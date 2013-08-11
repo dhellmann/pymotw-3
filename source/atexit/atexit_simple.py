@@ -26,15 +26,14 @@
 """Simple atexit example.
 
 """
-
-__module_id__ = "$Id$"
 #end_pymotw_header
 
 import atexit
 
-def all_done():
-    print 'all_done()'
 
-print 'Registering'
+def all_done():
+    print('all_done()')
+
+print('Registering')
 atexit.register(all_done)
-print 'Registered'
+print('Registered')

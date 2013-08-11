@@ -27,11 +27,10 @@
 the console.
 
 """
-
-__module_id__ = "$Id$"
 #end_pymotw_header
 
 import atexit
+
 
 def exit_with_exception(message):
     raise RuntimeError(message)

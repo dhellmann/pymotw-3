@@ -27,8 +27,6 @@
 the atexit handlers are not called.
 
 """
-
-__module_id__ = "$Id$"
 #end_pymotw_header
 
 import os
@@ -37,7 +35,7 @@ import subprocess
 import time
 
 proc = subprocess.Popen('atexit_signal_child.py')
-print 'PARENT: Pausing before sending signal...'
+print('PARENT: Pausing before sending signal...')
 time.sleep(1)
-print 'PARENT: Signaling child'
+print('PARENT: Signaling child')
 os.kill(proc.pid, signal.SIGTERM)

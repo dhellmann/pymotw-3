@@ -26,14 +26,13 @@
 """Register repeatedly with different arguments.
 
 """
-
-__module_id__ = "$Id$"
 #end_pymotw_header
 
 import atexit
 
+
 def my_cleanup(name):
-    print 'my_cleanup(%s)' % name
+    print('my_cleanup(%s)' % name)
 
 atexit.register(my_cleanup, 'first')
 atexit.register(my_cleanup, 'second')

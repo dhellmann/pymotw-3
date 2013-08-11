@@ -26,19 +26,18 @@
 """atexit callbacks are not invoked if we bypass normal exit and cleanup.
 
 """
-
-__module_id__ = "$Id$"
 #end_pymotw_header
 
 import atexit
 import os
 
+
 def not_called():
-    print 'This should not be called'
+    print('This should not be called')
 
-print 'Registering'
+print('Registering')
 atexit.register(not_called)
-print 'Registered'
+print('Registered')
 
-print 'Exiting...'
+print('Exiting...')
 os._exit(0)

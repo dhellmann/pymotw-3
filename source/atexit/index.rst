@@ -6,7 +6,6 @@
     :synopsis: Register shutdown callbacks
 
 :Purpose: Register function(s) to be called when a program is closing down.
-:Python Version: 2.1.3 and later
 
 The :mod:`atexit` module provides an interface to register
 functions to be called when a program closes down normally. The
@@ -33,7 +32,7 @@ called right away.
 ::
 
 	$ python atexit_simple.py
-
+	
 	Registering
 	Registered
 	all_done()
@@ -62,7 +61,7 @@ from which they are imported (and therefore register their
 ::
 
 	$ python atexit_multiple.py
-
+	
 	my_cleanup(third)
 	my_cleanup(second)
 	my_cleanup(first)
@@ -106,7 +105,7 @@ When run, the output is:
 ::
 
 	$ python atexit_signal_parent.py
-
+	
 	CHILD: Registering atexit handler
 	CHILD: Pausing to wait for signal
 	PARENT: Pausing before sending signal...
@@ -133,7 +132,6 @@ not run.
 ::
 
 	$ python atexit_os_exit.py
-
 	
 
 .. {{{end}}}
@@ -156,7 +154,7 @@ invoked.
 ::
 
 	$ python atexit_sys_exit.py
-
+	
 	Registering
 	Registered
 	Exiting...
@@ -188,30 +186,10 @@ error message to show the user.
 ::
 
 	$ python atexit_exception.py
-
+	
 	Error in atexit._run_exitfuncs:
-	Traceback (most recent call last):
-	  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python
-	2.7/atexit.py", line 24, in _run_exitfuncs
-	    func(*targs, **kargs)
-	  File "atexit_exception.py", line 37, in exit_with_exception
-	    raise RuntimeError(message)
 	RuntimeError: Registered second
 	Error in atexit._run_exitfuncs:
-	Traceback (most recent call last):
-	  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python
-	2.7/atexit.py", line 24, in _run_exitfuncs
-	    func(*targs, **kargs)
-	  File "atexit_exception.py", line 37, in exit_with_exception
-	    raise RuntimeError(message)
-	RuntimeError: Registered first
-	Error in sys.exitfunc:
-	Traceback (most recent call last):
-	  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python
-	2.7/atexit.py", line 24, in _run_exitfuncs
-	    func(*targs, **kargs)
-	  File "atexit_exception.py", line 37, in exit_with_exception
-	    raise RuntimeError(message)
 	RuntimeError: Registered first
 
 .. {{{end}}}

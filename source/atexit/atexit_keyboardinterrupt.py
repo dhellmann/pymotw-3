@@ -26,15 +26,14 @@
 """atexit functions are still called when a KeyboardInterrupt is received.
 
 """
-
-__module_id__ = "$Id$"
 #end_pymotw_header
 
 import atexit
 import sys
 
+
 def is_called():
-    print 'The atexit handlers are still called'
+    print('The atexit handlers are still called')
 
 atexit.register(is_called)
 
