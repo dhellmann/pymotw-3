@@ -32,6 +32,8 @@ Setup.todo
 
 		needed to update sphinxcontrib-paverutils to work with python 3, which in turn means that needs a new release
 
+	- cog to work on a single module
+
 	- new release of sphinxcontrib-paverutils
 		- move code to its own repo
 		- give Brad Miller commit access

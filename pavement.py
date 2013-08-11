@@ -8,10 +8,6 @@ from paver.setuputils import setup
 
 from sphinxcontrib import paverutils  # noqa
 
-# What is the current module being documented?
-MODULE = path('module').text().rstrip()
-os.environ['MODULE'] = MODULE
-
 
 setup(
     name="PyMOTW-3",
@@ -23,22 +19,28 @@ setup(
 )
 
 options(
+
     sphinx=Bunch(
         docroot='.',
         builddir='build',
         sourcedir='source',
     ),
+
+    # Some of the files include [[[ as part of a nested list data structure,
+    # so change the tags cog looks for to something less likely to appear.
     cog=Bunch(
         beginspec='{{{cog',
         endspec='}}}',
         endoutput='{{{end}}}',
     ),
+
     # pdf=Bunch(
     #     builder='latex',
     #     docroot='.',
     #     builddir='build',
     #     sourcedir='source',
     # ),
+
 )
 
 
@@ -69,6 +71,17 @@ def html_clean(options):
     return
 
 
+def _get_module(options):
+    """Return the name of module passed as arg or the default.
+    """
+    args = getattr(options, 'args', [])
+    if args:
+        module = args[0]
+    else:
+        module = path('module').text().rstrip()
+    return module
+
+
 def _flake8(infile):
     """Run flake8 against the input file"""
     return sh('flake8 %s' % infile)
@@ -91,11 +104,7 @@ def update(options):
       $ paver update atexit
     """
     options.order('update', 'sphinx', add_rest=True)
-    args = getattr(options, 'args', [])
-    if args:
-        module = args[0]
-    else:
-        module = MODULE
+    module = _get_module(options)
     module_dir = os.path.join(options.sphinx.sourcedir, module)
     if path(module_dir).isdir():
         _flake8(module_dir)
