@@ -1,0 +1,4 @@
+Sphinx==1.1.3
+cogapp==2.3
+flake8==2.0
+sphinxcontrib-paverutils

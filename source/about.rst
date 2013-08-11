@@ -40,7 +40,7 @@ cog_.
 
 ::
 
-	$ python3.3 -V
+	$ python -V
 	
 	Python 3.3.1
 
