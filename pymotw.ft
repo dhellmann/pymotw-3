@@ -1,0 +1,58 @@
+# PyMOTW 3 Todo
+
+Setup.todo
+
+	- new git repository @done
+	
+	or convert the existing one and create a branch for 2 and use master for 3?
+	
+	already created a book-git repo with a branch where the html build is changed
+	
+	- "PyMOTW-book-new" repo on bitbucket @done
+	
+	what are the rules about publishing the history of the text that went into the book? I'm planning to update each chapter based on the galleys anyway, so does it make sense to start from this version? the *website for the py2 version* isn't updated with that text, though
+	
+	using an empty repository lets me focus on just adding modules as I write them, instead of having some that are and some that are not updated (and are possibly broken)
+
+	- virtualenv @done
+		- include a requirements.txt file @done
+		- use 3.4 alpha release? @done
+			- tried a pyvenv, but doesn't seem to work well with pip or virtualenv @done
+		- having similar 100% CPU pegging issues pip installing Sphinx with python 3.3 @done
+
+	- sphinx @done
+
+	- pygments
+
+	- cog (does it support 3.3?) @done
+		
+		pypi page says "3"
+		
+		need to figure out how to handle the customizations for prefix and suffix of command blocks
+
+		needed to update sphinxcontrib-paverutils to work with python 3, which in turn means that needs a new release
+
+	- new release of sphinxcontrib-paverutils
+		- move code to its own repo
+		- give Brad Miller commit access
+		- publish the release
+
+	- custom sphinx extenions?
+		- standardize on include directive
+		- do something to avoid repeating parameters to include directives
+		- use shorter output line width
+
+	- flake8
+		- basic checks @done
+		- update checks @done
+		- check line width using custom plugin (or configure pep8?)
+
+	- don't create pypi packages of the source files? @done
+
+	- set up ssh config for syncing to pymotw.com server
+
+	- copy code from PBR for getting version from git tag
+
+	- theme
+		- experiment with bootstrap theme plugin and custom css
+		- 
