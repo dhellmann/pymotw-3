@@ -91,7 +91,8 @@ def update(options):
     else:
         module = MODULE
     module_dir = os.path.join(options.sphinx.sourcedir, module)
-    _flake8(module_dir)
+    if path(module_dir).isdir():
+        _flake8(module_dir)
     options.order('cog', 'sphinx', add_rest=True)
     options.args = [module_dir]
     cog(options)
