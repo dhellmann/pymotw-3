@@ -33,6 +33,12 @@ options(
         endspec='}}}',
         endoutput='{{{end}}}',
     ),
+    # pdf=Bunch(
+    #     builder='latex',
+    #     docroot='.',
+    #     builddir='build',
+    #     sourcedir='source',
+    # ),
 )
 
 
@@ -98,3 +104,12 @@ def update(options):
     cog(options)
     html(options)
     return
+
+
+# @task
+# def pdf():
+#     """Generate the PDF book.
+#     """
+#     options.order('pdf', 'sphinx', add_rest=True)
+#     paverutils.pdf(options)
+#     return
