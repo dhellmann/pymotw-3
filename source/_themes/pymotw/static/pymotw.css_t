@@ -29,6 +29,7 @@ pre {
 	margin-right: 2em;
     border-left: 5px solid #DDDDDD;		    
 	padding: 0.25em 0.5em;
+	font-size: 80%;
 }
 
 /* The links associated with the headers should be invisible unless
@@ -53,4 +54,46 @@ dt:hover > a.headerlink {
 a.headerlink:hover {
     background-color: #c60f0f;
     color: white;
+}
+
+/* Show admonitions with some highlighting. */
+div.admonition {
+	margin: 1em;
+	padding: 0 1em;
+	border-radius: 4px;
+	padding: 0.5em;
+}
+
+div.admonition p.admonition-title {
+	font-size: 120%;
+	margin-top: 0;
+	margin-bottom: 0.5em;
+}
+
+/* seealso blocks typically have lists */
+div.admonition dl {
+    padding: 0 1em;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+div.admonition dt {
+    font-weight: bold;
+}
+
+div.seealso {
+	background: rgba(66, 184, 221, 0.5);  /* light blue, semi-transparent */
+}
+
+div.seealso p.admonition-title {
+	color: white;
+    font-style: italic;
+}
+
+div.warning {
+	background: rgba(202, 60, 60, 0.5);  /* maroon, semi-transparent */
+}
+
+div.warning p.admonition-title {
+	color: black;
+	font-weight: bold;
 }
