@@ -7,15 +7,6 @@
   {%- set titlesuffix = "" %}
 {%- endif %}
 
-{%- macro css() %}
-    <link rel="stylesheet" href="{{ pathto('_static/pure-min.css', 1) }}">
-    <link rel="stylesheet" href="{{ pathto('_static/pymotw.css', 1) }}">
-    <link rel="stylesheet" href="{{ pathto('_static/pygments.css', 1) }}" type="text/css" />
-    {%- for cssfile in css_files %}
-    <link rel="stylesheet" href="{{ pathto(cssfile, 1) }}" type="text/css" />
-    {%- endfor %}
-{%- endmacro %}
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -26,7 +17,9 @@
     <title>{{ title|striptags|e }}{{ titlesuffix }}</title>
     {%- endblock %}
 
-    {{ css() }}
+    <link rel="stylesheet" href="{{ pathto('_static/pure-min.css', 1) }}" type="text/css">
+    <link rel="stylesheet" href="{{ pathto('_static/pygments.css', 1) }}" type="text/css" />
+    <link rel="stylesheet" href="{{ pathto('_static/pymotw.css', 1) }}" type="text/css">
 
   </head>
   <body>
