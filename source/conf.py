@@ -144,6 +144,14 @@ html_static_path = ['_static']
 
 # Custom sidebar templates, maps document names to template names.
 html_sidebars = {
+    'index': [
+        'sidebar_book.html',
+        'sidebar_ads.html',
+    ],
+    'frameworks': [
+        'sidebar_ads.html',
+        'sidebar_book.html',
+    ],
     '**': [
         'sidebar_toc.html',
         'sidebar_examples.html',
