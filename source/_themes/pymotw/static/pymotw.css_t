@@ -3,6 +3,9 @@
 .content {
 	padding: 0 1em;
 }
+
+.pure-menu, .pure-menu-open, .pure-menu-horizontal {
+	border-bottom: 1px solid #dddddd !important;
 }
 
 .sidebar_wrapper {
