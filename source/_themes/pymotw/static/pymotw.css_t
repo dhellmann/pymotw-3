@@ -97,3 +97,9 @@ div.warning p.admonition-title {
 	color: black;
 	font-weight: bold;
 }
+
+div.sidebar {
+	margin-top: 1em;
+#sidebar-book {
+	text-align: center;
+}
