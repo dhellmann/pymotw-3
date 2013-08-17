@@ -109,3 +109,9 @@ div.sidebar {
 #sidebar-book {
 	text-align: center;
 }
+
+.footer {
+	padding: 0.5em;
+	font-size: 80%;
+	border-top: 1px solid #dddddd;
+}
