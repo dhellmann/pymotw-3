@@ -9,7 +9,7 @@
 }
 
 .sidebar_wrapper {
-	margin: 0 0.25em;
+	margin: 0 0.5em;
 }
 
 .content {
