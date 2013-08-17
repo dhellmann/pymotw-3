@@ -1,7 +1,8 @@
 /* -*- mode: css -*- */
 
-body {
-	margin: 0 1em;
+.content {
+	padding: 0 1em;
+}
 }
 
 .sidebar_wrapper {
