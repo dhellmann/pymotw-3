@@ -8,11 +8,6 @@
 	border-bottom: 1px solid #dddddd !important;
 }
 
-.sidebar_wrapper {
-	margin: 0 0.5em;
-	padding-top: 0.5em;
-}
-
 .content {
 	margin: 0 0.25em;
 }
@@ -94,7 +89,12 @@ p.admonition-title {
 	font-weight: bold;
 }
 
-div.sidebar {
+.sidebar-wrapper {
+	margin: 0 0.5em;
+	padding-top: 0.5em;
+}
+
+.sidebar {
 	margin-top: 1em;
 }
 
@@ -107,6 +107,10 @@ div.sidebar {
 }
 
 #sidebar-book {
+	text-align: center;
+}
+
+#sidebar-ads {
 	text-align: center;
 }
 
