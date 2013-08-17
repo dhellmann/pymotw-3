@@ -1,0 +1,12 @@
+{{toc}}
+{#
+   TODO - Figure out how to only show the next/prev links for multipage articles.
+{%- if prev %}
+  <li><a href="{{ prev.link|e }}"
+         title="{{ _('previous chapter') }}">{{ prev.title }}</a></li>
+{%- endif %}
+{%- if next %}
+  <li><a href="{{ next.link|e }}"
+         title="{{ _('next chapter') }}">{{ next.title }}</a></li>
+{%- endif %}
+#}

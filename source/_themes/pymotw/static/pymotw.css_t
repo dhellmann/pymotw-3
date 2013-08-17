@@ -1,0 +1,13 @@
+/* -*- mode: css -*- */
+
+body {
+	margin: 0 1em;
+}
+
+.sidebar_wrapper {
+	margin: 0 0.25em;
+}
+
+.content {
+	margin: 0 0.25em;
+}

@@ -1,0 +1,70 @@
+{%- set url_root = pathto('', 1) %}
+{# XXX necessary? #}
+{%- if url_root == '#' %}{% set url_root = '' %}{% endif %}
+{%- if not embedded and docstitle %}
+  {%- set titlesuffix = " &mdash; "|safe + docstitle|e %}
+{%- else %}
+  {%- set titlesuffix = "" %}
+{%- endif %}
+
+{%- macro css() %}
+    <link rel="stylesheet" href="{{ pathto('_static/pure-min.css', 1) }}">
+    <link rel="stylesheet" href="{{ pathto('_static/pymotw.css', 1) }}">
+    <link rel="stylesheet" href="{{ pathto('_static/pygments.css', 1) }}" type="text/css" />
+    {%- for cssfile in css_files %}
+    <link rel="stylesheet" href="{{ pathto(cssfile, 1) }}" type="text/css" />
+    {%- endfor %}
+{%- endmacro %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    {%- block htmltitle %}
+    <title>{{ title|striptags|e }}{{ titlesuffix }}</title>
+    {%- endblock %}
+
+    {{ css() }}
+
+  </head>
+  <body>
+
+    <div class="pure-menu pure-menu-open pure-menu-horizontal">
+      {% block topnav %}
+      <a class="pure-menu-heading" href="{{ pathto(master_doc) }}">PyMOTW-3</a>
+      <ul>
+        {%- for parent in parents %}
+          <li class="pure-menu-selected"><a href="{{ parent.link|e }}" {% if loop.last %}{{ accesskey("U") }}{% endif %}>{{ parent.title }}</a></li>
+        {%- endfor %}
+        <li class="pure-menu-separator"></li>
+        <li><a href="{{ pathto('py-modindex') }}">Modules</a></li>
+        <li><a href="{{ pathto('genindex') }}">Index</a></li>
+        <li><a href="{{ pathto('about') }}">About</a></li>
+      </ul>
+      {% endblock %}
+    </div>
+
+    <div class="pure-g-r">
+
+      <div class="pure-u-3-4">
+        <div class="content">
+          {% block body %}
+          {% endblock %}
+        </div>
+      </div>
+
+      <div class="pure-u-1-4">
+        <div class="sidebar_wrapper">
+          {%- for sidebartemplate in sidebars %}
+          <div class="sidebar">
+            {%- include sidebartemplate %}
+          </div>
+          {%- endfor %}
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
