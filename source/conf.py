@@ -154,8 +154,8 @@ html_sidebars = {
     ],
     '**': [
         'sidebar_toc.html',
-        'sidebar_examples.html',
         'sidebar_book.html',
+        'sidebar_examples.html',
     ],
 }
 
