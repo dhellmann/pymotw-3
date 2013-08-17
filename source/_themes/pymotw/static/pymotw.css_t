@@ -10,6 +10,7 @@
 
 .sidebar_wrapper {
 	margin: 0 0.5em;
+	padding-top: 0.5em;
 }
 
 .content {
@@ -81,19 +82,14 @@ div.admonition dt {
 }
 
 div.seealso {
-	background: rgba(66, 184, 221, 0.5);  /* light blue, semi-transparent */
-}
-
-div.seealso p.admonition-title {
-	color: white;
-    font-style: italic;
+	background: rgba(66, 184, 221, 0.2);  /* light blue, semi-transparent */
 }
 
 div.warning {
-	background: rgba(202, 60, 60, 0.5);  /* maroon, semi-transparent */
+	background: rgba(202, 60, 60, 0.2);  /* maroon, semi-transparent */
 }
 
-div.warning p.admonition-title {
+p.admonition-title {
 	color: black;
 	font-weight: bold;
 }
