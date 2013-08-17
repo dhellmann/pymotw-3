@@ -15,6 +15,8 @@
 
 import sysconfig
 
+from docutils import nodes
+
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
@@ -271,3 +273,21 @@ texinfo_documents = [
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {'http://docs.python.org/': None}
+
+
+def html_page_context(app, pagename, templatename, context, doctree):
+    toc = app.builder.env.get_toc_for(pagename, app.builder)
+    toc_menu = []
+    for node in toc.traverse(nodes.reference):
+        # Skip the node at the top that points back to this page
+        if node['refuri'] == '#':
+            continue
+        toc_menu.append({
+            'title': str(node.children[0]),
+            'href': node['anchorname'],
+        })
+    context['toc_menu'] = toc_menu
+
+
+def setup(app):
+    app.connect('html-page-context', html_page_context)

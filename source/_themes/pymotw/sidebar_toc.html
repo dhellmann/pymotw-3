@@ -1,4 +1,12 @@
-{{toc}}
+<div id="sidebar-toc">
+  <h5>Quick Links</h5>
+{% if toc_menu %}
+  <ul>
+    {% for menu_item in toc_menu %}
+    <li>&raquo; <a href="{{ menu_item.href }}">{{menu_item.title}}</a></li>
+    {% endfor %}
+  </ul>
+{% endif %}
 {#
    TODO - Figure out how to only show the next/prev links for multipage articles.
 {%- if prev %}
@@ -10,3 +18,4 @@
          title="{{ _('next chapter') }}">{{ next.title }}</a></li>
 {%- endif %}
 #}
+</div>
