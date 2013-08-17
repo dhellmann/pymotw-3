@@ -57,6 +57,6 @@ Subscribe
 =========
 
 As new articles are written, they are posted to my blog
-(http://blog.doughellmann.com/).  Updates are available by RSS from
+(http://doughellmann.com/).  Updates are available by RSS from
 http://feeds.doughellmann.com/PyMOTW and `email
 <http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US>`_.
