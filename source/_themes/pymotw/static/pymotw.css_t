@@ -4,8 +4,16 @@
 	padding: 0 1em;
 }
 
-.pure-menu, .pure-menu-open, .pure-menu-horizontal {
-	border-bottom: 1px solid #dddddd !important;
+#site-menu {
+	background: rgb(41, 42, 136);  /* book blue */
+}
+
+#site-menu a {
+	color: white;
+}
+/* only change the hover settings for items *in* the menu list */
+#site-menu li a:hover {
+	color: rgb(41, 42, 136);  /* book blue */
 }
 
 .content {
@@ -76,12 +84,18 @@ div.admonition dt {
     font-weight: bold;
 }
 
+div.note {
+	background: #eeeeee;
+}
+
 div.seealso {
-	background: rgba(66, 184, 221, 0.2);  /* light blue, semi-transparent */
+	background: rgb(201, 200, 225);
+ /* rgba(41, 42, 136, 0.2);  /* book blue, semi-transparent */
+ /* rgba(66, 184, 221, 0.2);  /* light blue, semi-transparent */
 }
 
 div.warning {
-	background: rgba(202, 60, 60, 0.2);  /* maroon, semi-transparent */
+	background: rgb(241, 205, 205); /* rgba(202, 60, 60, 0.2);  maroon, semi-transparent */
 }
 
 p.admonition-title {
@@ -138,8 +152,14 @@ p.admonition-title {
 	text-decoration: none;
 }
 
-.footer {
+#footer {
 	padding: 0.5em;
 	font-size: 80%;
 	border-top: 1px solid #dddddd;
+	background: rgb(41, 42, 136);  /* book blue */
+	color: white;
+}
+#footer a {
+	color: white;
+	text-decoration: none;
 }

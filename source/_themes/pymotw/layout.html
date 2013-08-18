@@ -17,7 +17,7 @@
   </head>
   <body>
 
-    <div class="pure-menu pure-menu-open pure-menu-horizontal">
+    <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
       {% block topnav %}
       <a class="pure-menu-heading" href="{{ pathto(master_doc) }}">PyMOTW-3</a>
       <ul>
@@ -54,7 +54,7 @@
     
     </div>
 
-    <div class="pure-g-r">
+    <div class="pure-g-r" id="footer">
       <div class="pure-u-1">
           <a rel="author" href="/about/index.html">&copy; Copyright {{ copyright }}</a>.
           | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="{{ pathto('_static/cc-30-by-nc-sa.png', 1) }}"/></a>
