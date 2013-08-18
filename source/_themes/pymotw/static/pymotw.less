@@ -11,9 +11,18 @@
 
 @grey-highlight: #dddddd;
 
+/*
+** Main content area
+*/
+
 .content {
 	padding: 0 1em;
+	margin: 0 0.25em;
 }
+
+/*
+** Menu bar and footer
+*/
 
 #site-menu {
 	background: @book-blue;
@@ -28,25 +37,21 @@
 	color: @book-blue;
 }
 
-.content {
-	margin: 0 0.25em;
-}
-
-/* Remove the default yellow background from highlighted source code
-   and output.
- */
-.highlight {
-	background-color: #ffffff;
-}
-
-/* Emphasize code blocks with a line down the left side. */
-pre {
-	margin-left: 2em;
-	margin-right: 2em;
-    border-left: 5px solid @light-book-blue;		    
-	padding: 0.5em 0.5em;
+#footer {
+	padding: 0.5em;
 	font-size: 80%;
+	border-top: 1px solid @grey-highlight;
+	background: @book-blue;
+	color: white;
 }
+#footer a {
+	color: white;
+	text-decoration: none;
+}
+
+/*
+** Page structure
+*/
 
 /* The links associated with the section headers should be invisible
    unless the mouse is over them.  */
@@ -71,7 +76,29 @@ a.headerlink:hover {
     color: white;
 }
 
-/* Show admonitions with some highlighting. */
+/*
+** Code samples and program output
+*/
+
+.highlight {
+	/* Remove the default yellow background from highlighted source code
+	   and output. */
+	background-color: #ffffff;
+}
+
+pre {
+	/* Emphasize code blocks with a line down the left side. */
+	margin-left: 2em;
+	margin-right: 2em;
+    border-left: 5px solid @light-book-blue;		    
+	padding: 0.5em 0.5em;
+	font-size: 80%;
+}
+
+/*
+** Admonitions such as "seealso", "note", and "warning".
+*/
+
 div.admonition {
 	margin: 1em;
 	padding: 0 1em;
@@ -111,6 +138,10 @@ p.admonition-title {
 	color: black;
 	font-weight: bold;
 }
+
+/*
+** Page sidebars
+*/
 
 .sidebar-wrapper {
 	margin: 0 0.5em;
@@ -161,14 +192,40 @@ p.admonition-title {
 	text-decoration: none;
 }
 
-#footer {
-	padding: 0.5em;
-	font-size: 80%;
-	border-top: 1px solid @grey-highlight;
-	background: @book-blue;
-	color: white;
-}
-#footer a {
-	color: white;
+/*
+** Index pages
+*/
+.index-link {
+	color: @book-blue;
+	background: @light-book-blue;
 	text-decoration: none;
+	padding: 0.5em;
+	border-radius: 4px;
+}
+.index-link-hover {
+	color: white;
+	background: @book-blue;
+}
+
+.genindex-jumpbox a {
+	.index-link;
+}
+.genindex-jumpbox a:hover {
+	.index-link-hover;
+}
+
+.modindex-jumpbox a {
+	/* the module index is generated with lower-case letters, so make it
+	   look consistent with the regular index */
+	text-transform: uppercase;
+	.index-link;
+}
+.modindex-jumpbox a:hover {
+	.index-link-hover;
+}
+
+.indextable strong {
+	/* the module index is generated with lower-case letters, so make it
+	   look consistent with the regular index */
+	text-transform: uppercase;
 }
