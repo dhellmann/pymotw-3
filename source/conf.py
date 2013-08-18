@@ -13,6 +13,7 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
+import subprocess
 import sysconfig
 
 from docutils import nodes
@@ -295,6 +296,16 @@ def html_page_context(app, pagename, templatename, context, doctree):
     # directory, to prevent people from commenting on the main page,
     # about page, index, etc.
     context['show_comments'] = '/' in pagename
+
+    # Use the last modified date from git instead of applying a single
+    # value to the entire site.
+    src_file = app.builder.env.doc2path(pagename)
+    last_updated = subprocess.check_output(
+        ['git', 'log', '-n1', '--format=%ad', '--date=short',
+         '--', src_file,
+         ]
+    ).decode('utf-8').strip()
+    context['last_updated'] = last_updated
 
 
 def setup(app):
