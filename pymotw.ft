@@ -63,7 +63,7 @@ Setup.todo
 		- color background for header menu and footer @done
 		- lead paragraphs? @done
 		- fix colors in ad box @done
-		- use git to find the change time of the file in question and insert into the theme context to go into the footer
+		- use git to find the change time of the file in question and insert into the theme context to go into the footer @done
 		- shift static menu links to the right
 		
 	- main page @done
