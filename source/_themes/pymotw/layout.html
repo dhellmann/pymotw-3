@@ -69,16 +69,17 @@
 
     <div class="pure-g-r" id="footer">
       <div class="pure-u-1">
-          <a rel="author" href="/about/index.html">&copy; Copyright {{ copyright }}</a>.
-          | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="{{ pathto('_static/cc-30-by-nc-sa.png', 1) }}"/></a>
-          {%- if last_updated %}
-          | Last updated on {{ last_updated }}.
-          {%- endif %}
-          | <a href="http://sphinx.pocoo.org/">Created using Sphinx</a>.
-          | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
-            <img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
-                 src="{{ pathto('_static/dh-green-hosting.gif', 1) }}" height="15" width="80" /></a>
-        </div>
+        <p>
+        <a rel="author" href="/about/index.html">&copy; Copyright {{ copyright }}</a>
+        | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="{{ pathto('_static/cc-30-by-nc-sa.png', 1) }}"/></a>
+        {%- if last_updated %}
+        | Last updated on {{ last_updated }}
+        {%- endif %}
+        | <a href="http://sphinx.pocoo.org/">Created using Sphinx {{sphinx_version}}</a>
+        | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+          <img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+               src="{{ pathto('_static/dh-green-hosting.gif', 1) }}" height="15" width="80" /></a>
+        </p>
       </div>
     </div>
 
