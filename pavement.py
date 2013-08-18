@@ -41,6 +41,11 @@ options(
     #     sourcedir='source',
     # ),
 
+    website=Bunch(
+        # What server hosts the website?
+        server='pymotw.com',
+        server_path='/home/dhellmann/pymotw.com/3/',
+    ),
 )
 
 
@@ -132,3 +137,12 @@ def update(options):
 #     options.order('pdf', 'sphinx', add_rest=True)
 #     paverutils.pdf(options)
 #     return
+
+@task
+def rsyncwebsite(options):
+    # Copy to the server
+    os.environ['RSYNC_RSH'] = '/usr/bin/ssh'
+    src_path = path(options.sphinx.builddir) / 'html'
+    sh('(cd %s; rsync --archive --delete --verbose . %s:%s)' %
+        (src_path, options.website.server, options.website.server_path))
+    return
