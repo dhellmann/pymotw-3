@@ -170,6 +170,8 @@
   <filter  action="drop"  type="wildcard"  pattern="*txt"           />
   <filter  action="drop"  type="wildcard"  pattern="*_sources"           />
 
+  <filter  action="drop"  type="wildcard"  pattern="*_static*"           />
+
   <!-- Exclude URLs within UNIX-style hidden files or directories       -->
   <filter  action="drop"  type="regexp"    pattern="/\.[^/]*"     />
 
