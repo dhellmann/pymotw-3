@@ -22,7 +22,7 @@ Setup.todo
 
 	- sphinx @done
 
-	- pygments
+	- pygments @done
 
 	- cog (does it support 3.3?) @done
 		
@@ -35,8 +35,8 @@ Setup.todo
 	- cog to work on a single module
 
 	- new release of sphinxcontrib-paverutils
-		- move code to its own repo
-		- give Brad Miller commit access
+		- move code to its own repo @done
+		- give Brad Miller commit access @done
 		- publish the release
 
 	- custom sphinx extenions?
@@ -51,10 +51,32 @@ Setup.todo
 
 	- don't create pypi packages of the source files? @done
 
-	- set up ssh config for syncing to pymotw.com server
-
-	- copy code from PBR for getting version from git tag
+	- set up ssh config for syncing to pymotw.com server @done
 
 	- theme
-		- experiment with bootstrap theme plugin and custom css
-		- 
+		- experiment with bootstrap theme plugin and custom css @done
+		- dreamhost logo in footer @done
+		- cc logo in footer @done
+		- experiment with custom theme based on Pure css libs @done
+		- style the toc list in the sidebar @done
+		- center the book ad in the sidebar @done
+		- color background for header menu and footer @done
+		- lead paragraphs? @done
+		- fix colors in ad box @done
+		- use git to find the change time of the file in question and insert into the theme context to go into the footer
+		- shift static menu links to the right
+		
+	- main page @done
+		- remove "contents" @done
+		- style toc list @done
+		- add blurb @done
+
+	- index pages @done
+		- highlight the letter links at top @done
+
+	- content pages
+		- add disqus comments?
+
+	- redirect page for pymotw.com replaced with content page pointing to both versions
+
+	- 

@@ -46,6 +46,12 @@ options(
         server='pymotw.com',
         server_path='/home/dhellmann/pymotw.com/3/',
     ),
+
+    sitemap_gen=Bunch(
+        # Where is the config file for sitemap_gen.py?
+        config='sitemap_gen_config.xml',
+    ),
+
 )
 
 
@@ -145,4 +151,36 @@ def rsyncwebsite(options):
     src_path = path(options.sphinx.builddir) / 'html'
     sh('(cd %s; rsync --archive --delete --verbose . %s:%s)' %
         (src_path, options.website.server, options.website.server_path))
+    return
+
+
+@task
+def buildsitemap(options):
+    sh('python2 ./bin/sitemap_gen.py --testing --config=%s' %
+       options.sitemap_gen.config)
+    return
+
+
+@task
+def notify_google(options):
+    # Tell Google there is a new sitemap. This is sort of hacky,
+    # since we regenerate the sitemap locally but Google fetches
+    # the one we just copied to the remote site.
+    # sh('python2 ./bin/sitemap_gen.py --config=%s'
+    #    % options.sitemap_gen.config)
+    return
+
+
+@task
+def installwebsite(options):
+    """Rebuild and copy website files to the remote server.
+    """
+    # Rebuild
+    html_clean(options)
+    # Rebuild the site-map
+    buildsitemap(options)
+    # Install
+    rsyncwebsite(options)
+    # Update Google
+    notify_google(options)
     return
