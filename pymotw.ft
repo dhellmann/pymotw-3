@@ -77,6 +77,8 @@ Setup.todo
 	- content pages
 		- add disqus comments?
 
-	- redirect page for pymotw.com replaced with content page pointing to both versions
-
-	- 
+	- first site release
+		- redirect page for pymotw.com replaced with content page pointing to both versions
+		- root sitemap.xml updated with link to /3 page
+		- robots.txt updated with link to local sitemap @done
+		- 

@@ -1,12 +1,11 @@
 import os
 
-import paver.doctools  # noqa
-from paver.doctools import cog
 from paver.easy import options, Bunch, task, consume_args, sh
 from paver.path import path
 from paver.setuputils import setup
 
 from sphinxcontrib import paverutils  # noqa
+from sphinxcontrib.paverutils import cog
 
 
 setup(
