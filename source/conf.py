@@ -150,7 +150,7 @@ no_toc_sidebars = [
     'sidebar_ads.html',
 ]
 html_sidebars = {
-    'index': no_toc_sidebars,
+    'index': ['sidebar_subscribe.html'] + no_toc_sidebars,
     'genindex': no_toc_sidebars,
     'py-modindex': no_toc_sidebars,
     'frameworks': no_toc_sidebars,
