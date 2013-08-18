@@ -277,6 +277,8 @@ intersphinx_mapping = {'http://docs.python.org/': None}
 
 
 def html_page_context(app, pagename, templatename, context, doctree):
+    # Build a list of the local table of contents entries to appear in
+    # the sidebar
     toc = app.builder.env.get_toc_for(pagename, app.builder)
     toc_menu = []
     for node in toc.traverse(nodes.reference):
@@ -288,6 +290,11 @@ def html_page_context(app, pagename, templatename, context, doctree):
             'href': node['anchorname'],
         })
     context['toc_menu'] = toc_menu
+
+    # Only show comments when we are rendering a page inside a module
+    # directory, to prevent people from commenting on the main page,
+    # about page, index, etc.
+    context['show_comments'] = '/' in pagename
 
 
 def setup(app):

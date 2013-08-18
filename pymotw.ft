@@ -32,7 +32,7 @@ Setup.todo
 
 		needed to update sphinxcontrib-paverutils to work with python 3, which in turn means that needs a new release
 
-	- cog to work on a single module
+	- cog to work on a single module @done
 
 	- new release of sphinxcontrib-paverutils
 		- move code to its own repo @done
@@ -74,8 +74,8 @@ Setup.todo
 	- index pages @done
 		- highlight the letter links at top @done
 
-	- content pages
-		- add disqus comments?
+	- content pages @done
+		- add disqus comments? @done
 
 	- first site release
 		- redirect page for pymotw.com replaced with content page pointing to both versions
