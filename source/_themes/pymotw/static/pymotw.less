@@ -28,6 +28,10 @@
 	background: @book-blue;
 }
 
+#site-menu li {
+	background: @book-blue;
+}
+
 #site-menu a {
 	color: white;
 }
@@ -35,6 +39,46 @@
    doesn't include the site tile link on the left */
 #site-menu li a:hover {
 	color: @book-blue;
+}
+#site-menu .pure-menu-separator {
+	color: white;
+	background: white;
+}
+
+#top-menu {
+	float: right;
+}
+
+/* The menu in the sidebar is invisible in the default configuration
+   and made visible when the viewport shrinks (see media query
+   below). */
+#sidebar-menu {
+	visibility: hidden !important;
+}
+.sidebar .pure-menu {
+	visibility: hidden !important;
+	height: 0;
+	width: 0;
+}
+
+/* Handle screen resizing in the menu. When it gets too narrow, turn
+   off the menu in the title bar and make the one in the sidebar
+   visible. */
+@width-breakpoint: 750px;
+@media only screen and (max-width: @width-breakpoint){
+	#top-menu {
+		visibility: hidden !important;
+		height: 0;
+		width: 0;
+	}
+	#sidebar-menu {
+		visibility: visible !important;
+	}
+	.sidebar .pure-menu {
+		visibility: visible !important;
+		height: auto;
+		width: auto;
+	}
 }
 
 #footer {

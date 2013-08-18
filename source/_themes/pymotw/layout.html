@@ -1,5 +1,12 @@
 {%- set titlesuffix = " &mdash; "|safe + docstitle|e %}
 
+{% macro navmenu() %}
+<li><a href="http://doughellmann.com/">Blog</a></li>
+<li><a href="{{ pathto('py-modindex') }}">Modules</a></li>
+<li><a href="{{ pathto('genindex') }}">Index</a></li>
+<li><a href="{{ pathto('about') }}">About</a></li>
+{% endmacro %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -28,22 +35,22 @@
   <body>
 
     <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
-      {% block topnav %}
+
       <a class="pure-menu-heading" href="{{ pathto(master_doc) }}">PyMOTW-3</a>
-      <ul>
-        {%- if parents %}
+
+      {%- if parents %}
+      <ul id="breadcrumbs">
         <li class="pure-menu-separator"></li>
-        {% endif %}
         {%- for parent in parents %}
-          <li class="pure-menu-selected"><a href="{{ parent.link|e }}" {% if loop.last %}{{ accesskey("U") }}{% endif %}>{{ parent.title }}</a></li>
+          <li class="pure-menu-selected"><a href="{{ parent.link|e }}">{{ parent.title }}</a></li>
         {%- endfor %}
-        <li class="pure-menu-separator"></li>
-        <li><a href="http://doughellmann.com/">Blog</a></li>
-        <li><a href="{{ pathto('py-modindex') }}">Modules</a></li>
-        <li><a href="{{ pathto('genindex') }}">Index</a></li>
-        <li><a href="{{ pathto('about') }}">About</a></li>
       </ul>
-      {% endblock %}
+      {% endif %}
+      <ul id="top-menu">
+        <li class="pure-menu-separator"></li>
+        {{ navmenu() }}
+      </ul>
+
     </div>
 
     <div class="pure-g-r">
@@ -57,11 +64,21 @@
 
       <div class="pure-u-1-4">
         <div class="sidebar-wrapper">
+
           {%- for sidebartemplate in sidebars %}
           <div class="sidebar">
             {%- include sidebartemplate %}
           </div>
           {%- endfor %}
+
+          <div class="sidebar">
+            <div class="pure-menu pure-menu-open">
+              <ul id="sidebar-menu">
+                {{ navmenu() }}
+              </ul>
+            </div>
+          </div>
+
         </div>
       </div>
     
