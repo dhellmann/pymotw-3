@@ -150,6 +150,14 @@ html_sidebars = {
         'sidebar_book.html',
         'sidebar_ads.html',
     ],
+    'genindex': [
+        'sidebar_book.html',
+        'sidebar_ads.html',
+    ],
+    'py-modindex': [
+        'sidebar_book.html',
+        'sidebar_ads.html',
+    ],
     'frameworks': [
         'sidebar_ads.html',
         'sidebar_book.html',
