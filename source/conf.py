@@ -145,26 +145,19 @@ html_last_updated_fmt = '%b %d, %Y'
 #html_use_smartypants = True
 
 # Custom sidebar templates, maps document names to template names.
+no_toc_sidebars = [
+    'sidebar_book.html',
+    'sidebar_ads.html',
+]
 html_sidebars = {
-    'index': [
-        'sidebar_book.html',
-        'sidebar_ads.html',
-    ],
-    'genindex': [
-        'sidebar_book.html',
-        'sidebar_ads.html',
-    ],
-    'py-modindex': [
-        'sidebar_book.html',
-        'sidebar_ads.html',
-    ],
-    'frameworks': [
-        'sidebar_ads.html',
-        'sidebar_book.html',
-    ],
+    'index': no_toc_sidebars,
+    'genindex': no_toc_sidebars,
+    'py-modindex': no_toc_sidebars,
+    'frameworks': no_toc_sidebars,
     '**': [
         'sidebar_toc.html',
         'sidebar_book.html',
+        'sidebar_ads.html',
         'sidebar_examples.html',
     ],
 }
