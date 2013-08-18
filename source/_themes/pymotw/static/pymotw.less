@@ -1,19 +1,31 @@
 /* -*- mode: css -*- */
 
+/* color from the cover of the book */
+@book-blue: rgb(41, 42, 136);
+@light-book-blue: rgba(41, 42, 136, 0.2);  /* book blue, semi-transparent */
+
+/* from http://colrd.com/create/palette/#dna=0,ff7cb734,0.3333333,ffb0a546,0.6666667,ff492e27 */
+@gold: #b0a546;
+@green: #7cb734;
+@purple: #441166;
+
+@grey-highlight: #dddddd;
+
 .content {
 	padding: 0 1em;
 }
 
 #site-menu {
-	background: rgb(41, 42, 136);  /* book blue */
+	background: @book-blue;
 }
 
 #site-menu a {
 	color: white;
 }
-/* only change the hover settings for items *in* the menu list */
+/* only change the hover settings for items *in* the menu list, which
+   doesn't include the site tile link on the left */
 #site-menu li a:hover {
-	color: rgb(41, 42, 136);  /* book blue */
+	color: @book-blue;
 }
 
 .content {
@@ -31,17 +43,16 @@
 pre {
 	margin-left: 2em;
 	margin-right: 2em;
-    border-left: 5px solid #DDDDDD;		    
+    border-left: 5px solid @light-book-blue;		    
 	padding: 0.5em 0.5em;
 	font-size: 80%;
 }
 
-/* The links associated with the headers should be invisible unless
-   the mouse is over them.
- */
+/* The links associated with the section headers should be invisible
+   unless the mouse is over them.  */
 a.headerlink {
     visibility: hidden;
-    color: #c60f0f;
+    color: @light-book-blue;
     font-size: 0.8em;
     padding: 0 4px 0 4px;
     text-decoration: none;
@@ -56,7 +67,7 @@ dt:hover > a.headerlink {
     visibility: visible;
 }
 a.headerlink:hover {
-    background-color: #c60f0f;
+    background-color: @light-book-blue;
     color: white;
 }
 
@@ -74,7 +85,7 @@ div.admonition p.admonition-title {
 	margin-bottom: 0.5em;
 }
 
-/* seealso blocks typically have lists */
+/* seealso blocks typically have dictionary lists, clean up the margins */
 div.admonition dl {
     padding: 0 1em;
 	margin-top: 0;
@@ -89,13 +100,11 @@ div.note {
 }
 
 div.seealso {
-	background: rgb(201, 200, 225);
- /* rgba(41, 42, 136, 0.2);  /* book blue, semi-transparent */
- /* rgba(66, 184, 221, 0.2);  /* light blue, semi-transparent */
+	background: @light-book-blue;
 }
 
 div.warning {
-	background: rgb(241, 205, 205); /* rgba(202, 60, 60, 0.2);  maroon, semi-transparent */
+	background: rgba(202, 60, 60, 0.2);  /* maroon, semi-transparent */
 }
 
 p.admonition-title {
@@ -129,8 +138,8 @@ p.admonition-title {
 }
 
 #sidebar-toc {
-	border-top: 2px solid #dddddd;
-	border-bottom: 2px solid #dddddd;
+	border-top: 2px solid @grey-highlight;
+	border-bottom: 2px solid @grey-highlight;
 }
 #sidebar-toc h5 {
 	margin: 0.25em 0;  /* reduce margin from pure defaults */
@@ -155,8 +164,8 @@ p.admonition-title {
 #footer {
 	padding: 0.5em;
 	font-size: 80%;
-	border-top: 1px solid #dddddd;
-	background: rgb(41, 42, 136);  /* book blue */
+	border-top: 1px solid @grey-highlight;
+	background: @book-blue;
 	color: white;
 }
 #footer a {

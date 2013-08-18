@@ -56,8 +56,18 @@ def remake_directories(*dirnames):
 
 
 @task
+def css(options):
+    "Generate CSS from less"
+    file_base = 'source/_themes/pymotw/static/pymotw'
+    sh('lessc -x %(file_base)s.less > %(file_base)s.css' % {
+        'file_base': file_base,
+    })
+
+
+@task
 def html(options):
     "Generate HTML files."
+    css(options)
     paverutils.html(options)
     return
 
