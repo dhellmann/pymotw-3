@@ -53,7 +53,7 @@ Setup.todo
 
 	- set up ssh config for syncing to pymotw.com server @done
 
-	- theme
+	- theme @done
 		- experiment with bootstrap theme plugin and custom css @done
 		- dreamhost logo in footer @done
 		- cc logo in footer @done
@@ -64,7 +64,7 @@ Setup.todo
 		- lead paragraphs? @done
 		- fix colors in ad box @done
 		- use git to find the change time of the file in question and insert into the theme context to go into the footer @done
-		- shift static menu links to the right
+		- shift static menu links to the right @done
 		
 	- main page @done
 		- remove "contents" @done

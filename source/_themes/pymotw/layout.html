@@ -38,14 +38,17 @@
 
       <a class="pure-menu-heading" href="{{ pathto(master_doc) }}">PyMOTW-3</a>
 
-      {%- if parents %}
+      {# Always leave the UL present, even if we don't put anything in
+         it, to ensure the menubar height is calculated properly. #}
       <ul id="breadcrumbs">
+      {%- if parents %}
         <li class="pure-menu-separator"></li>
         {%- for parent in parents %}
           <li class="pure-menu-selected"><a href="{{ parent.link|e }}">{{ parent.title }}</a></li>
         {%- endfor %}
-      </ul>
       {% endif %}
+      </ul>
+
       <ul id="top-menu">
         <li class="pure-menu-separator"></li>
         {{ navmenu() }}
