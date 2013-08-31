@@ -38,7 +38,7 @@ CPython (see below for version) and inserted into the text using cog_.
 
 ::
 
-	$ python -V
+	$ python3 -V
 	
 	Python 3.3.2
 

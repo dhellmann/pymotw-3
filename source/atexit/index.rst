@@ -32,7 +32,7 @@ called right away.
 
 ::
 
-	$ python atexit_simple.py
+	$ python3 atexit_simple.py
 	
 	Registering
 	Registered
@@ -61,7 +61,7 @@ from which they are imported (and therefore register their
 
 ::
 
-	$ python atexit_multiple.py
+	$ python3 atexit_multiple.py
 	
 	my_cleanup(third)
 	my_cleanup(second)
@@ -94,7 +94,7 @@ an error.
 
 ::
 
-	$ python atexit_decorator.py
+	$ python3 atexit_decorator.py
 	
 	starting main program
 	all_done()
@@ -139,7 +139,7 @@ When run, the output is:
 
 ::
 
-	$ python atexit_signal_parent.py
+	$ python3 atexit_signal_parent.py
 	
 	CHILD: Registering atexit handler
 	CHILD: Pausing to wait for signal
@@ -166,7 +166,7 @@ not run.
 
 ::
 
-	$ python atexit_os_exit.py
+	$ python3 atexit_os_exit.py
 	
 
 .. {{{end}}}
@@ -188,7 +188,7 @@ invoked.
 
 ::
 
-	$ python atexit_sys_exit.py
+	$ python3 atexit_sys_exit.py
 	
 	Registering
 	Registered
@@ -220,7 +220,7 @@ error message to show the user.
 
 ::
 
-	$ python atexit_exception.py
+	$ python3 atexit_exception.py
 	
 	Error in atexit._run_exitfuncs:
 	RuntimeError: Registered second
