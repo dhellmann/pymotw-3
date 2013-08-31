@@ -42,7 +42,7 @@ cog_.
 
 	$ python -V
 	
-	Python 3.3.1
+	Python 3.3.2
 
 .. {{{end}}}
 
