@@ -20,8 +20,7 @@ Python web site at http://docs.python.org/library/.
 Tools
 =====
 
-The source text for PyMOTW is reStructuredText_
-and the HTML and PDF output are
+The source text for PyMOTW is reStructuredText_ and the HTML output is
 created using Sphinx_.
 
 .. _reStructuredText: http://docutils.sourceforge.net/
@@ -29,8 +28,7 @@ created using Sphinx_.
 .. _Sphinx: http://sphinx.pocoo.org/
 
 The output from all the example programs has been generated with
-CPython (see below for version) and inserted into the text using
-cog_. 
+CPython (see below for version) and inserted into the text using cog_.
 
 .. _cog: http://nedbatchelder.com/code/cog/
 
