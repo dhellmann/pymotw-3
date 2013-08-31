@@ -13,10 +13,11 @@ functions to be called when a program closes down normally. The
 one function can be registered there. The :mod:`atexit` registry can
 be used by multiple modules and libraries simultaneously.
 
-Examples
-========
+Registering Exit Callbacks
+==========================
 
-This is an example of registering a function via :func:`register`.
+This is an example of registering a function explicitly by calling
+:func:`register`.
 
 .. include:: atexit_simple.py
     :literal:
@@ -68,7 +69,41 @@ from which they are imported (and therefore register their
 
 .. {{{end}}}
 
-When Are atexit Functions Not Called?
+
+Decorator Syntax
+================
+
+Functions that require no arguments can be registered by using
+:func:`register` as a decorator.  This alternative syntax is
+convenient for cleanup functions that operate on module-level global
+data.
+
+.. include:: atexit_decorator.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+Because the function is registered as it is defined, it is also
+important to ensure that it works properly even if no other work is
+performed by the module. If the resources it is supposed to clean up
+were never initialized, calling the exit callback should not produce
+an error.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'atexit_decorator.py'))
+.. }}}
+
+::
+
+	$ python atexit_decorator.py
+	
+	starting main program
+	all_done()
+
+.. {{{end}}}
+
+
+
+When Are atexit Callbacks Not Called?
 =====================================
 
 The callbacks registered with :mod:`atexit` are not invoked if any of
