@@ -14,7 +14,7 @@ setup(
     version="0.0",
     url="http://pymotw.com/3/",
     author="Doug Hellmann",
-    author_email="doug.hellmann@gmail.com"
+    author_email="doug@doughellmann.com"
 )
 
 options(
@@ -171,7 +171,7 @@ def notify_google(options):
 
 
 @task
-def installwebsite(options):
+def deploy(options):
     """Rebuild and copy website files to the remote server.
     """
     # Rebuild
