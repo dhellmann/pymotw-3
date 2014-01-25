@@ -11,8 +11,9 @@ series, which covered Python 2.7.
 .. _PyMOTW: http://pymotw.com/2/
 
 See the project home page at http://pymotw.com/3/ for
-updates and the latest release.  Source code is available from
-http://bitbucket.org/dhellmann/pymotw-3/.
+updates and the latest release.
+
+..  Source code is available from http://bitbucket.org/dhellmann/pymotw-3/.
 
 Complete documentation for the standard library can be found on the
 Python web site at http://docs.python.org/library/.
