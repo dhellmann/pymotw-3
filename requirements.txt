@@ -3,3 +3,4 @@ cogapp==2.3
 flake8
 sphinxcontrib-paverutils
 Paver==1.2.2
+sphinxcontrib-spelling

@@ -1,3 +1,7 @@
+.. spelling::
+
+   tokenizer
+
 ===========================
 Application Building Blocks
 ===========================
@@ -35,7 +39,7 @@ handles the interaction with the user so the application only needs to
 implement the processing callbacks for the individual commands.
 
 :mod:`shlex` is a parser for shell-style syntax, with lines made up of
-tokens separated by whitespace.  It is smart about quotes and escape
+tokens separated by white-space.  It is smart about quotes and escape
 sequences, so text with embedded spaces is treated as a single token.
 :mod:`shlex` works well as the tokenizer for domain-specific languages
 such as configuration files or programming languages.

@@ -25,6 +25,10 @@ options(
         sourcedir='source',
     ),
 
+    spelling=Bunch(
+        builder='spelling',
+    ),
+
     # Some of the files include [[[ as part of a nested list data structure,
     # so change the tags cog looks for to something less likely to appear.
     cog=Bunch(
@@ -79,6 +83,13 @@ def html(options):
     "Generate HTML files."
     css(options)
     paverutils.html(options)
+    return
+
+
+@task
+def spelling(options):
+    "Check spelling."
+    paverutils.run_sphinx(options, 'spelling')
     return
 
 

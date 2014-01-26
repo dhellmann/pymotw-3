@@ -1,3 +1,7 @@
+.. spelling::
+
+   blog
+
 ===============================
 About Python Module of the Week
 ===============================
