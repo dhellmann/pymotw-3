@@ -223,8 +223,14 @@ error message to show the user.
 	$ python3 atexit_exception.py
 	
 	Error in atexit._run_exitfuncs:
+	Traceback (most recent call last):
+	  File "atexit_exception.py", line 36, in exit_with_exception
+	    raise RuntimeError(message)
 	RuntimeError: Registered second
 	Error in atexit._run_exitfuncs:
+	Traceback (most recent call last):
+	  File "atexit_exception.py", line 36, in exit_with_exception
+	    raise RuntimeError(message)
 	RuntimeError: Registered first
 
 .. {{{end}}}
