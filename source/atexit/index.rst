@@ -109,14 +109,14 @@ When Are atexit Callbacks Not Called?
 The callbacks registered with :mod:`atexit` are not invoked if any of
 these conditions is met:
 
-* the program dies because of a signal
+* The program dies because of a signal.
 
-* :func:`os._exit()` is invoked directly
+* :func:`os._exit()` is invoked directly.
 
-* a fatal error is detected in the interpreter
+* A fatal error is detected in the interpreter.
 
 An example from the :mod:`subprocess` section can be updated to show
-what happens when a program is killed by a signal. There are two files
+what happens when a program is killed by a signal. Two files are
 involved, the parent and the child programs. The parent starts the
 child, pauses, then kills it.
 
