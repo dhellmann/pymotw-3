@@ -9,7 +9,7 @@ Application Building Blocks
 The strength of Python's standard library is its size.  It includes
 implementations of so many aspects of a program's structure that
 developers can concentrate on what makes their application unique,
-instead of implementing all of the basic pieces over and over again.
+instead of implementing all the basic pieces over and over again.
 This chapter covers some of the more frequently reused building blocks
 that solve problems common to so many applications.
 
@@ -20,8 +20,8 @@ fewer features than other option parsing libraries, but that
 simplicity and familiarity make it a popular choice.  :mod:`optparse`
 is a more modern, and flexible, replacement for :mod:`getopt`.
 :mod:`argparse` is a third interface for parsing and validating
-command line arguments, and deprecates both :mod:`getopt` and
-:mod:`optparse`.  It supports converting arguments to from strings to
+command line arguments, which deprecates both :mod:`getopt` and
+:mod:`optparse`.  It supports converting arguments from strings to
 integers and other types, running callbacks when an option is
 encountered, setting default values for options not provided by the
 user, and automatically producing usage instructions for a program.
@@ -52,12 +52,12 @@ as a simple data file format.
 Applications being deployed in the real world need to give their users
 debugging information.  Simple error messages and tracebacks are
 helpful, but when it is difficult to reproduce an issue a full
-activity log can point directly to the chain of events that lead to a
+activity log can point directly to the chain of events that leads to a
 failure.  The :mod:`logging` module includes a full-featured API that
 manages log files, supports multiple threads, and even interfaces with
 remote logging daemons for centralized logging.
 
-One of the most common patterns for programs in Unix environments is a
+One of the most common patterns for programs in UNIX environments is a
 line-by-line filter that reads data, modifies it, and writes it back
 out.  Reading from files is simple enough, but there may not be an
 easier way to create a filter application than by using the
