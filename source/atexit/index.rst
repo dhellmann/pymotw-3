@@ -16,6 +16,9 @@ be used by multiple modules and libraries simultaneously.
 Registering Exit Callbacks
 ==========================
 
+.. index::
+   pair: callbacks; exit
+
 This is an example of registering a function explicitly by calling
 :func:`register`.
 
@@ -72,6 +75,9 @@ from which they are imported (and therefore register their
 
 Decorator Syntax
 ================
+
+.. index::
+   single: decorator; atexit
 
 Functions that require no arguments can be registered by using
 :func:`register` as a decorator.  This alternative syntax is
@@ -241,6 +247,8 @@ functions, since it is messy to have a program dump errors on exit.
 
 .. seealso::
 
-    `atexit <http://docs.python.org/library/atexit.html>`_
-        The standard library documentation for this module.
+    * `atexit <http://docs.python.org/library/atexit.html>`_ --
+      The standard library documentation for this module.
 
+    * :ref:`sys-exceptions` -- Global handling for uncaught
+      exceptions.
