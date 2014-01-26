@@ -108,6 +108,53 @@ an error.
 .. {{{end}}}
 
 
+Cancelling Callbacks
+====================
+
+To cancel an exit callback, remove it from the registry using
+:func:`unregister`.
+
+.. include:: atexit_unregister.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+All calls to the same callback are canceled, regardless of how many
+times it has been registered.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'atexit_unregister.py'))
+.. }}}
+
+::
+
+	$ python3 atexit_unregister.py
+	
+
+.. {{{end}}}
+
+Removing a callback that was not previously registered is not
+considered an error.
+
+.. include:: atexit_unregister_not_registered.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+Because it silently ignores unknown callbacks, :func:`unregister` can
+be used even when the sequence of registrations might not be known.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'atexit_unregister_not_registered.py'))
+.. }}}
+
+::
+
+	$ python3 atexit_unregister_not_registered.py
+	
+
+.. {{{end}}}
+
+
+
 
 When Are atexit Callbacks Not Called?
 =====================================
