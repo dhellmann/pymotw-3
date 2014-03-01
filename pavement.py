@@ -50,6 +50,11 @@ options(
         server_path='/home/dhellmann/pymotw.com/3/',
     ),
 
+    testsite=Bunch(
+        # Where do we put the files for local testing?
+        local_path='/Users/dhellmann/Sites/pymotw.com/3',
+    ),
+
     sitemap_gen=Bunch(
         # Where is the config file for sitemap_gen.py?
         config='sitemap_gen_config.xml',
@@ -161,6 +166,14 @@ def rsyncwebsite(options):
     src_path = path(options.sphinx.builddir) / 'html'
     sh('(cd %s; rsync --archive --delete --verbose . %s:%s)' %
         (src_path, options.website.server, options.website.server_path))
+    return
+
+@task
+def test(options):
+    # Copy to the local site
+    src_path = path(options.sphinx.builddir) / 'html'
+    sh('(cd %s; rsync --archive --delete --verbose . %s)' %
+        (src_path, options.testsite.local_path))
     return
 
 
