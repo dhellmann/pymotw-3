@@ -14,6 +14,7 @@
 # serve to show the default.
 
 import datetime
+import os
 import subprocess
 import sysconfig
 
@@ -280,6 +281,26 @@ texinfo_documents = [
 intersphinx_mapping = {'http://docs.python.org/': None}
 
 
+def _get_last_updated(app, pagename):
+    # Use the last modified date from git instead of applying a single
+    # value to the entire site.
+    last_updated = None
+    src_file = app.builder.env.doc2path(pagename)
+    if os.path.exists(src_file):
+        try:
+            last_updated_t = subprocess.check_output(
+                [
+                    'git', 'log', '-n1', '--format=%ad', '--date=short',
+                    '--', src_file,
+                ]
+            ).decode('utf-8').strip()
+            last_updated = datetime.datetime.strptime(last_updated_t,
+                                                      '%Y-%m-%d')
+        except (ValueError, subprocess.CalledProcessError):
+            pass
+    return last_updated
+
+
 def html_page_context(app, pagename, templatename, context, doctree):
     # Build a list of the local table of contents entries to appear in
     # the sidebar
@@ -298,17 +319,11 @@ def html_page_context(app, pagename, templatename, context, doctree):
     # Only show comments when we are rendering a page inside a module
     # directory, to prevent people from commenting on the main page,
     # about page, index, etc.
-    context['show_comments'] = '/' in pagename
+    context['show_comments'] = False  #'/' in pagename
 
     # Use the last modified date from git instead of applying a single
     # value to the entire site.
-    src_file = app.builder.env.doc2path(pagename)
-    last_updated = subprocess.check_output(
-        ['git', 'log', '-n1', '--format=%ad', '--date=short',
-         '--', src_file,
-         ]
-    ).decode('utf-8').strip()
-    context['last_updated'] = last_updated
+    context['last_updated'] = _get_last_updated(app, pagename)
 
 
 def setup(app):

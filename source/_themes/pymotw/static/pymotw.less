@@ -1,23 +1,75 @@
 /* -*- mode: css -*- */
 
-/* color from the cover of the book */
-@book-blue: rgb(41, 42, 136);
-@light-book-blue: rgba(41, 42, 136, 0.2);  /* book blue, semi-transparent */
+@import 'vars.less';
 
-/* from http://colrd.com/create/palette/#dna=0,ff7cb734,0.3333333,ffb0a546,0.6666667,ff492e27 */
-@gold: #b0a546;
-@green: #7cb734;
-@purple: #441166;
+/*
+** Reusable styles
+*/
+.centered-block {
+	margin: 0 auto;
+	display: block;
+}
 
-@grey-highlight: #dddddd;
+.monospaced-font {
+	font-family: monospace,serif;
+}
+
+.hidden-phone {
+    visibility: visible;
+}
 
 /*
 ** Main content area
 */
 
+html {
+	height: 100%;
+	width: 100%;
+}
+
+body {
+	height: 100%;
+	width: 100%;
+	color: @footer-foreground;
+	background-color: @footer-background;
+}
+
+#content-container {
+	color: @foreground;
+	background-color: @background;
+	padding-bottom: 1em;
+}
+
+.section img {
+	.centered-block;
+}
+
+a {
+	color: @link-foreground;
+	background-color: @link-background;
+	/* .body-font; */
+}
+
+a:link:hover {
+	color: @link-hover-foreground;
+	background-color: @link-hover-background;
+}
+
+a:visited {
+	color: @link-visited-foreground;
+	background-color: @link-visited-background;
+}
+
+a:visited:hover {
+	color: @link-hover-foreground;
+	background-color: @link-hover-background;
+}
+
 .content {
 	padding: 0 1em;
 	margin: 0 0.25em;
+	background: @background;
+	color: @foreground;
 }
 
 /*
@@ -25,24 +77,34 @@
 */
 
 #site-menu {
-	background: @book-blue;
+	background: @menu-background;
+	border-bottom: @trim-thickness solid @menu-border-color;
+	padding-top: 1em;
+	padding-bottom: 1em;
 }
 
 #site-menu li {
-	background: @book-blue;
+	background: @menu-background;
 }
 
 #site-menu a {
-	color: white;
+	color: @menu-foreground;
+	background-color: @menu-background;
 }
 /* only change the hover settings for items *in* the menu list, which
    doesn't include the site tile link on the left */
 #site-menu li a:hover {
-	color: @book-blue;
+	color: @menu-foreground;
+	background-color: @menu-background;
 }
-#site-menu .pure-menu-separator {
-	color: white;
-	background: white;
+#top-menu .pure-menu-separator {
+	color: @menu-foreground;
+	background: @menu-foreground;
+}
+
+#site-menu .pure-menu-heading {
+	text-transform: none;
+	font-size: 130%;
 }
 
 #top-menu {
@@ -61,36 +123,66 @@
 	width: 0;
 }
 
-/* Handle screen resizing in the menu. When it gets too narrow, turn
-   off the menu in the title bar and make the one in the sidebar
-   visible. */
-@width-breakpoint: 750px;
-@media only screen and (max-width: @width-breakpoint){
-	#top-menu {
-		visibility: hidden !important;
-		height: 0;
-		width: 0;
-	}
-	#sidebar-menu {
-		visibility: visible !important;
-	}
-	.sidebar .pure-menu {
-		visibility: visible !important;
-		height: auto;
-		width: auto;
-	}
-}
-
 #footer {
 	padding: 0.5em;
-	font-size: 80%;
-	border-top: 1px solid @grey-highlight;
-	background: @book-blue;
-	color: white;
+	border-top: 1px solid @footer-background;
+	padding: 1em 0;
+	background: @footer-background;
+	color: @footer-foreground;
 }
 #footer a {
-	color: white;
+	color: @footer-link-foreground;
+	background: @footer-link-background;
 	text-decoration: none;
+}
+
+.footer-content {
+	text-align: center;
+}
+
+.footer-list {
+	margin-left: 2em;
+	margin-right: 2em;
+}
+
+.footer-list h4 {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.footer-list ul {
+	list-style-type: none;
+}
+
+.footer-list ul li {
+	padding-bottom: 0.5em;
+}
+
+.footer-list ul i {
+	margin-left: -1em;
+}
+
+#footer-menu ul {
+	width: 100%;
+	background-color: @footer-background;
+	color: @footer-foreground;
+}
+
+.socialmedia {
+	font-size: 150%;
+	margin-bottom: 0.75em;
+}
+
+.socialmedia .sociallink {
+	padding: 5px 5px;
+}
+
+.copyright {
+	margin-bottom: 1em;
+}
+
+.last-updated {
+	margin-bottom: 1em;
 }
 
 /*
@@ -101,10 +193,16 @@
    unless the mouse is over them.  */
 a.headerlink {
     visibility: hidden;
-    color: @light-book-blue;
+    color: @foreground;
     font-size: 0.8em;
     padding: 0 4px 0 4px;
     text-decoration: none;
+	margin-left: 0.2em;
+
+	/* from webfont.css */
+    font-family: WebSymbolsRegular;
+    font-weight: normal;
+    font-style: normal;
 }
 h1:hover > a.headerlink,
 h2:hover > a.headerlink,
@@ -115,28 +213,38 @@ h6:hover > a.headerlink,
 dt:hover > a.headerlink {
     visibility: visible;
 }
-a.headerlink:hover {
-    background-color: @light-book-blue;
-    color: white;
+
+/* hide header permalinks on index page */
+#index a.headerlink {
+	visibility: hidden;
+}
+#index a.headerlink:hover {
+	visibility: hidden;
+}
+
+h1 a {
+	text-decoration: none;
+}
+
+.content h1 {
+	margin-top: 2em;
+	margin-left: 2em;
+	margin-right: 2em;
+	text-align: center;
+	/* for some reason the header is not centered without this border */
+	border: 1px solid transparent;
+}
+
+.content .aggregated h1 {
+	margin-top: 0.5em;
 }
 
 .field-name {
-/*
-	color: white;
-	background: @book-blue;
-	padding: 0.3em;
-*/
 	padding-right: 0.3em;
-}
-.field-body {
-/*
-	padding: 0.3em;
-	background: @light-book-blue;
-*/
 }
 
 #disqus_thread {
-    border-top: 5px solid @book-blue;		    
+    border-top: 2px solid @comments-border-color;
 	padding-top: 1em;
 }
 
@@ -147,15 +255,41 @@ a.headerlink:hover {
 .highlight {
 	/* Remove the default yellow background from highlighted source code
 	   and output. */
-	background-color: #ffffff;
+	background-color: @source-block-background;
 }
 
 pre {
 	/* Emphasize code blocks with a line down the left side. */
 	margin-left: 2em;
 	margin-right: 2em;
-    border-left: 5px solid @light-book-blue;		    
+    border-left: 5px solid @source-block-border-color;
 	padding: 0.5em 0.5em;
+}
+
+pre {
+	/* Emphasize code blocks with a line down the left side. */
+	margin-left: 2em;
+	margin-right: 2em;
+    border-left: @trim-thickness solid @source-block-border-color;
+	padding: 0.5em 0.5em;
+	overflow: auto;
+	word-wrap: normal;
+	white-space: pre;
+	.monospaced-font;
+}
+
+/* inline literals */
+.pre {
+	.monospaced-font;
+}
+
+div.linenodiv pre {
+	/* remove extra spacing and border around line numbers */
+	border-left: none;
+	margin-left: 0;
+	margin-right: -1.5em;
+	padding: 0;
+	text-align: right;
 }
 
 /*
@@ -164,8 +298,7 @@ pre {
 
 div.admonition {
 	margin: 1em;
-	padding: 0 1em;
-	border-radius: 4px;
+	border-radius: @border-radius-large;
 	padding: 0.5em;
 }
 
@@ -186,20 +319,51 @@ div.admonition dt {
 }
 
 div.note {
-	background: #eeeeee;
+	background: @note-background;
+}
+
+div.note a {
+	background: @note-background;
 }
 
 div.seealso {
-	background: @light-book-blue;
+	background-color: @seealso-background;
+}
+
+.see-also-link {
+	background-color: @seealso-link-background;
+	color: @seealso-link-foreground;
+}
+
+div.seealso a {
+	.see-also-link;
+}
+
+div.seealso a:hover {
+	.see-also-link;
 }
 
 div.warning {
-	background: rgba(202, 60, 60, 0.2);  /* maroon, semi-transparent */
+	background-color: @warning-background;
+}
+
+div.warning a {
+	background-color: @warning-background;
 }
 
 p.admonition-title {
-	color: black;
+	color: @admonition-title-foreground;
 	font-weight: bold;
+}
+
+/* seealso blocks typically have dictionary lists, clean up the margins */
+div.admonition dl {
+    padding: 0 1em;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+div.admonition dt {
+    font-weight: bold;
 }
 
 /*
@@ -268,15 +432,15 @@ p.admonition-title {
 ** Index pages
 */
 .index-link {
-	color: @book-blue;
-	background: @light-book-blue;
+	color: @index-link-foreground;
+	background: @index-link-background;
 	text-decoration: none;
 	padding: 0.5em;
-	border-radius: 4px;
+	border-radius: @border-radius-small;
 }
 .index-link-hover {
-	color: white;
-	background: @book-blue;
+	color: @index-link-hover-foreground;
+	background: @index-link-hover-background;
 }
 
 .genindex-jumpbox a {
@@ -309,4 +473,95 @@ p.admonition-title {
 	/* Links to other pages in PyMOTW do not need to be underlined in the
 	   table of contents. */
 	text-decoration: none;
+}
+
+
+/* Handle screen resizing in the menu. When it gets too narrow, turn
+   off the menu in the title bar and make the one in the sidebar
+   visible. */
+@width-breakpoint: 750px;
+@media only screen and (max-width: @width-breakpoint){
+
+	.hidden-phone {
+		visibility: hidden !important;
+		height: 0px;
+		width: 0px;
+		padding: 0;
+		margin: 0;
+		line-height: 0;
+	}
+
+	#site-menu {
+		.hidden-phone;
+		border-bottom: none;
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+
+	#breadcrumbs {
+		.hidden-phone;
+	}
+
+	#sidebar-book {
+		.hidden-phone;
+	}
+
+	/* #sidebar-ads { */
+	/* 	.hidden-phone; */
+	/* } */
+
+	.content {
+		padding: 0.5em;
+	}
+
+	h1 {
+		margin: 0 !important;
+		text-align: left;
+		font-size: 1.5em;
+		/* allow word breaks between any 2 characters so long project names do
+		   not cause layout issues on small screens */
+		/* word-break: break-all; */
+	}
+
+	.footer-content {
+		margin-top: 1em;
+	}
+
+	.footer-list {
+		margin-top: 1em;
+	}
+
+	.callout {
+		.hidden-phone;
+	}
+
+	div.admonition {
+		margin: 0;
+		padding: 0.5em;
+	}
+
+	div.admonition p.admonition-title {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+
+	/* Set width of pre boxes so they scroll instead of growing */
+	div.highlight {
+		width: 290px !important;
+	}
+
+	pre {
+		/* Emphasize code blocks with a line down the left side. */
+		margin-left: 0.5em;
+		margin-right: 0.5em;
+		padding: 0 0 0 0.5em;
+	}
+
+	div.linenodiv pre {
+		/* remove extra spacing and border around line numbers */
+		border-left: none;
+		margin-left: 0;
+		margin-right: -0.5em;
+	}
+
 }

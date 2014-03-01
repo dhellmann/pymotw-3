@@ -81,13 +81,14 @@ def css(options):
     sh('lessc -x %(file_base)s.less > %(file_base)s.css' % {
         'file_base': file_base,
     })
+    path(file_base + '.css').copy(options.sphinx.builddir + '/html/_static/pymotw.css')
 
 
 @task
 def html(options):
     "Generate HTML files."
-    css(options)
     paverutils.html(options)
+    css(options)
     return
 
 
