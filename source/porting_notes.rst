@@ -5,13 +5,21 @@
      porting - starts new section
      mod - builds reference to a module
 
-=============
-Porting Notes
-=============
+===============
+ Porting Notes
+===============
 
 This section includes notes and tips for updating from Python 2 to
 Python 3, including summaries of and references for the changes in
-each module.
+each module. The notes are based on the "What's New" documents
+prepared by the Python development team and release manager for each
+release.
+
+* `What's New In Python 3.0 <https://docs.python.org/3.0/whatsnew/3.0.html>`__
+* `What's New In Python 3.1 <https://docs.python.org/3.1/whatsnew/3.1.html>`__
+* `What's New In Python 3.2 <https://docs.python.org/3.2/whatsnew/3.2.html>`__
+* `What's New In Python 3.3 <https://docs.python.org/3.3/whatsnew/3.3.html>`__
+* `What's New In Python 3.4 <https://docs.python.org/3.4/whatsnew/3.4.html>`__
 
 Renamed Modules
 ===============
@@ -100,6 +108,11 @@ and the values are the Python 3 name).
 
 .. _six: http://pythonhosted.org/six/
 
+New Modules
+===========
+
+
+
 Deprecated Modules
 ==================
 
@@ -116,8 +129,8 @@ optparse
   Command-line option parsing library.
 
 
-Changes in Modules Between Python 2 and 3
-=========================================
+Summary of Changes to Modules
+=============================
 
 .. _porting-atexit:
 
