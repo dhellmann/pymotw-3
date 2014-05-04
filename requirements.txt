@@ -1,6 +1,7 @@
-Sphinx==1.2.1
+Sphinx==1.2.2
 cogapp==2.3
 flake8
 sphinxcontrib-paverutils
 Paver==1.2.2
 sphinxcontrib-spelling
+git+https://github.com/rfk/pyenchant.git

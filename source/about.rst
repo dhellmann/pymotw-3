@@ -45,7 +45,7 @@ CPython (see below for version) and inserted into the text using cog_.
 
 	$ python3 -V
 	
-	Python 3.3.3
+	Python 3.4.0
 
 .. {{{end}}}
 
