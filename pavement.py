@@ -81,7 +81,8 @@ def css(options):
     sh('lessc -x %(file_base)s.less > %(file_base)s.css' % {
         'file_base': file_base,
     })
-    path(file_base + '.css').copy(options.sphinx.builddir + '/html/_static/pymotw.css')
+    path(file_base + '.css').copy(
+        options.sphinx.builddir + '/html/_static/pymotw.css')
 
 
 @task
@@ -169,6 +170,7 @@ def rsyncwebsite(options):
         (src_path, options.website.server, options.website.server_path))
     return
 
+
 @task
 def test(options):
     # Copy to the local site
@@ -208,3 +210,16 @@ def deploy(options):
     # Update Google
     notify_google(options)
     return
+
+
+@task
+def push(options):
+    """Push changes to remote git repository.
+    """
+    sh('git push')
+
+
+@task
+def publish(options):
+    deploy(options)
+    push(options)
