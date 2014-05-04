@@ -108,8 +108,8 @@ an error.
 .. {{{end}}}
 
 
-Cancelling Callbacks
-====================
+Canceling Callbacks
+===================
 
 To cancel an exit callback, remove it from the registry using
 :func:`unregister`.
