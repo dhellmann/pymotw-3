@@ -97,8 +97,9 @@ def html(options):
 @task
 def spelling(options):
     "Check spelling."
-    paverutils.run_sphinx(options, 'spelling')
-    return
+    rc = paverutils.run_sphinx(options, 'spelling')
+    if rc:
+        raise ValueError('Found spelling mistake')
 
 
 @task
@@ -223,8 +224,6 @@ def push(options):
 
 @task
 def publish(options):
-    check = spelling(options)
-    if not check:
-        return check
+    spelling(options)
     deploy(options)
     push(options)
