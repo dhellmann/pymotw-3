@@ -223,5 +223,8 @@ def push(options):
 
 @task
 def publish(options):
+    check = spelling(options)
+    if not check:
+        return check
     deploy(options)
     push(options)
