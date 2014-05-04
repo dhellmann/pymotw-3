@@ -5,13 +5,23 @@
      porting - starts new section
      mod - builds reference to a module
 
+.. spelling::
+
+   Lennart
+   Regebro
+
 ===============
  Porting Notes
 ===============
 
 This section includes notes and tips for updating from Python 2 to
 Python 3, including summaries of and references for the changes in
-each module. The notes are based on the "What's New" documents
+each module.
+
+References
+==========
+
+The notes in this section are based on the "What's New" documents
 prepared by the Python development team and release manager for each
 release.
 
@@ -20,6 +30,17 @@ release.
 * `What's New In Python 3.2 <https://docs.python.org/3.2/whatsnew/3.2.html>`__
 * `What's New In Python 3.3 <https://docs.python.org/3.3/whatsnew/3.3.html>`__
 * `What's New In Python 3.4 <https://docs.python.org/3.4/whatsnew/3.4.html>`__
+
+For more information about porting to Python 3, refer to
+
+* `Porting Python 2 Code to Python 3
+  <https://docs.python.org/3/howto/pyporting.html>`__ on
+  docs.python.org.
+* `Porting to Python 3 <http://python3porting.com/>`__, by Lennart
+  Regebro.
+* The `python-porting
+  <http://mail.python.org/mailman/listinfo/python-porting>`__ mailing
+  list.
 
 Renamed Modules
 ===============
