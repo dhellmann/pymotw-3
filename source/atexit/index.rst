@@ -24,7 +24,7 @@ This is an example of registering a function explicitly by calling
 
 .. include:: atexit_simple.py
     :literal:
-    :start-after: #end_pymotw_header
+    :start-after: # end_pymotw_header
 
 Since the program does not do anything else, :func:`all_done` is
 called right away.
@@ -51,7 +51,7 @@ clean-up function can be registered for each resource.
 
 .. include:: atexit_multiple.py
     :literal:
-    :start-after: #end_pymotw_header
+    :start-after: # end_pymotw_header
 
 The exit functions are called in the reverse of the order they are
 registered. This allows modules to be cleaned up in the reverse order
@@ -86,7 +86,7 @@ data.
 
 .. include:: atexit_decorator.py
    :literal:
-   :start-after: #end_pymotw_header
+   :start-after: # end_pymotw_header
 
 Because the function is registered as it is defined, it is also
 important to ensure that it works properly even if no other work is
@@ -116,7 +116,7 @@ To cancel an exit callback, remove it from the registry using
 
 .. include:: atexit_unregister.py
    :literal:
-   :start-after: #end_pymotw_header
+   :start-after: # end_pymotw_header
 
 All calls to the same callback are canceled, regardless of how many
 times it has been registered.
@@ -137,7 +137,7 @@ considered an error.
 
 .. include:: atexit_unregister_not_registered.py
    :literal:
-   :start-after: #end_pymotw_header
+   :start-after: # end_pymotw_header
 
 Because it silently ignores unknown callbacks, :func:`unregister` can
 be used even when the sequence of registrations might not be known.
@@ -175,14 +175,14 @@ child, pauses, then kills it.
 
 .. include:: atexit_signal_parent.py
     :literal:
-    :start-after: #end_pymotw_header
+    :start-after: # end_pymotw_header
 
 The child sets up an :mod:`atexit` callback, then sleeps until the
 signal arrives.
 
 .. include:: atexit_signal_child.py
     :literal:
-    :start-after: #end_pymotw_header
+    :start-after: # end_pymotw_header
 
 When run, the output is:
 
@@ -208,7 +208,7 @@ If a program uses :func:`os._exit`, it can avoid having the
 
 .. include:: atexit_os_exit.py
     :literal:
-    :start-after: #end_pymotw_header
+    :start-after: # end_pymotw_header
 
 Because this example bypasses the normal exit path, the callback is
 not run.
@@ -230,7 +230,7 @@ by running out of statements to execute or by calling
 
 .. include:: atexit_sys_exit.py
     :literal:
-    :start-after: #end_pymotw_header
+    :start-after: # end_pymotw_header
 
 This example calls :func:`sys.exit`, so the registered callbacks are
 invoked.
@@ -260,7 +260,7 @@ be the final error message of the program.
 
 .. include:: atexit_exception.py
     :literal:
-    :start-after: #end_pymotw_header
+    :start-after: # end_pymotw_header
 
 The registration order controls the execution order. If an error in
 one callback introduces an error in another (registered earlier, but
@@ -277,12 +277,12 @@ error message to show the user.
 	
 	Error in atexit._run_exitfuncs:
 	Traceback (most recent call last):
-	  File "atexit_exception.py", line 36, in exit_with_exception
+	  File "atexit_exception.py", line 37, in exit_with_exception
 	    raise RuntimeError(message)
 	RuntimeError: Registered second
 	Error in atexit._run_exitfuncs:
 	Traceback (most recent call last):
-	  File "atexit_exception.py", line 36, in exit_with_exception
+	  File "atexit_exception.py", line 37, in exit_with_exception
 	    raise RuntimeError(message)
 	RuntimeError: Registered first
 

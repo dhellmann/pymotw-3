@@ -13,6 +13,8 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
+# flake8: noqa
+
 import datetime
 import os
 import subprocess

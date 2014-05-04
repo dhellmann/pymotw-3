@@ -40,6 +40,8 @@
 #   http://www.opensource.org/licenses/bsd-license.php
 #
 
+# flake8: noqa
+
 __usage__ = \
 """A simple script to automatically produce sitemaps for a webserver,
 in the Google Sitemap Protocol (GSP).

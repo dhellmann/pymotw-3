@@ -29,8 +29,9 @@ options(
         builder='spelling',
     ),
 
-    # Some of the files include [[[ as part of a nested list data structure,
-    # so change the tags cog looks for to something less likely to appear.
+    # Some of the files include [[[ as part of a nested list data
+    # structure, so change the tags cog looks for to something
+    # less likely to appear.
     cog=Bunch(
         beginspec='{{{cog',
         endspec='}}}',
@@ -167,7 +168,8 @@ def rsyncwebsite(options):
     os.environ['RSYNC_RSH'] = '/usr/bin/ssh'
     src_path = path(options.sphinx.builddir) / 'html'
     sh('(cd %s; rsync --archive --delete --verbose . %s:%s)' %
-        (src_path, options.website.server, options.website.server_path))
+        (src_path, options.website.server,
+         options.website.server_path))
     return
 
 
