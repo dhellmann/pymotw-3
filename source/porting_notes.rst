@@ -158,10 +158,11 @@ Summary of Changes to Modules
 atexit
 ------
 
+.. index::
+   pair: porting; atexit
+
 When :mod:`atexit` was updated to include a C implementation
 (:pyissue:`1680961`), a regression was introduced in the error
 handling logic that caused only the summary of the exception to be
 shown, without the traceback. This regression was fixed in Python 3.3
 (:pyissue:`18776`).
-
-
