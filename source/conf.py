@@ -39,8 +39,13 @@ extensions = [
     #'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.ifconfig',
+    'sphinx.ext.extlinks',
     'sphinxcontrib.spelling',
 ]
+
+extlinks = {
+    'pyissue': ('http://bugs.python.org/issue%s', 'Python issue '),
+}
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
