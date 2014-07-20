@@ -48,7 +48,7 @@ options(
     website=Bunch(
         # What server hosts the website?
         server='pymotw.com',
-        server_path='/home/dhellmann/pymotw.com/3/',
+        server_path='/home/douhel3shell/pymotw.com/3/',
     ),
 
     testsite=Bunch(
