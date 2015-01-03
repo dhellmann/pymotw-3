@@ -79,11 +79,12 @@ def remake_directories(*dirnames):
 def css(options):
     "Generate CSS from less"
     file_base = 'source/_themes/pymotw/static/pymotw'
-    sh('lessc -x %(file_base)s.less > %(file_base)s.css' % {
-        'file_base': file_base,
-    })
-    path(file_base + '.css').copy(
-        options.sphinx.builddir + '/html/_static/pymotw.css')
+    if path(file_base + '.less').mtime > path(file_base + '.css').mtime:
+        sh('lessc -x %(file_base)s.less > %(file_base)s.css' % {
+            'file_base': file_base,
+        })
+        path(file_base + '.css').copy(
+            options.sphinx.builddir + '/html/_static/pymotw.css')
 
 
 @task
