@@ -299,5 +299,6 @@ functions, since it is messy to have a program dump errors on exit.
 
     * :ref:`Porting notes for atexit <porting-atexit>`
 
+..
     * :ref:`sys-exceptions` -- Global handling for uncaught
       exceptions.
