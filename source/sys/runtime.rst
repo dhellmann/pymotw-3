@@ -27,9 +27,9 @@ In the third example, the ``-u`` option is understood by the
 interpreter, and is not passed to the program being run.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'sys_argv.py'))
-.. cog.out(run_script(cog.inFile, 'sys_argv.py -v foo blah', include_prefix=False))
-.. cog.out(run_script(cog.inFile, '-u sys_argv.py', include_prefix=False))
+.. cog.out(script_output(cog.inFile, 'sys_argv.py'))
+.. cog.out(script_output(cog.inFile, 'sys_argv.py -v foo blah', include_prefix=False))
+.. cog.out(script_output(cog.inFile, '-u sys_argv.py', include_prefix=False))
 .. }}}
 
 ::
@@ -72,7 +72,7 @@ be sent to the next program in a pipeline.  :const:`stderr` is
 intended for use with warning or error messages.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, interpreter='cat sys_stdio.py | python3 -u', script_name='sys_stdio.py'))
+.. cog.out(script_output(cog.inFile, interpreter='cat sys_stdio.py | python3 -u', script_name='sys_stdio.py'))
 .. }}}
 
 ::
@@ -119,8 +119,8 @@ To return an exit code from a program, pass an integer value to
 A non-zero value means the program exited with an error.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'sys_exit.py 0 ; echo "Exited $?"'))
-.. cog.out(run_script(cog.inFile, 'sys_exit.py 1 ; echo "Exited $?"', include_prefix=False, ignore_error=True))
+.. cog.out(script_output(cog.inFile, 'sys_exit.py 0 ; echo "Exited $?"'))
+.. cog.out(script_output(cog.inFile, 'sys_exit.py 1 ; echo "Exited $?"', include_prefix=False, ignore_error=True))
 .. }}}
 
 ::

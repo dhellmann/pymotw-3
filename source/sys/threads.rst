@@ -164,7 +164,7 @@ short period.  Meanwhile **Thread-3** tries to acquire *blocker* but
 cannot because **Thread-2** already has it.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'sys_current_frames.py'))
+.. cog.out(script_output(cog.inFile, 'sys_current_frames.py'))
 .. }}}
 
 ::
@@ -173,8 +173,8 @@ cannot because **Thread-2** already has it.
 	
 	Thread-1 with ident 4325380096 going to sleep
 	Thread-1 finishing
-	Thread-2 with ident 4325380096 going to sleep
-	Thread-3 with ident 4332720128 going to sleep
+	Thread-2 with ident 4326428672 going to sleep
+	Thread-3 with ident 4331683840 going to sleep
 	Thread-3 stopped in block at line 45 of sys_current_frames.py
 	Thread-2 stopped in block at line 46 of sys_current_frames.py
 

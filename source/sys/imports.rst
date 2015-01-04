@@ -299,11 +299,11 @@ preserved as module-level attributes.
 	  __package__: 
 	  __file__   : /tmp/pymotw_import_example.shelve/package
 	  __path__   : ['/tmp/pymotw_import_example.shelve']
-	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x100718d68>
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x1006f4c50>
 	
 	Global settings:
 	sys.modules entry:
-	<module 'package' (<sys_shelve_importer.ShelveLoader object at 0x100718d68
+	<module 'package' (<sys_shelve_importer.ShelveLoader object at 0x1006f4c50
 	>)>
 
 .. {{{end}}}

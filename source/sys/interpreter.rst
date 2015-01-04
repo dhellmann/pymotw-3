@@ -36,7 +36,7 @@ All of the values depend on the actual interpreter used to run the
 sample program.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'sys_version_values.py', break_lines_at=65))
+.. cog.out(script_output(cog.inFile, 'sys_version_values.py'))
 .. }}}
 
 ::
@@ -66,7 +66,7 @@ For most Unix systems, the value comes from combining the output of
 other operating systems there is a hard-coded table of values.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'sys_platform.py'))
+.. cog.out(script_output(cog.inFile, 'sys_platform.py'))
 .. }}}
 
 ::
@@ -117,7 +117,7 @@ Experiment with ``sys_flags.py`` to learn how the command line options
 map to the flags settings.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, '-S -E sys_flags.py'))
+.. cog.out(script_output(cog.inFile, '-S -E sys_flags.py'))
 .. }}}
 
 ::
@@ -157,7 +157,7 @@ sources can be handled more cleanly, and the number of assumptions
 about encodings in the application code is reduced.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'sys_unicode.py'))
+.. cog.out(script_output(cog.inFile, 'sys_unicode.py'))
 .. }}}
 
 ::

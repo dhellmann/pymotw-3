@@ -1,12 +1,12 @@
 import os
 import subprocess
 
-from paver.easy import options, Bunch, task, consume_args, sh
+from paver.easy import options, Bunch, task, consume_args, sh, info, error
 from paver.path import path
 from paver.setuputils import setup
 
 from sphinxcontrib import paverutils  # noqa
-from sphinxcontrib.paverutils import cog
+from sphinxcontrib.paverutils import cog, run_script
 
 
 # Replace run_script with local wrapper
@@ -73,6 +73,16 @@ options(
 )
 
 
+def script_output(*args, **kwds):
+    kwds.setdefault('break_lines_at', 65)
+    return run_script(*args, **kwds)
+
+
+# Stuff commonly used symbols into the builtins so we don't have to
+# import them in all of the cog blocks where we want to use them.
+__builtins__['script_output'] = script_output
+
+
 def remake_directories(*dirnames):
     """Remove the directories and recreate them.
     """
@@ -137,11 +147,16 @@ def _get_module(options):
     args = getattr(options, 'args', [])
     if args:
         module = args[0]
+        info('using argument for module: %s' % module)
     branch = _get_branch_name()
     if branch.startswith('module/'):
         module = branch.partition('/')[-1]
+        info('using git branch for module: %s' % module)
     if not module:
         module = path('module').text().rstrip()
+        info('read module from file: %s' % module)
+    if not module:
+        error('could not determine the module')
     return module
 
 

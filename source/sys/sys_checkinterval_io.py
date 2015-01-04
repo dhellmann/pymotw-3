@@ -30,7 +30,7 @@
 
 import sys
 import threading
-from Queue import Queue
+from queue import Queue
 
 
 def show_thread(q, extraByteCodes):
