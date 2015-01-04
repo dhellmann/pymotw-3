@@ -296,8 +296,9 @@ functions, since it is messy to have a program dump errors on exit.
     * `atexit <http://docs.python.org/library/atexit.html>`_ --
       The standard library documentation for this module.
 
-    * :ref:`Porting notes for atexit <porting-atexit>`
-
-..
     * :ref:`sys-exceptions` -- Global handling for uncaught
       exceptions.
+
+    * :ref:`sys-exitfunc` -- System exit callback hook.
+
+    * :ref:`Porting notes for atexit <porting-atexit>`
