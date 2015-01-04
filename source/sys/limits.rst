@@ -265,6 +265,16 @@ These examples were produced on OS X 10.9.5 on an Intel Core i7.
 
 .. {{{end}}}
 
+The C type used to store integers internally is determined when the
+interpreter is built. 64-bit architectures automatically use 30-bit
+integers by default, and they can be enabled for 32-bit architectures
+with the configuration flag ``--enable-big-digits``.
+
+.. seealso::
+
+   * `Build and C API Changes
+     <https://docs.python.org/3.1/whatsnew/3.1.html#build-and-c-api-changes>`__
+     from *What's New in Python 3.1*
 
 
 Byte Ordering

@@ -183,6 +183,9 @@ sys
 .. index::
    pair: porting; sys
 
+
+.. Patch #1680961
+
 :data:`sys.exitfunc` is no longer checked for a clean-up action to be
 run when a program exits. Use :mod:`atexit` instead.
 
@@ -192,4 +195,8 @@ run when a program exits. Use :mod:`atexit` instead.
 :data:`sys.flags.division_new`, :data:`sys.flags.tabcheck`, and
 :data:`sys.flags.unicode` are no longer defined.
 
-:data:`sys.maxint` is no longer defined.
+:data:`sys.maxint` is no longer defined, use :data:`sys.maxsize`
+instead. See :pep:`237` (Unifying Long Integers and Integers).
+
+:data:`sys.exc_type`, :data:`sys.exc_value`, and
+:data:`sys.exc_traceback` have been removed.
