@@ -190,6 +190,6 @@ run when a program exits. Use :mod:`atexit` instead.
 
 :data:`sys.flags.py3k_warning`, :data:`sys.flags.division_warning`,
 :data:`sys.flags.division_new`, :data:`sys.flags.tabcheck`, and
-:data::data:`sys.flags.unicode` are no longer defined.
+:data:`sys.flags.unicode` are no longer defined.
 
 :data:`sys.maxint` is no longer defined.
