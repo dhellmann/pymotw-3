@@ -80,6 +80,40 @@ other operating systems there is a hard-coded table of values.
   `Platform values <http://docs.python.org/library/sys.html#sys.platform>`_
     Hard-coded values of :const:`sys.platform` for systems without :command:`uname`.
 
+Interpreter Implementation
+==========================
+
+The CPython interpreter is one of several implementations of the
+Python language.  :data:`sys.implementation` is provided to detect the
+current implementation for libraries that need to work around any
+differences in interpreters.
+
+.. include:: sys_implementation.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+:data:`sys.implementation.version` is the same as
+:data:`sys.version_info` for CPython, but will be different for
+other interpreters.
+
+.. {{{cog
+.. cog.out(script_output(cog.inFile, 'sys_implementation.py'))
+.. }}}
+
+::
+
+	$ python3 sys_implementation.py
+	
+	Name: cpython
+	Version: sys.version_info(major=3, minor=4, micro=2, releaselevel
+	='final', serial=0)
+	Cache tag: cpython-34
+
+.. {{{end}}}
+
+.. seealso::
+
+   * :pep:`421` - Adding :data:`sys.implementation`
 
 Command Line Options
 ====================
