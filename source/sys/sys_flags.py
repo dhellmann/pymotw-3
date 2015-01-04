@@ -30,6 +30,8 @@
 
 import sys
 
+if sys.flags.bytes_warning:
+    print('Warning on bytes/str errors')
 if sys.flags.debug:
     print('Debuging')
 if sys.flags.inspect:

@@ -128,6 +128,8 @@ Flags`.
     Option      Meaning
     ========    =======
     ``-B``      do not write .py[co] files on import
+    ``-b``      issue warnings about converting bytes to string without decoding properly and comparing bytes with strings
+    ``-bb``     convert bytes warnings to errors
     ``-d``      debug output from parser
     ``-E``      ignore PYTHON* environment variables (such as PYTHONPATH)
     ``-i``      inspect interactively after running script
@@ -151,13 +153,14 @@ Experiment with ``sys_flags.py`` to learn how the command line options
 map to the flags settings.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, '-S -E sys_flags.py'))
+.. cog.out(script_output(cog.inFile, '-S -E -b sys_flags.py'))
 .. }}}
 
 ::
 
-	$ python3 -S -E sys_flags.py
+	$ python3 -S -E -b sys_flags.py
 	
+	Warning on bytes/str errors
 	Not importing "site"
 	Ignoring environment
 
