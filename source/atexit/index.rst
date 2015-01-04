@@ -26,7 +26,7 @@ This is an example of registering a function explicitly by calling
     :literal:
     :start-after: # end_pymotw_header
 
-Since the program does not do anything else, :func:`all_done` is
+Because the program does not do anything else, :func:`all_done` is
 called right away.
 
 .. {{{cog
@@ -46,17 +46,18 @@ called right away.
 It is also possible to register more than one function, and to pass
 arguments to the registered functions.  That can be useful to cleanly
 disconnect from databases, remove temporary files, etc.  Instead of
-keeping a separate list of resources that need to be freed, a separate
-clean-up function can be registered for each resource.
+keeping a list of resources that need to be freed, a separate clean-up
+function can be registered for each resource.
 
 .. include:: atexit_multiple.py
     :literal:
     :start-after: # end_pymotw_header
 
-The exit functions are called in the reverse of the order they are
-registered. This allows modules to be cleaned up in the reverse order
-from which they are imported (and therefore register their
-:mod:`atexit` functions), which should reduce dependency conflicts.
+The exit functions are called in the reverse of the order in which
+they are registered. This allows modules to be cleaned up in the
+reverse order from which they are imported (and therefore register
+their :mod:`atexit` functions), which should reduce dependency
+conflicts.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'atexit_multiple.py'))
@@ -154,8 +155,6 @@ be used even when the sequence of registrations might not be known.
 .. {{{end}}}
 
 
-
-
 When Are atexit Callbacks Not Called?
 =====================================
 
@@ -184,7 +183,7 @@ signal arrives.
     :literal:
     :start-after: # end_pymotw_header
 
-When run, the output is:
+When run, this is the output:
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'atexit_signal_parent.py'))
