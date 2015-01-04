@@ -8,10 +8,7 @@
 :Purpose: Register function(s) to be called when a program is closing down.
 
 The :mod:`atexit` module provides an interface to register
-functions to be called when a program closes down normally. The
-:mod:`sys` module also provides a hook, :data:`sys.exitfunc`, but only
-one function can be registered there. The :mod:`atexit` registry can
-be used by multiple modules and libraries simultaneously.
+functions to be called when a program closes down normally.
 
 Registering Exit Callbacks
 ==========================
@@ -298,7 +295,5 @@ functions, since it is messy to have a program dump errors on exit.
 
     * :ref:`sys-exceptions` -- Global handling for uncaught
       exceptions.
-
-    * :ref:`sys-exitfunc` -- System exit callback hook.
 
     * :ref:`Porting notes for atexit <porting-atexit>`

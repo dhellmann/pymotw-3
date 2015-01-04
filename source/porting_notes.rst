@@ -166,3 +166,14 @@ When :mod:`atexit` was updated to include a C implementation
 handling logic that caused only the summary of the exception to be
 shown, without the traceback. This regression was fixed in Python 3.3
 (:pyissue:`18776`).
+
+.. _porting-sys:
+
+sys
+---
+
+.. index::
+   pair: porting; sys
+
+:data:`sys.exitfunc` is no longer checked for a clean-up action to be
+run when a program exits. Use :mod:`atexit` instead.
