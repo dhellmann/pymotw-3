@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 from paver.easy import options, Bunch, task, consume_args, sh
 from paver.path import path
@@ -112,13 +113,26 @@ def html_clean(options):
     return
 
 
+def _get_branch_name():
+    """Look at git for our branch name."""
+    out = subprocess.check_output(
+        ['git', 'rev-parse', '--abbrev-ref', 'HEAD'],
+    )
+    out = out.strip()
+    return out.decode('utf-8')
+
+
 def _get_module(options):
     """Return the name of module passed as arg or the default.
     """
+    module = None
     args = getattr(options, 'args', [])
     if args:
         module = args[0]
-    else:
+    branch = _get_branch_name()
+    if branch.startswith('module/'):
+        module = branch.partition('/')[-1]
+    if not module:
         module = path('module').text().rstrip()
     return module
 
