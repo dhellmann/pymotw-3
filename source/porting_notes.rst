@@ -167,6 +167,14 @@ handling logic that caused only the summary of the exception to be
 shown, without the traceback. This regression was fixed in Python 3.3
 (:pyissue:`18776`).
 
+.. _porting-shelve:
+
+shelve
+------
+
+The default output format for :mod:`shelve` may create a file with a
+``.db`` extension added to the name given to :func:`shelve.open`.
+
 .. _porting-sys:
 
 sys
@@ -177,3 +185,11 @@ sys
 
 :data:`sys.exitfunc` is no longer checked for a clean-up action to be
 run when a program exits. Use :mod:`atexit` instead.
+
+:data:`sys.subversion` is no longer defined.
+
+:data:`sys.flags.py3k_warning`, :data:`sys.flags.division_warning`,
+:data:`sys.flags.division_new`, :data:`sys.flags.tabcheck`, and
+:data::data:`sys.flags.unicode` are no longer defined.
+
+:data:`sys.maxint` is no longer defined.
