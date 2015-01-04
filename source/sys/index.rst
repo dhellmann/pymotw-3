@@ -13,11 +13,6 @@ changing the configuration of the interpreter at runtime and resources
 for interacting with the operating environment outside of the current
 program.
 
-.. seealso::
-
-    `sys <http://docs.python.org/library/sys.html>`_
-        The standard library documentation for this module.
-
 .. toctree::
     :maxdepth: 2
     
@@ -27,9 +22,9 @@ program.
     exceptions
     threads
     imports
+    tracing
 
-.. only:: bonus
+.. seealso::
 
-   .. toctree::
-
-      tracing
+    `sys <http://docs.python.org/library/sys.html>`_
+        The standard library documentation for this module.
