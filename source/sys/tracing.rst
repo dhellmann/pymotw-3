@@ -57,18 +57,16 @@ write to :const:`sys.stdout`.
 
 ::
 
-	$ python sys_settrace_call.py
-		
-	Call to a
-	  on line 27 of sys_settrace_call.py
-	  from line 32 of sys_settrace_call.py
+	$ python3 sys_settrace_call.py
 	
+	Call to a
+	  on line 59 of sys_settrace_call.py
+	  from line 64 of sys_settrace_call.py
 	in a()
 	
 	Call to b
-	  on line 24 of sys_settrace_call.py
-	  from line 29 of sys_settrace_call.py
-	
+	  on line 55 of sys_settrace_call.py
+	  from line 61 of sys_settrace_call.py
 	in b()
 	
 
@@ -94,18 +92,18 @@ In this example, the global list of functions is kept in the variable
 
 ::
 
-    $ python sys_settrace_line.py
-    
-    Call to a on line 41 of sys_settrace_line.py
-    Call to b on line 36 of sys_settrace_line.py
-      b line 37
-      b line 38
-    Call to c on line 32 of sys_settrace_line.py
-    input = 10
-    Leaving c()
-      b line 39
-    Leaving b()
-    Leaving a()
+	$ python3 sys_settrace_line.py
+	
+	Call to a on line 72 of sys_settrace_line.py
+	Call to b on line 66 of sys_settrace_line.py
+	  b line 67
+	  b line 68
+	Call to c on line 61 of sys_settrace_line.py
+	input = 10
+	Leaving c()
+	  b line 69
+	Leaving b()
+	Leaving a()
 
 .. {{{end}}}
 
@@ -130,11 +128,11 @@ when a function is called, so the return value can be monitored.
 
 ::
 
-	$ python sys_settrace_return.py
-		
-	Call to a on line 27 of sys_settrace_return.py
+	$ python3 sys_settrace_return.py
+	
+	Call to a on line 56 of sys_settrace_return.py
 	in a()
-	Call to b on line 23 of sys_settrace_return.py
+	Call to b on line 51 of sys_settrace_return.py
 	in b()
 	b => response_from_b 
 	a => response_from_b response_from_b 
@@ -165,19 +163,19 @@ whether the caller catches and ignores it or not.
 
 ::
 
-	$ python sys_settrace_exception.py
-		
-	Tracing exception:
-	RuntimeError "generating exception in c()"
-	on line 26 of c
+	$ python3 sys_settrace_exception.py
 	
 	Tracing exception:
 	RuntimeError "generating exception in c()"
-	on line 29 of b
+	on line 55 of c
 	
 	Tracing exception:
 	RuntimeError "generating exception in c()"
-	on line 33 of a
+	on line 59 of b
+	
+	Tracing exception:
+	RuntimeError "generating exception in c()"
+	on line 64 of a
 	
 	Exception handler: generating exception in c()
 

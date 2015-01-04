@@ -169,14 +169,14 @@ cannot because **Thread-2** already has it.
 
 ::
 
-	$ python sys_current_frames.py
+	$ python3 sys_current_frames.py
 	
-	Thread-1 with ident 4300619776 going to sleep
+	Thread-1 with ident 4325380096 going to sleep
 	Thread-1 finishing
-	Thread-2 with ident 4301156352 going to sleep
-	Thread-3 with ident 4302835712 going to sleep
-	Thread-3 stopped in block at line 16 of sys_current_frames.py
-	Thread-2 stopped in block at line 17 of sys_current_frames.py
+	Thread-2 with ident 4325380096 going to sleep
+	Thread-3 with ident 4332720128 going to sleep
+	Thread-3 stopped in block at line 45 of sys_current_frames.py
+	Thread-2 stopped in block at line 46 of sys_current_frames.py
 
 .. {{{end}}}
 

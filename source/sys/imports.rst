@@ -33,15 +33,15 @@ The contents of :data:`sys.modules` change as new modules are imported.
 
 ::
 
-    $ python sys_modules.py
-        
-    UserDict, __builtin__, __main__, _abcoll, _codecs, _sre,
-    _warnings, abc, codecs, copy_reg, encodings,
-    encodings.__builtin__, encodings.aliases, encodings.codecs,
-    encodings.encodings, encodings.utf_8, errno, exceptions,
-    genericpath, linecache, os, os.path, posix, posixpath, re,
-    signal, site, sre_compile, sre_constants, sre_parse, stat,
-    string, strop, sys, textwrap, types, warnings, zipimport
+	$ python3 sys_modules.py
+	
+	__main__, _bootlocale, _codecs, _collections_abc,
+	_frozen_importlib, _imp, _io, _locale, _sre, _stat, _thread,
+	_warnings, _weakref, _weakrefset, abc, builtins, codecs, copyreg,
+	encodings, encodings.aliases, encodings.latin_1, encodings.utf_8,
+	errno, genericpath, io, marshal, os, os.path, posix, posixpath,
+	re, signal, site, sre_compile, sre_constants, sre_parse, stat,
+	sys, textwrap, zipimport
 
 .. {{{end}}}
 
@@ -71,11 +71,13 @@ installer for OS X.
 
 ::
 
-    $ python sys_builtins.py
-    
-    __builtin__, __main__, _ast, _codecs, _sre, _symtable, _warnings,
-    errno, exceptions, gc, imp, marshal, posix, pwd, signal, sys,
-    thread, xxsubtype, zipimport
+	$ python3 sys_builtins.py
+	
+	_ast, _codecs, _collections, _functools, _imp, _io, _locale,
+	_operator, _sre, _stat, _string, _symtable, _thread,
+	_tracemalloc, _warnings, _weakref, atexit, builtins, errno,
+	faulthandler, gc, itertools, marshal, posix, pwd, signal, sys,
+	xxsubtype, zipimport
 
 .. {{{end}}}
 
@@ -154,13 +156,13 @@ module may be loaded the second time.
 
 ::
 
-    $ python sys_path_modify.py
-    
-    Base directory: .
-    Imported example from: ./package_dir_a/example.pyc
-        This is example A
-    Reloaded example from: ./package_dir_b/example.pyc
-        This is example B
+	$ python3 sys_path_modify.py
+	
+	Base directory: .
+	Imported example from: ./package_dir_a/example.py
+		 This is example A
+	Reloaded example from: ./package_dir_b/example.py
+		 This is example B
 
 .. {{{end}}}
 
@@ -202,13 +204,11 @@ real path on the file system. This test prevents the
 
 ::
 
-    $ python sys_path_hooks_noisy.py
-    
-    Checking NoisyImportFinder_PATH_TRIGGER: works
-    Looking for "target_module"
-    Checking /Users/dhellmann/Documents/PyMOTW/book/PyMOTW/sys:
-     wrong finder
-    Import failed: No module named target_module
+	$ python3 sys_path_hooks_noisy.py
+	
+	Checking NoisyImportFinder_PATH_TRIGGER: works
+	Looking for "target_module"
+	Import failed: No module named 'target_module'
 
 .. {{{end}}}
 
@@ -237,15 +237,15 @@ this.
 
 ::
 
-    $ python sys_shelve_importer_create.py
-    
-    Created /tmp/pymotw_import_example.shelve with:
-        data:README
-        package.__init__
-        package.module1
-        package.subpackage.__init__
-        package.subpackage.module2
-        package.with_error
+	$ python3 sys_shelve_importer_create.py
+	
+	Created /tmp/pymotw_import_example.shelve with:
+		 data:README
+		 package.__init__
+		 package.module1
+		 package.subpackage.__init__
+		 package.subpackage.module2
+		 package.with_error
 
 .. {{{end}}}
 
@@ -278,32 +278,33 @@ preserved as module-level attributes.
 
 ::
 
-    $ python sys_shelve_importer_package.py
-    
-    Import of "package":
-    shelf added to import path: /tmp/pymotw_import_example.shelve
-    
-    looking for "package"
-      in /tmp/pymotw_import_example.shelve
-      found it as package.__init__
-    loading source for "package" from shelf
-    creating a new module object for "package"
-    adding path for package
-    execing source...
-    package imported
-    done
-    
-    Examine package details:
-      message    : This message is in package.__init__
-      __name__   : package
-      __package__: 
-      __file__   : /tmp/pymotw_import_example.shelve/package
-      __path__   : ['/tmp/pymotw_import_example.shelve']
-      __loader__ : <sys_shelve_importer.ShelveLoader object at 0x1006d42d0>
-    
-    Global settings:
-    sys.modules entry:
-    <module 'package' from '/tmp/pymotw_import_example.shelve/package'>
+	$ python3 sys_shelve_importer_package.py
+	
+	Import of "package":
+	shelf added to import path: /tmp/pymotw_import_example.shelve
+	
+	looking for "package"
+	  in /tmp/pymotw_import_example.shelve
+	  found it as package.__init__
+	loading source for "package" from shelf
+	creating a new module object for 'package'
+	adding path for package
+	execing source...
+	package imported
+	done
+	
+	Examine package details:
+	  message    : This message is in package.__init__
+	  __name__   : package
+	  __package__: 
+	  __file__   : /tmp/pymotw_import_example.shelve/package
+	  __path__   : ['/tmp/pymotw_import_example.shelve']
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x100718d68>
+	
+	Global settings:
+	sys.modules entry:
+	<module 'package' (<sys_shelve_importer.ShelveLoader object at 0x100718d68
+	>)>
 
 .. {{{end}}}
 
@@ -328,71 +329,71 @@ constructs and returns a :class:`module` instance.
 
 ::
 
-    $ python sys_shelve_importer_module.py
-    
-    Import of "package.module1":
-    shelf added to import path: /tmp/pymotw_import_example.shelve
-    
-    looking for "package"
-      in /tmp/pymotw_import_example.shelve
-      found it as package.__init__
-    loading source for "package" from shelf
-    creating a new module object for "package"
-    adding path for package
-    execing source...
-    package imported
-    done
-    
-    looking for "package.module1"
-      in /tmp/pymotw_import_example.shelve
-      found it as package.module1
-    loading source for "package.module1" from shelf
-    creating a new module object for "package.module1"
-    imported as regular module
-    execing source...
-    package.module1 imported
-    done
-    
-    Examine package.module1 details:
-      message    : This message is in package.module1
-      __name__   : package.module1
-      __package__: package
-      __file__   : /tmp/pymotw_import_example.shelve/package.module1
-      __path__   : /tmp/pymotw_import_example.shelve
-      __loader__ : <sys_shelve_importer.ShelveLoader object at 0x1006d42d0
-    >
-    
-    Import of "package.subpackage.module2":
-    
-    looking for "package.subpackage"
-      in /tmp/pymotw_import_example.shelve
-      found it as package.subpackage.__init__
-    loading source for "package.subpackage" from shelf
-    creating a new module object for "package.subpackage"
-    adding path for package
-    execing source...
-    package.subpackage imported
-    done
-    
-    looking for "package.subpackage.module2"
-      in /tmp/pymotw_import_example.shelve
-      found it as package.subpackage.module2
-    loading source for "package.subpackage.module2" from shelf
-    creating a new module object for "package.subpackage.module2"
-    imported as regular module
-    execing source...
-    package.subpackage.module2 imported
-    done
-    
-    Examine package.subpackage.module2 details:
-      message    : This message is in package.subpackage.module2
-      __name__   : package.subpackage.module2
-      __package__: package.subpackage
-      __file__   : /tmp/pymotw_import_example.shelve/package.subpackage.mo
-    dule2
-      __path__   : /tmp/pymotw_import_example.shelve
-      __loader__ : <sys_shelve_importer.ShelveLoader object at 0x1006d4390
-    >
+	$ python3 sys_shelve_importer_module.py
+	
+	Import of "package.module1":
+	shelf added to import path: /tmp/pymotw_import_example.shelve
+	
+	looking for "package"
+	  in /tmp/pymotw_import_example.shelve
+	  found it as package.__init__
+	loading source for "package" from shelf
+	creating a new module object for 'package'
+	adding path for package
+	execing source...
+	package imported
+	done
+	
+	looking for "package.module1"
+	  in /tmp/pymotw_import_example.shelve
+	  found it as package.module1
+	loading source for "package.module1" from shelf
+	creating a new module object for 'package.module1'
+	imported as regular module
+	execing source...
+	package.module1 imported
+	done
+	
+	Examine package.module1 details:
+	  message    : This message is in package.module1
+	  __name__   : package.module1
+	  __package__: package
+	  __file__   : /tmp/pymotw_import_example.shelve/package.module1
+	  __path__   : /tmp/pymotw_import_example.shelve
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x100725c88
+	>
+	
+	Import of "package.subpackage.module2":
+	
+	looking for "package.subpackage"
+	  in /tmp/pymotw_import_example.shelve
+	  found it as package.subpackage.__init__
+	loading source for "package.subpackage" from shelf
+	creating a new module object for 'package.subpackage'
+	adding path for package
+	execing source...
+	package.subpackage imported
+	done
+	
+	looking for "package.subpackage.module2"
+	  in /tmp/pymotw_import_example.shelve
+	  found it as package.subpackage.module2
+	loading source for "package.subpackage.module2" from shelf
+	creating a new module object for 'package.subpackage.module2'
+	imported as regular module
+	execing source...
+	package.subpackage.module2 imported
+	done
+	
+	Examine package.subpackage.module2 details:
+	  message    : This message is in package.subpackage.module2
+	  __name__   : package.subpackage.module2
+	  __package__: package.subpackage
+	  __file__   : /tmp/pymotw_import_example.shelve/package.subpackage.mo
+	dule2
+	  __path__   : /tmp/pymotw_import_example.shelve
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x10072ac88
+	>
 
 .. {{{end}}}
 
@@ -416,32 +417,32 @@ reload.
 
 ::
 
-    $ python sys_shelve_importer_reload.py
-    
-    First import of "package":
-    shelf added to import path: /tmp/pymotw_import_example.shelve
-    
-    looking for "package"
-      in /tmp/pymotw_import_example.shelve
-      found it as package.__init__
-    loading source for "package" from shelf
-    creating a new module object for "package"
-    adding path for package
-    execing source...
-    package imported
-    done
-    
-    Reloading "package":
-    
-    looking for "package"
-      in /tmp/pymotw_import_example.shelve
-      found it as package.__init__
-    loading source for "package" from shelf
-    reusing existing module from import of "package"
-    adding path for package
-    execing source...
-    package imported
-    done
+	$ python3 sys_shelve_importer_reload.py
+	
+	First import of "package":
+	shelf added to import path: /tmp/pymotw_import_example.shelve
+	
+	looking for "package"
+	  in /tmp/pymotw_import_example.shelve
+	  found it as package.__init__
+	loading source for "package" from shelf
+	creating a new module object for 'package'
+	adding path for package
+	execing source...
+	package imported
+	done
+	
+	Reloading "package":
+	
+	looking for "package"
+	  in /tmp/pymotw_import_example.shelve
+	  found it as package.__init__
+	loading source for "package" from shelf
+	reusing existing module from import of 'package'
+	adding path for package
+	execing source...
+	package imported
+	done
 
 .. {{{end}}}
 
@@ -463,24 +464,24 @@ Other errors during the import are propagated.
 
 ::
 
-    $ python sys_shelve_importer_missing.py
-    
-    shelf added to import path: /tmp/pymotw_import_example.shelve
-    
-    looking for "package"
-      in /tmp/pymotw_import_example.shelve
-      found it as package.__init__
-    loading source for "package" from shelf
-    creating a new module object for "package"
-    adding path for package
-    execing source...
-    package imported
-    done
-    
-    looking for "package.module3"
-      in /tmp/pymotw_import_example.shelve
-      not found
-    Failed to import: No module named module3
+	$ python3 sys_shelve_importer_missing.py
+	
+	shelf added to import path: /tmp/pymotw_import_example.shelve
+	
+	looking for "package"
+	  in /tmp/pymotw_import_example.shelve
+	  found it as package.__init__
+	loading source for "package" from shelf
+	creating a new module object for 'package'
+	adding path for package
+	execing source...
+	package imported
+	done
+	
+	looking for "package.module3"
+	  in /tmp/pymotw_import_example.shelve
+	  not found
+	Failed to import: No module named 'package.module3'
 
 .. {{{end}}}
 
@@ -513,33 +514,33 @@ exist.
 
 ::
 
-    $ python sys_shelve_importer_get_data.py
-    
-    shelf added to import path: /tmp/pymotw_import_example.shelve
-    
-    looking for "package"
-      in /tmp/pymotw_import_example.shelve
-      found it as package.__init__
-    loading source for "package" from shelf
-    creating a new module object for "package"
-    adding path for package
-    execing source...
-    package imported
-    done
-    looking for data
-      in /tmp/pymotw_import_example.shelve
-      for "/tmp/pymotw_import_example.shelve/README"
-    
-    ==============
-    package README
-    ==============
-    
-    This is the README for ``package``.
-    
-    looking for data
-      in /tmp/pymotw_import_example.shelve
-      for "/tmp/pymotw_import_example.shelve/foo"
-    ERROR: Could not load "foo" 
+	$ python3 sys_shelve_importer_get_data.py
+	
+	shelf added to import path: /tmp/pymotw_import_example.shelve
+	
+	looking for "package"
+	  in /tmp/pymotw_import_example.shelve
+	  found it as package.__init__
+	loading source for "package" from shelf
+	creating a new module object for 'package'
+	adding path for package
+	execing source...
+	package imported
+	done
+	looking for data
+	  in /tmp/pymotw_import_example.shelve
+	  for "/tmp/pymotw_import_example.shelve/README"
+	
+	==============
+	package README
+	==============
+	
+	This is the README for ``package``.
+	
+	looking for data
+	  in /tmp/pymotw_import_example.shelve
+	  for "/tmp/pymotw_import_example.shelve/foo"
+	ERROR: Could not load "foo" 
 
 .. {{{end}}}
 
@@ -631,20 +632,20 @@ simplicity).
 
 ::
 
-    $ python sys_meta_path.py
-    
-    Creating NoisyMetaImportFinder for foo
-    
-    looking for "foo" with path "None"
-     ... found prefix, returning loader
-    loading foo
-    
-    looking for "foo.bar" with path "['path-entry-goes-here']"
-     ... found prefix, returning loader
-    loading foo.bar
-    
-    looking for "bar" with path "None"
-     ... not the right prefix, cannot load
+	$ python3 sys_meta_path.py
+	
+	Creating NoisyMetaImportFinder for foo
+	
+	looking for "foo" with path "None"
+	 ... found prefix, returning loader
+	loading foo
+	
+	looking for "foo.bar" with path "['path-entry-goes-here']"
+	 ... found prefix, returning loader
+	loading foo.bar
+	
+	looking for "bar" with path "None"
+	 ... not the right prefix, cannot load
 
 .. {{{end}}}
 

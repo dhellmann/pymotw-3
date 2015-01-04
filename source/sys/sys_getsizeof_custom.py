@@ -31,7 +31,7 @@
 import sys
 
 
-class WithAttributes(object):
+class WithAttributes:
     def __init__(self):
         self.a = 'a'
         self.b = 'b'

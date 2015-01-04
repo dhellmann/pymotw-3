@@ -31,11 +31,11 @@
 import sys
 
 
-class WithoutAttributes(object):
+class WithoutAttributes:
     pass
 
 
-class WithAttributes(object):
+class WithAttributes:
     def __init__(self):
         self.a = 'a'
         self.b = 'b'

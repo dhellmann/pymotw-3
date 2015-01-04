@@ -29,6 +29,7 @@
 #end_pymotw_header
 
 import imp
+import inspect
 import os
 import shelve
 import sys
@@ -58,14 +59,28 @@ def _get_key_name(fullname, db):
 class ShelveFinder(object):
     """Find modules collected in a shelve archive."""
 
+    _maybe_recursing = False
+
     def __init__(self, path_entry):
-        if not os.path.isfile(path_entry):
+        # Loading shelve causes an import recursive loop when it
+        # imports dbm, and we know we are not going to load the
+        # module # being imported, so when we seem to be
+        # recursing just ignore the request so another finder
+        # will be used.
+        if ShelveFinder._maybe_recursing:
             raise ImportError
         try:
             # Test the path_entry to see if it is a valid shelf
-            with shelve.open(path_entry, 'r'):
-                pass
+            try:
+                ShelveFinder._maybe_recursing = True
+                with shelve.open(path_entry, 'r'):
+                    pass
+            finally:
+                ShelveFinder._maybe_recursing = False
         except Exception as e:
+            print('shelf could not import from %s: %s' %
+                  (path_entry, e))
+            raise
             raise ImportError(e)
         else:
             print('shelf added to import path:', path_entry)

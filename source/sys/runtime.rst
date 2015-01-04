@@ -34,16 +34,16 @@ interpreter, and is not passed to the program being run.
 
 ::
 
-	$ python sys_argv.py
-		
+	$ python3 sys_argv.py
+	
 	Arguments: ['sys_argv.py']
 
-	$ python sys_argv.py -v foo blah
-		
+	$ python3 sys_argv.py -v foo blah
+	
 	Arguments: ['sys_argv.py', '-v', 'foo', 'blah']
 
-	$ python -u sys_argv.py
-		
+	$ python3 -u sys_argv.py
+	
 	Arguments: ['sys_argv.py']
 
 .. {{{end}}}
@@ -72,36 +72,30 @@ be sent to the next program in a pipeline.  :const:`stderr` is
 intended for use with warning or error messages.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, interpreter='cat sys_stdio.py | python', script_name='sys_stdio.py'))
+.. cog.out(run_script(cog.inFile, interpreter='cat sys_stdio.py | python3 -u', script_name='sys_stdio.py'))
 .. }}}
 
 ::
 
-	$ cat sys_stdio.py | python sys_stdio.py
-		
+	$ cat sys_stdio.py | python3 -u sys_stdio.py
+	
 	STATUS: Reading from stdin
 	STATUS: Writing data to stdout
 	#!/usr/bin/env python
-	# encoding: utf-8
-	#
-	# Copyright (c) 2009 Doug Hellmann All rights reserved.
-	#
-	"""
-	"""
 	#end_pymotw_header
 	
 	import sys
 	
-	print >>sys.stderr, 'STATUS: Reading from stdin'
+	print('STATUS: Reading from stdin', file=sys.stderr)
 	
 	data = sys.stdin.read()
 	
-	print >>sys.stderr, 'STATUS: Writing data to stdout'
+	print('STATUS: Writing data to stdout', file=sys.stderr)
 	
 	sys.stdout.write(data)
 	sys.stdout.flush()
 	
-	print >>sys.stderr, 'STATUS: Done'
+	print('STATUS: Done', file=sys.stderr)
 	STATUS: Done
 
 .. {{{end}}}
@@ -131,12 +125,12 @@ A non-zero value means the program exited with an error.
 
 ::
 
-	$ python sys_exit.py 0 ; echo "Exited $?"
-		
+	$ python3 sys_exit.py 0 ; echo "Exited $?"
+	
 	Exited 0
 
-	$ python sys_exit.py 1 ; echo "Exited $?"
-		
+	$ python3 sys_exit.py 1 ; echo "Exited $?"
+	
 	Exited 1
 
 .. {{{end}}}

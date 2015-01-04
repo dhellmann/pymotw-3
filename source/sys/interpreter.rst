@@ -36,33 +36,20 @@ All of the values depend on the actual interpreter used to run the
 sample program.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'sys_version_values.py', interpreter='python2.6', break_lines_at=70))
-.. cog.out(run_script(cog.inFile, 'sys_version_values.py', interpreter='python2.7', include_prefix=False, break_lines_at=70))
+.. cog.out(run_script(cog.inFile, 'sys_version_values.py', break_lines_at=65))
 .. }}}
 
 ::
 
-	$ python2.6 sys_version_values.py
-		
+	$ python3 sys_version_values.py
+	
 	Version info:
 	
-	sys.version      = '2.6.5 (r265:79359, Mar 24 2010, 01:32:55) \n[GCC 4
-	.0.1 (Apple Inc. build 5493)]'
-	sys.version_info = (2, 6, 5, 'final', 0)
-	sys.hexversion   = 0x20605f0
-	sys.subversion   = ('CPython', 'tags/r265', '79359')
-	sys.api_version  = 1013
-
-	$ python2.7 sys_version_values.py
-		
-	Version info:
-	
-	sys.version      = '2.7 (r27:82508, Jul  3 2010, 21:12:11) \n[GCC 4.0.
-	1 (Apple Inc. build 5493)]'
-	sys.version_info = sys.version_info(major=2, minor=7, micro=0, release
-	level='final', serial=0)
-	sys.hexversion   = 0x20700f0
-	sys.subversion   = ('CPython', 'tags/r27', '82508')
+	sys.version      = '3.4.2 (v3.4.2:ab2c023a9432, Oct  5 2014, 20:4
+	2:22) \n[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)]'
+	sys.version_info = sys.version_info(major=3, minor=4, micro=2, re
+	leaselevel='final', serial=0)
+	sys.hexversion   = 0x30402f0
 	sys.api_version  = 1013
 
 .. {{{end}}}
@@ -84,8 +71,8 @@ other operating systems there is a hard-coded table of values.
 
 ::
 
-	$ python sys_platform.py
-		
+	$ python3 sys_platform.py
+	
 	This interpreter was built for: darwin
 
 .. {{{end}}}
@@ -117,7 +104,6 @@ Flags`.
 	-t          issue warnings about inconsistent tab usage
     -tt         issue errors for inconsistent tab usage
 	-v          verbose
-	-3          warn about Python 3.x incompatibilities
     ========    =======
 
 Some of these are available for programs to check through
@@ -131,18 +117,15 @@ Experiment with ``sys_flags.py`` to learn how the command line options
 map to the flags settings.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, '-3 -S -E sys_flags.py'))
+.. cog.out(run_script(cog.inFile, '-S -E sys_flags.py'))
 .. }}}
 
 ::
 
-	$ python -3 -S -E sys_flags.py
-		
-	Warning about Python 3.x incompatibilities
-	Warning about division change
+	$ python3 -S -E sys_flags.py
+	
 	Not importing "site"
 	Ignoring environment
-	Checking for mixed tabs and spaces
 
 .. {{{end}}}
 
@@ -179,9 +162,9 @@ about encodings in the application code is reduced.
 
 ::
 
-	$ python sys_unicode.py
-		
-	Default encoding     : ascii
+	$ python3 sys_unicode.py
+	
+	Default encoding     : utf-8
 	File system encoding : utf-8
 
 .. {{{end}}}
@@ -231,11 +214,11 @@ used, so the number in the prompt increases each time.
 ::
 
     $ python
-
-    Python 2.6.2 (r262:71600, Apr 16 2009, 09:17:39)
-    [GCC 4.0.1 (Apple Computer, Inc. build 5250)] on darwin
-    Type "help", "copyright", "credits" or "license" for more information.
-    >>> from PyMOTW.sys.sys_ps1 import LineCounter
+    Python 3.4.2 (v3.4.2:ab2c023a9432, Oct  5 2014, 20:42:22)
+    [GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin
+    Type "help", "copyright", "credits" or "license" for more
+    information.
+    >>> from source.sys.sys_ps1 import LineCounter
     >>> import sys
     >>> sys.ps1 = LineCounter()
     (  1)>
@@ -254,44 +237,45 @@ passed as the only argument to the function.
     :start-after: #end_pymotw_header
 
 The default value (saved in :data:`sys.__displayhook__`) prints the
-result to stdout and saves it in :data:`__builtin__._` for easy
+result to stdout and saves it in :data:`_` for easy
 reference later.
 
 ::
 
-    $ python 
-
-    Python 2.6.2 (r262:71600, Apr 16 2009, 09:17:39) 
-    [GCC 4.0.1 (Apple Computer, Inc. build 5250)] on darwin
-    Type "help", "copyright", "credits" or "license" for more information.
-    >>> import PyMOTW.sys.sys_displayhook
+    $ python3
+    Python 3.4.2 (v3.4.2:ab2c023a9432, Oct  5 2014, 20:42:22)
+    [GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin
+    Type "help", "copyright", "credits" or "license" for more
+    information.
+    >>> import source.sys.sys_displayhook
     installing
-    >>> 1+2
-
-      Previous: <PyMOTW.sys.sys_displayhook.ExpressionCounter object at 0x9c5f
-    90>
+    >>> 1 + 2
+    
+      Previous: <source.sys.sys_displayhook.ExpressionCounter
+      object at 0x1021035f8>
       New     : 3
-
+    
     3
     (  1)> 'abc'
-
+    
       Previous: 3
       New     : abc
-
+    
     'abc'
     (  2)> 'abc'
-
+    
       Previous: abc
       New     : abc
-
+    
     'abc'
     (  2)> 'abc' * 3
-
+    
       Previous: abc
       New     : abcabcabc
-
+    
     'abcabcabc'
     (  3)>
+
 
 Install Location
 ================
@@ -315,9 +299,9 @@ installed from python.org.
 
 ::
 
-    $ python sys_locations.py
-        
+	$ python3 sys_locations.py
+	
     Interpreter executable: /Library/Frameworks/Python.framework/
-    Versions/2.7/Resources/Python.app/Contents/MacOS/Python
+    Versions/3.4/bin/python3.4
     Installation prefix   : /Library/Frameworks/Python.framework/
-    Versions/2.7
+    Versions/3.4

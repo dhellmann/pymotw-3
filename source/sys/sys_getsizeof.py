@@ -31,17 +31,13 @@
 import sys
 
 
-class OldStyle:
-    pass
-
-
-class NewStyle(object):
+class MyClass:
     pass
 
 
 objects = [
     [], (), {}, 'c', 'string', 1, 2.3,
-    OldStyle, OldStyle(), NewStyle, NewStyle(),
+    MyClass, MyClass(),
 ]
 
 for obj in objects:

@@ -28,7 +28,7 @@ temporary reference to the object held by :func:`getrefcount` itself.
 
 ::
 
-	$ python sys_getrefcount.py
+	$ python3 sys_getrefcount.py
 	
 	At start         : 2
 	Second reference : 3
@@ -61,19 +61,17 @@ objects are.
 
 ::
 
-	$ python sys_getsizeof.py
+	$ python3 sys_getsizeof.py
 	
-	      list : 72
-	     tuple : 56
-	      dict : 280
-	       str : 38
-	       str : 43
-	       int : 24
+	      list : 64
+	     tuple : 48
+	      dict : 288
+	       str : 50
+	       str : 55
+	       int : 28
 	     float : 24
-	  classobj : 104
-	  instance : 72
-	      type : 904
-	  NewStyle : 64
+	      type : 976
+	   MyClass : 56
 
 .. {{{end}}}
 
@@ -93,10 +91,10 @@ consumed.
 
 ::
 
-	$ python sys_getsizeof_object.py
+	$ python3 sys_getsizeof_object.py
 	
-	WithoutAttributes: 64
-	WithAttributes: 64
+	WithoutAttributes: 56
+	WithAttributes: 56
 
 .. {{{end}}}
 
@@ -118,9 +116,9 @@ the attributes stored in the internal :data:`__dict__`.
 
 ::
 
-	$ python sys_getsizeof_custom.py
+	$ python3 sys_getsizeof_custom.py
 	
-	140
+	156
 
 .. {{{end}}}
 
@@ -148,7 +146,7 @@ program has an opportunity to handle the situation.
 
 ::
 
-	$ python sys_recursionlimit.py
+	$ python3 sys_recursionlimit.py
 	
 	Initial limit: 1000
 	Modified limit: 10
@@ -160,8 +158,8 @@ program has an opportunity to handle the situation.
 	generate_recursion_error(6)
 	generate_recursion_error(7)
 	generate_recursion_error(8)
-	Caught exception: maximum recursion depth exceeded while getting
-	the str of an object
+	Caught exception: maximum recursion depth exceeded while calling
+	a Python object
 
 .. {{{end}}}
 
@@ -177,7 +175,6 @@ to system.
     :literal:
     :start-after: #end_pymotw_header
 
-:const:`maxint` is the largest representable regular integer.
 :const:`maxsize` is the maximum size of a list, dictionary, string, or
 other data structure dictated by the C interpreter's size type.
 :const:`maxunicode` is the largest integer Unicode point supported by
@@ -189,11 +186,10 @@ the interpreter as currently configured.
 
 ::
 
-	$ python sys_maximums.py
+	$ python3 sys_maximums.py
 	
-	maxint    : 9223372036854775807
 	maxsize   : 9223372036854775807
-	maxunicode: 65535
+	maxunicode: 1114111
 
 .. {{{end}}}
 
@@ -209,7 +205,7 @@ the underlying system's float implementation.
     :start-after: #end_pymotw_header
 
 These values depend on the compiler and underlying system.  These
-examples were produced on OS X 10.6.5.
+examples were produced on OS X 10.9.5 on an Intel Core i7.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'sys_float_info.py'))
@@ -217,15 +213,15 @@ examples were produced on OS X 10.6.5.
 
 ::
 
-	$ python sys_float_info.py
+	$ python3 sys_float_info.py
 	
-	Smallest difference (epsilon): 2.22044604925e-16
+	Smallest difference (epsilon): 2.220446049250313e-16
 	
 	Digits (dig)              : 15
 	Mantissa digits (mant_dig): 53
 	
-	Maximum (max): 1.79769313486e+308
-	Minimum (min): 2.22507385851e-308
+	Maximum (max): 1.7976931348623157e+308
+	Minimum (min): 2.2250738585072014e-308
 	
 	Radix of exponents (radix): 2
 	
@@ -262,7 +258,7 @@ little-endian.
 
 ::
 
-	$ python sys_byteorder.py
+	$ python3 sys_byteorder.py
 	
 	little
 
@@ -276,8 +272,6 @@ little-endian.
     :mod:`array` and :mod:`struct`
         Other modules that depend on the byte order of data.
 
-    .. only:: bonus
-
-       ``float.h`` 
-          The C header file for the local compiler contains more
-          details about these settings.
+    ``float.h``
+       The C header file for the local compiler contains more
+       details about these settings.

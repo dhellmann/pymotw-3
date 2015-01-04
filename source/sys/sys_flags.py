@@ -32,12 +32,6 @@ import sys
 
 if sys.flags.debug:
     print('Debuging')
-if sys.flags.py3k_warning:
-    print('Warning about Python 3.x incompatibilities')
-if sys.flags.division_warning:
-    print('Warning about division change')
-if sys.flags.division_new:
-    print('New division behavior enabled')
 if sys.flags.inspect:
     print('Will enter interactive mode after running')
 if sys.flags.optimize:
@@ -48,9 +42,5 @@ if sys.flags.no_site:
     print('Not importing "site"')
 if sys.flags.ignore_environment:
     print('Ignoring environment')
-if sys.flags.tabcheck:
-    print('Checking for mixed tabs and spaces')
 if sys.flags.verbose:
     print('Verbose mode')
-if sys.flags.unicode:
-    print('Unicode')

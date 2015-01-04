@@ -33,11 +33,10 @@ not run, even though the except hook is set.
 
 ::
 
-	$ python sys_excepthook.py
-		
+	$ python3 sys_excepthook.py
+	
 	Before exception
-	Unhandled error: <type 'exceptions.RuntimeError'> This is the error
-	message
+	Unhandled error: <class 'RuntimeError'> This is the error message
 
 .. {{{end}}}
 
@@ -74,8 +73,8 @@ variable (using :command:`del`) to avoid cycles.
 
 ::
 
-	$ python sys_exc_info.py
-		
+	$ python3 sys_exc_info.py
+	
 	Handling RuntimeError exception with message "This is the error message"
 	in Thread-2
 	Handling RuntimeError exception with message "This is the error message"
