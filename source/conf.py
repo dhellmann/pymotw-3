@@ -18,6 +18,7 @@
 import datetime
 import os
 import subprocess
+import sys
 import sysconfig
 
 from docutils import nodes
@@ -25,7 +26,7 @@ from docutils import nodes
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-#sys.path.insert(0, os.path.abspath('.'))
+sys.path.insert(0, os.path.abspath('./_exts'))
 
 # -- General configuration ---------------------------------------------------
 
@@ -41,6 +42,7 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.extlinks',
     'sphinxcontrib.spelling',
+    'tableref',
 ]
 
 extlinks = {
