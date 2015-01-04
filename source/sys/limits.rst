@@ -240,6 +240,33 @@ examples were produced on OS X 10.9.5 on an Intel Core i7.
     The ``float.h`` C header file for the local compiler contains more
     details about these settings.
 
+Integer Values
+==============
+
+The structure :data:`int_info` holds information about the internal
+represenatation of integers used by the interpreter.
+
+.. include:: sys_int_info.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+These examples were produced on OS X 10.9.5 on an Intel Core i7.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'sys_int_info.py'))
+.. }}}
+
+::
+
+	$ python3 sys_int_info.py
+	
+	Number of bits used to hold each digit: 30
+	Size in bytes of C type used to hold each digit: 4
+
+.. {{{end}}}
+
+
+
 Byte Ordering
 =============
 
