@@ -300,14 +300,14 @@ preserved as module-level attributes.
 	Examine package details:
 	  message    : This message is in package.__init__
 	  __name__   : package
-	  __package__: 
+	  __package__: package
 	  __file__   : /tmp/pymotw_import_example.shelve/package
 	  __path__   : ['/tmp/pymotw_import_example.shelve']
-	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x101910eb8>
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x1007c41d0>
 	
 	Global settings:
 	sys.modules entry:
-	<module 'package' (<sys_shelve_importer.ShelveLoader object at 0x101910eb8>)>
+	<module 'package' (<sys_shelve_importer.ShelveLoader object at 0x1007c41d0>)>
 
 .. {{{end}}}
 
@@ -363,7 +363,7 @@ constructs and returns a :class:`module` instance.
 	  __package__: package
 	  __file__   : /tmp/pymotw_import_example.shelve/package.module1
 	  __path__   : /tmp/pymotw_import_example.shelve
-	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x100721dd8>
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x1006cc400>
 	
 	Import of "package.subpackage.module2":
 	
@@ -393,7 +393,7 @@ constructs and returns a :class:`module` instance.
 	  __package__: package.subpackage
 	  __file__   : /tmp/pymotw_import_example.shelve/package.subpackage.module2
 	  __path__   : /tmp/pymotw_import_example.shelve
-	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x10072add8>
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x1006ce588>
 
 .. {{{end}}}
 
@@ -656,6 +656,9 @@ simplicity).
 
    :pep:`302`
         Import Hooks
+
+   :pep:`366`
+        Main module explicit relative imports
 
    :mod:`zipimport`
         Implements importing Python modules from inside ZIP archives.

@@ -29,7 +29,6 @@
 #end_pymotw_header
 
 import imp
-import inspect
 import os
 import shelve
 import sys
@@ -174,7 +173,13 @@ class ShelveLoader(object):
         mod.__name__ = fullname
         mod.__path__ = self.path_entry
         mod.__loader__ = self
-        mod.__package__ = '.'.join(fullname.split('.')[:-1])
+        # PEP-366 specifies that package's set __package__ to
+        # their name, and modules have it set to their parent
+        # package (if any).
+        if self.is_package(fullname):
+            mod.__package__ = fullname
+        else:
+            mod.__package__ = '.'.join(fullname.split('.')[:-1])
 
         if self.is_package(fullname):
             print('adding path for package')
