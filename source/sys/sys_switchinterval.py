@@ -33,34 +33,36 @@ import threading
 from queue import Queue
 
 
-def show_thread(q, extraByteCodes):
+def show_thread(q):
     for i in range(5):
-        for j in range(extraByteCodes):
+        for j in range(1000000):
             pass
-        print(threading.current_thread().name)
+        q.put(threading.current_thread().name)
     return
 
 
-def run_threads(prefix, interval, extraByteCodes):
-    print('%s interval = %s with %s extra operations' %
-          (prefix, interval, extraByteCodes))
-    sys.setcheckinterval(interval)
+def run_threads():
+    interval = sys.getswitchinterval()
+    print('interval = %0.3f' % interval)
     q = Queue()
     threads = [
         threading.Thread(target=show_thread,
-                         name='%s T%s' % (prefix, i),
-                         args=(q, extraByteCodes))
+                         name='T%s' % i,
+                         args=(q,))
         for i in range(3)
     ]
     for t in threads:
+        t.setDaemon(True)
         t.start()
     for t in threads:
         t.join()
     while not q.empty():
-        print(q.get())
+        print(q.get(), end=' ')
     print()
     return
 
 
-run_threads('Default', interval=100, extraByteCodes=1000)
-run_threads('Custom', interval=10, extraByteCodes=0)
+for interval in [0.001, 0.1]:
+    sys.setswitchinterval(interval)
+    run_threads()
+    print()

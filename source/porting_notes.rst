@@ -208,3 +208,12 @@ removed.
 The variable :data:`sys.version_info` is now a :py:class:`namedtuple`
 instance with attributes ``major``, ``minor``, ``micro``,
 ``releaselevel``, and ``serial``.
+
+.. http://mail.python.org/pipermail/python-dev/2009-October/093321.html
+
+The "check interval" feature, controlling the number of opcodes to
+execute before allowing a thread context switch has been replaced with
+an absolute time value instead, managed with
+:func:`sys.setswitchinterval`. The old functions for managing the
+check interval, :func:`sys.getcheckinterval` and
+:func:`sys.setcheckinterval`, are deprecated.
