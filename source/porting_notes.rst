@@ -201,7 +201,7 @@ and Integers).
 
 The global exception tracking variables :data:`sys.exc_type`,
 :data:`sys.exc_value`, and :data:`sys.exc_traceback` have been
-removed.
+removed. The function :func:`sys.exc_clear` has also been removed.
 
 .. issue 4285
 
