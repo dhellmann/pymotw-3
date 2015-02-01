@@ -108,15 +108,14 @@ and then the global ``site-packages`` directory is listed last.
 
 ::
 
-    $ python sys_path_show.py
+    $ python3 sys_path_show.py
 
-    /Users/dhellmann/Documents/PyMOTW/book/PyMOTW/sys
-    .../lib/python2.7
-    .../lib/python2.7/plat-darwin
-    .../lib/python2.7/lib-tk
-    .../lib/python2.7/plat-mac
-    .../lib/python2.7/plat-mac/lib-scriptpackages
-    .../lib/python2.7/site-packages
+    /Users/dhellmann/Documents/PyMOTW/pymotw-3/source/sys
+    .../python34.zip
+    .../lib/python3.4
+    .../lib/python3.4/plat-darwin
+    .../python3.4/lib-dynload
+    .../lib/python3.4/site-packages
 
 
 The import search path list can be modified before starting the
@@ -128,15 +127,14 @@ colon-separated list of directories.
     $ PYTHONPATH=/my/private/site-packages:/my/shared/site-packages \
     > python sys_path_show.py
 
-    /Users/dhellmann/Documents/PyMOTW/book/PyMOTW/sys
+    /Users/dhellmann/Documents/PyMOTW/pymotw-3/source/sys
     /my/private/site-packages
     /my/shared/site-packages
-    .../lib/python2.7
-    .../lib/python2.7/plat-darwin
-    .../lib/python2.7/lib-tk
-    .../lib/python2.7/plat-mac
-    .../lib/python2.7/plat-mac/lib-scriptpackages
-    .../lib/python2.7/site-packages
+    .../python34.zip
+    .../lib/python3.4
+    .../lib/python3.4/plat-darwin
+    .../python3.4/lib-dynload
+    .../lib/python3.4/site-packages
 
 A program can also modify its path by adding elements to
 :data:`sys.path` directly.
@@ -206,6 +204,12 @@ real path on the file system. This test prevents the
 
 	$ python3 sys_path_hooks_noisy.py
 	
+	Path hook: <class 'zipimport.zipimporter'>
+	Path hook: <function
+	FileFinder.path_hook.<locals>.path_hook_for_FileFinder at
+	0x1003c1b70>
+	Path hook: <class '__main__.NoisyImportFinder'>
+	importing target_module
 	Checking NoisyImportFinder_PATH_TRIGGER: works
 	Looking for "target_module"
 	Import failed: No module named 'target_module'
@@ -273,7 +277,7 @@ module as the namespace so that names defined in the source are
 preserved as module-level attributes.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'sys_shelve_importer_package.py', break_lines_at=74))
+.. cog.out(run_script(cog.inFile, 'sys_shelve_importer_package.py'))
 .. }}}
 
 ::
@@ -299,12 +303,11 @@ preserved as module-level attributes.
 	  __package__: 
 	  __file__   : /tmp/pymotw_import_example.shelve/package
 	  __path__   : ['/tmp/pymotw_import_example.shelve']
-	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x1006f4c50>
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x101910eb8>
 	
 	Global settings:
 	sys.modules entry:
-	<module 'package' (<sys_shelve_importer.ShelveLoader object at 0x1006f4c50
-	>)>
+	<module 'package' (<sys_shelve_importer.ShelveLoader object at 0x101910eb8>)>
 
 .. {{{end}}}
 
@@ -324,7 +327,7 @@ name is passed to the loader's :meth:`load_module` method, which
 constructs and returns a :class:`module` instance.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'sys_shelve_importer_module.py', break_lines_at=70))
+.. cog.out(run_script(cog.inFile, 'sys_shelve_importer_module.py'))
 .. }}}
 
 ::
@@ -360,8 +363,7 @@ constructs and returns a :class:`module` instance.
 	  __package__: package
 	  __file__   : /tmp/pymotw_import_example.shelve/package.module1
 	  __path__   : /tmp/pymotw_import_example.shelve
-	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x100725c88
-	>
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x100721dd8>
 	
 	Import of "package.subpackage.module2":
 	
@@ -389,11 +391,9 @@ constructs and returns a :class:`module` instance.
 	  message    : This message is in package.subpackage.module2
 	  __name__   : package.subpackage.module2
 	  __package__: package.subpackage
-	  __file__   : /tmp/pymotw_import_example.shelve/package.subpackage.mo
-	dule2
+	  __file__   : /tmp/pymotw_import_example.shelve/package.subpackage.module2
 	  __path__   : /tmp/pymotw_import_example.shelve
-	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x10072ac88
-	>
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x10072add8>
 
 .. {{{end}}}
 
@@ -412,7 +412,7 @@ preserved even if class or function definitions are modified by the
 reload.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'sys_shelve_importer_reload.py', break_lines_at=74))
+.. cog.out(run_script(cog.inFile, 'sys_shelve_importer_reload.py'))
 .. }}}
 
 ::
@@ -459,7 +459,8 @@ is raised by the main import code.
 Other errors during the import are propagated.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'sys_shelve_importer_missing.py', break_lines_at=74))
+.. cog.out(run_script(cog.inFile, 'sys_shelve_importer_missing.py',
+..                    break_lines_at=74))
 .. }}}
 
 ::
@@ -509,7 +510,7 @@ exist.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'sys_shelve_importer_get_data.py', 
-..                    ignore_error=True, break_lines_at=74))
+..                    ignore_error=True))
 .. }}}
 
 ::
@@ -569,41 +570,30 @@ import modules. In the example output, several
 found on the path.
 
 .. NOT RUNNING
-.. cog.out(run_script(cog.inFile, 'sys_path_importer_cache.py', break_lines_at=74))
+.. cog.out(run_script(cog.inFile, 'sys_path_importer_cache.py', break_lines_at=65))
 
 ::
 
-    $ python sys_path_importer_cache.py
-            
+    $ python3 sys_path_importer_cache.py
     PATH:
-      /Users/dhellmann/Documents/PyMOTW/book/PyMOTW/sys
-      .../lib/python2.7/site-packages/distribute-0.6.10-py2.7.egg
-      .../lib/python2.7/site-packages/pip-0.7.2-py2.7.egg
-      .../lib/python27.zip
-      .../lib/python2.7
-      .../lib/python2.7/plat-darwin
-      .../lib/python2.7/plat-mac
-      .../lib/python2.7/plat-mac/lib-scriptpackages
-      .../lib/python2.7/lib-tk
-      .../lib/python2.7/lib-old
-      .../lib/python2.7/lib-dynload
-      .../lib/python2.7/site-packages
-        
+    /Users/dhellmann/Documents/PyMOTW/pymotw-3/source/sys
+    .../python34.zip
+    .../python3.4
+    .../python3.4/plat-darwin
+    .../python3.4/lib-dynload
+    .../python3.4/site-packages
+
     IMPORTERS:
-      sys_path_importer_cache.py: <imp.NullImporter object at 0x100d02080>
-      .../lib/python27.zip: <imp.NullImporter object at 0x100d02030>
-      .../lib/python2.7/lib-dynload: None
-      .../lib/python2.7/encodings: None
-      .../lib/python2.7: None
-      .../lib/python2.7/lib-old: None
-      .../lib/python2.7/site-packages: None
-      .../lib/python2.7/plat-darwin: None
-      .../lib/python2.7/: None
-      .../lib/python2.7/plat-mac/lib-scriptpackages: None
-      .../lib/python2.7/plat-mac: None
-      .../lib/python2.7/site-packages/pip-0.7.2-py2.7.egg: None
-      .../lib/python2.7/lib-tk: None
-      .../lib/python2.7/site-packages/distribute-0.6.10-py2.7.egg: None
+    .../lib/python3.4/plat-darwin: FileFinder('.../lib/python3.4/plat-darwin')
+    .../lib/python3.4/: FileFinder('.../lib/python3.4/')
+    sys_path_importer_cache.py: None
+    .../python3.4/lib-dynload: FileFinder('.../python3.4/lib-dynload')
+    .../lib/python34.zip: None
+    .../python3.4/plat-darwin: FileFinder('.../python3.4/plat-darwin')
+    .../lib/python3.4/lib-dynload: FileFinder('.../lib/python3.4/lib-dynload')
+    .../lib/python3.4/encodings: FileFinder('.../lib/python3.4/encodings')
+    .../python3.4/site-packages: FileFinder('.../python3.4/site-packages')
+    .../python3.4: FileFinder('.../python3.4')
 
 Meta Path
 =========

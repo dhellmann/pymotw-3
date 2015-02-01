@@ -217,3 +217,11 @@ an absolute time value instead, managed with
 :func:`sys.setswitchinterval`. The old functions for managing the
 check interval, :func:`sys.getcheckinterval` and
 :func:`sys.setcheckinterval`, are deprecated.
+
+.. https://docs.python.org/3.3/whatsnew/3.3.html#visible-changes
+
+The :data:`sys.meta_path` and :data:`sys.path_hooks` variables now
+expose all of the path finders and entry hooks for importing
+modules. In earlier versions, only finders and hooks explicitly added
+to the path were exposed, and the C import used values in its
+implementation that could not be modified from the outside.

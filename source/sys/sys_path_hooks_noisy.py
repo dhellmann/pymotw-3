@@ -51,9 +51,13 @@ class NoisyImportFinder(object):
 
 sys.path_hooks.append(NoisyImportFinder)
 
+for hook in sys.path_hooks:
+    print('Path hook: %s' % hook)
+
 sys.path.insert(0, NoisyImportFinder.PATH_TRIGGER)
 
 try:
+    print('importing target_module')
     import target_module
 except Exception as e:
     print('Import failed:', e)
