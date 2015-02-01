@@ -18,5 +18,6 @@ Python and tools used.
    :maxdepth: 2
 
    frameworks
+   unix
    porting_notes
    about
