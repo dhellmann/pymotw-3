@@ -225,3 +225,7 @@ expose all of the path finders and entry hooks for importing
 modules. In earlier versions, only finders and hooks explicitly added
 to the path were exposed, and the C import used values in its
 implementation that could not be modified from the outside.
+
+For Linux systems, :data:`sys.platform` no longer includes the version
+number. The value is now just ``linux`` and not ``linux2`` or
+``linux3``.
