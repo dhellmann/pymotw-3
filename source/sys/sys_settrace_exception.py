@@ -11,8 +11,8 @@ def trace_exceptions(frame, event, arg):
     func_name = co.co_name
     line_no = frame.f_lineno
     exc_type, exc_value, exc_traceback = arg
-    print('Tracing exception:\n%s "%s"\non line %s of %s\n' %
-          (exc_type.__name__, exc_value, line_no, func_name))
+    print('* Tracing exception:\n* %s "%s"\n* on line %s of %s\n'
+          % (exc_type.__name__, exc_value, line_no, func_name))
 
 
 def trace_calls(frame, event, arg):

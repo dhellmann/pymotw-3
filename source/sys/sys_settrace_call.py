@@ -17,10 +17,10 @@ def trace_calls(frame, event, arg):
     caller = frame.f_back
     caller_line_no = caller.f_lineno
     caller_filename = caller.f_code.co_filename
-    print('Call to', func_name)
-    print('  on line %s of %s' %
+    print('* Call to', func_name)
+    print('*  on line %s of %s' %
           (func_line_no, func_filename))
-    print('  from line %s of %s' %
+    print('*  from line %s of %s' %
           (caller_line_no, caller_filename))
     return
 
