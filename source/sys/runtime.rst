@@ -49,8 +49,8 @@ interpreter, and is not passed to the program being run.
 .. {{{end}}}
 
 .. seealso::
-    
-    :mod:`getopt`, :mod:`optparse`, and :mod:`argparse`
+
+    :mod:`argparse`
         Modules for parsing command line arguments.
 
 .. _sys-input-output:
@@ -59,7 +59,7 @@ Input and Output Steams
 =======================
 
 Following the Unix paradigm, Python programs can access three file
-descriptors by default.  
+descriptors by default.
 
 .. include:: sys_stdio.py
     :literal:
@@ -110,7 +110,7 @@ Returning Status
 ================
 
 To return an exit code from a program, pass an integer value to
-:func:`sys.exit`.  
+:func:`sys.exit`.
 
 .. include:: sys_exit.py
     :literal:

@@ -33,7 +33,7 @@ takes to run to completion, the interpreter gives another thread
 control so that it runs for a while.  This is illustrated in the first
 set of output where the interval is set to 1 millisecond.
 
-For longer intervales, the active thread will be able to complete more
+For longer intervals, the active thread will be able to complete more
 work before it is forced to release control. This is illustrated by
 the order of the name values in the queue in the second example using
 an interval of 10 milliseconds.
@@ -58,12 +58,6 @@ Many factors other than the switch interval may control the context
 switching behavior of Python's threads.  For example, when a thread
 performs I/O it releases the GIL and may therefore allow another
 thread to take over execution.
-
-.. seealso::
-
-    :mod:`dis`
-        Disassembling Python code with the ``dis`` module is one way to
-        count bytecodes.
 
 Debugging
 =========

@@ -19,14 +19,9 @@ build date, compiler, and platform.  :const:`sys.hexversion` is easier
 to use for checking the interpreter version since it is a simple
 integer.  When formatted using :func:`hex`, it is clear that parts of
 :const:`sys.hexversion` come from the version information also visible
-in the more readable :const:`sys.version_info` (a five-part tuple
-representing just the version number).  
-
-More specific information about the source that went into the build
-can be found in the :const:`sys.subversion` tuple, which includes the
-actual branch and subversion revision that was checked out and built.
-The separate C API version used by the current interpreter is saved in
-:const:`sys.api_version`.
+in the more readable :const:`sys.version_info` (a five-part namedtuple
+representing just the version number). The separate C API version used
+by the current interpreter is saved in :const:`sys.api_version`.
 
 .. include:: sys_version_values.py
     :literal:
@@ -77,6 +72,8 @@ other operating systems there is a hard-coded table of values.
 
 .. {{{end}}}
 
+.. seealso::
+
   `Platform values <http://docs.python.org/library/sys.html#sys.platform>`_
     Hard-coded values of :const:`sys.platform` for systems without :command:`uname`.
 
@@ -113,12 +110,13 @@ other interpreters.
 
 .. seealso::
 
-   * :pep:`421` - Adding :data:`sys.implementation`
+   :pep:`421`
+      Adding :data:`sys.implementation`
 
 Command Line Options
 ====================
 
-The CPython interpreter accepts several command line options to
+The CPython interpreter accepts several command-line options to
 control its behavior, listed in :table:`CPython Command Line Option
 Flags`.
 
@@ -173,10 +171,8 @@ Unicode Defaults
 ================
 
 To get the name of the default Unicode encoding being used by the
-interpreter, use :func:`getdefaultencoding`.  The value is set during
-start-up by :mod:`site`, which calls :func:`sys.setdefaultencoding` and
-then removes it from the namespace in :mod:`sys` to avoid having it
-called again.
+interpreter, use :func:`getdefaultencoding`.  The value is set as the
+interpreter is initialized, and cannot be changed.
 
 The internal encoding default and the file system encoding may be
 different for some operating systems, so there is a separate way to
@@ -187,8 +183,8 @@ returns an OS-specific (*not* file system-specific) value.
     :literal:
     :start-after: #end_pymotw_header
 
-Rather than changing the global default encoding, most Unicode experts
-recommend making an application explicitly Unicode-aware. This
+Rather than relying on the global default encoding, most Unicode
+experts recommend making an application explicitly Unicode-aware. This
 provides two benefits: Different Unicode encodings for different data
 sources can be handled more cleanly, and the number of assumptions
 about encodings in the application code is reduced.
@@ -267,7 +263,7 @@ Display Hook
 
 :data:`sys.displayhook` is invoked by the interactive interpreter each
 time the user enters an expression.  The *result* of the expression is
-passed as the only argument to the function.  
+passed as the only argument to the function.
 
 .. include:: sys_displayhook.py
     :literal:

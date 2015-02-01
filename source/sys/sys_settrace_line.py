@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
+import functools
 import sys
 
 
@@ -13,19 +14,19 @@ def trace_lines(frame, event, arg):
     print('*  %s line %s' % (func_name, line_no))
 
 
-def trace_calls(frame, event, arg):
+def trace_calls(frame, event, arg, to_be_traced):
     if event != 'call':
         return
     co = frame.f_code
     func_name = co.co_name
     if func_name == 'write':
-        # Ignore write() calls from print statements
+        # Ignore write() calls from printing
         return
     line_no = frame.f_lineno
     filename = co.co_filename
     print('* Call to %s on line %s of %s' %
           (func_name, line_no, filename))
-    if func_name in TRACE_INTO:
+    if func_name in to_be_traced:
         # Trace into this function
         return trace_lines
     return
@@ -47,7 +48,6 @@ def a():
     print('Leaving a()')
 
 
-TRACE_INTO = ['b']
-
-sys.settrace(trace_calls)
+tracer = functools.partial(trace_calls, to_be_traced=['b'])
+sys.settrace(tracer)
 a()

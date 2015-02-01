@@ -28,16 +28,20 @@
 """
 #end_pymotw_header
 
+import os
 import sys
+
+prefix = os.path.abspath(sys.prefix)
 
 print('PATH:')
 for name in sys.path:
-    if name.startswith(sys.prefix):
-        name = '...' + name[len(sys.prefix):]
+    name = name.replace(prefix, '...')
     print(' ', name)
 
 print()
 print('IMPORTERS:')
 for name, cache_value in sys.path_importer_cache.items():
-    name = name.replace(sys.prefix, '...')
+    if '..' in name:
+        name = os.path.abspath(name)
+    name = name.replace(prefix, '...')
     print('  %s: %r' % (name, cache_value))

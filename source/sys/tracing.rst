@@ -82,8 +82,8 @@ tracing to only run line-by-line within certain modules or functions.
 .. literalinclude:: sys_settrace_line.py
     :linenos:
 
-In this example, the global list of functions is kept in the variable
-:const:`TRACE_INTO`, so when :func:`trace_calls` runs it can return
+In this example, the list of functions is kept in the variable
+:py:data:`to_be_traced`, so when :func:`trace_calls` runs it can return
 :func:`trace_lines` to enable tracing inside of :func:`b`.
 
 .. {{{cog
@@ -198,3 +198,6 @@ whether the caller catches and ignores it or not.
 
     `Wicked hack: Python bytecode tracing <http://nedbatchelder.com/blog/200804/wicked_hack_python_bytecode_tracing.html>`_
         Ned Batchelder's experiments with tracing with more granularity than source line level.
+
+    `smiley <https://pypi.python.org/pypi/smiley>`_
+        Python Application Tracer

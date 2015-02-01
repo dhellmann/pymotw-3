@@ -84,7 +84,7 @@ installer for OS X.
 
 .. seealso::
 
-    `Build Instructions <http://svn.python.org/view/python/trunk/README?view=markup>`_
+    `Build Instructions <https://hg.python.org/cpython/file/tip/README>`_
         Instructions for building Python, from the README distributed with the source.
 
 .. _sys-path:
@@ -170,10 +170,10 @@ Custom Importers
 Modifying the search path lets a programmer control how standard
 Python modules are found, but what if a program needs to import code
 from somewhere other than the usual ``.py`` or ``.pyc`` files on the
-file system? PEP 302 solves this problem by introducing the idea of
-*import hooks* that can trap an attempt to find a module on the search
-path and take alternative measures to load the code from somewhere
-else or apply pre-processing to it.
+file system? :pep:`302` solves this problem by introducing the idea of
+*import hooks*, which can trap an attempt to find a module on the
+search path and take alternative measures to load the code from
+somewhere else or apply pre-processing to it.
 
 Custom importers are implemented in two separate phases. The *finder*
 is responsible for locating a module and providing a *loader* to
@@ -401,7 +401,7 @@ Reloading Modules in a Custom Importer
 ======================================
 
 Reloading a module is handled slightly differently. Instead of
-creating a new module object, the existing module is re-used.
+creating a new module object, the existing object is re-used.
 
 .. include:: sys_shelve_importer_reload.py
     :literal:
@@ -569,31 +569,31 @@ import modules. In the example output, several
 :class:`zipimport.zipimporter` instances are used to manage EGG files
 found on the path.
 
-.. NOT RUNNING
+.. Do not use cog because the output includes virtualenv settings.
 .. cog.out(run_script(cog.inFile, 'sys_path_importer_cache.py', break_lines_at=65))
 
 ::
 
-    $ python3 sys_path_importer_cache.py
-    PATH:
-    /Users/dhellmann/Documents/PyMOTW/pymotw-3/source/sys
-    .../python34.zip
-    .../python3.4
-    .../python3.4/plat-darwin
-    .../python3.4/lib-dynload
-    .../python3.4/site-packages
+   PATH:
+     /Users/dhellmann/Documents/PyMOTW/pymotw-3/source/sys
+     .../lib/python34.zip
+     .../lib/python3.4
+     .../lib/python3.4/plat-darwin
+     .../lib/python3.4/lib-dynload
+     /Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4
+     /Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/plat-darwin
+     .../lib/python3.4/site-packages
 
-    IMPORTERS:
-    .../lib/python3.4/plat-darwin: FileFinder('.../lib/python3.4/plat-darwin')
-    .../lib/python3.4/: FileFinder('.../lib/python3.4/')
-    sys_path_importer_cache.py: None
-    .../python3.4/lib-dynload: FileFinder('.../python3.4/lib-dynload')
-    .../lib/python34.zip: None
-    .../python3.4/plat-darwin: FileFinder('.../python3.4/plat-darwin')
-    .../lib/python3.4/lib-dynload: FileFinder('.../lib/python3.4/lib-dynload')
-    .../lib/python3.4/encodings: FileFinder('.../lib/python3.4/encodings')
-    .../python3.4/site-packages: FileFinder('.../python3.4/site-packages')
-    .../python3.4: FileFinder('.../python3.4')
+   IMPORTERS:
+     .../lib/python3.4/plat-darwin: FileFinder('.../lib/python3.4/plat-darwin')
+     .../lib/python3.4: FileFinder('.../lib/python3.4/')
+     .../lib/python3.4/lib-dynload: FileFinder('.../lib/python3.4/lib-dynload')
+     .../lib/python3.4/site-packages: FileFinder('.../lib/python3.4/site-packages')
+     sys_path_importer_cache.py: None
+     .../lib/python3.4/lib-dynload: FileFinder('.../lib/python3.4/lib-dynload')
+     .../lib/python3.4/plat-darwin: FileFinder('.../lib/python3.4/plat-darwin')
+     .../lib/python3.4/encodings: FileFinder('.../lib/python3.4/encodings')
+     .../lib/python34.zip: None
 
 Meta Path
 =========
@@ -641,27 +641,30 @@ simplicity).
 
 .. seealso::
 
-    :mod:`imp`
-        The imp module provides tools used by importers.
-
     :mod:`importlib`
         Base classes and other tools for creating custom importers.
 
-    `The Quick Guide to Python Eggs <http://peak.telecommunity.com/DevCenter/PythonEggs>`_
-        PEAK documentation for working with EGGs.
+    :mod:`zipimport`
+        Implements importing Python modules from inside ZIP archives.
+
+    `The Internal Structure of Python Eggs <http://pythonhosted.org//setuptools/formats.html?highlight=eggs>`_
+       setuptools documentation for the egg format.
+
+    `Wheel <http://wheel.readthedocs.org/en/latest/>`_
+       Documentation for ``wheel`` archive format for installable Python code.
+
+    :pep:`302`
+        Import Hooks
+
+    :pep:`366`
+        Main module explicit relative imports
+
+    :pep:`427`
+        The Wheel Binary Package Format 1.0
+
+    `Import this, that, and the other thing: custom importers <http://us.pycon.org/2010/conference/talks/?filter=core>`_
+        Brett Cannon's PyCon 2010 presentation.
 
     `Python 3 stdlib module "importlib" <http://docs.python.org/py3k/library/importlib.html>`_
         Python 3.x includes abstract base classes that makes it easier
         to create custom importers.
-
-   :pep:`302`
-        Import Hooks
-
-   :pep:`366`
-        Main module explicit relative imports
-
-   :mod:`zipimport`
-        Implements importing Python modules from inside ZIP archives.
-
-   `Import this, that, and the other thing: custom importers <http://us.pycon.org/2010/conference/talks/?filter=core>`_
-        Brett Cannon's PyCon 2010 presentation.

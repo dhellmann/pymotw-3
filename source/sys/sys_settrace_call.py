@@ -10,7 +10,7 @@ def trace_calls(frame, event, arg):
     co = frame.f_code
     func_name = co.co_name
     if func_name == 'write':
-        # Ignore write() calls from print statements
+        # Ignore write() calls from printing
         return
     func_line_no = frame.f_lineno
     func_filename = co.co_filename

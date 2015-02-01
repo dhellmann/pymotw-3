@@ -98,7 +98,6 @@ consumed.
 
 .. {{{end}}}
 
-
 For a more complete estimate of the space used by a class, provide a
 :func:`__sizeof__` method to compute the value by aggregating the
 sizes of attributes of an object.

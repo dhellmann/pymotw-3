@@ -14,8 +14,8 @@ Unhandled Exceptions
 Many applications are structured with a main loop that wraps execution
 in a global exception handler to trap errors not handled at a lower
 level.  Another way to achieve the same thing is by setting the
-:data:`sys.excepthook` to a function that takes three arguments (error
-type, error value, and traceback) and let it deal with unhandled
+:data:`sys.excepthook` to a function that takes three arguments (the
+error type, error value, and traceback) and let it deal with unhandled
 errors.
 
 .. include:: sys_excepthook.py
@@ -63,8 +63,8 @@ traceback.  Using :func:`exc_info` is preferred over the old form
 This example avoids introducing a circular reference between the
 traceback object and a local variable in the current frame by ignoring
 that part of the return value from :func:`exc_info`.  If the traceback
-is needed (e.g., so it can be logged), explicitly delete the local
-variable (using :command:`del`) to avoid cycles.
+is needed (for example, so it can be logged), explicitly delete the
+local variable (using :command:`del`) to avoid cycles.
 
 .. {{{cog
 .. cog.out(script_output(cog.inFile, 'sys_exc_info.py',
@@ -94,30 +94,29 @@ need to use the values directly.
 
 ::
 
-    $ python
-    
-    Python 2.7 (r27:82508, Jul  3 2010, 21:12:11) 
-    [GCC 4.0.1 (Apple Inc. build 5493)] on darwin
-    Type "help", "copyright", "credits" or "license" for more information.
-    >>> def cause_exception():
-    ...   raise RuntimeError('This is the error message')
-    ... 
-    >>> cause_exception()
-    Traceback (most recent call last):
-      File "<stdin>", line 1, in <module>
-      File "<stdin>", line 2, in cause_exception
-    RuntimeError: This is the error message
-    >>> import pdb
-    >>> pdb.pm()
-    > <stdin>(2)cause_exception()
-    (Pdb) where
-      <stdin>(1)<module>()
-    > <stdin>(2)cause_exception()
-    (Pdb) 
+   $ python3
+   Python 3.4.2 (v3.4.2:ab2c023a9432, Oct  5 2014, 20:42:22)
+   [GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin
+   Type "help", "copyright", "credits" or "license" for more information.
+   >>> def cause_exception():
+   ...     raise RuntimeError('This is the error message')
+   ...
+   >>> cause_exception()
+   Traceback (most recent call last):
+     File "<stdin>", line 1, in <module>
+     File "<stdin>", line 2, in cause_exception
+   RuntimeError: This is the error message
+   >>> import pdb
+   >>> pdb.pm()
+   > <stdin>(2)cause_exception()
+   (Pdb) where
+     <stdin>(1)<module>()
+   > <stdin>(2)cause_exception()
+   (Pdb)
 
 
 .. seealso::
-    
+
     :mod:`exceptions`
         Built-in errors
 
