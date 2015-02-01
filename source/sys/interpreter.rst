@@ -180,7 +180,7 @@ called again.
 
 The internal encoding default and the file system encoding may be
 different for some operating systems, so there is a separate way to
-retrieve the file system setting.  :func:`getfile systemencoding`
+retrieve the file system setting.  :func:`getfilesystemencoding`
 returns an OS-specific (*not* file system-specific) value.
 
 .. include:: sys_unicode.py
