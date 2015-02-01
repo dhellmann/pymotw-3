@@ -27,11 +27,12 @@ Index Attribute Meaning
 Querying All Users
 ==================
 
-To print a report of all of the "real" users on a system, including
-their home directories (where "real" is defined as having a name not
-starting with "``_``").  To load the entire password database, use
-``getpwall()``.  The return value is a list with an undefined order,
-so it needs to be sorted before the report is printed.
+This example prints a report of all of the "real" users on a system,
+including their home directories (where "real" is defined as having a
+name not starting with "``_``").  To load the entire password
+database, use ``getpwall()``.  The return value is a list with an
+undefined order, so it needs to be sorted before the report is
+printed.
 
 .. include:: pwd_getpwall.py
     :literal:
