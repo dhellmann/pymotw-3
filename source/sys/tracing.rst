@@ -46,7 +46,7 @@ passed to the callback can be used to find out which function is being
 called and from where.
 
 .. literalinclude:: sys_settrace_call.py
-    :linenos:
+   :linenos:
 
 This example ignores calls to :func:`write`, as used by :command:`print` to
 write to :const:`sys.stdout`.
@@ -60,13 +60,13 @@ write to :const:`sys.stdout`.
 	$ python3 sys_settrace_call.py
 	
 	Call to a
-	  on line 59 of sys_settrace_call.py
-	  from line 64 of sys_settrace_call.py
+	  on line 32 of sys_settrace_call.py
+	  from line 37 of sys_settrace_call.py
 	in a()
 	
 	Call to b
-	  on line 55 of sys_settrace_call.py
-	  from line 61 of sys_settrace_call.py
+	  on line 28 of sys_settrace_call.py
+	  from line 34 of sys_settrace_call.py
 	in b()
 	
 
@@ -94,14 +94,14 @@ In this example, the global list of functions is kept in the variable
 
 	$ python3 sys_settrace_line.py
 	
-	Call to a on line 72 of sys_settrace_line.py
-	Call to b on line 66 of sys_settrace_line.py
-	  b line 67
-	  b line 68
-	Call to c on line 61 of sys_settrace_line.py
+	Call to a on line 45 of sys_settrace_line.py
+	Call to b on line 39 of sys_settrace_line.py
+	  b line 40
+	  b line 41
+	Call to c on line 34 of sys_settrace_line.py
 	input = 10
 	Leaving c()
-	  b line 69
+	  b line 42
 	Leaving b()
 	Leaving a()
 
@@ -130,9 +130,9 @@ when a function is called, so the return value can be monitored.
 
 	$ python3 sys_settrace_return.py
 	
-	Call to a on line 56 of sys_settrace_return.py
+	Call to a on line 29 of sys_settrace_return.py
 	in a()
-	Call to b on line 51 of sys_settrace_return.py
+	Call to b on line 24 of sys_settrace_return.py
 	in b()
 	b => response_from_b 
 	a => response_from_b response_from_b 
@@ -167,15 +167,15 @@ whether the caller catches and ignores it or not.
 	
 	Tracing exception:
 	RuntimeError "generating exception in c()"
-	on line 55 of c
+	on line 28 of c
 	
 	Tracing exception:
 	RuntimeError "generating exception in c()"
-	on line 59 of b
+	on line 32 of b
 	
 	Tracing exception:
 	RuntimeError "generating exception in c()"
-	on line 64 of a
+	on line 37 of a
 	
 	Exception handler: generating exception in c()
 
