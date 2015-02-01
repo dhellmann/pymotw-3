@@ -183,20 +183,28 @@ sys
 .. index::
    pair: porting; sys
 
-
 .. Patch #1680961
 
-:data:`sys.exitfunc` is no longer checked for a clean-up action to be
-run when a program exits. Use :mod:`atexit` instead.
+The variable :data:`sys.exitfunc` is no longer checked for a clean-up
+action to be run when a program exits. Use :mod:`atexit` instead.
 
-:data:`sys.subversion` is no longer defined.
+The variable :data:`sys.subversion` is no longer defined.
 
-:data:`sys.flags.py3k_warning`, :data:`sys.flags.division_warning`,
-:data:`sys.flags.division_new`, :data:`sys.flags.tabcheck`, and
-:data:`sys.flags.unicode` are no longer defined.
+Flags :data:`sys.flags.py3k_warning`,
+:data:`sys.flags.division_warning`, :data:`sys.flags.division_new`,
+:data:`sys.flags.tabcheck`, and :data:`sys.flags.unicode` are no
+longer defined.
 
-:data:`sys.maxint` is no longer defined, use :data:`sys.maxsize`
-instead. See :pep:`237` (Unifying Long Integers and Integers).
+The variable :data:`sys.maxint` is no longer defined, use
+:data:`sys.maxsize` instead. See :pep:`237` (Unifying Long Integers
+and Integers).
 
-:data:`sys.exc_type`, :data:`sys.exc_value`, and
-:data:`sys.exc_traceback` have been removed.
+The global exception tracking variables :data:`sys.exc_type`,
+:data:`sys.exc_value`, and :data:`sys.exc_traceback` have been
+removed.
+
+.. issue 4285
+
+The variable :data:`sys.version_info` is now a :py:class:`namedtuple`
+instance with attributes ``major``, ``minor``, ``micro``,
+``releaselevel``, and ``serial``.
