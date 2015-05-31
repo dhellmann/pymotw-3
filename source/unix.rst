@@ -6,9 +6,9 @@ Unix-specific Services
     :maxdepth: 1
 
     pwd/index
+    grp/index
 
 ..
   commands/index
-  grp/index
   pipes/index
   resource/index
