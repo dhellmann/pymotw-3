@@ -39,7 +39,7 @@ the order of the name values in the queue in the second example using
 an interval of 10 milliseconds.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'sys_switchinterval.py'))
+.. cog.out(run_script(cog.inFile, 'sys_switchinterval.py'))
 .. }}}
 
 ::
@@ -47,10 +47,11 @@ an interval of 10 milliseconds.
 	$ python3 sys_switchinterval.py
 	
 	interval = 0.001
-	T0 T1 T2 T1 T0 T2 T1 T2 T0 T2 T1 T0 T2 T1 T0 
+	T0 T1 T2 T1 T0 T2 T0 T2 T1 T0 T2 T1 T0 T2 T1 
 	
 	interval = 0.100
-	T0 T0 T0 T0 T0 T1 T1 T1 T1 T1 T2 T2 T2 T2 T2 
+	T0 T0 T0 T0 T1 T0 T2 T2 T1 T2 T1 T2 T1 T2 T1 
+	
 
 .. {{{end}}}
 
@@ -81,17 +82,17 @@ short period.  Meanwhile **Thread-3** tries to acquire *blocker* but
 cannot because **Thread-2** already has it.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'sys_current_frames.py'))
+.. cog.out(run_script(cog.inFile, 'sys_current_frames.py'))
 .. }}}
 
 ::
 
 	$ python3 sys_current_frames.py
 	
-	Thread-1 with ident 4325380096 going to sleep
+	Thread-1 with ident 4350545920 going to sleep
 	Thread-1 finishing
-	Thread-2 with ident 4325380096 going to sleep
-	Thread-3 with ident 4332720128 going to sleep
+	Thread-2 with ident 4350545920 going to sleep
+	Thread-3 with ident 4355801088 going to sleep
 	Thread-3 stopped in block at line 45 of sys_current_frames.py
 	Thread-2 stopped in block at line 46 of sys_current_frames.py
 

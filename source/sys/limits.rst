@@ -23,7 +23,7 @@ The count is actually one higher than expected because there is a
 temporary reference to the object held by :func:`getrefcount` itself.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'sys_getrefcount.py'))
+.. cog.out(run_script(cog.inFile, 'sys_getrefcount.py'))
 .. }}}
 
 ::
@@ -56,7 +56,7 @@ objects are.
 :func:`getsizeof` reports the size of an object in bytes.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'sys_getsizeof.py'))
+.. cog.out(run_script(cog.inFile, 'sys_getsizeof.py'))
 .. }}}
 
 ::
@@ -86,7 +86,7 @@ This can give a false impression of the amount of memory being
 consumed.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'sys_getsizeof_object.py'))
+.. cog.out(run_script(cog.inFile, 'sys_getsizeof_object.py'))
 .. }}}
 
 ::
@@ -110,7 +110,7 @@ This version adds the base size of the object to the sizes of all of
 the attributes stored in the internal :data:`__dict__`.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'sys_getsizeof_custom.py'))
+.. cog.out(run_script(cog.inFile, 'sys_getsizeof_custom.py'))
 .. }}}
 
 ::
@@ -139,7 +139,7 @@ Once the recursion limit is reached, the interpreter raises a
 program has an opportunity to handle the situation.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'sys_recursionlimit.py',
+.. cog.out(run_script(cog.inFile, 'sys_recursionlimit.py',
 ..                       line_break_mode='wrap'))
 .. }}}
 
@@ -180,7 +180,7 @@ other data structure dictated by the C interpreter's size type.
 the interpreter as currently configured.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'sys_maximums.py'))
+.. cog.out(run_script(cog.inFile, 'sys_maximums.py'))
 .. }}}
 
 ::
@@ -207,7 +207,7 @@ These values depend on the compiler and underlying system.  These
 examples were produced on OS X 10.9.5 on an Intel Core i7.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'sys_float_info.py'))
+.. cog.out(run_script(cog.inFile, 'sys_float_info.py'))
 .. }}}
 
 ::
@@ -289,7 +289,7 @@ The value is either ``big`` for big-endian or ``little`` for
 little-endian.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'sys_byteorder.py'))
+.. cog.out(run_script(cog.inFile, 'sys_byteorder.py'))
 .. }}}
 
 ::

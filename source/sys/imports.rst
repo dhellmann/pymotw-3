@@ -37,8 +37,10 @@ The contents of :data:`sys.modules` change as new modules are imported.
 	
 	__main__, _bootlocale, _codecs, _collections_abc,
 	_frozen_importlib, _imp, _io, _locale, _sre, _stat, _thread,
-	_warnings, _weakref, _weakrefset, abc, builtins, codecs, copyreg,
-	encodings, encodings.aliases, encodings.latin_1, encodings.utf_8,
+	_warnings, _weakref, _weakrefset, abc, builtins, codecs, copyreg
+	,
+	encodings, encodings.aliases, encodings.latin_1, encodings.utf_8
+	,
 	errno, genericpath, io, marshal, os, os.path, posix, posixpath,
 	re, signal, site, sre_compile, sre_constants, sre_parse, stat,
 	sys, textwrap, zipimport
@@ -303,11 +305,13 @@ preserved as module-level attributes.
 	  __package__: package
 	  __file__   : /tmp/pymotw_import_example.shelve/package
 	  __path__   : ['/tmp/pymotw_import_example.shelve']
-	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x1007c41d0>
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x103
+	2baeb8>
 	
 	Global settings:
 	sys.modules entry:
-	<module 'package' (<sys_shelve_importer.ShelveLoader object at 0x1007c41d0>)>
+	<module 'package' (<sys_shelve_importer.ShelveLoader object at 0
+	x1032baeb8>)>
 
 .. {{{end}}}
 
@@ -363,7 +367,8 @@ constructs and returns a :class:`module` instance.
 	  __package__: package
 	  __file__   : /tmp/pymotw_import_example.shelve/package.module1
 	  __path__   : /tmp/pymotw_import_example.shelve
-	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x1006cc400>
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x102
+	bbdda0>
 	
 	Import of "package.subpackage.module2":
 	
@@ -391,9 +396,11 @@ constructs and returns a :class:`module` instance.
 	  message    : This message is in package.subpackage.module2
 	  __name__   : package.subpackage.module2
 	  __package__: package.subpackage
-	  __file__   : /tmp/pymotw_import_example.shelve/package.subpackage.module2
+	  __file__   : /tmp/pymotw_import_example.shelve/package.subpack
+	age.module2
 	  __path__   : /tmp/pymotw_import_example.shelve
-	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x1006ce588>
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x102
+	bd02b0>
 
 .. {{{end}}}
 

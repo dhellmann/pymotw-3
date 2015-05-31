@@ -27,7 +27,7 @@ the exception is raised the following :command:`print` statement is
 not run, even though the except hook is set.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'sys_excepthook.py', ignore_error=True,
+.. cog.out(run_script(cog.inFile, 'sys_excepthook.py', ignore_error=True,
 ..                       line_break_mode='wrap'))
 .. }}}
 
@@ -36,7 +36,8 @@ not run, even though the except hook is set.
 	$ python3 sys_excepthook.py
 	
 	Before exception
-	Unhandled error: <class 'RuntimeError'> This is the error message
+	Unhandled error: <class 'RuntimeError'> This is the error
+	message
 
 .. {{{end}}}
 
@@ -67,7 +68,7 @@ is needed (for example, so it can be logged), explicitly delete the
 local variable (using :command:`del`) to avoid cycles.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'sys_exc_info.py',
+.. cog.out(run_script(cog.inFile, 'sys_exc_info.py',
 ..                       line_break_mode='wrap'))
 .. }}}
 

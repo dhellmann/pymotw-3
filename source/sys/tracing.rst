@@ -94,14 +94,14 @@ In this example, the list of functions is kept in the variable
 
 	$ python3 sys_settrace_line.py
 	
-	* Call to a on line 45 of sys_settrace_line.py
-	* Call to b on line 39 of sys_settrace_line.py
-	*  b line 40
+	* Call to a on line 46 of sys_settrace_line.py
+	* Call to b on line 40 of sys_settrace_line.py
 	*  b line 41
-	* Call to c on line 34 of sys_settrace_line.py
+	*  b line 42
+	* Call to c on line 35 of sys_settrace_line.py
 	input = 10
 	Leaving c()
-	*  b line 42
+	*  b line 43
 	Leaving b()
 	Leaving a()
 

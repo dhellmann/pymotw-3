@@ -31,7 +31,7 @@ All of the values depend on the actual interpreter used to run the
 sample program.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'sys_version_values.py'))
+.. cog.out(run_script(cog.inFile, 'sys_version_values.py'))
 .. }}}
 
 ::
@@ -40,10 +40,10 @@ sample program.
 	
 	Version info:
 	
-	sys.version      = '3.4.2 (v3.4.2:ab2c023a9432, Oct  5 2014, 20:4
-	2:22) \n[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)]'
-	sys.version_info = sys.version_info(major=3, minor=4, micro=2, re
-	leaselevel='final', serial=0)
+	sys.version      = '3.4.2 (v3.4.2:ab2c023a9432, Oct  5 2014, 20:
+	42:22) \n[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)]'
+	sys.version_info = sys.version_info(major=3, minor=4, micro=2, r
+	eleaselevel='final', serial=0)
 	sys.hexversion   = 0x30402f0
 	sys.api_version  = 1013
 
@@ -61,7 +61,7 @@ For most Unix systems, the value comes from combining the output of
 other operating systems there is a hard-coded table of values.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'sys_platform.py'))
+.. cog.out(run_script(cog.inFile, 'sys_platform.py'))
 .. }}}
 
 ::
@@ -94,7 +94,7 @@ differences in interpreters.
 other interpreters.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'sys_implementation.py'))
+.. cog.out(run_script(cog.inFile, 'sys_implementation.py'))
 .. }}}
 
 ::
@@ -102,8 +102,8 @@ other interpreters.
 	$ python3 sys_implementation.py
 	
 	Name: cpython
-	Version: sys.version_info(major=3, minor=4, micro=2, releaselevel
-	='final', serial=0)
+	Version: sys.version_info(major=3, minor=4, micro=2, releaseleve
+	l='final', serial=0)
 	Cache tag: cpython-34
 
 .. {{{end}}}
@@ -151,7 +151,7 @@ Experiment with ``sys_flags.py`` to learn how the command line options
 map to the flags settings.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, '-S -E -b sys_flags.py'))
+.. cog.out(run_script(cog.inFile, '-S -E -b sys_flags.py'))
 .. }}}
 
 ::
@@ -190,7 +190,7 @@ sources can be handled more cleanly, and the number of assumptions
 about encodings in the application code is reduced.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'sys_unicode.py'))
+.. cog.out(run_script(cog.inFile, 'sys_unicode.py'))
 .. }}}
 
 ::

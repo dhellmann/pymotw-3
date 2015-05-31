@@ -9,14 +9,6 @@ from sphinxcontrib import paverutils  # noqa
 from sphinxcontrib.paverutils import cog, run_script
 
 
-# Replace run_script with local wrapper
-def run_script(input_file, script_name, break_lines_at=64, **kwds):
-    return paverutils.run_script(input_file, script_name,
-                                 break_lines_at=break_lines_at,
-                                 **kwds)
-__builtins__['run_script'] = run_script
-
-
 setup(
     name="PyMOTW-3",
     packages=[],
@@ -73,14 +65,15 @@ options(
 )
 
 
-def script_output(*args, **kwds):
-    kwds.setdefault('break_lines_at', 65)
-    return run_script(*args, **kwds)
-
+# Replace run_script with local wrapper
+def run_script(input_file, script_name, break_lines_at=64, **kwds):
+    return paverutils.run_script(input_file, script_name,
+                                 break_lines_at=break_lines_at,
+                                 **kwds)
 
 # Stuff commonly used symbols into the builtins so we don't have to
 # import them in all of the cog blocks where we want to use them.
-__builtins__['script_output'] = script_output
+__builtins__['run_script'] = run_script
 
 
 def remake_directories(*dirnames):
