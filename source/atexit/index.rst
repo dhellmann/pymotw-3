@@ -267,7 +267,7 @@ called later), the final error message might not be the most useful
 error message to show the user.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'atexit_exception.py', break_lines_at=68))
+.. cog.out(run_script(cog.inFile, 'atexit_exception.py'))
 .. }}}
 
 ::

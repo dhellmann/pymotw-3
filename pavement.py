@@ -9,6 +9,14 @@ from sphinxcontrib import paverutils  # noqa
 from sphinxcontrib.paverutils import cog
 
 
+# Replace run_script with local wrapper
+def run_script(input_file, script_name, break_lines_at=64, **kwds):
+    return paverutils.run_script(input_file, script_name,
+                                 break_lines_at=break_lines_at,
+                                 **kwds)
+__builtins__['run_script'] = run_script
+
+
 setup(
     name="PyMOTW-3",
     packages=[],
