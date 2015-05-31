@@ -201,3 +201,8 @@ whether the caller catches and ignores it or not.
 
     `smiley <https://pypi.python.org/pypi/smiley>`_
         Python Application Tracer
+
+.. spelling::
+
+   Batchelder
+   settrace

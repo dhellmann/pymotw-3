@@ -243,7 +243,7 @@ Integer Values
 ==============
 
 The structure :data:`int_info` holds information about the internal
-represenatation of integers used by the interpreter.
+representation of integers used by the interpreter.
 
 .. include:: sys_int_info.py
    :literal:

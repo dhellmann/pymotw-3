@@ -35,7 +35,7 @@ For more information about porting to Python 3, refer to
 
 * `Porting Python 2 Code to Python 3
   <https://docs.python.org/3/howto/pyporting.html>`__ on
-  docs.python.org.
+  ``docs.python.org``.
 * `Porting to Python 3 <http://python3porting.com/>`__, by Lennart
   Regebro.
 * The `python-porting

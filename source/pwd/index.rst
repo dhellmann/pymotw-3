@@ -12,17 +12,17 @@ Unix password database (usually ``/etc/passwd``).  The read-only
 interface returns tuple-like objects with named attributes for the
 standard fields of a password record.
 
-===== ========= =======
-Index Attribute Meaning
-===== ========= =======
- 0    pw_name   The user's login name
- 1    pw_passwd Encrypted password (optional)
- 2    pw_uid    User id (integer)
- 3    pw_gid    Group id (integer)
- 4    pw_gecos  Comment/full name
- 5    pw_dir    Home directory
- 6    pw_shell  Application started on login, usually a command interpreter
-===== ========= =======
+===== ============= =======
+Index Attribute     Meaning
+===== ============= =======
+ 0    ``pw_name``   The user's login name
+ 1    ``pw_passwd`` Encrypted password (optional)
+ 2    ``pw_uid``    User id (integer)
+ 3    ``pw_gid``    Group id (integer)
+ 4    ``pw_gecos``  Comment/full name
+ 5    ``pw_dir``    Home directory
+ 6    ``pw_shell``  Application started on login, usually a command interpreter
+===== ============= =======
 
 Querying All Users
 ==================
