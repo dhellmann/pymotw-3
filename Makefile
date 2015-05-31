@@ -86,4 +86,4 @@ flake8:
 
 .PHONE: cog
 cog:
-	./bin/run_cog.sh
+	paver cog
