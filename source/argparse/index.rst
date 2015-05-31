@@ -1188,3 +1188,5 @@ always ``None``.
     * :mod:`configparser` -- Read and write configuration files.
 
     * :mod:`shlex` -- Parse shell-like syntaxes.
+
+    * :ref:`Porting notes for argparse <porting-argparse>`

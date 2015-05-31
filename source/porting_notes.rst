@@ -158,6 +158,33 @@ optparse
 Summary of Changes to Modules
 =============================
 
+.. _porting-argparse:
+
+argparse
+--------
+
+.. index::
+   pair: porting; argparse
+
+The ``version`` argument to :class:`ArgumentParser` has been removed
+in favor of a special ``action`` type (:pyissue:`13248`).
+
+Replace::
+
+  parser = argparse.ArgumentParser(version='1.0')
+
+with something like::
+
+  parser = argparse.ArgumentParser(version='1.0')
+  parser.add_argument('--version', action='version',
+                      version='%(prog)s 1.0')
+
+The option name and version format string can be modified to suit the
+needs of the application.
+
+In Python 3.4, the version action was changed to print the version
+string to stdout instead of stderr (:pyissue:`18920`).
+
 .. _porting-atexit:
 
 atexit
