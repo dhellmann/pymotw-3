@@ -149,6 +149,11 @@ imp
 optparse
   Command-line option parsing library.
 
+  The API for :mod:`argparse` is similar to the one provided by
+  :mod:`optparse`, and in many cases :mod:`argparse` can be used as a
+  straightforward replacement by updating the names of the classes and
+  methods used.
+
 
 Summary of Changes to Modules
 =============================

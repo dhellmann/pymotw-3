@@ -13,15 +13,8 @@ instead of implementing all the basic pieces over and over again.
 This chapter covers some of the more frequently reused building blocks
 that solve problems common to so many applications.
 
-There are three separate modules for parsing command line arguments
-using different styles.  :mod:`getopt` implements the same low level
-processing model available to C programs and shell scripts.  It has
-fewer features than other option parsing libraries, but that
-simplicity and familiarity make it a popular choice.  :mod:`optparse`
-is a more modern, and flexible, replacement for :mod:`getopt`.
-:mod:`argparse` is a third interface for parsing and validating
-command line arguments, which deprecates both :mod:`getopt` and
-:mod:`optparse`.  It supports converting arguments from strings to
+:mod:`argparse` is an interface for parsing and validating command
+line arguments.  It supports converting arguments from strings to
 integers and other types, running callbacks when an option is
 encountered, setting default values for options not provided by the
 user, and automatically producing usage instructions for a program.
@@ -81,12 +74,12 @@ be used.
 .. toctree::
    :maxdepth: 1
 
+   argparse/index
    atexit/index
-    
+
 ..
       getopt/index
       optparse/index
-      argparse/index
       readline/index
       getpass/index
       cmd/index
