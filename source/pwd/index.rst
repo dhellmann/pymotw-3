@@ -43,7 +43,7 @@ nicely.  The ``for`` loop at the end shows how to access fields from
 the records by name.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'pwd_getpwall.py'))
+.. cog.out(run_script(cog.inFile, 'pwd_getpwall.py', break_lines_at=68))
 .. }}}
 
 ::
@@ -51,7 +51,8 @@ the records by name.
 	$ python3 pwd_getpwall.py
 	
 	User               UID Home Dir                 Description
-	---------- ----------- ------------------------ ------------------------------
+	---------- ----------- ------------------------ --------------------
+	----------
 	Guest              201 /Users/Guest             Guest User
 	daemon               1 /var/root                System Services
 	daemon               1 /var/root                System Services

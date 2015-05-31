@@ -27,7 +27,7 @@ Because the program does not do anything else, :func:`all_done` is
 called right away.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'atexit_simple.py'))
+.. cog.out(run_script(cog.inFile, 'atexit_simple.py'))
 .. }}}
 
 ::
@@ -57,7 +57,7 @@ their :mod:`atexit` functions), which should reduce dependency
 conflicts.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'atexit_multiple.py'))
+.. cog.out(run_script(cog.inFile, 'atexit_multiple.py'))
 .. }}}
 
 ::
@@ -93,7 +93,7 @@ were never initialized, calling the exit callback should not produce
 an error.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'atexit_decorator.py'))
+.. cog.out(run_script(cog.inFile, 'atexit_decorator.py'))
 .. }}}
 
 ::
@@ -120,7 +120,7 @@ All calls to the same callback are canceled, regardless of how many
 times it has been registered.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'atexit_unregister.py'))
+.. cog.out(run_script(cog.inFile, 'atexit_unregister.py'))
 .. }}}
 
 ::
@@ -141,7 +141,7 @@ Because it silently ignores unknown callbacks, :func:`unregister` can
 be used even when the sequence of registrations might not be known.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'atexit_unregister_not_registered.py'))
+.. cog.out(run_script(cog.inFile, 'atexit_unregister_not_registered.py'))
 .. }}}
 
 ::
@@ -183,7 +183,7 @@ signal arrives.
 When run, this is the output:
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'atexit_signal_parent.py'))
+.. cog.out(run_script(cog.inFile, 'atexit_signal_parent.py'))
 .. }}}
 
 ::
@@ -210,7 +210,7 @@ Because this example bypasses the normal exit path, the callback is
 not run.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'atexit_os_exit.py'))
+.. cog.out(run_script(cog.inFile, 'atexit_os_exit.py'))
 .. }}}
 
 ::
@@ -232,7 +232,7 @@ This example calls :func:`sys.exit`, so the registered callbacks are
 invoked.
 
 .. {{{cog
-.. cog.out(script_output(cog.inFile, 'atexit_sys_exit.py'))
+.. cog.out(run_script(cog.inFile, 'atexit_sys_exit.py'))
 .. }}}
 
 ::

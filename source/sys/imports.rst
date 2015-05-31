@@ -305,13 +305,13 @@ preserved as module-level attributes.
 	  __package__: package
 	  __file__   : /tmp/pymotw_import_example.shelve/package
 	  __path__   : ['/tmp/pymotw_import_example.shelve']
-	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x103
-	2baeb8>
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x102
+	3baeb8>
 	
 	Global settings:
 	sys.modules entry:
 	<module 'package' (<sys_shelve_importer.ShelveLoader object at 0
-	x1032baeb8>)>
+	x1023baeb8>)>
 
 .. {{{end}}}
 
@@ -368,7 +368,7 @@ constructs and returns a :class:`module` instance.
 	  __file__   : /tmp/pymotw_import_example.shelve/package.module1
 	  __path__   : /tmp/pymotw_import_example.shelve
 	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x102
-	bbdda0>
+	2bdda0>
 	
 	Import of "package.subpackage.module2":
 	
@@ -400,7 +400,7 @@ constructs and returns a :class:`module` instance.
 	age.module2
 	  __path__   : /tmp/pymotw_import_example.shelve
 	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x102
-	bd02b0>
+	2d02b0>
 
 .. {{{end}}}
 

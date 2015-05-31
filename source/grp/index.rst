@@ -47,19 +47,22 @@ sorted before printing the report.
 
 	$ python3 grp_getgrall.py
 	
-	36
+	37
 	Name                                    GID   Password Members
-	------------------------------- ----------- ---------- ------------------------------
+	------------------------------- ----------- ---------- ---------
+	---------------------
 	accessibility                            90          * 
 	admin                                    80          * root
 	authedusers                              50          * 
 	bin                                       7          * 
-	certusers                                29          * root, _jabber, _postfix, _cyrus, _calendar, _dovecot
+	certusers                                29          * root, _ja
+	bber, _postfix, _cyrus, _calendar, _dovecot
 	com.apple.access_disabled               396          * 
 	com.apple.access_screensharing          398          * 
 	com.apple.access_sessionkey             397          * 
 	com.apple.access_ssh                    399          * 
 	com.apple.sharepoint.group.1            402          * dhellmann
+	com.apple.sharepoint.group.2            701          * dhellmann
 	consoleusers                             53          * 
 	daemon                                    1          * root
 	dhellmann                               501          * 
@@ -69,7 +72,8 @@ sorted before printing the report.
 	interactusers                            51          * 
 	kmem                                      2          * root
 	localaccounts                            61          * 
-	mail                                      6          * _teamsserver
+	mail                                      6          * _teamsser
+	ver
 	netaccounts                              62          * 
 	netusers                                 52          * 
 	network                                  69          * 
@@ -109,7 +113,9 @@ The set of unique group names is sorted before they are printed.
 
 	$ python3 grp_groups_for_user.py
 	
-	dhellmann belongs to: _lpadmin, admin, com.apple.access_screensharing, com.apple.access_ssh, com.apple.sharepoint.group.1, racemi, staff
+	dhellmann belongs to: _lpadmin, admin, com.apple.access_screensh
+	aring, com.apple.access_ssh, com.apple.sharepoint.group.1, com.a
+	pple.sharepoint.group.2, racemi, staff
 
 .. {{{end}}}
 
