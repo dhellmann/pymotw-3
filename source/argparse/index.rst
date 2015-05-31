@@ -210,9 +210,8 @@ the same list.
 
 	$ python3 argparse_action.py -h
 	
-	usage: argparse_action.py [-h] [-s SIMPLE_VALUE] [-c] [-t] [-f] 
-	[-a COLLECTION] [-A]
-	                          [-B] [--version]
+	usage: argparse_action.py [-h] [-s SIMPLE_VALUE] [-c] [-t] [-f]
+	                          [-a COLLECTION] [-A] [-B] [--version]
 	
 	optional arguments:
 	  -h, --help       show this help message and exit
@@ -418,8 +417,11 @@ The output produced when processing the file is:
 
 .. {{{end}}}
 
+Help Output
+===========
+
 Automatically Generated Help
-============================
+----------------------------
 
 :mod:`argparse` will automatically add options to generate help, if
 configured to do so.  The *add_help* argument to
@@ -443,7 +445,8 @@ other purposes.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'argparse_with_help.py -h'))
-.. cog.out(run_script(cog.inFile, 'argparse_without_help.py -h', ignore_error=True, include_prefix=False))
+.. cog.out(run_script(cog.inFile, 'argparse_without_help.py -h',
+..                    ignore_error=True, include_prefix=False))
 .. }}}
 
 ::
@@ -464,6 +467,152 @@ other purposes.
 	argparse_without_help.py: error: unrecognized arguments: -h
 
 .. {{{end}}}
+
+Customizing Help
+----------------
+
+For applications that need to handle the help output directly, some of
+the utility methods of :class:`ArgumentParser` will be useful in
+creating :ref:`custom actions <argparse-custom-actions>` to print help
+with extra information.
+
+.. include:: argparse_custom_help.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+:meth:`print_usage` prints the short usage message for an argument
+parser, and :meth:`print_help` prints the full help output.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'argparse_custom_help.py'))
+.. }}}
+
+::
+
+	$ python3 argparse_custom_help.py
+	
+	print_usage output:
+	usage: argparse_custom_help.py [-h] [-a] [-b B] [-c C]
+	
+	print_help output:
+	usage: argparse_custom_help.py [-h] [-a] [-b B] [-c C]
+	
+	optional arguments:
+	  -h, --help  show this help message and exit
+	  -a
+	  -b B
+	  -c C
+
+.. {{{end}}}
+
+The :class:`ArgumentParser` uses a formatter class to control the
+appearance of the help output. To change the class, pass
+``formatter_class`` when instantiating the
+:class:`ArgumentParser`.
+
+For example, the :class:`RawDescriptionHelpFormatter` bypasses the
+line wrapping provided by the default formatter.
+
+.. include:: argparse_raw_description_help_formatter.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+All text in the description and epilog of the command will be left
+unchanged.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'argparse_raw_description_help_formatter.py'))
+.. }}}
+
+::
+
+	$ python3 argparse_raw_description_help_formatter.py
+	
+	usage: argparse_raw_description_help_formatter.py [-h] [-a]
+	
+	    description
+	        not
+	           wrapped
+	
+	optional arguments:
+	  -h, --help  show this help message and exit
+	  -a          argument help is wrapped
+	
+	    epilog
+	      not
+	         wrapped
+
+.. {{{end}}}
+
+The :class:`RawTextHelpFormatter` treats all help text as pre-formatted.
+
+.. include:: argparse_raw_text_help_formatter.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+The help text for the ``-a`` argument is no longer wrapped neatly.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'argparse_raw_text_help_formatter.py'))
+.. }}}
+
+::
+
+	$ python3 argparse_raw_text_help_formatter.py
+	
+	usage: argparse_raw_text_help_formatter.py [-h] [-a]
+	
+	    description
+	        not
+	           wrapped
+	
+	optional arguments:
+	  -h, --help  show this help message and exit
+	  -a          argument
+	                  help is not
+	                  wrapped
+	                  
+	
+	    epilog
+	      not
+	         wrapped
+
+.. {{{end}}}
+
+Raw formatters may be useful for applications with examples in the
+description or epilog, where changing the format of the text may make
+the examples invalid.
+
+The :class:`MetavarTypeHelpFormatter` prints the name of the type for
+each option, instead of the destination variable, which can be useful
+for applications with a lot of options of different types.
+
+.. include:: argparse_metavar_type_help_formatter.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+Rather than display the value of ``dest``, the name of the type
+associated with the option is printed.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'argparse_metavar_type_help_formatter.py'))
+.. }}}
+
+::
+
+	$ python3 argparse_metavar_type_help_formatter.py
+	
+	usage: argparse_metavar_type_help_formatter.py [-h] [-i int] [-f
+	 float]
+	
+	optional arguments:
+	  -h, --help  show this help message and exit
+	  -i int
+	  -f float
+
+.. {{{end}}}
+
+
 
 Parser Organization
 ===================
@@ -1072,6 +1221,7 @@ longer being used.
 
 .. {{{end}}}
 
+.. _argparse-custom-actions:
 
 Custom Actions
 --------------
