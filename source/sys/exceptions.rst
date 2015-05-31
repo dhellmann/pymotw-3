@@ -118,11 +118,8 @@ need to use the values directly.
 
 .. seealso::
 
-    :mod:`exceptions`
-        Built-in errors
+    * :mod:`exceptions` -- Built-in errors
 
-    :mod:`pdb`
-        Python debugger
+    * :mod:`pdb` -- Python debugger
 
-    :mod:`traceback`
-        Module for working with tracebacks.
+    * :mod:`traceback` -- Module for working with tracebacks.

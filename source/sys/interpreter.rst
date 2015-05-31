@@ -74,8 +74,10 @@ other operating systems there is a hard-coded table of values.
 
 .. seealso::
 
-  `Platform values <http://docs.python.org/library/sys.html#sys.platform>`_
-    Hard-coded values of :const:`sys.platform` for systems without :command:`uname`.
+  * `Platform values
+    <http://docs.python.org/3/library/sys.html#sys.platform>`_ --
+    Hard-coded values of :const:`sys.platform` for systems without
+    :command:`uname`.
 
 Interpreter Implementation
 ==========================
@@ -110,8 +112,7 @@ other interpreters.
 
 .. seealso::
 
-   :pep:`421`
-      Adding :data:`sys.implementation`
+   * :pep:`421` -- Adding :data:`sys.implementation`
 
 Command Line Options
 ====================

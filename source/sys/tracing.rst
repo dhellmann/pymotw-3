@@ -184,23 +184,27 @@ whether the caller catches and ignores it or not.
 
 .. seealso::
 
-    :mod:`profile`
-        The ``profile`` module documentation shows how to use a ready-made profiler.
+    * :mod:`profile` -- The ``profile`` module documentation shows how
+      to use a ready-made profiler.
 
-    :mod:`trace`
-        The ``trace`` module implements several code analysis features.
+    * :mod:`trace` -- The ``trace`` module implements several code
+      analysis features.
 
-    `Types and Members <http://docs.python.org/library/inspect.html#types-and-members>`_
-        The descriptions of frame and code objects and their attributes.
+    * `Types and Members
+      <http://docs.python.org/3/library/inspect.html#types-and-members>`_
+      -- The descriptions of frame and code objects and their
+      attributes.
 
-    `Tracing python code <http://www.dalkescientific.com/writings/diary/archive/2005/04/20/tracing_python_code.html>`_
-        Another ``settrace()`` tutorial.
+    * `Tracing python code
+      <http://www.dalkescientific.com/writings/diary/archive/2005/04/20/tracing_python_code.html>`_ -- Another ``settrace()`` tutorial.
 
-    `Wicked hack: Python bytecode tracing <http://nedbatchelder.com/blog/200804/wicked_hack_python_bytecode_tracing.html>`_
-        Ned Batchelder's experiments with tracing with more granularity than source line level.
+    * `Wicked hack: Python bytecode tracing
+      <http://nedbatchelder.com/blog/200804/wicked_hack_python_bytecode_tracing.html>`_
+      -- Ned Batchelder's experiments with tracing with more
+      granularity than source line level.
 
-    `smiley <https://pypi.python.org/pypi/smiley>`_
-        Python Application Tracer
+    * `smiley <https://pypi.python.org/pypi/smiley>`_ -- Python
+      Application Tracer
 
 .. spelling::
 

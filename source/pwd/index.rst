@@ -154,11 +154,11 @@ user currently running a process:
 
 .. seealso::
 
-    `pwd <https://docs.python.org/3.4/library/pwd.html>`_
-        The standard library documentation for this module.
+    * `pwd <https://docs.python.org/3/library/pwd.html>`_ -- The
+      standard library documentation for this module.
 
-    :mod:`spwd`
-        Secure password database access for systems using shadow passwords.
+    * :mod:`spwd` -- Secure password database access for systems using
+      shadow passwords.
 
-    :mod:`grp`
-        The :mod:`grp` module reads Unix group information.
+    * :mod:`grp` -- The :mod:`grp` module reads Unix group
+      information.

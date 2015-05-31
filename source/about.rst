@@ -20,7 +20,7 @@ updates and the latest release.
 ..  Source code is available from http://bitbucket.org/dhellmann/pymotw-3/.
 
 Complete documentation for the standard library can be found on the
-Python web site at http://docs.python.org/library/.
+Python web site at http://docs.python.org/3/library/.
 
 Tools
 =====

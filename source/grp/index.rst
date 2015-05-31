@@ -200,14 +200,11 @@ file or directory.
 
 .. seealso::
 
-    `grp <http://docs.python.org/library/grp.html>`_
-        The standard library documentation for this module.
+    * `grp <http://docs.python.org/3/library/grp.html>`_ -- The standard
+      library documentation for this module.
 
-    :mod:`pwd`
-        Read user data from the password database.
+    * :mod:`pwd` -- Read user data from the password database.
 
-    :mod:`spwd`
-        Read user data from the shadow password database.
+    * :mod:`spwd` -- Read user data from the shadow password database.
 
-    :mod:`os`
-        Operating system interfaces.
+    * :mod:`os` -- Operating system interfaces.

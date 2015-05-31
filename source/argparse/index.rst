@@ -1295,7 +1295,7 @@ always ``None``.
 
 .. seealso::
 
-    * `argparse <http://docs.python.org/library/argparse.html>`_ --
+    * `argparse <http://docs.python.org/3/library/argparse.html>`_ --
       The standard library documentation for this module.
 
     * :mod:`configparser` -- Read and write configuration files.

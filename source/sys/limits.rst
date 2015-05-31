@@ -38,8 +38,8 @@ temporary reference to the object held by :func:`getrefcount` itself.
 
 .. seealso::
 
-    :mod:`gc`
-        Control the garbage collector via the functions exposed in ``gc``.
+    * :mod:`gc` -- Control the garbage collector via the functions
+      exposed in ``gc``.
 
 Object Size
 ===========
@@ -236,8 +236,8 @@ examples were produced on OS X 10.9.5 on an Intel Core i7.
 
 .. seealso::
 
-    The ``float.h`` C header file for the local compiler contains more
-    details about these settings.
+    * The ``float.h`` C header file for the local compiler contains more
+      details about these settings.
 
 Integer Values
 ==============
@@ -302,12 +302,12 @@ little-endian.
 
 .. seealso::
 
-    `Wikipedia: Endianness <http://en.wikipedia.org/wiki/Byte_order>`__
-        Description of big and little endian memory systems.
+    * `Wikipedia: Endianness
+      <http://en.wikipedia.org/wiki/Byte_order>`__ -- Description of
+      big and little endian memory systems.
 
-    :mod:`array` and :mod:`struct`
-        Other modules that depend on the byte order of data.
+    * :mod:`array` and :mod:`struct` -- Other modules that depend on
+      the byte order of data.
 
-    ``float.h``
-       The C header file for the local compiler contains more
-       details about these settings.
+    * ``float.h`` -- The C header file for the local compiler contains
+       more details about these settings.

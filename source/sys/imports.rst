@@ -86,8 +86,8 @@ installer for OS X.
 
 .. seealso::
 
-    `Build Instructions <https://hg.python.org/cpython/file/tip/README>`_
-        Instructions for building Python, from the README distributed with the source.
+    * `Build Instructions <https://hg.python.org/cpython/file/tip/README>`_ --
+      Instructions for building Python, from the README distributed with the source.
 
 .. _sys-path:
 
@@ -554,8 +554,8 @@ exist.
 
 .. seealso::
 
-    :mod:`pkgutil`
-        Includes :func:`get_data` for retrieving data from a package.
+    * :mod:`pkgutil` -- Includes :func:`get_data` for retrieving data
+      from a package.
 
 Importer Cache
 ==============
@@ -648,30 +648,26 @@ simplicity).
 
 .. seealso::
 
-    :mod:`importlib`
-        Base classes and other tools for creating custom importers.
+    * :mod:`importlib` -- Base classes and other tools for creating
+      custom importers.
 
-    :mod:`zipimport`
-        Implements importing Python modules from inside ZIP archives.
+    * :mod:`zipimport` -- Implements importing Python modules from
+      inside ZIP archives.
 
-    `The Internal Structure of Python Eggs <http://pythonhosted.org//setuptools/formats.html?highlight=eggs>`_
-       setuptools documentation for the egg format.
+    * `The Internal Structure of Python Eggs
+       <http://pythonhosted.org//setuptools/formats.html?highlight=eggs>`_
+       -- setuptools documentation for the egg format
 
-    `Wheel <http://wheel.readthedocs.org/en/latest/>`_
-       Documentation for ``wheel`` archive format for installable Python code.
+    * `Wheel <http://wheel.readthedocs.org/en/latest/>`_ --
+      Documentation for ``wheel`` archive format for installable
+      Python code.
 
-    :pep:`302`
-        Import Hooks
+    * :pep:`302` -- Import Hooks
 
-    :pep:`366`
-        Main module explicit relative imports
+    * :pep:`366` -- Main module explicit relative imports
 
-    :pep:`427`
-        The Wheel Binary Package Format 1.0
+    * :pep:`427` -- The Wheel Binary Package Format 1.0
 
-    `Import this, that, and the other thing: custom importers <http://us.pycon.org/2010/conference/talks/?filter=core>`_
-        Brett Cannon's PyCon 2010 presentation.
-
-    `Python 3 stdlib module "importlib" <http://docs.python.org/py3k/library/importlib.html>`_
-        Python 3.x includes abstract base classes that makes it easier
-        to create custom importers.
+    * `Import this, that, and the other thing: custom importers
+      <http://us.pycon.org/2010/conference/talks/?filter=core>`_ --
+      Brett Cannon's PyCon 2010 presentation.
