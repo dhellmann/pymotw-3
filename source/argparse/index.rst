@@ -210,8 +210,9 @@ the same list.
 
 	$ python3 argparse_action.py -h
 	
-	usage: argparse_action.py [-h] [-s SIMPLE_VALUE] [-c] [-t] [-f]
-	                          [-a COLLECTION] [-A] [-B] [--version]
+	usage: argparse_action.py [-h] [-s SIMPLE_VALUE] [-c] [-t] [-f] 
+	[-a COLLECTION] [-A]
+	                          [-B] [--version]
 	
 	optional arguments:
 	  -h, --help       show this help message and exit
@@ -277,7 +278,6 @@ the same list.
 	argparse_action.py 1.0
 
 .. {{{end}}}
-
 
 
 Option Prefixes
@@ -418,15 +418,12 @@ The output produced when processing the file is:
 
 .. {{{end}}}
 
-Automatically Generated Options
-===============================
+Automatically Generated Help
+============================
 
-:mod:`argparse` will automatically add options to generate help and
-show the version information for the application, if configured to do
-so.
-
-The *add_help* argument to :class:`ArgumentParser` controls the
-help-related options.
+:mod:`argparse` will automatically add options to generate help, if
+configured to do so.  The *add_help* argument to
+:class:`ArgumentParser` controls the help-related options.
 
 .. include:: argparse_with_help.py
    :literal:
@@ -465,46 +462,6 @@ other purposes.
 	
 	usage: argparse_without_help.py [-a] [-b B] [-c C]
 	argparse_without_help.py: error: unrecognized arguments: -h
-
-.. {{{end}}}
-
-The version options (``-v`` and ``--version``) are added when
-*version* is set in the :class:`ArgumentParser` constructor.
-
-.. include:: argparse_with_version.py
-   :literal:
-   :start-after: #end_pymotw_header
-
-Both forms of the option print the program's version string, then
-cause it to exit immediately.
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'argparse_with_version.py -h'))
-.. cog.out(run_script(cog.inFile, 'argparse_with_version.py -v', include_prefix=False))
-.. cog.out(run_script(cog.inFile, 'argparse_with_version.py --version', include_prefix=False))
-.. }}}
-
-::
-
-	$ python3 argparse_with_version.py -h
-	
-	usage: argparse_with_version.py [-h] [-a] [-b B] [-c C] [--versi
-	on]
-	
-	optional arguments:
-	  -h, --help     show this help message and exit
-	  -a
-	  -b B
-	  -c C
-	  --version, -v  show program's version number and exit
-
-	$ python3 argparse_with_version.py -v
-	
-	argparse_with_version.py 1.0
-
-	$ python3 argparse_with_version.py --version
-	
-	argparse_with_version.py 1.0
 
 .. {{{end}}}
 
