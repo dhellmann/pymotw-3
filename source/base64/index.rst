@@ -6,7 +6,6 @@
     :synopsis: Encode binary data with ASCII characters.
 
 :Purpose: The base64 module contains functions for translating binary data into a subset of ASCII suitable for transmission using plaintext protocols.
-:Python Version: 1.4 and later
 
 The base64, base32, and base16 encodings convert 8 bit bytes to values
 with 6, 5, or 4 bits of useful data per byte, allowing non-ASCII bytes
@@ -35,21 +34,21 @@ bytes after being encoded.
     fit better on the page.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'base64_b64encode.py', break_lines_at=65))
+.. cog.out(run_script(cog.inFile, 'base64_b64encode.py'))
 .. }}}
 
 ::
 
-	$ python base64_b64encode.py
+	$ python3 base64_b64encode.py
 	
-	168 bytes before encoding
-	Expect 3 padding bytes
-	224 bytes after encoding
+	185 bytes before encoding
+	Expect 1 padding bytes
+	248 bytes after encoding
 	
-	CgppbXBvcnQgYmFzZTY0CmltcG9ydCB0ZXh0d3JhcAoKIyBMb2FkIHRoaXMgc291c
-	mNlIGZpbGUgYW5kIHN0cmlwIHRoZSBoZWFkZXIuCndpdGggb3BlbihfX2ZpbGVfXy
-	wgJ3J0JykgYXMgaW5wdXQ6CiAgICByYXcgPSBpbnB1dC5yZWFkKCkKICAgIGluaXR
-	pYWxfZGF0YSA9IHJhdy5zcGxpdCgn
+	b'CgppbXBvcnQgYmFzZTY0CmltcG9ydCB0ZXh0d3JhcAoKIyBMb2FkIHRoaXMgc2
+	91cmNlIGZpbGUgYW5kIHN0cmlwIHRoZSBoZWFkZXIuCndpdGggb3BlbihfX2ZpbG
+	VfXywgJ3InLCBlbmNvZGluZz0ndXRmLTgnKSBhcyBpbnB1dDoKICAgIHJhdyA9IG
+	lucHV0LnJlYWQoKQogICAgaW5pdGlhbF9kYXRhID0gcmF3LnNwbGl0KCc='
 
 .. {{{end}}}
 
@@ -77,11 +76,11 @@ evenly divisible by 24 in this example.
 
 ::
 
-	$ python base64_b64decode.py
+	$ python3 base64_b64decode.py
 	
-	Original: This is the data, in the clear.
-	Encoded : VGhpcyBpcyB0aGUgZGF0YSwgaW4gdGhlIGNsZWFyLg==
-	Decoded : This is the data, in the clear.
+	Original: b'This is the data, in the clear.'
+	Encoded : b'VGhpcyBpcyB0aGUgZGF0YSwgaW4gdGhlIGNsZWFyLg=='
+	Decoded : b'This is the data, in the clear.'
 
 .. {{{end}}}
 
@@ -105,15 +104,15 @@ underscore (``_``).  Otherwise, the alphabet is the same.
 
 ::
 
-	$ python base64_urlsafe.py
+	$ python3 base64_urlsafe.py
 	
-	Original         : '\xfb\xef'
-	Standard encoding: ++8=
-	URL-safe encoding: --8=
+	Original         : b'\xfb\xef'
+	Standard encoding: b'++8='
+	URL-safe encoding: b'--8='
 	
-	Original         : '\xff\xff'
-	Standard encoding: //8=
-	URL-safe encoding: __8=
+	Original         : b'\xff\xff'
+	Standard encoding: b'//8='
+	URL-safe encoding: b'__8='
 	
 
 .. {{{end}}}
@@ -132,16 +131,17 @@ Besides base 64, the module provides functions for working with base
 Base 32 output:
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'base64_base32.py', break_lines_at=68))
+.. cog.out(run_script(cog.inFile, 'base64_base32.py'))
 .. }}}
 
 ::
 
-	$ python base64_base32.py
+	$ python3 base64_base32.py
 	
-	Original: This is the data, in the clear.
-	Encoded : KRUGS4ZANFZSA5DIMUQGIYLUMEWCA2LOEB2GQZJAMNWGKYLSFY======
-	Decoded : This is the data, in the clear.
+	Original: b'This is the data, in the clear.'
+	Encoded : b'KRUGS4ZANFZSA5DIMUQGIYLUMEWCA2LOEB2GQZJAMNWGKYLSFY==
+	===='
+	Decoded : b'This is the data, in the clear.'
 
 .. {{{end}}}
 
@@ -155,24 +155,23 @@ Each time the number of encoding bits goes down, the output in the
 encoded format takes up more space.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'base64_base16.py', break_lines_at=68))
+.. cog.out(run_script(cog.inFile, 'base64_base16.py'))
 .. }}}
 
 ::
 
-	$ python base64_base16.py
+	$ python3 base64_base16.py
 	
-	Original: This is the data, in the clear.
-	Encoded : 546869732069732074686520646174612C20696E2074686520636C6561
-	722E
-	Decoded : This is the data, in the clear.
+	Original: b'This is the data, in the clear.'
+	Encoded : b'546869732069732074686520646174612C20696E207468652063
+	6C6561722E'
+	Decoded : b'This is the data, in the clear.'
 
 .. {{{end}}}
 
 .. seealso::
 
-    `base64 <http://docs.python.org/library/base64.html>`_
-        The standard library documentation for this module.
+    * `base64 <http://docs.python.org/3/library/base64.html>`_ -- The
+      standard library documentation for this module.
 
-    :rfc:`3548`
-        The Base16, Base32, and Base64 Data Encodings
+    * :rfc:`3548` -- The Base16, Base32, and Base64 Data Encodings
