@@ -91,7 +91,8 @@ def remake_directories(*dirnames):
 def css(options):
     "Generate CSS from less"
     file_base = 'source/_themes/pymotw/static/pymotw'
-    if path(file_base + '.less').mtime > path(file_base + '.css').mtime:
+    outfile = path(file_base + '.css')
+    if not outfile.exists() or path(file_base + '.less').mtime > outfile.mtime:
         sh('lessc -x %(file_base)s.less > %(file_base)s.css' % {
             'file_base': file_base,
         })
