@@ -130,7 +130,7 @@ Other Encodings
 ===============
 
 Besides base 64, the module provides functions for working with base
-32 and base 16 (hex) encoded data.
+85, 32, and 16 (hex) encoded data.
 
 .. include:: base64_base32.py
     :literal:
@@ -177,11 +177,47 @@ encoded format takes up more space.
 
 .. {{{end}}}
 
+The base 85 functions use an expanded alphabet that is more
+space-efficient than base 64.
+
+.. include:: base64_base85.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+There are several base 85 encodings, and different variations are used
+in Mercurial, git, and the PDF file format. Python includes two
+implementations, :func:`b85encode` implements the version used in Git
+and Mercurial and :func:`a85encode` implements the Ascii85 variant
+used by PDF files.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'base64_base85.py'))
+.. }}}
+
+::
+
+	$ python3 base64_base85.py
+	
+	Original    : 31 bytes b'This is the data, in the clear.'
+	b64 Encoded : 44 bytes b'VGhpcyBpcyB0aGUgZGF0YSwgaW4gdGhlIGNsZWF
+	yLg=='
+	b85 Encoded : 39 bytes b'RA^~)AZc?TbZBKDWMOn+EFfuaAarPDAY*K0VR9}
+	'
+	a85 Encoded : 39 bytes b'<+oue+DGm>FD,5.A79Rg/0JYE+EV:.+Cf5!@<*t
+	'
+
+.. {{{end}}}
+
 .. seealso::
 
     * `base64 <http://docs.python.org/3/library/base64.html>`_ -- The
       standard library documentation for this module.
 
     * :rfc:`3548` -- The Base16, Base32, and Base64 Data Encodings
+
+    * :rfc:`1924` -- A Compact Representation of IPv6 Addresses
+      (suggests base-85 encoding for IPv6 network addresses)
+
+    * `Ascii85 <https://en.wikipedia.org/wiki/Ascii85>`__
 
     * :ref:`Porting notes for base64 <porting-base64>`
