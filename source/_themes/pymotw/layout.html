@@ -55,6 +55,12 @@
         {%- endfor %}
       {% endif %}
       </ul>
+
+      <ul id="top-menu">
+        <li><a href="{{ pathto('py-modindex') }}"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+        <li><a href="{{ pathto('genindex') }}"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+        <li>{{ rss_link() }}</li>
+      </ul>
     </div>
 
     <div class="pure-g-r" id="content-container">
