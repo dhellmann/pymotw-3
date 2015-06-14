@@ -18,6 +18,7 @@ Python and tools used.
    :maxdepth: 2
 
    frameworks
+   internet_protocols
    runtime_services
    unix
    porting_notes
