@@ -1,3 +1,4 @@
+Ascii
 BaseHTTPServer
 CGIHTTPServer
 CPython
@@ -7,6 +8,7 @@ Dialog
 DocXMLRPCServer
 FileDialog
 HTMLParser
+IPv
 Queue
 ScrolledText
 SimpleDialog
@@ -73,6 +75,7 @@ org
 parse
 parser
 pickle
+plaintext
 pre
 py
 queue
@@ -99,6 +102,7 @@ traceback
 tracebacks
 ttk
 unhandled
+unicode
 urllib
 urlparse
 winreg
