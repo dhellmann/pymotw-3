@@ -15,10 +15,10 @@ with open(__file__, 'r', encoding='utf-8') as input:
     raw = input.read()
     initial_data = raw.split('#end_pymotw_header')[1]
 
-binary_data = initial_data.encode('utf-8')
-encoded_data = base64.b64encode(binary_data)
+byte_string = initial_data.encode('utf-8')
+encoded_data = base64.b64encode(byte_string)
 
-num_initial = len(binary_data)
+num_initial = len(byte_string)
 
 # There will never be more than 2 padding bytes.
 padding = 3 - (num_initial % 3)

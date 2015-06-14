@@ -5,7 +5,9 @@
 .. module:: base64
     :synopsis: Encode binary data with ASCII characters.
 
-:Purpose: The base64 module contains functions for translating binary data into a subset of ASCII suitable for transmission using plaintext protocols.
+:Purpose: The base64 module contains functions for translating binary
+          data into a subset of ASCII suitable for transmission using
+          plaintext protocols.
 
 The base64, base32, and base16 encodings convert 8 bit bytes to values
 with 6, 5, or 4 bits of useful data per byte, allowing non-ASCII bytes
@@ -24,8 +26,9 @@ A basic example of encoding some text looks like this:
     :literal:
     :start-after: #end_pymotw_header
 
-The output shows the 168 bytes of the original source expand to 224
-bytes after being encoded.
+The input must be a byte string, so the unicode string is first
+encoded to UTF-8. The output shows the 185 bytes of the UTF-8 source
+expand to 248 bytes after being encoded.
 
 .. note::
 
@@ -56,7 +59,7 @@ bytes after being encoded.
 Base 64 Decoding
 ================
 
-:func:`b64decode` converts the encoded string back to the original
+:func:`b64decode` converts an encoded string back to the original
 form by taking four bytes and converting them to the original three, using a
 lookup table.
 
@@ -78,18 +81,23 @@ evenly divisible by 24 in this example.
 
 	$ python3 base64_b64decode.py
 	
-	Original: b'This is the data, in the clear.'
 	Encoded : b'VGhpcyBpcyB0aGUgZGF0YSwgaW4gdGhlIGNsZWFyLg=='
 	Decoded : b'This is the data, in the clear.'
 
 .. {{{end}}}
 
+The value returned from :func:`b64decode` is a byte string. If the
+contents are known to be text, the byte string can be converted to a
+unicode object. However, the point of using base 64 encoding is to be
+able to transmit binary data, and so it is not always safe to assume
+that the decoded value is text.
+
 URL-safe Variations
 ===================
 
-Because the default base64 alphabet may use ``+`` and ``/``, and those
-two characters are used in URLs, it is often necessary to use an
-alternate encoding with substitutes for those characters.  
+Because the default base64 alphabet may use ``+`` and ``/``, both of
+which are used in URLs, it is often necessary to use an alternate
+encoding with substitutes for those characters.
 
 .. include:: base64_urlsafe.py
     :literal:
@@ -175,3 +183,5 @@ encoded format takes up more space.
       standard library documentation for this module.
 
     * :rfc:`3548` -- The Base16, Base32, and Base64 Data Encodings
+
+    * :ref:`Porting notes for base64 <porting-base64>`

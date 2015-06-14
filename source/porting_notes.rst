@@ -199,6 +199,15 @@ handling logic that caused only the summary of the exception to be
 shown, without the traceback. This regression was fixed in Python 3.3
 (:pyissue:`18776`).
 
+.. _porting-base64:
+
+base64
+------
+
+The :func:`encodestring` and :func:`decodestring` have been renamed
+:func:`encodebytes` and :func:`decodebytes` respectively. The old
+names still work as aliases, but are deprecated (:pyissue:`3613`).
+
 .. _porting-shelve:
 
 shelve
