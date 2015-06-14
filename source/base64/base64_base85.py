@@ -3,7 +3,9 @@
 #
 # Copyright (c) 2008 Doug Hellmann All rights reserved.
 #
-"""
+"""Demonstrates base85 and ascii85 encodings.
+
+http://bugs.python.org/17618
 """
 #end_pymotw_header
 

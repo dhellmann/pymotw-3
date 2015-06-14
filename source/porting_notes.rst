@@ -208,6 +208,11 @@ The :func:`encodestring` and :func:`decodestring` have been renamed
 :func:`encodebytes` and :func:`decodebytes` respectively. The old
 names still work as aliases, but are deprecated (:pyissue:`3613`).
 
+Two new encodings using 85-character alphabets have been
+added. :func:`b85encode` implements an encoding used in Mercurial and
+git, while :func:`a85encode` implements the Ascii85 format used by PDF
+files (:pyissue:`17618`).
+
 .. _porting-shelve:
 
 shelve
