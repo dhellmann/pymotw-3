@@ -654,9 +654,7 @@ simplicity).
     * :mod:`zipimport` -- Implements importing Python modules from
       inside ZIP archives.
 
-    * `The Internal Structure of Python Eggs
-       <http://pythonhosted.org//setuptools/formats.html?highlight=eggs>`_
-       -- setuptools documentation for the egg format
+    * `The Internal Structure of Python Eggs <http://pythonhosted.org//setuptools/formats.html?highlight=eggs>`_ -- setuptools documentation for the egg format
 
     * `Wheel <http://wheel.readthedocs.org/en/latest/>`_ --
       Documentation for ``wheel`` archive format for installable
