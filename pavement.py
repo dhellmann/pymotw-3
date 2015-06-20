@@ -1,3 +1,4 @@
+import http.server
 import os
 import subprocess
 
@@ -210,8 +211,11 @@ def rsyncwebsite(options):
 def test(options):
     # Copy to the local site
     src_path = path(options.sphinx.builddir) / 'html'
-    sh('(cd %s; rsync --archive --delete --verbose . %s)' %
-        (src_path, options.testsite.local_path))
+    os.chdir(src_path)
+    server_address = ('', 8080)
+    httpd = http.server.HTTPServer(server_address,
+                                   http.server.SimpleHTTPRequestHandler)
+    httpd.serve_forever()
     return
 
 
