@@ -80,7 +80,6 @@ class ShelveFinder(object):
             print('shelf could not import from %s: %s' %
                   (path_entry, e))
             raise
-            raise ImportError(e)
         else:
             print('shelf added to import path:', path_entry)
             self.path_entry = path_entry
