@@ -213,6 +213,14 @@ added. :func:`b85encode` implements an encoding used in Mercurial and
 git, while :func:`a85encode` implements the Ascii85 format used by PDF
 files (:pyissue:`17618`).
 
+.. _porting-glob:
+
+glob
+----
+
+The new function :func:`escape` implements a work-around for searching
+for files with meta-characters in the name (:pyissue:`8402`).
+
 .. _porting-shelve:
 
 shelve

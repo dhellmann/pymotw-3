@@ -230,3 +230,5 @@ containing a single entry.
       Command Language specification.
 
     * :mod:`fnmatch` -- Filename matching implementation.
+
+    * :ref:`Porting notes for glob <porting-glob>`
