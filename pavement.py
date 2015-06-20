@@ -89,6 +89,11 @@ def remake_directories(*dirnames):
 
 
 @task
+def clean(options):
+    remake_directories(options.sphinx.builddir)
+
+
+@task
 def css(options):
     "Generate CSS from less"
     file_base = 'source/_themes/pymotw/static/pymotw'
@@ -121,7 +126,7 @@ def spelling(options):
 def html_clean(options):
     """Remove sphinx output directories before building the HTML.
     """
-    remake_directories(options.sphinx.builddir)
+    clean(options)
     html(options)
     return
 
