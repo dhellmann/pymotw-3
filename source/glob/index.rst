@@ -46,6 +46,9 @@ present in the current working directory:
 	dir/file2.txt
 	dir/filea.txt
 	dir/fileb.txt
+	dir/file?.txt
+	dir/file*.txt
+	dir/file[.txt
 	dir/subdir
 	dir/subdir/subfile.txt
 
@@ -77,9 +80,12 @@ examples here sort it to make studying the results easier.
 
 	$ python3 glob_asterisk.py
 	
+	dir/file*.txt
 	dir/file.txt
 	dir/file1.txt
 	dir/file2.txt
+	dir/file?.txt
+	dir/file[.txt
 	dir/filea.txt
 	dir/fileb.txt
 	dir/subdir
@@ -137,8 +143,11 @@ The previous example matches all of the filenames that begin with
 
 	$ python3 glob_question.py
 	
+	dir/file*.txt
 	dir/file1.txt
 	dir/file2.txt
+	dir/file?.txt
+	dir/file[.txt
 	dir/filea.txt
 	dir/fileb.txt
 
@@ -173,6 +182,41 @@ range value could be written ``[0123456789]``.
 	dir/file2.txt
 
 .. {{{end}}}
+
+Escaping Meta-characters
+========================
+
+Sometimes it is necessary to search for files with names containing
+the special meta-characters :mod:`glob` uses for its patterns. The
+:func:`escape` function builds a suitable pattern.
+
+.. include:: glob_escape.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+Each special character is escaped by building a character range
+containing a single entry.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'glob_escape.py'))
+.. }}}
+
+::
+
+	$ python3 glob_escape.py
+	
+	Searching for: "dir/*[?].txt"
+	dir/file?.txt
+	
+	Searching for: "dir/*[*].txt"
+	dir/file*.txt
+	
+	Searching for: "dir/*[[].txt"
+	dir/file[.txt
+	
+
+.. {{{end}}}
+
 
 
 .. seealso::
