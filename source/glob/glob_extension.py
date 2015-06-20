@@ -31,5 +31,5 @@ extension.
 
 import glob
 
-for name in glob.glob('*.py'):
+for name in sorted(glob.glob('*.py')):
     print(name)

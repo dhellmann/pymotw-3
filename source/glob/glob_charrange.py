@@ -28,5 +28,5 @@
 #end_pymotw_header
 
 import glob
-for name in glob.glob('dir/*[0-9].*'):
+for name in sorted(glob.glob('dir/*[0-9].*')):
     print(name)

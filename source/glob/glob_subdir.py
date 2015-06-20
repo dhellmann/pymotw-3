@@ -30,9 +30,9 @@
 import glob
 
 print('Named explicitly:')
-for name in glob.glob('dir/subdir/*'):
+for name in sorted(glob.glob('dir/subdir/*')):
     print('\t', name)
 
 print('Named with wildcard:')
-for name in glob.glob('dir/*/*'):
+for name in sorted(glob.glob('dir/*/*')):
     print('\t', name)

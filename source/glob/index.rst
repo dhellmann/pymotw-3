@@ -64,8 +64,10 @@ name. For example, ``dir/*``.
     :literal:
     :start-after: #end_pymotw_header
 
-The pattern matches every path name (file or directory) in the directory dir,
-without recursing further into subdirectories.
+The pattern matches every path name (file or directory) in the
+directory dir, without recursing further into subdirectories. The data
+returned by :func:`glob` comes in the order it is found, so the
+examples here sort it to make studying the results easier.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'glob_asterisk.py'))
@@ -75,12 +77,12 @@ without recursing further into subdirectories.
 
 	$ python3 glob_asterisk.py
 	
-	dir/subdir
 	dir/file.txt
-	dir/file2.txt
-	dir/fileb.txt
-	dir/filea.txt
 	dir/file1.txt
+	dir/file2.txt
+	dir/filea.txt
+	dir/fileb.txt
+	dir/subdir
 
 .. {{{end}}}
 
@@ -135,10 +137,10 @@ The previous example matches all of the filenames that begin with
 
 	$ python3 glob_question.py
 	
-	dir/file2.txt
-	dir/fileb.txt
-	dir/filea.txt
 	dir/file1.txt
+	dir/file2.txt
+	dir/filea.txt
+	dir/fileb.txt
 
 .. {{{end}}}
 
@@ -167,8 +169,8 @@ range value could be written ``[0123456789]``.
 
 	$ python3 glob_charrange.py
 	
-	dir/file2.txt
 	dir/file1.txt
+	dir/file2.txt
 
 .. {{{end}}}
 
