@@ -5,6 +5,7 @@
 .. spelling::
 
    wildcard
+   Wildcard
    Wildcards
    globbing
 
