@@ -328,7 +328,7 @@ def html_page_context(app, pagename, templatename, context, doctree):
     # Only show comments when we are rendering a page inside a module
     # directory, to prevent people from commenting on the main page,
     # about page, index, etc.
-    context['show_comments'] = False  #'/' in pagename
+    context['show_comments'] = '/' in pagename
 
     # Use the last modified date from git instead of applying a single
     # value to the entire site.
