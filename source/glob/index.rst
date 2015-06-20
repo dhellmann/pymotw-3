@@ -177,11 +177,12 @@ range value could be written ``[0123456789]``.
 
 .. seealso::
 
-    `glob <http://docs.python.org/library/glob.html>`_
-        The standard library documentation for this module.
+    * `glob <http://docs.python.org/3/library/glob.html>`_ -- The
+      standard library documentation for this module.
 
-    `Pattern Matching Notation <http://www.opengroup.org/onlinepubs/000095399/utilities/xcu_chap02.html#tag_02_13>`_
-        An explanation of globbing from The Open Group's Shell Command Language specification.
+    * `Pattern Matching Notation
+      <http://www.opengroup.org/onlinepubs/000095399/utilities/xcu_chap02.html#tag_02_13>`_
+      -- An explanation of globbing from The Open Group's Shell
+      Command Language specification.
 
-    :mod:`fnmatch`
-        Filename matching implementation.
+    * :mod:`fnmatch` -- Filename matching implementation.
