@@ -409,6 +409,30 @@ div.admonition dt {
 	text-decoration: none;
 }
 
+#sidebar-nav {
+	border-top: 2px solid @grey-highlight;
+	border-bottom: 2px solid @grey-highlight;
+}
+#sidebar-nav h5 {
+	margin: 0.25em 0;  /* reduce margin from pure defaults */
+}
+#sidebar-nav ul {
+	padding: 0;  /* turn off padding from pure defaults */
+	margin-top: 0;  /* turn off margin from pure defaults */
+}
+#sidebar-nav ul li {
+	font-size: 90%;
+	list-style-type: none;
+	/* produce a hanging indent by shifting the whole element right and
+	   then changing the indent setting to move the first line back to
+	   the left */
+	padding-left: 1em;
+	text-indent: -1em;
+}
+#sidebar-nav ul li a {
+	text-decoration: none;
+}
+
 #sidebar-subscribe {
 	padding-left: 4em;
 }

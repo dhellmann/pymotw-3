@@ -1,0 +1,15 @@
+{%- if next or prev %}
+<div id="sidebar-nav">
+  <h5>Navigation</h5>
+  <ul>
+{%- if prev %}
+    <li><a href="{{ prev.link|e }}"
+           title="{{ _('previous chapter') }}"><i class="fa fa-arrow-circle-left"></i>{{ prev.title }}</a></li>
+{%- endif %}
+{%- if next %}
+    <li><a href="{{ next.link|e }}"
+           title="{{ _('next chapter') }}"><i class="fa fa-arrow-circle-right"></i>{{ next.title }}</a></li>
+{%- endif %}
+  </ul>
+</div>
+{%- endif %}

@@ -167,9 +167,9 @@ html_sidebars = {
     'index': ['sidebar_subscribe.html'] + no_toc_sidebars,
     'genindex': no_toc_sidebars,
     'py-modindex': no_toc_sidebars,
-    'frameworks': no_toc_sidebars,
     '**': [
         'sidebar_toc.html',
+        'sidebar_nav.html',
         'sidebar_book.html',
         'sidebar_ads.html',
         'sidebar_examples.html',
