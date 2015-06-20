@@ -2,6 +2,12 @@
  glob -- Filename Pattern Matching
 ===================================
 
+.. spelling::
+
+   wildcard
+   Wildcards
+   globbing
+
 .. module:: glob
     :synopsis: Use Unix shell rules to find filenames matching a pattern.
 
