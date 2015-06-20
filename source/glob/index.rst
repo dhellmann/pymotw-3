@@ -6,7 +6,6 @@
     :synopsis: Use Unix shell rules to find filenames matching a pattern.
 
 :Purpose: Use Unix shell rules to find filenames matching a pattern.
-:Python Version: 1.4 and later
 
 Even though the :mod:`glob` API is small, the module packs a lot of
 power. It is useful in any situation where a program needs to look for
@@ -39,8 +38,8 @@ present in the current working directory:
 
 ::
 
-	$ python glob_maketestdata.py
-
+	$ python3 glob_maketestdata.py
+	
 	dir
 	dir/file.txt
 	dir/file1.txt
@@ -74,14 +73,14 @@ without recursing further into subdirectories.
 
 ::
 
-	$ python glob_asterisk.py
-
-	dir/file.txt
-	dir/file1.txt
-	dir/file2.txt
-	dir/filea.txt
-	dir/fileb.txt
+	$ python3 glob_asterisk.py
+	
 	dir/subdir
+	dir/file.txt
+	dir/file2.txt
+	dir/fileb.txt
+	dir/filea.txt
+	dir/file1.txt
 
 .. {{{end}}}
 
@@ -102,12 +101,12 @@ directory.
 
 ::
 
-	$ python glob_subdir.py
-
+	$ python3 glob_subdir.py
+	
 	Named explicitly:
-		dir/subdir/subfile.txt
+		 dir/subdir/subfile.txt
 	Named with wildcard:
-		dir/subdir/subfile.txt
+		 dir/subdir/subfile.txt
 
 .. {{{end}}}
 
@@ -134,12 +133,12 @@ The previous example matches all of the filenames that begin with
 
 ::
 
-	$ python glob_question.py
-
-	dir/file1.txt
+	$ python3 glob_question.py
+	
 	dir/file2.txt
-	dir/filea.txt
 	dir/fileb.txt
+	dir/filea.txt
+	dir/file1.txt
 
 .. {{{end}}}
 
@@ -166,10 +165,10 @@ range value could be written ``[0123456789]``.
 
 ::
 
-	$ python glob_charrange.py
-
-	dir/file1.txt
+	$ python3 glob_charrange.py
+	
 	dir/file2.txt
+	dir/file1.txt
 
 .. {{{end}}}
 

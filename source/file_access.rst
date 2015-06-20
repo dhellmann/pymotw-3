@@ -71,20 +71,16 @@ a file, but does not reside on disk.
 .. toctree::
     :maxdepth: 1
     
-    ospath/index
     glob/index
+
+..
+    ospath/index
     linecache/index
     tempfile/index
     shutil/index
     mmap/index
     codecs/index
     StringIO/index
-
-.. only:: bonus
-
-   .. toctree::
-      :maxdepth: 2
-
-      fnmatch/index
-      dircache/index
-      filecmp/index
+    fnmatch/index
+    dircache/index
+    filecmp/index

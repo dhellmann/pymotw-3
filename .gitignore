@@ -2,3 +2,4 @@ build
 module
 source/_themes/pymotw/static/pymotw.css
 /order.txt
+source/glob/dir
