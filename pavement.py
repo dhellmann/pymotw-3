@@ -94,7 +94,7 @@ def css(options):
     file_base = 'source/_themes/pymotw/static/pymotw'
     outfile = path(file_base + '.css')
     if not outfile.exists() or path(file_base + '.less').mtime > outfile.mtime:
-        sh('lessc -x %(file_base)s.less > %(file_base)s.css' % {
+        sh('lessc %(file_base)s.less > %(file_base)s.css' % {
             'file_base': file_base,
         })
         path(file_base + '.css').copy(
