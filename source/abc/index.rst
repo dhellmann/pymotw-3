@@ -3,7 +3,7 @@
 ==============================
 
 .. module:: abc
-    :synopsis: Abstract Base Classes
+   :synopsis: Abstract Base Classes
 
 :Purpose: Define and use abstract base classes for interface verification.
 
@@ -29,10 +29,10 @@ base.  If an application or library requires a particular API,
 object against the abstract class.
 
 To start, define an abstract base class to represent the API of a set
-of plugins for saving and loading data.  Set the :attr:`__metaclass__`
-for the new base class to :class:`ABCMeta`, and use the
-:func:`abstractmethod` decorator to establish the public API for the
-class.  The following examples use ``abc_base.py``, which contains:
+of plug-ins for saving and loading data.  Set the meta-class for the
+new base class to :class:`ABCMeta`, and use the :func:`abstractmethod`
+decorator to establish the public API for the class.  The following
+examples use ``abc_base.py``, which contains:
 
 .. include:: abc_base.py
     :literal:
@@ -43,10 +43,11 @@ Registering a Concrete Class
 ============================
 
 There are two ways to indicate that a concrete class implements an
-abstract: register the class or subclass directly from the abstract
-base.  Use the :func:`register` class method to add a concrete class
-explicitly when the class provides the required API, but is not part
-of the inheritance tree of the abstract base class.
+abstract API: either explicitly register the class or create a new
+subclass directly from the abstract base.  Use the :func:`register`
+class method to add a concrete class explicitly when the class
+provides the required API, but is not part of the inheritance tree of
+the abstract base class.
 
 .. include:: abc_register.py
     :literal:
@@ -97,7 +98,7 @@ recognize :class:`PluginImplementation` as implementing the abstract
 
 .. {{{end}}}
 
-A side-effect of using direct subclassing is it is possible to find
+A side effect of using direct subclassing is it is possible to find
 all of the implementations of a plugin by asking the base class for
 the list of known classes derived from it (this is not an :mod:`abc`
 feature, all classes can do this).
@@ -171,7 +172,7 @@ provide an overriding method with (potentially) custom logic.
 Since :func:`ABCWithConcreteImplementation` is an abstract base class,
 it is not possible to instantiate it to use it directly.  Subclasses
 *must* provide an override for :func:`retrieve_values`, and in this
-case the concrete class massages the data before returning it at all.
+case the concrete class sorts the data before returning it.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'abc_concrete_method.py'))
@@ -223,14 +224,14 @@ using a class attribute.
 
 .. {{{end}}}
 
-Abstract read/write properties can also be defined.
+Abstract read-write properties can also be defined.
 
 .. include:: abc_abstractproperty_rw.py
     :literal:
     :start-after: #end_pymotw_header
 
 The concrete property must be defined the same way as the abstract
-property.  Trying to override a read/write property in
+property.  Trying to override a read-write property in
 :class:`PartialImplementation` with one that is read-only does not
 work.
 
@@ -252,7 +253,7 @@ work.
 
 .. {{{end}}}
 
-To use the decorator syntax with read/write abstract properties,
+To use the decorator syntax with read-write abstract properties,
 the methods to get and set the value must be named the same.
 
 .. include:: abc_abstractproperty_rw_deco.py
