@@ -10,13 +10,15 @@
 import abc
 
 
-class Base(object, metaclass=abc.ABCMeta):
+class Base(abc.ABC):
 
-    @abc.abstractproperty
+    @property
+    @abc.abstractmethod
     def value(self):
         return 'Should never get here'
 
-    @abc.abstractproperty
+    @property
+    @abc.abstractmethod
     def constant(self):
         return 'Should never get here'
 

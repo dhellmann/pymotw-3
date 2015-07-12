@@ -11,8 +11,7 @@ import abc
 import io
 
 
-class ABCWithConcreteImplementation(object,
-                                    metaclass=abc.ABCMeta):
+class ABCWithConcreteImplementation(abc.ABC):
 
     @abc.abstractmethod
     def retrieve_values(self, input):

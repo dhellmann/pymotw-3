@@ -30,9 +30,9 @@ object against the abstract class.
 
 To start, define an abstract base class to represent the API of a set
 of plug-ins for saving and loading data.  Set the meta-class for the
-new base class to :class:`ABCMeta`, and use the :func:`abstractmethod`
-decorator to establish the public API for the class.  The following
-examples use ``abc_base.py``, which contains:
+new base class to :class:`ABCMeta`, and using decorators to establish
+the public API for the class.  The following examples use
+``abc_base.py``, which contains:
 
 .. include:: abc_base.py
     :literal:
@@ -45,9 +45,9 @@ Registering a Concrete Class
 There are two ways to indicate that a concrete class implements an
 abstract API: either explicitly register the class or create a new
 subclass directly from the abstract base.  Use the :func:`register`
-class method to add a concrete class explicitly when the class
-provides the required API, but is not part of the inheritance tree of
-the abstract base class.
+class method as a decorator on a concrete class to add it explicitly
+when the class provides the required API, but is not part of the
+inheritance tree of the abstract base class.
 
 .. include:: abc_register.py
     :literal:
@@ -70,6 +70,7 @@ treat it as though it is derived from :class:`PluginBase`.
 	Instance: True
 
 .. {{{end}}}
+
 
 Implementation Through Subclassing
 ==================================
@@ -123,8 +124,35 @@ because it is not actually derived from the base.
 
 .. {{{end}}}
 
+Helper Base Class
+=================
+
+Forgetting to set the meta-class properly means the concrete
+implementations do not have their APIs enforced. To make it easier to
+set up the abstract class properly, a base class is provided that sets
+the meta-class.
+
+.. include:: abc_abc_base.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+To create a new abstract class, simply inherit from :class:`ABC`.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'abc_abc_base.py'))
+.. }}}
+
+::
+
+	$ python3 abc_abc_base.py
+	
+	Subclass: True
+	Instance: True
+
+.. {{{end}}}
+
 Incomplete Implementations
---------------------------
+==========================
 
 Another benefit of subclassing directly from the abstract base class
 is that the subclass cannot be instantiated unless it fully implements
@@ -195,8 +223,8 @@ Abstract Properties
 ===================
 
 If an API specification includes attributes in addition to methods, it
-can require the attributes in concrete classes by defining them with
-``@abstractproperty``.
+can require the attributes in concrete classes by combining
+:func:`abstractmethod` with :func:`property`.
 
 .. include:: abc_abstractproperty.py
     :literal:
@@ -256,25 +284,36 @@ work.
 To use the decorator syntax with read-write abstract properties,
 the methods to get and set the value must be named the same.
 
-.. include:: abc_abstractproperty_rw_deco.py
-    :literal:
-    :start-after: #end_pymotw_header
+Abstract Class and Static Methods
+=================================
 
-Both methods in the :class:`Base` and :class:`Implementation` classes
-are named :func:`value`, although they have different signatures.
+Class and static methods can also be marked as abstract.
+
+.. include:: abc_class_static.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+Although the class method is invoked on the class rather than an
+instance, it still prevents the class from being instantiated if it is
+not defined.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'abc_abstractproperty_rw_deco.py'))
+.. cog.out(run_script(cog.inFile, 'abc_class_static.py'))
 .. }}}
 
 ::
 
-	$ python3 abc_abstractproperty_rw_deco.py
+	$ python3 abc_class_static.py
 	
-	Implementation.value: Default value
-	Changed value: New value
+	ERROR: Can't instantiate abstract class Base with abstract metho
+	ds const_behavior, factory
+	Implementation.const_behavior : Static behavior differs
 
 .. {{{end}}}
+
+
+
+
 
 .. seealso::
 

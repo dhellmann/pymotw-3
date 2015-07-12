@@ -15,6 +15,7 @@ class LocalBaseClass(object):
     pass
 
 
+@PluginBase.register
 class RegisteredImplementation(LocalBaseClass):
 
     def load(self, input):
@@ -23,8 +24,6 @@ class RegisteredImplementation(LocalBaseClass):
     def save(self, output, data):
         return output.write(data)
 
-
-PluginBase.register(RegisteredImplementation)
 
 if __name__ == '__main__':
     print('Subclass:', issubclass(RegisteredImplementation,

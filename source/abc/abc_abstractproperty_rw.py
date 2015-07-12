@@ -10,20 +10,23 @@
 import abc
 
 
-class Base(object, metaclass=abc.ABCMeta):
+class Base(abc.ABC):
 
-    def value_getter(self):
+    @property
+    @abc.abstractmethod
+    def value(self):
         return 'Should never see this'
 
-    def value_setter(self, newvalue):
+    @value.setter
+    @abc.abstractmethod
+    def value(self, newvalue):
         return
-
-    value = abc.abstractproperty(value_getter, value_setter)
 
 
 class PartialImplementation(Base):
 
-    @abc.abstractproperty
+    @property
+    @abc.abstractmethod
     def value(self):
         return 'Read-only'
 
@@ -32,13 +35,13 @@ class Implementation(Base):
 
     _value = 'Default value'
 
-    def value_getter(self):
+    @property
+    def value(self):
         return self._value
 
-    def value_setter(self, newvalue):
+    @value.setter
+    def value(self, newvalue):
         self._value = newvalue
-
-    value = property(value_getter, value_setter)
 
 
 try:
