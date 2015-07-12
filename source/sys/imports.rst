@@ -1,5 +1,9 @@
 .. _sys-imports:
 
+.. spelling::
+
+   metafinder
+
 ===================
 Modules and Imports
 ===================

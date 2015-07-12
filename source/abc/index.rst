@@ -2,6 +2,11 @@
  abc -- Abstract Base Classes
 ==============================
 
+.. spelling::
+
+   Subclassing
+   subclassing
+
 .. module:: abc
    :synopsis: Abstract Base Classes
 
@@ -100,7 +105,7 @@ recognize :class:`PluginImplementation` as implementing the abstract
 .. {{{end}}}
 
 A side effect of using direct subclassing is it is possible to find
-all of the implementations of a plugin by asking the base class for
+all of the implementations of a plug-in by asking the base class for
 the list of known classes derived from it (this is not an :mod:`abc`
 feature, all classes can do this).
 
@@ -311,10 +316,6 @@ not defined.
 
 .. {{{end}}}
 
-
-
-
-
 .. seealso::
 
     * `abc <http://docs.python.org/library/abc.html>`_ -- The standard
@@ -329,7 +330,7 @@ not defined.
 
     * `Wikipedia: Strategy Pattern
       <http://en.wikipedia.org/wiki/Strategy_pattern>`_ -- Description
-      and examples of the strategy pattern, a common plugin
+      and examples of the strategy pattern, a common plug-in
       implementation pattern.
 
     * `Dynamic Code Patterns: Extending Your Applications With Plugins
