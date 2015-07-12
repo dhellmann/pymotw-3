@@ -161,6 +161,20 @@ optparse
 Summary of Changes to Modules
 =============================
 
+.. _porting-abc:
+
+abc
+---
+
+.. index::
+   pair: porting; abc
+
+The :func:`abstractproperty`, :func:`abstractclassmethod`, and
+:func:`abstractstaticmethod` decorators are deprecated. Combining
+:func:`abstractmethod` with the :func:`property`, :func:`classmethod`,
+and :func:`staticmethod` decorators works as expected
+(:pyissue:`11610`).
+
 .. _porting-argparse:
 
 argparse

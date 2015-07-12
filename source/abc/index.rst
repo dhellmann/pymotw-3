@@ -336,6 +336,8 @@ not defined.
       <http://pyvideo.org/video/1789/dynamic-code-patterns-extending-your-application>`__
       -- PyCon 2013 presentation by Doug Hellmann
 
+    * :ref:`Porting notes for abc <porting-abc>`
+
 ..  This video appears to have been deleted, and the old PyCon 2009
     site appears to be gone.
     * `Plugins and monkeypatching
