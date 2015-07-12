@@ -259,9 +259,9 @@ Abstract read-write properties can also be defined.
     :start-after: #end_pymotw_header
 
 The concrete property must be defined the same way as the abstract
-property.  Trying to override a read-write property in
-:class:`PartialImplementation` with one that is read-only does not
-work.
+property.  Overriding a read-write property in
+:class:`PartialImplementation` with one that is read-only leaves the
+property read-only.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'abc_abstractproperty_rw.py', 
@@ -274,8 +274,8 @@ work.
 	
 	ERROR: Can't instantiate abstract class Base with abstract
 	methods value
-	ERROR: Can't instantiate abstract class PartialImplementation
-	with abstract methods value
+	PartialImplementation.value: Read-only
+	ERROR: can't set attribute
 	Implementation.value: Default value
 	Changed value: New value
 

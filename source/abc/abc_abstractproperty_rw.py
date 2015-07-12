@@ -26,7 +26,6 @@ class Base(abc.ABC):
 class PartialImplementation(Base):
 
     @property
-    @abc.abstractmethod
     def value(self):
         return 'Read-only'
 
@@ -52,6 +51,8 @@ except Exception as err:
 
 try:
     p = PartialImplementation()
+    print('PartialImplementation.value:', p.value)
+    p.value = 'Alteration'
     print('PartialImplementation.value:', p.value)
 except Exception as err:
     print('ERROR:', str(err))
