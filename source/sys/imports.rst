@@ -509,9 +509,8 @@ stored as files on a file system).
     :start-after: #end_pymotw_header
 
 :func:`get_data` takes a path based on the module or package that owns
-the data, and returns the contents of the resource "file" as a string,
-or raises :class:`IOError` if the resource does not
-exist.
+the data, and returns the contents of the resource "file" as a byte
+string, or raises :class:`IOError` if the resource does not exist.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'sys_shelve_importer_get_data.py', 
