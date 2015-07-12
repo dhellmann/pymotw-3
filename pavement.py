@@ -40,12 +40,12 @@ options(
         endoutput='{{{end}}}',
     ),
 
-    # pdf=Bunch(
-    #     builder='latex',
-    #     docroot='.',
-    #     builddir='build',
-    #     sourcedir='source',
-    # ),
+    pdf=Bunch(
+        builder='latex',
+        docroot='.',
+        builddir='build',
+        sourcedir='source',
+    ),
 
     website=Bunch(
         # What server hosts the website?
