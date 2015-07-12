@@ -36,7 +36,7 @@ class MyClass:
 
 
 objects = [
-    [], (), {}, 'c', 'string', 1, 2.3,
+    [], (), {}, 'c', 'string', b'bytes', 1, 2.3,
     MyClass, MyClass(),
 ]
 
