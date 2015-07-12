@@ -292,6 +292,12 @@ are named :func:`value`, although they have different signatures.
       and examples of the strategy pattern, a common plugin
       implementation pattern.
 
+    * `Dynamic Code Patterns: Extending Your Applications With Plugins
+      <http://pyvideo.org/video/1789/dynamic-code-patterns-extending-your-application>`__
+      -- PyCon 2013 presentation by Doug Hellmann
+
+..  This video appears to have been deleted, and the old PyCon 2009
+    site appears to be gone.
     * `Plugins and monkeypatching
       <http://us.pycon.org/2009/conference/schedule/event/47/>`_ --
       PyCon 2009 presentation by Dr. André Roberge
