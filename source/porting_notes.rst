@@ -45,10 +45,11 @@ For more information about porting to Python 3, refer to
 Renamed Modules
 ===============
 
-Many standard library modules were renamed between Python 2 and 3. All
-of the new module names use consistent lower case, and some have been
-moved into packages to better organize related modules. A complete
-list of the renames can be found in the dictionary
+Many standard library modules were renamed between Python 2 and 3 as
+part of :pep:`3108` (*Standard Library Reorganization*). All of the
+new module names use consistent lower case, and some have been moved
+into packages to better organize related modules. A complete list of
+the renames can be found in the dictionary
 ``lib2to3.fixes.fix_imports.MAPPING`` (the keys are the Python 2 name
 and the values are the Python 3 name).
 
@@ -126,6 +127,8 @@ and the values are the Python 3 name).
      your code to import renamed modules using a single import
      statement, automatically redirecting the import to the correct
      version of the name depending on the version of Python.
+
+   * :pep:`3108` -- Standard Library Reorganization
 
 .. _six: http://pythonhosted.org/six/
 
