@@ -566,38 +566,47 @@ use the value to find modules.
     :literal:
     :start-after: #end_pymotw_header
 
-A cache value of ``None`` means to use the default file system
-loader. Directories on the path that do not exist are associated with
-an :class:`imp.NullImporter` instance, since they cannot be used to
-import modules. In the example output, several
-:class:`zipimport.zipimporter` instances are used to manage EGG files
-found on the path.
+A :class:`FileFinder` is used for path locations found on the file
+system. Locations on the path not supported by any finder are
+associated with a ``None``, since they cannot be used to import
+modules.
 
 .. Do not use cog because the output includes virtualenv settings.
 .. cog.out(run_script(cog.inFile, 'sys_path_importer_cache.py', break_lines_at=65))
 
+.. cog.out(run_script(cog.inFile, 'sys_path_importer_cache.py'))
+
 ::
 
-   PATH:
-     /Users/dhellmann/Documents/PyMOTW/pymotw-3/source/sys
-     .../lib/python34.zip
-     .../lib/python3.4
-     .../lib/python3.4/plat-darwin
-     .../lib/python3.4/lib-dynload
-     /Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4
-     /Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/plat-darwin
-     .../lib/python3.4/site-packages
-
-   IMPORTERS:
-     .../lib/python3.4/plat-darwin: FileFinder('.../lib/python3.4/plat-darwin')
-     .../lib/python3.4: FileFinder('.../lib/python3.4/')
-     .../lib/python3.4/lib-dynload: FileFinder('.../lib/python3.4/lib-dynload')
-     .../lib/python3.4/site-packages: FileFinder('.../lib/python3.4/site-packages')
-     sys_path_importer_cache.py: None
-     .../lib/python3.4/lib-dynload: FileFinder('.../lib/python3.4/lib-dynload')
-     .../lib/python3.4/plat-darwin: FileFinder('.../lib/python3.4/plat-darwin')
-     .../lib/python3.4/encodings: FileFinder('.../lib/python3.4/encodings')
-     .../lib/python34.zip: None
+	$ python3 sys_path_importer_cache.py
+	
+	PATH:
+	  /Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/sys
+	  .../lib/python34.zip
+	  .../lib/python3.4
+	  .../lib/python3.4/plat-darwin
+	  .../lib/python3.4/lib-dynload
+	  .../lib/python3.4/site-packages
+	
+	IMPORTERS:
+	  sys_path_importer_cache.py: None
+	  .../lib/python3.4/encodings: FileFinder(
+          '.../lib/python3.4/encodings')
+	  .../lib/python3.4/lib-dynload: FileFinder(
+          '.../lib/python3.4/lib-dynload')
+	  .../lib/python3.4/lib-dynload: FileFinder(
+          '.../lib/python3.4/lib-dynload')
+	  .../lib/python3.4/site-packages: FileFinder(
+          '.../lib/python3.4/site-packages')
+	  .../lib/python3.4: FileFinder(
+          '.../lib/python3.4/')
+	  .../lib/python3.4/plat-darwin: FileFinder(
+          '.../lib/python3.4/plat-darwin')
+	  .../lib/python3.4: FileFinder(
+          '.../lib/python3.4')
+	  .../lib/python34.zip: None
+	  .../lib/python3.4/plat-darwin: FileFinder(
+          '.../lib/python3.4/plat-darwin')
 
 Meta Path
 =========
