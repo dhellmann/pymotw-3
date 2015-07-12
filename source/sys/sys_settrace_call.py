@@ -26,11 +26,11 @@ def trace_calls(frame, event, arg):
 
 
 def b():
-    print('in b()\n')
+    print('inside b()\n')
 
 
 def a():
-    print('in a()\n')
+    print('inside a()\n')
     b()
 
 sys.settrace(trace_calls)

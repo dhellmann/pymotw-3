@@ -22,12 +22,12 @@ def trace_calls_and_returns(frame, event, arg):
 
 
 def b():
-    print('in b()')
+    print('inside b()')
     return 'response_from_b '
 
 
 def a():
-    print('in a()')
+    print('inside a()')
     val = b()
     return val * 2
 

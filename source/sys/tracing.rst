@@ -8,8 +8,8 @@ There are two ways to inject code to watch a program run: *tracing*
 and *profiling*.  They are similar, but intended for different
 purposes and so have different constraints.  The easiest, but least
 efficient, way to monitor a program is through a *trace hook*, which
-can be used for writing a debugger, code coverage monitoring, or many
-other purposes.
+can be used to write a debugger, monitor code coverage, or achieve
+many other purposes.
 
 The trace hook is modified by passing a callback function to
 :func:`sys.settrace`.  The callback will receive three arguments: the
@@ -18,25 +18,34 @@ notification, and an event-specific argument value.  :table:`Event
 Hooks for settrace()` lists the seven event types for different
 levels of information that occur as a program is being executed.
 
-.. table:: Event Hooks for settrace()
+.. list-table:: Event Hooks for settrace()
+   :header-rows: 1
+   :widths: 15 30 30
 
-   +-------------------+-------------------------------------+------------------------------------------+
-   | Event             | When it occurs                      | Argument value                           |
-   +===================+=====================================+==========================================+
-   |    call           | Before a function is executed.      | ``None``                                 |
-   +-------------------+-------------------------------------+------------------------------------------+
-   |    line           | Before a line is executed.          | ``None``                                 |
-   +-------------------+-------------------------------------+------------------------------------------+
-   |    return         | Before a function returns.          | The value being returned.                |
-   +-------------------+-------------------------------------+------------------------------------------+
-   |    exception      | After an exception occurs.          | The (exception, value, traceback) tuple. |
-   +-------------------+-------------------------------------+------------------------------------------+
-   |    c_call         | Before a C function is called.      | The C function object.                   |
-   +-------------------+-------------------------------------+------------------------------------------+
-   |    c_return       | After a C function returns.         | ``None``                                 |
-   +-------------------+-------------------------------------+------------------------------------------+
-   |    c_exception    | After a C function throws an error. | ``None``                                 |
-   +-------------------+-------------------------------------+------------------------------------------+
+   * - Event
+     - When it occurs
+     - Argument value
+   * - call
+     - Before a line is executed
+     - ``None``
+   * - line
+     - Before a line is executed
+     - ``None``
+   * - return
+     - Before a function returns
+     - The value being returned
+   * - exception
+     - After an exception occurs
+     - The (exception, value, traceback) tuple
+   * - c_call
+     - Before a C function is called
+     - The C function object
+   * - c_return
+     - After a C function returns
+     - ``None``
+   * - c_exception
+     - After a C function throws an error
+     - ``None``
 
 Tracing Function Calls
 ======================
@@ -62,12 +71,12 @@ write to :const:`sys.stdout`.
 	* Call to a
 	*  on line 32 of sys_settrace_call.py
 	*  from line 37 of sys_settrace_call.py
-	in a()
+	inside a()
 	
 	* Call to b
 	*  on line 28 of sys_settrace_call.py
 	*  from line 34 of sys_settrace_call.py
-	in b()
+	inside b()
 	
 
 .. {{{end}}}
@@ -131,9 +140,9 @@ when a function is called, so the return value can be monitored.
 	$ python3 sys_settrace_return.py
 	
 	* Call to a on line 29 of sys_settrace_return.py
-	in a()
+	inside a()
 	* Call to b on line 24 of sys_settrace_return.py
-	in b()
+	inside b()
 	* b => response_from_b 
 	* a => response_from_b response_from_b 
 
