@@ -569,7 +569,8 @@ use the value to find modules.
 A :class:`FileFinder` is used for path locations found on the file
 system. Locations on the path not supported by any finder are
 associated with a ``None``, since they cannot be used to import
-modules.
+modules. The output below has been truncated due to formatting
+constraints.
 
 .. Do not use cog because the output includes virtualenv settings.
 .. cog.out(run_script(cog.inFile, 'sys_path_importer_cache.py', break_lines_at=65))
@@ -614,8 +615,8 @@ Meta Path
 The :data:`sys.meta_path` further extends the sources of potential
 imports by allowing a finder to be searched *before* the regular
 :data:`sys.path` is scanned. The API for a finder on the meta-path is
-the same as for a regular path. The difference is that the meta-finder
-is not limited to a single entry in :data:`sys.path`, it can search
+the same as for a regular path. The difference is that the metafinder
+is not limited to a single entry in :data:`sys.path` -- it can search
 anywhere at all.
 
 .. include:: sys_meta_path.py
@@ -625,7 +626,7 @@ anywhere at all.
 Each finder on the meta-path is interrogated before :data:`sys.path`
 is searched, so there is always an opportunity to have a central
 importer load modules without explicitly modifying :data:`sys.path`.
-Once the module is "found", the loader API works in the same way as
+Once the module is "found," the loader API works in the same way as
 for regular loaders (although this example is truncated for
 simplicity).
 
