@@ -23,8 +23,8 @@ errors.
     :start-after: #end_pymotw_header
 
 Since there is no :command:`try:except` block around the line where
-the exception is raised the following :command:`print` statement is
-not run, even though the except hook is set.
+the exception is raised the following call to :func:`print` is not
+run, even though the except hook is set.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'sys_excepthook.py', ignore_error=True,
@@ -65,7 +65,7 @@ This example avoids introducing a circular reference between the
 traceback object and a local variable in the current frame by ignoring
 that part of the return value from :func:`exc_info`.  If the traceback
 is needed (for example, so it can be logged), explicitly delete the
-local variable (using :command:`del`) to avoid cycles.
+local variable (using :keyword:`del`) to avoid cycles.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'sys_exc_info.py',
@@ -122,4 +122,4 @@ need to use the values directly.
 
     * :mod:`pdb` -- Python debugger
 
-    * :mod:`traceback` -- Module for working with tracebacks.
+    * :mod:`traceback` -- Module for working with tracebacks

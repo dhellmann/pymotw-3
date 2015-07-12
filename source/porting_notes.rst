@@ -257,11 +257,9 @@ The global exception tracking variables :data:`sys.exc_type`,
 :data:`sys.exc_value`, and :data:`sys.exc_traceback` have been
 removed. The function :func:`sys.exc_clear` has also been removed.
 
-.. issue 4285
-
 The variable :data:`sys.version_info` is now a :py:class:`namedtuple`
 instance with attributes ``major``, ``minor``, ``micro``,
-``releaselevel``, and ``serial``.
+``releaselevel``, and ``serial`` (:pyissue:`4285`).
 
 .. http://mail.python.org/pipermail/python-dev/2009-October/093321.html
 

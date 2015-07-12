@@ -9,18 +9,18 @@
           data into a subset of ASCII suitable for transmission using
           plaintext protocols.
 
-The base64, base32, and base16 encodings convert 8 bit bytes to values
-with 6, 5, or 4 bits of useful data per byte, allowing non-ASCII bytes
-to be encoded as ASCII characters for transmission over protocols that
-require plain ASCII, such as SMTP.  The *base* values correspond to
-the length of the alphabet used in each encoding.  There are also
-URL-safe variations of the original encodings that use slightly
-different alphabets.
+The base64, base32, base16, and base85 encodings convert 8 bit bytes
+to values that fit inside the ASCII range of printable characters,
+trading more bits to represent the data for compatibility with systems
+that only support ASCII data, such as SMTP.  The *base* values
+correspond to the length of the alphabet used in each encoding.  There
+are also URL-safe variations of the original encodings that use
+slightly different alphabets.
 
 Base 64 Encoding
 ================
 
-A basic example of encoding some text looks like this:
+This is a basic example of encoding some text.
 
 .. include:: base64_b64encode.py
     :literal:
@@ -71,7 +71,7 @@ The encoding process looks at each sequence of 24 bits in the input
 (three bytes) and encodes those same 24 bits spread over four bytes in
 the output.  The equal signs at the end of the output are padding
 inserted because the number of bits in the original string was not
-evenly divisible by 24 in this example.
+evenly divisible by 24, in this example.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'base64_b64decode.py'))
@@ -95,9 +95,9 @@ that the decoded value is text.
 URL-safe Variations
 ===================
 
-Because the default base64 alphabet may use ``+`` and ``/``, both of
-which are used in URLs, it is often necessary to use an alternate
-encoding with substitutes for those characters.
+Because the default base64 alphabet may use ``+`` and ``/``, and those
+two characters are used in URLs, it is often necessary to use an
+alternate encoding with substitutes for those characters.
 
 .. include:: base64_urlsafe.py
     :literal:
@@ -129,14 +129,15 @@ underscore (``_``).  Otherwise, the alphabet is the same.
 Other Encodings
 ===============
 
-Besides base 64, the module provides functions for working with base
-85, 32, and 16 (hex) encoded data.
+Besides Base64, the module provides functions for working with Base85,
+Base32, and Base16 (hex) encoded data.
 
 .. include:: base64_base32.py
     :literal:
     :start-after: #end_pymotw_header
 
-Base 32 output:
+The Base32 alphabet includes the 26 uppercase letters from the ASCII
+set and the digits 2 through 7.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'base64_base32.py'))
@@ -153,7 +154,7 @@ Base 32 output:
 
 .. {{{end}}}
 
-The base 16 functions work with the hexadecimal alphabet.
+The Base16 functions work with the hexadecimal alphabet.
 
 .. include:: base64_base16.py
     :literal:
@@ -177,17 +178,17 @@ encoded format takes up more space.
 
 .. {{{end}}}
 
-The base 85 functions use an expanded alphabet that is more
+The Base85 functions use an expanded alphabet that is more
 space-efficient than base 64.
 
 .. include:: base64_base85.py
    :literal:
    :start-after: #end_pymotw_header
 
-There are several base 85 encodings, and different variations are used
+There are several Base85 encodings and different variations are used
 in Mercurial, git, and the PDF file format. Python includes two
 implementations, :func:`b85encode` implements the version used in Git
-and Mercurial and :func:`a85encode` implements the Ascii85 variant
+and Mercurial while :func:`a85encode` implements the Ascii85 variant
 used by PDF files.
 
 .. {{{cog

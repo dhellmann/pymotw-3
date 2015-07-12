@@ -56,7 +56,7 @@ as :const:`sys.platform`.
     :literal:
     :start-after: #end_pymotw_header
 
-For most Unix systems, the value comes from combining the output of
+For most UNIX systems, the value comes from combining the output of
 ``uname -s`` with the first part of the version in ``uname -r``. For
 other operating systems there is a hard-coded table of values.
 
@@ -171,9 +171,9 @@ map to the flags settings.
 Unicode Defaults
 ================
 
-To get the name of the default Unicode encoding being used by the
-interpreter, use :func:`getdefaultencoding`.  The value is set as the
-interpreter is initialized, and cannot be changed.
+To get the name of the default Unicode encoding the interpreter is
+using, call :func:`getdefaultencoding`.  The value is set during
+start-up, and cannot be changed.
 
 The internal encoding default and the file system encoding may be
 different for some operating systems, so there is a separate way to
@@ -186,7 +186,7 @@ returns an OS-specific (*not* file system-specific) value.
 
 Rather than relying on the global default encoding, most Unicode
 experts recommend making an application explicitly Unicode-aware. This
-provides two benefits: Different Unicode encodings for different data
+provides two benefits: different Unicode encodings for different data
 sources can be handled more cleanly, and the number of assumptions
 about encodings in the application code is reduced.
 
@@ -221,7 +221,7 @@ interactive interpreter.
     '... '
     >>>
 
-Either or both prompt can be changed to a different string
+Either or both prompt can be changed to a different string.
 
 ::
 
@@ -252,7 +252,7 @@ used, so the number in the prompt increases each time.
     [GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin
     Type "help", "copyright", "credits" or "license" for more
     information.
-    >>> from source.sys.sys_ps1 import LineCounter
+    >>> from sys_ps1 import LineCounter
     >>> import sys
     >>> sys.ps1 = LineCounter()
     (  1)>
@@ -281,11 +281,11 @@ reference later.
     [GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin
     Type "help", "copyright", "credits" or "license" for more
     information.
-    >>> import source.sys.sys_displayhook
+    >>> import sys_displayhook
     installing
     >>> 1 + 2
     
-      Previous: <source.sys.sys_displayhook.ExpressionCounter
+      Previous: <sys_displayhook.ExpressionCounter
       object at 0x1021035f8>
       New     : 3
     
@@ -335,5 +335,5 @@ installed from python.org.
 
     $ python3 sys_locations.py
 	
-    Interpreter executable: /Library/Frameworks/Python.framework/Versions/3.4/bin/python3.4
+    Interpreter executable: /Library/Frameworks/Python.framework/Versions/3.4/bin/python3
     Installation prefix   : /Library/Frameworks/Python.framework/Versions/3.4

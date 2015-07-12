@@ -50,15 +50,14 @@ interpreter, and is not passed to the program being run.
 
 .. seealso::
 
-    :mod:`argparse`
-        Modules for parsing command line arguments.
+    * :mod:`argparse` -- Module for parsing command line arguments.
 
 .. _sys-input-output:
 
 Input and Output Steams
 =======================
 
-Following the Unix paradigm, Python programs can access three file
+Following the UNIX paradigm, Python programs can access three file
 descriptors by default.
 
 .. include:: sys_stdio.py
@@ -103,8 +102,8 @@ intended for use with warning or error messages.
 
 .. seealso::
 
-    :mod:`subprocess` and :mod:`pipes`
-        Both subprocess and pipes have features for pipelining programs together.
+    * :mod:`subprocess` and :mod:`pipes` -- Both subprocess and pipes
+      have features for pipelining programs together.
 
 Returning Status
 ================
@@ -116,7 +115,7 @@ To return an exit code from a program, pass an integer value to
     :literal:
     :start-after: #end_pymotw_header
 
-A non-zero value means the program exited with an error.
+A nonzero value means the program exited with an error.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'sys_exit.py 0 ; echo "Exited $?"'))

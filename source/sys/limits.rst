@@ -1,8 +1,8 @@
 .. _sys-limits:
 
-============================
-Memory Management and Limits
-============================
+==============================
+ Memory Management and Limits
+==============================
 
 :mod:`sys` includes several functions for understanding and
 controlling memory usage.
@@ -19,8 +19,9 @@ reference count of an existing object, use :func:`getrefcount`.
     :literal:
     :start-after: #end_pymotw_header
 
-The count is actually one higher than expected because there is a
-temporary reference to the object held by :func:`getrefcount` itself.
+The value reported is actually one higher than expected because there
+is a temporary reference to the object held by :func:`getrefcount`
+itself.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'sys_getrefcount.py'))
@@ -68,6 +69,7 @@ objects are.
 	      dict : 288
 	       str : 50
 	       str : 55
+	     bytes : 38
 	       int : 28
 	     float : 24
 	      type : 976
@@ -196,8 +198,8 @@ Floating Point Values
 =====================
 
 The structure :data:`float_info` contains information about the
-floating point type representation used by the interpreter, based on
-the underlying system's float implementation.
+floating-point type representation used by the interpreter, based on
+the underlying system's :c:type:`float` implementation.
 
 .. include:: sys_float_info.py
     :literal:

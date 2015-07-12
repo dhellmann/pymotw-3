@@ -1,5 +1,5 @@
 ======================
-Unix-specific Services
+UNIX-specific Services
 ======================
 
 .. toctree::

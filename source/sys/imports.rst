@@ -6,7 +6,7 @@ Modules and Imports
 
 Most Python programs end up as a combination of several modules with a
 main application importing them. Whether using the features of the
-standard library, or organizing custom code in separate files to make
+standard library or organizing custom code in separate files to make
 it easier to maintain, understanding and managing the dependencies for
 a program is an important aspect of development. :mod:`sys` includes
 information about the modules available to an application, either as
@@ -37,13 +37,11 @@ The contents of :data:`sys.modules` change as new modules are imported.
 	
 	__main__, _bootlocale, _codecs, _collections_abc,
 	_frozen_importlib, _imp, _io, _locale, _sre, _stat, _thread,
-	_warnings, _weakref, _weakrefset, abc, builtins, codecs, copyreg
-	,
-	encodings, encodings.aliases, encodings.latin_1, encodings.utf_8
-	,
-	errno, genericpath, io, marshal, os, os.path, posix, posixpath,
-	re, signal, site, sre_compile, sre_constants, sre_parse, stat,
-	sys, textwrap, zipimport
+	_warnings, _weakref, _weakrefset, abc, builtins, codecs,
+	copyreg, encodings, encodings.aliases, encodings.latin_1,
+	encodings.utf_8, errno, genericpath, io, marshal, os, os.path,
+	posix, posixpath, re, signal, site, sre_compile, sre_constants,
+	sre_parse, stat, sys, textwrap, zipimport
 
 .. {{{end}}}
 
@@ -120,7 +118,7 @@ and then the global ``site-packages`` directory is listed last.
     .../lib/python3.4/site-packages
 
 
-The import search path list can be modified before starting the
+The import search-path list can be modified before starting the
 interpreter by setting the shell variable :data:`PYTHONPATH` to a
 colon-separated list of directories.
 
@@ -170,7 +168,7 @@ Custom Importers
 ================
 
 Modifying the search path lets a programmer control how standard
-Python modules are found, but what if a program needs to import code
+Python modules are found. But, what if a program needs to import code
 from somewhere other than the usual ``.py`` or ``.pyc`` files on the
 file system? :pep:`302` solves this problem by introducing the idea of
 *import hooks*, which can trap an attempt to find a module on the
@@ -209,7 +207,7 @@ real path on the file system. This test prevents the
 	Path hook: <class 'zipimport.zipimporter'>
 	Path hook: <function
 	FileFinder.path_hook.<locals>.path_hook_for_FileFinder at
-	0x1003c1b70>
+	0x1003c2b70>
 	Path hook: <class '__main__.NoisyImportFinder'>
 	importing target_module
 	Checking NoisyImportFinder_PATH_TRIGGER: works
@@ -274,8 +272,8 @@ The shelf is added to the import path the first time an import occurs
 after the path is modified. The finder recognizes the shelf and
 returns a loader, which is used for all imports from that shelf. The
 initial package-level import creates a new module object and then uses
-:command:`exec` to run the source loaded from the shelf, using the new
-module as the namespace so that names defined in the source are
+:command:`exec` to run the source loaded from the shelf. It uses the
+new module as the namespace so that names defined in the source are
 preserved as module-level attributes.
 
 .. {{{cog
@@ -306,12 +304,12 @@ preserved as module-level attributes.
 	  __file__   : /tmp/pymotw_import_example.shelve/package
 	  __path__   : ['/tmp/pymotw_import_example.shelve']
 	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x102
-	3baeb8>
+	4a0278>
 	
 	Global settings:
 	sys.modules entry:
 	<module 'package' (<sys_shelve_importer.ShelveLoader object at 0
-	x1023baeb8>)>
+	x1024a0278>)>
 
 .. {{{end}}}
 
@@ -368,7 +366,7 @@ constructs and returns a :class:`module` instance.
 	  __file__   : /tmp/pymotw_import_example.shelve/package.module1
 	  __path__   : /tmp/pymotw_import_example.shelve
 	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x102
-	2bdda0>
+	4bfe48>
 	
 	Import of "package.subpackage.module2":
 	
@@ -400,7 +398,7 @@ constructs and returns a :class:`module` instance.
 	age.module2
 	  __path__   : /tmp/pymotw_import_example.shelve
 	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x102
-	2d02b0>
+	4d1358>
 
 .. {{{end}}}
 

@@ -1,5 +1,5 @@
 ============================
- grp -- Unix Group Database
+ grp -- UNIX Group Database
 ============================
 
 .. spelling::
@@ -10,11 +10,11 @@
    gid
 
 .. module:: grp
-    :synopsis: Unix Group Database
+    :synopsis: UNIX Group Database
 
-:Purpose: Read group data from Unix group database.
+:Purpose: Read group data from UNIX group database.
 
-The :mod:`grp` module can be used to read information about Unix
+The :mod:`grp` module can be used to read information about UNIX
 groups from the group database (usually ``/etc/group``).  The
 read-only interface returns tuple-like objects with named attributes
 for the standard fields of a group record.

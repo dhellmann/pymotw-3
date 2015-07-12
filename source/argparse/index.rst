@@ -17,7 +17,8 @@ The :mod:`argparse` module was added to Python 2.7 as a replacement
 for :mod:`optparse`.  The implementation of :mod:`argparse` supports
 features that would not have been easy to add to :mod:`optparse`, and
 that would have required backwards-incompatible API changes, so a new
-module was brought into the library instead.
+module was brought into the library instead. :mod:`optparse` is now
+deprecated.
 
 Setting Up a Parser
 ===================
@@ -70,7 +71,7 @@ values as attributes, so if the argument's ``dest`` is set to
 Simple Examples
 ===============
 
-Here is a simple example with three different options: a boolean option
+Here is a simple example with three different options: a Boolean option
 (``-a``), a simple string option (``-b``), and an integer option
 (``-c``).
 
@@ -119,7 +120,7 @@ The results are similar.
 .. {{{end}}}
 
 :mod:`argparse` is a full command-line argument parser tool, and
-handles options and non-optional arguments as well.
+handles both optional and required arguments.
 
 .. include:: argparse_arguments.py
    :literal:
@@ -163,8 +164,8 @@ type, an error is reported.
 Argument Actions
 ----------------
 
-There are six built-in actions that can be triggered when an argument
-is encountered.
+Any of six built-in actions can be triggered when an argument is
+encountered.
 
 ``store``
   Save the value, after optionally converting it to a different type.
@@ -173,11 +174,11 @@ is encountered.
 ``store_const``
   Save a value defined as part of the argument specification, rather
   than a value that comes from the arguments being parsed.  This is
-  typically used to implement command line flags that are not booleans.
+  typically used to implement command line flags that are not Booleans.
 
 ``store_true`` / ``store_false``
-  Save the appropriate boolean value.  These actions are used to
-  implement boolean switches.
+  Save the appropriate Boolean value.  These actions are used to
+  implement Boolean switches.
 
 ``append``
   Save the value to a list.  Multiple values are saved if the argument
@@ -197,7 +198,7 @@ configuration needed for each to work.
    :start-after: #end_pymotw_header
 
 The ``-t`` and ``-f`` options are configured to modify the same option
-value, so they act as a boolean switch.  The *dest* values for ``-A``
+value, so they act as a Boolean switch.  The *dest* values for ``-A``
 and ``-B`` are the same so that their constant values are appended to
 the same list.
 
@@ -288,7 +289,7 @@ the same list.
 Option Prefixes
 ---------------
 
-The default syntax for options is based on the Unix convention of
+The default syntax for options is based on the UNIX convention of
 signifying command line switches using a dash prefix ("``-``").
 :mod:`argparse` supports other prefixes, so a program can conform to
 the local platform default (i.e., use "``/``" on Windows) or follow a
@@ -360,7 +361,7 @@ In the previous example, ``+a`` and ``-a`` are separate arguments, and
 Sources of Arguments
 --------------------
 
-In the examples so far, the list of arguments given to the parser have
+In the examples so far, the list of arguments given to the parser has
 come from a list passed in explicitly, or were taken implicitly from
 :data:`sys.argv`.  Passing the list explicitly is useful
 when using :mod:`argparse` to process command line-like instructions
@@ -679,16 +680,17 @@ Conflicting Options
 
 The previous example pointed out that adding two argument handlers to
 a parser using the same argument name causes an exception.  The
-conflict resolution behavior can be changed by passing a *conflict_handler*.  The two
-built-in handlers are ``error`` (the default), and ``resolve``, which
-picks a handler based on the order they are added.
+conflict resolution behavior can be changed by passing a
+*conflict_handler*.  The two built-in handlers are ``error`` (the
+default), and ``resolve``, which picks a handler based on the order
+they are added.
 
 .. include:: argparse_conflict_handler_resolve.py
    :literal:
    :start-after: #end_pymotw_header
 
 Since the last handler with a given argument name is used, in this
-example the stand-alone option ``-b`` is masked by the alias for
+example, the stand-alone option ``-b`` is masked by the alias for
 ``--long-b``.
 
 .. NOT RUNNING
@@ -945,7 +947,7 @@ command specified.
 Advanced Argument Processing
 ============================
 
-The examples so far have shown simple boolean flags, options with
+The examples so far have shown simple Boolean flags, options with
 string or numerical arguments, and positional arguments.
 :mod:`argparse` also supports sophisticated argument specification for
 variable-length argument list, enumerations, and constant values.
@@ -973,7 +975,7 @@ argparse`, based on the number of required or expected arguments.
    :literal:
    :start-after: #end_pymotw_header
 
-The parser enforces the argument count instructions, and generates an
+The parser enforces the argument count instructions and generates an
 accurate syntax diagram as part of the command help text.
 
 .. NOT RUNNING
@@ -1235,7 +1237,7 @@ Custom Actions
 In addition to the built-in actions described earlier, custom actions
 can be defined by providing an object that implements the Action API.
 The object passed to :func:`add_argument` as *action* should take
-parameters describing the argument being defined (all of the same
+parameters describing the argument being defined (all the same
 arguments given to :func:`add_argument`) and return a callable object
 that takes as parameters the *parser* processing the arguments, the
 *namespace* holding the parse results, the *value* of the argument

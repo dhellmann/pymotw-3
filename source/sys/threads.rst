@@ -47,10 +47,10 @@ an interval of 10 milliseconds.
 	$ python3 sys_switchinterval.py
 	
 	interval = 0.001
-	T0 T1 T2 T1 T0 T2 T2 T0 T1 T2 T1 T0 T2 T1 T0 
+	T0 T1 T2 T0 T1 T2 T0 T1 T2 T0 T2 T1 T2 T0 T1 
 	
 	interval = 0.100
-	T0 T0 T1 T0 T0 T1 T2 T1 T0 T1 T1 T2 T2 T2 T2 
+	T0 T0 T0 T0 T0 T1 T1 T1 T1 T1 T2 T2 T2 T2 T2 
 	
 
 .. {{{end}}}
@@ -104,13 +104,14 @@ cannot because **Thread-2** already has it.
 
 .. seealso::
 
-    :mod:`threading`
-        The ``threading`` module includes classes for creating Python threads.
+    * :mod:`threading` -- The ``threading`` module includes classes
+      for creating Python threads.
 
-    :mod:`Queue`
-        The ``Queue`` module provides a thread-safe implementation of a FIFO data structure.
+    * :mod:`Queue` -- The ``Queue`` module provides a thread-safe
+      implementation of a FIFO data structure.
 
-    `Reworking the GIL <https://mail.python.org/pipermail/python-dev/2009-October/093321.html>`_
-        Email from Antoine Pitrou to the python-dev mailing list
-        describing the GIL implementation changes to introduce the
-        switch interval.
+    * `Reworking the GIL
+      <https://mail.python.org/pipermail/python-dev/2009-October/093321.html>`_
+      -- Email from Antoine Pitrou to the python-dev mailing list
+      describing the GIL implementation changes to introduce the
+      switch interval.

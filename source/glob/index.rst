@@ -10,9 +10,9 @@
    globbing
 
 .. module:: glob
-    :synopsis: Use Unix shell rules to find filenames matching a pattern.
+    :synopsis: Use UNIX shell rules to find filenames matching a pattern.
 
-:Purpose: Use Unix shell rules to find filenames matching a pattern.
+:Purpose: Use UNIX shell rules to find filenames matching a pattern.
 
 Even though the :mod:`glob` API is small, the module packs a lot of
 power. It is useful in any situation where a program needs to look for
@@ -23,9 +23,9 @@ custom code to scan the directory contents.
 
 The pattern rules for :mod:`glob` are not the same as the regular
 expressions used by the :mod:`re` module. Instead, they follow
-standard Unix path expansion rules. There are only a few special
-characters: two different wild-cards, and character ranges are
-supported. The patterns rules are applied to segments of the filename
+standard UNIX path expansion rules. There are only a few special
+characters used to implement two different wild-cards and character
+ranges. The patterns rules are applied to segments of the filename
 (stopping at the path separator, ``/``). Paths in the pattern can be
 relative or absolute. Shell variable names and tilde (``~``) are not
 expanded.
@@ -34,7 +34,7 @@ Example Data
 ============
 
 The examples in this section assume the following test files are
-present in the current working directory:
+present in the current working directory.
 
 .. {{{cog
 .. from paver.path import path
@@ -76,8 +76,8 @@ name. For example, ``dir/*``.
 
 The pattern matches every path name (file or directory) in the
 directory dir, without recursing further into subdirectories. The data
-returned by :func:`glob` comes in the order it is found, so the
-examples here sort it to make studying the results easier.
+returned by :func:`glob` is not sorted, so the examples here sort it
+to make studying the results easier.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'glob_asterisk.py'))
@@ -100,15 +100,14 @@ examples here sort it to make studying the results easier.
 .. {{{end}}}
 
 To list files in a subdirectory, the subdirectory must be included in
-the pattern:
+the pattern.
 
 .. include:: glob_subdir.py
     :literal:
     :start-after: #end_pymotw_header
 
-The first case shown earlier lists the subdirectory name
-explicitly, while the second case depends on a wildcard to find the
-directory.
+The first case shown earlier lists the subdirectory name explicitly,
+while the second case depends on a wildcard to find the directory.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'glob_subdir.py'))
@@ -125,9 +124,9 @@ directory.
 
 .. {{{end}}}
 
-The results, in this case, are the same. If there was another subdirectory,
-the wildcard would match both subdirectories and include the filenames from
-both.
+The results, in this case, are the same. If there was another
+subdirectory, the wildcard would match both subdirectories and include
+the filenames from both.
 
 Single Character Wildcard
 =========================
@@ -140,7 +139,7 @@ single character in that position in the name.
     :start-after: #end_pymotw_header
 
 The previous example matches all of the filenames that begin with
-"file", have one more character of any type, then end with "``.txt``".
+``file``, have one more character of any type, then end with ``.txt``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'glob_question.py'))
@@ -195,7 +194,9 @@ Escaping Meta-characters
 
 Sometimes it is necessary to search for files with names containing
 the special meta-characters :mod:`glob` uses for its patterns. The
-:func:`escape` function builds a suitable pattern.
+:func:`escape` function builds a suitable pattern with the special
+characters "escaped" so they are not expanded or interpreted as
+special by :mod:`glob`.
 
 .. include:: glob_escape.py
    :literal:
