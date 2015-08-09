@@ -24,8 +24,6 @@
 # ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 # THIS SOFTWARE.
 #
-
-__version__ = "$Id$"
 #end_pymotw_header
 
 import pwd

@@ -314,13 +314,13 @@ to :func:`compress()` or :func:`decompress()` does not result in a
 complete block of compressed or uncompressed output.
 
 .. literalinclude:: bz2_server.py
-   :lines: 11-54
+   :lines: 9-52
 
 The main program starts a server in a thread, combining
 :mod:`SocketServer` and :class:`Bz2RequestHandler`.  
 
 .. literalinclude:: bz2_server.py
-   :lines: 57-
+   :lines: 55-
 
 It then opens a socket to communicate with the server as a client, and
 requests the file (defaulting to ``lorem.txt``) which contains:
