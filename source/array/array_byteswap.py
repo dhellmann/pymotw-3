@@ -22,8 +22,10 @@ def to_hex(a):
         end = start + chars_per_item
         yield hex_version[start:end]
 
-a1 = array.array('i', xrange(5))
-a2 = array.array('i', xrange(5))
+start = int('0x01020304', 16)
+end = start + 5
+a1 = array.array('i', range(start, end))
+a2 = array.array('i', range(start, end))
 a2.byteswap()
 
 fmt = '%12s %12s %12s %12s'
