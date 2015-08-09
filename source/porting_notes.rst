@@ -245,6 +245,14 @@ added. :func:`b85encode` implements an encoding used in Mercurial and
 git, while :func:`a85encode` implements the Ascii85 format used by PDF
 files (:pyissue:`17618`).
 
+.. _porting-bz2:
+
+bz2
+---
+
+:class:`BZ2File` instances now support the context manager protocol,
+and do not need to be wrapped with :func:`contextlib.closing`.
+
 .. _porting-glob:
 
 glob

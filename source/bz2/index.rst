@@ -398,14 +398,15 @@ Running ``bz2_server.py`` produces:
 
 .. seealso::
 
-    `bz2 <http://docs.python.org/library/bz2.html>`_
-        The standard library documentation for this module.
+    * `bz2 <http://docs.python.org/library/bz2.html>`_ -- The standard
+      library documentation for this module.
 
-    `bzip2.org <http://www.bzip.org/>`_
-        The home page for :command:`bzip2`.
+    * `bzip2.org <http://www.bzip.org/>`_ -- The home page for
+      :command:`bzip2`.
 
-    :mod:`zlib`
-        The ``zlib`` module for GNU zip compression.
+    * :mod:`zlib` -- The ``zlib`` module for GNU zip compression.
 
-    :mod:`gzip`
-        A file-like interface to GNU zip compressed files.
+    * :mod:`gzip` -- A file-like interface to GNU zip compressed
+      files.
+
+    * :ref:`Porting notes for bz2 <porting-bz2>`
