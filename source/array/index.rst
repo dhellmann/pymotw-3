@@ -33,11 +33,12 @@ and is initialized with a simple string.
 
 ::
 
-	$ python array_string.py
+	$ python3 array_string.py
 	
-	As string: This is the array.
-	As array : array('c', 'This is the array.')
-	As hex   : 54686973206973207468652061727261792e
+	As byte string: b'This is the array.'
+	As array      : array('b', [84, 104, 105, 115, 32, 105, 115, 32,
+	 116, 104, 101, 32, 97, 114, 114, 97, 121, 46])
+	As hex        : b'54686973206973207468652061727261792e'
 
 .. {{{end}}}
 
@@ -61,7 +62,7 @@ elements to the end.
 
 ::
 
-	$ python array_sequence.py
+	$ python3 array_sequence.py
 	
 	Initial : array('i', [0, 1, 2])
 	Extended: array('i', [0, 1, 2, 0, 1, 2])
@@ -92,10 +93,10 @@ bytes to the appropriate types.
 
 ::
 
-	$ python array_file.py
+	$ python3 array_file.py
 	
 	A1: array('i', [0, 1, 2, 3, 4])
-	Raw Contents: 0000000001000000020000000300000004000000
+	Raw Contents: b'0000000001000000020000000300000004000000'
 	A2: array('i', [0, 1, 2, 3, 4])
 
 .. {{{end}}}
@@ -123,15 +124,15 @@ over the data in Python.
 
 ::
 
-	$ python array_byteswap.py
+	$ python3 array_byteswap.py
 	
-	    A1 hex         A1     A2 hex         A2
-	---------- ---------- ---------- ----------
-	  00000000          0   00000000          0
-	  01000000          1   00000001   16777216
-	  02000000          2   00000002   33554432
-	  03000000          3   00000003   50331648
-	  04000000          4   00000004   67108864
+	      A1 hex           A1       A2 hex           A2
+	------------ ------------ ------------ ------------
+	 b'00000000'            0  b'00000000'            0
+	 b'01000000'            1  b'00000001'     16777216
+	 b'02000000'            2  b'00000002'     33554432
+	 b'03000000'            3  b'00000003'     50331648
+	 b'04000000'            4  b'00000004'     67108864
 
 .. {{{end}}}
 
