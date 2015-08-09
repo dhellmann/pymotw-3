@@ -208,8 +208,10 @@ array
 -----
 
 The ``'c'`` type used for character bytes in early version of Python 2
-has been removed. Use ``'b'`` for bytes and ``'u'`` for characters
-from unicode strings.
+has been removed. Use ``'b'`` or ``'B'`` for bytes instead.
+
+The ``'u'`` type for characters from unicode strings has been
+deprecated and will be removed in Python 4.0.
 
 .. _porting-atexit:
 
