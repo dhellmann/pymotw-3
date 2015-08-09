@@ -6,7 +6,6 @@
     :synopsis: Manage sequences of fixed-type data efficiently.
 
 :Purpose: Manage sequences of fixed-type numerical data efficiently.
-:Python Version: 1.4 and later
 
 The :mod:`array` module defines a sequence data structure that looks
 very much like a :class:`list`, except that all of the members have to
