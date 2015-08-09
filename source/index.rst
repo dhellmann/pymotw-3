@@ -17,6 +17,7 @@ Python and tools used.
 .. toctree::
    :maxdepth: 2
 
+   data_types
    file_access
    frameworks
    internet_protocols
