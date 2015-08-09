@@ -148,7 +148,7 @@ bytes to the appropriate types.
 .. {{{end}}}
 
 :func:`tofile` uses :func:`tobytes` to format the data and `fromfile`
-:func:uses :func:`frombytes` to convert it back to an array instance.
+uses :func:`frombytes` to convert it back to an array instance.
 
 .. include:: array_tobytes.py
    :literal:
