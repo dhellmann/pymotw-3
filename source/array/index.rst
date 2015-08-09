@@ -10,8 +10,35 @@
 
 The :mod:`array` module defines a sequence data structure that looks
 very much like a :class:`list`, except that all of the members have to
-be of the same primitive type.  Refer to the standard library
-documentation for :mod:`array` for a complete list of the types supported.
+be of the same primitive type. The types supported are all numeric or
+other fixed-size primitive types such as bytes.
+
++------------+-------------------+--------------------------+
+| Code       | Type              | Minimum size (bytes)     |
++============+===================+==========================+
+| ``b``      | int               | 1                        |
++------------+-------------------+--------------------------+
+| ``B``      | int               | 1                        |
++------------+-------------------+--------------------------+
+| ``h``      | int               | 2                        |
++------------+-------------------+--------------------------+
+| ``H``      | int               | 2                        |
++------------+-------------------+--------------------------+
+| ``i``      | int               | 2                        |
++------------+-------------------+--------------------------+
+| ``I``      | long              | 2                        |
++------------+-------------------+--------------------------+
+| ``l``      | int               | 4                        |
++------------+-------------------+--------------------------+
+| ``L``      | long              | 4                        |
++------------+-------------------+--------------------------+
+| ``f``      | float             | 4                        |
++------------+-------------------+--------------------------+
+| ``d``      | float             | 8                        |
++------------+-------------------+--------------------------+
+
+Refer to the standard library documentation for :mod:`array` for a
+complete list of type codes.
 
 Initialization
 ==============
@@ -128,22 +155,23 @@ over the data in Python.
 	
 	      A1 hex           A1       A2 hex           A2
 	------------ ------------ ------------ ------------
-	 b'00000000'            0  b'00000000'            0
-	 b'01000000'            1  b'00000001'     16777216
-	 b'02000000'            2  b'00000002'     33554432
-	 b'03000000'            3  b'00000003'     50331648
-	 b'04000000'            4  b'00000004'     67108864
+	 b'04030201'     16909060  b'01020304'     67305985
+	 b'05030201'     16909061  b'01020305'     84083201
+	 b'06030201'     16909062  b'01020306'    100860417
+	 b'07030201'     16909063  b'01020307'    117637633
+	 b'08030201'     16909064  b'01020308'    134414849
 
 .. {{{end}}}
 
 
 .. seealso::
 
-    `array <http://docs.python.org/library/array.html>`_
-        The standard library documentation for this module.
+    * `array <http://docs.python.org/library/array.html>`_ -- The
+      standard library documentation for this module.
 
-    :mod:`struct`
-        The ``struct`` module.
+    * :mod:`struct` -- The ``struct`` module.
 
-    `Numerical Python <http://www.scipy.org>`_
-        NumPy is a Python library for working with large data sets efficiently.
+    * `Numerical Python <http://www.scipy.org>`_ -- NumPy is a Python
+      library for working with large data sets efficiently.
+
+    * :ref:`Porting notes for array <porting-array>`
