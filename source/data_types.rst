@@ -71,11 +71,11 @@ container type using one of the abstract base classes defined in
     :maxdepth: 1
 
     array/index
+    bisect/index
 
 ..
     collections/index
     heapq/index
-    bisect/index
     Queue/index
     struct/index
     weakref/index
