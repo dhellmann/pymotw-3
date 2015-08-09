@@ -19,6 +19,7 @@ Python and tools used.
 
    data_types
    file_access
+   compression
    frameworks
    internet_protocols
    runtime_services
