@@ -66,7 +66,7 @@ store in the array.
     :start-after: #end_pymotw_header
 
 In this example, the array is configured to hold a sequence of bytes
-and is initialized with a simple string.
+and is initialized with a simple byte string.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'array_string.py'))
@@ -142,6 +142,29 @@ bytes to the appropriate types.
 
 .. {{{end}}}
 
+:func:`tofile` uses :func:`tobytes` to format the data and `fromfile`
+:func:uses :func:`frombytes` to convert it back to an array instance.
+
+.. include:: array_tobytes.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+Both :func:`tobytes` and :func:`frombytes` work on byte strings, not
+unicode strings.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'array_tobytes.py'))
+.. }}}
+
+::
+
+	$ python3 array_tobytes.py
+	
+	A1: array('i', [0, 1, 2, 3, 4])
+	Bytes: b'0000000001000000020000000300000004000000'
+	A2: array('i', [0, 1, 2, 3, 4])
+
+.. {{{end}}}
 
 Alternate Byte Ordering
 =======================
