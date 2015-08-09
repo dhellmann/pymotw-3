@@ -202,6 +202,15 @@ needs of the application.
 In Python 3.4, the version action was changed to print the version
 string to stdout instead of stderr (:pyissue:`18920`).
 
+.. _porting-array:
+
+array
+-----
+
+The ``'c'`` type used for character bytes in early version of Python 2
+has been removed. Use ``'b'`` for bytes and ``'u'`` for characters
+from unicode strings.
+
 .. _porting-atexit:
 
 atexit
