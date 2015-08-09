@@ -10,9 +10,7 @@
           each time an item is added to the list.
 
 The :mod:`bisect` module implements an algorithm for inserting
-elements into a list while maintaining the list in sorted order. For
-some cases, this is more efficient than repeatedly sorting a list, or
-explicitly sorting a large list after it is constructed.
+elements into a list while maintaining the list in sorted order.
 
 Inserting in Sorted Order
 =========================
