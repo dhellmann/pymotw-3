@@ -14,15 +14,14 @@ compressor = bz2.BZ2Compressor()
 
 with open('lorem.txt', 'r') as input:
     while True:
-        block = input.read(64)
+        block = input.read(64).encode('utf-8')
         if not block:
             break
         compressed = compressor.compress(block)
         if compressed:
-            print 'Compressed: %s' % binascii.hexlify(compressed)
+            print('Compressed: %s' %
+                  binascii.hexlify(compressed))
         else:
-            print 'buffering...'
+            print('buffering...')
     remaining = compressor.flush()
-    print 'Flushed: %s' % binascii.hexlify(remaining)
-    
-            
+    print('Flushed: %s' % binascii.hexlify(remaining))

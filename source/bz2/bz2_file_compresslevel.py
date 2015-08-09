@@ -13,9 +13,9 @@ import bz2
 import os
 
 data = open('lorem.txt', 'r').read() * 1024
-print 'Input contains %d bytes' % len(data)
+print('Input contains %d bytes' % len(data))
 
-for i in xrange(1, 10):
+for i in range(1, 10):
     filename = 'compress-level-%s.bz2' % i
     with bz2.BZ2File(filename, 'wb', compresslevel=i) as output:
         output.write(data)

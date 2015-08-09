@@ -10,13 +10,14 @@ __version__ = "$Id$"
 #end_pymotw_header
 
 import bz2
-import contextlib
 import itertools
 import os
 
-with contextlib.closing(bz2.BZ2File('lines.bz2', 'wb')) as output:
+data = 'The same line, over and over.\n'.encode('utf-8')
+
+with bz2.BZ2File('lines.bz2', 'wb') as output:
     output.writelines(
-        itertools.repeat('The same line, over and over.\n', 10),
-        )
+        itertools.repeat(data, 10),
+    )
 
 os.system('bzcat lines.bz2')

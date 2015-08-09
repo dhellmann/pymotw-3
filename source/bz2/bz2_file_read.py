@@ -10,7 +10,6 @@ __version__ = "$Id$"
 #end_pymotw_header
 
 import bz2
-import contextlib
 
-with contextlib.closing(bz2.BZ2File('example.bz2', 'rb')) as input:
-    print input.read()
+with bz2.BZ2File('example.bz2', 'rb') as input:
+    print(input.read())

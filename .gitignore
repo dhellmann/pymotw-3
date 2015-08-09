@@ -3,3 +3,5 @@ module
 source/_themes/pymotw/static/pymotw.css
 /order.txt
 source/glob/dir
+/source/bz2/example.bz2
+/source/bz2/lines.bz2

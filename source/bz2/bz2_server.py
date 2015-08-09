@@ -10,37 +10,39 @@
 #end_pymotw_header
 import bz2
 import logging
-import SocketServer
+import socketserver
 import binascii
 
 BLOCK_SIZE = 32
 
-class Bz2RequestHandler(SocketServer.BaseRequestHandler):
+
+class Bz2RequestHandler(socketserver.BaseRequestHandler):
 
     logger = logging.getLogger('Server')
-    
+
     def handle(self):
         compressor = bz2.BZ2Compressor()
-        
+
         # Find out what file the client wants
         filename = self.request.recv(1024)
         self.logger.debug('client asked for: "%s"', filename)
-        
+
         # Send chunks of the file as they are compressed
         with open(filename, 'rb') as input:
-            while True:            
+            while True:
                 block = input.read(BLOCK_SIZE)
                 if not block:
                     break
                 self.logger.debug('RAW "%s"', block)
                 compressed = compressor.compress(block)
                 if compressed:
-                    self.logger.debug('SENDING "%s"',
-                                      binascii.hexlify(compressed))
+                    self.logger.debug(
+                        'SENDING "%s"',
+                        binascii.hexlify(compressed))
                     self.request.send(compressed)
                 else:
                     self.logger.debug('BUFFERING')
-        
+
         # Send any data being buffered by the compressor
         remaining = compressor.flush()
         while remaining:
@@ -55,7 +57,7 @@ class Bz2RequestHandler(SocketServer.BaseRequestHandler):
 if __name__ == '__main__':
     import socket
     import sys
-    from cStringIO import StringIO
+    from io import StringIO
     import threading
 
     logging.basicConfig(level=logging.DEBUG,
@@ -63,9 +65,9 @@ if __name__ == '__main__':
                         )
 
     # Set up a server, running in a separate thread
-    address = ('localhost', 0) # let the kernel assign a port
-    server = SocketServer.TCPServer(address, Bz2RequestHandler)
-    ip, port = server.server_address # what port was assigned?
+    address = ('localhost', 0)  # let the kernel assign a port
+    server = socketserver.TCPServer(address, Bz2RequestHandler)
+    ip, port = server.server_address  # what port was assigned?
 
     t = threading.Thread(target=server.serve_forever)
     t.setDaemon(True)
@@ -83,7 +85,7 @@ if __name__ == '__main__':
                       if len(sys.argv) > 1
                       else 'lorem.txt')
     logger.debug('sending filename: "%s"', requested_file)
-    len_sent = s.send(requested_file)
+    len_sent = s.send(requested_file.encode('utf-8'))
 
     # Receive a response
     buffer = StringIO()
@@ -94,11 +96,12 @@ if __name__ == '__main__':
             break
         logger.debug('READ "%s"', binascii.hexlify(response))
 
-        # Include any unconsumed data when feeding the decompressor.
+        # Include any unconsumed data when feeding the
+        # decompressor.
         decompressed = decompressor.decompress(response)
         if decompressed:
             logger.debug('DECOMPRESSED "%s"', decompressed)
-            buffer.write(decompressed)
+            buffer.write(decompressed.decode('utf-8'))
         else:
             logger.debug('BUFFERING')
 
