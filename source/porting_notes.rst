@@ -213,6 +213,10 @@ has been removed. Use ``'b'`` or ``'B'`` for bytes instead.
 The ``'u'`` type for characters from unicode strings has been
 deprecated and will be removed in Python 4.0.
 
+The methods :func:`tostring` and :func:`fromstring` have been renamed
+:func:`tobytes` and :func:`frombytes` to remove ambiguity
+(:pyissue:`8990`).
+
 .. _porting-atexit:
 
 atexit
