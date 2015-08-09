@@ -26,28 +26,34 @@ other fixed-size primitive types such as bytes.
      - int
      - 1
    * - ``h``
-     - int
+     - signed short
      - 2
    * - ``H``
-     - int
+     - unsigned short
      - 2
    * - ``i``
-     - int
+     - signed int
      - 2
    * - ``I``
-     - long
+     - unsigned int
      - 2
    * - ``l``
-     - int
+     - signed long
      - 4
    * - ``L``
-     - long
+     - unsigned long
      - 4
+   * - ``q``
+     - signed long long
+     - 8
+   * - ``Q``
+     - unsigned long long
+     - 8
    * - ``f``
      - float
      - 4
    * - ``d``
-     - float
+     - double float
      - 8
 
 Refer to the standard library documentation for :mod:`array` for a
