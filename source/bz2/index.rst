@@ -6,7 +6,6 @@
     :synopsis: bzip2 compression
 
 :Purpose: bzip2 compression
-:Python Version: 2.3 and later
 
 The :mod:`bz2` module is an interface for the bzip2 library, used to
 compress data for storage or transmission.  There are three APIs
@@ -133,7 +132,7 @@ Mixed Content Streams
 =====================
 
 :class:`BZ2Decompressor` can also be used in situations where
-compressed and uncompressed data is mixed together.  
+compressed and uncompressed data is mixed together.
 
 .. include:: bz2_mixed.py
     :literal:
@@ -315,13 +314,13 @@ to :func:`compress()` or :func:`decompress()` does not result in a
 complete block of compressed or uncompressed output.
 
 .. literalinclude:: bz2_server.py
-   :lines: 11-52
+   :lines: 11-54
 
 The main program starts a server in a thread, combining
 :mod:`SocketServer` and :class:`Bz2RequestHandler`.  
 
 .. literalinclude:: bz2_server.py
-   :lines: 55-
+   :lines: 57-
 
 It then opens a socket to communicate with the server as a client, and
 requests the file (defaulting to ``lorem.txt``) which contains:
@@ -345,54 +344,54 @@ Running ``bz2_server.py`` produces:
 
 	$ python3 bz2_server.py
 	
-	Client: Contacting server on 127.0.0.1:52683
+	Client: Contacting server on 127.0.0.1:53013
 	Client: sending filename: "lorem.txt"
-	Server: client asked for: "b'lorem.txt'"
-	Server: RAW "b'Lorem ipsum dolor sit amet, cons'"
+	Server: client asked for: "lorem.txt"
+	Server: RAW b'Lorem ipsum dolor sit amet, cons'
 	Server: BUFFERING
-	Server: RAW "b'ectetuer adipiscing elit. Donec\n'"
+	Server: RAW b'ectetuer adipiscing elit. Donec\n'
 	Server: BUFFERING
-	Server: RAW "b'egestas, enim et consectetuer ul'"
+	Server: RAW b'egestas, enim et consectetuer ul'
 	Server: BUFFERING
-	Server: RAW "b'lamcorper, lectus ligula rutrum '"
+	Server: RAW b'lamcorper, lectus ligula rutrum '
 	Server: BUFFERING
-	Server: RAW "b'leo,\na elementum elit tortor eu '"
+	Server: RAW b'leo,\na elementum elit tortor eu '
 	Server: BUFFERING
-	Server: RAW "b'quam. Duis tincidunt nisi ut ant'"
+	Server: RAW b'quam. Duis tincidunt nisi ut ant'
 	Server: BUFFERING
-	Server: RAW "b'e. Nulla\nfacilisi.\n'"
+	Server: RAW b'e. Nulla\nfacilisi.\n'
 	Server: BUFFERING
-	Server: FLUSHING "b'425a6839314159265359ba83a48c000014d580001040
-	0504052fa7fe003000ba'"
-	Server: FLUSHING "b'9112793d4ca789068698a0d1a341901a0d53f4d1119a
-	8d4c9e812d755a67c107'"
-	Client: READ "b'425a6839314159265359ba83a48c000014d5800010400504
-	052fa7fe003000ba'"
-	Server: FLUSHING "b'98387682c7ca7b5a3bb75da77755eb81c1cb1ca94c4b
-	6faf209c52a90aaa4d16'"
+	Server: FLUSHING b'425a6839314159265359ba83a48c000014d5800010400
+	504052fa7fe003000ba'
+	Server: FLUSHING b'9112793d4ca789068698a0d1a341901a0d53f4d1119a8
+	d4c9e812d755a67c107'
+	Client: READ b'425a6839314159265359ba83a48c000014d58000104005040
+	52fa7fe003000ba'
 	Client: BUFFERING
-	Client: READ "b'9112793d4ca789068698a0d1a341901a0d53f4d1119a8d4c
-	9e812d755a67c107'"
-	Server: FLUSHING "b'a4a1b9c167a01c8d9ef32589d831e77df7a5753a398b
-	11660e392126fc18a72a'"
+	Client: READ b'9112793d4ca789068698a0d1a341901a0d53f4d1119a8d4c9
+	e812d755a67c107'
+	Server: FLUSHING b'98387682c7ca7b5a3bb75da77755eb81c1cb1ca94c4b6
+	faf209c52a90aaa4d16'
 	Client: BUFFERING
-	Server: FLUSHING "b'1088716cc8dedda5d489da410748531278043d70a8a1
-	31c2b8adcd6a221bdb8c'"
-	Client: READ "b'98387682c7ca7b5a3bb75da77755eb81c1cb1ca94c4b6faf
-	209c52a90aaa4d16'"
-	Server: FLUSHING "b'7ff76b88c1d5342ee48a70a12175074918'"
+	Server: FLUSHING b'a4a1b9c167a01c8d9ef32589d831e77df7a5753a398b1
+	1660e392126fc18a72a'
+	Client: READ b'98387682c7ca7b5a3bb75da77755eb81c1cb1ca94c4b6faf2
+	09c52a90aaa4d16'
+	Server: FLUSHING b'1088716cc8dedda5d489da410748531278043d70a8a13
+	1c2b8adcd6a221bdb8c'
 	Client: BUFFERING
-	Client: READ "b'a4a1b9c167a01c8d9ef32589d831e77df7a5753a398b1166
-	0e392126fc18a72a'"
+	Client: READ b'a4a1b9c167a01c8d9ef32589d831e77df7a5753a398b11660
+	e392126fc18a72a'
 	Client: BUFFERING
-	Client: READ "b'1088716cc8dedda5d489da410748531278043d70a8a131c2
-	b8adcd6a221bdb8c'"
+	Server: FLUSHING b'7ff76b88c1d5342ee48a70a12175074918'
+	Client: READ b'1088716cc8dedda5d489da410748531278043d70a8a131c2b
+	8adcd6a221bdb8c'
 	Client: BUFFERING
-	Client: READ "b'7ff76b88c1d5342ee48a70a12175074918'"
-	Client: DECOMPRESSED "b'Lorem ipsum dolor sit amet, consectetuer
-	 adipiscing elit. Donec\negestas, enim et consectetuer ullamcorp
-	er, lectus ligula rutrum leo,\na elementum elit tortor eu quam. 
-	Duis tincidunt nisi ut ante. Nulla\nfacilisi.\n'"
+	Client: READ b'7ff76b88c1d5342ee48a70a12175074918'
+	Client: DECOMPRESSED b'Lorem ipsum dolor sit amet, consectetuer 
+	adipiscing elit. Donec\negestas, enim et consectetuer ullamcorpe
+	r, lectus ligula rutrum leo,\na elementum elit tortor eu quam. D
+	uis tincidunt nisi ut ante. Nulla\nfacilisi.\n'
 	Client: response matches file contents: True
 
 .. {{{end}}}
