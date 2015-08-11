@@ -65,7 +65,7 @@ This example avoids introducing a circular reference between the
 traceback object and a local variable in the current frame by ignoring
 that part of the return value from :func:`exc_info`.  If the traceback
 is needed (for example, so it can be logged), explicitly delete the
-local variable (using :keyword:`del`) to avoid cycles.
+local variable (using ``del``) to avoid cycles.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'sys_exc_info.py',
