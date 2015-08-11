@@ -303,6 +303,40 @@ function expecting a regular uncompressed file.
 
 .. {{{end}}}
 
+Reading and Writing Unicode Data
+================================
+
+The previous examples used :class:`BZ2File` directly and managed the
+encoding and decoding of Unicode text strings explicitly. The
+:func:`open` function in :mod:`bz2` will set up an
+:class:`io.TextIOWrapper` to handle the encoding or decoding
+automatically, if the file is opened in text mode and an encoding is
+provided.
+
+.. include:: bz2_unicode.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+The file handle returned by :func:`open` supports :func:`seek`, but
+use care because the file pointer moves by bytes and may end up in the
+middle of an encoded character.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'bz2_unicode.py'))
+.. }}}
+
+::
+
+	$ python3 bz2_unicode.py
+	
+	Full file: Character with an åccent.
+	One character: å
+	ERROR: failed to decode
+
+.. {{{end}}}
+
+
+
 Compressing Network Data
 ========================
 
