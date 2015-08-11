@@ -33,6 +33,7 @@ bsd
 builtin
 builtins
 bytecode
+bzip
 cPickle
 cStringIO
 client
