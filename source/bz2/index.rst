@@ -90,14 +90,14 @@ Incremental Compression and Decompression
 
 The in-memory approach has obvious drawbacks that make it impractical
 for real-world use cases.  The alternative is to use :class:`BZ2Compressor`
-and :class:`BZ2Decompressor` objects to manipulate data incrementally, so that
+and :class:`BZ2Decompressor` objects to manipulate data incrementally so that
 the entire data set does not have to fit into memory.
 
 .. include:: bz2_incremental.py
    :literal:
    :start-after: #end_pymotw_header
 
-This example reads small blocks of data from a plain text file and
+This example reads small blocks of data from a plain-text file and
 passes it to :func:`compress`.  The compressor maintains an internal
 buffer of compressed data.  Since the compression algorithm depends on
 checksums and minimum block sizes, the compressor may not be ready to
@@ -221,7 +221,7 @@ method that can be used to write a sequence of strings.
     :literal:
     :start-after: #end_pymotw_header
 
-The lines should end in a newline character, like when writing to a
+The lines should end in a newline character, as when writing to a
 regular file.
 
 .. {{{cog
@@ -252,8 +252,8 @@ Reading Compressed Files
 ========================
 
 To read data back from previously compressed files, open the file with
-binary read mode (``'rb'``) so no text-based translation of line
-endings is performed.
+read mode (``'r'``). The value returned from :func:`read` will be a
+byte string.
 
 .. include:: bz2_file_read.py
     :literal:
@@ -282,9 +282,9 @@ of the data.
     :start-after: #end_pymotw_header
 
 The :func:`seek()` position is relative to the *uncompressed* data, so
-the caller does not even need to be aware that the data file is
-compressed.  This allows a :class:`BZ2File` instance to be passed to a
-function expecting a regular uncompressed file.
+the caller does not need to be aware that the data file is compressed.
+This allows a :class:`BZ2File` instance to be passed to a function
+expecting a regular uncompressed file.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'bz2_file_seek.py'))
@@ -307,19 +307,18 @@ Reading and Writing Unicode Data
 ================================
 
 The previous examples used :class:`BZ2File` directly and managed the
-encoding and decoding of Unicode text strings explicitly. The
-:func:`open` function in :mod:`bz2` will set up an
-:class:`io.TextIOWrapper` to handle the encoding or decoding
-automatically, if the file is opened in text mode and an encoding is
-provided.
+encoding and decoding of Unicode text strings explicitly, where
+necessary. These extra steps can be avoided by using :func:`bz2.open`,
+which sets up an :class:`io.TextIOWrapper` to handle the encoding or
+decoding automatically.
 
 .. include:: bz2_unicode.py
    :literal:
    :start-after: #end_pymotw_header
 
 The file handle returned by :func:`open` supports :func:`seek`, but
-use care because the file pointer moves by bytes and may end up in the
-middle of an encoded character.
+use care because the file pointer moves by *bytes* not *characters*
+and may end up in the middle of an encoded character.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'bz2_unicode.py'))
