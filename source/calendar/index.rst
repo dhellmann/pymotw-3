@@ -154,6 +154,50 @@ The :data:`day_name`, :data:`day_abbr`, :data:`month_name`, and
 formatted output (i.e., to include links in the HTML output). They are
 automatically configured correctly for the current locale.
 
+Locales
+=======
+
+To produce a calendar formatted for a locale other than the current
+default, use :class:`LocaleTextCalendar` or
+:class:`LocaleHTMLCalendar`.
+
+.. include:: calendar_locale.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+The first day of the week is not part of the locale settings, and the
+value is taken from the argument to the calendar class just as with
+the regular :class:`TextCalendar`.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'calendar_locale.py'))
+.. }}}
+
+::
+
+	$ python3 calendar_locale.py
+	
+	     July 2015
+	Mo Tu We Th Fr Sa Su
+	       1  2  3  4  5
+	 6  7  8  9 10 11 12
+	13 14 15 16 17 18 19
+	20 21 22 23 24 25 26
+	27 28 29 30 31
+	 
+	    juillet 2015
+	Lu Ma Me Je Ve Sa Di
+	       1  2  3  4  5
+	 6  7  8  9 10 11 12
+	13 14 15 16 17 18 19
+	20 21 22 23 24 25 26
+	27 28 29 30 31
+	 
+
+.. {{{end}}}
+
+
+
 Calculating Dates
 =================
 
@@ -239,3 +283,4 @@ So the meeting schedule for the year is:
     * :mod:`datetime` -- Manipulate date values, including timestamps
       and time zones.
 
+    * :mod:`locale` -- Locale settings.
