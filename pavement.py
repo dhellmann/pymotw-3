@@ -286,3 +286,4 @@ def migrate(options):
         'old_loc': options.migrate.old_loc,
         'module': module,
     })
+    (dest + '/__init__.py').remove()
