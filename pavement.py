@@ -63,6 +63,10 @@ options(
         config='sitemap_gen_config.xml',
     ),
 
+    migrate=Bunch(
+        old_loc='../../Python2/book-git/PyMOTW/',
+    ),
+
 )
 
 
@@ -268,3 +272,17 @@ def publish(options):
     spelling(options)
     deploy(options)
     push(options)
+
+
+@task
+def migrate(options):
+    "Copy old content into place to prepare for updating"
+    options.order('update', 'sphinx', add_rest=True)
+    module = _get_module(options)
+    dest = path('source/' + module)
+    if dest.exists():
+        raise ValueError('%s already exists' % dest)
+    sh('cp -a %(old_loc)s/%(module)s source' % {
+        'old_loc': options.migrate.old_loc,
+        'module': module,
+    })
