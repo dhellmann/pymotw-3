@@ -70,11 +70,11 @@ container type using one of the abstract base classes defined in
 .. toctree::
     :maxdepth: 1
 
+    collections/index
     array/index
     bisect/index
 
 ..
-    collections/index
     heapq/index
     Queue/index
     struct/index
