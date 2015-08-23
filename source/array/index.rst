@@ -208,8 +208,7 @@ over the data in Python.
 
 .. seealso::
 
-    * `array <http://docs.python.org/library/array.html>`_ -- The
-      standard library documentation for this module.
+    * :pydoc:`array`
 
     * :mod:`struct` -- The ``struct`` module.
 

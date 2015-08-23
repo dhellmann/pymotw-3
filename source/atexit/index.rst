@@ -290,8 +290,7 @@ functions, since it is messy to have a program dump errors on exit.
 
 .. seealso::
 
-    * `atexit <http://docs.python.org/3/library/atexit.html>`_ --
-      The standard library documentation for this module.
+    * :pydoc:`atexit`
 
     * :ref:`sys-exceptions` -- Global handling for uncaught
       exceptions.

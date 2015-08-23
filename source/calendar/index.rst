@@ -275,8 +275,7 @@ So the meeting schedule for the year is:
 
 .. seealso::
 
-    * `calendar <http://docs.python.org/library/calendar.html>`_ --
-      The standard library documentation for this module.
+    * :pydoc:`calendar`
 
     * :mod:`time` -- Lower-level time functions.
 

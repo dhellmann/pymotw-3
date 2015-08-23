@@ -200,8 +200,7 @@ file or directory.
 
 .. seealso::
 
-    * `grp <http://docs.python.org/3/library/grp.html>`_ -- The standard
-      library documentation for this module.
+    * :pydoc:`grp`
 
     * :mod:`pwd` -- Read user data from the password database.
 

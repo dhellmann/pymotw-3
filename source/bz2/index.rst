@@ -431,8 +431,7 @@ Running ``bz2_server.py`` produces:
 
 .. seealso::
 
-    * `bz2 <http://docs.python.org/library/bz2.html>`_ -- The standard
-      library documentation for this module.
+    * :pydoc:`bz2`
 
     * `bzip2.org <http://www.bzip.org/>`_ -- The home page for
       :command:`bzip2`.

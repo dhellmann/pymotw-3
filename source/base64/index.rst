@@ -211,8 +211,7 @@ used by PDF files.
 
 .. seealso::
 
-    * `base64 <http://docs.python.org/3/library/base64.html>`_ -- The
-      standard library documentation for this module.
+    * :pydoc:`base64`
 
     * :rfc:`3548` -- The Base16, Base32, and Base64 Data Encodings
 

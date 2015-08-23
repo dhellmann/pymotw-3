@@ -229,8 +229,7 @@ containing a single entry.
 
 .. seealso::
 
-    * `glob <http://docs.python.org/3/library/glob.html>`_ -- The
-      standard library documentation for this module.
+    * :pydoc:`glob`
 
     * `Pattern Matching Notation
       <http://www.opengroup.org/onlinepubs/000095399/utilities/xcu_chap02.html#tag_02_13>`_

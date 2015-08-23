@@ -318,8 +318,7 @@ not defined.
 
 .. seealso::
 
-    * `abc <http://docs.python.org/library/abc.html>`_ -- The standard
-      library documentation for this module.
+    * :pydoc:`abc`
 
     * :pep:`3119` -- Introducing Abstract Base Classes
 

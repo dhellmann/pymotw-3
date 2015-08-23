@@ -154,8 +154,7 @@ user currently running a process:
 
 .. seealso::
 
-    * `pwd <https://docs.python.org/3/library/pwd.html>`_ -- The
-      standard library documentation for this module.
+    * :pydoc:`pwd`
 
     * :mod:`spwd` -- Secure password database access for systems using
       shadow passwords.

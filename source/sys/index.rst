@@ -25,7 +25,6 @@ program.
 
 .. seealso::
 
-    * `sys <http://docs.python.org/3/library/sys.html>`_ -- The standard
-      library documentation for this module.
+    * :pydoc:`sys`
 
     * :ref:`Porting notes for sys <porting-sys>`
