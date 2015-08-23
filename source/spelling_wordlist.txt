@@ -53,6 +53,7 @@ dbm
 dev
 dialog
 dnd
+docstrings
 dumb
 dumbdbm
 dummy_thread
