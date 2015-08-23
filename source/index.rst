@@ -18,6 +18,7 @@ Python and tools used.
    :maxdepth: 2
 
    data_types
+   dates
    file_access
    compression
    frameworks
