@@ -27,7 +27,7 @@ The results of all three forms of initialization are the same.
 
 ::
 
-	$ python collections_counter_init.py
+	$ python3 collections_counter_init.py
 	
 	Counter({'b': 3, 'a': 2, 'c': 1})
 	Counter({'b': 3, 'a': 2, 'c': 1})
@@ -52,10 +52,10 @@ replaced.  In this example, the count for ``a`` goes from ``3`` to
 
 ::
 
-	$ python collections_counter_update.py
+	$ python3 collections_counter_update.py
 	
 	Initial : Counter()
-	Sequence: Counter({'a': 3, 'b': 2, 'c': 1, 'd': 1})
+	Sequence: Counter({'a': 3, 'b': 2, 'd': 1, 'c': 1})
 	Dict    : Counter({'d': 6, 'a': 4, 'b': 2, 'c': 1})
 
 .. {{{end}}}
@@ -80,7 +80,7 @@ example), its count is ``0``.
 
 ::
 
-	$ python collections_counter_get_values.py
+	$ python3 collections_counter_get_values.py
 	
 	a : 3
 	b : 2
@@ -106,11 +106,11 @@ than or equal to zero are not included.
 
 ::
 
-	$ python collections_counter_elements.py
+	$ python3 collections_counter_elements.py
 	
-	Counter({'e': 3, 'm': 1, 'l': 1, 'r': 1, 't': 1, 'y': 1, 'x': 1, 
+	Counter({'e': 3, 'l': 1, 'x': 1, 'm': 1, 'r': 1, 'y': 1, 't': 1, 
 	'z': 0})
-	['e', 'e', 'e', 'm', 'l', 'r', 't', 'y', 'x']
+	['l', 'x', 'm', 'r', 'e', 'e', 'e', 'y', 't']
 
 .. {{{end}}}
 
@@ -133,12 +133,12 @@ frequency.
 
 ::
 
-	$ python collections_counter_most_common.py
+	$ python3 collections_counter_most_common.py
 	
 	Most common:
-	e:  234803
-	i:  200613
-	a:  198938
+	e:  235331
+	i:  201032
+	a:  199554
 
 .. {{{end}}}
 
@@ -164,13 +164,13 @@ zero.
 
 ::
 
-	$ python collections_counter_arithmetic.py
+	$ python3 collections_counter_arithmetic.py
 	
 	C1: Counter({'b': 3, 'a': 2, 'c': 1})
-	C2: Counter({'a': 2, 'b': 1, 'e': 1, 'h': 1, 'l': 1, 'p': 1, 't': 1})
+	C2: Counter({'a': 2, 'h': 1, 't': 1, 'e': 1, 'p': 1, 'l': 1, 'b': 1})
 	
 	Combined counts:
-	Counter({'a': 4, 'b': 4, 'c': 1, 'e': 1, 'h': 1, 'l': 1, 'p': 1, 't': 1})
+	Counter({'a': 4, 'b': 4, 'h': 1, 'p': 1, 'c': 1, 'e': 1, 'l': 1, 't': 1})
 	
 	Subtraction:
 	Counter({'b': 2, 'c': 1})
@@ -179,6 +179,6 @@ zero.
 	Counter({'a': 2, 'b': 1})
 	
 	Union (taking maximums):
-	Counter({'b': 3, 'a': 2, 'c': 1, 'e': 1, 'h': 1, 'l': 1, 'p': 1, 't': 1})
+	Counter({'b': 3, 'a': 2, 'h': 1, 'p': 1, 'c': 1, 'e': 1, 'l': 1, 't': 1})
 
 .. {{{end}}}

@@ -19,8 +19,8 @@ This makes :class:`tuples` convenient containers for simple uses.
 
 ::
 
-	$ python collections_tuple.py
-
+	$ python3 collections_tuple.py
+	
 	Representation: ('Bob', 30, 'male')
 	
 	Field by index: Jane
@@ -61,9 +61,9 @@ well as using the positional indexes of standard tuples.
 
 ::
 
-	$ python collections_namedtuple_person.py
-
-	Type of Person: <type 'type'>
+	$ python3 collections_namedtuple_person.py
+	
+	Type of Person: <class 'type'>
 	
 	Representation: Person(name='Bob', age=30, gender='male')
 	
@@ -94,8 +94,8 @@ As the field names are parsed, invalid values cause
 
 ::
 
-	$ python collections_namedtuple_bad_fields.py
-
+	$ python3 collections_namedtuple_bad_fields.py
+	
 	Type names and field names cannot be a keyword: 'class'
 	Encountered duplicate field name: 'age'
 
@@ -121,8 +121,8 @@ so the field with name ``class`` becomes ``_1`` and the duplicate
 
 ::
 
-	$ python collections_namedtuple_rename.py
-
+	$ python3 collections_namedtuple_rename.py
+	
 	('name', '_1', 'age', 'gender')
 	('name', 'age', 'gender', '_3')
 

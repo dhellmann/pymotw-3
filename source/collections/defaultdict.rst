@@ -23,9 +23,10 @@ includes several examples of using :class:`defaultdict` this way.
 
 ::
 
-	$ python collections_defaultdict.py
+	$ python3 collections_defaultdict.py
 	
-	d: defaultdict(<function default_factory at 0x100d9ba28>, {'foo': 'bar'})
+	d: defaultdict(<function default_factory at 0x10073c598>, {'foo'
+	: 'bar'})
 	foo => bar
 	bar => default value
 

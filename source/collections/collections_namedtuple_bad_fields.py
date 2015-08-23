@@ -11,11 +11,10 @@ import collections
 
 try:
     collections.namedtuple('Person', 'name class age gender')
-except ValueError, err:
-    print err
+except ValueError as err:
+    print(err)
 
 try:
     collections.namedtuple('Person', 'name age gender age')
-except ValueError, err:
-    print err
-    
+except ValueError as err:
+    print(err)

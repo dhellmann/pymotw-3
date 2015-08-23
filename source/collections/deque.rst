@@ -24,7 +24,7 @@ from the middle by matching identity.
 
 ::
 
-	$ python collections_deque.py
+	$ python3 collections_deque.py
 	
 	Deque: deque(['a', 'b', 'c', 'd', 'e', 'f', 'g'])
 	Length: 7
@@ -54,7 +54,7 @@ is the :class:`deque` contains the input sequence in reverse order.
 
 ::
 
-	$ python collections_deque_populating.py
+	$ python3 collections_deque_populating.py
 	
 	extend    : deque(['a', 'b', 'c', 'd', 'e', 'f', 'g'])
 	append    : deque(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'])
@@ -82,13 +82,12 @@ Use :func:`pop` to remove an item from the "right" end of the
 
 ::
 
-	$ python collections_deque_consuming.py
+	$ python3 collections_deque_consuming.py
 	
 	From the right:
-	g f e d c b a
-	
+	gfedcba
 	From the left:
-	0 1 2 3 4 5
+	012345
 
 .. {{{end}}}
 
@@ -140,7 +139,7 @@ the items in the deque as being engraved along the edge of a dial.
 
 ::
 
-	$ python collections_deque_rotate.py
+	$ python3 collections_deque_rotate.py
 	
 	Normal        : deque([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
 	Right rotation: deque([8, 9, 0, 1, 2, 3, 4, 5, 6, 7])

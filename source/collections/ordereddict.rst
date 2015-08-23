@@ -21,12 +21,12 @@ creating an iterator.
 
 ::
 
-	$ python collections_ordereddict_iter.py
+	$ python3 collections_ordereddict_iter.py
 	
 	Regular dictionary:
 	a A
-	c C
 	b B
+	c C
 	
 	OrderedDict:
 	a A
@@ -55,10 +55,12 @@ values in a different order, they are considered to be different.
 
 ::
 
-	$ python collections_ordereddict_equality.py
+	$ python3 collections_ordereddict_equality.py
 	
-	dict       : True
-	OrderedDict: False
+	dict       :
+	True
+	OrderedDict:
+	False
 
 .. {{{end}}}
 
