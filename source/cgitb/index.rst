@@ -578,8 +578,7 @@ describing where to go to find the error log.
 
 .. seealso::
 
-    * `cgitb <http://docs.python.org/library/cgitb.html>`_ -- The
-      standard library documentation for this module.
+    * :pydoc:`cgitb`
 
     * :mod:`traceback` -- Standard library module for working with
       tracebacks.
