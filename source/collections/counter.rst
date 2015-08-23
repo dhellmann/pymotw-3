@@ -108,9 +108,9 @@ than or equal to zero are not included.
 
 	$ python3 collections_counter_elements.py
 	
-	Counter({'e': 3, 'l': 1, 'x': 1, 'm': 1, 'r': 1, 'y': 1, 't': 1, 
+	Counter({'e': 3, 'r': 1, 'm': 1, 'y': 1, 'x': 1, 'l': 1, 't': 1, 
 	'z': 0})
-	['l', 'x', 'm', 'r', 'e', 'e', 'e', 'y', 't']
+	['r', 'm', 'y', 'x', 'e', 'e', 'e', 'l', 't']
 
 .. {{{end}}}
 
@@ -167,10 +167,10 @@ zero.
 	$ python3 collections_counter_arithmetic.py
 	
 	C1: Counter({'b': 3, 'a': 2, 'c': 1})
-	C2: Counter({'a': 2, 'h': 1, 't': 1, 'e': 1, 'p': 1, 'l': 1, 'b': 1})
+	C2: Counter({'a': 2, 'l': 1, 'p': 1, 'h': 1, 't': 1, 'e': 1, 'b': 1})
 	
 	Combined counts:
-	Counter({'a': 4, 'b': 4, 'h': 1, 'p': 1, 'c': 1, 'e': 1, 'l': 1, 't': 1})
+	Counter({'b': 4, 'a': 4, 'l': 1, 'c': 1, 'h': 1, 'e': 1, 't': 1, 'p': 1})
 	
 	Subtraction:
 	Counter({'b': 2, 'c': 1})
@@ -179,6 +179,6 @@ zero.
 	Counter({'a': 2, 'b': 1})
 	
 	Union (taking maximums):
-	Counter({'b': 3, 'a': 2, 'h': 1, 'p': 1, 'c': 1, 'e': 1, 'l': 1, 't': 1})
+	Counter({'b': 3, 'a': 2, 'l': 1, 'c': 1, 'h': 1, 'e': 1, 't': 1, 'p': 1})
 
 .. {{{end}}}

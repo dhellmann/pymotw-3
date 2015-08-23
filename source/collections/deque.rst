@@ -149,8 +149,9 @@ the items in the deque as being engraved along the edge of a dial.
 
 .. seealso::
 
-    `WikiPedia: Deque <http://en.wikipedia.org/wiki/Deque>`_
-        A discussion of the deque data structure.
+    * `WikiPedia: Deque <http://en.wikipedia.org/wiki/Deque>`_ -- A
+      discussion of the deque data structure.
 
-    `Deque Recipes <http://docs.python.org/lib/deque-recipes.html>`_
-        Examples of using deques in algorithms from the standard library documentation.
+    * `Deque Recipes <http://docs.python.org/lib/deque-recipes.html>`_
+      -- Examples of using deques in algorithms from the standard
+      library documentation.

@@ -25,8 +25,8 @@ creating an iterator.
 	
 	Regular dictionary:
 	a A
-	b B
 	c C
+	b B
 	
 	OrderedDict:
 	a A

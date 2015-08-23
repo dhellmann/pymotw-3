@@ -22,6 +22,5 @@ built-in types :class:`list`, :class:`dict`, and :class:`tuple`.
 
 .. seealso::
 
-    `collections <http://docs.python.org/library/collections.html>`_
-        The standard library documentation for this module.
+    * :pydoc:`collections`
 
