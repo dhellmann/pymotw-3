@@ -70,72 +70,122 @@ Having access to the variables involved in the error stack can help
 find a logical error that occurs somewhere higher in the stack than
 the line where the actual exception is generated.
 
-.. NOT RUNNING
-.. cog.out(run_script(cog.inFile, 'cgitb_local_vars.py', 
-..                    ignore_error=True, break_lines_at=68, line_break_mode='fill'))
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'cgitb_local_vars.py', ignore_error=True,
+..                    line_break_mode='fill'))
+.. }}}
 
 ::
 
-	$ python cgitb_local_vars.py
+	$ python3 cgitb_local_vars.py
 	
-	<type 'exceptions.ZeroDivisionError'>
-	Python 2.7: /Users/dhellmann/.virtualenvs/pymotw/bin/python
-	Sat Dec  4 12:59:15 2010
+	ZeroDivisionError
+	Python 3.4.3: /Users/dhellmann/Envs/pymotw34/bin/python3
+	Sun Aug 23 16:55:43 2015
 	
 	A problem occurred in a Python script.  Here is the sequence of
-	function calls leading up to the error, in the order they occurred.
+	function calls leading up to the error, in the order they
+	occurred.
 	
-	 /Users/dhellmann/Documents/PyMOTW/book/PyMOTW/cgitb/cgitb_local_var
-	 s.py in <module>()
-	   16 def func1(a, b):
-	   17     c = b - 5
-	   18     return func2(a, c)
-	   19 
-	   20 func1(1, 5)
+	 /Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/cgitb
+	 /cgitb_local_vars.py in <module>()
+	   18 def func1(a, b):
+	   19     c = b - 5
+	   20     return func2(a, c)
+	   21 
+	   22 func1(1, 5)
 	func1 = <function func1>
 	
-	 /Users/dhellmann/Documents/PyMOTW/book/PyMOTW/cgitb/cgitb_local_var
-	 s.py in func1(a=1, b=5)
-	   16 def func1(a, b):
-	   17     c = b - 5
-	   18     return func2(a, c)
-	   19 
-	   20 func1(1, 5)
+	 /Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/cgitb
+	 /cgitb_local_vars.py in func1(a=1, b=5)
+	   18 def func1(a, b):
+	   19     c = b - 5
+	   20     return func2(a, c)
+	   21 
+	   22 func1(1, 5)
 	global func2 = <function func2>
 	a = 1
 	c = 0
 	
-	 /Users/dhellmann/Documents/PyMOTW/book/PyMOTW/cgitb/cgitb_local_var
-	 s.py in func2(a=1, divisor=0)
-	   12 
-	   13 def func2(a, divisor):
-	   14     return a / divisor
-	   15 
-	   16 def func1(a, b):
+	 /Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/cgitb
+	 /cgitb_local_vars.py in func2(a=1, divisor=0)
+	   13 
+	   14 def func2(a, divisor):
+	   15     return a / divisor
+	   16 
+	   17 
 	a = 1
 	divisor = 0
-	<type 'exceptions.ZeroDivisionError'>: integer division or modulo by
-	zero
-	    __class__ = <type 'exceptions.ZeroDivisionError'>
+	ZeroDivisionError: division by zero
+	    __cause__ = None
+	    __class__ = <class 'ZeroDivisionError'>
+	    __context__ = None
+	    __delattr__ = <method-wrapper '__delattr__' of
+	    ZeroDivisionError object>
 	    __dict__ = {}
-	    __doc__ = 'Second argument to a division or modulo operation was
-	    zero.'
-        ...method references removed...
-	    args = ('integer division or modulo by zero',)
-	    message = 'integer division or modulo by zero'
+	    __dir__ = <built-in method __dir__ of ZeroDivisionError
+	    object>
+	    __doc__ = 'Second argument to a division or modulo operation
+	    was zero.'
+	    __eq__ = <method-wrapper '__eq__' of ZeroDivisionError
+	    object>
+	    __format__ = <built-in method __format__ of
+	    ZeroDivisionError object>
+	    __ge__ = <method-wrapper '__ge__' of ZeroDivisionError
+	    object>
+	    __getattribute__ = <method-wrapper '__getattribute__' of
+	    ZeroDivisionError object>
+	    __gt__ = <method-wrapper '__gt__' of ZeroDivisionError
+	    object>
+	    __hash__ = <method-wrapper '__hash__' of ZeroDivisionError
+	    object>
+	    __init__ = <method-wrapper '__init__' of ZeroDivisionError
+	    object>
+	    __le__ = <method-wrapper '__le__' of ZeroDivisionError
+	    object>
+	    __lt__ = <method-wrapper '__lt__' of ZeroDivisionError
+	    object>
+	    __ne__ = <method-wrapper '__ne__' of ZeroDivisionError
+	    object>
+	    __new__ = <built-in method __new__ of type object>
+	    __reduce__ = <built-in method __reduce__ of
+	    ZeroDivisionError object>
+	    __reduce_ex__ = <built-in method __reduce_ex__ of
+	    ZeroDivisionError object>
+	    __repr__ = <method-wrapper '__repr__' of ZeroDivisionError
+	    object>
+	    __setattr__ = <method-wrapper '__setattr__' of
+	    ZeroDivisionError object>
+	    __setstate__ = <built-in method __setstate__ of
+	    ZeroDivisionError object>
+	    __sizeof__ = <built-in method __sizeof__ of
+	    ZeroDivisionError object>
+	    __str__ = <method-wrapper '__str__' of ZeroDivisionError
+	    object>
+	    __subclasshook__ = <built-in method __subclasshook__ of type
+	    object>
+	    __suppress_context__ = False
+	    __traceback__ = <traceback object>
+	    args = ('division by zero',)
+	    with_traceback = <built-in method with_traceback of
+	    ZeroDivisionError object>
 	
-	The above is a description of an error in a Python program.  Here is
+	The above is a description of an error in a Python program.
+	Here is
 	the original traceback:
 	
 	Traceback (most recent call last):
-	  File "cgitb_local_vars.py", line 20, in <module>
+	  File "cgitb_local_vars.py", line 22, in <module>
 	    func1(1, 5)
-	  File "cgitb_local_vars.py", line 18, in func1
+	  File "cgitb_local_vars.py", line 20, in func1
 	    return func2(a, c)
-	  File "cgitb_local_vars.py", line 14, in func2
+	  File "cgitb_local_vars.py", line 15, in func2
 	    return a / divisor
-	ZeroDivisionError: integer division or modulo by zero
+	ZeroDivisionError: division by zero
 	
+	
+
+.. {{{end}}}
 
 In the case of this code with a :class:`ZeroDivisionError`, it is
 apparent that the problem is introduced in the computation of the
@@ -170,75 +220,127 @@ of the traceback.
 This output show that ``self.a`` and ``self.b`` are involved in the
 error-prone code.
 
-.. NOT RUNNING
-.. cog.out(run_script(cog.inFile, 'cgitb_with_classes.py', 
-..                    ignore_error=True, break_lines_at=68, line_break_mode='fill'))
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'cgitb_with_classes.py',
+..                    ignore_error=True, line_break_mode='fill'))
+.. }}}
 
 ::
 
-	$ python cgitb_with_classes.py | grep -v method
+	$ python3 cgitb_with_classes.py
 	
-	<type 'exceptions.ZeroDivisionError'>
-	Python 2.7: /Users/dhellmann/.virtualenvs/pymotw/bin/python
-	Sat Dec  4 12:59:16 2010
+	ZeroDivisionError
+	Python 3.4.3: /Users/dhellmann/Envs/pymotw34/bin/python3
+	Sun Aug 23 16:55:44 2015
 	
 	A problem occurred in a Python script.  Here is the sequence of
-	function calls leading up to the error, in the order they occurred.
+	function calls leading up to the error, in the order they
+	occurred.
 	
-	 /Users/dhellmann/Documents/PyMOTW/book/PyMOTW/cgitb/cgitb_with_clas
-	 ses.py in <module>()
-	   20         self.a = a
-	   21         self.b = b
-	   22         self.c = self.a * self.b
-	   23         # Really
-	   24         # long
-	   25         # comment
-	   26         # goes
-	   27         # here.
-	   28         self.d = self.a / self.b
-	   29         return
-	   30 
-	   31 o = BrokenClass(1, 0)
+	 /Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/cgitb
+	 /cgitb_with_classes.py in <module>()
+	   21         self.a = a
+	   22         self.b = b
+	   23         self.c = self.a * self.b
+	   24         # Really
+	   25         # long
+	   26         # comment
+	   27         # goes
+	   28         # here.
+	   29         self.d = self.a / self.b
+	   30         return
+	   31 
+	   32 o = BrokenClass(1, 0)
 	o undefined
 	BrokenClass = <class '__main__.BrokenClass'>
 	
-	 /Users/dhellmann/Documents/PyMOTW/book/PyMOTW/cgitb/cgitb_with_clas
-	 ses.py in __init__(self=<__main__.BrokenClass object>, a=1, b=0)
-	   20         self.a = a
-	   21         self.b = b
-	   22         self.c = self.a * self.b
-	   23         # Really
-	   24         # long
-	   25         # comment
-	   26         # goes
-	   27         # here.
-	   28         self.d = self.a / self.b
-	   29         return
-	   30 
-	   31 o = BrokenClass(1, 0)
+	 /Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/cgitb
+	 /cgitb_with_classes.py in __init__(self=<__main__.BrokenClass
+	 object>, a=1, b=0)
+	   21         self.a = a
+	   22         self.b = b
+	   23         self.c = self.a * self.b
+	   24         # Really
+	   25         # long
+	   26         # comment
+	   27         # goes
+	   28         # here.
+	   29         self.d = self.a / self.b
+	   30         return
+	   31 
+	   32 o = BrokenClass(1, 0)
 	self = <__main__.BrokenClass object>
 	self.d undefined
 	self.a = 1
 	self.b = 0
-	<type 'exceptions.ZeroDivisionError'>: integer division or modulo by
-	zero
-	    __class__ = <type 'exceptions.ZeroDivisionError'>
+	ZeroDivisionError: division by zero
+	    __cause__ = None
+	    __class__ = <class 'ZeroDivisionError'>
+	    __context__ = None
+	    __delattr__ = <method-wrapper '__delattr__' of
+	    ZeroDivisionError object>
 	    __dict__ = {}
-	    __doc__ = 'Second argument to a division or modulo operation was
-	    zero.'
-        ...method references removed...
-	    args = ('integer division or modulo by zero',)
-	    message = 'integer division or modulo by zero'
+	    __dir__ = <built-in method __dir__ of ZeroDivisionError
+	    object>
+	    __doc__ = 'Second argument to a division or modulo operation
+	    was zero.'
+	    __eq__ = <method-wrapper '__eq__' of ZeroDivisionError
+	    object>
+	    __format__ = <built-in method __format__ of
+	    ZeroDivisionError object>
+	    __ge__ = <method-wrapper '__ge__' of ZeroDivisionError
+	    object>
+	    __getattribute__ = <method-wrapper '__getattribute__' of
+	    ZeroDivisionError object>
+	    __gt__ = <method-wrapper '__gt__' of ZeroDivisionError
+	    object>
+	    __hash__ = <method-wrapper '__hash__' of ZeroDivisionError
+	    object>
+	    __init__ = <method-wrapper '__init__' of ZeroDivisionError
+	    object>
+	    __le__ = <method-wrapper '__le__' of ZeroDivisionError
+	    object>
+	    __lt__ = <method-wrapper '__lt__' of ZeroDivisionError
+	    object>
+	    __ne__ = <method-wrapper '__ne__' of ZeroDivisionError
+	    object>
+	    __new__ = <built-in method __new__ of type object>
+	    __reduce__ = <built-in method __reduce__ of
+	    ZeroDivisionError object>
+	    __reduce_ex__ = <built-in method __reduce_ex__ of
+	    ZeroDivisionError object>
+	    __repr__ = <method-wrapper '__repr__' of ZeroDivisionError
+	    object>
+	    __setattr__ = <method-wrapper '__setattr__' of
+	    ZeroDivisionError object>
+	    __setstate__ = <built-in method __setstate__ of
+	    ZeroDivisionError object>
+	    __sizeof__ = <built-in method __sizeof__ of
+	    ZeroDivisionError object>
+	    __str__ = <method-wrapper '__str__' of ZeroDivisionError
+	    object>
+	    __subclasshook__ = <built-in method __subclasshook__ of type
+	    object>
+	    __suppress_context__ = False
+	    __traceback__ = <traceback object>
+	    args = ('division by zero',)
+	    with_traceback = <built-in method with_traceback of
+	    ZeroDivisionError object>
 	
-	The above is a description of an error in a Python program.  Here is
+	The above is a description of an error in a Python program.
+	Here is
 	the original traceback:
 	
 	Traceback (most recent call last):
-	  File "cgitb_with_classes.py", line 31, in <module>
+	  File "cgitb_with_classes.py", line 32, in <module>
 	    o = BrokenClass(1, 0)
-	  File "cgitb_with_classes.py", line 28, in __init__
+	  File "cgitb_with_classes.py", line 29, in __init__
 	    self.d = self.a / self.b
-	ZeroDivisionError: integer division or modulo by zero
+	ZeroDivisionError: division by zero
+	
+	
+
+.. {{{end}}}
 
 
 Exception Properties
@@ -266,7 +368,7 @@ standard *message* and *args* values.
 	
 	MyException
 	Python 3.4.3: /Users/dhellmann/Envs/pymotw34/bin/python3
-	Sun Aug 23 16:51:23 2015
+	Sun Aug 23 16:55:44 2015
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
@@ -386,17 +488,17 @@ describing where to go to find the error log.
 	
 	<p>A problem occurred in a Python script.
 	/Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/cgitb/
-	LOGS/tmpnbv85eqw.txt contains the description of this error.
+	LOGS/tmpqz_849_d.txt contains the description of this error.
 
 	$ ls LOGS
 	
-	tmpnbv85eqw.txt
+	tmpqz_849_d.txt
 
 	$ cat LOGS/*.txt
 	
 	ZeroDivisionError
 	Python 3.4.3: /Users/dhellmann/Envs/pymotw34/bin/python3
-	Sun Aug 23 16:51:24 2015
+	Sun Aug 23 16:55:44 2015
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
