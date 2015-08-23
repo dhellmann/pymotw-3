@@ -10,10 +10,11 @@
 import cgitb
 cgitb.enable(format='text', context=12)
 
+
 class BrokenClass(object):
     """This class has an error.
     """
-    
+
     def __init__(self, a, b):
         """Be careful passing arguments in here.
         """

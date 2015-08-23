@@ -5,3 +5,4 @@ source/_themes/pymotw/static/pymotw.css
 source/glob/dir
 /source/bz2/example.bz2
 /source/bz2/lines.bz2
+/source/cgitb/LOGS

@@ -10,10 +10,12 @@
 import cgitb
 import os
 
-cgitb.enable(logdir=os.path.join(os.path.dirname(__file__), 'LOGS'),
-             display=False,
-             format='text',
-             )
+cgitb.enable(
+    logdir=os.path.join(os.path.dirname(__file__), 'LOGS'),
+    display=False,
+    format='text',
+)
+
 
 def func(a, divisor):
     return a / divisor

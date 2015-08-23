@@ -34,16 +34,16 @@ This sample program has a subtle error in :func:`func2()`.
 
 ::
 
-	$ python cgitb_basic_traceback.py
+	$ python3 cgitb_basic_traceback.py
 	
 	Traceback (most recent call last):
-	  File "cgitb_basic_traceback.py", line 17, in <module>
+	  File "cgitb_basic_traceback.py", line 19, in <module>
 	    func1(1, 5)
-	  File "cgitb_basic_traceback.py", line 15, in func1
+	  File "cgitb_basic_traceback.py", line 17, in func1
 	    return func2(a, c)
-	  File "cgitb_basic_traceback.py", line 11, in func2
+	  File "cgitb_basic_traceback.py", line 12, in func2
 	    return a / divisor
-	ZeroDivisionError: integer division or modulo by zero
+	ZeroDivisionError: division by zero
 
 .. {{{end}}}
 
@@ -255,45 +255,85 @@ custom exception types are printed as part of the error report.
 In this example, the *bad_value* property is included along with the
 standard *message* and *args* values.
 
-.. NOT RUNNING
+.. {{{cog
 .. cog.out(run_script(cog.inFile, 'cgitb_exception_properties.py', 
-..                    ignore_error=True, break_lines_at=68, line_break_mode='fill'))
+..                    ignore_error=True, line_break_mode='fill'))
+.. }}}
 
 ::
 
-	$ python cgitb_exception_properties.py
+	$ python3 cgitb_exception_properties.py
 	
-	<class '__main__.MyException'>
-	Python 2.7: /Users/dhellmann/.virtualenvs/pymotw/bin/python
-	Sat Dec  4 12:59:16 2010
+	MyException
+	Python 3.4.3: /Users/dhellmann/Envs/pymotw34/bin/python3
+	Sun Aug 23 16:51:23 2015
 	
 	A problem occurred in a Python script.  Here is the sequence of
-	function calls leading up to the error, in the order they occurred.
+	function calls leading up to the error, in the order they
+	occurred.
 	
-	 /Users/dhellmann/Documents/PyMOTW/book/PyMOTW/cgitb/cgitb_exception
-	 _properties.py in <module>()
-	   18         self.bad_value = bad_value
-	   19         Exception.__init__(self, message)
-	   20         return
-	   21 
-	   22 raise MyException('Normal message', bad_value=99)
+	 /Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/cgitb
+	 /cgitb_exception_properties.py in <module>()
+	   19         self.bad_value = bad_value
+	   20         Exception.__init__(self, message)
+	   21         return
+	   22 
+	   23 raise MyException('Normal message', bad_value=99)
 	MyException = <class '__main__.MyException'>
 	bad_value undefined
-	<class '__main__.MyException'>: Normal message
+	MyException: Normal message
+	    __cause__ = None
 	    __class__ = <class '__main__.MyException'>
+	    __context__ = None
+	    __delattr__ = <method-wrapper '__delattr__' of MyException
+	    object>
 	    __dict__ = {'bad_value': 99}
-	    __doc__ = 'Add extra properties to a special exception\n    '
+	    __dir__ = <built-in method __dir__ of MyException object>
+	    __doc__ = 'Add extra properties to a special exception\n
+	    '
+	    __eq__ = <method-wrapper '__eq__' of MyException object>
+	    __format__ = <built-in method __format__ of MyException
+	    object>
+	    __ge__ = <method-wrapper '__ge__' of MyException object>
+	    __getattribute__ = <method-wrapper '__getattribute__' of
+	    MyException object>
+	    __gt__ = <method-wrapper '__gt__' of MyException object>
+	    __hash__ = <method-wrapper '__hash__' of MyException object>
+	    __init__ = <bound method MyException.__init__ of
+	    MyException('Normal message',)>
+	    __le__ = <method-wrapper '__le__' of MyException object>
+	    __lt__ = <method-wrapper '__lt__' of MyException object>
 	    __module__ = '__main__'
-        ...method references removed...
+	    __ne__ = <method-wrapper '__ne__' of MyException object>
+	    __new__ = <built-in method __new__ of type object>
+	    __reduce__ = <built-in method __reduce__ of MyException
+	    object>
+	    __reduce_ex__ = <built-in method __reduce_ex__ of
+	    MyException object>
+	    __repr__ = <method-wrapper '__repr__' of MyException object>
+	    __setattr__ = <method-wrapper '__setattr__' of MyException
+	    object>
+	    __setstate__ = <built-in method __setstate__ of MyException
+	    object>
+	    __sizeof__ = <built-in method __sizeof__ of MyException
+	    object>
+	    __str__ = <method-wrapper '__str__' of MyException object>
+	    __subclasshook__ = <built-in method __subclasshook__ of type
+	    object>
+	    __suppress_context__ = False
+	    __traceback__ = <traceback object>
+	    __weakref__ = None
 	    args = ('Normal message',)
 	    bad_value = 99
-	    message = 'Normal message'
+	    with_traceback = <built-in method with_traceback of
+	    MyException object>
 	
-	The above is a description of an error in a Python program.  Here is
+	The above is a description of an error in a Python program.
+	Here is
 	the original traceback:
 	
 	Traceback (most recent call last):
-	  File "cgitb_exception_properties.py", line 22, in <module>
+	  File "cgitb_exception_properties.py", line 23, in <module>
 	    raise MyException('Normal message', bad_value=99)
 	MyException: Normal message
 	
@@ -331,105 +371,119 @@ Even though the error display is suppressed, a message is printed
 describing where to go to find the error log.
 
 .. {{{cog
-.. path('PyMOTW/cgitb/LOGS').rmtree()
-.. sh('mkdir -p PyMOTW/cgitb/LOGS')
+.. path('source/cgitb/LOGS').rmtree()
+.. sh('mkdir -p source/cgitb/LOGS')
 .. cog.out(run_script(cog.inFile, 'cgitb_log_exception.py', 
-..                    ignore_error=True, break_lines_at=68, line_break_mode='fill'))
+..                    ignore_error=True, line_break_mode='fill'))
 .. cog.out(run_script(cog.inFile, 'ls LOGS', interpreter=None, include_prefix=False))
 .. cog.out(run_script(cog.inFile, 'cat LOGS/*.txt', interpreter=None, include_prefix=False, 
-..                    ignore_error=True, break_lines_at=68, line_break_mode='fill'))
+..                    ignore_error=True, line_break_mode='fill'))
 .. }}}
 
 ::
 
-	$ python cgitb_log_exception.py
+	$ python3 cgitb_log_exception.py
 	
 	<p>A problem occurred in a Python script.
-	<p> /Users/dhellmann/Documents/PyMOTW/book/PyMOTW/cgitb/LOGS/tmpy2v8
-	NM.txt contains the description of this error.
+	/Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/cgitb/
+	LOGS/tmpnbv85eqw.txt contains the description of this error.
 
 	$ ls LOGS
 	
-	tmpy2v8NM.txt
+	tmpnbv85eqw.txt
 
 	$ cat LOGS/*.txt
 	
-	<type 'exceptions.ZeroDivisionError'>
-	Python 2.7: /Users/dhellmann/.virtualenvs/pymotw/bin/python
-	Sat Dec  4 12:59:15 2010
+	ZeroDivisionError
+	Python 3.4.3: /Users/dhellmann/Envs/pymotw34/bin/python3
+	Sun Aug 23 16:51:24 2015
 	
 	A problem occurred in a Python script.  Here is the sequence of
-	function calls leading up to the error, in the order they occurred.
+	function calls leading up to the error, in the order they
+	occurred.
 	
-	 /Users/dhellmann/Documents/PyMOTW/book/PyMOTW/cgitb/cgitb_log_excep
-	 tion.py in <module>()
-	   17 
-	   18 def func(a, divisor):
-	   19     return a / divisor
-	   20 
-	   21 func(1, 0)
+	 /Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/cgitb
+	 /cgitb_log_exception.py in <module>()
+	   19 
+	   20 def func(a, divisor):
+	   21     return a / divisor
+	   22 
+	   23 func(1, 0)
 	func = <function func>
 	
-	 /Users/dhellmann/Documents/PyMOTW/book/PyMOTW/cgitb/cgitb_log_excep
-	 tion.py in func(a=1, divisor=0)
-	   17 
-	   18 def func(a, divisor):
-	   19     return a / divisor
-	   20 
-	   21 func(1, 0)
+	 /Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/cgitb
+	 /cgitb_log_exception.py in func(a=1, divisor=0)
+	   19 
+	   20 def func(a, divisor):
+	   21     return a / divisor
+	   22 
+	   23 func(1, 0)
 	a = 1
 	divisor = 0
-	<type 'exceptions.ZeroDivisionError'>: integer division or modulo by
-	zero
-	    __class__ = <type 'exceptions.ZeroDivisionError'>
+	ZeroDivisionError: division by zero
+	    __cause__ = None
+	    __class__ = <class 'ZeroDivisionError'>
+	    __context__ = None
 	    __delattr__ = <method-wrapper '__delattr__' of
-	    exceptions.ZeroDivisionError object>
+	    ZeroDivisionError object>
 	    __dict__ = {}
-	    __doc__ = 'Second argument to a division or modulo operation was
-	    zero.'
+	    __dir__ = <built-in method __dir__ of ZeroDivisionError
+	    object>
+	    __doc__ = 'Second argument to a division or modulo operation
+	    was zero.'
+	    __eq__ = <method-wrapper '__eq__' of ZeroDivisionError
+	    object>
 	    __format__ = <built-in method __format__ of
-	    exceptions.ZeroDivisionError object>
+	    ZeroDivisionError object>
+	    __ge__ = <method-wrapper '__ge__' of ZeroDivisionError
+	    object>
 	    __getattribute__ = <method-wrapper '__getattribute__' of
-	    exceptions.ZeroDivisionError object>
-	    __getitem__ = <method-wrapper '__getitem__' of
-	    exceptions.ZeroDivisionError object>
-	    __getslice__ = <method-wrapper '__getslice__' of
-	    exceptions.ZeroDivisionError object>
-	    __hash__ = <method-wrapper '__hash__' of
-	    exceptions.ZeroDivisionError object>
-	    __init__ = <method-wrapper '__init__' of
-	    exceptions.ZeroDivisionError object>
+	    ZeroDivisionError object>
+	    __gt__ = <method-wrapper '__gt__' of ZeroDivisionError
+	    object>
+	    __hash__ = <method-wrapper '__hash__' of ZeroDivisionError
+	    object>
+	    __init__ = <method-wrapper '__init__' of ZeroDivisionError
+	    object>
+	    __le__ = <method-wrapper '__le__' of ZeroDivisionError
+	    object>
+	    __lt__ = <method-wrapper '__lt__' of ZeroDivisionError
+	    object>
+	    __ne__ = <method-wrapper '__ne__' of ZeroDivisionError
+	    object>
 	    __new__ = <built-in method __new__ of type object>
 	    __reduce__ = <built-in method __reduce__ of
-	    exceptions.ZeroDivisionError object>
+	    ZeroDivisionError object>
 	    __reduce_ex__ = <built-in method __reduce_ex__ of
-	    exceptions.ZeroDivisionError object>
-	    __repr__ = <method-wrapper '__repr__' of
-	    exceptions.ZeroDivisionError object>
+	    ZeroDivisionError object>
+	    __repr__ = <method-wrapper '__repr__' of ZeroDivisionError
+	    object>
 	    __setattr__ = <method-wrapper '__setattr__' of
-	    exceptions.ZeroDivisionError object>
+	    ZeroDivisionError object>
 	    __setstate__ = <built-in method __setstate__ of
-	    exceptions.ZeroDivisionError object>
+	    ZeroDivisionError object>
 	    __sizeof__ = <built-in method __sizeof__ of
-	    exceptions.ZeroDivisionError object>
-	    __str__ = <method-wrapper '__str__' of
-	    exceptions.ZeroDivisionError object>
+	    ZeroDivisionError object>
+	    __str__ = <method-wrapper '__str__' of ZeroDivisionError
+	    object>
 	    __subclasshook__ = <built-in method __subclasshook__ of type
 	    object>
-	    __unicode__ = <built-in method __unicode__ of
-	    exceptions.ZeroDivisionError object>
-	    args = ('integer division or modulo by zero',)
-	    message = 'integer division or modulo by zero'
+	    __suppress_context__ = False
+	    __traceback__ = <traceback object>
+	    args = ('division by zero',)
+	    with_traceback = <built-in method with_traceback of
+	    ZeroDivisionError object>
 	
-	The above is a description of an error in a Python program.  Here is
+	The above is a description of an error in a Python program.
+	Here is
 	the original traceback:
 	
 	Traceback (most recent call last):
-	  File "cgitb_log_exception.py", line 21, in <module>
+	  File "cgitb_log_exception.py", line 23, in <module>
 	    func(1, 0)
-	  File "cgitb_log_exception.py", line 19, in func
+	  File "cgitb_log_exception.py", line 21, in func
 	    return a / divisor
-	ZeroDivisionError: integer division or modulo by zero
+	ZeroDivisionError: division by zero
 	
 
 .. {{{end}}}

@@ -10,8 +10,10 @@
 import cgitb
 cgitb.enable(format='text')
 
+
 def func2(a, divisor):
     return a / divisor
+
 
 def func1(a, b):
     c = b - 5

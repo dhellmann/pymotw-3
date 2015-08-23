@@ -7,8 +7,10 @@
 """
 #end_pymotw_header
 
+
 def func2(a, divisor):
     return a / divisor
+
 
 def func1(a, b):
     c = b - 5

@@ -79,6 +79,8 @@ def run_script(input_file, script_name, break_lines_at=64, **kwds):
 # Stuff commonly used symbols into the builtins so we don't have to
 # import them in all of the cog blocks where we want to use them.
 __builtins__['run_script'] = run_script
+__builtins__['path'] = path
+__builtins__['sh'] = sh
 
 
 def remake_directories(*dirnames):
