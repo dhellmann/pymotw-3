@@ -70,10 +70,9 @@ Having access to the variables involved in the error stack can help
 find a logical error that occurs somewhere higher in the stack than
 the line where the actual exception is generated.
 
-.. {{{cog
+.. NOT RUNNING
 .. cog.out(run_script(cog.inFile, 'cgitb_local_vars.py', ignore_error=True,
 ..                    line_break_mode='fill'))
-.. }}}
 
 ::
 
@@ -182,10 +181,7 @@ the line where the actual exception is generated.
 	  File "cgitb_local_vars.py", line 15, in func2
 	    return a / divisor
 	ZeroDivisionError: division by zero
-	
-	
 
-.. {{{end}}}
 
 In the case of this code with a :class:`ZeroDivisionError`, it is
 apparent that the problem is introduced in the computation of the
@@ -220,10 +216,9 @@ of the traceback.
 This output show that ``self.a`` and ``self.b`` are involved in the
 error-prone code.
 
-.. {{{cog
+.. NOT RUNNING
 .. cog.out(run_script(cog.inFile, 'cgitb_with_classes.py',
 ..                    ignore_error=True, line_break_mode='fill'))
-.. }}}
 
 ::
 
@@ -337,10 +332,6 @@ error-prone code.
 	  File "cgitb_with_classes.py", line 29, in __init__
 	    self.d = self.a / self.b
 	ZeroDivisionError: division by zero
-	
-	
-
-.. {{{end}}}
 
 
 Exception Properties
@@ -357,10 +348,9 @@ custom exception types are printed as part of the error report.
 In this example, the *bad_value* property is included along with the
 standard *message* and *args* values.
 
-.. {{{cog
+.. NOT RUNNING
 .. cog.out(run_script(cog.inFile, 'cgitb_exception_properties.py', 
 ..                    ignore_error=True, line_break_mode='fill'))
-.. }}}
 
 ::
 
@@ -438,10 +428,6 @@ standard *message* and *args* values.
 	  File "cgitb_exception_properties.py", line 23, in <module>
 	    raise MyException('Normal message', bad_value=99)
 	MyException: Normal message
-	
-	
-
-.. {{{end}}}
 
 
 HTML Output
@@ -488,17 +474,17 @@ describing where to go to find the error log.
 	
 	<p>A problem occurred in a Python script.
 	/Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/cgitb/
-	LOGS/tmpqz_849_d.txt contains the description of this error.
+	LOGS/tmp6s9oa92a.txt contains the description of this error.
 
 	$ ls LOGS
 	
-	tmpqz_849_d.txt
+	tmp6s9oa92a.txt
 
 	$ cat LOGS/*.txt
 	
 	ZeroDivisionError
 	Python 3.4.3: /Users/dhellmann/Envs/pymotw34/bin/python3
-	Sun Aug 23 16:55:44 2015
+	Sun Aug 23 16:58:57 2015
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
