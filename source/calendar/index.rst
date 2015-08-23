@@ -5,7 +5,8 @@
 .. module:: calendar
     :synopsis: Classes for working with year, month, and week-oriented values.
 
-:Purpose: The calendar module implements classes for working with dates to manage year/month/week oriented values.
+:Purpose: The calendar module implements classes for working with
+          dates to manage year/month/week oriented values.
 
 The :mod:`calendar` module defines the :class:`Calendar` class, which
 encapsulates calculations for values such as the dates of the weeks in
@@ -34,7 +35,7 @@ The output looks like:
 
 ::
 
-	$ python calendar_textcalendar.py
+	$ python3 calendar_textcalendar.py
 	
 	     July 2011
 	Su Mo Tu We Th Fr Sa
@@ -44,6 +45,7 @@ The output looks like:
 	17 18 19 20 21 22 23
 	24 25 26 27 28 29 30
 	31
+	 
 
 .. {{{end}}}
 
@@ -74,12 +76,12 @@ Calling ``yeardays2calendar(2011, 3)`` returns data for 2011,
 organized with three months per row.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'calendar_yeardays2calendar.py'))
+.. cog.out(run_script(cog.inFile, 'calendar_yeardays2calendar.py', break_lines_at=66))
 .. }}}
 
 ::
 
-	$ python calendar_yeardays2calendar.py
+	$ python3 calendar_yeardays2calendar.py
 	
 	len(cal_data)      : 4
 	len(top_months)    : 3
@@ -108,7 +110,7 @@ For the same arguments, :func:`formatyear` produces this output:
 
 ::
 
-	$ python calendar_formatyear.py
+	$ python3 calendar_formatyear.py
 	
 	                              2011
 	
@@ -178,7 +180,7 @@ the given month, but that are part of another month.
 
 ::
 
-	$ python calendar_monthcalendar.py
+	$ python3 calendar_monthcalendar.py
 	
 	[[0, 0, 0, 0, 1, 2, 3],
 	 [4, 5, 6, 7, 8, 9, 10],
@@ -212,7 +214,7 @@ So the meeting schedule for the year is:
 
 ::
 
-	$ python calendar_secondthursday.py
+	$ python3 calendar_secondthursday.py
 	
 	Jan: 13
 	Feb: 10
