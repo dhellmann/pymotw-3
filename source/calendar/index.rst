@@ -234,12 +234,11 @@ So the meeting schedule for the year is:
 
 .. seealso::
 
-    `calendar <http://docs.python.org/library/calendar.html>`_
-        The standard library documentation for this module.
+    * `calendar <http://docs.python.org/library/calendar.html>`_ --
+      The standard library documentation for this module.
 
-    :mod:`time`
-        Lower-level time functions.
+    * :mod:`time` -- Lower-level time functions.
 
-    :mod:`datetime`
-        Manipulate date values, including timestamps and time zones.
+    * :mod:`datetime` -- Manipulate date values, including timestamps
+      and time zones.
 
