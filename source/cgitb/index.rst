@@ -11,7 +11,7 @@
 was originally designed for showing errors and debugging information
 in web applications and was later updated to include plain-text output
 as well, but unfortunately was never renamed.  This has led to
-obscurity and the module is not used as often as it could be.
+obscurity, and the module is not used as often as it could be.
 
 Standard Traceback Dumps
 ========================
@@ -60,10 +60,10 @@ tracebacks.
 The error report from this example is much more extensive than the
 original.  Each frame of the stack is listed, along with:
 
-* the full path to the source file, instead of just the base name
-* the values of the arguments to each function in the stack
-* a few lines of source context from around the line in the error path
-* the values of variables in the expression causing the error
+* The full path to the source file, instead of just the base name
+* The values of the arguments to each function in the stack
+* A few lines of source context from around the line in the error path
+* The values of variables in the expression causing the error
 
 Having access to the variables involved in the error stack can help
 find a logical error that occurs somewhere higher in the stack than
