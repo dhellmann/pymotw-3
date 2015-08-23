@@ -6,7 +6,6 @@
     :synopsis: Mis-named module that provides extended traceback information.
 
 :Purpose: cgitb provides more detailed traceback information than :mod:`traceback`.
-:Python Version: 2.2 and later
 
 :mod:`cgitb` is a valuable debugging tool in the standard library.  It
 was originally designed for showing errors and debugging information
@@ -474,17 +473,17 @@ describing where to go to find the error log.
 	
 	<p>A problem occurred in a Python script.
 	/Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/cgitb/
-	LOGS/tmp6s9oa92a.txt contains the description of this error.
+	LOGS/tmp0l4jfvst.txt contains the description of this error.
 
 	$ ls LOGS
 	
-	tmp6s9oa92a.txt
+	tmp0l4jfvst.txt
 
 	$ cat LOGS/*.txt
 	
 	ZeroDivisionError
 	Python 3.4.3: /Users/dhellmann/Envs/pymotw34/bin/python3
-	Sun Aug 23 16:58:57 2015
+	Sun Aug 23 17:05:36 2015
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
@@ -579,22 +578,21 @@ describing where to go to find the error log.
 
 .. seealso::
 
-    `cgitb <http://docs.python.org/library/cgitb.html>`_
-        The standard library documentation for this module.
+    * `cgitb <http://docs.python.org/library/cgitb.html>`_ -- The
+      standard library documentation for this module.
 
-    :mod:`traceback`
-        Standard library module for working with tracebacks.
+    * :mod:`traceback` -- Standard library module for working with
+      tracebacks.
 
-    :mod:`inspect`
-        The ``inspect`` module includes more functions for examining the
-        stack.
+    * :mod:`inspect` -- The ``inspect`` module includes more functions
+      for examining the stack.
 
-    :mod:`sys`
-        The ``sys`` module provides access to the current exception value
-        and the ``excepthook`` handler invoked when an exception
-        occurs.
+    * :mod:`sys` -- The ``sys`` module provides access to the current
+      exception value and the ``excepthook`` handler invoked when an
+      exception occurs.
 
-    `Improved traceback module <http://thread.gmane.org/gmane.comp.python.devel/110326>`_
-        Discussion on the Python development mailing list about
-        improvements to the traceback module and related enhancements
-        other developers use locally.
+    * `Improved traceback module
+      <http://thread.gmane.org/gmane.comp.python.devel/110326>`_ --
+      Discussion on the Python development mailing list about
+      improvements to the traceback module and related enhancements
+      other developers use locally.
