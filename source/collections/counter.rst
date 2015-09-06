@@ -1,6 +1,6 @@
-=========
- Counter
-=========
+====================================
+ Counter --- count hashable objects
+====================================
 
 A :class:`Counter` is a container that keeps track of how many times
 equivalent values are added.  It can be used to implement the same

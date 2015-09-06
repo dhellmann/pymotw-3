@@ -1,8 +1,8 @@
 .. _deque:
 
-=======
- Deque
-=======
+==============================
+ Deque --- double-ended queue
+==============================
 
 A double-ended queue, or :class:`deque`, supports adding and removing
 elements from either end. The more commonly used structures stacks and

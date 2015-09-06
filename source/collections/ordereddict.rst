@@ -1,9 +1,9 @@
-=============
- OrderedDict
-=============
+===================================================================
+ OrderedDict --- remember the order keys are added to a dictionary
+===================================================================
 
 An :class:`OrderedDict` is a dictionary subclass that remembers the
-order in which its contents are added.  
+order in which its contents are added.
 
 .. include:: collections_ordereddict_iter.py
    :literal:

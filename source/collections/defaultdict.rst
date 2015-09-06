@@ -1,6 +1,6 @@
-=============
- defaultdict
-=============
+=====================================================
+ defaultdict --- missing keys return a default value
+=====================================================
 
 The standard dictionary includes the method :func:`setdefault` for
 retrieving a value and establishing a default if the value does not

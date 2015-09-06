@@ -1,8 +1,8 @@
 .. _collections-namedtuple:
 
-============
- namedtuple
-============
+=================================================
+ namedtuple --- tuple subclass with named fields
+=================================================
 
 The standard :class:`tuple` uses numerical indexes to access its
 members.

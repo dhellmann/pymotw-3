@@ -1,6 +1,6 @@
-=====================================
- collections -- Container Data Types
-=====================================
+======================================
+ collections --- Container Data Types
+======================================
 
 .. module:: collections
     :synopsis: Container data types.
@@ -12,7 +12,7 @@ The :mod:`collections` module includes container data types beyond the
 built-in types :class:`list`, :class:`dict`, and :class:`tuple`.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    counter
    defaultdict
