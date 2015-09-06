@@ -9,16 +9,14 @@
 
 import collections
 
-Person = collections.namedtuple('Person', 'name age gender')
+Person = collections.namedtuple('Person', 'name age')
 
-print('Type of Person:', type(Person))
-
-bob = Person(name='Bob', age=30, gender='male')
+bob = Person(name='Bob', age=30)
 print('\nRepresentation:', bob)
 
-jane = Person(name='Jane', age=29, gender='female')
+jane = Person(name='Jane', age=29)
 print('\nField by name:', jane.name)
 
 print('\nFields by index:')
 for p in [bob, jane]:
-    print('%s is a %d year old %s' % p)
+    print('%s is %d years old' % p)
