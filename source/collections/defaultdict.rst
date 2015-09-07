@@ -15,11 +15,12 @@ default up front when the container is initialized.
     :literal:
     :start-after: #end_pymotw_header
 
-This works well as long as it is appropriate for all keys to have the
-same default. It can be especially useful if the default is a type
-used for aggregating or accumulating values, such as a :class:`list`,
-:class:`set`, or even :class:`int`. The standard library documentation
-includes several examples of using :class:`defaultdict` this way.
+This method works well as long as it is appropriate for all keys to
+have the same default. It can be especially useful if the default is a
+type used for aggregating or accumulating values, such as a
+:class:`list`, :class:`set`, or even :class:`int`. The standard
+library documentation includes several examples of using
+:class:`defaultdict` this way.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'collections_defaultdict.py'))

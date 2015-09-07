@@ -5,9 +5,9 @@
 ==============================
 
 A double-ended queue, or :class:`deque`, supports adding and removing
-elements from either end. The more commonly used structures stacks and
-queues are degenerate forms of deques, where the inputs and outputs
-are restricted to a single end.
+elements from either end. The more commonly used stacks and queues are
+degenerate forms of deques, where the inputs and outputs are
+restricted to a single end.
 
 .. include:: collections_deque.py
     :literal:

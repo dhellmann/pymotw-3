@@ -142,7 +142,7 @@ are renamed.
 
 The new names for renamed fields depend on their index in the tuple,
 so the field with name ``class`` becomes ``_1`` and the duplicate
-``age`` field is changed to ``_3``.
+``age`` field is changed to ``_2``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'collections_namedtuple_rename.py'))
