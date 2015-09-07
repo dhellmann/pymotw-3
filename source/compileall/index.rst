@@ -22,6 +22,8 @@ byte-compile the files within it.
     :start-after: #end_pymotw_header
 
 By default, all of the subdirectories are scanned to a depth of 10.
+The output files are written to a ``__pycache__`` directory and named
+based on the Python interpreter version.
 
 .. {{{cog
 .. workdir = path(cog.inFile).dirname()
@@ -34,12 +36,19 @@ By default, all of the subdirectories are scanned to a depth of 10.
 
 	$ python3 compileall_compile_dir.py
 	
+	Before: []
+	
 	Listing 'examples'...
 	Compiling 'examples/a.py'...
 	Listing 'examples/subdir'...
 	Compiling 'examples/subdir/b.py'...
+	
+	After: ['examples/__pycache__/a.cpython-34.pyc']
 
 .. {{{end}}}
+
+Ignoring Files
+==============
 
 To filter directories out, use the ``rx`` argument to provide a
 regular expression to match the names to exclude.
