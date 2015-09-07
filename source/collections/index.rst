@@ -25,3 +25,4 @@ built-in types :class:`list`, :class:`dict`, and :class:`tuple`.
 
     * :pydoc:`collections`
 
+    * :ref:`Porting notes for collections <porting-collections>`

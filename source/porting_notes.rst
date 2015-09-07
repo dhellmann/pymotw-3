@@ -253,6 +253,15 @@ bz2
 :class:`BZ2File` instances now support the context manager protocol,
 and do not need to be wrapped with :func:`contextlib.closing`.
 
+.. _porting-collections:
+
+collections
+-----------
+
+The abstract base classes formerly defined in :mod:`collections` moved
+to :mod:`collections.abc`, with backwards-compatibility imports in
+:mod:`collections`, for now (:pyissue:`11085`).
+
 .. _porting-glob:
 
 glob
