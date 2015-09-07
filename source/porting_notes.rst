@@ -330,3 +330,19 @@ implementation that could not be modified from the outside.
 For Linux systems, :data:`sys.platform` no longer includes the version
 number. The value is now just ``linux`` and not ``linux2`` or
 ``linux3``.
+
+UserDict, UserList, and UserString
+----------------------------------
+
+.. spelling::
+
+   subclassed
+
+The UserDict, UserList, and UserString classes have been moved out of
+their own modules into the :mod:`collections` module. :class:`dict`,
+:class:`list`, and :class:`str` can be subclassed directly, but the
+classes in :mod:`collections` may make implementing the subclass
+simpler because the content of the container is available directly
+through an instance attribute. The abstract classes in
+:mod:`collections.abc` are also useful for creating custom containers
+that follow the APIs of the built-in types.
