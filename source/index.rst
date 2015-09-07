@@ -17,6 +17,7 @@ Python and tools used.
 .. toctree::
    :maxdepth: 2
 
+   text
    data_types
    dates
    file_access
