@@ -14,6 +14,7 @@ built-in types :class:`list`, :class:`dict`, and :class:`tuple`.
 .. toctree::
    :maxdepth: 1
 
+   chainmap
    counter
    defaultdict
    deque
