@@ -1,3 +1,9 @@
+.. spelling::
+
+   Ratcliff
+   Metzener
+   Dobb
+
 ===============================
  difflib --- Compare Sequences
 ===============================
