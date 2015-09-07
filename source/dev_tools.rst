@@ -69,6 +69,7 @@ without importing the code and potentially triggering side-effects.
     :maxdepth: 1
 
     cgitb/index
+    compileall/index
 
 ..
     pydoc/index
@@ -79,5 +80,4 @@ without importing the code and potentially triggering side-effects.
     trace/index
     profile/index
     timeit/index
-    compileall/index
     pyclbr/index
