@@ -147,6 +147,50 @@ the items in the deque as being engraved along the edge of a dial.
 
 .. {{{end}}}
 
+Constraining the Queue Size
+===========================
+
+A :class:`deque` instance can be configured with a maximum length so
+that it never grows beyond that size. When the queue reaches the
+specified length, existing items are discarded as new items are
+added. This behavior is useful for finding the last *n* items in a
+stream of undetermined length.
+
+.. include:: collections_deque_maxlen.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+The deque length is maintained regardless of which end the items are
+added to.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'collections_deque_maxlen.py'))
+.. }}}
+
+::
+
+	$ python3 collections_deque_maxlen.py
+	
+	n = 17
+	D1: deque([17], maxlen=3)
+	D2: deque([17], maxlen=3)
+	n = 72
+	D1: deque([17, 72], maxlen=3)
+	D2: deque([72, 17], maxlen=3)
+	n = 97
+	D1: deque([17, 72, 97], maxlen=3)
+	D2: deque([97, 72, 17], maxlen=3)
+	n = 8
+	D1: deque([72, 97, 8], maxlen=3)
+	D2: deque([8, 97, 72], maxlen=3)
+	n = 32
+	D1: deque([97, 8, 32], maxlen=3)
+	D2: deque([32, 8, 97], maxlen=3)
+
+.. {{{end}}}
+
+
+
 .. seealso::
 
     * `WikiPedia: Deque <http://en.wikipedia.org/wiki/Deque>`_ -- A
