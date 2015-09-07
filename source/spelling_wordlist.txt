@@ -4,12 +4,15 @@ CGIHTTPServer
 CPython
 ConfigParser
 Cookie
+Deque
 Dialog
 DocXMLRPCServer
 FileDialog
 HTMLParser
+Hashable
 Hellmann
 IPv
+Iterable
 Queue
 ScrolledText
 SimpleDialog
@@ -50,6 +53,9 @@ copy_reg
 copyreg
 dbhash
 dbm
+defaultdict
+deque
+deques
 dev
 dialog
 dnd
@@ -64,6 +70,7 @@ filenames
 font
 gdbm
 gnu
+hashable
 hellmann
 html
 htmlentitydefs
@@ -72,6 +79,7 @@ httplib
 io
 markupbase
 messagebox
+multiset
 namedtuple
 namespace
 ndbm
