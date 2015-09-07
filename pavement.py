@@ -10,6 +10,12 @@ from sphinxcontrib import paverutils  # noqa
 from sphinxcontrib.paverutils import cog, run_script
 
 
+# Set PYTHONHASHSEED so ensure the "randomness" for mapping-related
+# items is always the same between runs to avoid unnecessary cog
+# updates.
+os.environ['PYTHONHASHSEED'] = '19710329'
+
+
 setup(
     name="PyMOTW-3",
     packages=[],

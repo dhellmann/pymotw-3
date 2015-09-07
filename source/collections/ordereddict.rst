@@ -24,9 +24,9 @@ creating an iterator.
 	$ python3 collections_ordereddict_iter.py
 	
 	Regular dictionary:
-	a A
 	c C
 	b B
+	a A
 	
 	OrderedDict:
 	a A

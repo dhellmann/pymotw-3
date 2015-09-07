@@ -55,7 +55,7 @@ replaced.  In this example, the count for ``a`` goes from ``3`` to
 	$ python3 collections_counter_update.py
 	
 	Initial : Counter()
-	Sequence: Counter({'a': 3, 'b': 2, 'd': 1, 'c': 1})
+	Sequence: Counter({'a': 3, 'b': 2, 'c': 1, 'd': 1})
 	Dict    : Counter({'d': 6, 'a': 4, 'b': 2, 'c': 1})
 
 .. {{{end}}}
@@ -108,9 +108,9 @@ than or equal to zero are not included.
 
 	$ python3 collections_counter_elements.py
 	
-	Counter({'e': 3, 'r': 1, 'm': 1, 'y': 1, 'x': 1, 'l': 1, 't': 1, 
+	Counter({'e': 3, 'x': 1, 'm': 1, 't': 1, 'y': 1, 'l': 1, 'r': 1, 
 	'z': 0})
-	['r', 'm', 'y', 'x', 'e', 'e', 'e', 'l', 't']
+	['x', 'm', 't', 'e', 'e', 'e', 'y', 'l', 'r']
 
 .. {{{end}}}
 
@@ -167,10 +167,10 @@ zero.
 	$ python3 collections_counter_arithmetic.py
 	
 	C1: Counter({'b': 3, 'a': 2, 'c': 1})
-	C2: Counter({'a': 2, 'l': 1, 'p': 1, 'h': 1, 't': 1, 'e': 1, 'b': 1})
+	C2: Counter({'a': 2, 'b': 1, 'p': 1, 't': 1, 'l': 1, 'e': 1, 'h': 1})
 	
 	Combined counts:
-	Counter({'b': 4, 'a': 4, 'l': 1, 'c': 1, 'h': 1, 'e': 1, 't': 1, 'p': 1})
+	Counter({'b': 4, 'a': 4, 'p': 1, 't': 1, 'c': 1, 'e': 1, 'l': 1, 'h': 1})
 	
 	Subtraction:
 	Counter({'b': 2, 'c': 1})
@@ -179,6 +179,6 @@ zero.
 	Counter({'a': 2, 'b': 1})
 	
 	Union (taking maximums):
-	Counter({'b': 3, 'a': 2, 'l': 1, 'c': 1, 'h': 1, 'e': 1, 't': 1, 'p': 1})
+	Counter({'b': 3, 'a': 2, 'p': 1, 't': 1, 'c': 1, 'e': 1, 'l': 1, 'h': 1})
 
 .. {{{end}}}
