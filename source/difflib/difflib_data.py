@@ -11,7 +11,7 @@ text1 = """Lorem ipsum dolor sit amet, consectetuer adipiscing
 elit. Integer eu lacus accumsan arcu fermentum euismod. Donec
 pulvinar porttitor tellus. Aliquam venenatis. Donec facilisis
 pharetra tortor.  In nec mauris eget magna consequat
-convallis. Nam sed sem vitae odio pellentesque interdum. Sed
+convalis. Nam sed sem vitae odio pellentesque interdum. Sed
 consequat viverra nisl. Suspendisse arcu metus, blandit quis,
 rhoncus ac, pharetra eget, velit. Mauris urna. Morbi nonummy
 molestie orci. Praesent nisi elit, fringilla ac, suscipit non,
@@ -25,7 +25,7 @@ text2 = """Lorem ipsum dolor sit amet, consectetuer adipiscing
 elit. Integer eu lacus accumsan arcu fermentum euismod. Donec
 pulvinar, porttitor tellus. Aliquam venenatis. Donec facilisis
 pharetra tortor. In nec mauris eget magna consequat
-convallis. Nam cras vitae mi vitae odio pellentesque interdum. Sed
+convalis. Nam cras vitae mi vitae odio pellentesque interdum. Sed
 consequat viverra nisl. Suspendisse arcu metus, blandit quis,
 rhoncus ac, pharetra eget, velit. Mauris urna. Morbi nonummy
 molestie orci. Praesent nisi elit, fringilla ac, suscipit non,

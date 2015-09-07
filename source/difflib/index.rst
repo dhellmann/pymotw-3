@@ -1,12 +1,11 @@
-==============================
- difflib -- Compare Sequences
-==============================
+===============================
+ difflib --- Compare Sequences
+===============================
 
 .. module:: difflib
     :synopsis: Compare sequences, especially lines of text.
 
 :Purpose: Compare sequences, especially lines of text.
-:Python Version: 2.1 and later
 
 The :mod:`difflib` module contains tools for computing and working
 with differences between sequences.  It is especially useful for
@@ -115,7 +114,7 @@ subversion or other version control tools.
 
 ::
 
-	$ python difflib_unified.py
+	$ python3 difflib_unified.py
 	
 	--- 
 	+++ 
@@ -124,10 +123,11 @@ subversion or other version control tools.
 	 elit. Integer eu lacus accumsan arcu fermentum euismod. Donec
 	-pulvinar porttitor tellus. Aliquam venenatis. Donec facilisis
 	-pharetra tortor.  In nec mauris eget magna consequat
-	-convallis. Nam sed sem vitae odio pellentesque interdum. Sed
+	-convalis. Nam sed sem vitae odio pellentesque interdum. Sed
 	+pulvinar, porttitor tellus. Aliquam venenatis. Donec facilisis
 	+pharetra tortor. In nec mauris eget magna consequat
-	+convallis. Nam cras vitae mi vitae odio pellentesque interdum. Sed
+	+convalis. Nam cras vitae mi vitae odio pellentesque interdum. S
+	ed
 	 consequat viverra nisl. Suspendisse arcu metus, blandit quis,
 	 rhoncus ac, pharetra eget, velit. Mauris urna. Morbi nonummy
 	 molestie orci. Praesent nisi elit, fringilla ac, suscipit non,
@@ -165,7 +165,7 @@ characters explicitly, but to rely on the ability of
 
 ::
 
-	$ python difflib_junk.py
+	$ python3 difflib_junk.py
 	
 	A = ' abcd'
 	B = 'abcd abcd'
@@ -211,7 +211,7 @@ are added and removed.
 
 ::
 
-	$ python difflib_seq.py
+	$ python3 difflib_seq.py
 	
 	Initial data:
 	s1 = [1, 2, 3, 5, 6, 4]
@@ -237,8 +237,9 @@ built-in types, as long as they are hashable.
 
 .. seealso::
 
-    `difflib <http://docs.python.org/library/difflib.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`difflib`
 
-    `Pattern Matching: The Gestalt Approach <http://www.ddj.com/documents/s=1103/ddj8807c/>`_
-        Discussion of a similar algorithm by John W. Ratcliff and D. E. Metzener published in Dr. Dobb’s Journal in July, 1988.
+   * `Pattern Matching: The Gestalt Approach
+     <http://www.ddj.com/documents/s=1103/ddj8807c/>`_ -- Discussion
+     of a similar algorithm by John W. Ratcliff and D. E. Metzener
+     published in Dr. Dobb’s Journal in July, 1988.
