@@ -32,14 +32,14 @@ The :class:`Differ` class works on sequences of text lines and
 produces human-readable *deltas*, or change instructions, including
 differences within individual lines.  The default output produced by
 :class:`Differ` is similar to the :command:`diff` command line tool
-under Unix.  It includes the original input values from both lists,
+under UNIX.  It includes the original input values from both lists,
 including common values, and markup data to indicate what changes were
 made.
 
 * Lines prefixed with ``-`` indicate that they were in the first
   sequence, but not the second.
 * Lines prefixed with ``+`` were in the second sequence, but not the
-  first. 
+  first.
 * If a line has an incremental difference between versions, an extra
   line prefixed with ``?`` is used to highlight the change within the
   new version.
@@ -100,9 +100,8 @@ Other Output Formats
 --------------------
 
 While the :class:`Differ` class shows all of the input lines, a
-*unified diff* only includes modified lines and a bit of context. In
-Python 2.3, the :func:`unified_diff` function was added to produce
-this sort of output.
+*unified diff* only includes modified lines and a bit of context. The
+:func:`unified_diff` function produces this sort of output.
 
 .. include:: difflib_unified.py
     :literal:
@@ -112,7 +111,7 @@ The *lineterm* argument is used to tell :func:`unified_diff` to skip
 appending newlines to the control lines it returns because the input
 lines do not include them.  Newlines are added to all of the lines
 when they are printed.  The output should look familiar to users of
-subversion or other version control tools.
+many common version control tools.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'difflib_unified.py'))
@@ -151,7 +150,7 @@ Junk Data
 =========
 
 All of the functions that produce difference sequences accept
-arguments to indicate which lines should be ignored, and which
+arguments to indicate which lines should be ignored and which
 characters within a line should be ignored. These parameters can be
 used to skip over markup or whitespace changes in two versions of a
 file, for example.
