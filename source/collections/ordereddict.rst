@@ -11,9 +11,10 @@ order in which its contents are added.
 
 A regular :class:`dict` does not track the insertion order, and
 iterating over it produces the values in order based on how the keys
-are stored in the hash table.  In an :class:`OrderedDict`, by
-contrast, the order the items are inserted is remembered and used when
-creating an iterator.
+are stored in the hash table, which is in turn influenced by a random
+value to reduce collisions.  In an :class:`OrderedDict`, by contrast,
+the order the items are inserted is remembered and used when creating
+an iterator.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'collections_ordereddict_iter.py'))
@@ -64,3 +65,51 @@ values in a different order, they are considered to be different.
 
 .. {{{end}}}
 
+Re-ordering
+===========
+
+It is possible to change the order of the keys in an
+:class:`OrderedDict` by moving them either to the beginning or the end
+of the sequence using :func:`move_to_end`.
+
+.. include:: collections_ordereddict_move_to_end.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+The ``last`` argument tells :func:`move_to_end` whether to move the
+item to be the last item in the key sequence (when ``True``), or the
+first (when ``False``).
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'collections_ordereddict_move_to_end.py'))
+.. }}}
+
+::
+
+	$ python3 collections_ordereddict_move_to_end.py
+	
+	Before:
+	a A
+	b B
+	c C
+	
+	move_to_end():
+	a A
+	c C
+	b B
+	
+	move_to_end(last=False):
+	b B
+	a A
+	c C
+
+.. {{{end}}}
+
+
+
+.. seealso::
+
+   * `PYTHONHASHSEED
+     <https://docs.python.org/3.5/using/cmdline.html#envvar-PYTHONHASHSEED>`__
+     -- Environment variable to control the random seed value added to
+     the hash algorithm for key locations in the dictionary.
