@@ -1,12 +1,11 @@
-=======================================
-compileall -- Byte-compile Source Files
-=======================================
+==========================================
+ compileall --- Byte-compile Source Files
+==========================================
 
 .. module:: compileall
     :synopsis: Byte-compile Source Files
 
 :Purpose: Convert source files to byte-compiled version.
-:Python Version: 1.4 and later
 
 The :mod:`compileall` module finds Python source files and compiles
 them to the byte-code representation, saving the results in ``.pyc``
@@ -33,12 +32,12 @@ By default, all of the subdirectories are scanned to a depth of 10.
 
 ::
 
-	$ python compileall_compile_dir.py
+	$ python3 compileall_compile_dir.py
 	
-	Listing examples ...
-	Compiling examples/a.py ...
-	Listing examples/subdir ...
-	Compiling examples/subdir/b.py ...
+	Listing 'examples'...
+	Compiling 'examples/a.py'...
+	Listing 'examples/subdir'...
+	Compiling 'examples/subdir/b.py'...
 
 .. {{{end}}}
 
@@ -60,11 +59,11 @@ This version excludes files in the ``subdir`` subdirectory.
 
 ::
 
-	$ python compileall_exclude_dirs.py
+	$ python3 compileall_exclude_dirs.py
 	
-	Listing examples ...
-	Compiling examples/a.py ...
-	Listing examples/subdir ...
+	Listing 'examples'...
+	Compiling 'examples/a.py'...
+	Listing 'examples/subdir'...
 
 .. {{{end}}}
 
@@ -87,10 +86,10 @@ compiled.
 
 ::
 
-	$ python compileall_recursion_depth.py
+	$ python3 compileall_recursion_depth.py
 	
-	Listing examples ...
-	Compiling examples/a.py ...
+	Listing 'examples'...
+	Compiling 'examples/a.py'...
 
 .. {{{end}}}
 
@@ -119,13 +118,13 @@ defaults to ``0``.
 
 ::
 
-	$ python compileall_path.py
+	$ python3 compileall_path.py
 	
 	sys.path = ['examples', 'notthere']
-	Listing examples ...
-	Compiling examples/a.py ...
-	Listing notthere ...
-	Can't list notthere
+	Listing 'examples'...
+	Compiling 'examples/a.py'...
+	Listing 'notthere'...
+	Can't list 'notthere'
 
 .. {{{end}}}
 
@@ -139,24 +138,46 @@ example:
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '-m compileall -h', ignore_error=True, 
-..                    break_lines_at=65, line_break_mode='wrap'))
+..                    line_break_mode='wrap'))
 .. }}}
 
 ::
 
-	$ python -m compileall -h
+	$ python3 -m compileall -h
 	
-	option -h not recognized
-	usage: python compileall.py [-l] [-f] [-q] [-d destdir] [-x
-	regexp] [-i list] [directory|file ...]
-	-l: don't recurse down
-	-f: force rebuild even if timestamps are up-to-date
-	-q: quiet operation
-	-d destdir: purported directory name for error messages
-	   if no directory arguments, -l sys.path is assumed
-	-x regexp: skip files matching the regular expression regexp
-	   the regexp is searched for in the full path of the file
-	-i list: expand list with its content (file and directory names)
+	usage: compileall.py [-h] [-l] [-f] [-q] [-b] [-d DESTDIR] [-x
+	REGEXP]
+	                     [-i FILE]
+	                     [FILE|DIR [FILE|DIR ...]]
+	
+	Utilities to support installing Python libraries.
+	
+	positional arguments:
+	  FILE|DIR    zero or more file and directory names to compile;
+	if no
+	              arguments given, defaults to the equivalent of -l
+	sys.path
+	
+	optional arguments:
+	  -h, --help  show this help message and exit
+	  -l          don't recurse into subdirectories
+	  -f          force rebuild even if timestamps are up to date
+	  -q          output only error messages
+	  -b          use legacy (pre-PEP3147) compiled file locations
+	  -d DESTDIR  directory to prepend to file paths for use in
+	compile-time
+	              tracebacks and in runtime tracebacks in cases
+	where the source
+	              file is unavailable
+	  -x REGEXP   skip files matching the regular expression; the
+	regexp is
+	              searched for in the full path of each file
+	considered for
+	              compilation
+	  -i FILE     add all the files and directories listed in FILE
+	to the list
+	              considered for compilation; if "-", names are read
+	from stdin
 
 .. {{{end}}}
 
@@ -171,16 +192,15 @@ To recreate the earlier example, skipping the ``subdir`` directory, run:
 
 ::
 
-	$ python -m compileall -x '/subdir' examples
+	$ python3 -m compileall -x '/subdir' examples
 	
-	Listing examples ...
-	Compiling examples/a.py ...
-	Listing examples/subdir ...
+	Listing 'examples'...
+	Compiling 'examples/a.py'...
+	Listing 'examples/subdir'...
 
 .. {{{end}}}
 
 
 .. seealso::
 
-    `compileall <http://docs.python.org/library/compileall.html>`_
-        The standard library documentation for this module.
+    * :pydoc:`compileall`

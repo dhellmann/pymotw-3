@@ -5,13 +5,12 @@
 #
 """
 """
-
-__version__ = "$Id$"
 #end_pymotw_header
 
 import compileall
 import re
 
-compileall.compile_dir('examples', 
-    maxlevels=0, 
-    rx=re.compile(r'/\.svn'))
+compileall.compile_dir(
+    'examples',
+    maxlevels=0,
+)

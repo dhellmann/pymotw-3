@@ -5,12 +5,12 @@
 #
 """
 """
-
-__version__ = "$Id$"
 #end_pymotw_header
 
 import compileall
 import re
 
-compileall.compile_dir('examples', 
-    rx=re.compile(r'/subdir'))
+compileall.compile_dir(
+    'examples',
+    rx=re.compile(r'/subdir'),
+)
