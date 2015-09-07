@@ -11,14 +11,10 @@ import collections
 
 a = {'a': 'A', 'c': 'C'}
 b = {'b': 'B', 'c': 'D'}
+c = {'c': 'E'}
 
 m1 = collections.ChainMap(a, b)
-m2 = m1.new_child()
+m2 = m1.new_child(c)
 
-print('m1 before:', m1)
-print('m2 before:', m2)
-
-m2['c'] = 'E'
-
-print('m1 after:', m1)
-print('m2 after:', m2)
+print('m1["c"] = %s' % m1['c'])
+print('m2["c"] = %s' % m2['c'])

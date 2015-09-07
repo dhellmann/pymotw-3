@@ -160,3 +160,32 @@ changes for the next iteration.
 	'b': 'B'})
 
 .. {{{end}}}
+
+For situations where the new context is known or built in advance it
+is also possible to pass a mapping to :func:`new_child`.
+
+.. include:: collections_chainmap_new_child_explicit.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+This is the equivalent of
+
+::
+
+  m2 = collections.ChainMap(c, *m1.maps)
+
+and produces
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'collections_chainmap_new_child_explicit.py'))
+.. }}}
+
+::
+
+	$ python3 collections_chainmap_new_child_explicit.py
+	
+	m1["c"] = C
+	m2["c"] = E
+
+.. {{{end}}}
+
