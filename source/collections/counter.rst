@@ -146,7 +146,9 @@ Arithmetic
 ==========
 
 :class:`Counter` instances support arithmetic and set operations for
-aggregating results.
+aggregating results. This example shows the standard operators for
+creating new :class:`Counter` instances, but the in-place operators
+``+=``, ``-=``, ``&=`` and ``|=`` are also supported.
 
 .. include:: collections_counter_arithmetic.py
    :literal:

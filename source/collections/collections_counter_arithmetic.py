@@ -3,7 +3,7 @@
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
 #
-"""Initializing a Counter
+"""Arithmetic operations with Counters
 """
 #end_pymotw_header
 
