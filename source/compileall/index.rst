@@ -8,8 +8,7 @@
 :Purpose: Convert source files to byte-compiled version.
 
 The :mod:`compileall` module finds Python source files and compiles
-them to the byte-code representation, saving the results in ``.pyc``
-or ``.pyo`` files.
+them to the byte-code representation, saving the results in ``.pyc``.
 
 Compiling One Directory
 =======================
@@ -102,7 +101,6 @@ compiled.
 
 .. {{{end}}}
 
-
 Compiling sys.path
 ==================
 
@@ -134,6 +132,38 @@ defaults to ``0``.
 	Compiling 'examples/a.py'...
 	Listing 'notthere'...
 	Can't list 'notthere'
+
+.. {{{end}}}
+
+Compiling Individual Files
+==========================
+
+To compile a single file, rather than an entire directory of files,
+use :func:`compile_file`.
+
+.. include:: compileall_compile_file.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+The first argument should be the name to the file, either a full path
+or a relative path.
+
+.. {{{cog
+.. workdir = path(cog.inFile).dirname()
+.. cog.msg('Removing .pyc files from %s' % workdir)
+.. sh("find %s -name '*.pyc' | xargs rm" % workdir) #* fix emacs syntax highlighting
+.. cog.out(run_script(cog.inFile, 'compileall_compile_file.py'))
+.. }}}
+
+::
+
+	$ python3 compileall_compile_file.py
+	
+	Before: []
+	
+	Compiling 'examples/a.py'...
+	
+	After: ['examples/__pycache__/a.cpython-34.pyc']
 
 .. {{{end}}}
 

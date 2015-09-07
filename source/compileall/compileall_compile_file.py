@@ -13,6 +13,6 @@ import glob
 print('Before:', glob.glob('examples/__pycache__/*'))
 print()
 
-compileall.compile_dir('examples')
+compileall.compile_file('examples/a.py')
 
 print('\nAfter:', glob.glob('examples/__pycache__/*'))
