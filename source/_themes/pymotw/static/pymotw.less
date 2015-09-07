@@ -239,6 +239,29 @@ h1 a {
 }
 
 /*
+** Tables
+*/
+.table-cell {
+	padding: 0.25em;
+}
+/* normal tables have borders, so we want to set the text off from the
+   lines */
+table.docutils tbody tr th {
+	.table-cell;
+}
+table.docutils tbody tr td {
+	.table-cell;
+}
+/* field lists don't have borders, so we don't want them indented by
+   any padding, so remove it */
+table.field-list tbody tr th {
+	padding-left: 0;
+}
+table.field-list tbody tr td {
+	padding-left: 0;
+}
+
+/*
 ** Code samples and program output
 */
 
