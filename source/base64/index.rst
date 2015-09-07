@@ -1,6 +1,6 @@
-=========================================
- base64 -- Encode Binary Data with ASCII
-=========================================
+==========================================
+ base64 --- Encode Binary Data with ASCII
+==========================================
 
 .. module:: base64
     :synopsis: Encode binary data with ASCII characters.

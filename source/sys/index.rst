@@ -1,6 +1,6 @@
-====================================
-sys -- System-specific Configuration
-====================================
+=======================================
+ sys --- System-specific Configuration
+=======================================
 
 .. module:: sys
     :synopsis: System-specific configuration

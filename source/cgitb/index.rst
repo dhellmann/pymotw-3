@@ -1,6 +1,6 @@
-=====================================
- cgitb -- Detailed Traceback Reports
-=====================================
+======================================
+ cgitb --- Detailed Traceback Reports
+======================================
 
 .. module:: cgitb
     :synopsis: Mis-named module that provides extended traceback information.

@@ -1,6 +1,6 @@
-==========================
- bz2 -- bzip2 Compression
-==========================
+===========================
+ bz2 --- bzip2 Compression
+===========================
 
 .. module:: bz2
     :synopsis: bzip2 compression

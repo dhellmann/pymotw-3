@@ -1,6 +1,6 @@
-==========================================
- bisect -- Maintain Lists in Sorted Order
-==========================================
+===========================================
+ bisect --- Maintain Lists in Sorted Order
+===========================================
 
 .. module:: bisect
     :synopsis: Maintains a list in sorted order without having to call

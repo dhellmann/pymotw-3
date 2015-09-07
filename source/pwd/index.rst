@@ -1,6 +1,6 @@
-===============================
- pwd -- UNIX Password Database
-===============================
+================================
+ pwd --- UNIX Password Database
+================================
 
 .. module:: pwd
     :synopsis: UNIX Password Database

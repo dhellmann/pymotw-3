@@ -1,6 +1,6 @@
-======================================
- array -- Sequence of Fixed-type Data
-======================================
+=======================================
+ array --- Sequence of Fixed-type Data
+=======================================
 
 .. module:: array
     :synopsis: Manage sequences of fixed-type data efficiently.

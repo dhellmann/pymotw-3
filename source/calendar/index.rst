@@ -1,6 +1,6 @@
-=============================
- calendar -- Work with Dates
-=============================
+==============================
+ calendar --- Work with Dates
+==============================
 
 .. module:: calendar
     :synopsis: Classes for working with year, month, and week-oriented values.

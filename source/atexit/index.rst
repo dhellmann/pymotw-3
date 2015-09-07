@@ -1,6 +1,6 @@
-======================================
- atexit -- Program Shutdown Callbacks
-======================================
+=======================================
+ atexit --- Program Shutdown Callbacks
+=======================================
 
 .. module:: atexit
     :synopsis: Register shutdown callbacks
