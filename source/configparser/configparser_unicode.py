@@ -11,10 +11,8 @@ from configparser import ConfigParser
 import codecs
 
 parser = ConfigParser()
-
 # Open the file with the correct encoding
-with codecs.open('unicode.ini', 'r', encoding='utf-8') as f:
-    parser.readfp(f)
+parser.read('unicode.ini', encoding='utf-8')
 
 password = parser.get('bug_tracker', 'password')
 

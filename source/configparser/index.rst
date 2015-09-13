@@ -94,23 +94,22 @@ files are missing and decide whether to ignore them.
 Unicode Configuration Data
 --------------------------
 
-Configuration files containing Unicode data should be opened using the
-:mod:`codecs` module to set the proper encoding value.  Changing the
-password value of the original input to contain Unicode characters and
-saving the results in UTF-8 encoding gives:
+Configuration files containing Unicode data should be read using the
+proper encoding value.  Changing the password value of the original
+input to contain Unicode characters and saving the results in UTF-8
+encoding gives:
 
 .. literalinclude:: unicode.ini
 
-The :mod:`codecs` file handle can be passed to :func:`readfp`, which
-uses the :func:`readline` method of its argument to get lines from the
-file and parse them.
+The file is opened with the appropriate decoder, converting the UTF-8
+data to native Unicode strings.
 
 .. include:: configparser_unicode.py
    :literal:
    :start-after: #end_pymotw_header
 
-The value returned by :func:`get` is a :class:`unicode` object, so in
-order to print it safely it must be re-encoded as UTF-8.
+The value returned by :func:`get` is a Unicode string, so in order to
+print it safely it must be re-encoded as UTF-8.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'configparser_unicode.py'))
