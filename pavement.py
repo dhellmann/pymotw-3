@@ -283,12 +283,26 @@ def publish(options):
 
 
 @task
+@consume_args
 def migrate(options):
     "Copy old content into place to prepare for updating"
+    args = getattr(options, 'args', [])
     options.order('update', 'sphinx', add_rest=True)
     module = _get_module(options)
+    # The source module name might be different from the destination
+    # module name, so look for an explicit argument for the source.
+    source = module
+    args = getattr(options, 'args', [])
+    if args:
+        source = args[0]
     dest = path('source/' + module)
     if dest.exists():
         raise ValueError('%s already exists' % dest)
     path(options.migrate.old_loc + '/' + source).copytree(dest)
     (dest + '/__init__.py').remove()
+    if source != module:
+        # Rename any modules that have the old source module name to
+        # use the new source module name.
+        for srcfile in dest.glob(source + '_*.py'):
+            newname = srcfile.name.replace(source + '_', module + '_')
+            srcfile.rename(dest + '/' + newname)
