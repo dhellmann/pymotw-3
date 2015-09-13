@@ -635,8 +635,4 @@ constructed.
 
 .. seealso::
 
-    `ConfigParser <http://docs.python.org/library/configparser.html>`_
-        The standard library documentation for this module.
-
-    :mod:`codecs`
-        The ``codecs`` module is for reading and writing Unicode files.
+    * :pydoc:`configparser`
