@@ -4,8 +4,6 @@
 #
 """Context diff example
 """
-
-__version__ = "$Id$"
 #end_pymotw_header
 
 import difflib
