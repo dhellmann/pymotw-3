@@ -1,14 +1,13 @@
-=============================================
-ConfigParser -- Work with Configuration Files
-=============================================
+===============================================
+ configparser -- Work with Configuration Files
+===============================================
 
-.. module:: ConfigParser
+.. module:: configparser
     :synopsis: Read/write configuration files similar to Windows INI files
 
 :Purpose: Read/write configuration files similar to Windows INI files
-:Python Version: 1.5
 
-Use the :mod:`ConfigParser` module to manage user-editable
+Use the :mod:`configparser` module to manage user-editable
 configuration files for an application. The contents of the
 configuration files can be organized into groups and several option
 value types are supported, including integers, floating point values,
@@ -19,7 +18,7 @@ host names and port numbers.
 Configuration File Format
 =========================
 
-The file format used by :mod:`ConfigParser` is similar to the format
+The file format used by :mod:`configparser` is similar to the format
 used by older versions of Microsoft Windows.  It consists of one or
 more named *sections*, each of which can contain individual *options*
 with names and values.  
@@ -48,7 +47,7 @@ application behavior defaults, and then have the application read the
 file, parse it, and act based on its contents.  Use the :func:`read`
 method of :mod:`SafeConfigParser` to read the configuration file.
 
-.. include:: ConfigParser_read.py
+.. include:: configparser_read.py
    :literal:
    :start-after: #end_pymotw_header
 
@@ -57,12 +56,12 @@ and prints the value of the :data:`url` option from the
 :data:`bug_tracker` section.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'ConfigParser_read.py'))
+.. cog.out(run_script(cog.inFile, 'configparser_read.py'))
 .. }}}
 
 ::
 
-	$ python ConfigParser_read.py
+	$ python configparser_read.py
 
 	http://localhost:8080/bugs/
 
@@ -71,7 +70,7 @@ and prints the value of the :data:`url` option from the
 The :func:`read` method also accepts a list of filenames.  Each name
 in turn is scanned, and if the file exists it is opened and read.  
 
-.. include:: ConfigParser_read_many.py
+.. include:: configparser_read_many.py
    :literal:
    :start-after: #end_pymotw_header
 
@@ -80,12 +79,12 @@ successfully loaded, so the program can discover which configuration
 files are missing and decide whether to ignore them.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'ConfigParser_read_many.py'))
+.. cog.out(run_script(cog.inFile, 'configparser_read_many.py'))
 .. }}}
 
 ::
 
-	$ python ConfigParser_read_many.py
+	$ python configparser_read_many.py
 
 	Found config files: ['multisection.ini', 'simple.ini']
 	Missing files     : ['also-does-not-exist.ini', 'does_not_exist.ini']
@@ -106,7 +105,7 @@ The :mod:`codecs` file handle can be passed to :func:`readfp`, which
 uses the :func:`readline` method of its argument to get lines from the
 file and parse them.
 
-.. include:: ConfigParser_unicode.py
+.. include:: configparser_unicode.py
    :literal:
    :start-after: #end_pymotw_header
 
@@ -114,12 +113,12 @@ The value returned by :func:`get` is a :class:`unicode` object, so in
 order to print it safely it must be re-encoded as UTF-8.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'ConfigParser_unicode.py'))
+.. cog.out(run_script(cog.inFile, 'configparser_unicode.py'))
 .. }}}
 
 ::
 
-	$ python ConfigParser_unicode.py
+	$ python configparser_unicode.py
 
 	Password: ßéç®é†
 	Type    : <type 'unicode'>
@@ -141,7 +140,7 @@ And this sample program exercises some of the methods for looking at
 the configuration data, including :func:`sections`, :func:`options`,
 and :func:`items`.
 
-.. include:: ConfigParser_structure.py
+.. include:: configparser_structure.py
    :literal:
    :start-after: #end_pymotw_header
 
@@ -150,12 +149,12 @@ while :func:`items` returns a list of tuples containing the name-value
 pairs.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'ConfigParser_structure.py'))
+.. cog.out(run_script(cog.inFile, 'configparser_structure.py'))
 .. }}}
 
 ::
 
-	$ python ConfigParser_structure.py
+	$ python configparser_structure.py
 
 	Section: bug_tracker
 	  Options: ['url', 'username', 'password']
@@ -178,7 +177,7 @@ Testing Whether Values Are Present
 To test if a section exists, use :func:`has_section`, passing the
 section name.
 
-.. include:: ConfigParser_has_section.py
+.. include:: configparser_has_section.py
    :literal:
    :start-after: #end_pymotw_header
 
@@ -186,12 +185,12 @@ Testing if a section exists before calling :func:`get` avoids
 exceptions for missing data.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'ConfigParser_has_section.py'))
+.. cog.out(run_script(cog.inFile, 'configparser_has_section.py'))
 .. }}}
 
 ::
 
-	$ python ConfigParser_has_section.py
+	$ python configparser_has_section.py
 
 	wiki        : True
 	bug_tracker : True
@@ -201,19 +200,19 @@ exceptions for missing data.
 
 Use :func:`has_option` to test if an option exists within a section.
 
-.. include:: ConfigParser_has_option.py
+.. include:: configparser_has_option.py
    :literal:
    :start-after: #end_pymotw_header
 
 If the section does not exist, :func:`has_option` returns ``False``.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'ConfigParser_has_option.py'))
+.. cog.out(run_script(cog.inFile, 'configparser_has_option.py'))
 .. }}}
 
 ::
 
-	$ python ConfigParser_has_option.py
+	$ python configparser_has_option.py
 
 	wiki section exists: True
 	wiki.username      : True
@@ -246,19 +245,19 @@ fetch the value as the desired type.  :func:`get` always returns a
 string.  Use :func:`getint` for integers, :func:`getfloat` for
 floating point numbers, and :func:`getboolean` for boolean values.
 
-.. include:: ConfigParser_value_types.py
+.. include:: configparser_value_types.py
    :literal:
    :start-after: #end_pymotw_header
 
 Running this program with the example input produces:
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'ConfigParser_value_types.py'))
+.. cog.out(run_script(cog.inFile, 'configparser_value_types.py'))
 .. }}}
 
 ::
 
-	$ python ConfigParser_value_types.py
+	$ python configparser_value_types.py
 
 	Integers:
 	  positive     : '1'     -> 1
@@ -289,7 +288,7 @@ with the :class:`SafeConfigParser` parameter *allow_no_value* set to
 ``True`` an option can appear by itself on a line in the input file,
 and be used as a flag.
 
-.. include:: ConfigParser_allow_no_value.py
+.. include:: configparser_allow_no_value.py
    :literal:
    :start-after: #end_pymotw_header
 
@@ -297,12 +296,12 @@ When an option has no explicit value, :func:`has_option` reports that
 the option exists and :func:`get` returns ``None``.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'ConfigParser_allow_no_value.py'))
+.. cog.out(run_script(cog.inFile, 'configparser_allow_no_value.py'))
 .. }}}
 
 ::
 
-	$ python ConfigParser_allow_no_value.py
+	$ python configparser_allow_no_value.py
 
 	Could not parse: File contains parsing errors: allow_no_value.ini
 		[line  2]: 'turn_feature_on\n'
@@ -326,7 +325,7 @@ by reading settings from files, settings can also be populated by
 calling :func:`add_section` to create a new section, and :func:`set`
 to add or change an option.
 
-.. include:: ConfigParser_populate.py
+.. include:: configparser_populate.py
    :literal:
    :start-after: #end_pymotw_header
 
@@ -334,12 +333,12 @@ All options must be set as strings, even if they will be retrieved as
 integer, float, or boolean values.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'ConfigParser_populate.py'))
+.. cog.out(run_script(cog.inFile, 'configparser_populate.py'))
 .. }}}
 
 ::
 
-	$ python ConfigParser_populate.py
+	$ python configparser_populate.py
 
 	bug_tracker
 	  url = 'http://localhost:8080/bugs'
@@ -351,19 +350,19 @@ integer, float, or boolean values.
 Sections and options can be removed from a :class:`SafeConfigParser`
 with :func:`remove_section` and :func:`remove_option`.
 
-.. include:: ConfigParser_remove.py
+.. include:: configparser_remove.py
    :literal:
    :start-after: #end_pymotw_header
 
 Removing a section deletes any options it contains.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'ConfigParser_remove.py'))
+.. cog.out(run_script(cog.inFile, 'configparser_remove.py'))
 .. }}}
 
 ::
 
-	$ python ConfigParser_remove.py
+	$ python configparser_remove.py
 
 	Read values:
 	
@@ -394,7 +393,7 @@ makes it possible to provide a user interface for editing the
 configuration settings, without having to write any code to manage the
 file.
 
-.. include:: ConfigParser_write.py
+.. include:: configparser_write.py
    :literal:
    :start-after: #end_pymotw_header
 
@@ -403,12 +402,12 @@ writes the data out in the INI format so it can be parsed again by
 :class:`SafeConfigParser`.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'ConfigParser_write.py'))
+.. cog.out(run_script(cog.inFile, 'configparser_write.py'))
 .. }}}
 
 ::
 
-	$ python ConfigParser_write.py
+	$ python configparser_write.py
 
 	[bug_tracker]
 	url = http://localhost:8080/bugs
@@ -456,7 +455,7 @@ This test program includes default settings for options not specified
 in the configuration file, and overrides some values that are defined
 in the file.
 
-.. include:: ConfigParser_defaults.py
+.. include:: configparser_defaults.py
    :literal:
    :start-after: #end_pymotw_header
 
@@ -465,12 +464,12 @@ illustrates the way defaults from different sources override existing
 values.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'ConfigParser_defaults.py'))
+.. cog.out(run_script(cog.inFile, 'configparser_defaults.py'))
 .. }}}
 
 ::
 
-	$ python ConfigParser_defaults.py
+	$ python configparser_defaults.py
 
 	Defaults before loading file:
 	  from-default    = 'value from defaults passed to init'
@@ -524,7 +523,7 @@ Interpolation is performed by default each time :func:`get` is called.
 Pass a true value in the :data:`raw` argument to retrieve the original
 value, without interpolation.
 
-.. include:: ConfigParser_interpolation.py
+.. include:: configparser_interpolation.py
    :literal:
    :start-after: #end_pymotw_header
 
@@ -532,12 +531,12 @@ Because the value is computed by :func:`get`, changing one of the
 settings being used by the ``url`` value changes the return value.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'ConfigParser_interpolation.py'))
+.. cog.out(run_script(cog.inFile, 'configparser_interpolation.py'))
 .. }}}
 
 ::
 
-	$ python ConfigParser_interpolation.py
+	$ python configparser_interpolation.py
 
 	Original value       : http://localhost:8080/bugs/
 	Altered port value   : http://localhost:9090/bugs/
@@ -557,7 +556,7 @@ With this configuration, the value for ``url`` comes from the
 ``DEFAULT`` section, and the substitution starts by looking in
 ``bug_tracker`` and falling back to ``DEFAULT`` for pieces not found.
 
-.. include:: ConfigParser_interpolation_defaults.py
+.. include:: configparser_interpolation_defaults.py
    :literal:
    :start-after: #end_pymotw_header
 
@@ -565,12 +564,12 @@ The ``hostname`` and ``port`` values come from the ``bug_tracker``
 section, but the ``protocol`` comes from ``DEFAULT``.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'ConfigParser_interpolation_defaults.py'))
+.. cog.out(run_script(cog.inFile, 'configparser_interpolation_defaults.py'))
 .. }}}
 
 ::
 
-	$ python ConfigParser_interpolation_defaults.py
+	$ python configparser_interpolation_defaults.py
 
 	URL: http://localhost:8080/bugs/
 
@@ -582,7 +581,7 @@ Substitution Errors
 Substitution stops after :attr:`MAX_INTERPOLATION_DEPTH` steps to
 avoid problems due to recursive references.
 
-.. include:: ConfigParser_interpolation_recursion.py
+.. include:: configparser_interpolation_recursion.py
    :literal:
    :start-after: #end_pymotw_header
 
@@ -590,12 +589,12 @@ An :class:`InterpolationDepthError` exception is raised if there are
 too many substitution steps.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'ConfigParser_interpolation_recursion.py'))
+.. cog.out(run_script(cog.inFile, 'configparser_interpolation_recursion.py'))
 .. }}}
 
 ::
 
-	$ python ConfigParser_interpolation_recursion.py
+	$ python configparser_interpolation_recursion.py
 
 	ERROR: Value interpolation too deeply recursive:
 		section: [sect]
@@ -608,7 +607,7 @@ too many substitution steps.
 Missing values result in an :class:`InterpolationMissingOptionError`
 exception.
 
-.. include:: ConfigParser_interpolation_error.py
+.. include:: configparser_interpolation_error.py
    :literal:
    :start-after: #end_pymotw_header
 
@@ -616,12 +615,12 @@ Since no ``server`` value is defined, the ``url`` cannot be
 constructed.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'ConfigParser_interpolation_error.py'))
+.. cog.out(run_script(cog.inFile, 'configparser_interpolation_error.py'))
 .. }}}
 
 ::
 
-	$ python ConfigParser_interpolation_error.py
+	$ python configparser_interpolation_error.py
 
 	ERROR: Bad value substitution:
 		section: [bug_tracker]

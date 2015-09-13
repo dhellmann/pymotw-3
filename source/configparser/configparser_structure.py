@@ -7,14 +7,14 @@
 """
 #end_pymotw_header
 
-from ConfigParser import SafeConfigParser
+from configparser import ConfigParser
 
-parser = SafeConfigParser()
+parser = ConfigParser()
 parser.read('multisection.ini')
 
 for section_name in parser.sections():
-    print 'Section:', section_name
-    print '  Options:', parser.options(section_name)
+    print('Section:', section_name)
+    print('  Options:', parser.options(section_name))
     for name, value in parser.items(section_name):
-        print '  %s = %s' % (name, value)
-    print
+        print('  %s = %s' % (name, value))
+    print()

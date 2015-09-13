@@ -7,22 +7,22 @@
 """
 #end_pymotw_header
 
-from ConfigParser import SafeConfigParser
+from configparser import ConfigParser
 
-parser = SafeConfigParser()
+parser = ConfigParser()
 parser.read('multisection.ini')
 
-print 'Read values:\n'
+print('Read values:\n')
 for section in parser.sections():
-    print section
+    print(section)
     for name, value in parser.items(section):
-        print '  %s = %r' % (name, value)
+        print('  %s = %r' % (name, value))
 
 parser.remove_option('bug_tracker', 'password')
 parser.remove_section('wiki')
-        
-print '\nModified values:\n'
+
+print('\nModified values:\n')
 for section in parser.sections():
-    print section
+    print(section)
     for name, value in parser.items(section):
-        print '  %s = %r' % (name, value)
+        print('  %s = %r' % (name, value))

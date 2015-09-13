@@ -7,14 +7,14 @@
 """
 #end_pymotw_header
 
-import ConfigParser
+import configparser
 
-parser = ConfigParser.SafeConfigParser()
+parser = configparser.ConfigParser()
 
 parser.add_section('sect')
 parser.set('sect', 'opt', '%(opt)s')
 
 try:
-    print parser.get('sect', 'opt')
-except ConfigParser.InterpolationDepthError, err:
-    print 'ERROR:', err
+    print(parser.get('sect', 'opt'))
+except configparser.InterpolationDepthError as err:
+    print('ERROR:', err)

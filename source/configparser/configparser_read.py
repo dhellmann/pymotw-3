@@ -7,12 +7,9 @@
 """
 #end_pymotw_header
 
-from ConfigParser import SafeConfigParser
+from configparser import ConfigParser
 
-parser = SafeConfigParser()
+parser = ConfigParser()
 parser.read('simple.ini')
 
-print parser.get('bug_tracker', 'url')
-
-
-
+print(parser.get('bug_tracker', 'url'))

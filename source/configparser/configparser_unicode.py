@@ -7,10 +7,10 @@
 """
 #end_pymotw_header
 
-from ConfigParser import SafeConfigParser
+from configparser import ConfigParser
 import codecs
 
-parser = SafeConfigParser()
+parser = ConfigParser()
 
 # Open the file with the correct encoding
 with codecs.open('unicode.ini', 'r', encoding='utf-8') as f:
@@ -18,6 +18,6 @@ with codecs.open('unicode.ini', 'r', encoding='utf-8') as f:
 
 password = parser.get('bug_tracker', 'password')
 
-print 'Password:', password.encode('utf-8')
-print 'Type    :', type(password)
-print 'repr()  :', repr(password)
+print('Password:', password.encode('utf-8'))
+print('Type    :', type(password))
+print('repr()  :', repr(password))
