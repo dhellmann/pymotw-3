@@ -290,8 +290,5 @@ def migrate(options):
     dest = path('source/' + module)
     if dest.exists():
         raise ValueError('%s already exists' % dest)
-    sh('cp -a %(old_loc)s/%(module)s source' % {
-        'old_loc': options.migrate.old_loc,
-        'module': module,
-    })
+    path(options.migrate.old_loc + '/' + source).copytree(dest)
     (dest + '/__init__.py').remove()
