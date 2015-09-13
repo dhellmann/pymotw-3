@@ -38,7 +38,7 @@ sequences, so text with embedded spaces is treated as a single token.
 such as configuration files or programming languages.
 
 It is easy to manage application configuration files with
-:mod:`ConfigParser`.  It can save user preferences between program
+:mod:`configparser`.  It can save user preferences between program
 runs and read them the next time an application starts, or even serve
 as a simple data file format.
 
@@ -75,6 +75,7 @@ be used.
    :maxdepth: 1
 
    argparse/index
+   configparser/index
    atexit/index
 
 ..
@@ -84,7 +85,6 @@ be used.
       getpass/index
       cmd/index
       shlex/index
-      ConfigParser/index
       logging/index
       fileinput/index
       sched/index
