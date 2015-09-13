@@ -21,7 +21,7 @@ Configuration File Format
 The file format used by :mod:`configparser` is similar to the format
 used by older versions of Microsoft Windows.  It consists of one or
 more named *sections*, each of which can contain individual *options*
-with names and values.  
+with names and values.
 
 Config file sections are identified by looking for lines starting with
 ``[`` and ending with ``]``.  The value between the square brackets is
@@ -31,10 +31,10 @@ brackets.
 Options are listed one per line within a section.  The line starts
 with the name of the option, which is separated from the value by a
 colon (``:``) or equal sign (``=``).  Whitespace around the separator
-is ignored when the file is parsed.  
+is ignored when the file is parsed.
 
-This sample configuration file has a section named "bug_tracker" with
-three options.
+This sample configuration file has a section named ``bug_tracker`` with
+three options, ``url``, ``username``, and ``password``.
 
 .. literalinclude:: simple.ini
 
@@ -45,7 +45,7 @@ The most common use for a configuration file is to have a user or
 system administrator edit the file with a regular text editor to set
 application behavior defaults, and then have the application read the
 file, parse it, and act based on its contents.  Use the :func:`read`
-method of :mod:`SafeConfigParser` to read the configuration file.
+method of :mod:`ConfigParser` to read the configuration file.
 
 .. include:: configparser_read.py
    :literal:
@@ -61,14 +61,14 @@ and prints the value of the :data:`url` option from the
 
 ::
 
-	$ python configparser_read.py
-
+	$ python3 configparser_read.py
+	
 	http://localhost:8080/bugs/
 
 .. {{{end}}}
 
 The :func:`read` method also accepts a list of filenames.  Each name
-in turn is scanned, and if the file exists it is opened and read.  
+in turn is scanned, and if the file exists it is opened and read.
 
 .. include:: configparser_read_many.py
    :literal:
@@ -79,15 +79,16 @@ successfully loaded, so the program can discover which configuration
 files are missing and decide whether to ignore them.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'configparser_read_many.py'))
+.. cog.out(run_script(cog.inFile, 'configparser_read_many.py', line_break_mode='fill'))
 .. }}}
 
 ::
 
-	$ python configparser_read_many.py
-
+	$ python3 configparser_read_many.py
+	
 	Found config files: ['multisection.ini', 'simple.ini']
-	Missing files     : ['also-does-not-exist.ini', 'does_not_exist.ini']
+	Missing files     : ['also-does-not-exist.ini',
+	'does_not_exist.ini']
 
 .. {{{end}}}
 
@@ -117,18 +118,19 @@ print it safely it must be re-encoded as UTF-8.
 
 ::
 
-	$ python configparser_unicode.py
-
-	Password: ßéç®é†
-	Type    : <type 'unicode'>
-	repr()  : u'\xdf\xe9\xe7\xae\xe9\u2020'
+	$ python3 configparser_unicode.py
+	
+	Password: b'\xc3\x9f\xc3\xa9\xc3\xa7\xc2\xae\xc3\xa9\xe2\x80\xa0
+	'
+	Type    : <class 'str'>
+	repr()  : 'ßéç®é†'
 
 .. {{{end}}}
 
 Accessing Configuration Settings
 ================================
 
-:class:`SafeConfigParser` includes methods for examining the structure
+:class:`ConfigParser` includes methods for examining the structure
 of the parsed configuration, including listing the sections and
 options, and getting their values.  This configuration file includes
 two sections for separate web services:
@@ -153,8 +155,8 @@ pairs.
 
 ::
 
-	$ python configparser_structure.py
-
+	$ python3 configparser_structure.py
+	
 	Section: bug_tracker
 	  Options: ['url', 'username', 'password']
 	  url = http://localhost:8080/bugs/
@@ -189,8 +191,8 @@ exceptions for missing data.
 
 ::
 
-	$ python configparser_has_section.py
-
+	$ python3 configparser_has_section.py
+	
 	wiki        : True
 	bug_tracker : True
 	dvcs        : False
@@ -211,8 +213,8 @@ If the section does not exist, :func:`has_option` returns ``False``.
 
 ::
 
-	$ python configparser_has_option.py
-
+	$ python3 configparser_has_option.py
+	
 	wiki section exists: True
 	wiki.username      : True
 	wiki.password      : True
@@ -238,7 +240,7 @@ false.  This example file includes one of each:
 
 .. literalinclude:: types.ini
 
-:class:`SafeConfigParser` does not make any attempt to understand the
+:class:`ConfigParser` does not make any attempt to understand the
 option type.  The application is expected to use the correct method to
 fetch the value as the desired type.  :func:`get` always returns a
 string.  Use :func:`getint` for integers, :func:`getfloat` for
@@ -256,8 +258,8 @@ Running this program with the example input produces:
 
 ::
 
-	$ python configparser_value_types.py
-
+	$ python3 configparser_value_types.py
+	
 	Integers:
 	  positive     : '1'     -> 1
 	  negative     : '-5'    -> -5
@@ -283,7 +285,7 @@ Options as Flags
 ----------------
 
 Usually the parser requires an explicit value for each option, but
-with the :class:`SafeConfigParser` parameter *allow_no_value* set to
+with the :class:`ConfigParser` parameter *allow_no_value* set to
 ``True`` an option can appear by itself on a line in the input file,
 and be used as a flag.
 
@@ -300,18 +302,19 @@ the option exists and :func:`get` returns ``None``.
 
 ::
 
-	$ python configparser_allow_no_value.py
-
-	Could not parse: File contains parsing errors: allow_no_value.ini
+	$ python3 configparser_allow_no_value.py
+	
+	Could not parse: Source contains parsing errors: 'allow_no_value
+	.ini'
 		[line  2]: 'turn_feature_on\n'
 	
 	Trying again with allow_no_value=True
 	
-	turn_feature_on
+	 turn_feature_on
 	  has_option: True
 	         get: None
 	
-	turn_other_feature_on
+	 turn_other_feature_on
 	  has_option: False
 
 .. {{{end}}}
@@ -319,7 +322,7 @@ the option exists and :func:`get` returns ``None``.
 Modifying Settings
 ==================
 
-While :class:`SafeConfigParser` is primarily intended to be configured
+While :class:`ConfigParser` is primarily intended to be configured
 by reading settings from files, settings can also be populated by
 calling :func:`add_section` to create a new section, and :func:`set`
 to add or change an option.
@@ -337,8 +340,8 @@ integer, float, or boolean values.
 
 ::
 
-	$ python configparser_populate.py
-
+	$ python3 configparser_populate.py
+	
 	bug_tracker
 	  url = 'http://localhost:8080/bugs'
 	  username = 'dhellmann'
@@ -346,7 +349,7 @@ integer, float, or boolean values.
 
 .. {{{end}}}
 
-Sections and options can be removed from a :class:`SafeConfigParser`
+Sections and options can be removed from a :class:`ConfigParser`
 with :func:`remove_section` and :func:`remove_option`.
 
 .. include:: configparser_remove.py
@@ -361,8 +364,8 @@ Removing a section deletes any options it contains.
 
 ::
 
-	$ python configparser_remove.py
-
+	$ python3 configparser_remove.py
+	
 	Read values:
 	
 	bug_tracker
@@ -386,7 +389,7 @@ Removing a section deletes any options it contains.
 Saving Configuration Files
 ==========================
 
-Once a :class:`SafeConfigParser` is populated with desired data, it
+Once a :class:`ConfigParser` is populated with desired data, it
 can be saved to a file by calling the :func:`write` method.  This
 makes it possible to provide a user interface for editing the
 configuration settings, without having to write any code to manage the
@@ -398,7 +401,7 @@ file.
 
 The :func:`write` method takes a file-like object as argument.  It
 writes the data out in the INI format so it can be parsed again by
-:class:`SafeConfigParser`.
+:class:`ConfigParser`.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'configparser_write.py'))
@@ -406,8 +409,8 @@ writes the data out in the INI format so it can be parsed again by
 
 ::
 
-	$ python configparser_write.py
-
+	$ python3 configparser_write.py
+	
 	[bug_tracker]
 	url = http://localhost:8080/bugs
 	username = dhellmann
@@ -426,7 +429,7 @@ writes the data out in the INI format so it can be parsed again by
 Option Search Path
 ==================
 
-:class:`SafeConfigParser` uses a multi-step search process when
+:class:`ConfigParser` uses a multi-step search process when
 looking for an option.
 
 Before starting the option search, the section name is tested.  If the
@@ -468,8 +471,8 @@ values.
 
 ::
 
-	$ python configparser_defaults.py
-
+	$ python3 configparser_defaults.py
+	
 	Defaults before loading file:
 	  from-default    = 'value from defaults passed to init'
 	  from-section    = 'value from defaults passed to init'
@@ -495,8 +498,8 @@ values.
 	  from-vars       = 'value from vars'
 	
 	Error cases:
-	No such option : No option 'no-option' in section: 'sect'
-	No such section: No section: 'no-sect'
+	No option 'no-option' in section: 'sect'
+	No section: 'no-sect'
 
 .. {{{end}}}
 
@@ -504,7 +507,7 @@ values.
 Combining Values with Interpolation
 ===================================
 
-:class:`SafeConfigParser` provides a feature called *interpolation*
+:class:`ConfigParser` provides a feature called *interpolation*
 that can be used to combine values together.  Values containing
 standard Python format strings trigger the interpolation feature when
 they are retrieved with :func:`get`.  Options named within the value
@@ -535,8 +538,8 @@ settings being used by the ``url`` value changes the return value.
 
 ::
 
-	$ python configparser_interpolation.py
-
+	$ python3 configparser_interpolation.py
+	
 	Original value       : http://localhost:8080/bugs/
 	Altered port value   : http://localhost:9090/bugs/
 	Without interpolation: %(protocol)s://%(server)s:%(port)s/bugs/
@@ -568,8 +571,8 @@ section, but the ``protocol`` comes from ``DEFAULT``.
 
 ::
 
-	$ python configparser_interpolation_defaults.py
-
+	$ python3 configparser_interpolation_defaults.py
+	
 	URL: http://localhost:8080/bugs/
 
 .. {{{end}}}
@@ -593,8 +596,8 @@ too many substitution steps.
 
 ::
 
-	$ python configparser_interpolation_recursion.py
-
+	$ python3 configparser_interpolation_recursion.py
+	
 	ERROR: Value interpolation too deeply recursive:
 		section: [sect]
 		option : opt
@@ -619,8 +622,8 @@ constructed.
 
 ::
 
-	$ python configparser_interpolation_error.py
-
+	$ python3 configparser_interpolation_error.py
+	
 	ERROR: Bad value substitution:
 		section: [bug_tracker]
 		option : url
