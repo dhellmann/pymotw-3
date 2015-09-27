@@ -636,3 +636,10 @@ constructed.
 .. seealso::
 
     * :pydoc:`configparser`
+
+    * `ConfigObj
+      <http://configobj.readthedocs.org/en/latest/configobj.html>`__
+      -- An advanced configuration file parser with support for
+      features like content validation.
+
+    * :ref:`Porting notes for configparser <porting-configparser>`

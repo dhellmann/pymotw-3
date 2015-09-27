@@ -262,6 +262,27 @@ The abstract base classes formerly defined in :mod:`collections` moved
 to :mod:`collections.abc`, with backwards-compatibility imports in
 :mod:`collections`, for now (:pyissue:`11085`).
 
+.. _porting-configparser:
+
+configparser
+------------
+
+The old ``ConfigParser`` module has been renamed to
+:mod:`configparser`.
+
+The old :class:`ConfigParser` class was removed in favor of
+:class:`SafeConfigParser` which has in turn been renamed to
+:class:`ConfigParser`. The deprecated interpolation behavior is
+available via :class:`LegacyInterpolation`.
+
+The :func:`read` method now supports an ``encoding`` argument, so it
+is no longer necessary to use :mod:`codecs` to read configuration
+files with Unicode values in them.
+
+Using the old :class:`RawConfigParser` is discouraged. New projects
+should use ``ConfigParser(interpolation=None)`` instead to achieve the
+same behavior.
+
 .. _porting-glob:
 
 glob
