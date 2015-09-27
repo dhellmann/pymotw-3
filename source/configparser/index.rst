@@ -633,6 +633,38 @@ constructed.
 
 .. {{{end}}}
 
+Escaping Special Characters
+===========================
+
+Since ``%`` starts the interpolation instructions, a literal ``%`` in
+a value must be escaped as ``%%``.
+
+.. include:: escape.ini
+   :literal:
+
+Reading the value does not require any special consideration.
+
+.. include:: configparser_escape.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+When the value is read, the ``%%`` is converted to ``%``
+automatically.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'configparser_escape.py'))
+.. }}}
+
+::
+
+	$ python3 configparser_escape.py
+	
+	a literal % must be escaped
+
+.. {{{end}}}
+
+
+
 .. seealso::
 
     * :pydoc:`configparser`
