@@ -33,6 +33,10 @@ with the name of the option, which is separated from the value by a
 colon (``:``) or equal sign (``=``).  Whitespace around the separator
 is ignored when the file is parsed.
 
+Lines starting with semi-colon (``;``) or octothorpe (``#``) are
+treated as comments and not visible when accessing the contents of the
+configuration file programmatically.
+
 This sample configuration file has a section named ``bug_tracker`` with
 three options, ``url``, ``username``, and ``password``.
 
