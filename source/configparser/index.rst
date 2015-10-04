@@ -323,6 +323,35 @@ the option exists and :func:`get` returns ``None``.
 
 .. {{{end}}}
 
+Multi-line Strings
+------------------
+
+String values can span multiple lines, if subsequent lines are
+indented.
+
+.. include:: multiline.ini
+   :literal:
+
+Within the indented multi-line values, blank lines are treated as part
+of the value and preserved.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'configparser_multiline.py'))
+.. }}}
+
+::
+
+	$ python3 configparser_multiline.py
+	
+	This is a multi-line string.
+	With two paragraphs.
+	
+	They are separated by a completely empty line.
+
+.. {{{end}}}
+
+
+
 Modifying Settings
 ==================
 
