@@ -176,6 +176,43 @@ pairs.
 
 .. {{{end}}}
 
+A :class:`ConfigParser` also supports the same mapping API as `dict`,
+with the :class:`ConfigParser` acting as one dictionary containing
+separate dictionaries for each section.
+
+.. include:: configparser_structure_dict.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+Using the mapping API to access the same configuration file produces
+the same output.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'configparser_structure_dict.py'))
+.. }}}
+
+::
+
+	$ python3 configparser_structure_dict.py
+	
+	Section: DEFAULT
+	  Options: []
+	
+	Section: bug_tracker
+	  Options: ['url', 'username', 'password']
+	  url = http://localhost:8080/bugs/
+	  username = dhellmann
+	  password = SECRET
+	
+	Section: wiki
+	  Options: ['url', 'username', 'password']
+	  url = http://localhost:8080/wiki/
+	  username = dhellmann
+	  password = SECRET
+	
+
+.. {{{end}}}
+
 Testing Whether Values Are Present
 ----------------------------------
 
