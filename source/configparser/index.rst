@@ -733,6 +733,46 @@ automatically.
 
 .. {{{end}}}
 
+Extended Interpolation
+======================
+
+:class:`ConfigParser` supports alternate interpolation implementations
+Passing an object that supports the API defined by
+:class:`Interpolation` to the ``interpolation`` parameter.  For
+example, using :class:`ExtendedInterpolation` instead of the default
+:class:`BasicInterpolation` enables a different syntax using ``${}``
+to indicate variables.
+
+.. include:: configparser_extendedinterpolation.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+Extended interpolation supports accessing values from other sections
+of the configuration file by prefixing the variable name with the
+section name and a colon (``:``).
+
+.. include:: extended_interpolation.ini
+   :literal:
+
+Referring to values in other sections of the file makes it possible to
+share a hierarchy of values, without placing all defaults in the
+``DEFAULTS`` section.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'configparser_extendedinterpolation.py'))
+.. }}}
+
+::
+
+	$ python3 configparser_extendedinterpolation.py
+	
+	Original value       : http://localhost:8080/bugs/
+	Altered port value   : http://localhost:9090/bugs/
+	Without interpolation: http://${intranet:server}:${intranet:port
+	}/bugs/
+
+.. {{{end}}}
+
 
 
 .. seealso::
