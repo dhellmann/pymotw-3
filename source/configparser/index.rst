@@ -704,7 +704,7 @@ constructed.
 .. {{{end}}}
 
 Escaping Special Characters
-===========================
+---------------------------
 
 Since ``%`` starts the interpolation instructions, a literal ``%`` in
 a value must be escaped as ``%%``.
@@ -734,7 +734,7 @@ automatically.
 .. {{{end}}}
 
 Extended Interpolation
-======================
+----------------------
 
 :class:`ConfigParser` supports alternate interpolation implementations
 Passing an object that supports the API defined by
@@ -770,6 +770,31 @@ share a hierarchy of values, without placing all defaults in the
 	Altered port value   : http://localhost:9090/bugs/
 	Without interpolation: http://${intranet:server}:${intranet:port
 	}/bugs/
+
+.. {{{end}}}
+
+Disabling Interpolation
+-----------------------
+
+To disable interpolation, pass ``None`` instead of an
+:class:`Interpolation` object.
+
+.. include:: configparser_nointerpolation.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+This enables any syntax that might have been processed by the
+interpolation object to be safely ignored.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'configparser_nointerpolation.py'))
+.. }}}
+
+::
+
+	$ python3 configparser_nointerpolation.py
+	
+	Without interpolation: %(protocol)s://%(server)s:%(port)s/bugs/
 
 .. {{{end}}}
 
