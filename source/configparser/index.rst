@@ -323,6 +323,37 @@ output.
 
 .. {{{end}}}
 
+Custom type converters can be added by passing conversion functions in
+the ``converters`` argument to :class:`ConfigParser`. Each converter
+receives a single input value, and should transform that value into
+the appropriate return type.
+
+.. include:: configparser_custom_types.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+Adding a converter causes :class:`ConfigParser` to automatically
+create a retrieval method for that type, using the name of the type as
+specified in ``converters``. In this example, the ``'datetime'``
+converter causes a new :func:`getdatetime` method to be added.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'configparser_custom_types.py'))
+.. }}}
+
+::
+
+	$ python3 configparser_custom_types.py
+	
+	parse_iso_datetime('2015-11-08T11:30:05.905898')
+	due_date : '2015-11-08T11:30:05.905898' -> datetime.datetime(201
+	5, 11, 8, 11, 30, 5, 905898)
+
+.. {{{end}}}
+
+It is also possible to add converter methods directly to a subclass of
+:class:`ConfigParser`.
+
 
 Options as Flags
 ----------------
