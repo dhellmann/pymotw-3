@@ -39,13 +39,16 @@ The contents of :data:`sys.modules` change as new modules are imported.
 
 	$ python3 sys_modules.py
 	
-	__main__, _bootlocale, _codecs, _collections_abc,
-	_frozen_importlib, _imp, _io, _locale, _sre, _stat, _thread,
-	_warnings, _weakref, _weakrefset, abc, builtins, codecs,
-	copyreg, encodings, encodings.aliases, encodings.latin_1,
-	encodings.utf_8, errno, genericpath, io, marshal, os, os.path,
-	posix, posixpath, re, signal, site, sre_compile, sre_constants,
-	sre_parse, stat, sys, textwrap, zipimport
+	__main__, _bootlocale, _codecs, _collections, _collections_abc,
+	_frozen_importlib, _frozen_importlib_external, _functools,
+	_heapq, _imp, _io, _locale, _operator, _signal, _sre, _stat,
+	_thread, _warnings, _weakref, _weakrefset, abc, builtins,
+	codecs, collections, collections.abc, copyreg, encodings,
+	encodings.aliases, encodings.latin_1, encodings.utf_8, errno,
+	functools, genericpath, heapq, io, itertools, keyword, marshal,
+	operator, os, os.path, posix, posixpath, re, reprlib, site,
+	sphinxcontrib, sre_compile, sre_constants, sre_parse, stat, sys,
+	textwrap, types, weakref, zipimport
 
 .. {{{end}}}
 
@@ -78,9 +81,9 @@ installer for OS X.
 	$ python3 sys_builtins.py
 	
 	_ast, _codecs, _collections, _functools, _imp, _io, _locale,
-	_operator, _sre, _stat, _string, _symtable, _thread,
+	_operator, _signal, _sre, _stat, _string, _symtable, _thread,
 	_tracemalloc, _warnings, _weakref, atexit, builtins, errno,
-	faulthandler, gc, itertools, marshal, posix, pwd, signal, sys,
+	faulthandler, gc, itertools, marshal, posix, pwd, sys, time,
 	xxsubtype, zipimport
 
 .. {{{end}}}
@@ -211,7 +214,7 @@ real path on the file system. This test prevents the
 	Path hook: <class 'zipimport.zipimporter'>
 	Path hook: <function
 	FileFinder.path_hook.<locals>.path_hook_for_FileFinder at
-	0x1003c2b70>
+	0x100734950>
 	Path hook: <class '__main__.NoisyImportFinder'>
 	importing target_module
 	Checking NoisyImportFinder_PATH_TRIGGER: works
@@ -307,13 +310,13 @@ preserved as module-level attributes.
 	  __package__: package
 	  __file__   : /tmp/pymotw_import_example.shelve/package
 	  __path__   : ['/tmp/pymotw_import_example.shelve']
-	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x102
-	4a0278>
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x104
+	0864e0>
 	
 	Global settings:
 	sys.modules entry:
 	<module 'package' (<sys_shelve_importer.ShelveLoader object at 0
-	x1024a0278>)>
+	x1040864e0>)>
 
 .. {{{end}}}
 
@@ -369,8 +372,8 @@ constructs and returns a :class:`module` instance.
 	  __package__: package
 	  __file__   : /tmp/pymotw_import_example.shelve/package.module1
 	  __path__   : /tmp/pymotw_import_example.shelve
-	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x102
-	4bfe48>
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x105
+	07ec50>
 	
 	Import of "package.subpackage.module2":
 	
@@ -401,8 +404,8 @@ constructs and returns a :class:`module` instance.
 	  __file__   : /tmp/pymotw_import_example.shelve/package.subpack
 	age.module2
 	  __path__   : /tmp/pymotw_import_example.shelve
-	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x102
-	4d1358>
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x105
+	0a1780>
 
 .. {{{end}}}
 

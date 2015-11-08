@@ -42,7 +42,7 @@ based on the Python interpreter version.
 	Listing 'examples/subdir'...
 	Compiling 'examples/subdir/b.py'...
 	
-	After: ['examples/__pycache__/a.cpython-34.pyc']
+	After: ['examples/__pycache__/a.cpython-35.pyc']
 
 .. {{{end}}}
 
@@ -163,7 +163,7 @@ or a relative path.
 	
 	Compiling 'examples/a.py'...
 	
-	After: ['examples/__pycache__/a.cpython-34.pyc']
+	After: ['examples/__pycache__/a.cpython-35.pyc']
 
 .. {{{end}}}
 
@@ -184,39 +184,51 @@ example:
 
 	$ python3 -m compileall -h
 	
-	usage: compileall.py [-h] [-l] [-f] [-q] [-b] [-d DESTDIR] [-x
-	REGEXP]
-	                     [-i FILE]
+	usage: compileall.py [-h] [-l] [-r RECURSION] [-f] [-q] [-b] [-d
+	DESTDIR]
+	                     [-x REGEXP] [-i FILE] [-j WORKERS]
 	                     [FILE|DIR [FILE|DIR ...]]
 	
 	Utilities to support installing Python libraries.
 	
 	positional arguments:
-	  FILE|DIR    zero or more file and directory names to compile;
-	if no
-	              arguments given, defaults to the equivalent of -l
-	sys.path
+	  FILE|DIR              zero or more file and directory names to
+	compile; if
+	                        no arguments given, defaults to the
+	equivalent of -l
+	                        sys.path
 	
 	optional arguments:
-	  -h, --help  show this help message and exit
-	  -l          don't recurse into subdirectories
-	  -f          force rebuild even if timestamps are up to date
-	  -q          output only error messages
-	  -b          use legacy (pre-PEP3147) compiled file locations
-	  -d DESTDIR  directory to prepend to file paths for use in
-	compile-time
-	              tracebacks and in runtime tracebacks in cases
-	where the source
-	              file is unavailable
-	  -x REGEXP   skip files matching the regular expression; the
-	regexp is
-	              searched for in the full path of each file
-	considered for
-	              compilation
-	  -i FILE     add all the files and directories listed in FILE
-	to the list
-	              considered for compilation; if "-", names are read
-	from stdin
+	  -h, --help            show this help message and exit
+	  -l                    don't recurse into subdirectories
+	  -r RECURSION          control the maximum recursion level. if
+	`-l` and `-r`
+	                        options are specified, then `-r` takes
+	precedence.
+	  -f                    force rebuild even if timestamps are up
+	to date
+	  -q                    output only error messages; -qq will
+	suppress the
+	                        error messages as well.
+	  -b                    use legacy (pre-PEP3147) compiled file
+	locations
+	  -d DESTDIR            directory to prepend to file paths for
+	use in compile-
+	                        time tracebacks and in runtime
+	tracebacks in cases
+	                        where the source file is unavailable
+	  -x REGEXP             skip files matching the regular
+	expression; the regexp
+	                        is searched for in the full path of each
+	file
+	                        considered for compilation
+	  -i FILE               add all the files and directories listed
+	in FILE to
+	                        the list considered for compilation; if
+	"-", names are
+	                        read from stdin
+	  -j WORKERS, --workers WORKERS
+	                        Run compileall concurrently
 
 .. {{{end}}}
 

@@ -72,7 +72,7 @@ objects are.
 	     bytes : 38
 	       int : 28
 	     float : 24
-	      type : 976
+	      type : 1016
 	   MyClass : 56
 
 .. {{{end}}}
