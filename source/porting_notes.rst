@@ -30,6 +30,7 @@ release.
 * `What's New In Python 3.2 <https://docs.python.org/3.2/whatsnew/3.2.html>`__
 * `What's New In Python 3.3 <https://docs.python.org/3.3/whatsnew/3.3.html>`__
 * `What's New In Python 3.4 <https://docs.python.org/3.4/whatsnew/3.4.html>`__
+* `What's New In Python 3.5 <https://docs.python.org/3.5/whatsnew/3.5.html>`__
 
 For more information about porting to Python 3, refer to
 
