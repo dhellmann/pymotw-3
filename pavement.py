@@ -277,7 +277,7 @@ def push(options):
 
 @task
 def publish(options):
-    spelling(options)
+    # spelling(options)
     deploy(options)
     push(options)
 
