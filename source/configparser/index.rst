@@ -11,7 +11,7 @@ Use the :mod:`configparser` module to manage user-editable
 configuration files for an application. The contents of the
 configuration files can be organized into groups and several option
 value types are supported, including integers, floating point values,
-and booleans.  Option values can be combined using Python formatting
+and Booleans.  Option values can be combined using Python formatting
 strings, to build longer values such as URLs from shorter values like
 host names and port numbers.
 
@@ -47,7 +47,7 @@ Reading Configuration Files
 
 The most common use for a configuration file is to have a user or
 system administrator edit the file with a regular text editor to set
-application behavior defaults, and then have the application read the
+application behavior defaults and then have the application read the
 file, parse it, and act based on its contents.  Use the :func:`read`
 method of :mod:`ConfigParser` to read the configuration file.
 
@@ -80,7 +80,8 @@ in turn is scanned, and if the file exists it is opened and read.
 
 :func:`read` returns a list containing the names of the files
 successfully loaded, so the program can discover which configuration
-files are missing and decide whether to ignore them.
+files are missing and decide whether to ignore them or treat the
+condition as an error.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'configparser_read_many.py', line_break_mode='fill'))
@@ -137,7 +138,7 @@ Accessing Configuration Settings
 :class:`ConfigParser` includes methods for examining the structure
 of the parsed configuration, including listing the sections and
 options, and getting their values.  This configuration file includes
-two sections for separate web services:
+two sections for separate web services.
 
 .. literalinclude:: multisection.ini
 
@@ -275,8 +276,8 @@ Value Types
 -----------
 
 All section and option names are treated as strings, but option values
-can be strings, integers, floating point numbers, or booleans.  There
-are a range of possible boolean values that are converted true or
+can be strings, integers, floating point numbers, or Booleans.  There
+are a range of possible Boolean values that are converted true or
 false.  This example file includes one of each:
 
 .. literalinclude:: types.ini
@@ -291,7 +292,8 @@ floating point numbers, and :func:`getboolean` for boolean values.
    :literal:
    :start-after: #end_pymotw_header
 
-Running this program with the example input produces:
+Running this program with the example input produces the following
+output.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'configparser_value_types.py'))
@@ -325,7 +327,7 @@ Running this program with the example input produces:
 Options as Flags
 ----------------
 
-Usually the parser requires an explicit value for each option, but
+Usually, the parser requires an explicit value for each option, but
 with the :class:`ConfigParser` parameter *allow_no_value* set to
 ``True`` an option can appear by itself on a line in the input file,
 and be used as a flag.
@@ -402,7 +404,7 @@ to add or change an option.
    :start-after: #end_pymotw_header
 
 All options must be set as strings, even if they will be retrieved as
-integer, float, or boolean values.
+integer, float, or Boolean values.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'configparser_populate.py'))
@@ -531,7 +533,7 @@ in the file.
    :literal:
    :start-after: #end_pymotw_header
 
-The output shows the origin for the value of each option, and
+The output shows the origin for the value of each option and
 illustrates the way defaults from different sources override existing
 values.
 
@@ -580,7 +582,7 @@ Combining Values with Interpolation
 :class:`ConfigParser` provides a feature called *interpolation*
 that can be used to combine values together.  Values containing
 standard Python format strings trigger the interpolation feature when
-they are retrieved with :func:`get`.  Options named within the value
+they are retrieved.  Options named within the value
 being fetched are replaced with their values in turn, until no more
 substitution is necessary.
 
