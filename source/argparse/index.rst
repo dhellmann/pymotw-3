@@ -46,7 +46,7 @@ can trigger different actions, specified by the *action* argument to
 :func:`add_argument()`. Supported actions include storing the argument
 (singly, or as part of a list), storing a constant value when the
 argument is encountered (including special handling for true/false
-values for boolean switches), counting the number of times an argument
+values for Boolean switches), counting the number of times an argument
 is seen, and calling a callback to use custom processing instructions.
 
 The default action is to store the argument value. If a type is
