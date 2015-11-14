@@ -109,14 +109,14 @@ re-raised after :func:`__exit__` returns.
 	__exit__()
 	  exc_type = <class 'RuntimeError'>
 	  exc_val  = error message handled
-	  exc_tb   = <traceback object at 0x1013e0dc8>
+	  exc_tb   = <traceback object at 0x1010e0dc8>
 	
 	__init__(False)
 	__enter__()
 	__exit__()
 	  exc_type = <class 'RuntimeError'>
 	  exc_val  = error message propagated
-	  exc_tb   = <traceback object at 0x1013e0dc8>
+	  exc_tb   = <traceback object at 0x1010e0dc8>
 	Traceback (most recent call last):
 	  File "contextlib_api_error.py", line 34, in <module>
 	    raise RuntimeError('error message propagated')
@@ -213,6 +213,59 @@ block or not.
 	  Had an error: error message
 
 .. {{{end}}}
+
+Ignoring Exceptions
+===================
+
+It is frequently useful to ignore exceptions raised by libraries,
+because the error indicates that the desired state has already been
+achieved, or it can otherwise be ignored. The most common way to
+ignore exceptions is with a ``try:except`` statement with only a
+``pass`` statement in the ``except`` block.
+
+.. include:: contextlib_ignore_error.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+In this case, the operation fails and the error is ignored.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'contextlib_ignore_error.py'))
+.. }}}
+
+::
+
+	$ python3 contextlib_ignore_error.py
+	
+	trying non-idempotent operation
+	done
+
+.. {{{end}}}
+
+The ``try:except`` form can be replaced with
+:func:`contextlib.suppress` to more explicitly suppress a class of
+exceptions happening anywhere in the ``with`` block.
+
+.. include:: contextlib_suppress.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+In this updated version, the exception is discarded entirely.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'contextlib_suppress.py'))
+.. }}}
+
+::
+
+	$ python3 contextlib_suppress.py
+	
+	trying non-idempotent operation
+	done
+
+.. {{{end}}}
+
+
 
 .. seealso::
 
