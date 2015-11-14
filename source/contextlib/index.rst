@@ -6,12 +6,11 @@
     :synopsis: Utilities for creating and working with context managers.
 
 :Purpose: Utilities for creating and working with context managers.
-:Python Version: 2.5 and later
 
 The :mod:`contextlib` module contains utilities for working with
 context managers and the :command:`with` statement.
 
-.. note:: 
+.. note::
 
     Context managers are tied to the :command:`with` statement. Since
     :command:`with` is officially part of Python 2.6, import it from
@@ -52,8 +51,8 @@ exception is raised.
 
 ::
 
-	$ python contextlib_api.py
-
+	$ python3 contextlib_api.py
+	
 	__init__()
 	__enter__()
 	Doing work in the context
@@ -80,11 +79,11 @@ returned by :func:`__enter__`, which is not necessarily the
 
 ::
 
-	$ python contextlib_api_other_object.py
-
+	$ python3 contextlib_api_other_object.py
+	
 	Context.__init__()
 	Context.__enter__()
-	WithinContext.__init__(<__main__.Context object at 0x100d98a10>)
+	WithinContext.__init__(<__main__.Context object at 0x1007a97b8>)
 	WithinContext.do_something()
 	Context.__exit__()
 	WithinContext.__del__
@@ -109,23 +108,23 @@ re-raised after :func:`__exit__` returns.
 
 ::
 
-	$ python contextlib_api_error.py
-
+	$ python3 contextlib_api_error.py
+	
 	__init__(True)
 	__enter__()
 	__exit__()
-	  exc_type = <type 'exceptions.RuntimeError'>
+	  exc_type = <class 'RuntimeError'>
 	  exc_val  = error message handled
-	  exc_tb   = <traceback object at 0x100da52d8>
+	  exc_tb   = <traceback object at 0x1013e0dc8>
 	
 	__init__(False)
 	__enter__()
 	__exit__()
-	  exc_type = <type 'exceptions.RuntimeError'>
+	  exc_type = <class 'RuntimeError'>
 	  exc_val  = error message propagated
-	  exc_tb   = <traceback object at 0x100da5368>
+	  exc_tb   = <traceback object at 0x1013e0dc8>
 	Traceback (most recent call last):
-	  File "contextlib_api_error.py", line 33, in <module>
+	  File "contextlib_api_error.py", line 34, in <module>
 	    raise RuntimeError('error message propagated')
 	RuntimeError: error message propagated
 
@@ -158,8 +157,8 @@ re-raised inside the generator, so they can be handled there.
 
 ::
 
-	$ python contextlib_contextmanager.py
-
+	$ python3 contextlib_contextmanager.py
+	
 	Normal:
 	  entering
 	  inside with statement: {}
@@ -174,72 +173,9 @@ re-raised inside the generator, so they can be handled there.
 	  entering
 	  exiting
 	Traceback (most recent call last):
-	  File "contextlib_contextmanager.py", line 34, in <module>
+	  File "contextlib_contextmanager.py", line 32, in <module>
 	    raise ValueError('this exception is not handled')
 	ValueError: this exception is not handled
-
-.. {{{end}}}
-
-
-Nesting Contexts
-================
-
-At times it is necessary to manage multiple contexts simultaneously
-(such as when copying data between input and output file handles, for
-example). It is possible to nest :command:`with` statements one inside
-another, but if the outer contexts do not need their own separate
-block, this adds to the indention level without giving any real
-benefit. Using :func:`nested()` nests the contexts using a single
-:command:`with` statement.
-
-.. include:: contextlib_nested.py
-    :literal:
-    :start-after: #end_pymotw_header
-
-Program execution leaves the contexts in the reverse order in which
-they are entered.
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'contextlib_nested.py'))
-.. }}}
-
-::
-
-	$ python contextlib_nested.py
-
-	entering: A
-	entering: B
-	inside with statement: A B
-	exiting : B
-	exiting : A
-
-.. {{{end}}}
-
-In Python 2.7 and later, :func:`nested` is deprecated because the
-:command:`with` statement supports nesting directly.
-
-.. include:: contextlib_nested_with.py
-   :literal:
-   :start-after: #end_pymotw_header
-
-Each context manager and optional :command:`as` clause are separated
-by a comma (``,``).  The effect is similar to using :func:`nested`,
-but avoids some of the edge-cases around error handling that
-:func:`nested` could not implement correctly.
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'contextlib_nested_with.py'))
-.. }}}
-
-::
-
-	$ python contextlib_nested_with.py
-
-	entering: A
-	entering: B
-	inside with statement: A B
-	exiting : B
-	exiting : A
 
 .. {{{end}}}
 
@@ -268,8 +204,8 @@ block or not.
 
 ::
 
-	$ python contextlib_closing.py
-
+	$ python3 contextlib_closing.py
+	
 	Normal Example:
 	  __init__()
 	  inside with statement
