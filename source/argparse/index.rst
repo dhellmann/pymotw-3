@@ -1,5 +1,5 @@
 =======================================================
- argparse --- Command Line Option and Argument Parsing
+ argparse --- Command-Line Option and Argument Parsing
 =======================================================
 
 .. spelling::
@@ -9,9 +9,9 @@
    pre
 
 .. module:: argparse
-    :synopsis: Command line option and argument parsing.
+    :synopsis: Command-line option and argument parsing.
 
-:Purpose: Command line option and argument parsing.
+:Purpose: Command-line option and argument parsing.
 
 The :mod:`argparse` module was added to Python 2.7 as a replacement
 for :mod:`optparse`.  The implementation of :mod:`argparse` supports
@@ -25,7 +25,7 @@ Setting Up a Parser
 
 The first step when using :mod:`argparse` is to create a parser object
 and tell it what arguments to expect.  The parser can then be used to
-process the command line arguments when the program runs.  The
+process the command-line arguments when the program runs.  The
 constructor for the parser class (:class:`ArgumentParser`) takes
 several arguments to set up the description used in the help text for
 the program and other global behaviors or settings.
@@ -52,12 +52,12 @@ is seen, and calling a callback to use custom processing instructions.
 The default action is to store the argument value. If a type is
 provided, the value is converted to that type before it is stored. If
 the *dest* argument is provided, the value is saved using that name
-when the command line arguments are parsed.
+when the command-line arguments are parsed.
 
-Parsing a Command Line
+Parsing a Command-Line
 ======================
 
-After all of the arguments are defined, parse the command line by
+After all of the arguments are defined, parse the command-line by
 passing a sequence of argument strings to :func:`parse_args()`. By
 default, the arguments are taken from ``sys.argv[1:]``, but any list
 of strings can be used. The options are processed using the GNU/POSIX
@@ -128,7 +128,7 @@ handles both optional and required arguments.
 
 In this example, the "count" argument is an integer and the "units"
 argument is saved as a string.  If either is left off of the
-command line, or the value given cannot be converted to the right
+command-line, or the value given cannot be converted to the right
 type, an error is reported.
 
 .. {{{cog
@@ -174,7 +174,7 @@ encountered.
 ``store_const``
   Save a value defined as part of the argument specification, rather
   than a value that comes from the arguments being parsed.  This is
-  typically used to implement command line flags that are not Booleans.
+  typically used to implement command-line flags that are not Booleans.
 
 ``store_true`` / ``store_false``
   Save the appropriate Boolean value.  These actions are used to
@@ -290,7 +290,7 @@ Option Prefixes
 ---------------
 
 The default syntax for options is based on the UNIX convention of
-signifying command line switches using a dash prefix ("``-``").
+signifying command-line switches using a dash prefix ("``-``").
 :mod:`argparse` supports other prefixes, so a program can conform to
 the local platform default (i.e., use "``/``" on Windows) or follow a
 different convention.
@@ -306,7 +306,7 @@ signify options.  It is important to understand that although
 individual argument definitions specify the syntax for a given switch.
 This gives explicit control over whether options using different
 prefixes are aliases (such as might be the case for
-platform-independent command line syntax) or alternatives (e.g., using
+platform-independent command-line syntax) or alternatives (e.g., using
 "``+``" to indicate turning a switch on and "``-``" to turn it off).
 In the previous example, ``+a`` and ``-a`` are separate arguments, and
 ``//noarg`` can also be given as ``++noarg``, but not ``--noarg``.
@@ -364,8 +364,8 @@ Sources of Arguments
 In the examples so far, the list of arguments given to the parser has
 come from a list passed in explicitly, or were taken implicitly from
 :data:`sys.argv`.  Passing the list explicitly is useful
-when using :mod:`argparse` to process command line-like instructions
-that do not come from the command line (such as in a configuration
+when using :mod:`argparse` to process command-line-like instructions
+that do not come from the command-line (such as in a configuration
 file).
 
 .. include:: argparse_with_shlex.py
@@ -631,7 +631,7 @@ the help output.
 Sharing Parser Rules
 --------------------
 
-Programmers commonly to need to implement a suite of command line tools
+Programmers commonly to need to implement a suite of command-line tools
 that all take a set of arguments, and then specialize in some way.
 For example, if the programs all need to authenticate the user before
 taking any real action, they would all need to support ``--user`` and
@@ -868,8 +868,8 @@ Nesting Parsers
 The parent parser approach described earlier is one way to share
 options between related commands.  An alternate approach is to combine
 the commands into a single program, and use sub-parsers to handle each
-portion of the command line.  The result works in the way ``svn``,
-``hg``, and other programs with multiple command line actions, or
+portion of the command-line.  The result works in the way ``svn``,
+``hg``, and other programs with multiple command-line actions, or
 sub-commands, does.
 
 A program to work with directories on the file system might define
@@ -881,7 +881,7 @@ directory like this:
    :start-after: #end_pymotw_header
 
 The help output shows the named sub-parsers as "commands" that can be
-specified on the command line as positional arguments.
+specified on the command-line as positional arguments.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'argparse_subparsers.py -h'))
@@ -956,7 +956,7 @@ Variable Argument Lists
 -----------------------
 
 A single argument definition can be configured to consume multiple
-arguments on the command line being parsed.  Set *nargs* to one of the
+arguments on the command-line being parsed.  Set *nargs* to one of the
 flag values from :table:`Flags for Variable Argument Definitions in
 argparse`, based on the number of required or expected arguments.
 
