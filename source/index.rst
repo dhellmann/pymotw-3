@@ -19,6 +19,7 @@ Python and tools used.
 
    text
    data_types
+   algorithm_tools
    dates
    file_access
    compression
