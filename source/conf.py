@@ -317,17 +317,24 @@ def _get_last_updated(app, pagename):
 def html_page_context(app, pagename, templatename, context, doctree):
     # Build a list of the local table of contents entries to appear in
     # the sidebar
-    toc = app.builder.env.get_toc_for(pagename, app.builder)
-    toc_menu = []
-    for node in toc.traverse(nodes.reference):
-        # Skip the node at the top that points back to this page
-        if node['refuri'] == '#':
-            continue
-        toc_menu.append({
-            'title': str(node.children[0]),
-            'href': node['anchorname'],
-        })
-    context['toc_menu'] = toc_menu
+    try:
+        toc = app.builder.env.get_toc_for(pagename, app.builder)
+    except KeyError:
+        # Pages like genindex may not show up in the list of pages
+        # with table of contents, and that breaks
+        # environment.get_toc_for, which throws an KeyError.
+        pass
+    else:
+        toc_menu = []
+        for node in toc.traverse(nodes.reference):
+            # Skip the node at the top that points back to this page
+            if node['refuri'] == '#':
+                continue
+            toc_menu.append({
+                'title': str(node.children[0]),
+                'href': node['anchorname'],
+            })
+        context['toc_menu'] = toc_menu
 
     # Only show comments when we are rendering a page inside a module
     # directory, to prevent people from commenting on the main page,
