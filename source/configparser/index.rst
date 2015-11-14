@@ -1,6 +1,6 @@
-===============================================
- configparser -- Work with Configuration Files
-===============================================
+================================================
+ configparser --- Work with Configuration Files
+================================================
 
 .. module:: configparser
     :synopsis: Read/write configuration files similar to Windows INI files
