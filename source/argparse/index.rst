@@ -1260,13 +1260,14 @@ The value of *option_string* also depends on the original argument
 specification.  For positional required arguments, *option_string* is
 always ``None``.
 
-.. NOT RUNNING
+.. {{{cog
 .. cog.out(run_script(cog.inFile, 'argparse_custom_action.py'))
+.. }}}
 
 ::
 
-	$ python argparse_custom_action.py
-
+	$ python3 argparse_custom_action.py
+	
 	Initializing CustomAction
 	  dest = 'a'
 	  option_strings = ['-a']
@@ -1278,22 +1279,19 @@ always ``None``.
 	  option_strings = ['-m']
 	  required = False
 	
-	Initializing CustomAction
-	  dest = 'positional'
-	  option_strings = []
-	  required = True
-	
 	Processing CustomAction for "a"
-	  parser = 4309267472
+	  parser = 4313709536
 	  values = 'value'
 	  option_string = '-a'
 	
 	Processing CustomAction for "m"
-	  parser = 4309267472
-      values = ['multivalue', 'second']
+	  parser = 4313709536
+	  values = ['multivalue', 'second']
 	  option_string = '-m'
 	
 	Namespace(a='VALUE', m=['MULTIVALUE', 'SECOND'])
+
+.. {{{end}}}
 
 .. seealso::
 

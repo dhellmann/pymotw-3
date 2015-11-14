@@ -39,7 +39,7 @@ class CustomAction(argparse.Action):
             if name == 'self' or value is None:
                 continue
             print('  %s = %r' % (name, value))
-        print
+        print()
         return
 
     def __call__(self, parser, namespace, values,
