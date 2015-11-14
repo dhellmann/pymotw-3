@@ -13,13 +13,16 @@ class Door(object):
 
     def __init__(self):
         print('  __init__()')
+        self.status = 'open'
 
     def close(self):
         print('  close()')
+        self.status = 'closed'
 
 print('Normal Example:')
 with contextlib.closing(Door()) as door:
-    print('  inside with statement')
+    print('  inside with statement: %s' % door.status)
+print('  outside with statement: %s' % door.status)
 
 print('\nError handling example:')
 try:

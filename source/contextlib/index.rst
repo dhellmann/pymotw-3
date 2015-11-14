@@ -202,8 +202,9 @@ block or not.
 	
 	Normal Example:
 	  __init__()
-	  inside with statement
+	  inside with statement: open
 	  close()
+	  outside with statement: closed
 	
 	Error handling example:
 	  __init__()
