@@ -1,6 +1,6 @@
-=========================================
- contextlib -- Context Manager Utilities
-=========================================
+==========================================
+ contextlib --- Context Manager Utilities
+==========================================
 
 .. module:: contextlib
     :synopsis: Utilities for creating and working with context managers.
@@ -9,12 +9,6 @@
 
 The :mod:`contextlib` module contains utilities for working with
 context managers and the :command:`with` statement.
-
-.. note::
-
-    Context managers are tied to the :command:`with` statement. Since
-    :command:`with` is officially part of Python 2.6, import it from
-    :mod:`__future__` before using :mod:`contextlib` in Python 2.5.
 
 Context Manager API
 ===================
@@ -221,14 +215,16 @@ block or not.
 
 .. seealso::
 
-    `contextlib <http://docs.python.org/library/contextlib.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`contextlib`
 
-    :pep:`343`
-        The :command:`with` statement.
+   * :pep:`343` -- The :command:`with` statement.
 
-    `Context Manager Types <http://docs.python.org/library/stdtypes.html#typecontextmanager>`__
-        Description of the context manager API from the standard library documentation.
+   * `Context Manager Types
+     <http://docs.python.org/library/stdtypes.html#typecontextmanager>`__
+     -- Description of the context manager API from the standard
+     library documentation.
 
-    `With Statement Context Managers <http://docs.python.org/reference/datamodel.html#context-managers>`__
-        Description of the context manager API from the Python Reference Guide.
+   * `With Statement Context Managers
+     <http://docs.python.org/reference/datamodel.html#context-managers>`__
+     -- Description of the context manager API from the Python
+     Reference Guide.
