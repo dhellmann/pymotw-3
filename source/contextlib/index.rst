@@ -124,6 +124,45 @@ re-raised after :func:`__exit__` returns.
 
 .. {{{end}}}
 
+Context Managers as Function Decorators
+=======================================
+
+The class :class:`ContextDecorator` adds support to regular context
+manager classes to let them be used as function decorators as well as
+context managers.
+
+.. include:: contextlib_decorator.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+One difference with using the context manager as a decorator is that
+the value returned by :func:`__enter__` is not available inside the
+function being decorated, unlike when using :command:`with` and
+:command:`as`. Arguments passed to the decorated function are
+available in the usual way.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'contextlib_decorator.py'))
+.. }}}
+
+::
+
+	$ python3 contextlib_decorator.py
+	
+	__init__(as decorator)
+	
+	__init__(as context manager)
+	__enter__(as context manager)
+	Doing work in the context
+	__exit__(as context manager)
+	
+	__enter__(as decorator)
+	Doing work in the wrapped function
+	__exit__(as decorator)
+
+.. {{{end}}}
+
+
 
 From Generator to Context Manager
 =================================
@@ -174,18 +213,18 @@ re-raised inside the generator, so they can be handled there.
 
 .. {{{end}}}
 
-The context manager returned by :func:`contextmanager` also works as a
-function decorator, providing nearly the same behavior.
+The context manager returned by :func:`contextmanager` is derived from
+:class:`ContextDecorator`, so it also works as a function decorator.
 
 .. include:: contextlib_contextmanager_decorator.py
    :literal:
    :start-after: #end_pymotw_header
 
-One difference with using the context manager as a decorator is that
-the value yielded by the generator is not available inside the
-function being decorated. Arguments passed to the decorated function
-are available in the usual way, as demonstrated by :func:`throw_error`
-in this example.
+As in the :class:`ContextDecorator` example above, when the context
+manager is used as a decorator the value yielded by the generator is
+not available inside the function being decorated. Arguments passed to
+the decorated function are still available, as demonstrated by
+:func:`throw_error` in this example.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'contextlib_contextmanager_decorator.py', 
@@ -210,13 +249,13 @@ in this example.
 	  entering
 	  exiting
 	Traceback (most recent call last):
-	  File "contextlib_contextmanager_decorator.py", line 42, in <mo
+	  File "contextlib_contextmanager_decorator.py", line 43, in <mo
 	dule>
 	    throw_error(ValueError('this exception is not handled'))
 	  File "/Library/Frameworks/Python.framework/Versions/3.5/lib/py
 	thon3.5/contextlib.py", line 30, in inner
 	    return func(*args, **kwds)
-	  File "contextlib_contextmanager_decorator.py", line 32, in thr
+	  File "contextlib_contextmanager_decorator.py", line 33, in thr
 	ow_error
 	    raise err
 	ValueError: this exception is not handled
