@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 #
-# Copyright (c) 2014 Doug Hellmann.  All rights reserved.
+# Copyright (c) 2015 Doug Hellmann.  All rights reserved.
 #
 """
 """
