@@ -77,7 +77,7 @@ returned by :func:`__enter__`, which is not necessarily the
 	
 	Context.__init__()
 	Context.__enter__()
-	WithinContext.__init__(<__main__.Context object at 0x1007a97b8>)
+	WithinContext.__init__(<__main__.Context object at 0x1021a97b8>)
 	WithinContext.do_something()
 	Context.__exit__()
 	WithinContext.__del__
@@ -109,14 +109,14 @@ re-raised after :func:`__exit__` returns.
 	__exit__()
 	  exc_type = <class 'RuntimeError'>
 	  exc_val  = error message handled
-	  exc_tb   = <traceback object at 0x1010e0dc8>
+	  exc_tb   = <traceback object at 0x1012e0dc8>
 	
 	__init__(False)
 	__enter__()
 	__exit__()
 	  exc_type = <class 'RuntimeError'>
 	  exc_val  = error message propagated
-	  exc_tb   = <traceback object at 0x1010e0dc8>
+	  exc_tb   = <traceback object at 0x1012e0dc8>
 	Traceback (most recent call last):
 	  File "contextlib_api_error.py", line 34, in <module>
 	    raise RuntimeError('error message propagated')
@@ -265,6 +265,45 @@ In this updated version, the exception is discarded entirely.
 
 .. {{{end}}}
 
+Redirecting Output Streams
+==========================
+
+Poorly designed library code may write directly to ``sys.stdout`` or
+``sys.stderr``, without providing arguments to configure different
+output destinations. The :func:`redirect_stdout` and
+:func:`redirect_stderr` context managers can be used to capture output
+from functions like this, for which the source cannot be changed to
+accept a new output argument.
+
+.. include:: contextlib_redirect.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+In this example, ``misbehaving_function()`` writes to both ``stdout``
+and ``stderr``, but the two context managers send that output to the
+same :class:`io.StringIO` instance where it is saved to be used later.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'contextlib_redirect.py'))
+.. }}}
+
+::
+
+	$ python3 contextlib_redirect.py
+	
+	(stdout) A: 5
+	(stderr) A: 5
+	
+
+.. {{{end}}}
+
+.. note::
+
+   Both :func:`redirect_stdout` and :func:`redirect_stderr` modify
+   global state by replacing objects in the :mod:`sys` module, and
+   should be used with care. The functions are not thread-safe, and
+   may interfere with other operations that expect the standard output
+   streams to be attached to terminal devices.
 
 
 .. seealso::
