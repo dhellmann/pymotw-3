@@ -393,6 +393,54 @@ same :class:`io.StringIO` instance where it is saved to be used later.
    may interfere with other operations that expect the standard output
    streams to be attached to terminal devices.
 
+Dynamic Context Managers Stacks
+===============================
+
+Most context managers operate on one object at a time, such as a
+single file or database handle. In these cases, the object is known in
+advance and the code using the context manager can be built around
+that one object. In other cases, a program may need to create an
+unknown number of objects in a context, while wanting all of them to
+be cleaned up when control flow exits the context. :class:`ExitStack`
+was created to handle these more dynamic cases.
+
+An :class:`ExitStack` instance maintains a stack data structure of
+cleanup callbacks. The callbacks are populated explicitly within the
+context, and any registered callbacks are called in the reverse order
+when control flow exits the context. The result is like having multple
+nested :command:`with` statements, except they are established
+dynamically.
+
+There are several ways to populate the :class:`ExitStack`.  This
+example uses :func:`enter_context` to add a new context manager to the
+stack.
+
+.. include:: contextlib_exitstack_enter_context.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+:func:`enter_context` first calls :func:`__enter__` on the context
+manager, and then registers its :func:`__exit__` method as a callback
+to be invoked as the stack is undone.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'contextlib_exitstack_enter_context.py',
+..                    ignore_error=True))
+.. }}}
+
+::
+
+	$ python3 contextlib_exitstack_enter_context.py
+	
+	0 entering
+	1 entering
+	inside context
+	1 exiting
+	0 exiting
+
+.. {{{end}}}
+
+
 
 .. seealso::
 
@@ -409,3 +457,8 @@ same :class:`io.StringIO` instance where it is saved to be used later.
      <http://docs.python.org/reference/datamodel.html#context-managers>`__
      -- Description of the context manager API from the Python
      Reference Guide.
+
+   * `Resource management in Python 3.3, or contextlib.ExitStack FTW!
+     <http://www.wefearchange.org/2013/05/resource-management-in-python-33-or.html>`__
+     -- Description of using :class:`ExitStack` to deploy safe code
+     from Barry Warsaw.
