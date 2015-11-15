@@ -146,7 +146,8 @@ statement. Exceptions from within the :command:`with` block are
 re-raised inside the generator, so they can be handled there.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'contextlib_contextmanager.py', ignore_error=True))
+.. cog.out(run_script(cog.inFile, 'contextlib_contextmanager.py',
+..                    ignore_error=True))
 .. }}}
 
 ::
@@ -173,6 +174,54 @@ re-raised inside the generator, so they can be handled there.
 
 .. {{{end}}}
 
+The context manager returned by :func:`contextmanager` also works as a
+function decorator, providing nearly the same behavior.
+
+.. include:: contextlib_contextmanager_decorator.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+One difference with using the context manager as a decorator is that
+the value yielded by the generator is not available inside the
+function being decorated. Arguments passed to the decorated function
+are available in the usual way, as demonstrated by :func:`throw_error`
+in this example.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'contextlib_contextmanager_decorator.py', 
+..                    ignore_error=True))
+.. }}}
+
+::
+
+	$ python3 contextlib_contextmanager_decorator.py
+	
+	Normal:
+	  entering
+	  inside with statement
+	  exiting
+	
+	Handled error:
+	  entering
+	  ERROR: showing example of handling an error
+	  exiting
+	
+	Unhandled error:
+	  entering
+	  exiting
+	Traceback (most recent call last):
+	  File "contextlib_contextmanager_decorator.py", line 42, in <mo
+	dule>
+	    throw_error(ValueError('this exception is not handled'))
+	  File "/Library/Frameworks/Python.framework/Versions/3.5/lib/py
+	thon3.5/contextlib.py", line 30, in inner
+	    return func(*args, **kwds)
+	  File "contextlib_contextmanager_decorator.py", line 32, in thr
+	ow_error
+	    raise err
+	ValueError: this exception is not handled
+
+.. {{{end}}}
 
 Closing Open Handles
 ====================
