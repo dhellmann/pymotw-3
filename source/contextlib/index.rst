@@ -77,7 +77,7 @@ returned by :func:`__enter__`, which is not necessarily the
 	
 	Context.__init__()
 	Context.__enter__()
-	WithinContext.__init__(<__main__.Context object at 0x1021a97b8>)
+	WithinContext.__init__(<__main__.Context object at 0x1010a97b8>)
 	WithinContext.do_something()
 	Context.__exit__()
 	WithinContext.__del__
@@ -109,14 +109,14 @@ re-raised after :func:`__exit__` returns.
 	__exit__()
 	  exc_type = <class 'RuntimeError'>
 	  exc_val  = error message handled
-	  exc_tb   = <traceback object at 0x1012e0dc8>
+	  exc_tb   = <traceback object at 0x101ee0dc8>
 	
 	__init__(False)
 	__enter__()
 	__exit__()
 	  exc_type = <class 'RuntimeError'>
 	  exc_val  = error message propagated
-	  exc_tb   = <traceback object at 0x1012e0dc8>
+	  exc_tb   = <traceback object at 0x101ee0dc8>
 	Traceback (most recent call last):
 	  File "contextlib_api_error.py", line 34, in <module>
 	    raise RuntimeError('error message propagated')
@@ -437,6 +437,92 @@ to be invoked as the stack is undone.
 	inside context
 	1 exiting
 	0 exiting
+
+.. {{{end}}}
+
+The context managers given :class:`ExitStack` are treated as though
+they are in a series of nested :command:`with` statements. Errors that
+happen anywhere within the context propagate through the normal error
+handling of the context managers. These context manager classes
+illustrate the way errors propagate.
+
+.. literalinclude:: contextlib_exitstack_enter_context_errors.py
+   :lines: 8-62
+
+:func:`variable_stack` passes each of the context managers passed to
+an :class:`ExitStack`, building up the overall context one by one. The
+examples below pass different context managers to explore the error
+handling behavior. First, the normal case of no exceptions.
+
+.. literalinclude:: contextlib_exitstack_enter_context_errors.py
+   :lines: 65-69
+
+Then, an example of handling exceptions within the context managers at
+the end of the stack, in which all of the open contexts are closed as
+the stack is unwound.
+
+.. literalinclude:: contextlib_exitstack_enter_context_errors.py
+   :lines: 71-76
+
+Next, an example of handling exceptions within the context managers in
+the middle of the stack, in which the error does not occur until some
+contexts are already closed, so those contexts do not see the error.
+
+.. literalinclude:: contextlib_exitstack_enter_context_errors.py
+   :lines: 78-84
+
+Finally, an example of the exception remaining unhandled and
+propagating up to the calling code.
+
+.. literalinclude:: contextlib_exitstack_enter_context_errors.py
+   :lines: 86-
+
+If any context manager in the stack receives an exception and returns
+a ``True`` value, it prevents that exception from propagating up to
+any other context managers.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'contextlib_exitstack_enter_context_errors.py'))
+.. }}}
+
+::
+
+	$ python3 contextlib_exitstack_enter_context_errors.py
+	
+	No errors:
+	  HandleError(1): entering
+	  PassError(2): entering
+	  PassError(2): exiting
+	  HandleError(1): exiting False
+	
+	Error at the end of the context stack:
+	  HandleError(1): entering
+	  HandleError(2): entering
+	  ThrowError(3): entering
+	  ThrowError(3): throwing error
+	  HandleError(2): handling exception RuntimeError('from 3',)
+	  HandleError(2): exiting True
+	  HandleError(1): exiting False
+	
+	Error in the middle of the context stack:
+	  HandleError(1): entering
+	  PassError(2): entering
+	  ThrowError(3): entering
+	  HandleError(4): entering
+	  HandleError(4): exiting False
+	  ThrowError(3): throwing error
+	  PassError(2): passing exception RuntimeError('from 3',)
+	  PassError(2): exiting
+	  HandleError(1): handling exception RuntimeError('from 3',)
+	  HandleError(1): exiting True
+	
+	Error ignored:
+	  PassError(1): entering
+	  ThrowError(2): entering
+	  ThrowError(2): throwing error
+	  PassError(1): passing exception RuntimeError('from 2',)
+	  PassError(1): exiting
+	error handled outside of context
 
 .. {{{end}}}
 
