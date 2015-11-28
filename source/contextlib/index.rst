@@ -77,7 +77,7 @@ returned by :func:`__enter__`, which is not necessarily the
 	
 	Context.__init__()
 	Context.__enter__()
-	WithinContext.__init__(<__main__.Context object at 0x1010a97b8>)
+	WithinContext.__init__(<__main__.Context object at 0x1007a97b8>)
 	WithinContext.do_something()
 	Context.__exit__()
 	WithinContext.__del__
@@ -109,14 +109,14 @@ re-raised after :func:`__exit__` returns.
 	__exit__()
 	  exc_type = <class 'RuntimeError'>
 	  exc_val  = error message handled
-	  exc_tb   = <traceback object at 0x101ee0dc8>
+	  exc_tb   = <traceback object at 0x1014e0dc8>
 	
 	__init__(False)
 	__enter__()
 	__exit__()
 	  exc_type = <class 'RuntimeError'>
 	  exc_val  = error message propagated
-	  exc_tb   = <traceback object at 0x101ee0dc8>
+	  exc_tb   = <traceback object at 0x1014e0dc8>
 	Traceback (most recent call last):
 	  File "contextlib_api_error.py", line 34, in <module>
 	    raise RuntimeError('error message propagated')
@@ -411,6 +411,9 @@ when control flow exits the context. The result is like having multple
 nested :command:`with` statements, except they are established
 dynamically.
 
+Stacking Context Managers
+-------------------------
+
 There are several ways to populate the :class:`ExitStack`.  This
 example uses :func:`enter_context` to add a new context manager to the
 stack.
@@ -523,6 +526,88 @@ any other context managers.
 	  PassError(1): passing exception RuntimeError('from 2',)
 	  PassError(1): exiting
 	error handled outside of context
+
+.. {{{end}}}
+
+Arbitrary Context Callbacks
+---------------------------
+
+:class:`ExitStack` also supports arbitrary callbacks for closing a
+context, making it easy to clean up resources that are not controlled
+via a context manager.
+
+.. include:: contextlib_exitstack_callbacks.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+Just as with the :func:`__exit__` methods of full context managers,
+the callbacks are invoked in the reverse order that they are
+registered.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'contextlib_exitstack_callbacks.py'))
+.. }}}
+
+::
+
+	$ python3 contextlib_exitstack_callbacks.py
+	
+	closing callback((), {'arg3': 'val3'})
+	closing callback(('arg1', 'arg2'), {})
+
+.. {{{end}}}
+
+The callbacks are invoked regardless of whether an error occurred, and
+they are not given any information about whether an error
+occurred. Their return value is ignored.
+
+.. include:: contextlib_exitstack_callbacks_error.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+Because they do not have access to the error, callbacks are unable to
+suppress exceptions from propagating through the rest of the stack of
+context managers.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'contextlib_exitstack_callbacks_error.py'))
+.. }}}
+
+::
+
+	$ python3 contextlib_exitstack_callbacks_error.py
+	
+	closing callback((), {'arg3': 'val3'})
+	closing callback(('arg1', 'arg2'), {})
+	ERROR: thrown error
+
+.. {{{end}}}
+
+Callbacks make a convenient way to clearly define cleanup logic
+without the overhead of creating a new context manager class. To
+improve code readability, that logic can be encapsulated in an inline
+function, and :func:`callback` can be used as a decorator.
+
+.. include:: contextlib_exitstack_callbacks_decorator.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+There is no way to specify the arguments for functions registered
+using the decorator form of :func:`callback`. However, if the cleanup
+callback is defined inline, scope rules give it access to variables
+defined in the calling code.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'contextlib_exitstack_callbacks_decorator.py'))
+.. }}}
+
+::
+
+	$ python3 contextlib_exitstack_callbacks_decorator.py
+	
+	within the context
+	inline_cleanup()
+	local_resource = 'resource created in context'
 
 .. {{{end}}}
 
