@@ -109,14 +109,14 @@ re-raised after :func:`__exit__` returns.
 	__exit__()
 	  exc_type = <class 'RuntimeError'>
 	  exc_val  = error message handled
-	  exc_tb   = <traceback object at 0x1014e0dc8>
+	  exc_tb   = <traceback object at 0x1010e0dc8>
 	
 	__init__(False)
 	__enter__()
 	__exit__()
 	  exc_type = <class 'RuntimeError'>
 	  exc_val  = error message propagated
-	  exc_tb   = <traceback object at 0x1014e0dc8>
+	  exc_tb   = <traceback object at 0x1010e0dc8>
 	Traceback (most recent call last):
 	  File "contextlib_api_error.py", line 34, in <module>
 	    raise RuntimeError('error message propagated')
@@ -608,6 +608,68 @@ defined in the calling code.
 	within the context
 	inline_cleanup()
 	local_resource = 'resource created in context'
+
+.. {{{end}}}
+
+Partial Stacks
+--------------
+
+Sometimes when building complex contexts it is useful to be able to
+abort an operation if the context cannot be completely constructed,
+but to delay the cleanup of all resources until a later time if they
+can all be set up properly. For example, if an operation needs several
+long-lived network connections, it may be best to not start the
+operation if one connection fails. However, if all of the connections
+can be opened they need to stay open longer than the duration of a
+single context manager. The :func:`pop_all` method of
+:class:`ExitStack` can be used in this scenario.
+
+:func:`pop_all` clears all of the context managers and callbacks from
+the stack on which it is called, and returns a new stack pre-populated
+with those same context managers and callbacks. The :func:`close`
+method of the new stack can be invoked later, after the original stack
+is gone, to clean up the resources.
+
+.. literalinclude:: contextlib_exitstack_pop_all.py
+   :lines: 50-
+
+This example uses context manager classes similar to the ones created
+earlier, with the difference that :class:`ErrorOnEnter` produces an
+error on :func:`__enter__` instead of :func:`__exit__`. Inside
+:func:`variable_stack`, if all of the contexts are entered without
+error then the :func:`close` method of a new :class:`ExitStack` is
+returned. If a handled error occurs, :func:`variable_stack` returns
+``None`` to indicate that the cleanup work is already done. And if an
+unhandled error occurs, the partial stack is cleaned up and the error
+is propagated.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'contextlib_exitstack_pop_all.py'))
+.. }}}
+
+::
+
+	$ python3 contextlib_exitstack_pop_all.py
+	
+	No errors:
+	  HandleError(1): entering
+	  HandleError(2): entering
+	  HandleError(2): exiting False
+	  HandleError(1): exiting False
+	
+	Handled error building context manager stack:
+	  HandleError(1): entering
+	  ErrorOnEnter(2): throwing error on enter
+	  HandleError(1): handling exception RuntimeError('from 2',)
+	  HandleError(1): exiting True
+	no cleaner returned
+	
+	Unhandled error building context manager stack:
+	  PassError(1): entering
+	  ErrorOnEnter(2): throwing error on enter
+	  PassError(1): passing exception RuntimeError('from 2',)
+	  PassError(1): exiting
+	caught error from 2
 
 .. {{{end}}}
 
