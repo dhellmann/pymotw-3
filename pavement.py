@@ -31,6 +31,7 @@ options(
         docroot='.',
         builddir='build',
         sourcedir='source',
+        warnerror=True,
     ),
 
     spelling=Bunch(
