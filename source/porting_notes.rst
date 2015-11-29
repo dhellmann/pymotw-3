@@ -292,6 +292,15 @@ Using the old :class:`RawConfigParser` is discouraged. New projects
 should use ``ConfigParser(interpolation=None)`` instead to achieve the
 same behavior.
 
+.. _porting-fractions:
+
+fractions
+---------
+
+The :func:`from_float` and :func:`from_decimal` class methods are no
+longer needed. Floating point and :class:`Decimal` values can be
+passed directly to the :class:`Fraction` constructor.
+
 .. _porting-glob:
 
 glob
