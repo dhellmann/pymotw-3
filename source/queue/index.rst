@@ -129,65 +129,69 @@ uses hard-coded values for the number of threads and list of URLs to
 fetch.
 
 .. literalinclude:: fetch_podcasts.py
-   :lines: 6-20
+   :lines: 6-25
 
-The function :func:`downloadEnclosures` will run in the worker thread
+The function :func:`download_enclosures` will run in the worker thread
 and process the downloads using :mod:`urllib`.
 
 .. literalinclude:: fetch_podcasts.py
-   :lines: 22-41
+   :lines: 28-47
 
 Once the threads' target function is defined, the worker threads can
-be started. When :func:`downloadEnclosures` processes the statement
+be started. When :func:`download_enclosures` processes the statement
 ``url = q.get()``, it blocks and waits until the queue has something
 to return.  That means it is safe to start the threads before there is
 anything in the queue.
 
 .. literalinclude:: fetch_podcasts.py
-   :lines: 44-49
+   :lines: 50-58
 
-The next step is to retrieve the feed contents using Mark Pilgrim's
-:mod:`feedparser` module (http://www.feedparser.org/) and enqueue the
-URLs of the enclosures. As soon as the first URL is added to the
-queue, one of the worker threads picks it up and starts downloading
-it. The loop will continue to add items until the feed is exhausted,
-and the worker threads will take turns dequeuing URLs to download
-them.
+The next step is to retrieve the feed contents using the
+``feedparser`` module and enqueue the URLs of the enclosures. As soon
+as the first URL is added to the queue, one of the worker threads
+picks it up and starts downloading it. The loop will continue to add
+items until the feed is exhausted, and the worker threads will take
+turns dequeuing URLs to download them.
 
 .. literalinclude:: fetch_podcasts.py
-   :lines: 51-59
+   :lines: 60-68
 
 And the only thing left to do is wait for the queue to empty out
 again, using :func:`join`.
 
 .. literalinclude:: fetch_podcasts.py
-   :lines: 61-
+   :lines: 70-
 
-Running the sample script produces:
+Running the sample script produces output similar to this.
 
 ::
 
     $ python fetch_podcasts.py 
     
-    0: Looking for the next enclosure
-    1: Looking for the next enclosure
-    Queuing: /podcasts/littlebit/2010-04-18.mp3
-    Queuing: /podcasts/littlebit/2010-05-22.mp3
-    Queuing: /podcasts/littlebit/2010-06-06.mp3
-    Queuing: /podcasts/littlebit/2010-07-26.mp3
-    Queuing: /podcasts/littlebit/2010-11-25.mp3
-    *** Main thread waiting
-    0: Downloading: /podcasts/littlebit/2010-04-18.mp3
-    0: Looking for the next enclosure
-    0: Downloading: /podcasts/littlebit/2010-05-22.mp3
-    0: Looking for the next enclosure
-    0: Downloading: /podcasts/littlebit/2010-06-06.mp3
-    0: Looking for the next enclosure
-    0: Downloading: /podcasts/littlebit/2010-07-26.mp3
-    0: Looking for the next enclosure
-    0: Downloading: /podcasts/littlebit/2010-11-25.mp3
-    0: Looking for the next enclosure
-    *** Done
+    worker-0: looking for the next enclosure
+    worker-1: looking for the next enclosure
+    MainThread: queuing /episodes/download/35/turbogears-and-the-future-of-python-web-frameworks.mp3
+    MainThread: queuing /episodes/download/34/continuum-scientific-python-and-the-business-of-open-source.mp3
+    MainThread: queuing /episodes/download/33/openstack-cloud-computing-built-on-python.mp3
+    MainThread: queuing /episodes/download/32/pypy.js-pypy-python-in-your-browser.mp3
+    MainThread: queuing /episodes/download/31/machine-learning-with-python-and-scikit-learn.mp3
+    MainThread: *** main thread waiting
+    worker-0: downloading: /episodes/download/35/turbogears-and-the-future-of-python-web-frameworks.mp3
+    worker-1: downloading: /episodes/download/34/continuum-scientific-python-and-the-business-of-open-source.mp3
+    worker-0: writing to turbogears-and-the-future-of-python-web-frameworks.mp3
+    worker-0: looking for the next enclosure
+    worker-0: downloading: /episodes/download/33/openstack-cloud-computing-built-on-python.mp3
+    worker-1: writing to continuum-scientific-python-and-the-business-of-open-source.mp3
+    worker-1: looking for the next enclosure
+    worker-1: downloading: /episodes/download/32/pypy.js-pypy-python-in-your-browser.mp3
+    worker-0: writing to openstack-cloud-computing-built-on-python.mp3
+    worker-0: looking for the next enclosure
+    worker-0: downloading: /episodes/download/31/machine-learning-with-python-and-scikit-learn.mp3
+    worker-1: writing to pypy.js-pypy-python-in-your-browser.mp3
+    worker-1: looking for the next enclosure
+    worker-0: writing to machine-learning-with-python-and-scikit-learn.mp3
+    worker-0: looking for the next enclosure
+    MainThread: *** done
 
 The actual output will depend on the contents of the RSS feed used.
 
@@ -204,3 +208,5 @@ The actual output will depend on the contents of the RSS feed used.
 
     `FIFO <http://en.wikipedia.org/wiki/FIFO>`__
         Wikipedia article explaining first in, first out, data structures.
+
+    * `feedparser module <https://pypi.python.org/pypi/feedparser>`__

@@ -4,10 +4,10 @@
 #end_pymotw_header
 
 from queue import Queue
-from threading import Thread
+import threading
 import time
 import urllib
-import urlparse
+from urllib.parse import urlparse
 
 import feedparser
 
@@ -17,11 +17,15 @@ enclosure_queue = Queue()
 
 # A real app wouldn't use hard-coded data...
 feed_urls = [
-    'http://advocacy.python.org/podcasts/littlebit.rss',
+    'http://talkpython.fm/episodes/rss',
 ]
 
 
-def downloadEnclosures(i, q):
+def message(s):
+    print('%s: %s' % (threading.current_thread().name, s))
+
+
+def download_enclosures(q):
     """This is the worker thread function.
     It processes items in the queue one after
     another.  These daemon threads go into an
@@ -29,14 +33,15 @@ def downloadEnclosures(i, q):
     the main thread ends.
     """
     while True:
-        print('%s: Looking for the next enclosure' % i)
+        message('looking for the next enclosure')
         url = q.get()
-        parsed_url = urlparse.urlparse(url)
-        print('%s: Downloading:' % (i, parsed_url.path))
-        response = urllib.urlopen(url)
+        parsed_url = urlparse(url)
+        message('downloading: %s' % parsed_url.path)
+        response = urllib.request.urlopen(url)
         data = response.read()
         # Save the downloaded file to the current directory
         outfile_name = url.rpartition('/')[-1]
+        message('writing to %s' % outfile_name)
         with open(outfile_name, 'wb') as outfile:
             outfile.write(data)
         q.task_done()
@@ -44,8 +49,11 @@ def downloadEnclosures(i, q):
 
 # Set up some threads to fetch the enclosures
 for i in range(num_fetch_threads):
-    worker = Thread(target=downloadEnclosures,
-                    args=(i, enclosure_queue,))
+    worker = threading.Thread(
+        target=download_enclosures,
+        args=(enclosure_queue,),
+        name='worker-%s' % i,
+    )
     worker.setDaemon(True)
     worker.start()
 
@@ -53,14 +61,14 @@ for i in range(num_fetch_threads):
 # the queue.
 for url in feed_urls:
     response = feedparser.parse(url, agent='fetch_podcasts.py')
-    for entry in response['entries'][-5:]:
+    for entry in response['entries'][:5]:
         for enclosure in entry.get('enclosures', []):
-            parsed_url = urlparse.urlparse(enclosure['url'])
-            print('Queuing:', parsed_url.path)
+            parsed_url = urlparse(enclosure['url'])
+            message('queuing %s' % parsed_url.path)
             enclosure_queue.put(enclosure['url'])
 
 # Now wait for the queue to be empty, indicating that we have
 # processed all of the downloads.
-print('*** Main thread waiting')
+message('*** main thread waiting')
 enclosure_queue.join()
-print('*** Done')
+message('*** done')
