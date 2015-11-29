@@ -32,7 +32,7 @@ computed.
 
 ::
 
-	$ python fractions_create_integers.py
+	$ python3 fractions_create_integers.py
 	
 	1/2 = 1/2
 	2/4 = 1/2
@@ -55,7 +55,7 @@ The string is parsed to find the numerator and denominator values.
 
 ::
 
-	$ python fractions_create_strings.py
+	$ python3 fractions_create_strings.py
 	
 	1/2 = 1/2
 	2/4 = 1/2
@@ -79,7 +79,7 @@ value is computed automatically.
 
 ::
 
-	$ python fractions_create_strings_floats.py
+	$ python3 fractions_create_strings_floats.py
 	
 	0.5 = 1/2
 	1.5 = 3/2
@@ -87,9 +87,9 @@ value is computed automatically.
 
 .. {{{end}}}
 
-There are also class methods for creating :class:`Fraction` instances
-directly from other representations of rational values, such as
-:class:`float` or :class:`Decimal`.
+It is also possible to create :class:`Fraction` instances directly
+from other representations of rational values, such as :class:`float`
+or :class:`Decimal`.
 
 .. include:: fractions_from_float.py
     :literal:
@@ -104,7 +104,7 @@ unexpected results.
 
 ::
 
-	$ python fractions_from_float.py
+	$ python3 fractions_from_float.py
 	
 	0.1 = 3602879701896397/36028797018963968
 	0.5 = 1/2
@@ -129,7 +129,7 @@ the precision errors of the standard floating point representation.
 
 ::
 
-	$ python fractions_from_decimal.py
+	$ python3 fractions_from_decimal.py
 	
 	0.1 = 1/10
 	0.5 = 1/2
@@ -158,7 +158,7 @@ All of the standard operators are supported.
 
 ::
 
-	$ python fractions_arithmetic.py
+	$ python3 fractions_arithmetic.py
 	
 	1/2 + 3/4 = 5/4
 	1/2 - 3/4 = -1/4
@@ -186,10 +186,10 @@ the denominator.
 
 ::
 
-	$ python fractions_limit_denominator.py
+	$ python3 fractions_limit_denominator.py
 	
-	PI       = 3.14159265359
-	No limit = 314159265359/100000000000
+	PI       = 3.141592653589793
+	No limit = 3141592653589793/1000000000000000
 	       1 = 3
 	       6 = 19/6
 	      11 = 22/7
@@ -203,11 +203,11 @@ the denominator.
 
 .. seealso::
 
-    `fractions <http://docs.python.org/library/fractions.html>`_
-        The standard library documentation for this module.
+    * :pydoc:`fractions`
 
-    :mod:`decimal`
-        The ``decimal`` module provides an API for fixed and floating point math.
+    * :mod:`decimal` -- The ``decimal`` module provides an API for
+      fixed and floating point math.
 
-    :mod:`numbers`
-        Numeric abstract base classes.
+    * :mod:`numbers` -- Numeric abstract base classes.
+
+    * :ref:`Porting notes for fractions <porting-fractions>`
