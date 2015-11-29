@@ -188,7 +188,6 @@ def flake8(options):
         _flake8(module_dir)
     else:
         _flake8(options.sphinx.sourcedir)
-    _flake8('pavement.py')
 
 
 @task
