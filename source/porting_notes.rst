@@ -292,6 +292,14 @@ Using the old :class:`RawConfigParser` is discouraged. New projects
 should use ``ConfigParser(interpolation=None)`` instead to achieve the
 same behavior.
 
+.. _porting-csv:
+
+csv
+---
+
+Instead of using the :func:`next` method of a reader directly, use the
+built-in :func:`next` function to invoke the iterator properly.
+
 .. _porting-fractions:
 
 fractions
