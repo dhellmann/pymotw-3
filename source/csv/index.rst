@@ -1,12 +1,11 @@
-====================================
- csv -- Comma-separated Value Files
-====================================
+=====================================
+ csv --- Comma-separated Value Files
+=====================================
 
 .. module:: csv
     :synopsis: Read and write comma separated value files.
 
 :Purpose: Read and write comma separated value files.
-:Python Version: 2.3 and later
 
 The :mod:`csv` module can be used to work with data exported from
 spreadsheets and databases into text files formatted with fields and
@@ -47,7 +46,7 @@ As it is read, each row of the input data is parsed and converted to a
 
 ::
 
-	$ python csv_reader.py testdata.csv
+	$ python3 csv_reader.py testdata.csv
 	
 	['Title 1', 'Title 2', 'Title 3']
 	['1', 'a', '08/18/07']
@@ -73,7 +72,7 @@ when they are returned by the parser.
 
 ::
 
-	$ python csv_reader.py testlinebreak.csv
+	$ python3 csv_reader.py testlinebreak.csv
 	
 	['Title 1', 'Title 2', 'Title 3']
 	['1', 'first line\nsecond line', '08/18/07']
@@ -100,7 +99,7 @@ example:
 
 ::
 
-	$ python csv_writer.py testout.csv
+	$ python3 csv_writer.py testout.csv
 	
 	Title 1,Title 2,Title 3
 	1,a,08/01/07
@@ -133,7 +132,7 @@ that contain values that are not numbers.
 
 ::
 
-	$ python csv_writer_quoted.py testout_quoted.csv
+	$ python3 csv_writer_quoted.py testout_quoted.csv
 	
 	"Title 1","Title 2","Title 3"
 	1,"a","08/01/07"
@@ -192,9 +191,9 @@ OpenOffice or NeoOffice.
 
 ::
 
-	$ python csv_list_dialects.py
+	$ python3 csv_list_dialects.py
 	
-	['excel-tab', 'excel']
+	['excel', 'excel-tab', 'unix']
 
 .. {{{end}}}
 
@@ -222,7 +221,7 @@ comma-delimited file.
 
 ::
 
-	$ python csv_dialect.py
+	$ python3 csv_dialect.py
 	
 	['Title 1', 'Title 2', 'Title 3']
 	['1', 'first line\nsecond line', '08/18/07']
@@ -264,7 +263,7 @@ dialects.
 
 ::
 
-	$ python csv_dialect_variations.py
+	$ python3 csv_dialect_variations.py
 	
 	Dialect: "escaped"
 	
@@ -302,6 +301,15 @@ dialects.
 	
 	'col1','1','10/01/2010','Special chars: " '' , to parse'
 	
+	Dialect: "unix"
+	
+	  delimiter   = ','       skipinitialspace = 0
+	  doublequote = 1         quoting          = QUOTE_ALL
+	  quotechar   = '"'       lineterminator   = '\n'
+	  escapechar  = None  
+	
+	"col1","1","10/01/2010","Special chars: "" ' , to parse"
+	
 
 .. {{{end}}}
 
@@ -329,11 +337,12 @@ demonstrated by the "escaped" dialect in the example.
 
 ::
 
-	$ python csv_dialect_sniffer.py
+	$ python3 csv_dialect_sniffer.py
 	
 	Dialect: "escaped"
 	
-	['col1', '1', '10/01/2010', 'Special chars \\" \' \\', ' to parse']
+	['col1', '1', '10/01/2010', 'Special chars \\" \' \\', ' to pars
+	e']
 	
 	Dialect: "excel"
 	
@@ -344,6 +353,10 @@ demonstrated by the "escaped" dialect in the example.
 	['col1', '1', '10/01/2010', 'Special chars " \' \t to parse']
 	
 	Dialect: "singlequote"
+	
+	['col1', '1', '10/01/2010', 'Special chars " \' , to parse']
+	
+	Dialect: "unix"
 	
 	['col1', '1', '10/01/2010', 'Special chars " \' , to parse']
 	
@@ -376,11 +389,11 @@ returned as dictionaries instead of lists or tuples.
 
 ::
 
-	$ python csv_dictreader.py testdata.csv
+	$ python3 csv_dictreader.py testdata.csv
 	
-	{'Title 1': '1', 'Title 3': '08/18/07', 'Title 2': 'a'}
-	{'Title 1': '2', 'Title 3': '08/19/07', 'Title 2': 'b'}
-	{'Title 1': '3', 'Title 3': '08/20/07', 'Title 2': 'c'}
+	{'Title 2': 'a', 'Title 3': '08/18/07', 'Title 1': '1'}
+	{'Title 2': 'b', 'Title 3': '08/19/07', 'Title 1': '2'}
+	{'Title 2': 'c', 'Title 3': '08/20/07', 'Title 1': '3'}
 
 .. {{{end}}}
 
@@ -400,7 +413,7 @@ need to be written explicitly before any other data.
 
 ::
 
-	$ python csv_dictwriter.py testout.csv
+	$ python3 csv_dictwriter.py testout.csv
 	
 	Title 1,Title 2,Title 3
 	1,a,08/01/07
@@ -412,10 +425,10 @@ need to be written explicitly before any other data.
 
 .. seealso::
 
-    `csv <http://docs.python.org/library/csv.html>`_
-        The standard library documentation for this module.
+    * :pydoc:`csv`
 
-    :pep:`305`
-        CSV File API
+    * :pep:`305` -- CSV File API
+
+    * :ref:`Porting notes for csv <porting-csv>`
 
 .. _NeoOffice: http://www.neooffice.org/
