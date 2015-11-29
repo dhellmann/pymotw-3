@@ -8,3 +8,5 @@ source/glob/dir
 /source/cgitb/LOGS
 /source/difflib/output.diff
 .tox
+/source/csv/testout.csv
+/source/csv/testout_quoted.csv
