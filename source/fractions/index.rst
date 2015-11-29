@@ -64,7 +64,9 @@ The string is parsed to find the numerator and denominator values.
 .. {{{end}}}
 
 Strings can also use the more usual decimal or floating point notation
-of series of digits separated by a period.
+of series of digits separated by a period. Any string that can be
+parsed by :func:`float` and that does not represent not-a-number
+(``NaN``) or infinite value is supported.
 
 .. include:: fractions_create_strings_floats.py
     :literal:
@@ -81,9 +83,10 @@ value is computed automatically.
 
 	$ python3 fractions_create_strings_floats.py
 	
-	0.5 = 1/2
-	1.5 = 3/2
-	2.0 = 2
+	 0.5 = 1/2
+	 1.5 = 3/2
+	 2.0 = 2
+	5e-1 = 1/2
 
 .. {{{end}}}
 
