@@ -1,17 +1,17 @@
 ===========================================
- Queue --- Thread-safe FIFO Implementation
+ queue --- Thread-safe FIFO Implementation
 ===========================================
 
-.. module:: Queue
+.. module:: queue
     :synopsis: Thread-safe FIFO implementation
 
 :Purpose: Provides a thread-safe FIFO implementation
 
-The :mod:`Queue` module provides a first-in, first-out (FIFO) data
+The :mod:`queue` module provides a first-in, first-out (FIFO) data
 structure suitable for multi-threaded programming. It can be used to
 pass messages or other data between producer and consumer threads
 safely. Locking is handled for the caller, so many threads can work
-with the same :class:`Queue` instance safely. The size of a
+with the same :class:`Queue` instance safely and easily. The size of a
 :class:`Queue` (the number of elements it contains) may be restricted
 to throttle memory usage or processing.
 
@@ -118,10 +118,10 @@ Building a Threaded Podcast Client
 The source code for the podcasting client in this section demonstrates
 how to use the :class:`Queue` class with multiple threads.  The
 program reads one or more RSS feeds, queues up the enclosures for the
-five most recent episodes to be downloaded, and processes several
-downloads in parallel using threads. It does not have enough error
-handling for production use, but the skeleton implementation provides an
-example of using the :mod:`Queue` module.
+five most recent episodes from each feed to be downloaded, and
+processes several downloads in parallel using threads. It does not
+have enough error handling for production use, but the skeleton
+implementation provides an example of using the :mod:`queue` module.
 
 First, some operating parameters are established. Normally these would
 come from user inputs (preferences, a database, etc.). The example
@@ -192,16 +192,15 @@ The actual output will depend on the contents of the RSS feed used.
 
 .. seealso::
 
-    `Queue <http://docs.python.org/lib/module-Queue.html>`_
-        Standard library documentation for this module.
+    * :pydoc:`queue`
 
-    :ref:`deque` from :mod:`collections`
-        The ``collections`` module includes a deque (double-ended queue) class.
-    
-    `Queue data structures <http://en.wikipedia.org/wiki/Queue_(data_structure)>`__
-        Wikipedia article explaining queues.
+    * :ref:`deque` from :mod:`collections`
 
-    `FIFO <http://en.wikipedia.org/wiki/FIFO>`__
-        Wikipedia article explaining first in, first out, data structures.
+    * `Queue data structures
+      <http://en.wikipedia.org/wiki/Queue_(data_structure)>`__ --
+      Wikipedia article explaining queues.
+
+    * `FIFO <http://en.wikipedia.org/wiki/FIFO>`__ -- Wikipedia
+      article explaining first in, first out, data structures.
 
     * `feedparser module <https://pypi.python.org/pypi/feedparser>`__
