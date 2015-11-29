@@ -135,7 +135,7 @@ The function :func:`download_enclosures` will run in the worker thread
 and process the downloads using :mod:`urllib`.
 
 .. literalinclude:: fetch_podcasts.py
-   :lines: 28-48
+   :lines: 28-46
 
 Once the threads' target function is defined, the worker threads can
 be started. When :func:`download_enclosures` processes the statement
@@ -144,7 +144,7 @@ to return.  That means it is safe to start the threads before there is
 anything in the queue.
 
 .. literalinclude:: fetch_podcasts.py
-   :lines: 51-59
+   :lines: 49-57
 
 The next step is to retrieve the feed contents using the
 ``feedparser`` module and enqueue the URLs of the enclosures. As soon
@@ -154,13 +154,13 @@ items until the feed is exhausted, and the worker threads will take
 turns dequeuing URLs to download them.
 
 .. literalinclude:: fetch_podcasts.py
-   :lines: 61-69
+   :lines: 59-68
 
 And the only thing left to do is wait for the queue to empty out
 again, using :func:`join`.
 
 .. literalinclude:: fetch_podcasts.py
-   :lines: 71-
+   :lines: 70-
 
 Running the sample script produces output similar to this.
 

@@ -35,7 +35,6 @@ def download_enclosures(q):
     while True:
         message('looking for the next enclosure')
         url = q.get()
-        parsed_url = urlparse(url)
         filename = url.rpartition('/')[-1]
         message('downloading %s' % filename)
         response = urllib.request.urlopen(url)
