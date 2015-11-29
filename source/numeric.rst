@@ -25,6 +25,11 @@ mathematical functions such as logarithms and trigonometric
 functions.  The full complement of IEEE functions usually found in
 the native platform C libraries is available through the module.
 
+.. toctree::
+   :maxdepth: 1
+
+   fractions/index
+
 ..
    .. toctree::
        :maxdepth: 1
