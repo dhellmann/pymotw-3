@@ -21,13 +21,21 @@ Python and tools used.
    data_types
    algorithm_tools
    dates
+   numeric
    file_access
+   persistence
    compression
-   frameworks
+   cryptographic
+   concurrency
+   networking
    internet_protocols
+   email
+   frameworks
+   i18n
    dev_tools
    runtime_services
    language
+   importing
    unix
    porting_notes
    about
