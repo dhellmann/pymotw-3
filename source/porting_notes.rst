@@ -254,6 +254,14 @@ bz2
 :class:`BZ2File` instances now support the context manager protocol,
 and do not need to be wrapped with :func:`contextlib.closing`.
 
+.. _porting-contextlib:
+
+contextlib
+----------
+
+:func:`contextlib.nested` has been removed. Pass multiple context
+managers to the same ``with`` statement instead.
+
 .. _porting-collections:
 
 collections
