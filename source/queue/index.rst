@@ -137,11 +137,11 @@ and process the downloads using :mod:`urllib`.
 .. literalinclude:: fetch_podcasts.py
    :lines: 28-46
 
-Once the threads' target function is defined, the worker threads can
-be started. When :func:`download_enclosures` processes the statement
-``url = q.get()``, it blocks and waits until the queue has something
-to return.  That means it is safe to start the threads before there is
-anything in the queue.
+Once the target function for the threads is defined, the worker
+threads can be started. When :func:`download_enclosures` processes the
+statement ``url = q.get()``, it blocks and waits until the queue has
+something to return.  That means it is safe to start the threads
+before there is anything in the queue.
 
 .. literalinclude:: fetch_podcasts.py
    :lines: 49-57
@@ -156,13 +156,13 @@ turns dequeuing URLs to download them.
 .. literalinclude:: fetch_podcasts.py
    :lines: 59-68
 
-And the only thing left to do is wait for the queue to empty out
-again, using :func:`join`.
+The only thing left to do is wait for the queue to empty out again,
+using :func:`join`.
 
 .. literalinclude:: fetch_podcasts.py
    :lines: 70-
 
-Running the sample script produces output similar to this.
+Running the sample script produces output similar to the following.
 
 ::
 
@@ -204,3 +204,5 @@ The actual output will depend on the contents of the RSS feed used.
       article explaining first in, first out, data structures.
 
     * `feedparser module <https://pypi.python.org/pypi/feedparser>`__
+      -- A module for parsing RSS and Atom feeds, created by Mark
+      Pilgrim and maintained by Kurt McKee.
