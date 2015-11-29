@@ -9,4 +9,4 @@
 
 import csv
 
-print csv.list_dialects()
+print(csv.list_dialects())

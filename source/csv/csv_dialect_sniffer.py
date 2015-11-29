@@ -8,7 +8,7 @@
 #end_pymotw_header
 
 import csv
-from StringIO import StringIO
+from io import StringIO
 import textwrap
 
 csv.register_dialect('escaped',
@@ -28,16 +28,15 @@ for name in sorted(csv.list_dialects()):
     writer.writerow(
         ('col1', 1, '10/01/2010',
          'Special chars " \' %s to parse' % dialect.delimiter)
-        )
-    samples.append( (name, dialect, buffer.getvalue()) )
+    )
+    samples.append((name, dialect, buffer.getvalue()))
 
-# Guess the dialect for a given sample, and then use the results to parse
-# the data.
+# Guess the dialect for a given sample, and then use the results
+# to parse the data.
 sniffer = csv.Sniffer()
 for name, expected, sample in samples:
-    print 'Dialect: "%s"\n' % name
+    print('Dialect: "%s"\n' % name)
     dialect = sniffer.sniff(sample, delimiters=',\t')
     reader = csv.reader(StringIO(sample), dialect=dialect)
-    print reader.next()
-    print
-    
+    print(next(reader))
+    print()
