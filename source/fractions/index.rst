@@ -1,12 +1,11 @@
-===============================
- fractions -- Rational Numbers
-===============================
+================================
+ fractions --- Rational Numbers
+================================
 
 .. module:: fractions
     :synopsis: Implements a class for working with rational numbers.
 
 :Purpose: Implements a class for working with rational numbers.
-:Python Version: 2.6 and later
 
 The :class:`Fraction` class implements numerical operations for
 rational numbers based on the API defined by :class:`Rational` in
@@ -65,8 +64,8 @@ The string is parsed to find the numerator and denominator values.
 
 Strings can also use the more usual decimal or floating point notation
 of series of digits separated by a period. Any string that can be
-parsed by :func:`float` and that does not represent not-a-number
-(``NaN``) or infinite value is supported.
+parsed by :func:`float` and that does not represent "not a number"
+(``NaN``) or an infinite value is supported.
 
 .. include:: fractions_create_strings_floats.py
     :literal:
