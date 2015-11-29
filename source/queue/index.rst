@@ -135,7 +135,7 @@ The function :func:`download_enclosures` will run in the worker thread
 and process the downloads using :mod:`urllib`.
 
 .. literalinclude:: fetch_podcasts.py
-   :lines: 28-47
+   :lines: 28-48
 
 Once the threads' target function is defined, the worker threads can
 be started. When :func:`download_enclosures` processes the statement
@@ -144,7 +144,7 @@ to return.  That means it is safe to start the threads before there is
 anything in the queue.
 
 .. literalinclude:: fetch_podcasts.py
-   :lines: 50-58
+   :lines: 51-59
 
 The next step is to retrieve the feed contents using the
 ``feedparser`` module and enqueue the URLs of the enclosures. As soon
@@ -154,13 +154,13 @@ items until the feed is exhausted, and the worker threads will take
 turns dequeuing URLs to download them.
 
 .. literalinclude:: fetch_podcasts.py
-   :lines: 60-68
+   :lines: 61-69
 
 And the only thing left to do is wait for the queue to empty out
 again, using :func:`join`.
 
 .. literalinclude:: fetch_podcasts.py
-   :lines: 70-
+   :lines: 71-
 
 Running the sample script produces output similar to this.
 
@@ -170,26 +170,21 @@ Running the sample script produces output similar to this.
     
     worker-0: looking for the next enclosure
     worker-1: looking for the next enclosure
-    MainThread: queuing /episodes/download/35/turbogears-and-the-future-of-python-web-frameworks.mp3
-    MainThread: queuing /episodes/download/34/continuum-scientific-python-and-the-business-of-open-source.mp3
-    MainThread: queuing /episodes/download/33/openstack-cloud-computing-built-on-python.mp3
-    MainThread: queuing /episodes/download/32/pypy.js-pypy-python-in-your-browser.mp3
-    MainThread: queuing /episodes/download/31/machine-learning-with-python-and-scikit-learn.mp3
+    MainThread: queuing turbogears-and-the-future-of-python-web-frameworks.mp3
+    MainThread: queuing continuum-scientific-python-and-the-business-of-open-source.mp3
+    MainThread: queuing openstack-cloud-computing-built-on-python.mp3
+    MainThread: queuing pypy.js-pypy-python-in-your-browser.mp3
+    MainThread: queuing machine-learning-with-python-and-scikit-learn.mp3
     MainThread: *** main thread waiting
-    worker-0: downloading: /episodes/download/35/turbogears-and-the-future-of-python-web-frameworks.mp3
-    worker-1: downloading: /episodes/download/34/continuum-scientific-python-and-the-business-of-open-source.mp3
-    worker-0: writing to turbogears-and-the-future-of-python-web-frameworks.mp3
+    worker-0: downloading turbogears-and-the-future-of-python-web-frameworks.mp3
+    worker-1: downloading continuum-scientific-python-and-the-business-of-open-source.mp3
     worker-0: looking for the next enclosure
-    worker-0: downloading: /episodes/download/33/openstack-cloud-computing-built-on-python.mp3
-    worker-1: writing to continuum-scientific-python-and-the-business-of-open-source.mp3
+    worker-0: downloading openstack-cloud-computing-built-on-python.mp3
     worker-1: looking for the next enclosure
-    worker-1: downloading: /episodes/download/32/pypy.js-pypy-python-in-your-browser.mp3
-    worker-0: writing to openstack-cloud-computing-built-on-python.mp3
+    worker-1: downloading pypy.js-pypy-python-in-your-browser.mp3
     worker-0: looking for the next enclosure
-    worker-0: downloading: /episodes/download/31/machine-learning-with-python-and-scikit-learn.mp3
-    worker-1: writing to pypy.js-pypy-python-in-your-browser.mp3
+    worker-0: downloading machine-learning-with-python-and-scikit-learn.mp3
     worker-1: looking for the next enclosure
-    worker-0: writing to machine-learning-with-python-and-scikit-learn.mp3
     worker-0: looking for the next enclosure
     MainThread: *** done
 

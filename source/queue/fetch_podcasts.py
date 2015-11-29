@@ -36,13 +36,13 @@ def download_enclosures(q):
         message('looking for the next enclosure')
         url = q.get()
         parsed_url = urlparse(url)
-        message('downloading: %s' % parsed_url.path)
+        filename = url.rpartition('/')[-1]
+        message('downloading %s' % filename)
         response = urllib.request.urlopen(url)
         data = response.read()
         # Save the downloaded file to the current directory
-        outfile_name = url.rpartition('/')[-1]
-        message('writing to %s' % outfile_name)
-        with open(outfile_name, 'wb') as outfile:
+        message('writing to %s' % filename)
+        with open(filename, 'wb') as outfile:
             outfile.write(data)
         q.task_done()
 
@@ -64,7 +64,8 @@ for url in feed_urls:
     for entry in response['entries'][:5]:
         for enclosure in entry.get('enclosures', []):
             parsed_url = urlparse(enclosure['url'])
-            message('queuing %s' % parsed_url.path)
+            message('queuing %s' %
+                    parsed_url.path.rpartition('/')[-1])
             enclosure_queue.put(enclosure['url'])
 
 # Now wait for the queue to be empty, indicating that we have
