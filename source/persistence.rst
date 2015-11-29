@@ -64,6 +64,11 @@ formats produced by spreadsheets or database applications, making it
 useful for bulk loading data, or converting the data from one format
 to another.
 
+.. toctree::
+   :maxdepth: 1
+
+   csv/index
+
 ..
    .. toctree::
        :maxdepth: 1
