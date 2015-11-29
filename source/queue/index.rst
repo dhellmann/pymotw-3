@@ -28,7 +28,7 @@ The :class:`Queue` class implements a basic first-in, first-out
 container.  Elements are added to one "end" of the sequence using
 :func:`put`, and removed from the other end using :func:`get`.
 
-.. include:: Queue_fifo.py
+.. include:: queue_fifo.py
    :literal:
    :start-after: #end_pymotw_header
 
@@ -36,14 +36,14 @@ This example uses a single thread to illustrate that elements are
 removed from the queue in the same order they are inserted.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'Queue_fifo.py'))
+.. cog.out(run_script(cog.inFile, 'queue_fifo.py'))
 .. }}}
 
 ::
 
-	$ python Queue_fifo.py
+	$ python3 queue_fifo.py
 	
-	0 1 2 3 4
+	0 1 2 3 4 
 
 .. {{{end}}}
 
@@ -54,7 +54,7 @@ In contrast to the standard FIFO implementation of :class:`Queue`, the
 :class:`LifoQueue` uses last-in, first-out ordering (normally associated
 with a stack data structure).
 
-.. include:: Queue_lifo.py
+.. include:: queue_lifo.py
    :literal:
    :start-after: #end_pymotw_header
 
@@ -62,14 +62,14 @@ The item most recently :class:`put` into the queue is removed by
 :class:`get`.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'Queue_lifo.py'))
+.. cog.out(run_script(cog.inFile, 'queue_lifo.py'))
 .. }}}
 
 ::
 
-	$ python Queue_lifo.py
+	$ python3 queue_lifo.py
 	
-	4 3 2 1 0
+	4 3 2 1 0 
 
 .. {{{end}}}
 
@@ -85,7 +85,7 @@ the payroll department may take precedence over a code listing printed
 by a developer.  :class:`PriorityQueue` uses the sort order of the
 contents of the queue to decide which to retrieve.
 
-.. include:: Queue_priority.py
+.. include:: queue_priority.py
    :literal:
    :start-after: #end_pymotw_header
 
@@ -96,12 +96,12 @@ the queue while the consumer threads are running depends on thread
 context switching.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'Queue_priority.py'))
+.. cog.out(run_script(cog.inFile, 'queue_priority.py'))
 .. }}}
 
 ::
 
-	$ python Queue_priority.py
+	$ python3 queue_priority.py
 	
 	New job: Mid-level job
 	New job: Low-level job

@@ -7,14 +7,13 @@
 """
 #end_pymotw_header
 
-import Queue
+import queue
 
-q = Queue.Queue()
+q = queue.Queue()
 
 for i in range(5):
     q.put(i)
 
 while not q.empty():
-    print q.get(),
-print
-
+    print(q.get(), end=' ')
+print()
