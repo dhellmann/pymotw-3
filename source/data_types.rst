@@ -73,10 +73,10 @@ container type using one of the abstract base classes defined in
     collections/index
     array/index
     bisect/index
+    queue/index
 
 ..
     heapq/index
-    Queue/index
     struct/index
     weakref/index
     copy/index
