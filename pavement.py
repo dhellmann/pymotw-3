@@ -181,7 +181,13 @@ def _flake8(infile):
 @task
 def flake8(options):
     """Run flake8 against all of the input files"""
-    _flake8(options.sphinx.sourcedir)
+    options.order('flake8', 'sphinx', add_rest=True)
+    module = _get_module(options)
+    if module:
+        module_dir = os.path.join(options.sphinx.sourcedir, module)
+        _flake8(module_dir)
+    else:
+        _flake8(options.sphinx.sourcedir)
     _flake8('pavement.py')
 
 

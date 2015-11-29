@@ -7,3 +7,4 @@ source/glob/dir
 /source/bz2/lines.bz2
 /source/cgitb/LOGS
 /source/difflib/output.diff
+.tox
