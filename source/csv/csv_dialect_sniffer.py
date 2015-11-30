@@ -35,8 +35,9 @@ for name in sorted(csv.list_dialects()):
 # to parse the data.
 sniffer = csv.Sniffer()
 for name, expected, sample in samples:
-    print('Dialect: "%s"\n' % name)
+    print('Dialect: "%s"' % name)
+    print('In: %s' % (sample.rstrip(),))
     dialect = sniffer.sniff(sample, delimiters=',\t')
     reader = csv.reader(StringIO(sample), dialect=dialect)
-    print(next(reader))
-    print()
+    print('Parsed:\n  %s\n' %
+          '\n  '.join(repr(r) for r in next(reader)))

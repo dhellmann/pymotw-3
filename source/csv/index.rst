@@ -17,7 +17,7 @@ Reading
 
 Use :func:`reader` to create a an object for reading data from a CSV
 file.  The reader can be used as an iterator to process the rows of
-the file in order. For example:
+the file in order. For example
 
 .. include:: csv_reader.py
     :literal:
@@ -84,7 +84,7 @@ to create an object for writing, then iterate over the rows, using
     :start-after: #end_pymotw_header
 
 The output does not look exactly like the exported data used in the reader
-example:
+example because it lacks quotes around some of the values.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'csv_writer.py testout.csv'))
@@ -173,10 +173,11 @@ complete list of registered dialects can be retrieved with
    :literal:
    :start-after: #end_pymotw_header
 
-The standard library includes two dialects: ``excel``, and
-``excel-tabs``. The ``excel`` dialect is for working with data in the
-default export format for Microsoft Excel, and also works with
-LibreOffice_.
+The standard library includes three dialects: ``excel``,
+``excel-tabs``, and ``unix``. The ``excel`` dialect is for working
+with data in the default export format for Microsoft Excel, and also
+works with LibreOffice_. The ``unix`` dialect quotes all fields with
+double-quotes and uses ``\n`` as the record separator.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'csv_list_dialects.py'))
@@ -333,25 +334,45 @@ demonstrated by the "escaped" dialect in the example.
 	$ python3 csv_dialect_sniffer.py
 	
 	Dialect: "escaped"
-	
-	['col1', '1', '10/01/2010', 'Special chars \\" \' \\', ' to pars
-	e']
+	In: col1,1,10/01/2010,Special chars \" ' \, to parse
+	Parsed:
+	  'col1'
+	  '1'
+	  '10/01/2010'
+	  'Special chars \\" \' \\'
+	  ' to parse'
 	
 	Dialect: "excel"
-	
-	['col1', '1', '10/01/2010', 'Special chars " \' , to parse']
+	In: col1,1,10/01/2010,"Special chars "" ' , to parse"
+	Parsed:
+	  'col1'
+	  '1'
+	  '10/01/2010'
+	  'Special chars " \' , to parse'
 	
 	Dialect: "excel-tab"
-	
-	['col1', '1', '10/01/2010', 'Special chars " \' \t to parse']
+	In: col1	1	10/01/2010	"Special chars "" ' 	 to parse"
+	Parsed:
+	  'col1'
+	  '1'
+	  '10/01/2010'
+	  'Special chars " \' \t to parse'
 	
 	Dialect: "singlequote"
-	
-	['col1', '1', '10/01/2010', 'Special chars " \' , to parse']
+	In: 'col1','1','10/01/2010','Special chars " '' , to parse'
+	Parsed:
+	  'col1'
+	  '1'
+	  '10/01/2010'
+	  'Special chars " \' , to parse'
 	
 	Dialect: "unix"
-	
-	['col1', '1', '10/01/2010', 'Special chars " \' , to parse']
+	In: "col1","1","10/01/2010","Special chars "" ' , to parse"
+	Parsed:
+	  'col1'
+	  '1'
+	  '10/01/2010'
+	  'Special chars " \' , to parse'
 	
 
 .. {{{end}}}
@@ -397,9 +418,8 @@ knows how to order the columns in the output.
     :literal:
     :start-after: #end_pymotw_header
 
-The field names are not written to the file automatically, so they
-need to be written explicitly before any other data using the
-:func:`writeheader` method.
+The field names are not written to the file automatically, but they
+can be written explicitly using the :func:`writeheader` method.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'csv_dictwriter.py testout.csv'))
