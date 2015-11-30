@@ -49,7 +49,6 @@ As it is read, each row of the input data is parsed and converted to a
 
 .. {{{end}}}
 
-
 The parser handles line breaks embedded within strings in a row, which
 is why a "row" is not always the same as a "line" of input from the
 file.
@@ -399,7 +398,8 @@ knows how to order the columns in the output.
     :start-after: #end_pymotw_header
 
 The field names are not written to the file automatically, so they
-need to be written explicitly before any other data.
+need to be written explicitly before any other data using the
+:func:`writeheader` method.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'csv_dictwriter.py testout.csv'))
