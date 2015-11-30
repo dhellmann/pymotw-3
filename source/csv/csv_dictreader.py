@@ -3,7 +3,6 @@
 """Dictionary reader.
 """
 #end_pymotw_header
-
 import csv
 import sys
 

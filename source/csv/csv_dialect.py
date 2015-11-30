@@ -6,7 +6,6 @@
 """
 """
 #end_pymotw_header
-
 import csv
 
 csv.register_dialect('pipes', delimiter='|')

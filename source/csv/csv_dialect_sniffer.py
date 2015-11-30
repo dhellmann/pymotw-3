@@ -6,7 +6,6 @@
 """
 """
 #end_pymotw_header
-
 import csv
 from io import StringIO
 import textwrap

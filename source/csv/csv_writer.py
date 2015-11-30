@@ -3,7 +3,6 @@
 """Example of writing a comma separated value file.
 """
 #end_pymotw_header
-
 import csv
 import sys
 

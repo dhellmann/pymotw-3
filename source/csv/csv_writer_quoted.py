@@ -3,7 +3,6 @@
 """Writing a comma separated value file using more quoting.
 """
 #end_pymotw_header
-
 import csv
 import sys
 
