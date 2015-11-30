@@ -6,11 +6,12 @@
 import csv
 import sys
 
-fieldnames = ('Title 1', 'Title 2', 'Title 3')
+fieldnames = ('Title 1', 'Title 2', 'Title 3', 'Title 4')
 headers = {
     n: n
     for n in fieldnames
 }
+unicode_chars = 'å∫ç'
 
 with open(sys.argv[1], 'wt') as f:
 
@@ -22,6 +23,7 @@ with open(sys.argv[1], 'wt') as f:
             'Title 1': i + 1,
             'Title 2': chr(ord('a') + i),
             'Title 3': '08/%02d/07' % (i + 1),
+            'Title 4': unicode_chars[i],
         })
 
 print(open(sys.argv[1], 'rt').read())

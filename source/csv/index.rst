@@ -42,10 +42,10 @@ As it is read, each row of the input data is parsed and converted to a
 
 	$ python3 csv_reader.py testdata.csv
 	
-	['Title 1', 'Title 2', 'Title 3']
-	['1', 'a', '08/18/07']
-	['2', 'b', '08/19/07']
-	['3', 'c', '08/20/07']
+	['Title 1', 'Title 2', 'Title 3', 'Title 4']
+	['1', 'a', '08/18/07', 'å']
+	['2', 'b', '08/19/07', '∫']
+	['3', 'c', '08/20/07', 'ç']
 
 .. {{{end}}}
 
@@ -94,10 +94,10 @@ example because it lacks quotes around some of the values.
 
 	$ python3 csv_writer.py testout.csv
 	
-	Title 1,Title 2,Title 3
-	1,a,08/01/07
-	2,b,08/02/07
-	3,c,08/03/07
+	Title 1,Title 2,Title 3,Title 4
+	1,a,08/01/07,å
+	2,b,08/02/07,∫
+	3,c,08/03/07,ç
 	
 
 .. {{{end}}}
@@ -127,10 +127,10 @@ that contain values that are not numbers.
 
 	$ python3 csv_writer_quoted.py testout_quoted.csv
 	
-	"Title 1","Title 2","Title 3"
-	1,"a","08/01/07"
-	2,"b","08/02/07"
-	3,"c","08/03/07"
+	"Title 1","Title 2","Title 3","Title 4"
+	1,"a","08/01/07","å"
+	2,"b","08/02/07","∫"
+	3,"c","08/03/07","ç"
 	
 
 .. {{{end}}}
@@ -405,9 +405,12 @@ returned as dictionaries instead of lists or tuples.
 
 	$ python3 csv_dictreader.py testdata.csv
 	
-	{'Title 2': 'a', 'Title 3': '08/18/07', 'Title 1': '1'}
-	{'Title 2': 'b', 'Title 3': '08/19/07', 'Title 1': '2'}
-	{'Title 2': 'c', 'Title 3': '08/20/07', 'Title 1': '3'}
+	{'Title 2': 'a', 'Title 3': '08/18/07', 'Title 4': 'å', 'Title 1
+	': '1'}
+	{'Title 2': 'b', 'Title 3': '08/19/07', 'Title 4': '∫', 'Title 1
+	': '2'}
+	{'Title 2': 'c', 'Title 3': '08/20/07', 'Title 4': 'ç', 'Title 1
+	': '3'}
 
 .. {{{end}}}
 
@@ -429,10 +432,10 @@ can be written explicitly using the :func:`writeheader` method.
 
 	$ python3 csv_dictwriter.py testout.csv
 	
-	Title 1,Title 2,Title 3
-	1,a,08/01/07
-	2,b,08/02/07
-	3,c,08/03/07
+	Title 1,Title 2,Title 3,Title 4
+	1,a,08/01/07,å
+	2,b,08/02/07,∫
+	3,c,08/03/07,ç
 	
 
 .. {{{end}}}
