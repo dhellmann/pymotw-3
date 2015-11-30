@@ -183,7 +183,7 @@ complete list of registered dialects can be retrieved with
 The standard library includes two dialects: ``excel``, and
 ``excel-tabs``. The ``excel`` dialect is for working with data in the
 default export format for Microsoft Excel, and also works with
-OpenOffice or NeoOffice.
+LibreOffice_.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'csv_list_dialects.py'))
@@ -431,4 +431,4 @@ need to be written explicitly before any other data.
 
     * :ref:`Porting notes for csv <porting-csv>`
 
-.. _NeoOffice: http://www.neooffice.org/
+.. _LibreOffice: http://www.libreoffice.org
