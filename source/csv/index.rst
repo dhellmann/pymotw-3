@@ -12,12 +12,6 @@ spreadsheets and databases into text files formatted with fields and
 records, commonly referred to as *comma-separated value* (CSV) format
 because commas are often used to separate the fields in a record.
 
-.. note::
-
-  The Python 2.5 version of :mod:`csv` does not support Unicode
-  data. There are also "issues with ASCII NUL characters." Using UTF-8
-  or printable ASCII is recommended.
-
 Reading
 =======
 
