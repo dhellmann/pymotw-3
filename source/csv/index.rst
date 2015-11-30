@@ -254,8 +254,8 @@ to the character used to escape a token.
    :literal:
    :start-after: #end_pymotw_header
 
-This program shows how the same data appears in several different
-dialects.
+This program shows how the same data appears when formatted using
+several different dialects.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'csv_dialect_variations.py'))

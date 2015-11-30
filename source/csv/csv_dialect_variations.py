@@ -26,18 +26,28 @@ quoting_modes = {
     if n.startswith('QUOTE_')
 }
 
+TEMPLATE = '''\
+Dialect: "{name}"
+
+  delimiter   = {dl!r:<6}    skipinitialspace = {si!r}
+  doublequote = {dq!r:<6}    quoting          = {qu}
+  quotechar   = {qc!r:<6}    lineterminator   = {lt!r}
+  escapechar  = {ec!r:<6}
+'''
+
 for name in sorted(csv.list_dialects()):
-    print('Dialect: "%s"\n' % name)
     dialect = csv.get_dialect(name)
 
-    print('  delimiter   = %-6r    skipinitialspace = %r' %
-          (dialect.delimiter, dialect.skipinitialspace))
-    print('  doublequote = %-6r    quoting          = %s' %
-          (dialect.doublequote, quoting_modes[dialect.quoting]))
-    print('  quotechar   = %-6r    lineterminator   = %r' %
-          (dialect.quotechar, dialect.lineterminator))
-    print('  escapechar  = %-6r' % dialect.escapechar)
-    print()
+    print(TEMPLATE.format(
+        name=name,
+        dl=dialect.delimiter,
+        si=dialect.skipinitialspace,
+        dq=dialect.doublequote,
+        qu=quoting_modes[dialect.quoting],
+        qc=dialect.quotechar,
+        lt=dialect.lineterminator,
+        ec=dialect.escapechar,
+    ))
 
     writer = csv.writer(sys.stdout, dialect=dialect)
     writer.writerow(
