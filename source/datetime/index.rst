@@ -153,7 +153,7 @@ This example illustrates the different value types used by
 	
 	o               : 733114
 	fromordinal(o)  : 2008-03-13
-	t               : 1449421038.962197
+	t               : 1449422711.300084
 	fromtimestamp(t): 2015-12-06
 
 .. {{{end}}}
@@ -351,16 +351,16 @@ attributes of both a :class:`date` and a :class:`time` object.
 
 	$ python3 datetime_datetime.py
 	
-	Now    : 2015-12-06 11:57:19.314194
-	Today  : 2015-12-06 11:57:19.314251
-	UTC Now: 2015-12-06 16:57:19.314272
+	Now    : 2015-12-06 12:25:11.651175
+	Today  : 2015-12-06 12:25:11.651215
+	UTC Now: 2015-12-06 17:25:11.651228
 	           year: 2015
 	          month: 12
 	            day: 6
-	           hour: 11
-	         minute: 57
-	         second: 19
-	    microsecond: 314619
+	           hour: 12
+	         minute: 25
+	         second: 11
+	    microsecond: 651484
 
 .. {{{end}}}
 
@@ -411,9 +411,9 @@ Use :func:`datetime.strptime()` to convert formatted strings to
 
 	$ python3 datetime_datetime_strptime.py
 	
-	ISO     : 2015-12-06 11:57:19.410573
-	strftime: Sun Dec 06 11:57:19 2015
-	strptime: Sun Dec 06 11:57:19 2015
+	ISO     : 2015-12-06 12:25:11.749233
+	strftime: Sun Dec 06 12:25:11 2015
+	strptime: Sun Dec 06 12:25:11 2015
 
 .. {{{end}}}
 
@@ -441,8 +441,8 @@ PM January 13, 2016 in the US/Eastern time zone.
 ..   ('%M', 'Minutes'),
 ..   ('%S', 'Seconds'),
 ..   ('%f', 'Microseconds'),
-..   ('%z', 'UTC offset for timezone-aware objects'),
-..   ('%Z', 'Timezone name'),
+..   ('%z', 'UTC offset for time zone-aware objects'),
+..   ('%Z', 'Time Zone name'),
 ..   ('%j', 'Day of the year'),
 ..   ('%W', 'Week of the year'),
 ..   ('%c', 'Date and time representation for the current locale'),
@@ -479,8 +479,8 @@ PM January 13, 2016 in the US/Eastern time zone.
    ``%M``, Minutes, ``'00'``
    ``%S``, Seconds, ``'00'``
    ``%f``, Microseconds, ``'000000'``
-   ``%z``, UTC offset for timezone-aware objects, ``'-0500'``
-   ``%Z``, Timezone name, ``'EST'``
+   ``%z``, UTC offset for time zone-aware objects, ``'-0500'``
+   ``%Z``, Time Zone name, ``'EST'``
    ``%j``, Day of the year, ``'013'``
    ``%W``, Week of the year, ``'02'``
    ``%c``, Date and time representation for the current locale, ``'Wed Jan 13 17:00:00 2016'``
@@ -523,9 +523,9 @@ hours on either side of UTC are shown, and the ``utc`` instance from
 
 	$ python3 datetime_timezone.py
 	
-	UTC-5  : 2015-12-06 12:23:31.749796-05:00
-	UTC    : 2015-12-06 17:23:31.749796+00:00
-	UTC+5  : 2015-12-06 22:23:31.749796+05:00
+	UTC-5  : 2015-12-06 12:25:11.860964-05:00
+	UTC    : 2015-12-06 17:25:11.860964+00:00
+	UTC+5  : 2015-12-06 22:25:11.860964+05:00
 
 .. {{{end}}}
 

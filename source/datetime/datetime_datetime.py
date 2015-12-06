@@ -16,7 +16,8 @@ print
 
 FIELDS = [
     'year', 'month', 'day',
-    'hour', 'minute', 'second', 'microsecond',
+    'hour', 'minute', 'second',
+    'microsecond',
 ]
 
 d = datetime.datetime.now()
