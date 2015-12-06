@@ -7,20 +7,26 @@
 """
 #end_pymotw_header
 
+import argparse
 import hashlib
 import sys
 
+from hashlib_data import lorem
 
-try:
-    hash_name = sys.argv[1]
-except IndexError:
-    print('Specify the hash name as the first argument.')
-else:
-    try:
-        data = sys.argv[2]
-    except IndexError:
-        from hashlib_data import lorem as data
 
-    h = hashlib.new(hash_name)
-    h.update(data.encode('utf-8'))
-    print(h.hexdigest())
+parser = argparse.ArgumentParser('hashlib demo')
+parser.add_argument(
+    'hash_name',
+    help='the name of the hash algorithm to use',
+)
+parser.add_argument(
+    'data',
+    nargs='?',
+    default=lorem,
+    help='the input data to hash, defaults to lorem ipsum',
+)
+args = parser.parse_args()
+
+h = hashlib.new(args.hash_name)
+h.update(args.data.encode('utf-8'))
+print(h.hexdigest())
