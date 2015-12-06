@@ -69,9 +69,10 @@ All of the examples in this section use the same sample data:
 MD5 Example
 ===========
 
-To calculate the MD5 hash, or *digest*, for a block of data
-(here an ASCII string), first create the hash object, then add the
-data and call :func:`digest` or :func:`hexdigest`.
+To calculate the MD5 hash, or *digest*, for a block of data (here a
+unicode string converted to a byte string), first create the hash
+object, then add the data and call :func:`digest` or
+:func:`hexdigest`.
 
 .. include:: hashlib_md5.py
     :literal:
