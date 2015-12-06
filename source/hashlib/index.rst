@@ -1,6 +1,6 @@
-==================================
- hashlib -- Cryptographic Hashing
-==================================
+===================================
+ hashlib --- Cryptographic Hashing
+===================================
 
 .. module:: hashlib
     :synopsis: Cryptographic hashes and message digests
