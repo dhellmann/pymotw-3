@@ -5,25 +5,26 @@
 #
 """Demonstrate the ISO calendar features of date().
 """
-
-__version__ = "$Id$"
 #end_pymotw_header
 
 import datetime
 import locale
 
-day_names = [ locale.nl_langinfo(x)
-              for x in (locale.DAY_1, locale.DAY_2, locale.DAY_3, locale.DAY_4, 
-              locale.DAY_5, locale.DAY_6, locale.DAY_7, locale.DAY_1) ]
-                  
-print 'US days :', day_names[:-1]
-print 'ISO days:', day_names[1:]
+day_names = [
+    locale.nl_langinfo(x)
+    for x in (locale.DAY_1, locale.DAY_2, locale.DAY_3,
+              locale.DAY_4, locale.DAY_5, locale.DAY_6,
+              locale.DAY_7, locale.DAY_1)
+]
+
+print('US days :', day_names[:-1])
+print('ISO days:', day_names[1:])
 
 d = datetime.date(2007, 12, 30)
 for i in range(7):
     delta = datetime.timedelta(days=i)
     date = d + delta
     print
-    print day_names[date.weekday()], date
-    print '\tISO Weekday:', day_names[date.isoweekday()]
-    print '\tISO Calendar:', date.isocalendar()
+    print(day_names[date.weekday()], date)
+    print('\tISO Weekday:', day_names[date.isoweekday()])
+    print('\tISO Calendar:', date.isocalendar())

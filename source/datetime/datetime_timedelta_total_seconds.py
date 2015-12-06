@@ -5,8 +5,6 @@
 #
 """
 """
-
-__version__ = "$Id$"
 #end_pymotw_header
 
 import datetime
@@ -19,4 +17,4 @@ for delta in [datetime.timedelta(microseconds=1),
               datetime.timedelta(days=1),
               datetime.timedelta(weeks=1),
               ]:
-    print '%15s = %s seconds' % (delta, delta.total_seconds())
+    print('%15s = %s seconds' % (delta, delta.total_seconds()))
