@@ -5,8 +5,6 @@
 #
 """Simple SHA1 generation.
 """
-
-__version__ = "$Id$"
 #end_pymotw_header
 
 import hashlib
@@ -14,5 +12,5 @@ import hashlib
 from hashlib_data import lorem
 
 h = hashlib.sha1()
-h.update(lorem)
-print h.hexdigest()
+h.update(lorem.encode('utf-8'))
+print(h.hexdigest())

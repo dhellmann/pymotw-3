@@ -37,7 +37,7 @@ All of the examples in this section use the same sample data:
 MD5 Example
 ===========
 
-To calculate the MD5 hash, or :term:`digest`, for a block of data
+To calculate the MD5 hash, or **digest**, for a block of data
 (here an ASCII string), first create the hash object, then add the
 data and call :func:`digest` or :func:`hexdigest`.
 
@@ -55,9 +55,9 @@ clearly. If a binary digest value is acceptable, use :func:`digest()`.
 
 ::
 
-	$ python hashlib_md5.py
-
-	1426f365574592350315090e295ac273
+	$ python3 hashlib_md5.py
+	
+	3f2fd2c9e25d60fb0fa5d593b802b7a8
 
 .. {{{end}}}
 
@@ -79,9 +79,9 @@ changed from MD5 to SHA1.
 
 ::
 
-	$ python hashlib_sha1.py
-
-	8173396ba8a560b89a3f3e2fcc024b044bc83d0a
+	$ python3 hashlib_sha1.py
+	
+	ea360b288b3dd178fe2625f55b2959bf1dba6eef
 
 .. {{{end}}}
 
@@ -110,22 +110,22 @@ When run with a variety of arguments:
 
 ::
 
-	$ python hashlib_new.py sha1
+	$ python3 hashlib_new.py sha1
+	
+	ea360b288b3dd178fe2625f55b2959bf1dba6eef
 
-	8173396ba8a560b89a3f3e2fcc024b044bc83d0a
+	$ python3 hashlib_new.py sha256
+	
+	3c887cc71c67949df29568119cc646f46b9cd2c2b39d456065646bc2fc09ffd8
 
-	$ python hashlib_new.py sha256
+	$ python3 hashlib_new.py sha512
+	
+	a7e53384eb9bb4251a19571450465d51809e0b7046101b87c4faef96b9bc904cf7f90
+	035f444952dfd9f6084eeee2457433f3ade614712f42f80960b2fca43ff
 
-	dca37495608c68ec23bbb54ab9675bf0152db63e5a51ab1061dc9982b843e767
-
-	$ python hashlib_new.py sha512
-
-	0e3d4bc1cbc117382fa077b147a7ff6363f6cbc7508877460f978a566a0adb6dbb4c8
-	b89f56514da98eb94d7135e1b7ad7fc4a2d747c02af67fcd4e571bd54de
-
-	$ python hashlib_new.py md5
-
-	1426f365574592350315090e295ac273
+	$ python3 hashlib_new.py md5
+	
+	3f2fd2c9e25d60fb0fa5d593b802b7a8
 
 .. {{{end}}}
 
@@ -151,10 +151,10 @@ is read or otherwise produced.
 
 ::
 
-	$ python hashlib_update.py
-
-	All at once : 1426f365574592350315090e295ac273
-	Line by line: 1426f365574592350315090e295ac273
+	$ python3 hashlib_update.py
+	
+	All at once : 3f2fd2c9e25d60fb0fa5d593b802b7a8
+	Line by line: 3f2fd2c9e25d60fb0fa5d593b802b7a8
 	Same        : True
 
 .. {{{end}}}
