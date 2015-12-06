@@ -13,6 +13,9 @@ algorithm, use the appropriate constructor function or :func:`new` to
 create a hash object. From there, the objects use the same API, no
 matter what algorithm is being used.
 
+Hash Algorithms
+===============
+
 Since :mod:`hashlib` is "backed" by OpenSSL, all of the algorithms
 provided by that library are available, including:
 
@@ -22,6 +25,36 @@ provided by that library are available, including:
  * sha256
  * sha384
  * sha512
+
+Some algorithms are available on all platforms, and some depend on the
+underlying libraries. For lists of each, look at
+:data:`algorithms_guaranteed` and :data:`algorithms_available`
+respectively.
+
+.. include:: hashlib_algorithms.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'hashlib_algorithms.py'))
+.. }}}
+
+::
+
+	$ python3 hashlib_algorithms.py
+	
+	Guaranteed:
+	md5, sha1, sha224, sha256, sha384, sha512
+	
+	Available:
+	DSA, DSA-SHA, MD4, MD5, MDC2, RIPEMD160, SHA, SHA1, SHA224, SHA2
+	56, SHA384, SHA512, dsaEncryption, dsaWithSHA, ecdsa-with-SHA1, 
+	md4, md5, mdc2, ripemd160, sha, sha1, sha224, sha256, sha384, sh
+	a512
+
+.. {{{end}}}
+
+
 
 Sample Data
 ===========

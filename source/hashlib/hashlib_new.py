@@ -17,6 +17,7 @@ from hashlib_data import lorem
 parser = argparse.ArgumentParser('hashlib demo')
 parser.add_argument(
     'hash_name',
+    choices=hashlib.algorithms_available,
     help='the name of the hash algorithm to use',
 )
 parser.add_argument(
