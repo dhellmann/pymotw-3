@@ -6,11 +6,10 @@
     :synopsis: Cryptographic hashes and message digests
 
 :Purpose: Cryptographic hashes and message digests
-:Python Version: 2.5 and later
 
-The :mod:`hashlib` module deprecates the separate :mod:`md5` and
-:mod:`sha` modules and makes their API consistent. To work with a
-specific hash algorithm, use the appropriate constructor function to
+The :mod:`hashlib` module defines an API for accessing different
+cryptographic hashing algorithms. To work with a specific hash
+algorithm, use the appropriate constructor function or :func:`new` to
 create a hash object. From there, the objects use the same API, no
 matter what algorithm is being used.
 
@@ -37,7 +36,7 @@ All of the examples in this section use the same sample data:
 MD5 Example
 ===========
 
-To calculate the MD5 hash, or **digest**, for a block of data
+To calculate the MD5 hash, or *digest*, for a block of data
 (here an ASCII string), first create the hash object, then add the
 data and call :func:`digest` or :func:`hexdigest`.
 
@@ -161,16 +160,18 @@ is read or otherwise produced.
 
 .. seealso::
 
-    `hashlib <http://docs.python.org/library/hashlib.html>`_
-        The standard library documentation for this module.
+    * :pydoc:`hashlib`
 
-    `Voidspace: IronPython and hashlib <http://www.voidspace.org.uk/python/weblog/arch_d7_2006_10_07.shtml#e497>`_
-        A wrapper for ``hashlib`` that works with IronPython.
+    * :mod:`hmac` -- The ``hmac`` module.
 
-    :mod:`hmac`
-        The ``hmac`` module.
+    * OpenSSL_ -- An open source encryption toolkit.
 
-    OpenSSL_
-        An open source encryption toolkit.
+    * Cryptography_ module -- A Python package that provides
+      cryptographic recipes and primitives.
+
+    * `Voidspace: IronPython and hashlib
+      <http://www.voidspace.org.uk/python/weblog/arch_d7_2006_10_07.shtml#e497>`_
+      -- A wrapper for ``hashlib`` that works with IronPython.
 
 .. _OpenSSL: http://www.openssl.org/
+.. _Cryptography: https://pypi.python.org/pypi/cryptography
