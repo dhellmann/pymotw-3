@@ -25,7 +25,8 @@ representations.
    :maxdepth: 1
 
    calendar/index
+   datetime/index
 
 ..
    time/index
-   datetime/index
+   calendar/index

@@ -1,12 +1,12 @@
-==============================================
- datetime -- Date and Time Value Manipulation
-==============================================
+===============================================
+ datetime --- Date and Time Value Manipulation
+===============================================
 
 .. module:: datetime
     :synopsis: Date and time value manipulation.
 
-:Purpose: The datetime module includes functions and classes for doing date and time parsing, formatting, and arithmetic.
-:Python Version: 2.3 and later
+:Purpose: The datetime module includes functions and classes for doing
+          date and time parsing, formatting, and arithmetic.
 
 :mod:`datetime` contains functions and classes for working with dates
 and times, separately and together.
@@ -32,8 +32,8 @@ the default of ``0`` is unlikely to be correct.
 
 ::
 
-	$ python datetime_time.py
-
+	$ python3 datetime_time.py
+	
 	01:02:03
 	hour       : 1
 	minute     : 2
@@ -59,50 +59,34 @@ range of times in a single day.
 
 ::
 
-	$ python datetime_time_minmax.py
-
+	$ python3 datetime_time_minmax.py
+	
 	Earliest  : 00:00:00
 	Latest    : 23:59:59.999999
 	Resolution: 0:00:00.000001
 
 .. {{{end}}}
 
-The resolution for :class:`time` is limited to whole microseconds. 
+The resolution for :class:`time` is limited to whole microseconds.
 
 .. include:: datetime_time_resolution.py
     :literal:
     :start-after: #end_pymotw_header
 
-The way floating point values are treated depends on the version of
-Python.  Version 2.7 raises a :class:`TypeError`, while earlier
-versions produce a :class:`DeprecationWarning` and convert the
-floating point number to an integer.
+Floating point values for microseconds cause a :class:`TypeError`.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'datetime_time_resolution.py', interprepter='python2.7'))
-.. cog.out(run_script(cog.inFile, 'datetime_time_resolution.py', 
-..         interpreter='python2.6', include_prefix=False,
-..         break_lines_at=74, line_break_mode='wrap'))
+.. cog.out(run_script(cog.inFile, 'datetime_time_resolution.py'))
 .. }}}
 
 ::
 
-    $ python2.7 datetime_time_resolution.py
-
-    1.0 : 00:00:00.000001
-    0.0 : 00:00:00
-    0.1 : ERROR: integer argument expected, got float
-    0.6 : ERROR: integer argument expected, got float
-    
-    $ python2.6 datetime_time_resolution.py 
-
-    1.0 : 00:00:00.000001
-    0.0 : 00:00:00
-    datetime_time_resolution.py:16: DeprecationWarning: integer argument 
-    expected, got float
-      print '%02.1f :' % m, datetime.time(0, 0, 0, microsecond=m)
-    0.1 : 00:00:00
-    0.6 : 00:00:00
+	$ python3 datetime_time_resolution.py
+	
+	1.0 : 00:00:00.000001
+	0.0 : 00:00:00
+	ERROR: integer argument expected, got float
+	ERROR: integer argument expected, got float
 
 .. {{{end}}}
 
@@ -127,23 +111,23 @@ This example prints the current date in several formats:
 
 ::
 
-	$ python datetime_date.py
-
-	2010-11-27
-	ctime  : Sat Nov 27 00:00:00 2010
-	tuple  : tm_year  = 2010
-	         tm_mon   = 11
-	         tm_mday  = 27
+	$ python3 datetime_date.py
+	
+	2015-12-06
+	ctime  : Sun Dec  6 00:00:00 2015
+	tuple  : tm_year  = 2015
+	         tm_mon   = 12
+	         tm_mday  = 6
 	         tm_hour  = 0
 	         tm_min   = 0
 	         tm_sec   = 0
-	         tm_wday  = 5
-	         tm_yday  = 331
+	         tm_wday  = 6
+	         tm_yday  = 340
 	         tm_isdst = -1
-	ordinal: 734103
-	Year   : 2010
-	Mon    : 11
-	Day    : 27
+	ordinal: 735938
+	Year   : 2015
+	Mon    : 12
+	Day    : 6
 
 .. {{{end}}}
 
@@ -165,12 +149,12 @@ This example illustrates the different value types used by
 
 ::
 
-	$ python datetime_date_fromordinal.py
-
+	$ python3 datetime_date_fromordinal.py
+	
 	o               : 733114
 	fromordinal(o)  : 2008-03-13
-	t               : 1290874810.14
-	fromtimestamp(t): 2010-11-27
+	t               : 1449421038.962197
+	fromtimestamp(t): 2015-12-06
 
 .. {{{end}}}
 
@@ -189,8 +173,8 @@ The resolution for dates is whole days.
 
 ::
 
-	$ python datetime_date_minmax.py
-
+	$ python3 datetime_date_minmax.py
+	
 	Earliest  : 0001-01-01
 	Latest    : 9999-12-31
 	Resolution: 1 day, 0:00:00
@@ -212,8 +196,8 @@ This example changes the year, leaving the day and month unmodified.
 
 ::
 
-	$ python datetime_date_replace.py
-
+	$ python3 datetime_date_replace.py
+	
 	d1: Sat Mar 29 00:00:00 2008
 	d2: Sun Mar 29 00:00:00 2009
 
@@ -234,7 +218,7 @@ stored in days, seconds, and microseconds.
     :start-after: #end_pymotw_header
 
 Intermediate level values passed to the constructor are converted into
-days, seconds, and microseconds.  
+days, seconds, and microseconds.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'datetime_timedelta.py'))
@@ -242,8 +226,8 @@ days, seconds, and microseconds.
 
 ::
 
-	$ python datetime_timedelta.py
-
+	$ python3 datetime_timedelta.py
+	
 	microseconds: 0:00:00.000001
 	milliseconds: 0:00:00.001000
 	seconds     : 0:00:01
@@ -270,8 +254,8 @@ durations.
 
 ::
 
-	$ python datetime_timedelta_total_seconds.py
-
+	$ python3 datetime_timedelta_total_seconds.py
+	
 	 0:00:00.000001 = 1e-06 seconds
 	 0:00:00.001000 = 0.001 seconds
 	        0:00:01 = 1.0 seconds
@@ -285,7 +269,7 @@ durations.
 Date Arithmetic
 ===============
 
-Date math uses the standard arithmetic operators. 
+Date math uses the standard arithmetic operators.
 
 .. include:: datetime_date_math.py
     :literal:
@@ -301,12 +285,12 @@ produce timedeltas (including a negative delta value).
 
 ::
 
-	$ python datetime_date_math.py
-
-	Today    : 2010-11-27
+	$ python3 datetime_date_math.py
+	
+	Today    : 2015-12-06
 	One day  : 1 day, 0:00:00
-	Yesterday: 2010-11-26
-	Tomorrow : 2010-11-28
+	Yesterday: 2015-12-05
+	Tomorrow : 2015-12-07
 	
 	tomorrow - yesterday: 2 days, 0:00:00
 	yesterday - tomorrow: -2 days, 0:00:00
@@ -331,16 +315,15 @@ All of the comparison operators are supported.
 
 ::
 
-	$ python datetime_comparing.py
-
+	$ python3 datetime_comparing.py
+	
 	Times:
 	  t1: 12:55:00
 	  t2: 13:05:00
 	  t1 < t2: True
-	
 	Dates:
-	  d1: 2010-11-27
-	  d2: 2010-11-28
+	  d1: 2015-12-06
+	  d2: 2015-12-07
 	  d1 > d2: False
 
 .. {{{end}}}
@@ -366,19 +349,18 @@ attributes of both a :class:`date` and a :class:`time` object.
 
 ::
 
-	$ python datetime_datetime.py
-
-	Now    : 2010-11-27 11:20:10.479880
-	Today  : 2010-11-27 11:20:10.481494
-	UTC Now: 2010-11-27 16:20:10.481521
+	$ python3 datetime_datetime.py
 	
-	           year: 2010
-	          month: 11
-	            day: 27
+	Now    : 2015-12-06 11:57:19.314194
+	Today  : 2015-12-06 11:57:19.314251
+	UTC Now: 2015-12-06 16:57:19.314272
+	           year: 2015
+	          month: 12
+	            day: 6
 	           hour: 11
-	         minute: 20
-	         second: 10
-	    microsecond: 481752
+	         minute: 57
+	         second: 19
+	    microsecond: 314619
 
 .. {{{end}}}
 
@@ -399,11 +381,11 @@ class methods for creating new instances. It also includes
 
 ::
 
-	$ python datetime_datetime_combine.py
-
+	$ python3 datetime_datetime_combine.py
+	
 	t : 01:02:03
-	d : 2010-11-27
-	dt: 2010-11-27 01:02:03
+	d : 2015-12-06
+	dt: 2015-12-06 01:02:03
 
 .. {{{end}}}
 
@@ -427,11 +409,14 @@ Use :func:`datetime.strptime()` to convert formatted strings to
 
 ::
 
-	$ python datetime_datetime_strptime.py
+	$ python3 datetime_datetime_strptime.py
+	
+	ISO     : 2015-12-06 11:57:19.410573
+	strftime: Sun Dec 06 11:57:19 2015
+	strptime: Sun Dec 06 11:57:19 2015
 
-	ISO     : 2010-11-27 11:20:10.571582
-	strftime: Sat Nov 27 11:20:10 2010
-	strptime: Sat Nov 27 11:20:10 2010
+.. {{{end}}}
+
 
 .. {{{end}}}
 
