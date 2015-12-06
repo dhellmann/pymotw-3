@@ -417,8 +417,80 @@ Use :func:`datetime.strptime()` to convert formatted strings to
 
 .. {{{end}}}
 
+The following table demonstrates all of the formatting codes for 5:00
+PM January 13, 2016 in the US/Eastern timezone.
+
+.. {{{cog
+.. import datetime
+.. import pytz
+.. tz = pytz.timezone('US/Eastern')
+.. d = tz.localize(datetime.datetime(2016, 1, 13, 17, 0, 0))
+.. symbols = [
+..   ('%a', 'Abbreviated weekday name'),
+..   ('%A', 'Full weekday name'),
+..   ('%w', 'Weekday number -- 0 (Sunday) through 6 (Saturday)'),
+..   ('%d', 'Day of the month (zero padded'),
+..   ('%b', 'Abbreviated month name'),
+..   ('%B', 'Full month name'),
+..   ('%m', 'Month of the year'),
+..   ('%y', 'Year without century'),
+..   ('%Y', 'Year with century'),
+..   ('%H', 'Hour from 24-hour clock'),
+..   ('%I', 'Hour from 12-hour clock'),
+..   ('%p', 'AM/PM'),
+..   ('%M', 'Minutes'),
+..   ('%S', 'Seconds'),
+..   ('%f', 'Microseconds'),
+..   ('%z', 'UTC offset for timezone-aware objects'),
+..   ('%Z', 'Timezone name'),
+..   ('%j', 'Day of the year'),
+..   ('%W', 'Week of the year'),
+..   ('%c', 'Date and time representation for the current locale'),
+..   ('%x', 'Date representation for the current locale'),
+..   ('%X', 'Time representation for the current locale'),
+..   ('%%', 'A literal ``%`` character'),
+.. ]
+.. cog.out('\n')
+.. cog.out('.. csv-table:: strptime/strftime format codes\n')
+.. cog.out('   :widths: 10, 50, 40\n')
+.. cog.out('   :header: "Symbol", "Meaning", "Example"\n')
+.. cog.out('\n')
+.. for sym, mean in symbols:
+..     cog.out('   ``%s``, %s, ``%r``\n' % (sym, mean, d.strftime(sym)))
+.. cog.out('\n')
+.. }}}
+
+.. csv-table:: strptime/strftime format codes
+   :widths: 10, 50, 40
+   :header: "Symbol", "Meaning", "Example"
+
+   ``%a``, Abbreviated weekday name, ``'Wed'``
+   ``%A``, Full weekday name, ``'Wednesday'``
+   ``%w``, Weekday number -- 0 (Sunday) through 6 (Saturday), ``'3'``
+   ``%d``, Day of the month (zero padded, ``'13'``
+   ``%b``, Abbreviated month name, ``'Jan'``
+   ``%B``, Full month name, ``'January'``
+   ``%m``, Month of the year, ``'01'``
+   ``%y``, Year without century, ``'16'``
+   ``%Y``, Year with century, ``'2016'``
+   ``%H``, Hour from 24-hour clock, ``'17'``
+   ``%I``, Hour from 12-hour clock, ``'05'``
+   ``%p``, AM/PM, ``'PM'``
+   ``%M``, Minutes, ``'00'``
+   ``%S``, Seconds, ``'00'``
+   ``%f``, Microseconds, ``'000000'``
+   ``%z``, UTC offset for timezone-aware objects, ``'-0500'``
+   ``%Z``, Timezone name, ``'EST'``
+   ``%j``, Day of the year, ``'013'``
+   ``%W``, Week of the year, ``'02'``
+   ``%c``, Date and time representation for the current locale, ``'Wed Jan 13 17:00:00 2016'``
+   ``%x``, Date representation for the current locale, ``'01/13/16'``
+   ``%X``, Time representation for the current locale, ``'17:00:00'``
+   ``%%``, A literal ``%`` character, ``'%'``
 
 .. {{{end}}}
+
+
 
 Time Zones
 ==========
