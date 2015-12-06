@@ -8,6 +8,11 @@ support includes :mod:`hashlib` for generating signatures of message
 content using standard algorithms such as MD5 and SHA, and :mod:`hmac`
 for verifying that a message has not been altered in transmission.
 
+.. toctree::
+   :maxdepth: 1
+
+   hashlib/index
+
 ..
    .. toctree::
        :maxdepth: 1
