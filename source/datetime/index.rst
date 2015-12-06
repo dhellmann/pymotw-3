@@ -418,7 +418,7 @@ Use :func:`datetime.strptime()` to convert formatted strings to
 .. {{{end}}}
 
 The following table demonstrates all of the formatting codes for 5:00
-PM January 13, 2016 in the US/Eastern timezone.
+PM January 13, 2016 in the US/Eastern time zone.
 
 .. {{{cog
 .. import datetime
@@ -498,36 +498,66 @@ Time Zones
 Within :mod:`datetime`, time zones are represented by subclasses of
 :class:`tzinfo`. Since :class:`tzinfo` is an abstract base class,
 applications need to define a subclass and provide appropriate
-implementations for a few methods to make it useful. Unfortunately,
-:mod:`datetime` does not include any actual implementations ready to
-be used, although the documentation does provide a few sample
-implementations. Refer to the standard library documentation page for
-examples using fixed offsets as well as a DST-aware class and more
-details about creating custom time zone classes.  ``pytz`` is also a
-good source for time zone implementation details.
+implementations for a few methods to make it useful.
+
+:mod:`datetime` does include a somewhat naive implementation in the
+class :class:`timezone` that uses a fixed offset from UTC, and does
+not support different offset values on different days of the year,
+such as where daylight savings time applies, or where the offset from
+UTC has changed over time.
+
+.. include:: datetime_timezone.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+To convert a datetime value from one time zone to another, use
+:func:`astimezone`. In the example above, two separate time zones 5
+hours on either side of UTC are shown, and the ``utc`` instance from
+``datetime.timezone`` is also used for reference.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'datetime_timezone.py'))
+.. }}}
+
+::
+
+	$ python3 datetime_timezone.py
+	
+	UTC-5  : 2015-12-06 12:23:31.749796-05:00
+	UTC    : 2015-12-06 17:23:31.749796+00:00
+	UTC+5  : 2015-12-06 22:23:31.749796+05:00
+
+.. {{{end}}}
+
+
+.. note::
+
+   The third party module pytz_ is a better implementation for time
+   zones. It supports named time zones, and the offset database is
+   kept up to date as changes are made by political bodies around the
+   world.
 
 .. seealso::
 
-    `datetime <http://docs.python.org/lib/module-datetime.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`datetime`
 
-    :mod:`calendar`
-        The ``calendar`` module.
+   * :mod:`calendar` -- The ``calendar`` module.
 
-    :mod:`time`
-        The ``time`` module.
+   * :mod:`time` -- The ``time`` module.
 
-    `dateutil <http://labix.org/python-dateutil>`_
-        ``dateutil`` from Labix extends the ``datetime`` module with additional features.
+   * `dateutil <http://labix.org/python-dateutil>`_ -- ``dateutil``
+     from Labix extends the ``datetime`` module with additional
+     features.
 
-    `WikiPedia: Proleptic Gregorian calendar <http://en.wikipedia.org/wiki/Proleptic_Gregorian_calendar>`_
-        A description of the Gregorian calendar system.
+   * pytz_ -- World Time Zone database and classes for making
+     :class:`datetime` objects time zone-aware.
 
-    pytz_
-        World Time Zone database
+   * `WikiPedia: Proleptic Gregorian calendar
+     <http://en.wikipedia.org/wiki/Proleptic_Gregorian_calendar>`_ --
+     A description of the Gregorian calendar system.
 
-    `ISO 8601`_
-        The standard for numeric representation of Dates and Time
+   * `ISO 8601`_ -- The standard for numeric representation of Dates
+     and Time
 
 .. _ISO 8601: http://www.iso.org/iso/support/faqs/faqs_widely_used_standards/widely_used_standards_other/date_and_time_format.htm
 
