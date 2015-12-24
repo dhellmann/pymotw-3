@@ -9,12 +9,15 @@
 
 import datetime
 
-min5 = datetime.timezone(datetime.timedelta(hours=-5))
-plus5 = datetime.timezone(datetime.timedelta(hours=5))
-d = datetime.datetime.now(min5)
-print('-5 zone    :', min5)
-print('UTC zone   :', datetime.timezone.utc)
-print('+5 zone    :', plus5)
-print('UTC-5 time :', d)
-print('UTC time   :', d.astimezone(datetime.timezone.utc))
-print('UTC+5 time :', d.astimezone(plus5))
+min6 = datetime.timezone(datetime.timedelta(hours=-6))
+plus6 = datetime.timezone(datetime.timedelta(hours=6))
+d = datetime.datetime.now(min6)
+
+print(min6, ':', d)
+print(datetime.timezone.utc, ':',
+      d.astimezone(datetime.timezone.utc))
+print(plus6, ':', d.astimezone(plus6))
+
+# convert to the current system timezone
+d_system = d.astimezone()
+print(d_system.tzinfo, '      :', d_system)

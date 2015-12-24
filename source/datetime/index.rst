@@ -113,21 +113,21 @@ This example prints the current date in several formats:
 
 	$ python3 datetime_date.py
 	
-	2015-12-06
-	ctime  : Sun Dec  6 00:00:00 2015
+	2015-12-24
+	ctime  : Thu Dec 24 00:00:00 2015
 	tuple  : tm_year  = 2015
 	         tm_mon   = 12
-	         tm_mday  = 6
+	         tm_mday  = 24
 	         tm_hour  = 0
 	         tm_min   = 0
 	         tm_sec   = 0
-	         tm_wday  = 6
-	         tm_yday  = 340
+	         tm_wday  = 3
+	         tm_yday  = 358
 	         tm_isdst = -1
-	ordinal: 735938
+	ordinal: 735956
 	Year   : 2015
 	Mon    : 12
-	Day    : 6
+	Day    : 24
 
 .. {{{end}}}
 
@@ -153,8 +153,8 @@ This example illustrates the different value types used by
 	
 	o               : 733114
 	fromordinal(o)  : 2008-03-13
-	t               : 1449422711.300084
-	fromtimestamp(t): 2015-12-06
+	t               : 1450966583.426028
+	fromtimestamp(t): 2015-12-24
 
 .. {{{end}}}
 
@@ -287,10 +287,10 @@ produce timedeltas (including a negative delta value).
 
 	$ python3 datetime_date_math.py
 	
-	Today    : 2015-12-06
+	Today    : 2015-12-24
 	One day  : 1 day, 0:00:00
-	Yesterday: 2015-12-05
-	Tomorrow : 2015-12-07
+	Yesterday: 2015-12-23
+	Tomorrow : 2015-12-25
 	
 	tomorrow - yesterday: 2 days, 0:00:00
 	yesterday - tomorrow: -2 days, 0:00:00
@@ -353,8 +353,8 @@ All of the comparison operators are supported.
 	  t2: 13:05:00
 	  t1 < t2: True
 	Dates:
-	  d1: 2015-12-06
-	  d2: 2015-12-07
+	  d1: 2015-12-24
+	  d2: 2015-12-25
 	  d1 > d2: False
 
 .. {{{end}}}
@@ -382,16 +382,16 @@ attributes of both a :class:`date` and a :class:`time` object.
 
 	$ python3 datetime_datetime.py
 	
-	Now    : 2015-12-06 12:25:11.651175
-	Today  : 2015-12-06 12:25:11.651215
-	UTC Now: 2015-12-06 17:25:11.651228
+	Now    : 2015-12-24 09:16:23.823676
+	Today  : 2015-12-24 09:16:23.823714
+	UTC Now: 2015-12-24 14:16:23.823728
 	           year: 2015
 	          month: 12
-	            day: 6
-	           hour: 12
-	         minute: 25
-	         second: 11
-	    microsecond: 651484
+	            day: 24
+	           hour: 9
+	         minute: 16
+	         second: 23
+	    microsecond: 823924
 
 .. {{{end}}}
 
@@ -415,8 +415,8 @@ class methods for creating new instances. It also includes
 	$ python3 datetime_datetime_combine.py
 	
 	t : 01:02:03
-	d : 2015-12-06
-	dt: 2015-12-06 01:02:03
+	d : 2015-12-24
+	dt: 2015-12-24 01:02:03
 
 .. {{{end}}}
 
@@ -442,9 +442,9 @@ Use :func:`datetime.strptime()` to convert formatted strings to
 
 	$ python3 datetime_datetime_strptime.py
 	
-	ISO     : 2015-12-06 12:25:11.749233
-	strftime: Sun Dec 06 12:25:11 2015
-	strptime: Sun Dec 06 12:25:11 2015
+	ISO     : 2015-12-24 09:16:23.924300
+	strftime: Thu Dec 24 09:16:23 2015
+	strptime: Thu Dec 24 09:16:23 2015
 
 .. {{{end}}}
 
@@ -542,9 +542,11 @@ UTC has changed over time.
    :start-after: #end_pymotw_header
 
 To convert a datetime value from one time zone to another, use
-:func:`astimezone`. In the example above, two separate time zones 5
+:func:`astimezone`. In the example above, two separate time zones 6
 hours on either side of UTC are shown, and the ``utc`` instance from
-``datetime.timezone`` is also used for reference.
+``datetime.timezone`` is also used for reference. The final output
+line shows the value in the system timezone, acquired by calling
+:func:`astimezone` with no argument.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'datetime_timezone.py'))
@@ -554,12 +556,10 @@ hours on either side of UTC are shown, and the ``utc`` instance from
 
 	$ python3 datetime_timezone.py
 	
-	-5 zone    : UTC-05:00
-	UTC zone   : UTC+00:00
-	+5 zone    : UTC+05:00
-	UTC-5 time : 2015-12-06 12:25:11.860964-05:00
-	UTC time   : 2015-12-06 17:25:11.860964+00:00
-	UTC+5 time : 2015-12-06 22:25:11.860964+05:00
+	UTC-06:00 : 2015-12-24 08:16:24.021553-06:00
+	UTC+00:00 : 2015-12-24 14:16:24.021553+00:00
+	UTC+06:00 : 2015-12-24 20:16:24.021553+06:00
+	EST       : 2015-12-24 09:16:24.021553-05:00
 
 .. {{{end}}}
 
@@ -574,6 +574,8 @@ hours on either side of UTC are shown, and the ``utc`` instance from
 .. seealso::
 
    * :pydoc:`datetime`
+
+   * :ref:`Porting notes for datetime <porting-datetime>`
 
    * :mod:`calendar` -- The ``calendar`` module.
 
