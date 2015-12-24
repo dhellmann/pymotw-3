@@ -309,6 +309,10 @@ Starting with Python 3.3, equality comparisons between naive and
 timezone-aware :class:`datetime` instances return ``False`` instead of
 raising :class:`TypeError` (:pyissue:`15006`).
 
+Prior to Python 3.5, a :class:`datetime.time` object representing
+midnight evaluated to ``False`` when converted to a Boolean. This
+behavior has been removed in Python 3.5 (:pyissue:`13936`).
+
 .. _porting-fractions:
 
 fractions
