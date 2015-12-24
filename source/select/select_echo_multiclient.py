@@ -10,35 +10,42 @@
 import socket
 import sys
 
-messages = [ 'This is the message. ',
-             'It will be sent ',
-             'in parts.',
-             ]
+messages = [
+    'This is the message. ',
+    'It will be sent ',
+    'in parts.',
+]
 server_address = ('localhost', 10000)
 
 # Create a TCP/IP socket
-socks = [ socket.socket(socket.AF_INET, socket.SOCK_STREAM),
-          socket.socket(socket.AF_INET, socket.SOCK_STREAM),
-          ]
+socks = [
+    socket.socket(socket.AF_INET, socket.SOCK_STREAM),
+    socket.socket(socket.AF_INET, socket.SOCK_STREAM),
+]
 
 # Connect the socket to the port where the server is listening
-print >>sys.stderr, 'connecting to %s port %s' % server_address
+print('connecting to %s port %s' % server_address,
+      file=sys.stderr)
 for s in socks:
     s.connect(server_address)
 
 for message in messages:
+    outgoing_data = message.encode()
 
     # Send messages on both sockets
     for s in socks:
-        print >>sys.stderr, '%s: sending "%s"' % \
-            (s.getsockname(), message)
-        s.send(message)
+        print('%s: sending %r' %
+              (s.getsockname(), outgoing_data),
+              file=sys.stderr)
+        s.send(outgoing_data)
 
     # Read responses on both sockets
     for s in socks:
         data = s.recv(1024)
-        print >>sys.stderr, '%s: received "%s"' % \
-            (s.getsockname(), data)
+        print('%s: received %r' %
+              (s.getsockname(), data),
+              file=sys.stderr)
         if not data:
-            print >>sys.stderr, 'closing socket', s.getsockname()
+            print('closing socket', s.getsockname(),
+                  file=sys.stderr)
             s.close()

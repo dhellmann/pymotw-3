@@ -38,7 +38,7 @@ to watch for more than one connection at a time by using
 TCP/IP socket and configuring it to listen on an address.
 
 .. literalinclude:: select_echo_server.py
-   :lines: 10-25
+   :lines: 10-26
 
 The arguments to :func:`select` are three lists containing
 communication channels to monitor.  The first is a list of the objects
@@ -50,7 +50,7 @@ in the server is to set up the lists containing input sources and
 output destinations to be passed to :func:`select`.
 
 .. literalinclude:: select_echo_server.py
-   :lines: 27-31
+   :lines: 28-32
 
 Connections are added to and removed from these lists by the server
 main loop.  Since this version of the server is going to wait for a
@@ -59,13 +59,13 @@ immediately sending the reply), each output connection needs a queue
 to act as a buffer for the data to be sent through it.
 
 .. literalinclude:: select_echo_server.py
-   :lines: 33-34
+   :lines: 34-35
 
 The main portion of the server program loops, calling :func:`select` to
 block and wait for network activity.
 
 .. literalinclude:: select_echo_server.py
-   :lines: 36-42
+   :lines: 37-44
 
 :func:`select` returns three new lists, containing subsets of the
 contents of the lists passed in.  All of the sockets in the
@@ -83,20 +83,20 @@ to the list of inputs to monitor, this section sets the client socket
 to not block.
 
 .. literalinclude:: select_echo_server.py
-   :lines: 44-55
+   :lines: 46-59
 
 The next case is an established connection with a client that has sent
 data.  The data is read with :func:`recv`, then placed on the queue so
 it can be sent through the socket and back to the client.
 
 .. literalinclude:: select_echo_server.py
-   :lines: 57-66
+   :lines: 61-71
 
 A readable socket *without* data available is from a client that has
 disconnected, and the stream is ready to be closed.
 
 .. literalinclude:: select_echo_server.py
-   :lines: 67-78
+   :lines: 73-84
 
 There are fewer cases for the writable connections.  If there is data
 in the queue for a connection, the next message is sent.  Otherwise,
@@ -105,12 +105,12 @@ the next time through the loop :func:`select` does not indicate that
 the socket is ready to send data.
 
 .. literalinclude:: select_echo_server.py
-   :lines: 80-91
+   :lines: 86-100
 
 Finally, if there is an error with a socket, it is closed.
 
 .. literalinclude:: select_echo_server.py
-   :lines: 93-
+   :lines: 102-
 
 The example client program uses two sockets to demonstrate how the
 server with :func:`select` manages multiple connections at the same
@@ -118,78 +118,77 @@ time.  The client starts by connecting each TCP/IP socket to the
 server.
 
 .. literalinclude:: select_echo_multiclient.py
-   :lines: 10-27
+   :lines: 10-30
 
 Then it sends one piece of the message at a time via each socket, and
 reads all responses available after writing new data.
 
 .. literalinclude:: select_echo_multiclient.py
-   :lines: 29-
+   :lines: 32-
 
 Run the server in one window and the client in another.  The output
 will look like this, with different port numbers.
 
 ::
 
-    $ python ./select_echo_server.py  
-    
-    starting up on localhost port 10000
-    waiting for the next event
-      connection from ('127.0.0.1', 55472)
-    waiting for the next event
-      connection from ('127.0.0.1', 55473)
-      received "This is the message. " from ('127.0.0.1', 55472)
-    waiting for the next event
-      received "This is the message. " from ('127.0.0.1', 55473)
-      sending "This is the message. " to ('127.0.0.1', 55472)
-    waiting for the next event
-      ('127.0.0.1', 55472) queue empty
-      sending "This is the message. " to ('127.0.0.1', 55473)
-    waiting for the next event
-      ('127.0.0.1', 55473) queue empty
-    waiting for the next event
-      received "It will be sent " from ('127.0.0.1', 55472)
-      received "It will be sent " from ('127.0.0.1', 55473)
-    waiting for the next event
-      sending "It will be sent " to ('127.0.0.1', 55472)
-      sending "It will be sent " to ('127.0.0.1', 55473)
-    waiting for the next event
-      ('127.0.0.1', 55472) queue empty
-      ('127.0.0.1', 55473) queue empty
-    waiting for the next event
-      received "in parts." from ('127.0.0.1', 55472)
-      received "in parts." from ('127.0.0.1', 55473)
-    waiting for the next event
-      sending "in parts." to ('127.0.0.1', 55472)
-      sending "in parts." to ('127.0.0.1', 55473)
-    waiting for the next event
-      ('127.0.0.1', 55472) queue empty
-      ('127.0.0.1', 55473) queue empty
-    waiting for the next event
-      closing ('127.0.0.1', 55473)
-      closing ('127.0.0.1', 55473)
-    waiting for the next event
-    
+   $ python3 select_echo_server.py
+   starting up on localhost port 10000
+   waiting for the next event
+     connection from ('127.0.0.1', 61003)
+   waiting for the next event
+     connection from ('127.0.0.1', 61004)
+   waiting for the next event
+     received b'This is the message. ' from ('127.0.0.1', 61003)
+     received b'This is the message. ' from ('127.0.0.1', 61004)
+   waiting for the next event
+     sending b'This is the message. ' to ('127.0.0.1', 61003)
+     sending b'This is the message. ' to ('127.0.0.1', 61004)
+   waiting for the next event
+      ('127.0.0.1', 61003) queue empty
+      ('127.0.0.1', 61004) queue empty
+   waiting for the next event
+     received b'It will be sent ' from ('127.0.0.1', 61003)
+     received b'It will be sent ' from ('127.0.0.1', 61004)
+   waiting for the next event
+     sending b'It will be sent ' to ('127.0.0.1', 61003)
+     sending b'It will be sent ' to ('127.0.0.1', 61004)
+   waiting for the next event
+      ('127.0.0.1', 61003) queue empty
+      ('127.0.0.1', 61004) queue empty
+   waiting for the next event
+     received b'in parts.' from ('127.0.0.1', 61003)
+   waiting for the next event
+     received b'in parts.' from ('127.0.0.1', 61004)
+     sending b'in parts.' to ('127.0.0.1', 61003)
+   waiting for the next event
+      ('127.0.0.1', 61003) queue empty
+     sending b'in parts.' to ('127.0.0.1', 61004)
+   waiting for the next event
+      ('127.0.0.1', 61004) queue empty
+   waiting for the next event
+     closing ('127.0.0.1', 61004)
+     closing ('127.0.0.1', 61004)
+   waiting for the next event
+
 The client output shows the data being sent and received using both
 sockets.
 
 ::
 
-    $ python ./select_echo_multiclient.py 
-
-    connecting to localhost port 10000
-    ('127.0.0.1', 55821): sending "This is the message. "
-    ('127.0.0.1', 55822): sending "This is the message. "
-    ('127.0.0.1', 55821): received "This is the message. "
-    ('127.0.0.1', 55822): received "This is the message. "
-    ('127.0.0.1', 55821): sending "It will be sent "
-    ('127.0.0.1', 55822): sending "It will be sent "
-    ('127.0.0.1', 55821): received "It will be sent "
-    ('127.0.0.1', 55822): received "It will be sent "
-    ('127.0.0.1', 55821): sending "in parts."
-    ('127.0.0.1', 55822): sending "in parts."
-    ('127.0.0.1', 55821): received "in parts."
-    ('127.0.0.1', 55822): received "in parts."
+   $ python3 select_echo_multiclient.py
+   connecting to localhost port 10000
+   ('127.0.0.1', 61003): sending b'This is the message. '
+   ('127.0.0.1', 61004): sending b'This is the message. '
+   ('127.0.0.1', 61003): received b'This is the message. '
+   ('127.0.0.1', 61004): received b'This is the message. '
+   ('127.0.0.1', 61003): sending b'It will be sent '
+   ('127.0.0.1', 61004): sending b'It will be sent '
+   ('127.0.0.1', 61003): received b'It will be sent '
+   ('127.0.0.1', 61004): received b'It will be sent '
+   ('127.0.0.1', 61003): sending b'in parts.'
+   ('127.0.0.1', 61004): sending b'in parts.'
+   ('127.0.0.1', 61003): received b'in parts.'
+   ('127.0.0.1', 61004): received b'in parts.'
 
 Non-blocking I/O With Timeouts
 ==============================
@@ -206,53 +205,60 @@ argument to the :func:`select` call and handling the empty lists after
 :func:`select` returns.
 
 .. literalinclude:: select_echo_server_timeout.py
-   :lines: 38-48
+   :lines: 44-52
 
 This "slow" version of the client program pauses after sending each
 message, to simulate latency or other delay in transmission.
 
-.. literalinclude:: select_echo_slow_client.py
-   :lines: 10-47
+.. include:: select_select_echo_slow_client.py
+   :literal:
+   :start-after: #end_pymotw_header
 
 Running the new server with the slow client produces:
 
 ::
 
-    $ python ./select_echo_server_timeout.py 
-        
-    starting up on localhost port 10000
-    waiting for the next event
-      connection from ('127.0.0.1', 55480)
-    waiting for the next event
-      received "Part one of the message." from ('127.0.0.1', 55480)
-    waiting for the next event
-      sending "Part one of the message." to ('127.0.0.1', 55480)
-    waiting for the next event
-      ('127.0.0.1', 55480) queue empty
-    waiting for the next event
-      received "Part two of the message." from ('127.0.0.1', 55480)
-    waiting for the next event
-      sending "Part two of the message." to ('127.0.0.1', 55480)
-    waiting for the next event
-      ('127.0.0.1', 55480) queue empty
-    waiting for the next event
-      closing ('127.0.0.1', 55480)
-    waiting for the next event
+   $ python3 select_echo_server_timeout.py
+   starting up on localhost port 10000
+   waiting for the next event
+     timed out, do some other work here
+   waiting for the next event
+     connection from ('127.0.0.1', 61144)
+   waiting for the next event
+     timed out, do some other work here
+   waiting for the next event
+     received "b'Part one of the message.'" from ('127.0.0.1', 61144)
+   waiting for the next event
+     sending "b'Part one of the message.'" to ('127.0.0.1', 61144)
+   waiting for the next event
+   ('127.0.0.1', 61144) queue empty
+   waiting for the next event
+     timed out, do some other work here
+   waiting for the next event
+     received "b'Part two of the message.'" from ('127.0.0.1', 61144)
+   waiting for the next event
+     sending "b'Part two of the message.'" to ('127.0.0.1', 61144)
+   waiting for the next event
+   ('127.0.0.1', 61144) queue empty
+   waiting for the next event
+     timed out, do some other work here
+   waiting for the next event
+   closing ('127.0.0.1', 61144)
+   waiting for the next event
+     timed out, do some other work here
 
 And the client output is:
 
 ::
 
-    $ python ./select_echo_slow_client.py 
-
-    connecting to localhost port 10000
-    sending "Part one of the message."
-    sending "Part two of the message."
-    received "Part one of the "
-    received "message.Part two"
-    received " of the message."
-    closing socket
-
+   $ python3 select_echo_slow_client.py
+   connecting to localhost port 10000
+   sending b'Part one of the message.'
+   sending b'Part two of the message.'
+   received b'Part one of the '
+   received b'message.Part two'
+   received b' of the message.'
+   closing socket
 
 Using poll()
 ============
@@ -266,14 +272,14 @@ An echo server built on :func:`poll` starts with the same socket
 configuration code used in the other examples.
 
 .. literalinclude:: select_poll_echo_server.py
-   :lines: 10-28
+   :lines: 10-29
 
 The timeout value passed to :func:`poll` is represented in
 milliseconds, instead of seconds, so in order to pause for a full
 second the timeout must be set to ``1000``.
 
 .. literalinclude:: select_poll_echo_server.py
-   :lines: 30-31
+   :lines: 31-32
 
 Python implements :func:`poll` with a class that manages the
 registered data channels being monitored.  Channels are added by
@@ -300,13 +306,13 @@ flags are saved to the local variables :data:`READ_ONLY` and
 :data:`READ_WRITE`.
 
 .. literalinclude:: select_poll_echo_server.py
-   :lines: 33-38
+   :lines: 34-41
 
 The :data:`server` socket is registered so that any incoming
 connections or data triggers an event.
 
 .. literalinclude:: select_poll_echo_server.py
-   :lines: 40-42
+   :lines: 43-45
 
 Since :func:`poll` returns a list of tuples containing the file
 descriptor for the socket and the event flag, a mapping from file
@@ -314,14 +320,14 @@ descriptor numbers to objects is needed to retrieve the
 :class:`socket` to read or write from it.
 
 .. literalinclude:: select_poll_echo_server.py
-   :lines: 44-46
+   :lines: 47-50
 
 The server's loop calls :func:`poll`, then processes the "events"
 returned by looking up the socket and taking action based on the flag
 in the event.
 
 .. literalinclude:: select_poll_echo_server.py
-   :lines: 48-57
+   :lines: 52-62
 
 As with :func:`select`, when the main server socket is "readable,"
 that really means there is a pending connection from a client.  The
@@ -329,13 +335,13 @@ new connection is registered with the :data:`READ_ONLY` flags to watch
 for new data to come through it.
 
 .. literalinclude:: select_poll_echo_server.py
-   :lines: 59-71
+   :lines: 64-78
 
 Sockets other than the server are existing clients, and :func:`recv`
 is used to access the data waiting to be read.
 
 .. literalinclude:: select_poll_echo_server.py
-   :lines: 73-74
+   :lines: 80-81
 
 If :func:`recv` returns any data, it is placed into the outgoing queue
 for the socket and the flags for that socket are changed using
@@ -343,21 +349,21 @@ for the socket and the flags for that socket are changed using
 to receive data.
 
 .. literalinclude:: select_poll_echo_server.py
-   :lines: 75-81
+   :lines: 82-89
 
 An empty string returned by :func:`recv` means the client
 disconnected, so :func:`unregister` is used to tell the :class:`poll`
 object to ignore the socket.
 
 .. literalinclude:: select_poll_echo_server.py
-   :lines: 83-91
+   :lines: 91-100
 
 The :const:`POLLHUP` flag indicates a client that "hung up" the
 connection without closing it cleanly.  The server stops polling
 clients that disappear.
 
 .. literalinclude:: select_poll_echo_server.py
-   :lines: 93-98
+   :lines: 102-108
 
 The handling for writable sockets looks like the version used in the
 example for :func:`select`, except that :func:`modify` is used to
@@ -365,13 +371,13 @@ change the flags for the socket in the poller, instead of removing it
 from the output list.
 
 .. literalinclude:: select_poll_echo_server.py
-   :lines: 100-111
+   :lines: 110-124
 
 And finally, any events with :const:`POLLERR` cause the server to
 close the socket.
 
 .. literalinclude:: select_poll_echo_server.py
-   :lines: 113-
+   :lines: 126-
 
 When the poll-based server is run together with
 ``select_echo_multiclient.py`` (the client program that uses multiple
@@ -379,50 +385,47 @@ sockets), the output is:
 
 ::
 
-    $ python ./select_poll_echo_server.py 
-            
-    waiting for the next event
-    waiting for the next event
-      connection ('127.0.0.1', 62835)
-    waiting for the next event
-      connection ('127.0.0.1', 62836)
-    waiting for the next event
-      received "This is the message. " from ('127.0.0.1', 62835)
-    waiting for the next event
-      sending "This is the message. " to ('127.0.0.1', 62835)
-    waiting for the next event
-    ('127.0.0.1', 62835) queue empty
-    waiting for the next event
-      received "This is the message. " from ('127.0.0.1', 62836)
-    waiting for the next event
-      sending "This is the message. " to ('127.0.0.1', 62836)
-    waiting for the next event
-    ('127.0.0.1', 62836) queue empty
-    waiting for the next event
-      received "It will be sent " from ('127.0.0.1', 62835)
-    waiting for the next event
-      sending "It will be sent " to ('127.0.0.1', 62835)
-    waiting for the next event
-    ('127.0.0.1', 62835) queue empty
-    waiting for the next event
-      received "It will be sent " from ('127.0.0.1', 62836)
-    waiting for the next event
-      sending "It will be sent " to ('127.0.0.1', 62836)
-    waiting for the next event
-    ('127.0.0.1', 62836) queue empty
-    waiting for the next event
-      received "in parts." from ('127.0.0.1', 62835)
-      received "in parts." from ('127.0.0.1', 62836)
-    waiting for the next event
-      sending "in parts." to ('127.0.0.1', 62835)
-      sending "in parts." to ('127.0.0.1', 62836)
-    waiting for the next event
-    ('127.0.0.1', 62835) queue empty
-    ('127.0.0.1', 62836) queue empty
-    waiting for the next event
-      closing ('127.0.0.1', 62836)
-      closing ('127.0.0.1', 62836)
-    waiting for the next event    
+   $ python3 select_poll_echo_server.py
+   starting up on localhost port 10000
+   waiting for the next event
+   waiting for the next event
+   waiting for the next event
+   waiting for the next event
+     connection ('127.0.0.1', 61253)
+   waiting for the next event
+     connection ('127.0.0.1', 61254)
+   waiting for the next event
+     received "b'This is the message. '" from ('127.0.0.1', 61253)
+     received "b'This is the message. '" from ('127.0.0.1', 61254)
+   waiting for the next event
+     sending "b'This is the message. '" to ('127.0.0.1', 61253)
+     sending "b'This is the message. '" to ('127.0.0.1', 61254)
+   waiting for the next event
+   ('127.0.0.1', 61253) queue empty
+   ('127.0.0.1', 61254) queue empty
+   waiting for the next event
+     received "b'It will be sent '" from ('127.0.0.1', 61253)
+     received "b'It will be sent '" from ('127.0.0.1', 61254)
+   waiting for the next event
+     sending "b'It will be sent '" to ('127.0.0.1', 61253)
+     sending "b'It will be sent '" to ('127.0.0.1', 61254)
+   waiting for the next event
+   ('127.0.0.1', 61253) queue empty
+   ('127.0.0.1', 61254) queue empty
+   waiting for the next event
+     received "b'in parts.'" from ('127.0.0.1', 61253)
+     received "b'in parts.'" from ('127.0.0.1', 61254)
+   waiting for the next event
+     sending "b'in parts.'" to ('127.0.0.1', 61253)
+     sending "b'in parts.'" to ('127.0.0.1', 61254)
+   waiting for the next event
+   ('127.0.0.1', 61253) queue empty
+   ('127.0.0.1', 61254) queue empty
+   waiting for the next event
+     closing ('127.0.0.1', 61254)
+   waiting for the next event
+     closing ('127.0.0.1', 61254)
+   waiting for the next event
 
 .. using PIPE_BUF to limit writes
 
