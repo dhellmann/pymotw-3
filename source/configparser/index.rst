@@ -701,11 +701,9 @@ too many substitution steps.
 
 	$ python3 configparser_interpolation_recursion.py
 	
-	ERROR: Value interpolation too deeply recursive:
-		section: [sect]
-		option : opt
-		rawval : %(opt)s
-	
+	ERROR: Recursion limit exceeded in value substitution: option 'o
+	pt' in section 'sect' contains an interpolation key which cannot
+	 be substituted in 10 steps. Raw value: '%(opt)s'
 
 .. {{{end}}}
 
@@ -727,12 +725,9 @@ constructed.
 
 	$ python3 configparser_interpolation_error.py
 	
-	ERROR: Bad value substitution:
-		section: [bug_tracker]
-		option : url
-		key    : server
-		rawval : :%(port)s/bugs
-	
+	ERROR: Bad value substitution: option 'url' in section 'bug_trac
+	ker' contains an interpolation key 'server' which is not a valid
+	 option name. Raw value: 'http://%(server)s:%(port)s/bugs'
 
 .. {{{end}}}
 
