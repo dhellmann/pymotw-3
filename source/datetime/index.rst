@@ -554,9 +554,12 @@ hours on either side of UTC are shown, and the ``utc`` instance from
 
 	$ python3 datetime_timezone.py
 	
-	UTC-5  : 2015-12-06 12:25:11.860964-05:00
-	UTC    : 2015-12-06 17:25:11.860964+00:00
-	UTC+5  : 2015-12-06 22:25:11.860964+05:00
+	-5 zone    : UTC-05:00
+	UTC zone   : UTC+00:00
+	+5 zone    : UTC+05:00
+	UTC-5 time : 2015-12-06 12:25:11.860964-05:00
+	UTC time   : 2015-12-06 17:25:11.860964+00:00
+	UTC+5 time : 2015-12-06 22:25:11.860964+05:00
 
 .. {{{end}}}
 
