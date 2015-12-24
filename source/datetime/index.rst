@@ -153,7 +153,7 @@ This example illustrates the different value types used by
 	
 	o               : 733114
 	fromordinal(o)  : 2008-03-13
-	t               : 1450967538.278214
+	t               : 1450968483.121123
 	fromtimestamp(t): 2015-12-24
 
 .. {{{end}}}
@@ -382,16 +382,16 @@ attributes of both a :class:`date` and a :class:`time` object.
 
 	$ python3 datetime_datetime.py
 	
-	Now    : 2015-12-24 09:32:18.674412
-	Today  : 2015-12-24 09:32:18.674452
-	UTC Now: 2015-12-24 14:32:18.674465
+	Now    : 2015-12-24 09:48:03.539040
+	Today  : 2015-12-24 09:48:03.539080
+	UTC Now: 2015-12-24 14:48:03.539123
 	year           : 2015
 	month          : 12
 	day            : 24
 	hour           : 9
-	minute         : 32
-	second         : 18
-	microsecond    : 674657
+	minute         : 48
+	second         : 3
+	microsecond    : 542174
 
 .. {{{end}}}
 
@@ -442,11 +442,39 @@ Use :func:`datetime.strptime()` to convert formatted strings to
 
 	$ python3 datetime_datetime_strptime.py
 	
-	ISO     : 2015-12-24 09:32:18.775653
-	strftime: Thu Dec 24 09:32:18 2015
-	strptime: Thu Dec 24 09:32:18 2015
+	ISO     : 2015-12-24 09:48:03.639545
+	strftime: Thu Dec 24 09:48:03 2015
+	strptime: Thu Dec 24 09:48:03 2015
 
 .. {{{end}}}
+
+The same formatting codes can be used with Python's `string formatting
+mini-language`_ by placing them after the ``:`` in the field
+specification of the format string.
+
+.. include:: datetime_format.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+Each datetime format code must still be prefixed with ``%``, and
+subsequent colons are treated as literal characters to include in the
+output.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'datetime_format.py'))
+.. }}}
+
+::
+
+	$ python3 datetime_format.py
+	
+	ISO     : 2015-12-24 09:48:03.699078
+	format(): Thu Dec 24 09:48:03 2015
+
+.. {{{end}}}
+
+.. _string formatting mini-language: https://docs.python.org/3.5/library/string.html#formatspec
+
 
 The following table demonstrates all of the formatting codes for 5:00
 PM January 13, 2016 in the US/Eastern time zone.
@@ -521,8 +549,6 @@ PM January 13, 2016 in the US/Eastern time zone.
 
 .. {{{end}}}
 
-
-
 Time Zones
 ==========
 
@@ -556,10 +582,10 @@ line shows the value in the system timezone, acquired by calling
 
 	$ python3 datetime_timezone.py
 	
-	UTC-06:00 : 2015-12-24 08:32:18.870506-06:00
-	UTC+00:00 : 2015-12-24 14:32:18.870506+00:00
-	UTC+06:00 : 2015-12-24 20:32:18.870506+06:00
-	EST       : 2015-12-24 09:32:18.870506-05:00
+	UTC-06:00 : 2015-12-24 08:48:03.791420-06:00
+	UTC+00:00 : 2015-12-24 14:48:03.791420+00:00
+	UTC+06:00 : 2015-12-24 20:48:03.791420+06:00
+	EST       : 2015-12-24 09:48:03.791420-05:00
 
 .. {{{end}}}
 
