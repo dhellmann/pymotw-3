@@ -300,6 +300,15 @@ csv
 Instead of using the :func:`next` method of a reader directly, use the
 built-in :func:`next` function to invoke the iterator properly.
 
+.. _porting-datetime:
+
+datetime
+--------
+
+Starting with Python 3.3, equality comparisons between naive and
+timezone-aware :class:`datetime` instances return ``False`` instead of
+raising :class:`TypeError` (:pyissue:`15006`).
+
 .. _porting-fractions:
 
 fractions
