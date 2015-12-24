@@ -1,18 +1,17 @@
-==================================
-select -- Wait for I/O Efficiently
-==================================
+===================================
+select --- Wait for I/O Efficiently
+===================================
 
 .. module:: select
     :synopsis: Wait for I/O Efficiently
 
 :Purpose: Wait for notification that an input or output channel is ready.
-:Python Version: 1.4 and later
 
 The :mod:`select` module provides access to platform-specific I/O
 monitoring functions.  The most portable interface is the POSIX
-function :func:`select`, which is available on Unix and Windows.  The
-module also includes :func:`poll`, a Unix-only API, and several
-options that only work with specific variants of Unix.
+function :func:`select`, which is available on UNIX and Windows.  The
+module also includes :func:`poll`, a UNIX-only API, and several
+options that only work with specific variants of UNIX.
 
 Using select()
 ==============
@@ -20,7 +19,7 @@ Using select()
 Python's :func:`select` function is a direct interface to the
 underlying operating system implementation.  It monitors sockets, open
 files, and pipes (anything with a :func:`fileno` method that returns a
-valid file descriptor) until they become readable or writable, or a
+valid file descriptor) until they become readable or writable or a
 communication error occurs.  :func:`select` makes it easier to monitor
 multiple connections at the same time, and is more efficient than
 writing a polling loop in Python using socket timeouts, because the
@@ -29,7 +28,7 @@ the interpreter.
 
 .. note::
 
-   Using Python's file objects with :func:`select` works for Unix, but
+   Using Python's file objects with :func:`select` works for UNIX, but
    is not supported under Windows.
 
 The echo server example from the :mod:`socket` section can be extended
@@ -120,7 +119,7 @@ server.
 .. literalinclude:: select_echo_multiclient.py
    :lines: 10-30
 
-Then it sends one piece of the message at a time via each socket, and
+Then it sends one piece of the message at a time via each socket and
 reads all responses available after writing new data.
 
 .. literalinclude:: select_echo_multiclient.py
@@ -193,7 +192,7 @@ sockets.
 Non-blocking I/O With Timeouts
 ==============================
 
-:func:`select` also takes an optional fourth parameter which is the
+:func:`select` also takes an optional fourth parameter, which is the
 number of seconds to wait before breaking off monitoring if no
 channels have become active.  Using a timeout value lets a main
 program call :func:`select` as part of a larger processing loop,
@@ -247,7 +246,7 @@ Running the new server with the slow client produces:
    waiting for the next event
      timed out, do some other work here
 
-And the client output is:
+And this is the client output:
 
 ::
 
@@ -300,7 +299,7 @@ interesting for that channel.  The full set of flags is listed in
    :const:`POLLNVAL`  Channel not open
    =================  ===========
 
-The echo server will be setting up some sockets just for reading, and
+The echo server will be setting up some sockets just for reading and
 others to be read from or written to.  The appropriate combinations of
 flags are saved to the local variables :data:`READ_ONLY` and
 :data:`READ_WRITE`.
@@ -322,7 +321,7 @@ descriptor numbers to objects is needed to retrieve the
 .. literalinclude:: select_poll_echo_server.py
    :lines: 47-50
 
-The server's loop calls :func:`poll`, then processes the "events"
+The server's loop calls :func:`poll` and then processes the "events"
 returned by looking up the socket and taking action based on the flag
 in the event.
 
@@ -337,14 +336,14 @@ for new data to come through it.
 .. literalinclude:: select_poll_echo_server.py
    :lines: 64-78
 
-Sockets other than the server are existing clients, and :func:`recv`
+Sockets other than the server are existing clients and :func:`recv`
 is used to access the data waiting to be read.
 
 .. literalinclude:: select_poll_echo_server.py
    :lines: 80-81
 
 If :func:`recv` returns any data, it is placed into the outgoing queue
-for the socket and the flags for that socket are changed using
+for the socket, and the flags for that socket are changed using
 :func:`modify` so :func:`poll` will watch for the socket to be ready
 to receive data.
 
@@ -373,7 +372,7 @@ from the output list.
 .. literalinclude:: select_poll_echo_server.py
    :lines: 110-124
 
-And finally, any events with :const:`POLLERR` cause the server to
+And, finally, any events with :const:`POLLERR` cause the server to
 close the socket.
 
 .. literalinclude:: select_poll_echo_server.py
@@ -381,7 +380,7 @@ close the socket.
 
 When the poll-based server is run together with
 ``select_echo_multiclient.py`` (the client program that uses multiple
-sockets), the output is:
+sockets), this is the output.
 
 ::
 
@@ -440,23 +439,25 @@ more detail about how they work.
 
 .. seealso::
 
-    `select <http://docs.python.org/library/select.html>`_
-        The standard library documentation for this module.
+    * :pydoc:`select`
 
-    `Socket Programming HOWOTO <http://docs.python.org/howto/sockets.html>`__
-        An instructional guide by Gordon McMillan, included in the
-        standard library documentation.
+    * `Socket Programming HOWOTO
+      <http://docs.python.org/howto/sockets.html>`__ -- An
+      instructional guide by Gordon McMillan, included in the standard
+      library documentation.
 
-    :mod:`socket`
-        Low-level network communication.
+    * :mod:`socket` -- Low-level network communication.
 
-    :mod:`SocketServer`
-        Framework for creating network server applications.
+    * :mod:`SocketServer` -- Framework for creating network server
+      applications.
 
-    :mod:`asyncore` and :mod:`asynchat`
-        Asynchronous I/O framework.
+    * :mod:`asyncio` -- Asynchronous I/O framework
 
-    *Unix Network Programming, Volume 1: The Sockets Networking API, 3/E*
-        By W. Richard Stevens, Bill Fenner, and Andrew
-        M. Rudoff. Published by Addison-Wesley Professional, 2004.
-        ISBN-10: 0131411551
+    * *Unix Network Programming, Volume 1: The Sockets Networking API, 3/E*
+      By W. Richard Stevens, Bill Fenner, and Andrew
+      M. Rudoff. Published by Addison-Wesley Professional, 2004.
+      ISBN-10: 0131411551
+
+    * *Foundations of Python Network Programminng, 3/E* By Brandon
+      Rhodes and John Goerzen. Published by Apress, 2014. ISBN-10:
+      1430258543
