@@ -141,7 +141,7 @@ day increments the value by 1.
     :start-after: #end_pymotw_header
 
 This example illustrates the different value types used by
-:func:`fromordinal()` and :func:`fromtimestamp()`.
+:func:`fromordinal` and :func:`fromtimestamp`.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'datetime_date_fromordinal.py'))
@@ -182,7 +182,7 @@ The resolution for dates is whole days.
 .. {{{end}}}
 
 Another way to create new :class:`date` instances uses the
-:func:`replace()` method of an existing :class:`date`.
+:func:`replace` method of an existing :class:`date`.
 
 .. include:: datetime_date_replace.py
     :literal:
@@ -326,8 +326,6 @@ a floating point number.
 
 .. {{{end}}}
 
-
-
 Comparing Values
 ================
 
@@ -338,7 +336,7 @@ comparison operators to determine which is earlier or later.
     :literal:
     :start-after: #end_pymotw_header
 
-All of the comparison operators are supported.
+All comparison operators are supported.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'datetime_comparing.py'))
@@ -397,13 +395,13 @@ attributes of both a :class:`date` and a :class:`time` object.
 
 Just as with :class:`date`, :class:`datetime` provides convenient
 class methods for creating new instances. It also includes
-:func:`fromordinal()` and :func:`fromtimestamp()`. 
+:func:`fromordinal` and :func:`fromtimestamp`.
 
 .. include:: datetime_datetime_combine.py
     :literal:
     :start-after: #end_pymotw_header
 
-:func:`combine()` creates :class:`datetime` instances from one
+:func:`combine` creates :class:`datetime` instances from one
 :class:`date` and one :class:`time` instance.
 
 .. {{{cog
@@ -425,13 +423,13 @@ Formatting and Parsing
 
 The default string representation of a datetime object uses the
 ISO-8601 format (``YYYY-MM-DDTHH:MM:SS.mmmmmm``). Alternate formats
-can be generated using :func:`strftime()`.
+can be generated using :func:`strftime`.
 
 .. include:: datetime_datetime_strptime.py
     :literal:
     :start-after: #end_pymotw_header
 
-Use :func:`datetime.strptime()` to convert formatted strings to
+Use :func:`datetime.strptime` to convert formatted strings to
 :class:`datetime` instances.
 
 .. {{{cog
