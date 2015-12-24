@@ -297,6 +297,37 @@ produce timedeltas (including a negative delta value).
 
 .. {{{end}}}
 
+A :class:`timedelta` object also supports arithmetic with integers,
+floats, and other :class:`timedelta` instances.
+
+.. include:: datetime_timedelta_math.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+In this example, several multiples of a single day are computed, with
+the resulting :class:`timedelta` holding the appropriate number of
+days or hours. The final example demonstrates how to compute values by
+combining two :class:`timedelta` objects. In this case, the result is
+a floating point number.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'datetime_timedelta_math.py'))
+.. }}}
+
+::
+
+	$ python3 datetime_timedelta_math.py
+	
+	1 day    : 1 day, 0:00:00
+	5 days   : 5 days, 0:00:00
+	1.5 days : 1 day, 12:00:00
+	1/4 day  : 6:00:00
+	meetings per day : 7.0
+
+.. {{{end}}}
+
+
+
 Comparing Values
 ================
 
