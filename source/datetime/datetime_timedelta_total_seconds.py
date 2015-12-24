@@ -17,4 +17,6 @@ for delta in [datetime.timedelta(microseconds=1),
               datetime.timedelta(days=1),
               datetime.timedelta(weeks=1),
               ]:
-    print('%15s = %s seconds' % (delta, delta.total_seconds()))
+    print('{:15} = {:8} seconds'.format(
+        str(delta), delta.total_seconds())
+    )

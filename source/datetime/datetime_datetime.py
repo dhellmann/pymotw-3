@@ -22,4 +22,4 @@ FIELDS = [
 
 d = datetime.datetime.now()
 for attr in FIELDS:
-    print('%15s: %s' % (attr, getattr(d, attr)))
+    print('{:15}: {}'.format(attr, getattr(d, attr)))

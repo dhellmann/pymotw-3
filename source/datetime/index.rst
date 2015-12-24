@@ -153,7 +153,7 @@ This example illustrates the different value types used by
 	
 	o               : 733114
 	fromordinal(o)  : 2008-03-13
-	t               : 1450966583.426028
+	t               : 1450967538.278214
 	fromtimestamp(t): 2015-12-24
 
 .. {{{end}}}
@@ -256,12 +256,12 @@ durations.
 
 	$ python3 datetime_timedelta_total_seconds.py
 	
-	 0:00:00.000001 = 1e-06 seconds
-	 0:00:00.001000 = 0.001 seconds
-	        0:00:01 = 1.0 seconds
-	        0:01:00 = 60.0 seconds
-	        1:00:00 = 3600.0 seconds
-	 1 day, 0:00:00 = 86400.0 seconds
+	0:00:00.000001  =    1e-06 seconds
+	0:00:00.001000  =    0.001 seconds
+	0:00:01         =      1.0 seconds
+	0:01:00         =     60.0 seconds
+	1:00:00         =   3600.0 seconds
+	1 day, 0:00:00  =  86400.0 seconds
 	7 days, 0:00:00 = 604800.0 seconds
 
 .. {{{end}}}
@@ -382,16 +382,16 @@ attributes of both a :class:`date` and a :class:`time` object.
 
 	$ python3 datetime_datetime.py
 	
-	Now    : 2015-12-24 09:16:23.823676
-	Today  : 2015-12-24 09:16:23.823714
-	UTC Now: 2015-12-24 14:16:23.823728
-	           year: 2015
-	          month: 12
-	            day: 24
-	           hour: 9
-	         minute: 16
-	         second: 23
-	    microsecond: 823924
+	Now    : 2015-12-24 09:32:18.674412
+	Today  : 2015-12-24 09:32:18.674452
+	UTC Now: 2015-12-24 14:32:18.674465
+	year           : 2015
+	month          : 12
+	day            : 24
+	hour           : 9
+	minute         : 32
+	second         : 18
+	microsecond    : 674657
 
 .. {{{end}}}
 
@@ -442,9 +442,9 @@ Use :func:`datetime.strptime()` to convert formatted strings to
 
 	$ python3 datetime_datetime_strptime.py
 	
-	ISO     : 2015-12-24 09:16:23.924300
-	strftime: Thu Dec 24 09:16:23 2015
-	strptime: Thu Dec 24 09:16:23 2015
+	ISO     : 2015-12-24 09:32:18.775653
+	strftime: Thu Dec 24 09:32:18 2015
+	strptime: Thu Dec 24 09:32:18 2015
 
 .. {{{end}}}
 
@@ -556,10 +556,10 @@ line shows the value in the system timezone, acquired by calling
 
 	$ python3 datetime_timezone.py
 	
-	UTC-06:00 : 2015-12-24 08:16:24.021553-06:00
-	UTC+00:00 : 2015-12-24 14:16:24.021553+00:00
-	UTC+06:00 : 2015-12-24 20:16:24.021553+06:00
-	EST       : 2015-12-24 09:16:24.021553-05:00
+	UTC-06:00 : 2015-12-24 08:32:18.870506-06:00
+	UTC+00:00 : 2015-12-24 14:32:18.870506+00:00
+	UTC+06:00 : 2015-12-24 20:32:18.870506+06:00
+	EST       : 2015-12-24 09:32:18.870506-05:00
 
 .. {{{end}}}
 
