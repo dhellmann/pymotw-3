@@ -210,7 +210,7 @@ argument to the :func:`select` call and handling the empty lists after
 This "slow" version of the client program pauses after sending each
 message, to simulate latency or other delay in transmission.
 
-.. include:: select_select_echo_slow_client.py
+.. include:: select_echo_slow_client.py
    :literal:
    :start-after: #end_pymotw_header
 
@@ -227,17 +227,17 @@ Running the new server with the slow client produces:
    waiting for the next event
      timed out, do some other work here
    waiting for the next event
-     received "b'Part one of the message.'" from ('127.0.0.1', 61144)
+     received b'Part one of the message.' from ('127.0.0.1', 61144)
    waiting for the next event
-     sending "b'Part one of the message.'" to ('127.0.0.1', 61144)
+     sending b'Part one of the message.' to ('127.0.0.1', 61144)
    waiting for the next event
    ('127.0.0.1', 61144) queue empty
    waiting for the next event
      timed out, do some other work here
    waiting for the next event
-     received "b'Part two of the message.'" from ('127.0.0.1', 61144)
+     received b'Part two of the message.' from ('127.0.0.1', 61144)
    waiting for the next event
-     sending "b'Part two of the message.'" to ('127.0.0.1', 61144)
+     sending b'Part two of the message.' to ('127.0.0.1', 61144)
    waiting for the next event
    ('127.0.0.1', 61144) queue empty
    waiting for the next event
@@ -395,29 +395,29 @@ sockets), the output is:
    waiting for the next event
      connection ('127.0.0.1', 61254)
    waiting for the next event
-     received "b'This is the message. '" from ('127.0.0.1', 61253)
-     received "b'This is the message. '" from ('127.0.0.1', 61254)
+     received b'This is the message. ' from ('127.0.0.1', 61253)
+     received b'This is the message. ' from ('127.0.0.1', 61254)
    waiting for the next event
-     sending "b'This is the message. '" to ('127.0.0.1', 61253)
-     sending "b'This is the message. '" to ('127.0.0.1', 61254)
-   waiting for the next event
-   ('127.0.0.1', 61253) queue empty
-   ('127.0.0.1', 61254) queue empty
-   waiting for the next event
-     received "b'It will be sent '" from ('127.0.0.1', 61253)
-     received "b'It will be sent '" from ('127.0.0.1', 61254)
-   waiting for the next event
-     sending "b'It will be sent '" to ('127.0.0.1', 61253)
-     sending "b'It will be sent '" to ('127.0.0.1', 61254)
+     sending b'This is the message. ' to ('127.0.0.1', 61253)
+     sending b'This is the message. ' to ('127.0.0.1', 61254)
    waiting for the next event
    ('127.0.0.1', 61253) queue empty
    ('127.0.0.1', 61254) queue empty
    waiting for the next event
-     received "b'in parts.'" from ('127.0.0.1', 61253)
-     received "b'in parts.'" from ('127.0.0.1', 61254)
+     received b'It will be sent ' from ('127.0.0.1', 61253)
+     received b'It will be sent ' from ('127.0.0.1', 61254)
    waiting for the next event
-     sending "b'in parts.'" to ('127.0.0.1', 61253)
-     sending "b'in parts.'" to ('127.0.0.1', 61254)
+     sending b'It will be sent ' to ('127.0.0.1', 61253)
+     sending b'It will be sent ' to ('127.0.0.1', 61254)
+   waiting for the next event
+   ('127.0.0.1', 61253) queue empty
+   ('127.0.0.1', 61254) queue empty
+   waiting for the next event
+     received b'in parts.' from ('127.0.0.1', 61253)
+     received b'in parts.' from ('127.0.0.1', 61254)
+   waiting for the next event
+     sending b'in parts.' to ('127.0.0.1', 61253)
+     sending b'in parts.' to ('127.0.0.1', 61254)
    waiting for the next event
    ('127.0.0.1', 61253) queue empty
    ('127.0.0.1', 61254) queue empty

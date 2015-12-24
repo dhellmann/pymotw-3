@@ -24,7 +24,7 @@ socks = [
 ]
 
 # Connect the socket to the port where the server is listening
-print('connecting to %s port %s' % server_address,
+print('connecting to {} port {}'.format(*server_address),
       file=sys.stderr)
 for s in socks:
     s.connect(server_address)
@@ -34,16 +34,16 @@ for message in messages:
 
     # Send messages on both sockets
     for s in socks:
-        print('%s: sending %r' %
-              (s.getsockname(), outgoing_data),
+        print('{}: sending {!r}'.format(s.getsockname(),
+                                        outgoing_data),
               file=sys.stderr)
         s.send(outgoing_data)
 
     # Read responses on both sockets
     for s in socks:
         data = s.recv(1024)
-        print('%s: received %r' %
-              (s.getsockname(), data),
+        print('{}: received {!r}'.format(s.getsockname(),
+                                         data),
               file=sys.stderr)
         if not data:
             print('closing socket', s.getsockname(),

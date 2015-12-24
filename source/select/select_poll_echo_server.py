@@ -18,7 +18,7 @@ server.setblocking(0)
 
 # Bind the socket to the port
 server_address = ('localhost', 10000)
-print('starting up on %s port %s' % server_address,
+print('starting up on {} port {}'.format(*server_address),
       file=sys.stderr)
 server.bind(server_address)
 
@@ -81,9 +81,9 @@ while True:
                 data = s.recv(1024)
                 if data:
                     # A readable client socket has data
-                    print('  received "%s" from %s' %
-                          (data, s.getpeername()),
-                          file=sys.stderr)
+                    print('  received {!r} from {}'.format(
+                        data, s.getpeername()), file=sys.stderr,
+                    )
                     message_queues[s].put(data)
                     # Add output channel for response
                     poller.modify(s, READ_WRITE)
@@ -118,9 +118,9 @@ while True:
                       file=sys.stderr)
                 poller.modify(s, READ_ONLY)
             else:
-                print('  sending "%s" to %s' %
-                      (next_msg, s.getpeername()),
-                      file=sys.stderr)
+                print('  sending {!r} to {}'.format(
+                    next_msg, s.getpeername()), file=sys.stderr,
+                )
                 s.send(next_msg)
 
         elif flag & select.POLLERR:
