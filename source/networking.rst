@@ -26,6 +26,11 @@ and invokes appropriate handlers when data is received.  The framework
 in :mod:`asynchat` simplifies the work needed to create bi-directional
 message based protocols on top of :mod:`asyncore`.
 
+.. toctree::
+   :maxdepth: 1
+
+   select/index
+
 ..
    .. toctree::
        :maxdepth: 1
