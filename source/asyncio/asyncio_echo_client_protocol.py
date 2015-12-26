@@ -8,6 +8,7 @@
 
 import asyncio
 import functools
+import logging
 import sys
 
 
@@ -17,15 +18,12 @@ class EchoClient(asyncio.Protocol):
         self.messages = messages
         self.loop = loop
         self.num = num
-
-    def report(self, text):
-        print('{}: {}'.format(self.num, text),
-              file=sys.stderr)
+        self.log = logging.getLogger('EchoClient%s' % num)
 
     def connection_made(self, transport):
         self.transport = transport
         self.address = transport.get_extra_info('peername')
-        self.report(
+        self.log.debug(
             'connecting to {} port {}'.format(*self.address)
         )
         # This could be transport.writelines() except that
@@ -33,21 +31,28 @@ class EchoClient(asyncio.Protocol):
         # being sent.
         for msg in self.messages:
             transport.write(msg)
-            self.report('sending {!r}'.format(msg))
+            self.log.debug('sending {!r}'.format(msg))
         if transport.can_write_eof():
             transport.write_eof()
 
     def data_received(self, data):
-        self.report('received {!r}'.format(data))
+        self.log.debug('received {!r}'.format(data))
 
     def eof_received(self):
-        self.report('received EOF')
+        self.log.debug('received EOF')
         self.transport.close()
 
     def connection_lost(self, exc):
-        self.report('server closed connection')
+        self.log.debug('server closed connection')
         self.transport.close()
 
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(name)s: %(message)s',
+    stream=sys.stderr,
+)
+log = logging.getLogger('main')
 
 messages = [
     b'This is the message. ',
@@ -75,8 +80,11 @@ for i in range(1, 3):
     connections.append(connection_factory())
 
 # Wait until the work for all of the clients is done.
-event_loop.run_until_complete(
-    asyncio.wait(connections, loop=event_loop),
-)
-
-event_loop.close()
+log.debug('waiting for clients to complete')
+try:
+    event_loop.run_until_complete(
+        asyncio.wait(connections, loop=event_loop),
+    )
+finally:
+    log.debug('closing event loop')
+    event_loop.close()

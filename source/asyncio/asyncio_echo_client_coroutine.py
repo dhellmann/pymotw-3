@@ -8,15 +8,15 @@
 
 import asyncio
 import functools
+import logging
 import sys
 
 
 async def echo_client(server_address, messages, loop, num):
 
-    def report(text):
-        print('{}: {}'.format(num, text), file=sys.stderr)
+    log = logging.getLogger('echo_client_%s' % num)
 
-    report('connecting to {} port {}'.format(*server_address))
+    log.debug('connecting to {} port {}'.format(*server_address))
     reader, writer = await asyncio.open_connection(
         *server_address, loop=loop)
 
@@ -25,17 +25,17 @@ async def echo_client(server_address, messages, loop, num):
     # being sent.
     for msg in messages:
         writer.write(msg)
-        report('sending {!r}'.format(msg))
+        log.debug('sending {!r}'.format(msg))
     writer.write_eof()
     await writer.drain()
 
-    report('waiting for response')
+    log.debug('waiting for response')
     while True:
         data = await reader.read(128)
         if data:
-            report('received {!r}'.format(data))
+            log.debug('received {!r}'.format(data))
         else:
-            report('closing')
+            log.debug('closing')
             writer.close()
             return
 
@@ -46,6 +46,13 @@ messages = [
     b'in parts.',
 ]
 server_address = ('localhost', 10000)
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(name)s: %(message)s',
+    stream=sys.stderr,
+)
+log = logging.getLogger('main')
 
 event_loop = asyncio.get_event_loop()
 

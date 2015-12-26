@@ -7,31 +7,37 @@
 #end_pymotw_header
 
 import asyncio
+import logging
 import sys
 
 
 async def echo(reader, writer):
     address = writer.get_extra_info('peername')
-    print('connection from {}'.format(address),
-          file=sys.stderr)
+    log = logging.getLogger('echo_{}_{}'.format(*address))
+    log.debug('connection accepted')
     while True:
         data = await reader.read(128)
         if data:
-            print('received {!r} from {}'.format(data, address),
-                  file=sys.stderr)
+            log.debug('received {!r}'.format(data))
             writer.write(data)
             await writer.drain()
-            print('sent {!r} to {}'.format(data, address),
-                  file=sys.stderr)
+            log.debug('sent {!r}'.format(data))
         else:
-            print('closing {}'.format(address),
-                  file=sys.stderr)
+            log.debug('closing')
             writer.close()
             return
 
 
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(name)s: %(message)s',
+    stream=sys.stderr,
+)
+log = logging.getLogger('main')
+
 server_address = ('localhost', 10000)
 event_loop = asyncio.get_event_loop()
+# event_loop.set_debug(True)
 
 # Create and start the server once, to ensure we can listen on
 # the desired port. If something goes wrong creating the server,
@@ -39,13 +45,16 @@ event_loop = asyncio.get_event_loop()
 coroutine = asyncio.start_server(echo, *server_address,
                                  loop=event_loop)
 server = event_loop.run_until_complete(coroutine)
-print('starting up on {} port {}'.format(*server_address),
-      file=sys.stderr)
+log.debug('starting up on {} port {}'.format(*server_address))
 
 # Re-enter the event loop permanently to handle all connections.
 try:
     event_loop.run_forever()
+except KeyboardInterrupt:
+    pass
 finally:
+    log.debug('closing server')
     server.close()
     event_loop.run_until_complete(server.wait_closed())
+    log.debug('closing event loop')
     event_loop.close()
