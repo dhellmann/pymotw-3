@@ -20,11 +20,10 @@ classes can be combined to create servers that fork or use threads and
 support TCP or UDP.  Only the actual message handling needs to be
 provided by the application.
 
-:mod:`asyncore` implements an asynchronous networking stack with a
-callback-based API.  It encapsulates the polling loop and buffering,
-and invokes appropriate handlers when data is received.  The framework
-in :mod:`asynchat` simplifies the work needed to create bi-directional
-message based protocols on top of :mod:`asyncore`.
+:mod:`asyncio` provides a framework for concurrency and asynchronous
+I/O management using either a class-based protocol system or
+coroutines. :mod:`asyncio` replaces the old :mod:`asyncore` and
+:mod:`asynchat` modules, which are still available but deprecated.
 
 .. toctree::
    :maxdepth: 1
@@ -32,16 +31,6 @@ message based protocols on top of :mod:`asyncore`.
    select/index
    socketserver/index
    asyncio/index
-
-..
-   .. toctree::
-       :maxdepth: 1
-
-       socket/index
-       select/index
-       SocketServer/index
-       asyncore/index
-       asynchat/index
 
 
 ..    io/index
