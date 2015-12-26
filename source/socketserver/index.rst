@@ -133,21 +133,21 @@ Running the program produces:
 	EchoServer: __init__
 	EchoServer: server_activate
 	EchoServer: waiting for request
-	client: Server on 127.0.0.1:53676
 	EchoServer: Handling requests, press <Ctrl-C> to quit
+	client: Server on 127.0.0.1:53917
 	client: creating socket
 	client: connecting to server
 	client: sending data: b'Hello, world'
 	client: waiting for response
 	EchoServer: verify_request(<socket.socket fd=7, family=AddressFamily
 	.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 
-	53676), raddr=('127.0.0.1', 53677)>, ('127.0.0.1', 53677))
+	53917), raddr=('127.0.0.1', 53918)>, ('127.0.0.1', 53918))
 	EchoServer: process_request(<socket.socket fd=7, family=AddressFamil
 	y.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1',
-	 53676), raddr=('127.0.0.1', 53677)>, ('127.0.0.1', 53677))
+	 53917), raddr=('127.0.0.1', 53918)>, ('127.0.0.1', 53918))
 	EchoServer: finish_request(<socket.socket fd=7, family=AddressFamily
 	.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 
-	53676), raddr=('127.0.0.1', 53677)>, ('127.0.0.1', 53677))
+	53917), raddr=('127.0.0.1', 53918)>, ('127.0.0.1', 53918))
 	EchoRequestHandler: __init__
 	EchoRequestHandler: setup
 	EchoRequestHandler: handle
@@ -157,7 +157,7 @@ Running the program produces:
 	EchoServer: shutdown()
 	EchoServer: close_request(<socket.socket fd=7, family=AddressFamily.
 	AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5
-	3676), raddr=('127.0.0.1', 53677)>)
+	3917), raddr=('127.0.0.1', 53918)>)
 	client: closing socket
 	client: done
 
@@ -243,9 +243,9 @@ from the server:
 
 	$ python3 socketserver_forking.py
 	
-	Server loop running in process: 67704
+	Server loop running in process: 69953
 	Sending : b'Hello, world'
-	Received: b'67705: Hello, world'
+	Received: b'69954: Hello, world'
 
 .. {{{end}}}
 

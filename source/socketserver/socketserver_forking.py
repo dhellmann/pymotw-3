@@ -12,8 +12,8 @@ class ForkingEchoRequestHandler(socketserver.BaseRequestHandler):
     def handle(self):
         # Echo the back to the client
         data = self.request.recv(1024)
-        cur_pid = str(os.getpid()).encode()
-        response = b'%s: %s' % (cur_pid, data)
+        cur_pid = os.getpid()
+        response = b'%d: %s' % (cur_pid, data)
         self.request.send(response)
         return
 
@@ -44,12 +44,12 @@ if __name__ == '__main__':
 
     # Send the data
     message = 'Hello, world'.encode()
-    print('Sending : %r' % message)
+    print('Sending : {!r}'.format(message))
     len_sent = s.send(message)
 
     # Receive a response
     response = s.recv(1024)
-    print('Received: %r' % response)
+    print('Received: {!r}'.format(response))
 
     # Clean up
     server.shutdown()

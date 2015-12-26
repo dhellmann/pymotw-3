@@ -46,12 +46,12 @@ if __name__ == '__main__':
 
     # Send the data
     message = b'Hello, world'
-    print('Sending : %r' % message)
+    print('Sending : {!r}'.format(message))
     len_sent = s.send(message)
 
     # Receive a response
     response = s.recv(1024)
-    print('Received: %r' % response)
+    print('Received: {!r}'.format(response))
 
     # Clean up
     server.shutdown()
