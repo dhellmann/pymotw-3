@@ -10,13 +10,13 @@
 The :mod:`socketserver` module is a framework for creating network
 servers. It defines classes for handling synchronous network requests
 (the server request handler blocks until the request is completed)
-over TCP, UDP, Unix streams, and Unix datagrams. It also provides
+over TCP, UDP, UNIX streams, and UNIX datagrams. It also provides
 mix-in classes for easily converting servers to use a separate thread
 or process for each request.
 
 Responsibility for processing a request is split between a server
 class and a request handler class. The server deals with the
-communication issues such as listening on a socket and accepting
+communication issues, such as listening on a socket and accepting
 connections, and the request handler deals with the "protocol"
 issues like interpreting incoming data, processing it, and sending
 data back to the client. This division of responsibility means that
@@ -32,7 +32,7 @@ There are five different server classes defined in
 intended to be instantiated and used directly. :class:`TCPServer` uses
 TCP/IP sockets to communicate. :class:`UDPServer` uses datagram
 sockets. :class:`UnixStreamServer` and :class:`UnixDatagramServer` use
-Unix-domain sockets and are only available on Unix platforms.
+UNIX-domain sockets and are only available on UNIX platforms.
 
 Server Objects
 ==============
@@ -53,13 +53,13 @@ can call :func:`handle_request` directly.
 Implementing a Server
 =====================
 
-When creating a server, it is usually sufficient to re-use one of the
+When creating a server, it is usually sufficient to reuse one of the
 existing classes and provide a custom request handler class.  For
 other cases, :class:`BaseServer` includes several methods that can be
 overridden in a subclass.
 
-* ``verify_request(request, client_address)``: Return True to process
-  the request or False to ignore it. For example, a server could
+* ``verify_request(request, client_address)``: Return ``True`` to process
+  the request or ``False`` to ignore it. For example, a server could
   refuse requests from an IP range or if it is overloaded.
 
 * ``process_request(request, client_address)``: Calls
@@ -120,7 +120,7 @@ the data is echoed back.
 .. literalinclude:: socketserver_echo.py
    :lines: 107-
 
-Running the program produces:
+Running the program produces the following output.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'socketserver_echo.py', break_lines_at=68))
@@ -210,7 +210,7 @@ For threads, use :class:`ThreadingMixIn`.
     :start-after: #end_pymotw_header
 
 The response from this threaded server includes the identifier of the
-thread where the request is handled:
+thread where the request is handled.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'socketserver_threaded.py'))
