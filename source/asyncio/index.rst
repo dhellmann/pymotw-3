@@ -27,6 +27,23 @@
 
     * :mod:`socketserver` -- Framework for creating network servers
 
+    * `The New asyncio Module in Python 3.4: Event Loops
+      <http://www.drdobbs.com/open-source/the-new-asyncio-module-in-python-34-even/240168401>`__
+      -- Article by Gastón Hillar in Dr. Dobb's
+
+    * `Exploring Python 3's Asyncio by Example
+      <http://www.giantflyingsaucer.com/blog/?p=5557>`__ -- Blog post
+      by Chat Lung
+
+    * `A Web Crawler With asyncio Coroutines
+      <http://aosabook.org/en/500L/a-web-crawler-with-asyncio-coroutines.html>`__
+      -- An article in *The Architecture of Open Source Applications*
+      by A. Jesse Jiryu Davis and Guido van Rossum
+
+    * `Playing with asyncio
+      <http://www.getoffmalawn.com/blog/playing-with-asyncio>`__ --
+      blog post by Nathan Hoad
+
     * *Unix Network Programming, Volume 1: The Sockets Networking API, 3/E*
       By W. Richard Stevens, Bill Fenner, and Andrew
       M. Rudoff. Published by Addison-Wesley Professional, 2004.
