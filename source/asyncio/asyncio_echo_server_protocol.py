@@ -25,6 +25,12 @@ class EchoServer(asyncio.Protocol):
         print('sent {!r} to {}'.format(data, self.address),
               file=sys.stderr)
 
+    def eof_received(self):
+        print('received EOF from {}'.format(self.address),
+              file=sys.stderr)
+        if self.transport.can_write_eof():
+            self.transport.write_eof()
+
     def connection_lost(self, error):
         if error:
             print('error from {}: {}'.format(self.address,
