@@ -10,3 +10,5 @@ source/glob/dir
 .tox
 /source/csv/testout.csv
 /source/csv/testout_quoted.csv
+*.egg-info
+dist/
