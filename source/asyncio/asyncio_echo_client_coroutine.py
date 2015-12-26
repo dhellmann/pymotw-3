@@ -14,8 +14,7 @@ import sys
 async def echo_client(server_address, messages, loop, num):
 
     def report(text):
-        print('{}: {}'.format(num, text),
-              file=sys.stderr)
+        print('{}: {}'.format(num, text), file=sys.stderr)
 
     report('connecting to {} port {}'.format(*server_address))
     reader, writer = await asyncio.open_connection(
@@ -27,9 +26,10 @@ async def echo_client(server_address, messages, loop, num):
     for msg in messages:
         writer.write(msg)
         report('sending {!r}'.format(msg))
-    await writer.drain()
     writer.write_eof()
+    await writer.drain()
 
+    report('waiting for response')
     while True:
         data = await reader.read(128)
         if data:
@@ -49,9 +49,8 @@ server_address = ('localhost', 10000)
 
 event_loop = asyncio.get_event_loop()
 
-connections = []
-
 # Build multiple clients
+connections = []
 for i in range(1, 3):
     connections.append(
         echo_client(server_address, messages, event_loop, i)

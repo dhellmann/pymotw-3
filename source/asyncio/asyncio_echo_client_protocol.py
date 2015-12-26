@@ -58,9 +58,8 @@ server_address = ('localhost', 10000)
 
 event_loop = asyncio.get_event_loop()
 
-connections = []
-
 # Build multiple clients
+connections = []
 for i in range(1, 3):
     client_factory = functools.partial(
         EchoClient,
