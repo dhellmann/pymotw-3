@@ -144,6 +144,11 @@ Deprecated Modules
 These modules are still present in the standard library, but are
 deprecated and should not be used in new Python 3 programs.
 
+asyncore and asynchat
+  Asynchronous I/O and protocol handlers.
+
+  See :mod:`asyncio` instead.
+
 formatter
   Generic output formatter and device interface.
 
