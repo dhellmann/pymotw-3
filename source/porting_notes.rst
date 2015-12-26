@@ -338,6 +338,18 @@ shelve
 The default output format for :mod:`shelve` may create a file with a
 ``.db`` extension added to the name given to :func:`shelve.open`.
 
+.. _porting-socketserver:
+
+socketserver
+============
+
+.. index::
+   pair: porting; socketserver
+
+The :mod:`socketserver` module was named ``SocketServer`` under
+Python 2.
+
+
 .. _porting-sys:
 
 sys
