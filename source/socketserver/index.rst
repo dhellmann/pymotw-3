@@ -254,9 +254,11 @@ from the server:
 
     * :pydoc:`socketserver`
 
-    * :mod:`socket` -- Low-level network communication.
+    * :mod:`socket` -- Low-level network communication
 
     * :mod:`select` -- Low-level asynchronous I/O tools
+
+    * :mod:`asyncio` -- Asynchronous I/O, event loop, and concurrency tools
 
     * :mod:`SimpleXMLRPCServer` -- XML-RPC server built using
       :mod:`socketserver`.

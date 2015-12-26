@@ -17,9 +17,11 @@
     * `trollius <https://pypi.python.org/pypi/trollius>`__ -- A port
       of Tulip, the original version of asyncio, to Python 2.
 
-    * :mod:`socket` -- Low-level network communication.
+    * :mod:`socket` -- Low-level network communication
 
     * :mod:`select` -- Low-level asynchronous I/O tools
+
+    * :mod:`socketserver` -- Framework for creating network servers
 
     * *Unix Network Programming, Volume 1: The Sockets Networking API, 3/E*
       By W. Richard Stevens, Bill Fenner, and Andrew
