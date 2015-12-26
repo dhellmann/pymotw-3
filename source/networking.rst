@@ -31,6 +31,7 @@ message based protocols on top of :mod:`asyncore`.
 
    select/index
    socketserver/index
+   asyncio/index
 
 ..
    .. toctree::
