@@ -16,7 +16,9 @@ class EchoServer(asyncio.Protocol):
     def connection_made(self, transport):
         self.transport = transport
         self.address = transport.get_extra_info('peername')
-        self.log = logging.getLogger('EchoServer_{}_{}'.format(*self.address))
+        self.log = logging.getLogger(
+            'EchoServer_{}_{}'.format(*self.address)
+        )
         self.log.debug('connection accepted')
 
     def data_received(self, data):
