@@ -14,6 +14,10 @@
     * :pep:`3156` -- *Asynchronous IO Support Rebooted: the "asyncio"
       Module*
 
+    * :pep:`380` -- *Syntax for Delegating to a Subgenerator*
+
+    * :pep:`492` -- *Coroutines with async and await syntax*
+
     * `trollius <https://pypi.python.org/pypi/trollius>`__ -- A port
       of Tulip, the original version of asyncio, to Python 2.
 
