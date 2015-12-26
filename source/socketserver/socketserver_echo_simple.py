@@ -3,9 +3,10 @@
 """
 #end_pymotw_header
 
-import SocketServer
+import socketserver
 
-class EchoRequestHandler(SocketServer.BaseRequestHandler):
+
+class EchoRequestHandler(socketserver.BaseRequestHandler):
 
     def handle(self):
         # Echo the back to the client
@@ -13,16 +14,17 @@ class EchoRequestHandler(SocketServer.BaseRequestHandler):
         self.request.send(data)
         return
 
+
 if __name__ == '__main__':
     import socket
     import threading
 
-    address = ('localhost', 0) # let the kernel assign a port
-    server = SocketServer.TCPServer(address, EchoRequestHandler)
-    ip, port = server.server_address # what port was assigned?
+    address = ('localhost', 0)  # let the kernel assign a port
+    server = socketserver.TCPServer(address, EchoRequestHandler)
+    ip, port = server.server_address  # what port was assigned?
 
     t = threading.Thread(target=server.serve_forever)
-    t.setDaemon(True) # don't hang on exit
+    t.setDaemon(True)  # don't hang on exit
     t.start()
 
     # Connect to the server
@@ -30,13 +32,13 @@ if __name__ == '__main__':
     s.connect((ip, port))
 
     # Send the data
-    message = 'Hello, world'
-    print 'Sending : "%s"' % message
+    message = 'Hello, world'.encode()
+    print('Sending : %r' % message)
     len_sent = s.send(message)
 
     # Receive a response
     response = s.recv(len_sent)
-    print 'Received: "%s"' % response
+    print('Received: %r' % response)
 
     # Clean up
     server.shutdown()

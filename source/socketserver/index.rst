@@ -1,14 +1,13 @@
-==========================================
- SocketServer -- Creating Network Servers
-==========================================
+===========================================
+ socketserver --- Creating Network Servers
+===========================================
 
-.. module:: SocketServer
+.. module:: socketserver
     :synopsis: Creating network servers.
 
 :Purpose: Creating network servers.
-:Python Version: 1.4 and later
 
-The :mod:`SocketServer` module is a framework for creating network
+The :mod:`socketserver` module is a framework for creating network
 servers. It defines classes for handling synchronous network requests
 (the server request handler blocks until the request is completed)
 over TCP, UDP, Unix streams, and Unix datagrams. It also provides
@@ -29,7 +28,7 @@ Server Types
 ============
 
 There are five different server classes defined in
-:mod:`SocketServer`.  :class:`BaseServer` defines the API, and is not
+:mod:`socketserver`.  :class:`BaseServer` defines the API, and is not
 intended to be instantiated and used directly. :class:`TCPServer` uses
 TCP/IP sockets to communicate. :class:`UDPServer` uses datagram
 sockets. :class:`UnixStreamServer` and :class:`UnixDatagramServer` use
@@ -44,12 +43,12 @@ format depends on the server type and the socket family used. Refer to
 the :mod:`socket` module documentation for details.
 
 Once the server object is instantiated, use either
-:func:`handle_request()` or :func:`serve_forever()` to process
-requests. The :func:`serve_forever()` method calls
-:func:`handle_request()` in an infinite loop, but if an application
+:func:`handle_request` or :func:`serve_forever` to process
+requests. The :func:`serve_forever` method calls
+:func:`handle_request` in an infinite loop, but if an application
 needs to integrate the server with another event loop or use
-:func:`select()` to monitor several sockets for different servers, it
-can call :func:`handle_request()` directly.
+:func:`select` to monitor several sockets for different servers, it
+can call :func:`handle_request` directly.
 
 Implementing a Server
 =====================
@@ -64,13 +63,13 @@ overridden in a subclass.
   refuse requests from an IP range or if it is overloaded.
 
 * ``process_request(request, client_address)``: Calls
-  :func:`finish_request()` to actually do the work of handling the
+  :func:`finish_request` to actually do the work of handling the
   request.  It can also create a separate thread or process, as the
   mix-in classes do.
 
 * ``finish_request(request, client_address)``: Creates a request
   handler instance using the class given to the server's
-  constructor. Calls :func:`handle()` on the request handler to
+  constructor. Calls :func:`handle` on the request handler to
   process the request.
 
 Request Handlers
@@ -84,15 +83,15 @@ incoming data channel, processes it, and writes a response back
 out. There are three methods available to be over-ridden.
 
 * ``setup()``: Prepares the request handler for the request. In the
-  :class:`StreamRequestHandler` the :func:`setup()` method creates
+  :class:`StreamRequestHandler` the :func:`setup` method creates
   file-like objects for reading from and writing to the socket.
 
 * ``handle()``: Does the real work for the request. Parse the incoming
   request, process the data, and send a response.
 
-* ``finish()``: Cleans up anything created during :func:`setup()`.
+* ``finish()``: Cleans up anything created during :func:`setup`.
 
-Many handlers can be implemented with only a :func:`handle()` method.
+Many handlers can be implemented with only a :func:`handle` method.
 
 Echo Example
 ============
@@ -101,60 +100,64 @@ This example implements a simple server/request handler pair that
 accepts TCP connections and echos back any data sent by the
 client. It starts with the request handler.
 
-.. literalinclude:: SocketServer_echo.py
-   :lines: 6-39
+.. literalinclude:: socketserver_echo.py
+   :lines: 6-40
 
 The only method that actually needs to be implemented is
-:func:`EchoRequestHandler.handle()`, but versions of all of the
+:func:`EchoRequestHandler.handle`, but versions of all of the
 methods described earlier are included to illustrate the sequence of
 calls made.  The :class:`EchoServer` class does nothing
 different from :class:`TCPServer`, except log when each method is
 called.
 
-.. literalinclude:: SocketServer_echo.py
-   :lines: 41-96
+.. literalinclude:: socketserver_echo.py
+   :lines: 43-104
 
 The last step is to add a main program that sets up the server to run in
 a thread, and sends it data to illustrate which methods are called as
 the data is echoed back.
 
-.. literalinclude:: SocketServer_echo.py
-   :lines: 99-
+.. literalinclude:: socketserver_echo.py
+   :lines: 107-
 
 Running the program produces:
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'SocketServer_echo.py', break_lines_at=68))
+.. cog.out(run_script(cog.inFile, 'socketserver_echo.py', break_lines_at=68))
 .. }}}
 
 ::
 
-	$ python SocketServer_echo.py
-
+	$ python3 socketserver_echo.py
+	
 	EchoServer: __init__
 	EchoServer: server_activate
 	EchoServer: waiting for request
+	client: Server on 127.0.0.1:53676
 	EchoServer: Handling requests, press <Ctrl-C> to quit
-	client: Server on 127.0.0.1:62859
 	client: creating socket
 	client: connecting to server
-	EchoServer: verify_request(<socket._socketobject object at 0x100e1b8
-	a0>, ('127.0.0.1', 62860))
-	EchoServer: process_request(<socket._socketobject object at 0x100e1b
-	8a0>, ('127.0.0.1', 62860))
-	EchoServer: finish_request(<socket._socketobject object at 0x100e1b8
-	a0>, ('127.0.0.1', 62860))
+	client: sending data: b'Hello, world'
+	client: waiting for response
+	EchoServer: verify_request(<socket.socket fd=7, family=AddressFamily
+	.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 
+	53676), raddr=('127.0.0.1', 53677)>, ('127.0.0.1', 53677))
+	EchoServer: process_request(<socket.socket fd=7, family=AddressFamil
+	y.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1',
+	 53676), raddr=('127.0.0.1', 53677)>, ('127.0.0.1', 53677))
+	EchoServer: finish_request(<socket.socket fd=7, family=AddressFamily
+	.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 
+	53676), raddr=('127.0.0.1', 53677)>, ('127.0.0.1', 53677))
 	EchoRequestHandler: __init__
 	EchoRequestHandler: setup
 	EchoRequestHandler: handle
-	client: sending data: "Hello, world"
-	EchoRequestHandler: recv()->"Hello, world"
+	EchoRequestHandler: recv()->"b'Hello, world'"
 	EchoRequestHandler: finish
-	EchoServer: close_request(<socket._socketobject object at 0x100e1b8a
-	0>)
-	client: waiting for response
-	client: response from server: "Hello, world"
+	client: response from server: b'Hello, world'
 	EchoServer: shutdown()
+	EchoServer: close_request(<socket.socket fd=7, family=AddressFamily.
+	AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5
+	3676), raddr=('127.0.0.1', 53677)>)
 	client: closing socket
 	client: done
 
@@ -171,7 +174,7 @@ Here is a condensed version of the same server, without the logging
 calls.  Only the :func:`handle` method in the request handler class
 needs to be provided.
 
-.. include:: SocketServer_echo_simple.py
+.. include:: socketserver_echo_simple.py
     :literal:
     :start-after: #end_pymotw_header
 
@@ -179,15 +182,15 @@ In this case, no special server class is required since the
 :mod:`TCPServer` handles all of the server requirements.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'SocketServer_echo_simple.py'))
+.. cog.out(run_script(cog.inFile, 'socketserver_echo_simple.py'))
 .. }}}
 
 ::
 
-	$ python SocketServer_echo_simple.py
-
-	Sending : "Hello, world"
-	Received: "Hello, world"
+	$ python3 socketserver_echo_simple.py
+	
+	Sending : b'Hello, world'
+	Received: b'Hello, world'
 
 .. {{{end}}}
 
@@ -196,13 +199,13 @@ Threading and Forking
 
 To add threading or forking support to a server, include the
 appropriate mix-in in the class hierarchy for the server. The mix-in
-classes override :func:`process_request()` to start a new thread or
+classes override :func:`process_request` to start a new thread or
 process when a request is ready to be handled, and the work is done in
 the new child.
 
 For threads, use :class:`ThreadingMixIn`.
 
-.. include:: SocketServer_threaded.py
+.. include:: socketserver_threaded.py
     :literal:
     :start-after: #end_pymotw_header
 
@@ -210,22 +213,22 @@ The response from this threaded server includes the identifier of the
 thread where the request is handled:
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'SocketServer_threaded.py'))
+.. cog.out(run_script(cog.inFile, 'socketserver_threaded.py'))
 .. }}}
 
 ::
 
-	$ python SocketServer_threaded.py
-
+	$ python3 socketserver_threaded.py
+	
 	Server loop running in thread: Thread-1
-	Sending : "Hello, world"
-	Received: "Thread-2: Hello, world"
+	Sending : b'Hello, world'
+	Received: b'Thread-2: Hello, world'
 
 .. {{{end}}}
 
 For separate processes, use the :class:`ForkingMixIn`.
 
-.. include:: SocketServer_forking.py
+.. include:: socketserver_forking.py
     :literal:
     :start-after: #end_pymotw_header
 
@@ -233,28 +236,36 @@ In this case, the process ID of the child is included in the response
 from the server:
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'SocketServer_forking.py'))
+.. cog.out(run_script(cog.inFile, 'socketserver_forking.py'))
 .. }}}
 
 ::
 
-	$ python SocketServer_forking.py
-
-	Server loop running in process: 12797
-	Sending : "Hello, world"
-	Received: "12798: Hello, world"
+	$ python3 socketserver_forking.py
+	
+	Server loop running in process: 67704
+	Sending : b'Hello, world'
+	Received: b'67705: Hello, world'
 
 .. {{{end}}}
 
 
 .. seealso::
 
-    `SocketServer <http://docs.python.org/lib/module-SocketServer.html>`_
-        Standard library documentation for this module.
+    * :pydoc:`socketserver`
 
-    :mod:`asyncore`
-        Use ``asyncore`` to create asynchronous servers that do not
-        block while processing a request.
+    * :mod:`socket` -- Low-level network communication.
 
-    :mod:`SimpleXMLRPCServer`
-        XML-RPC server built using :mod:`SocketServer`.
+    * :mod:`select` -- Low-level asynchronous I/O tools
+
+    * :mod:`SimpleXMLRPCServer` -- XML-RPC server built using
+      :mod:`socketserver`.
+
+    * *Unix Network Programming, Volume 1: The Sockets Networking API, 3/E*
+      By W. Richard Stevens, Bill Fenner, and Andrew
+      M. Rudoff. Published by Addison-Wesley Professional, 2004.
+      ISBN-10: 0131411551
+
+    * *Foundations of Python Network Programminng, 3/E* By Brandon
+      Rhodes and John Goerzen. Published by Apress, 2014. ISBN-10:
+      1430258543
