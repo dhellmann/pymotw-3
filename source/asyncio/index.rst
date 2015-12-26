@@ -18,14 +18,18 @@
 
     * :pep:`492` -- *Coroutines with async and await syntax*
 
-    * `trollius <https://pypi.python.org/pypi/trollius>`__ -- A port
-      of Tulip, the original version of asyncio, to Python 2.
-
     * :mod:`socket` -- Low-level network communication
 
     * :mod:`select` -- Low-level asynchronous I/O tools
 
     * :mod:`socketserver` -- Framework for creating network servers
+
+    * `trollius <https://pypi.python.org/pypi/trollius>`__ -- A port
+      of Tulip, the original version of asyncio, to Python 2.
+
+    * `Twisted <https://twistedmatrix.com/>`__ -- An extensible
+      framework for Python programming, with special focus on
+      event-based network programming and multiprotocol integration.
 
     * `The New asyncio Module in Python 3.4: Event Loops
       <http://www.drdobbs.com/open-source/the-new-asyncio-module-in-python-34-even/240168401>`__
@@ -43,6 +47,10 @@
     * `Playing with asyncio
       <http://www.getoffmalawn.com/blog/playing-with-asyncio>`__ --
       blog post by Nathan Hoad
+
+    * `Async I/O and Python
+      <https://blogs.gnome.org/markmc/2013/06/04/async-io-and-python/>`__
+      -- blog post by Mark McLoughlin
 
     * *Unix Network Programming, Volume 1: The Sockets Networking API, 3/E*
       By W. Richard Stevens, Bill Fenner, and Andrew
