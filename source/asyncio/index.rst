@@ -20,17 +20,17 @@ future, to enable one coroutine to wait for another to complete, for
 handling system signals, and for recognizing other events that may be
 reasons for an application to change what it is working on.
 
-.. note::
-
-   :mod:`asyncio` is still a *provisional* module. The API may change
-   in backwards-incompatible ways, and the entire module may be
-   removed.
-
 .. toctree::
    :maxdepth: 1
 
    concepts
    echo_protocol
+
+.. note::
+
+   :mod:`asyncio` is still a *provisional* module. The API may change
+   in backwards-incompatible ways, and the entire module may be
+   removed, though that is much less likely.
 
 ..
     - concepts
