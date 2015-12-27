@@ -2,6 +2,9 @@
  Concepts
 ==========
 
+Event Loop
+==========
+
 The framework provided by :mod:`asyncio` is centered on the *event
 loop*, a first class object responsible for efficiently handling I/O
 events, system events, and application context changes. Several loop
@@ -19,6 +22,9 @@ short period of time when no more work can be done in the current
 context. For example, if there is no more data to read from a socket
 the server should yield control back to the event loop.
 
+Coroutines
+==========
+
 The mechanism for yielding depends on the abstraction layer being
 used, but underlying everything is the concept of Python's
 *coroutines*, functions that give up control to the caller without
@@ -26,12 +32,16 @@ losing their state. Python 3.5 introduced new language features to
 define such co-routines natively using ``async def`` and ``await``,
 but earlier versions of Python 3 can use generator functions wrapped
 with the ``@asyncio.coroutine`` decorator and ``yield from`` to
-achieve the same effect.  A class-based abstraction layer for
-*protocols* and *transports* is also provided for writing code using
-callbacks instead of writing coroutines directly. In both models,
-explicitly changing context by re-entering the event loop takes the
-place of implicit context changes in Python's threading
-implementation.
+achieve the same effect.
+
+Protocols and Transports
+========================
+
+A class-based abstraction layer for *protocols* and *transports* is
+also provided for writing code using callbacks instead of writing
+coroutines directly. In both models, explicitly changing context by
+re-entering the event loop takes the place of implicit context changes
+in Python's threading implementation.
 
 
 
