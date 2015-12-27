@@ -38,6 +38,7 @@ class EchoServer(asyncio.Protocol):
             self.log.error('ERROR: {}'.format(error))
         else:
             self.log.debug('closing')
+        super().connection_lost(error)
 
 
 logging.basicConfig(

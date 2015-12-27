@@ -15,7 +15,7 @@ The server starts by importing the modules it needs to set up
 object.
 
 .. literalinclude:: asyncio_echo_server_protocol.py
-   :lines: 9-14,43-50
+   :lines: 9-14,44-51
 
 It then defines a subclass of :class:`asyncio.Protocol` to handle
 client communication. The protocol object's methods are invoked based
@@ -63,7 +63,7 @@ there was an error, the argument contains an appropriate exception
 object. Otherwise it is ``None``.
 
 .. literalinclude:: asyncio_echo_server_protocol.py
-   :lines: 36-40
+   :lines: 36-41
 
 There are two steps to starting the server. First the application
 tells the event loop to create a new server object using the protocol
@@ -74,7 +74,7 @@ server. Completing the coroutine produces a :class:`asyncio.Server`
 instance tied to the event loop.
 
 .. literalinclude:: asyncio_echo_server_protocol.py
-   :lines: 52-56
+   :lines: 53-57
 
 Then the event loop needs to be run in order to process events and
 handle client requests. For a long-running service, the
