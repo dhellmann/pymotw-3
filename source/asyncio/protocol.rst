@@ -111,12 +111,14 @@ When the client successfully connects to the server, it starts
 communicating immediately.  The sequence of messages is sent one at a
 time, although the underlying networking code may combine multiple
 messages into one transmission. When all of the messages are
-exhausted, an EOF is sent. Although it appears that the data is all
-being sent immediately, in fact the transport object buffers the
-outgoing data and sets up a callback to actually transmit when the
-socket's buffer is ready to receive data. This is all handled
-transparently, so the application code can be written as though the
-I/O operation is happening right away.
+exhausted, an EOF is sent.
+
+Although it appears that the data is all being sent immediately, in
+fact the transport object buffers the outgoing data and sets up a
+callback to actually transmit when the socket's buffer is ready to
+receive data. This is all handled transparently, so the application
+code can be written as though the I/O operation is happening right
+away.
 
 .. literalinclude:: asyncio_echo_client_protocol.py
    :lines: 30-43
@@ -133,23 +135,100 @@ and the future object is marked as done by setting a result.
 .. literalinclude:: asyncio_echo_client_protocol.py
    :lines: 48-58
 
-The event loop has no facility for passing extra arguments to the
-protocol constructor, so it is necessary to create a *partial* to wrap
-the client class and pass the list of messages to send and the
-:class:`Future` instance. That new callable can then be used in place
-of the class when calling :func:`create_connection` to establish the
-client connection.
+Normally the protocol class is passed to the event loop to create the
+connection. In this case, because the event loop has no facility for
+passing extra arguments to the protocol constructor, it is necessary
+to create a *partial* to wrap the client class and pass the list of
+messages to send and the :class:`Future` instance. That new callable
+is then used in place of the class when calling
+:func:`create_connection` to establish the client connection.
 
 .. literalinclude:: asyncio_echo_client_protocol.py
    :lines: 70-80
 
 To trigger the client to run, the event loop is called once with the
 coroutine for creating the client and then again with the
-``client_completed`` :class:`Future`. Using two calls like this avoids
-having an infinite loop in the client program, which likely wants to
-exit after it has finished communicating with the server.
+:class:`Future` instance given to the client to communicate when it is
+finished. Using two calls like this avoids having an infinite loop in
+the client program, which likely wants to exit after it has finished
+communicating with the server.
 
 .. literalinclude:: asyncio_echo_client_protocol.py
    :lines: 82-
 
+Output
+======
 
+Running the server in one window and the client in another produces
+the following output.
+
+::
+
+    $ python3 asyncio_echo_client_protocol.py
+    asyncio: Using selector: KqueueSelector
+    main: waiting for client to complete
+    EchoClient: connecting to ::1 port 10000
+    EchoClient: sending b'This is the message. '
+    EchoClient: sending b'It will be sent '
+    EchoClient: sending b'in parts.'
+    EchoClient: received b'This is the message. It will be sent in parts.'
+    EchoClient: received EOF
+    EchoClient: server closed connection
+    main: closing event loop
+
+    $ python3 asyncio_echo_client_protocol.py
+    asyncio: Using selector: KqueueSelector
+    main: waiting for client to complete
+    EchoClient: connecting to ::1 port 10000
+    EchoClient: sending b'This is the message. '
+    EchoClient: sending b'It will be sent '
+    EchoClient: sending b'in parts.'
+    EchoClient: received b'This is the message. It will be sent in parts.'
+    EchoClient: received EOF
+    EchoClient: server closed connection
+    main: closing event loop
+
+    $ python3 asyncio_echo_client_protocol.py
+    asyncio: Using selector: KqueueSelector
+    main: waiting for client to complete
+    EchoClient: connecting to ::1 port 10000
+    EchoClient: sending b'This is the message. '
+    EchoClient: sending b'It will be sent '
+    EchoClient: sending b'in parts.'
+    EchoClient: received b'This is the message. It will be sent in parts.'
+    EchoClient: received EOF
+    EchoClient: server closed connection
+    main: closing event loop
+
+::
+
+    $ python3 asyncio_echo_server_protocol.py
+    asyncio: Using selector: KqueueSelector
+    main: starting up on localhost port 10000
+    EchoServer_::1_63347: connection accepted
+    EchoServer_::1_63347: received b'This is the message. It will be sent in parts.'
+    EchoServer_::1_63347: sent b'This is the message. It will be sent in parts.'
+    EchoServer_::1_63347: received EOF
+    EchoServer_::1_63347: closing
+
+    EchoServer_::1_63387: connection accepted
+    EchoServer_::1_63387: received b'This is the message. '
+    EchoServer_::1_63387: sent b'This is the message. '
+    EchoServer_::1_63387: received b'It will be sent in parts.'
+    EchoServer_::1_63387: sent b'It will be sent in parts.'
+    EchoServer_::1_63387: received EOF
+    EchoServer_::1_63387: closing
+
+    EchoServer_::1_63389: connection accepted
+    EchoServer_::1_63389: received b'This is the message. It will be sent '
+    EchoServer_::1_63389: sent b'This is the message. It will be sent '
+    EchoServer_::1_63389: received b'in parts.'
+    EchoServer_::1_63389: sent b'in parts.'
+    EchoServer_::1_63389: received EOF
+    EchoServer_::1_63389: closing
+
+Although the client always sends the messages separately, the first
+time the client runs the server receives one large message and echoes
+that back to the client. These results vary in subsequent runs, based
+on how busy the network is and whether the socket is flushed before
+all of the data is prepared.
