@@ -1,6 +1,6 @@
-=======================
- Processes and Threads
-=======================
+====================================
+ Processes, Threads, and Coroutines
+====================================
 
 Python includes sophisticated tools for managing concurrent operations
 using processes and threads.  Even many relatively simple programs can
@@ -34,6 +34,16 @@ for sharing data and passing messages between them so that in many
 cases converting from threads to processes is as simple as changing a
 few :command:`import` statements.
 
+:mod:`asyncio` provides a framework for concurrency and asynchronous
+I/O management using either a class-based protocol system or
+coroutines. :mod:`asyncio` replaces the old :mod:`asyncore` and
+:mod:`asynchat` modules, which are still available but deprecated.
+
+.. toctree::
+   :maxdepth: 1
+
+   asyncio/index
+
 ..
    .. toctree::
       :maxdepth: 1
@@ -42,4 +52,4 @@ few :command:`import` statements.
       signal/index
       threading/index
       multiprocessing/index
-   
+      asyncio/index
