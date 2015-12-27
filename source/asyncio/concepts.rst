@@ -25,14 +25,13 @@ the server should yield control back to the event loop.
 Coroutines
 ==========
 
-The mechanism for yielding depends on the abstraction layer being
-used, but underlying everything is the concept of Python's
-*coroutines*, functions that give up control to the caller without
-losing their state. Python 3.5 introduced new language features to
-define such co-routines natively using ``async def`` and ``await``,
-but earlier versions of Python 3 can use generator functions wrapped
-with the ``@asyncio.coroutine`` decorator and ``yield from`` to
-achieve the same effect.
+The mechanism for yielding control back to the event loop depends on
+the abstraction layer being used, but underlying everything is the
+concept of Python's *coroutines*, special functions that give up
+control to the caller without losing their state. Coroutines are
+similar to generators, and in fact generators can be used to implement
+coroutines in versions of Python without native support for coroutine
+objects.
 
 Protocols and Transports
 ========================

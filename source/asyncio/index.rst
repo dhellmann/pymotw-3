@@ -101,6 +101,8 @@ reasons for an application to change what it is working on.
 
     * :pydoc:`asyncio`
 
+    * :ref:`Porting notes for asyncio <porting-asyncio>`
+
     * :pep:`3156` -- *Asynchronous IO Support Rebooted: the "asyncio"
       Module*
 
