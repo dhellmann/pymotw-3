@@ -39,15 +39,14 @@ server_address = ('localhost', 10000)
 event_loop = asyncio.get_event_loop()
 # event_loop.set_debug(True)
 
-# Create and start the server once, to ensure we can listen on
-# the desired port. If something goes wrong creating the server,
-# this throws an exception.
+# Create the server and let the loop finish the coroutine before
+# starting the real event loop.
 coroutine = asyncio.start_server(echo, *server_address,
                                  loop=event_loop)
 server = event_loop.run_until_complete(coroutine)
 log.debug('starting up on {} port {}'.format(*server_address))
 
-# Re-enter the event loop permanently to handle all connections.
+# Enter the event loop permanently to handle all connections.
 try:
     event_loop.run_forever()
 except KeyboardInterrupt:

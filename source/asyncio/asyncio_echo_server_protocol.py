@@ -48,14 +48,13 @@ log = logging.getLogger('main')
 server_address = ('localhost', 10000)
 event_loop = asyncio.get_event_loop()
 
-# Create and start the server once, to ensure we can listen on
-# the desired port. If something goes wrong creating the server,
-# this throws an exception.
+# Create the server and let the loop finish the coroutine before
+# starting the real event loop.
 coroutine = event_loop.create_server(EchoServer, *server_address)
 server = event_loop.run_until_complete(coroutine)
 log.debug('starting up on {} port {}'.format(*server_address))
 
-# Re-enter the event loop permanently to handle all connections.
+# Enter the event loop permanently to handle all connections.
 try:
     event_loop.run_forever()
 finally:
