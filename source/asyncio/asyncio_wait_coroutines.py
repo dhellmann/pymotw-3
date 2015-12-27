@@ -19,19 +19,6 @@ logging.basicConfig(
 LOG = logging.getLogger('')
 
 
-async def start_coroutines(loop):
-    LOG.debug('in start_coroutines')
-    LOG.debug('waiting for sub-tasks')
-    coroutines = [
-        phase1(),
-        phase2(),
-    ]
-    completed, pending = await asyncio.wait(coroutines, loop=loop)
-    results = [ t.result() for t in completed ]
-    LOG.debug('completed, results: {!r}'.format(results))
-    return results
-
-
 async def phase1():
     LOG.debug('in phase1')
     await asyncio.sleep(2)
@@ -48,14 +35,19 @@ async def phase2():
 
 event_loop = asyncio.get_event_loop()
 
-LOG.debug('creating task')
-task = event_loop.create_task(start_coroutines(event_loop))
+coroutines = [
+    phase1(),
+    phase2(),
+]
 
 try:
     LOG.debug('entering event loop')
-    event_loop.run_until_complete(task)
+    completed, pending = event_loop.run_until_complete(
+        asyncio.wait(coroutines, loop=event_loop),
+    )
+    result = [ t.result() for t in completed ]
 finally:
     LOG.debug('closing event loop')
     event_loop.close()
 
-LOG.debug('task result: %r' % (task.result(),))
+LOG.debug('result: %r' % (result,))
