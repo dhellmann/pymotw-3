@@ -29,7 +29,7 @@ async def task_func(loop):
 
 async def second_task():
     LOG.debug('in second_task')
-    asyncio.sleep(1)
+    await asyncio.sleep(1)
     LOG.debug('done with second_task')
 
 

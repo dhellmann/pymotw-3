@@ -34,14 +34,14 @@ async def start_tasks(loop):
 
 async def phase1():
     LOG.debug('in phase1')
-    asyncio.sleep(2)
+    await asyncio.sleep(2)
     LOG.debug('done with phase1')
     return 'phase1 result'
 
 
 async def phase2():
     LOG.debug('in phase2')
-    asyncio.sleep(1)
+    await asyncio.sleep(1)
     LOG.debug('done with phase2')
     return 'phase2 result'
 
