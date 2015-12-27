@@ -34,23 +34,15 @@ reasons for an application to change what it is working on.
    removed, though that is much less likely.
 
 ..
-    - futures & tasks
-        - waiting
-        - callbacks
-    - using coroutines
-        - chaining coroutines with await
-        - streams
-    - futures
-        - waiting for a future from within another function
-        - adding a done callback
-            - use a multi-part task to calculate something and then set the result of a future, with a callback or something else waiting on the future (lots of fibonacci examples on the web, so do something else)
     - tasks
-        - run_until_complete() vs. run_forever()
-        - cancelling a task before it finishes
-        - cancelling a task after it finishes (error)
-        - adding a done callback (maybe the same as futures example?)
-        - waiting for a background task from within a protocol
-        - waiting for a task with a timeout
+        - scheduling a task -- asyncio_create_task.py
+        - cancelling a task before it finishes -- asyncio_cancel_task.py
+        - waiting for a background task from within a coroutine -- asyncio_background_task.py
+        - waiting for a task with a timeout -- asyncio_wait_task_timeout.py
+    - futures
+        - running the loop until a future is done -- asyncio_future_wait.py
+        - waiting for a future from within another coroutine (redundant with task examples)
+        - adding a done callback -- asyncio_future_callback.py
     - subprocesses
         - transport & protocol
         - coroutine
@@ -66,6 +58,7 @@ reasons for an application to change what it is working on.
         - queue
             - rewrite the podcast downloader example?
     - advanced topics
+        - run_until_complete() vs. run_forever()
         - connecting with SSL
         - using wait(), gather(), and as_completed() to wait for groups of background tasks
             - multi-client echo example
@@ -78,6 +71,8 @@ reasons for an application to change what it is working on.
         - alternate event loops, esp. for Windows
     - enabling debugging
     - aiohttp third-party module
+    - not sure about
+        - waiting for a background task from within a protocol
 
 
 .. seealso::
