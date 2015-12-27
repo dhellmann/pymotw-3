@@ -10,6 +10,8 @@ import asyncio
 import logging
 import sys
 
+SERVER_ADDRESS = ('localhost', 10000)
+
 
 async def echo(reader, writer):
     address = writer.get_extra_info('peername')
@@ -35,16 +37,15 @@ logging.basicConfig(
 )
 log = logging.getLogger('main')
 
-server_address = ('localhost', 10000)
 event_loop = asyncio.get_event_loop()
 # event_loop.set_debug(True)
 
 # Create the server and let the loop finish the coroutine before
 # starting the real event loop.
-coroutine = asyncio.start_server(echo, *server_address,
+coroutine = asyncio.start_server(echo, *SERVER_ADDRESS,
                                  loop=event_loop)
 server = event_loop.run_until_complete(coroutine)
-log.debug('starting up on {} port {}'.format(*server_address))
+log.debug('starting up on {} port {}'.format(*SERVER_ADDRESS))
 
 # Enter the event loop permanently to handle all connections.
 try:

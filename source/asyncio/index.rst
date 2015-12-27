@@ -25,6 +25,7 @@ reasons for an application to change what it is working on.
 
    concepts
    echo_protocol
+   echo_coroutine
 
 .. note::
 

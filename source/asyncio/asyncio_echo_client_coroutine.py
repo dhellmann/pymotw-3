@@ -11,10 +11,17 @@ import functools
 import logging
 import sys
 
+MESSAGES = [
+    b'This is the message. ',
+    b'It will be sent ',
+    b'in parts.',
+]
+SERVER_ADDRESS = ('localhost', 10000)
 
-async def echo_client(server_address, messages, loop, num):
 
-    log = logging.getLogger('echo_client_%s' % num)
+async def echo_client(server_address, messages, loop):
+
+    log = logging.getLogger('echo_client')
 
     log.debug('connecting to {} port {}'.format(*server_address))
     reader, writer = await asyncio.open_connection(
@@ -40,13 +47,6 @@ async def echo_client(server_address, messages, loop, num):
             return
 
 
-messages = [
-    b'This is the message. ',
-    b'It will be sent ',
-    b'in parts.',
-]
-server_address = ('localhost', 10000)
-
 logging.basicConfig(
     level=logging.DEBUG,
     format='%(name)s: %(message)s',
@@ -56,14 +56,10 @@ log = logging.getLogger('main')
 
 event_loop = asyncio.get_event_loop()
 
-# Build multiple clients
-connections = []
-for i in range(1, 3):
-    connections.append(
-        echo_client(server_address, messages, event_loop, i)
+try:
+    event_loop.run_until_complete(
+        echo_client(SERVER_ADDRESS, MESSAGES, event_loop)
     )
-event_loop.run_until_complete(
-    asyncio.wait(connections, loop=event_loop),
-)
-
-event_loop.close()
+finally:
+    log.debug('closing event loop')
+    event_loop.close()
