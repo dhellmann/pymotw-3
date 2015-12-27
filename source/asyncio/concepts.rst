@@ -43,7 +43,21 @@ coroutines directly. In both models, explicitly changing context by
 re-entering the event loop takes the place of implicit context changes
 in Python's threading implementation.
 
+Futures
+=======
 
+A *future* is a data structure representing the result of work that
+has not been completed yet. The event loop can watch for a
+:class:`Future` object to be set to done, allowing one part of an
+application to wait for another part to finish some work.
+
+Tasks
+=====
+
+A :class:`Task` is a subclass of :class:`Future` that knows how to
+wrap and manage the execution for a coroutine. Tasks can be scheduled
+with the event loop to run when the resources they need are available,
+and to produce a result that can be consumed by other coroutines.
 
 ..
   The fundamental API for the event loop to interact
