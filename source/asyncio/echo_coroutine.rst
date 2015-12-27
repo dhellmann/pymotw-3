@@ -181,6 +181,12 @@ the following output.
     echo_client: closing
     main: closing event loop
 
+Although the client always sends the messages separately, the first
+two times the client runs the server receives one large message and
+echoes that back to the client. These results vary in subsequent runs,
+based on how busy the network is and whether the socket is flushed
+before all of the data is prepared.
+
 ::
 
     $ python asyncio_echo_server_coroutine.py
@@ -202,9 +208,3 @@ the following output.
     echo_::1_64627: received b'in parts.'
     echo_::1_64627: sent b'in parts.'
     echo_::1_64627: closing
-
-Although the client always sends the messages separately, the first
-two times the client runs the server receives one large message and
-echoes that back to the client. These results vary in subsequent runs,
-based on how busy the network is and whether the socket is flushed
-before all of the data is prepared.

@@ -200,6 +200,12 @@ the following output.
     EchoClient: server closed connection
     main: closing event loop
 
+Although the client always sends the messages separately, the first
+time the client runs the server receives one large message and echoes
+that back to the client. These results vary in subsequent runs, based
+on how busy the network is and whether the socket is flushed before
+all of the data is prepared.
+
 ::
 
     $ python3 asyncio_echo_server_protocol.py
@@ -226,9 +232,3 @@ the following output.
     EchoServer_::1_63389: sent b'in parts.'
     EchoServer_::1_63389: received EOF
     EchoServer_::1_63389: closing
-
-Although the client always sends the messages separately, the first
-time the client runs the server receives one large message and echoes
-that back to the client. These results vary in subsequent runs, based
-on how busy the network is and whether the socket is flushed before
-all of the data is prepared.
