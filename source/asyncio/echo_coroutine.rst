@@ -134,7 +134,11 @@ is finished.
 
 To start the client, the event loop is called with the coroutine for
 creating the client. Using :func:`run_until_complete` avoids having an
-infinite loop in the client program.
+infinite loop in the client program. Unlike in the protocol example,
+no separate future is needed to signal when the coroutine is finished,
+because :func:`echo_client` contains all of the client logic itself
+and it does not return until it has received a response and closed the
+server connection.
 
 .. literalinclude:: asyncio_echo_client_coroutine.py
    :lines: 59-

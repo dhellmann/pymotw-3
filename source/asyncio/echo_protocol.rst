@@ -151,7 +151,9 @@ coroutine for creating the client and then again with the
 :class:`Future` instance given to the client to communicate when it is
 finished. Using two calls like this avoids having an infinite loop in
 the client program, which likely wants to exit after it has finished
-communicating with the server.
+communicating with the server. If only the first call was used to wait
+for the coroutine to create the client, it might not process all of
+the response data and clean up the connection to the server properly.
 
 .. literalinclude:: asyncio_echo_client_protocol.py
    :lines: 83-
