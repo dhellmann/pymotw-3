@@ -34,27 +34,10 @@ reasons for an application to change what it is working on.
    removed, though that is much less likely.
 
 ..
-    - concepts
-        - event loop
-        - coroutines — cooperative multi-tasking
     - futures & tasks
         - waiting
         - callbacks
-    - basic transports and protocols
-        - echo server example
-            - create connection
-            - read data
-            - write data
-        - echo client example (single)
-            - create connection
-            - write data
-            - read data
     - using coroutines
-        - echo server/client example from the previous example reproduced
-        - sidebar: difference between async def and generator coroutines
-            - maybe put this at the end of the chapter?
-            - generator-based coroutines
-            - native coroutines
         - chaining coroutines with await
         - streams
     - futures
