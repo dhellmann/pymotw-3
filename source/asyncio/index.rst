@@ -30,6 +30,7 @@ reasons for an application to change what it is working on.
    :maxdepth: 1
 
    concepts
+   protocol
 
 ..
     - concepts

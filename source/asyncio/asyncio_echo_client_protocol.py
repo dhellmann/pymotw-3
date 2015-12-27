@@ -11,14 +11,21 @@ import functools
 import logging
 import sys
 
+MESSAGES = [
+    b'This is the message. ',
+    b'It will be sent ',
+    b'in parts.',
+]
+SERVER_ADDRESS = ('localhost', 10000)
+
 
 class EchoClient(asyncio.Protocol):
 
-    def __init__(self, messages, loop, num):
+    def __init__(self, messages, future):
+        super(EchoClient, self).__init__()
         self.messages = messages
-        self.loop = loop
-        self.num = num
-        self.log = logging.getLogger('EchoClient%s' % num)
+        self.log = logging.getLogger('EchoClient')
+        self.f = future
 
     def connection_made(self, transport):
         self.transport = transport
@@ -41,10 +48,14 @@ class EchoClient(asyncio.Protocol):
     def eof_received(self):
         self.log.debug('received EOF')
         self.transport.close()
+        if not self.f.done():
+            self.f.set_result(True)
 
     def connection_lost(self, exc):
         self.log.debug('server closed connection')
         self.transport.close()
+        if not self.f.done():
+            self.f.set_result(True)
 
 
 logging.basicConfig(
@@ -54,37 +65,24 @@ logging.basicConfig(
 )
 log = logging.getLogger('main')
 
-messages = [
-    b'This is the message. ',
-    b'It will be sent ',
-    b'in parts.',
-]
-server_address = ('localhost', 10000)
-
 event_loop = asyncio.get_event_loop()
 
-# Build multiple clients
-connections = []
-for i in range(1, 3):
-    client_factory = functools.partial(
-        EchoClient,
-        messages,
-        event_loop,
-        i,
-    )
-    connection_factory = functools.partial(
-        event_loop.create_connection,
-        client_factory,
-        *server_address,
-    )
-    connections.append(connection_factory())
+client_completed = asyncio.Future()
 
-# Wait until the work for all of the clients is done.
-log.debug('waiting for clients to complete')
+client_factory = functools.partial(
+    EchoClient,
+    MESSAGES,
+    client_completed,
+)
+coroutine = event_loop.create_connection(
+    client_factory,
+    *SERVER_ADDRESS,
+)
+
+log.debug('waiting for client to complete')
 try:
-    event_loop.run_until_complete(
-        asyncio.wait(connections, loop=event_loop),
-    )
+    event_loop.run_until_complete(coroutine)
+    event_loop.run_until_complete(client_completed)
 finally:
     log.debug('closing event loop')
     event_loop.close()
