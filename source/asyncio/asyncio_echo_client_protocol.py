@@ -22,7 +22,7 @@ SERVER_ADDRESS = ('localhost', 10000)
 class EchoClient(asyncio.Protocol):
 
     def __init__(self, messages, future):
-        super(EchoClient, self).__init__()
+        super().__init__()
         self.messages = messages
         self.log = logging.getLogger('EchoClient')
         self.f = future
@@ -56,6 +56,7 @@ class EchoClient(asyncio.Protocol):
         self.transport.close()
         if not self.f.done():
             self.f.set_result(True)
+        super().connection_lost(exc)
 
 
 logging.basicConfig(

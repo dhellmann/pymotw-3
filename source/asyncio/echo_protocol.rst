@@ -133,7 +133,7 @@ closed from the server's side, the local transport object is closed
 and the future object is marked as done by setting a result.
 
 .. literalinclude:: asyncio_echo_client_protocol.py
-   :lines: 48-58
+   :lines: 48-59
 
 Normally the protocol class is passed to the event loop to create the
 connection. In this case, because the event loop has no facility for
@@ -144,7 +144,7 @@ is then used in place of the class when calling
 :func:`create_connection` to establish the client connection.
 
 .. literalinclude:: asyncio_echo_client_protocol.py
-   :lines: 70-80
+   :lines: 71-81
 
 To trigger the client to run, the event loop is called once with the
 coroutine for creating the client and then again with the
@@ -154,7 +154,7 @@ the client program, which likely wants to exit after it has finished
 communicating with the server.
 
 .. literalinclude:: asyncio_echo_client_protocol.py
-   :lines: 82-
+   :lines: 83-
 
 Output
 ======
