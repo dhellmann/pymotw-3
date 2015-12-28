@@ -29,6 +29,12 @@ class DFProtocol(asyncio.SubprocessProtocol):
         LOG.debug('read {} bytes'.format(len(data)))
         self.output.extend(data)
 
+    def process_exited(self):
+        LOG.debug('process exited, parsing output')
+        cmd_output = bytes(self.output).decode()
+        results = self._parse_results(cmd_output)
+        self.done.set_result(results)
+
     def _parse_results(self, output):
         # Output has one row of headers, all single words.  The
         # remaining rows are one per filesystem, with columns more or
@@ -37,16 +43,11 @@ class DFProtocol(asyncio.SubprocessProtocol):
         lines = output.splitlines()
         headers = lines[0].split()
         devices = lines[1:]
-        results = []
-        for line in devices:
-            results.append(dict(zip(headers, line.split())))
+        results = [
+            dict(zip(headers, line.split()))
+            for line in devices
+        ]
         return results
-
-    def process_exited(self):
-        LOG.debug('process exited, parsing output')
-        cmd_output = bytes(self.output).decode('ascii')
-        results = self._parse_results(cmd_output)
-        self.done.set_result(results)
 
 
 async def run_df(loop):
