@@ -44,8 +44,9 @@ reasons for an application to change what it is working on.
         - waiting for a future from within another coroutine (redundant with task examples)
         - adding a done callback -- asyncio_future_callback.py
     - subprocesses
-        - transport & protocol
-        - coroutine
+        - transport & protocol -- asyncio_subprocess_protocol.py
+        - coroutine -- asyncio_subprocess_coroutine.py
+        - sending data into a command and reading data back (some sort of filter)
     - non-I/O events
         - scheduling based on the clock
             - call_soon
