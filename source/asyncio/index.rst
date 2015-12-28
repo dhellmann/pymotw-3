@@ -46,7 +46,7 @@ reasons for an application to change what it is working on.
     - subprocesses
         - transport & protocol -- asyncio_subprocess_protocol.py
         - coroutine -- asyncio_subprocess_coroutine.py
-        - sending data into a command and reading data back (some sort of filter)
+        - sending data into a command and reading data back (some sort of filter) -- asyncio_subprocess_coroutine_write.py
     - non-I/O events
         - scheduling based on the clock
             - call_soon
