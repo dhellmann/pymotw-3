@@ -49,10 +49,10 @@ reasons for an application to change what it is working on.
         - sending data into a command and reading data back (some sort of filter) -- asyncio_subprocess_coroutine_write.py
     - non-I/O events
         - scheduling based on the clock
-            - call_soon
-            - call_later
+            - call_soon -- asyncio_call_soon.py
+            - call_later -- asyncio_call_later.py
                 - schedule two callbacks out of order using different sleep times, and have them executed in the opposite order they are scheduled
-        - UNIX signals
+        - UNIX signals -- asyncio_signal.py
     - sync tools
         - lock
         - event
