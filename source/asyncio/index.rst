@@ -53,8 +53,8 @@ reasons for an application to change what it is working on.
             - call_later -- asyncio_call_later.py
                 - schedule two callbacks out of order using different sleep times, and have them executed in the opposite order they are scheduled
         - UNIX signals -- asyncio_signal.py
-    - sync tools
-        - lock
+    - synchronization tools
+        - lock -- asyncio_lock.py
         - event
         - queue
             - rewrite the podcast downloader example?
