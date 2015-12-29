@@ -13,18 +13,19 @@ import sys
 
 logging.basicConfig(
     level=logging.DEBUG,
-    format='%(message)s',
+    format='%(name)s: %(message)s',
     stream=sys.stderr,
 )
 LOG = logging.getLogger('')
 
 
 async def consumer(n, q, future):
-    LOG.debug('in consumer {}'.format(n))
+    log = logging.getLogger('consumer {}'.format(n))
+    log.debug('starting')
     while True:
-        LOG.debug('consumer {} waiting for item'.format(n))
+        log.debug('waiting for item')
         item = await q.get()
-        LOG.debug('consumer {} has item {}'.format(n, item))
+        log.debug('has item {}'.format(item))
         q.task_done()
         if item is None:
             break
@@ -34,25 +35,26 @@ async def consumer(n, q, future):
 
 
 async def producer(q, num_workers):
-    LOG.debug('starting producer')
+    log = logging.getLogger('producer')
+    log.debug('starting producer')
     # Add some numbers to the queue to simulate jobs
-    LOG.debug('adding task values to the queue')
     for i in range(num_workers * 3):
+        log.debug('adding task {} to the queue'.format(i))
         await q.put(i)
     # Add None entries in the queue to signal the consumers to exit
-    LOG.debug('adding stop signals to the queue')
+    log.debug('adding stop signals to the queue')
     for i in range(num_workers):
         await q.put(None)
-    LOG.debug('producer waiting for queue to empty')
+    log.debug('producer waiting for queue to empty')
     await q.join()
-    LOG.debug('ending producer')
+    log.debug('ending producer')
 
 
 event_loop = asyncio.get_event_loop()
 
-q = asyncio.Queue(loop=event_loop)
-
 num_consumers = 2
+
+q = asyncio.Queue(maxsize=num_consumers, loop=event_loop)
 
 # Create some futures to let us know when both coroutines are done.
 futures = [
