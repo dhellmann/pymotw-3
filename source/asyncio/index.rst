@@ -56,7 +56,8 @@ reasons for an application to change what it is working on.
     - synchronization tools
         - lock -- asyncio_lock.py
         - event -- asyncio_event.py
-        - queue
+        - condition -- asyncio_condition.py
+        - queue -- 
             - rewrite the podcast downloader example?
     - advanced topics
         - run_until_complete() vs. run_forever()
