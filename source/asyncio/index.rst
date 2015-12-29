@@ -55,7 +55,7 @@ reasons for an application to change what it is working on.
         - UNIX signals -- asyncio_signal.py
     - synchronization tools
         - lock -- asyncio_lock.py
-        - event
+        - event -- asyncio_event.py
         - queue
             - rewrite the podcast downloader example?
     - advanced topics
