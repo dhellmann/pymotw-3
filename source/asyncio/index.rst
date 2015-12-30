@@ -15,10 +15,11 @@ implements concurrency through application threads and
 which parts of an application cooperate to switch tasks explicitly at
 optimal times. Most often this context switching occurs when the
 program would otherwise block waiting to read or write data, but
-:mod:`asyncio` also includes support for scheduling code to run in the
-future, to enable one coroutine to wait for another to complete, for
-handling system signals, and for recognizing other events that may be
-reasons for an application to change what it is working on.
+:mod:`asyncio` also includes support for scheduling code to run at a
+specific future time, to enable one coroutine to wait for another to
+complete, for handling system signals, and for recognizing other
+events that may be reasons for an application to change what it is
+working on.
 
 .. toctree::
    :maxdepth: 1
