@@ -44,40 +44,6 @@ running until the task returns a result.
 
 .. {{{end}}}
 
-Chaining Coroutines
-===================
-
-A task or other coroutine can start another coroutine and wait for the
-results. This makes it easier to decompose a task into reusable parts.
-
-.. include:: asyncio_chain_coroutines.py
-   :literal:
-   :start-after: #end_pymotw_header
-
-This example has two phases that must be executed in order, but that
-can run concurrently with other operations.
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'asyncio_chain_coroutines.py', line_break_mode='wrap'))
-.. }}}
-
-::
-
-	$ python3 asyncio_chain_coroutines.py
-	
-	Using selector: KqueueSelector
-	creating task
-	task: <Task pending coro=<outer() running at
-	asyncio_chain_coroutines.py:22>>
-	entering event loop
-	in outer
-	in phase1
-	in phase2
-	closing event loop
-	task result: ('result1', 'result2 derived from result1')
-
-.. {{{end}}}
-
 Canceling a Task
 ================
 

@@ -25,6 +25,7 @@ working on.
    :maxdepth: 1
 
    concepts
+   coroutines
    tasks
    echo_protocol
    echo_coroutine
