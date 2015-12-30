@@ -27,15 +27,15 @@ LOG = logging.getLogger('')
 
 
 async def inner():
-    LOG.info('in inner')
+    LOG.info('inner starting')
     # Use a blocking sleep to simulate doing work inside the function.
     time.sleep(0.1)
     LOG.info('inner completed')
 
 
 async def outer(loop):
-    LOG.info('in outer')
-    await loop.create_task(inner())
+    LOG.info('outer starting')
+    await asyncio.ensure_future(loop.create_task(inner()))
     LOG.info('outer completed')
 
 
