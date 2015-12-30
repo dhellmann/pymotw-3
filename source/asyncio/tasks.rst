@@ -106,3 +106,39 @@ already done, if necessary.
 	closing event loop
 
 .. {{{end}}}
+
+Creating Tasks from Coroutines
+==============================
+
+The :func:`ensure_future` function returns a :class:`Task` tied to the
+execution of a coroutine. That :class:`Task` instance can then be
+passed to other code, which can wait for it without knowing how the
+original coroutine was constructed or called.
+
+.. include:: asyncio_ensure_future.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+Note that the coroutine given to :func:`ensure_future` is not started
+until something uses ``await`` to allow it to be executed.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'asyncio_ensure_future.py', line_break_mode='wrap'))
+.. }}}
+
+::
+
+	$ python3 asyncio_ensure_future.py
+	
+	entering event loop
+	starter: creating task
+	starter: waiting for inner
+	inner: starting
+	inner: waiting for <Task pending coro=<wrapped() running at
+	asyncio_ensure_future.py:17>>
+	wrapped
+	inner: task returned 'result'
+	starter: inner returned
+
+.. {{{end}}}
+
