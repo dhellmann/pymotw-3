@@ -70,6 +70,7 @@ reasons for an application to change what it is working on.
         - calling a blocking function using an executor
             - default, threading -- asyncio_executor_thread.py
             - process -- asyncio_executor_process.py
+        - looking up a hostname -- asyncio_getaddrinfo.py
     - enabling debugging -- asyncio_debug.py
     - aiohttp third-party module
     - not sure about
