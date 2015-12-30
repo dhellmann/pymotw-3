@@ -20,22 +20,23 @@ LOG = logging.getLogger('')
 
 
 async def task_func():
-    LOG.debug('in task_func')
+    LOG.info('in task_func')
     return 'the result'
 
 
 event_loop = asyncio.get_event_loop()
 
-LOG.debug('creating task')
+LOG.info('creating task')
 task = event_loop.create_task(task_func())
-LOG.debug('task: %r' % (task,))
+LOG.info('task: %r' % (task,))
 
 try:
-    LOG.debug('entering event loop')
-    event_loop.run_until_complete(task)
-    LOG.debug('task: %r' % (task,))
+    LOG.info('entering event loop')
+    return_value = event_loop.run_until_complete(task)
+    LOG.info('task: {!r}'.format(task))
+    LOG.info('return value: {!r}'.format(return_value))
 finally:
-    LOG.debug('closing event loop')
+    LOG.info('closing event loop')
     event_loop.close()
 
-LOG.debug('task result: %r' % (task.result(),))
+LOG.info('task result: %r' % (task.result(),))

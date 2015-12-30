@@ -25,6 +25,7 @@ working on.
    :maxdepth: 1
 
    concepts
+   tasks
    echo_protocol
    echo_coroutine
 
@@ -38,9 +39,8 @@ working on.
     - tasks
         - scheduling a task -- asyncio_create_task.py
         - cancelling a task before it finishes -- asyncio_cancel_task.py
-        - waiting for a background task from within a coroutine -- asyncio_background_task.py
-        - waiting for a task with a timeout -- asyncio_wait_task_timeout.py
     - futures
+        - simple ensure future
         - running the loop until a future is done -- asyncio_future_wait.py
         - waiting for a future from within another coroutine (redundant with task examples)
         - adding a done callback -- asyncio_future_callback.py
@@ -62,7 +62,10 @@ working on.
             - rewrite the podcast downloader example?
     - advanced topics
         - connecting with SSL -- asyncio_echo_server_ssl.py and asyncio_echo_client_ssl.py
-        - using wait(), gather(), and as_completed() to wait for groups of background tasks
+        - control flow
+          - waiting for background tasks from within a coroutine -- asyncio_background_task.py
+          - waiting for a task with a timeout -- asyncio_wait_task_timeout.py
+          - using wait(), gather(), and as_completed() to wait for groups of background tasks
             - asyncio_wait_coroutines.py, asyncio_wait_tasks.py, asyncio_wait_task_timeout.py
             - asyncio_gather.py
             - asyncio_as_completed.py
