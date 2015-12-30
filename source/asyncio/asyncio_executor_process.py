@@ -14,7 +14,7 @@ import time
 
 logging.basicConfig(
     level=logging.DEBUG,
-    format='%(process)5s %(name)10s: %(message)s',
+    format='PID %(process)5s %(name)18s: %(message)s',
     stream=sys.stderr,
 )
 LOG = logging.getLogger('main')
@@ -28,11 +28,10 @@ def blocks(n):
     return n ** 2
 
 
-async def task(loop):
-    log = logging.getLogger('task')
+async def run_blocking_tasks(loop, executor):
+    log = logging.getLogger('run_blocking_tasks')
     log.debug('starting task')
 
-    executor = concurrent.futures.ProcessPoolExecutor(max_workers=3)
     log.debug('creating executor tasks')
     blocking_tasks = [
         loop.run_in_executor(
@@ -46,13 +45,15 @@ async def task(loop):
     results = await asyncio.gather(*blocking_tasks, loop=loop)
     log.debug('results: {!r}'.format(results))
 
-    log.debug('exiting task')
+    log.debug('exiting')
 
+
+executor = concurrent.futures.ProcessPoolExecutor(max_workers=3)
 
 event_loop = asyncio.get_event_loop()
 try:
     LOG.debug('entering event loop')
-    event_loop.run_until_complete(task(event_loop))
+    event_loop.run_until_complete(run_blocking_tasks(event_loop, executor))
 finally:
     LOG.debug('closing event loop')
     event_loop.close()
