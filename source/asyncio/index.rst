@@ -70,12 +70,12 @@ reasons for an application to change what it is working on.
         - calling a blocking function using an executor
             - default, threading -- asyncio_executor_thread.py
             - process -- asyncio_executor_process.py
+    - enabling debugging -- asyncio_debug.py
+    - aiohttp third-party module
+    - not sure about
         - pausing transport production in a protocol?
         - using existing sockets?
         - alternate event loops, esp. for Windows
-    - enabling debugging
-    - aiohttp third-party module
-    - not sure about
         - waiting for a background task from within a protocol
 
 
