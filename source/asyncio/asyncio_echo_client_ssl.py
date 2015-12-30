@@ -27,7 +27,9 @@ async def echo_client(server_address, messages, loop):
     # The certificate is created with pymotw.com as the hostname,
     # which will not match when the example code runs
     # elsewhere, so disable hostname verification.
-    ssl_context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
+    ssl_context = ssl.create_default_context(
+        ssl.Purpose.SERVER_AUTH,
+    )
     ssl_context.check_hostname = False
     ssl_context.load_verify_locations('pymotw.crt')
 

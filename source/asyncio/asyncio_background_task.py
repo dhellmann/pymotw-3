@@ -32,7 +32,6 @@ async def task_func():
     return 'the result'
 
 
-
 event_loop = asyncio.get_event_loop()
 
 LOG.debug('creating task')

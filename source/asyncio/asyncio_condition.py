@@ -22,7 +22,7 @@ LOG = logging.getLogger('')
 async def consumer(condition, n, future):
     LOG.debug('in consumer {}'.format(n))
     with await condition:
-        LOG.debug('consumer {} acquired lock and is waiting'.format(n))
+        LOG.debug('consumer {} is waiting'.format(n))
         await condition.wait()
         LOG.debug('consumer {} triggered'.format(n))
     future.set_result(True)
@@ -48,7 +48,8 @@ condition = asyncio.Condition(loop=event_loop)
 
 num_consumers = 4
 
-# Create some futures to let us know when both coroutines are done.
+# Create some futures to let us know when
+# both coroutines are done.
 futures = [
     asyncio.Future(loop=event_loop)
     for i in range(num_consumers)

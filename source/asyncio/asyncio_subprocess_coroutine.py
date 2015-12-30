@@ -77,7 +77,9 @@ event_loop = asyncio.get_event_loop()
 
 try:
     LOG.debug('entering event loop')
-    return_code, results = event_loop.run_until_complete(run_df(event_loop))
+    return_code, results = event_loop.run_until_complete(
+        run_df(event_loop)
+    )
 finally:
     LOG.debug('closing event loop')
     event_loop.close()

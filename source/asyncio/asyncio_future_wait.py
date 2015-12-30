@@ -29,7 +29,9 @@ event_loop = asyncio.get_event_loop()
 all_done = asyncio.Future(loop=event_loop)
 
 LOG.debug('scheduling mark_done')
-event_loop.call_soon(functools.partial(mark_done, all_done, 'the result'))
+event_loop.call_soon(
+    functools.partial(mark_done, all_done, 'the result'),
+)
 
 try:
     LOG.debug('entering event loop')

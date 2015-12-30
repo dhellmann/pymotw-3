@@ -45,7 +45,7 @@ try:
     completed, pending = event_loop.run_until_complete(
         asyncio.wait(coroutines, loop=event_loop),
     )
-    result = [ t.result() for t in completed ]
+    result = [t.result() for t in completed]
 finally:
     LOG.debug('closing event loop')
     event_loop.close()

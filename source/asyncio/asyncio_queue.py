@@ -41,7 +41,8 @@ async def producer(q, num_workers):
     for i in range(num_workers * 3):
         log.debug('adding task {} to the queue'.format(i))
         await q.put(i)
-    # Add None entries in the queue to signal the consumers to exit
+    # Add None entries in the queue
+    # to signal the consumers to exit
     log.debug('adding stop signals to the queue')
     for i in range(num_workers):
         await q.put(None)
@@ -56,7 +57,8 @@ num_consumers = 2
 
 q = asyncio.Queue(maxsize=num_consumers, loop=event_loop)
 
-# Create some futures to let us know when both coroutines are done.
+# Create some futures to let us know when
+# both coroutines are done.
 futures = [
     asyncio.Future(loop=event_loop)
     for i in range(num_consumers)

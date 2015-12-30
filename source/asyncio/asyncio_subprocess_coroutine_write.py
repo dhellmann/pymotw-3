@@ -57,7 +57,9 @@ to all caps.
 
 try:
     LOG.debug('entering event loop')
-    return_code, results = event_loop.run_until_complete(run_tr(event_loop, MESSAGE))
+    return_code, results = event_loop.run_until_complete(
+        run_tr(event_loop, MESSAGE)
+    )
 finally:
     LOG.debug('closing event loop')
     event_loop.close()

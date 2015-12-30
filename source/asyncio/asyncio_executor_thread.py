@@ -53,7 +53,9 @@ executor = concurrent.futures.ThreadPoolExecutor(max_workers=3)
 event_loop = asyncio.get_event_loop()
 try:
     LOG.debug('entering event loop')
-    event_loop.run_until_complete(run_blocking_tasks(event_loop, executor))
+    event_loop.run_until_complete(
+        run_blocking_tasks(event_loop, executor),
+    )
 finally:
     LOG.debug('closing event loop')
     event_loop.close()

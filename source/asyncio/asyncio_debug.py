@@ -15,7 +15,12 @@ import time
 import warnings
 
 parser = argparse.ArgumentParser('debugging asyncio')
-parser.add_argument('-v', dest='verbose', default=False, action='store_true')
+parser.add_argument(
+    '-v',
+    dest='verbose',
+    default=False,
+    action='store_true',
+)
 args = parser.parse_args()
 
 logging.basicConfig(
@@ -28,7 +33,8 @@ LOG = logging.getLogger('')
 
 async def inner():
     LOG.info('inner starting')
-    # Use a blocking sleep to simulate doing work inside the function.
+    # Use a blocking sleep to simulate
+    # doing work inside the function.
     time.sleep(0.1)
     LOG.info('inner completed')
 

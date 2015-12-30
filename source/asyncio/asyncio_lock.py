@@ -48,7 +48,8 @@ event_loop = asyncio.get_event_loop()
 # Create a shared lock
 lock = asyncio.Lock(loop=event_loop)
 
-# Create some futures to let us know when both coroutines are done.
+# Create some futures to let us know when
+# both coroutines are done.
 f1 = asyncio.Future(loop=event_loop)
 f2 = asyncio.Future(loop=event_loop)
 

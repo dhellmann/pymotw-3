@@ -22,12 +22,13 @@ LOG = logging.getLogger('')
 async def outer(loop):
     LOG.debug('in outer')
     task = loop.create_task(task_func())
-    complete, pending = await asyncio.wait([task], loop=loop, timeout=1)
+    complete, pending = await asyncio.wait([task], loop=loop,
+                                           timeout=1)
     result = '{} completed and {} pending'.format(
         len(complete), len(pending),
     )
-    # Cancel remaining tasks so they do not generate errors as we exit
-    # without finishing them.
+    # Cancel remaining tasks so they do not generate errors
+    # as we exit without finishing them.
     for t in pending:
         t.cancel()
     return result
@@ -37,7 +38,6 @@ async def task_func():
     LOG.debug('in task_func')
     await asyncio.sleep(2)
     return 'the result'
-
 
 
 event_loop = asyncio.get_event_loop()

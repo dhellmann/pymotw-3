@@ -26,7 +26,8 @@ class DFProtocol(asyncio.SubprocessProtocol):
         self.output = bytearray()
 
     def connection_made(self, transport):
-        LOG.debug('process started {}'.format(transport.get_pid()))
+        LOG.debug('process started {}'.format(
+            transport.get_pid()))
         self.transport = transport
 
     def pipe_data_received(self, fd, data):
@@ -47,9 +48,9 @@ class DFProtocol(asyncio.SubprocessProtocol):
     def _parse_results(self, output):
         LOG.debug('parsing results')
         # Output has one row of headers, all single words.  The
-        # remaining rows are one per filesystem, with columns more or
-        # less matching the headers (assuming that none of the mount
-        # points have whitespace in the names).
+        # remaining rows are one per filesystem, with columns
+        # more or less matching the headers (assuming that none
+        # of the mount points have whitespace in the names).
         if not output:
             return []
         lines = output.splitlines()
@@ -88,7 +89,9 @@ event_loop = asyncio.get_event_loop()
 
 try:
     LOG.debug('entering event loop')
-    return_code, results = event_loop.run_until_complete(run_df(event_loop))
+    return_code, results = event_loop.run_until_complete(
+        run_df(event_loop)
+    )
 finally:
     LOG.debug('closing event loop')
     event_loop.close()

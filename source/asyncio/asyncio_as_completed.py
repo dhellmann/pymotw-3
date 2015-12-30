@@ -52,7 +52,9 @@ event_loop = asyncio.get_event_loop()
 
 try:
     LOG.debug('entering event loop')
-    result = event_loop.run_until_complete(start_coroutines(event_loop))
+    result = event_loop.run_until_complete(
+        start_coroutines(event_loop)
+    )
 finally:
     LOG.debug('closing event loop')
     event_loop.close()

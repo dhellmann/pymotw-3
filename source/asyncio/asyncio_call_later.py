@@ -33,7 +33,8 @@ event_loop = asyncio.get_event_loop()
 LOG.debug('registering callbacks')
 event_loop.call_later(0.2, functools.partial(callback, 1))
 event_loop.call_later(0.1, functools.partial(callback, 2))
-event_loop.call_later(0.3, functools.partial(stopper, event_loop))
+event_loop.call_later(0.3, functools.partial(stopper,
+                                             event_loop))
 event_loop.call_soon(functools.partial(callback, 3))
 
 try:

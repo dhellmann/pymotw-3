@@ -41,9 +41,9 @@ log = logging.getLogger('main')
 event_loop = asyncio.get_event_loop()
 # event_loop.set_debug(True)
 
-# The certificate is created with pymotw.com as the hostname, which
-# will not match when the example code runs elsewhere, so disable
-# hostname verification.
+# The certificate is created with pymotw.com as the hostname,
+# which will not match when the example code runs elsewhere,
+# so disable hostname verification.
 ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
 ssl_context.check_hostname = False
 ssl_context.load_cert_chain('pymotw.crt', 'pymotw.key')
