@@ -60,15 +60,17 @@ reasons for an application to change what it is working on.
         - queue -- asyncio_queue.py
             - rewrite the podcast downloader example?
     - advanced topics
-        - run_until_complete() vs. run_forever()
-        - connecting with SSL
-        - using wait(), gather(), and as_completed() to wait for groups of background tasks
-            - multi-client echo example
-        - stopping the event loop programmatically
-        - pausing transport production in a protocol?
+        - connecting with SSL -- asyncio_echo_server_ssl.py and asyncio_echo_client_ssl.py
         - calling a blocking function using an executor
             - default, threading
             - other?
+        - using wait(), gather(), and as_completed() to wait for groups of background tasks
+            - asyncio_wait_coroutines.py, asyncio_wait_tasks.py, asyncio_wait_task_timeout.py
+            - asyncio_gather.py
+            - asyncio_as_completed.py
+        - run_until_complete() vs. run_forever()
+        - stopping the event loop programmatically -- asyncio_stop.py
+        - pausing transport production in a protocol?
         - using existing sockets?
         - alternate event loops, esp. for Windows
     - enabling debugging
