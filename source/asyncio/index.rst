@@ -26,6 +26,7 @@ working on.
 
    concepts
    coroutines
+   scheduling
    tasks
    echo_protocol
    echo_coroutine
