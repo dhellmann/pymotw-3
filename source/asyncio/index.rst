@@ -27,6 +27,7 @@ working on.
    concepts
    coroutines
    scheduling
+   futures
    tasks
    echo_protocol
    echo_coroutine
@@ -38,14 +39,15 @@ working on.
    removed, though that is much less likely.
 
 ..
-    - tasks
-        - scheduling a task -- asyncio_create_task.py
-        - cancelling a task before it finishes -- asyncio_cancel_task.py
     - futures
         - simple ensure future
         - running the loop until a future is done -- asyncio_future_wait.py
         - waiting for a future from within another coroutine (redundant with task examples)
         - adding a done callback -- asyncio_future_callback.py
+    - tasks
+        - scheduling a task -- asyncio_create_task.py
+        - cancelling a task before it finishes -- asyncio_cancel_task.py
+    - I/O examples
     - subprocesses
         - transport & protocol -- asyncio_subprocess_protocol.py
         - coroutine -- asyncio_subprocess_coroutine.py

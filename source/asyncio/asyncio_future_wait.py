@@ -7,20 +7,10 @@
 #end_pymotw_header
 
 import asyncio
-import functools
-import logging
-import sys
-
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(message)s',
-    stream=sys.stderr,
-)
-LOG = logging.getLogger('')
 
 
 def mark_done(future, result):
-    LOG.debug('setting future result to {!r}'.format(result))
+    print('setting future result to {!r}'.format(result))
     future.set_result(result)
 
 
@@ -28,17 +18,15 @@ event_loop = asyncio.get_event_loop()
 
 all_done = asyncio.Future(loop=event_loop)
 
-LOG.debug('scheduling mark_done')
-event_loop.call_soon(
-    functools.partial(mark_done, all_done, 'the result'),
-)
+print('scheduling mark_done')
+event_loop.call_soon(mark_done, all_done, 'the result')
 
 try:
-    LOG.debug('entering event loop')
+    print('entering event loop')
     result = event_loop.run_until_complete(all_done)
-    LOG.debug('returned result: %r' % (result,))
+    print('returned result: {!r}'.format(result))
 finally:
-    LOG.debug('closing event loop')
+    print('closing event loop')
     event_loop.close()
 
-LOG.debug('future result: %r' % (all_done.result(),))
+print('future result: {!r}'.format(all_done.result()))
