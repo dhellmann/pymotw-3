@@ -31,6 +31,7 @@ working on.
    io_protocol
    io_coroutine
    subprocesses
+   unix_signals
 
 .. note::
 
@@ -39,7 +40,6 @@ working on.
    removed, though that is much less likely.
 
 ..
-    - UNIX signals -- asyncio_signal.py
     - synchronization tools
         - lock -- asyncio_lock.py
         - event -- asyncio_event.py
