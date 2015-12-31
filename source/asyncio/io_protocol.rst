@@ -2,10 +2,16 @@
  Asynchronous I/O with Protocol Class Abstractions
 ===================================================
 
-This section examines two sample programs implementing a simple echo
-server and client, similar to the examples used in the :mod:`socket`
-and :mod:`socketserver` sections. A client can connect to the server,
-send some data, and then receive the same data as a response.
+Up to this point the examples have all avoided mingling concurrency
+and I/O operations. However, switching contexts when I/O blocks is one
+of the primary use cases for :mod:`asyncio`. Building on the
+concurrency concepts already introduced, this section examines two
+sample programs implementing a simple echo server and client, similar
+to the examples used in the :mod:`socket` and :mod:`socketserver`
+sections. A client can connect to the server, send some data, and then
+receive the same data as a response. Each time an I/O operation is
+initiated, the executing code gives up control to the event loop,
+allowing other tasks to run until the I/O is ready.
 
 Echo Server
 ===========

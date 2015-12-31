@@ -5,7 +5,9 @@
 This section examines alternate versions of the two sample programs
 implementing a simple echo server and client, using coroutines and the
 :mod:`asyncio` streams API instead of the protocol and transport class
-abstractions.
+abstractions. The examples operate at a lower abstraction level than
+the :class:`Protocol` API discussed previously, but the events being
+processed are similar.
 
 Echo Server
 ===========
