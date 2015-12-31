@@ -135,6 +135,10 @@ working on.
       <https://blogs.gnome.org/markmc/2013/06/04/async-io-and-python/>`__
       -- blog post by Mark McLoughlin
 
+    * `A Curious Course on Coroutines and Concurrency
+      <http://www.dabeaz.com/coroutines/>`__ -- PyCon 2009 tutorial by
+      David Beazley
+
     * *Unix Network Programming, Volume 1: The Sockets Networking API, 3/E*
       By W. Richard Stevens, Bill Fenner, and Andrew
       M. Rudoff. Published by Addison-Wesley Professional, 2004.
