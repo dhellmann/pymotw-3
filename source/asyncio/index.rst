@@ -39,17 +39,7 @@ working on.
    removed, though that is much less likely.
 
 ..
-    - I/O examples
-    - subprocesses
-        - transport & protocol -- asyncio_subprocess_protocol.py
-        - coroutine -- asyncio_subprocess_coroutine.py
-        - sending data into a command and reading data back (some sort of filter) -- asyncio_subprocess_coroutine_write.py
-    - non-I/O events
-        - scheduling based on the clock
-            - call_soon -- asyncio_call_soon.py
-            - call_later -- asyncio_call_later.py
-                - schedule two callbacks out of order using different sleep times, and have them executed in the opposite order they are scheduled
-        - UNIX signals -- asyncio_signal.py
+    - UNIX signals -- asyncio_signal.py
     - synchronization tools
         - lock -- asyncio_lock.py
         - event -- asyncio_event.py

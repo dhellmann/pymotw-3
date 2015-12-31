@@ -8,19 +8,10 @@
 
 import asyncio
 import asyncio.subprocess
-import logging
-import sys
-
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(message)s',
-    stream=sys.stderr,
-)
-LOG = logging.getLogger('')
 
 
-async def run_tr(loop, input):
-    LOG.debug('in run_tr')
+async def to_upper(loop, input):
+    print('in to_upper')
 
     create = asyncio.create_subprocess_exec(
         'tr', '[:lower:]', '[:upper:]',
@@ -28,18 +19,18 @@ async def run_tr(loop, input):
         stdin=asyncio.subprocess.PIPE,
         loop=loop,
     )
-    LOG.debug('launching process')
+    print('launching process')
     proc = await create
-    LOG.debug('pid {}'.format(proc.pid))
+    print('pid {}'.format(proc.pid))
 
-    LOG.debug('communicating with process')
+    print('communicating with process')
     stdout, stderr = await proc.communicate(input.encode())
 
-    LOG.debug('waiting for process to complete')
+    print('waiting for process to complete')
     await proc.wait()
 
     return_code = proc.returncode
-    LOG.debug('return code {}'.format(return_code))
+    print('return code {}'.format(return_code))
     if not return_code:
         results = bytes(stdout).decode()
     else:
@@ -48,24 +39,21 @@ async def run_tr(loop, input):
     return (return_code, results)
 
 
-event_loop = asyncio.get_event_loop()
-
 MESSAGE = """
 This message will be converted
 to all caps.
 """
 
+event_loop = asyncio.get_event_loop()
 try:
-    LOG.debug('entering event loop')
     return_code, results = event_loop.run_until_complete(
-        run_tr(event_loop, MESSAGE)
+        to_upper(event_loop, MESSAGE)
     )
 finally:
-    LOG.debug('closing event loop')
     event_loop.close()
 
 if return_code:
-    LOG.debug('error exit {}'.format(return_code))
+    print('error exit {}'.format(return_code))
 else:
     print('Original: {!r}'.format(MESSAGE))
-    print('Changed: {!r}'.format(results))
+    print('Changed : {!r}'.format(results))

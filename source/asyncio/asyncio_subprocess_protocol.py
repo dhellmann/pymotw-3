@@ -18,7 +18,6 @@ class DFProtocol(asyncio.SubprocessProtocol):
         super().__init__()
 
     def connection_made(self, transport):
-        print('transport {!r}'.format(transport))
         print('process started {}'.format(transport.get_pid()))
         self.transport = transport
 

@@ -8,19 +8,10 @@
 
 import asyncio
 import asyncio.subprocess
-import logging
-import sys
-
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(message)s',
-    stream=sys.stderr,
-)
-LOG = logging.getLogger('')
 
 
 def _parse_results(output):
-    LOG.debug('parsing results')
+    print('parsing results')
     # Output has one row of headers, all single words.  The
     # remaining rows are one per filesystem, with columns more or
     # less matching the headers (assuming that none of the mount
@@ -38,7 +29,7 @@ def _parse_results(output):
 
 
 async def run_df(loop):
-    LOG.debug('in run_df')
+    print('in run_df')
 
     buffer = bytearray()
 
@@ -47,23 +38,23 @@ async def run_df(loop):
         stdout=asyncio.subprocess.PIPE,
         loop=loop,
     )
-    LOG.debug('launching process')
+    print('launching process')
     proc = await create
-    LOG.debug('pid {}'.format(proc.pid))
+    print('process started {}'.format(proc.pid))
 
     while True:
         line = await proc.stdout.readline()
-        LOG.debug('read {!r}'.format(line))
+        print('read {!r}'.format(line))
         if not line:
-            LOG.debug('no more output from command')
+            print('no more output from command')
             break
         buffer.extend(line)
 
-    LOG.debug('waiting for process to complete')
+    print('waiting for process to complete')
     await proc.wait()
 
     return_code = proc.returncode
-    LOG.debug('return code {}'.format(return_code))
+    print('return code {}'.format(return_code))
     if not return_code:
         cmd_output = bytes(buffer).decode()
         results = _parse_results(cmd_output)
@@ -74,18 +65,15 @@ async def run_df(loop):
 
 
 event_loop = asyncio.get_event_loop()
-
 try:
-    LOG.debug('entering event loop')
     return_code, results = event_loop.run_until_complete(
         run_df(event_loop)
     )
 finally:
-    LOG.debug('closing event loop')
     event_loop.close()
 
 if return_code:
-    LOG.debug('error exit {}'.format(return_code))
+    print('error exit {}'.format(return_code))
 else:
     print('\nFree space:')
     for r in results:
