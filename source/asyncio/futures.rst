@@ -1,6 +1,6 @@
-=========
- Futures
-=========
+==================================
+ Futures --- Asynchronous Results
+==================================
 
 A :class:`Future` represents the result of work that has not been
 completed yet. The event loop can watch for a :class:`Future` object
