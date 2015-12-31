@@ -1,6 +1,6 @@
-=========================================
- Coroutines --- Cooperative Multitasking
-=========================================
+==========================================
+ Cooperative Multitasking with Coroutines
+==========================================
 
 Coroutines are a language construct designed for concurrent
 operation. A coroutine function creates a coroutine object when

@@ -1,14 +1,14 @@
-========================================================
- An Echo Server and Client Using the Class Abstractions
-========================================================
+===================================================
+ Asynchronous I/O with Protocol Class Abstractions
+===================================================
 
 This section examines two sample programs implementing a simple echo
 server and client, similar to the examples used in the :mod:`socket`
 and :mod:`socketserver` sections. A client can connect to the server,
 send some data, and then receive the same data as a response.
 
-Server
-======
+Echo Server
+===========
 
 The server starts by importing the modules it needs to set up
 :mod:`asyncio` and :mod:`logging`, and then it creates an event loop
@@ -87,8 +87,8 @@ coroutines before the program exits.
 .. literalinclude:: asyncio_echo_server_protocol.py
    :lines: 59-
 
-Client
-======
+Echo Client
+===========
 
 Constructing a client using a protocol class is very similar to
 constructing a server.  The code again starts by importing the modules

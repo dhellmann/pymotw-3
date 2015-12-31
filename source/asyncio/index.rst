@@ -22,15 +22,14 @@ events that may be reasons for an application to change what it is
 working on.
 
 .. toctree::
-   :maxdepth: 1
 
    concepts
    coroutines
    scheduling
    futures
    tasks
-   echo_protocol
-   echo_coroutine
+   io_protocol
+   io_coroutine
 
 .. note::
 
@@ -39,14 +38,6 @@ working on.
    removed, though that is much less likely.
 
 ..
-    - futures
-        - simple ensure future
-        - running the loop until a future is done -- asyncio_future_wait.py
-        - waiting for a future from within another coroutine (redundant with task examples)
-        - adding a done callback -- asyncio_future_callback.py
-    - tasks
-        - scheduling a task -- asyncio_create_task.py
-        - cancelling a task before it finishes -- asyncio_cancel_task.py
     - I/O examples
     - subprocesses
         - transport & protocol -- asyncio_subprocess_protocol.py

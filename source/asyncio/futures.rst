@@ -1,5 +1,5 @@
 ==================================
- Futures --- Asynchronous Results
+ Producing Results Asynchronously
 ==================================
 
 A :class:`Future` represents the result of work that has not been

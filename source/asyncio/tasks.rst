@@ -1,6 +1,6 @@
-================================
- Tasks --- Concurrent Execution
-================================
+==============================
+ Executing Tasks Concurrently
+==============================
 
 Tasks are one of the primary ways to interact with the event
 loop. Tasks wrap coroutines and track when they are complete using a

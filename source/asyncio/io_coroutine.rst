@@ -1,14 +1,14 @@
-========================================================
- An Echo Server and Client Using Coroutines and Streams
-========================================================
+===============================================
+ Asynchronous I/O Using Coroutines and Streams
+===============================================
 
 This section examines alternate versions of the two sample programs
 implementing a simple echo server and client, using coroutines and the
 :mod:`asyncio` streams API instead of the protocol and transport class
 abstractions.
 
-Server
-======
+Echo Server
+===========
 
 The server starts by importing the modules it needs to set up
 :mod:`asyncio` and :mod:`logging`, and then it creates an event loop
@@ -82,8 +82,8 @@ coroutines before the program exits.
 .. literalinclude:: asyncio_echo_server_coroutine.py
    :lines: 50-
 
-Client
-======
+Echo Client
+===========
 
 Constructing a client using a coroutine is very similar to
 constructing a server.  The code again starts by importing the modules
