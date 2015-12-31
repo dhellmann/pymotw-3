@@ -30,6 +30,7 @@ working on.
    tasks
    io_protocol
    io_coroutine
+   ssl
    subprocesses
    unix_signals
 
@@ -40,34 +41,31 @@ working on.
    removed, though that is much less likely.
 
 ..
-    - synchronization tools
-        - lock -- asyncio_lock.py
-        - event -- asyncio_event.py
-        - condition -- asyncio_condition.py
-        - queue -- asyncio_queue.py
-            - rewrite the podcast downloader example?
-    - advanced topics
-        - connecting with SSL -- asyncio_echo_server_ssl.py and asyncio_echo_client_ssl.py
-        - control flow
-          - waiting for background tasks from within a coroutine -- asyncio_background_task.py
-          - waiting for a task with a timeout -- asyncio_wait_task_timeout.py
-          - using wait(), gather(), and as_completed() to wait for groups of background tasks
-            - asyncio_wait_coroutines.py, asyncio_wait_tasks.py, asyncio_wait_task_timeout.py
-            - asyncio_gather.py
-            - asyncio_as_completed.py
-        - run_until_complete() vs. run_forever()
-        - stopping the event loop programmatically -- asyncio_stop.py
-        - calling a blocking function using an executor
-            - default, threading -- asyncio_executor_thread.py
-            - process -- asyncio_executor_process.py
-        - looking up a hostname -- asyncio_getaddrinfo.py
-    - enabling debugging -- asyncio_debug.py
-    - aiohttp third-party module
-    - not sure about
-        - pausing transport production in a protocol?
-        - using existing sockets?
-        - alternate event loops, esp. for Windows
-        - waiting for a background task from within a protocol
+   - control flow
+     - waiting for background tasks from within a coroutine -- asyncio_background_task.py
+     - waiting for a task with a timeout -- asyncio_wait_task_timeout.py
+     - using wait(), gather(), and as_completed() to wait for groups of background tasks
+       - asyncio_wait_coroutines.py, asyncio_wait_tasks.py, asyncio_wait_task_timeout.py
+       - asyncio_gather.py
+       - asyncio_as_completed.py
+   - synchronization tools
+     - lock -- asyncio_lock.py
+     - event -- asyncio_event.py
+     - condition -- asyncio_condition.py
+     - queue -- asyncio_queue.py
+   - run_until_complete() vs. run_forever()
+   - stopping the event loop programmatically -- asyncio_stop.py
+   - calling a blocking function using an executor
+     - default, threading -- asyncio_executor_thread.py
+     - process -- asyncio_executor_process.py
+   - looking up a hostname -- asyncio_getaddrinfo.py
+   - enabling debugging -- asyncio_debug.py
+   - aiohttp third-party module
+   - not sure about
+     - pausing transport production in a protocol?
+     - using existing sockets?
+     - alternate event loops, esp. for Windows
+     - waiting for a background task from within a protocol
 
 
 .. seealso::
