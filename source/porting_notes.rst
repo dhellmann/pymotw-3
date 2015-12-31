@@ -136,7 +136,8 @@ and the values are the Python 3 name).
 New Modules
 ===========
 
-
+asyncio
+  Asynchronous I/O, event loop, and other concurrency tools.
 
 Deprecated Modules
 ==================
@@ -226,7 +227,7 @@ The methods :func:`tostring` and :func:`fromstring` have been renamed
 .. _porting-asyncio:
 
 asyncio
-=======
+-------
 
 .. index::
    pair: porting; asyncio
