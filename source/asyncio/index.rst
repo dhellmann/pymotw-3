@@ -30,6 +30,7 @@ working on.
    tasks
    io_protocol
    io_coroutine
+   subprocesses
 
 .. note::
 

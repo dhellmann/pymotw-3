@@ -8,49 +8,41 @@
 
 import asyncio
 import functools
-import logging
-import sys
-
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(message)s',
-    stream=sys.stderr,
-)
-LOG = logging.getLogger('')
 
 
 class DFProtocol(asyncio.SubprocessProtocol):
 
     def __init__(self, done):
         self.done = done
-        self.output = bytearray()
+        self.buffer = bytearray()
+        super().__init__()
 
     def connection_made(self, transport):
-        LOG.debug('process started {}'.format(
-            transport.get_pid()))
+        print('transport {!r}'.format(transport))
+        print('process started {}'.format(transport.get_pid()))
         self.transport = transport
 
     def pipe_data_received(self, fd, data):
-        LOG.debug('read {} bytes'.format(len(data)))
-        self.output.extend(data)
+        print('read {} bytes'.format(len(data)))
+        self.buffer.extend(data)
 
     def process_exited(self):
-        LOG.debug('process exited')
+        print('process exited')
         return_code = self.transport.get_returncode()
-        LOG.debug('return code {}'.format(return_code))
+        print('return code {}'.format(return_code))
         if not return_code:
-            cmd_output = bytes(self.output).decode()
+            cmd_output = bytes(self.buffer).decode()
             results = self._parse_results(cmd_output)
         else:
             results = []
         self.done.set_result((return_code, results))
 
     def _parse_results(self, output):
-        LOG.debug('parsing results')
+        print('parsing results')
         # Output has one row of headers, all single words.  The
         # remaining rows are one per filesystem, with columns
-        # more or less matching the headers (assuming that none
-        # of the mount points have whitespace in the names).
+        # matching the headers (assuming that none of the
+        # mount points have whitespace in the names).
         if not output:
             return []
         lines = output.splitlines()
@@ -64,7 +56,7 @@ class DFProtocol(asyncio.SubprocessProtocol):
 
 
 async def run_df(loop):
-    LOG.debug('in run_df')
+    print('in run_df')
 
     cmd_done = asyncio.Future(loop=loop)
     factory = functools.partial(DFProtocol, cmd_done)
@@ -75,9 +67,9 @@ async def run_df(loop):
         stderr=None,
     )
     try:
-        LOG.debug('launching process')
+        print('launching process')
         transport, protocol = await proc
-        LOG.debug('waiting for process to complete')
+        print('waiting for process to complete')
         await cmd_done
     finally:
         transport.close()
@@ -86,18 +78,15 @@ async def run_df(loop):
 
 
 event_loop = asyncio.get_event_loop()
-
 try:
-    LOG.debug('entering event loop')
     return_code, results = event_loop.run_until_complete(
         run_df(event_loop)
     )
 finally:
-    LOG.debug('closing event loop')
     event_loop.close()
 
 if return_code:
-    LOG.debug('error exit {}'.format(return_code))
+    print('error exit {}'.format(return_code))
 else:
     print('\nFree space:')
     for r in results:
