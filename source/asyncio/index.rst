@@ -28,6 +28,7 @@ working on.
    scheduling
    futures
    tasks
+   control
    io_protocol
    io_coroutine
    ssl
@@ -42,7 +43,6 @@ working on.
 
 ..
    - control flow
-     - waiting for background tasks from within a coroutine -- asyncio_background_task.py
      - waiting for a task with a timeout -- asyncio_wait_task_timeout.py
      - using wait(), gather(), and as_completed() to wait for groups of background tasks
        - asyncio_wait_coroutines.py, asyncio_wait_tasks.py, asyncio_wait_task_timeout.py
