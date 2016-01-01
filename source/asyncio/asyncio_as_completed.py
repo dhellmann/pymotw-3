@@ -7,56 +7,33 @@
 #end_pymotw_header
 
 import asyncio
-import functools
-import logging
-import sys
-
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(message)s',
-    stream=sys.stderr,
-)
-LOG = logging.getLogger('')
 
 
-async def start_coroutines(loop):
-    LOG.debug('in start_coroutines')
-    LOG.debug('waiting for sub-tasks')
-    coroutines = [
-        phase1(),
-        phase2(),
+async def phase(i):
+    print('in phase {}'.format(i))
+    await asyncio.sleep(0.5 - (0.1 * i))
+    print('done with phase {}'.format(i))
+    return 'phase {} result'.format(i)
+
+
+async def main(num_phases):
+    print('starting main')
+    phases = [
+        phase(i)
+        for i in range(num_phases)
     ]
+    print('waiting for phases to complete')
     results = []
-    for task in asyncio.as_completed(coroutines, loop=loop):
-        answer = await task
+    for next_to_complete in asyncio.as_completed(phases):
+        answer = await next_to_complete
+        print('received answer {!r}'.format(answer))
         results.append(answer)
-    LOG.debug('completed, results: {!r}'.format(results))
+    print('results: {!r}'.format(results))
     return results
 
 
-async def phase1():
-    LOG.debug('in phase1')
-    await asyncio.sleep(2)
-    LOG.debug('done with phase1')
-    return 'phase1 result'
-
-
-async def phase2():
-    LOG.debug('in phase2')
-    await asyncio.sleep(1)
-    LOG.debug('done with phase2')
-    return 'phase2 result'
-
-
 event_loop = asyncio.get_event_loop()
-
 try:
-    LOG.debug('entering event loop')
-    result = event_loop.run_until_complete(
-        start_coroutines(event_loop)
-    )
+    event_loop.run_until_complete(main(3))
 finally:
-    LOG.debug('closing event loop')
     event_loop.close()
-
-LOG.debug('result: %r' % (result,))

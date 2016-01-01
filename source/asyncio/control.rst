@@ -116,3 +116,42 @@ background operations actually completed.
 
 .. {{{end}}}
 
+Handling Background Operations as They Finish
+=============================================
+
+Use :func:`as_completed` to start many operations in the background
+and be notified as each finishes. :func:`as_completed` is a generator
+that manages the execution of a list of coroutines given to it and
+produces their results one at a time as they finish running.
+
+.. include:: asyncio_as_completed.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+This example starts several background phases that finish in the
+reverse order from which they start. As the generator is consumed, the
+loop waits for the result of the coroutine using ``await``.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'asyncio_as_completed.py'))
+.. }}}
+
+::
+
+	$ python3 asyncio_as_completed.py
+	
+	starting main
+	waiting for phases to complete
+	in phase 0
+	in phase 2
+	in phase 1
+	done with phase 2
+	received answer 'phase 2 result'
+	done with phase 1
+	received answer 'phase 1 result'
+	done with phase 0
+	received answer 'phase 0 result'
+	results: ['phase 2 result', 'phase 1 result', 'phase 0 result']
+
+.. {{{end}}}
+
