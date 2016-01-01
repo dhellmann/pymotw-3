@@ -29,6 +29,7 @@ working on.
    futures
    tasks
    control
+   synchronization
    io_protocol
    io_coroutine
    ssl
@@ -42,12 +43,6 @@ working on.
    removed, though that is much less likely.
 
 ..
-   - control flow
-     - waiting for a task with a timeout -- asyncio_wait_task_timeout.py
-     - using wait(), gather(), and as_completed() to wait for groups of background tasks
-       - asyncio_wait_coroutines.py, asyncio_wait_tasks.py, asyncio_wait_task_timeout.py
-       - asyncio_gather.py
-       - asyncio_as_completed.py
    - synchronization tools
      - lock -- asyncio_lock.py
      - event -- asyncio_event.py

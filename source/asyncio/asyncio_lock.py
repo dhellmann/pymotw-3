@@ -8,67 +8,49 @@
 
 import asyncio
 import functools
-import logging
-import sys
-
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(message)s',
-    stream=sys.stderr,
-)
-LOG = logging.getLogger('')
 
 
 def unlock(lock):
-    LOG.debug('releasing lock')
+    print('callback releasing lock')
     lock.release()
 
 
-async def coro1(lock, future):
-    LOG.debug('in coro1')
+async def coro1(lock):
+    print('coro1 waiting for the lock')
     with await lock:
-        LOG.debug('coro1 acquired lock')
-    LOG.debug('coro1 released lock')
-    future.set_result(True)
+        print('coro1 acquired lock')
+    print('coro1 released lock')
 
 
-async def coro2(lock, future):
-    LOG.debug('in coro2')
+async def coro2(lock):
+    print('coro2 waiting for the lock')
     await lock
     try:
-        LOG.debug('coro2 acquired lock')
+        print('coro2 acquired lock')
     finally:
-        LOG.debug('coro2 released lock')
+        print('coro2 released lock')
         lock.release()
-    future.set_result(True)
 
 
 event_loop = asyncio.get_event_loop()
-
-# Create a shared lock
-lock = asyncio.Lock(loop=event_loop)
-
-# Create some futures to let us know when
-# both coroutines are done.
-f1 = asyncio.Future(loop=event_loop)
-f2 = asyncio.Future(loop=event_loop)
-
 try:
-    LOG.debug('acquiring the lock')
+    # Create and acquire a shared lock.
+    lock = asyncio.Lock()
+    print('acquiring the lock before starting coroutines')
     event_loop.run_until_complete(lock.acquire())
-    LOG.debug('lock acquired: {}'.format(lock.locked()))
+    print('lock acquired: {}'.format(lock.locked()))
 
-    event_loop.call_later(1, functools.partial(unlock, lock))
-    event_loop.create_task(coro1(lock, f1))
-    event_loop.create_task(coro2(lock, f2))
+    # Schedule a callback to unlock the lock.
+    event_loop.call_later(0.1, functools.partial(unlock, lock))
 
-    LOG.debug('entering event loop')
-    result = event_loop.run_until_complete(
-        asyncio.wait([f1, f2], loop=event_loop),
+    # Run the coroutines that want to use the lock.
+    print('entering event loop')
+    event_loop.run_until_complete(
+        asyncio.wait([coro1(lock),
+                      coro2(lock)]),
     )
-    LOG.debug('exited event loop')
+    print('exited event loop')
 
-    LOG.debug('lock acquired: {}'.format(lock.locked()))
+    print('lock status: {}'.format(lock.locked()))
 finally:
-    LOG.debug('closing event loop')
     event_loop.close()
