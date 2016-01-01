@@ -3,9 +3,9 @@
 ==============================
 
 Tasks are one of the primary ways to interact with the event
-loop. Tasks wrap coroutines and track when they are complete using a
-:class:`Future`. Tasks have a result, which can be retrieved after the
-task completes.
+loop. Tasks wrap coroutines and track when they are complete. Tasks
+are subclasses of :class:`Future`, so they can be waited for and each
+has a result that can be retrieved after the task completes.
 
 Starting a Task
 ===============
@@ -141,4 +141,3 @@ until something uses ``await`` to allow it to be executed.
 	starter: inner returned
 
 .. {{{end}}}
-
