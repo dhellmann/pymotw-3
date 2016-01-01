@@ -88,9 +88,18 @@ unique hold on the event object.
 Conditions
 ==========
 
+A :class:`Condition` works similarly to an :class:`Event` except that
+rather than notifying all waiting coroutines the number of waiters
+awakened is controlled with an argument to :func:`notify`.
+
 .. include:: asyncio_condition.py
    :literal:
    :start-after: #end_pymotw_header
+
+This example starts five consumers of the :class:`Condition`. Each
+uses the :func:`wait` method to wait for a notification that they can
+proceed. :func:`manipulate_condition` notifies one consumer, then two
+consumers, then all of the remaining consumers.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'asyncio_condition.py'))
@@ -100,25 +109,27 @@ Conditions
 
 	$ python3 asyncio_condition.py
 	
-	Using selector: KqueueSelector
 	entering event loop
-	in consumer 0
-	consumer 0 is waiting
-	in consumer 1
-	consumer 1 is waiting
-	in consumer 2
-	consumer 2 is waiting
-	in consumer 3
-	consumer 3 is waiting
 	starting manipulate_condition
-	notifying 0
-	consumer 0 triggered
+	consumer 2 is waiting
+	consumer 3 is waiting
+	consumer 1 is waiting
+	consumer 4 is waiting
+	consumer 0 is waiting
 	notifying 1
+	consumer 2 triggered
+	ending consumer 2
+	notifying 2
+	consumer 3 triggered
+	ending consumer 3
 	consumer 1 triggered
+	ending consumer 1
 	notifying remaining
 	ending manipulate_condition
-	consumer 2 triggered
-	consumer 3 triggered
+	consumer 4 triggered
+	ending consumer 4
+	consumer 0 triggered
+	ending consumer 0
 	exited event loop
 	closing event loop
 

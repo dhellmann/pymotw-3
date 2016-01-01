@@ -8,72 +8,56 @@
 
 import asyncio
 import functools
-import logging
-import sys
-
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(message)s',
-    stream=sys.stderr,
-)
-LOG = logging.getLogger('')
 
 
-async def consumer(condition, n, future):
-    LOG.debug('in consumer {}'.format(n))
+async def consumer(condition, n):
     with await condition:
-        LOG.debug('consumer {} is waiting'.format(n))
+        print('consumer {} is waiting'.format(n))
         await condition.wait()
-        LOG.debug('consumer {} triggered'.format(n))
-    future.set_result(True)
+        print('consumer {} triggered'.format(n))
+    print('ending consumer {}'.format(n))
 
 
 async def manipulate_condition(condition):
-    LOG.debug('starting manipulate_condition')
-    for i in range(2):
+    print('starting manipulate_condition')
+
+    # pause to let consumers start
+    await asyncio.sleep(0.1)
+
+    for i in range(1, 3):
         with await condition:
-            LOG.debug('notifying {}'.format(i))
-            condition.notify(n=1)
+            print('notifying {}'.format(i))
+            condition.notify(n=i)
         await asyncio.sleep(0.1)
+
     with await condition:
-        LOG.debug('notifying remaining')
+        print('notifying remaining')
         condition.notify_all()
-    LOG.debug('ending manipulate_condition')
+
+    print('ending manipulate_condition')
 
 
 event_loop = asyncio.get_event_loop()
-
-# Create a condition
-condition = asyncio.Condition(loop=event_loop)
-
-num_consumers = 4
-
-# Create some futures to let us know when
-# both coroutines are done.
-futures = [
-    asyncio.Future(loop=event_loop)
-    for i in range(num_consumers)
-]
-
 try:
+    # Create a condition
+    condition = asyncio.Condition(loop=event_loop)
+
     # Set up tasks watching the condition
-    tasks = [
-        event_loop.create_task(
-            consumer(condition, i, futures[i])
-        )
-        for i in range(num_consumers)
+    consumers = [
+        consumer(condition, i)
+        for i in range(5)
     ]
 
-    # Schedule the task to manipulate the condition variable
+    # Schedule a task to manipulate the condition variable
     event_loop.create_task(
         manipulate_condition(condition)
     )
 
-    LOG.debug('entering event loop')
+    print('entering event loop')
     result = event_loop.run_until_complete(
-        asyncio.wait(futures, loop=event_loop),
+        asyncio.wait(consumers),
     )
-    LOG.debug('exited event loop')
+    print('exited event loop')
 finally:
-    LOG.debug('closing event loop')
+    print('closing event loop')
     event_loop.close()
