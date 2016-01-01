@@ -33,6 +33,7 @@ working on.
    io_protocol
    io_coroutine
    ssl
+   dns
    subprocesses
    unix_signals
    executors
@@ -48,7 +49,6 @@ working on.
    - run_until_complete() vs. run_forever()
    - stopping the event loop programmatically -- asyncio_stop.py
    - looking up a hostname -- asyncio_getaddrinfo.py
-   - enabling debugging -- asyncio_debug.py
    - aiohttp third-party module
    - not sure about
      - pausing transport production in a protocol?

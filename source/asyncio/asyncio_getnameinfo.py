@@ -2,7 +2,7 @@
 # encoding: utf-8
 #
 # Copyright (c) 2014 Doug Hellmann.  All rights reserved.
-"""Converting hostnames to IP addresses
+"""Scheduling a callback with call_later
 """
 #end_pymotw_header
 
@@ -16,21 +16,16 @@ import sys
 event_loop = asyncio.get_event_loop()
 
 targets = [
-    ('pymotw.com', 'https'),
-    ('doughellmann.com', 'https'),
-    ('python.org', 'https'),
+    ('66.33.211.242', 443),
+    ('104.130.43.121', 443),
 ]
 
 try:
     for target in targets:
         info = event_loop.run_until_complete(
-            event_loop.getaddrinfo(
-                *target,
-                proto=socket.IPPROTO_TCP,
-            )
+            event_loop.getnameinfo(target)
         )
 
-        for host in info:
-            print('{:20}: {}'.format(target[0], host[4][0]))
+        print('{:15}: {} {}'.format(target[0], *info))
 finally:
     event_loop.close()
