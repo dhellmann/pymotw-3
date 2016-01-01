@@ -25,8 +25,8 @@ async def main(num_phases):
     ]
     print('waiting for phases to complete')
     completed, pending = await asyncio.wait(phases)
-    result = [t.result() for t in completed]
-    print('result: {!r}'.format(result))
+    results = [t.result() for t in completed]
+    print('results: {!r}'.format(results))
 
 
 event_loop = asyncio.get_event_loop()
