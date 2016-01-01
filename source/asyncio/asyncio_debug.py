@@ -47,10 +47,15 @@ async def outer(loop):
 
 event_loop = asyncio.get_event_loop()
 if args.verbose:
+    LOG.info('enabling debugging')
+
+    # Enable debugging
     event_loop.set_debug(True)
+
     # Make the threshold for "slow" tasks very very small for
     # illustration. The default is 0.1, or 100 milliseconds.
     event_loop.slow_callback_duration = 0.001
+
     # Report all mistakes managing asynchronous resources.
     warnings.simplefilter('always', ResourceWarning)
 

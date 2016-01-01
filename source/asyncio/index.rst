@@ -36,6 +36,7 @@ working on.
    subprocesses
    unix_signals
    executors
+   debugging
 
 .. note::
 
@@ -44,16 +45,8 @@ working on.
    removed, though that is much less likely.
 
 ..
-   - synchronization tools
-     - lock -- asyncio_lock.py
-     - event -- asyncio_event.py
-     - condition -- asyncio_condition.py
-     - queue -- asyncio_queue.py
    - run_until_complete() vs. run_forever()
    - stopping the event loop programmatically -- asyncio_stop.py
-   - calling a blocking function using an executor
-     - default, threading -- asyncio_executor_thread.py
-     - process -- asyncio_executor_process.py
    - looking up a hostname -- asyncio_getaddrinfo.py
    - enabling debugging -- asyncio_debug.py
    - aiohttp third-party module
