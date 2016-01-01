@@ -12,27 +12,21 @@ import logging
 import sys
 import time
 
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='PID %(process)5s %(name)18s: %(message)s',
-    stream=sys.stderr,
-)
-LOG = logging.getLogger('main')
-
 
 def blocks(n):
     log = logging.getLogger('blocks({})'.format(n))
-    log.debug('running')
-    time.sleep(1)
-    log.debug('done')
+    log.info('running')
+    time.sleep(0.1)
+    log.info('done')
     return n ** 2
 
 
-async def run_blocking_tasks(loop, executor):
+async def run_blocking_tasks(executor):
     log = logging.getLogger('run_blocking_tasks')
-    log.debug('starting task')
+    log.info('starting')
 
-    log.debug('creating executor tasks')
+    log.info('creating executor tasks')
+    loop = asyncio.get_event_loop()
     blocking_tasks = [
         loop.run_in_executor(
             executor,
@@ -41,21 +35,31 @@ async def run_blocking_tasks(loop, executor):
         )
         for i in range(6)
     ]
-    log.debug('waiting for executor tasks')
-    results = await asyncio.gather(*blocking_tasks, loop=loop)
-    log.debug('results: {!r}'.format(results))
+    log.info('waiting for executor tasks')
+    completed, pending = await asyncio.wait(blocking_tasks)
+    results = [t.result() for t in completed]
+    log.info('results: {!r}'.format(results))
 
-    log.debug('exiting')
+    log.info('exiting')
 
 
-executor = concurrent.futures.ProcessPoolExecutor(max_workers=3)
+# Configure logging to show the id of the process where the log
+# message originates.
+logging.basicConfig(
+    level=logging.INFO,
+    format='PID %(process)5s %(name)18s: %(message)s',
+    stream=sys.stderr,
+)
+
+# Create a limited process pool.
+executor = concurrent.futures.ProcessPoolExecutor(
+    max_workers=3,
+)
 
 event_loop = asyncio.get_event_loop()
 try:
-    LOG.debug('entering event loop')
     event_loop.run_until_complete(
-        run_blocking_tasks(event_loop, executor),
+        run_blocking_tasks(executor)
     )
 finally:
-    LOG.debug('closing event loop')
     event_loop.close()

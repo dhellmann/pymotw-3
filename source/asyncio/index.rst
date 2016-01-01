@@ -35,6 +35,7 @@ working on.
    ssl
    subprocesses
    unix_signals
+   executors
 
 .. note::
 
