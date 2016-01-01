@@ -8,81 +8,60 @@
 
 import asyncio
 import functools
-import logging
-import sys
-
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(name)s: %(message)s',
-    stream=sys.stderr,
-)
-LOG = logging.getLogger('')
 
 
-async def consumer(n, q, future):
-    log = logging.getLogger('consumer {}'.format(n))
-    log.debug('starting')
+async def consumer(n, q):
+    print('consumer {}: starting'.format(n))
     while True:
-        log.debug('waiting for item')
+        print('consumer {}: waiting for item'.format(n))
         item = await q.get()
-        log.debug('has item {}'.format(item))
-        q.task_done()
+        print('consumer {}: has item {}'.format(n, item))
         if item is None:
+            # None is the signal to stop.
+            q.task_done()
             break
         else:
             await asyncio.sleep(0.01 * item)
-    future.set_result(True)
+            q.task_done()
+    print('consumer {}: ending'.format(n))
 
 
 async def producer(q, num_workers):
-    log = logging.getLogger('producer')
-    log.debug('starting producer')
+    print('producer: starting')
     # Add some numbers to the queue to simulate jobs
     for i in range(num_workers * 3):
-        log.debug('adding task {} to the queue'.format(i))
         await q.put(i)
+        print('producer: added task {} to the queue'.format(i))
     # Add None entries in the queue
     # to signal the consumers to exit
-    log.debug('adding stop signals to the queue')
+    print('producer: adding stop signals to the queue')
     for i in range(num_workers):
         await q.put(None)
-    log.debug('producer waiting for queue to empty')
+    print('producer: waiting for queue to empty')
     await q.join()
-    log.debug('ending producer')
+    print('producer: ending')
 
 
 event_loop = asyncio.get_event_loop()
-
-num_consumers = 2
-
-q = asyncio.Queue(maxsize=num_consumers, loop=event_loop)
-
-# Create some futures to let us know when
-# both coroutines are done.
-futures = [
-    asyncio.Future(loop=event_loop)
-    for i in range(num_consumers)
-]
-
 try:
-    # Set up tasks watching the condition
-    tasks = [
-        event_loop.create_task(
-            consumer(i, q, futures[i])
-        )
+    num_consumers = 2
+
+    # Create the queue with a fixed size so the producer
+    # will block until the consumers pull some items out.
+    q = asyncio.Queue(maxsize=num_consumers)
+
+    # Scheduled the consumer tasks.
+    consumers = [
+        event_loop.create_task(consumer(i, q))
         for i in range(num_consumers)
     ]
 
-    # Schedule the task to manipulate the condition variable
-    event_loop.create_task(
-        producer(q, num_consumers)
-    )
+    # Schedule the producer task.
+    prod = event_loop.create_task(producer(q, num_consumers))
 
-    LOG.debug('entering event loop')
+    # Wait for all of the coroutines to finish.
     result = event_loop.run_until_complete(
-        asyncio.wait(futures, loop=event_loop),
+        asyncio.wait(consumers + [prod])
     )
-    LOG.debug('exited event loop')
 finally:
-    LOG.debug('closing event loop')
     event_loop.close()

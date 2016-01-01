@@ -113,8 +113,8 @@ consumers, then all of the remaining consumers.
 	starting manipulate_condition
 	consumer 2 is waiting
 	consumer 3 is waiting
-	consumer 1 is waiting
 	consumer 4 is waiting
+	consumer 1 is waiting
 	consumer 0 is waiting
 	notifying 1
 	consumer 2 triggered
@@ -122,12 +122,12 @@ consumers, then all of the remaining consumers.
 	notifying 2
 	consumer 3 triggered
 	ending consumer 3
-	consumer 1 triggered
-	ending consumer 1
-	notifying remaining
-	ending manipulate_condition
 	consumer 4 triggered
 	ending consumer 4
+	notifying remaining
+	ending manipulate_condition
+	consumer 1 triggered
+	ending consumer 1
 	consumer 0 triggered
 	ending consumer 0
 	exited event loop
@@ -138,9 +138,18 @@ consumers, then all of the remaining consumers.
 Queues
 ======
 
+An :class:`asyncio.Queue` provides a first-in, first-out data
+structure for coroutines like a :class:`queue.Queue` does for threads
+or a :class:`multiprocessing.Queue` does for processes.
+
 .. include:: asyncio_queue.py
    :literal:
    :start-after: #end_pymotw_header
+
+Adding items with :func:`put` or removing items with :func:`get` are
+both asynchronous operations, since the queue size might be fixed
+(blocking an addition) or the queue might be empty (blocking a call to
+fetch an item).
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'asyncio_queue.py'))
@@ -150,38 +159,36 @@ Queues
 
 	$ python3 asyncio_queue.py
 	
-	asyncio: Using selector: KqueueSelector
-	root: entering event loop
 	consumer 0: starting
 	consumer 0: waiting for item
 	consumer 1: starting
 	consumer 1: waiting for item
-	producer: starting producer
-	producer: adding task 0 to the queue
-	producer: adding task 1 to the queue
-	producer: adding task 2 to the queue
+	producer: starting
+	producer: added task 0 to the queue
+	producer: added task 1 to the queue
 	consumer 0: has item 0
 	consumer 1: has item 1
-	producer: adding task 3 to the queue
-	producer: adding task 4 to the queue
+	producer: added task 2 to the queue
+	producer: added task 3 to the queue
 	consumer 0: waiting for item
 	consumer 0: has item 2
-	producer: adding task 5 to the queue
+	producer: added task 4 to the queue
 	consumer 1: waiting for item
 	consumer 1: has item 3
+	producer: added task 5 to the queue
 	producer: adding stop signals to the queue
 	consumer 0: waiting for item
 	consumer 0: has item 4
 	consumer 1: waiting for item
 	consumer 1: has item 5
-	producer: producer waiting for queue to empty
+	producer: waiting for queue to empty
 	consumer 0: waiting for item
 	consumer 0: has item None
+	consumer 0: ending
 	consumer 1: waiting for item
 	consumer 1: has item None
-	producer: ending producer
-	root: exited event loop
-	root: closing event loop
+	consumer 1: ending
+	producer: ending
 
 .. {{{end}}}
 
