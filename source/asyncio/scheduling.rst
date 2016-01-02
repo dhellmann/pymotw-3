@@ -97,14 +97,14 @@ returned by :func:`time.time`.
 
 	$ python3 asyncio_call_at.py
 	
-	clock time: 1451511233.021935
-	loop  time: 621411.292077311
+	clock time: 1451746600.330646
+	loop  time: 856785.00372738
 	registering callbacks
 	entering event loop
-	callback 3 invoked at 621411.292226764
-	callback 2 invoked at 621411.397159889
-	callback 1 invoked at 621411.497157289
-	stopper invoked at    621411.597113354
+	callback 3 invoked at 856785.003883249
+	callback 2 invoked at 856785.104088092
+	callback 1 invoked at 856785.205991229
+	stopper invoked at    856785.305830442
 	closing event loop
 
 .. {{{end}}}
