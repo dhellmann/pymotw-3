@@ -17,7 +17,7 @@ def callback(n, future):
 event_loop = asyncio.get_event_loop()
 
 print('registering callbacks on future')
-all_done = asyncio.Future(loop=event_loop)
+all_done = asyncio.Future()
 all_done.add_done_callback(functools.partial(callback, 1))
 all_done.add_done_callback(functools.partial(callback, 2))
 

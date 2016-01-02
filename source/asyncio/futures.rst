@@ -3,9 +3,9 @@
 ==================================
 
 A :class:`Future` represents the result of work that has not been
-completed yet. The event loop can watch for a :class:`Future` object
-to be set to done, allowing one part of an application to wait for
-another part to finish some work.
+completed yet. The event loop can watch for a :class:`Future` object's
+state to indicate that it is done, allowing one part of an application
+to wait for another part to finish some work.
 
 Waiting for a Future
 ====================

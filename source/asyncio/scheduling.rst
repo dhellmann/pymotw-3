@@ -2,7 +2,8 @@
  Scheduling Calls to Regular Functions
 =======================================
 
-The :mod:`asyncio` event loop can schedule calls to regular functions
+In addition to managing coroutines and I/O callbacks, the
+:mod:`asyncio` event loop can schedule calls to regular functions
 based on the timer value kept in the loop.
 
 Scheduling a Callback "Soon"
@@ -50,9 +51,9 @@ second argument is the callback.
 
 In this example, the same callback function is scheduled for several
 different times with different arguments. The final instance, using
-:func:`call_soon`, results in the callback being invoked with ``3``
-before any of the time-scheduled instances, showing that "soon"
-usually implies a minimal delay.
+:func:`call_soon`, results in the callback being invoked with the
+argument ``3`` before any of the time-scheduled instances, showing
+that "soon" usually implies a minimal delay.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'asyncio_call_later.py'))
@@ -76,10 +77,10 @@ Scheduling a Callback for a Specific Time
 =========================================
 
 It is also possible to schedule a call to occur at a specific
-time. The clock implementation used by the loop will vary based on the
-platform and loop implementation, so to choose a time it is necessary
-to start from the internal state of that clock using its :func:`time`
-method.
+time. The loop uses a monotonic clock, rather than a wall-clock time,
+to ensure that the value of "now" never regresses. To choose a time
+for a scheduled callback it is necessary to start from the internal
+state of that clock using the loop's :func:`time` method.
 
 .. include:: asyncio_call_at.py
    :literal:
