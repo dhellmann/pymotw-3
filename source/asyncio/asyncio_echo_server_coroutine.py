@@ -42,8 +42,7 @@ event_loop = asyncio.get_event_loop()
 
 # Create the server and let the loop finish the coroutine before
 # starting the real event loop.
-coroutine = asyncio.start_server(echo, *SERVER_ADDRESS,
-                                 loop=event_loop)
+coroutine = asyncio.start_server(echo, *SERVER_ADDRESS)
 server = event_loop.run_until_complete(coroutine)
 log.debug('starting up on {} port {}'.format(*SERVER_ADDRESS))
 

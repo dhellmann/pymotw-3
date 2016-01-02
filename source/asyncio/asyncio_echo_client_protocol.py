@@ -75,14 +75,14 @@ client_factory = functools.partial(
     MESSAGES,
     client_completed,
 )
-coroutine = event_loop.create_connection(
+factory_coroutine = event_loop.create_connection(
     client_factory,
     *SERVER_ADDRESS,
 )
 
 log.debug('waiting for client to complete')
 try:
-    event_loop.run_until_complete(coroutine)
+    event_loop.run_until_complete(factory_coroutine)
     event_loop.run_until_complete(client_completed)
 finally:
     log.debug('closing event loop')

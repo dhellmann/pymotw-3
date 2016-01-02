@@ -17,7 +17,7 @@ The server starts by importing the modules it needs to set up
 object.
 
 .. literalinclude:: asyncio_echo_server_coroutine.py
-   :lines: 9-13
+   :lines: 9-13,33-40
 
 It then defines a coroutine to handle communication. Each time a
 client connects, a new instance of the coroutine will be invoked so
@@ -71,7 +71,7 @@ server. Completing the coroutine produces a :class:`asyncio.Server`
 instance tied to the event loop.
 
 .. literalinclude:: asyncio_echo_server_coroutine.py
-   :lines: 43-48
+   :lines: 43-47
 
 Then the event loop needs to be run in order to process events and
 handle client requests. For a long-running service, the
@@ -82,7 +82,7 @@ and then the event loop can be closed to finish handling any other
 coroutines before the program exits.
 
 .. literalinclude:: asyncio_echo_server_coroutine.py
-   :lines: 50-
+   :lines: 49-
 
 Echo Client
 ===========
@@ -96,7 +96,7 @@ creating an event loop object.
    :lines: 9-19,50-57
 
 The ``echo_client`` coroutine takes arguments telling it where the
-server is, what messages to send, and which event loop to use.
+server is and what messages to send.
 
 .. literalinclude:: asyncio_echo_client_coroutine.py
    :lines: 22
@@ -108,7 +108,7 @@ blocking other activity while the :func:`open_connection` coroutine
 runs.
 
 .. literalinclude:: asyncio_echo_client_coroutine.py
-   :lines: 24-28
+   :lines: 24-27
 
 The :func:`open_connection` coroutine returns :class:`StreamReader`
 and :class:`StreamWriter` instances associated with the new
@@ -120,7 +120,7 @@ to restore control to the event loop, which monitors the write socket
 and invokes the writer when it is possible to send more data.
 
 .. literalinclude:: asyncio_echo_client_coroutine.py
-   :lines: 30-37
+   :lines: 29-37
 
 Next the client looks for a response from the server by trying to read
 data until there is nothing left to read. To avoid blocking on an
