@@ -388,7 +388,7 @@ def post_draft(title, body):
     post.content = body
     post.post_status = 'draft'
     post.terms_names = {
-        'post_tag': ['PyMOTW'],
+        'post_tag': ['PyMOTW', 'python'],
     }
     wp.call(wordpress_xmlrpc.methods.posts.NewPost(post))
 
