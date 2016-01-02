@@ -13,12 +13,13 @@
 
 :Purpose: Command-line option and argument parsing.
 
-The :mod:`argparse` module was added to Python 2.7 as a replacement
-for :mod:`optparse`.  The implementation of :mod:`argparse` supports
-features that would not have been easy to add to :mod:`optparse`, and
-that would have required backwards-incompatible API changes, so a new
-module was brought into the library instead. :mod:`optparse` is now
-deprecated.
+The :mod:`argparse` module includes tools for building command line
+argument and option processors. It was added to Python 2.7 as a
+replacement for :mod:`optparse`.  The implementation of
+:mod:`argparse` supports features that would not have been easy to add
+to :mod:`optparse`, and that would have required
+backwards-incompatible API changes, so a new module was brought into
+the library instead. :mod:`optparse` is now deprecated.
 
 Setting Up a Parser
 ===================
