@@ -48,7 +48,6 @@ working on.
 ..
    - run_until_complete() vs. run_forever()
    - stopping the event loop programmatically -- asyncio_stop.py
-   - looking up a hostname -- asyncio_getaddrinfo.py
    - aiohttp third-party module
    - not sure about
      - pausing transport production in a protocol?
@@ -60,8 +59,6 @@ working on.
 .. seealso::
 
     * :pydoc:`asyncio`
-
-    * :ref:`Porting notes for asyncio <porting-asyncio>`
 
     * :pep:`3156` -- *Asynchronous IO Support Rebooted: the "asyncio"
       Module*

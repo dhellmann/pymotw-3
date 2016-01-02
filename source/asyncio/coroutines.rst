@@ -4,8 +4,11 @@
 
 Coroutines are a language construct designed for concurrent
 operation. A coroutine function creates a coroutine object when
-called, and the coroutine object enters and exits execution,
-maintaining its state even when it is not actively running.
+called, and the caller can then run the code of the function using the
+coroutine's :func:`send` method. A coroutine can pause execution using
+the ``await`` keyword with another coroutine. While it is paused, the
+coroutine's state is maintained, allowing it to resume where it left
+off the next time it is awakened.
 
 Starting a Coroutine
 ====================
@@ -98,3 +101,44 @@ the new coroutines.
 	return value: ('result1', 'result2 derived from result1')
 
 .. {{{end}}}
+
+Generators Instead of Coroutines
+================================
+
+Coroutine functions are a key component of the design of
+:mod:`asyncio`. They provide a language construct for stopping the
+execution of part of a program, preserving the state of that call, and
+re-entering the state at a later time, which are all important
+capabilities for a concurrency framework.
+
+Python 3.5 introduced new language features to define such coroutines
+natively using ``async def`` and to yield control using ``await``, and
+the examples for :mod:`asyncio` take advantage of the new
+feature. Earlier versions of Python 3 can use generator functions
+wrapped with the :func:`asyncio.coroutine` decorator and ``yield
+from`` to achieve the same effect.
+
+.. include:: asyncio_generator.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+The preceding example reproduces ``asyncio_coroutine_chain.py`` using
+generator functions instead of native coroutines.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'asyncio_generator.py'))
+.. }}}
+
+::
+
+	$ python3 asyncio_generator.py
+	
+	in outer
+	waiting for result1
+	in phase1
+	waiting for result2
+	in phase2
+	return value: ('result1', 'result2 derived from result1')
+
+.. {{{end}}}
+

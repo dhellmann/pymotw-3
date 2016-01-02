@@ -22,25 +22,26 @@ processes in a way that may trade some efficiencies in network I/O.
 
 An application interacts with the event loop explicitly to register
 code to be run, and lets the event loop make the necessary calls into
-application code at the right time. For example, a network server
-opens sockets and then registers them to be told when input events
-occur on them. Application code is expected to yield control again
-after a short period of time when no more work can be done in the
-current context. For example, if there is no more data to read from a
-socket the server should yield control back to the event loop.
+application code when resources are available. For example, a network
+server opens sockets and then registers them to be told when input
+events occur on them. The event loop alerts the server code when there
+is a new incoming connection or when there is data to
+read. Application code is expected to yield control again after a
+short period of time when no more work can be done in the current
+context. For example, if there is no more data to read from a socket
+the server should yield control back to the event loop.
 
 The mechanism for yielding control back to the event loop depends on
-the abstraction layer being used, but underlying everything is the
-concept of Python's *coroutines*, special functions that give up
-control to the caller without losing their state. Coroutines are
-similar to generators, and in fact generators can be used to implement
-coroutines in versions of Python without native support for coroutine
-objects. :mod:`asyncio` also provides a class-based abstraction layer
-for *protocols* and *transports* for writing code using callbacks
-instead of writing coroutines directly. In both the class-based and
-coroutine models, explicitly changing context by re-entering the event
-loop takes the place of implicit context changes in Python's threading
-implementation.
+Python's *coroutines*, special functions that give up control to the
+caller without losing their state. Coroutines are similar to generator
+functions, and in fact generators can be used to implement coroutines
+in versions of Python earlier than 3.5 without native support for
+coroutine objects. :mod:`asyncio` also provides a class-based
+abstraction layer for *protocols* and *transports* for writing code
+using callbacks instead of writing coroutines directly. In both the
+class-based and coroutine models, explicitly changing context by
+re-entering the event loop takes the place of implicit context changes
+in Python's threading implementation.
 
 A *future* is a data structure representing the result of work that
 has not been completed yet. The event loop can watch for a

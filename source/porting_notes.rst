@@ -224,29 +224,6 @@ The methods :func:`tostring` and :func:`fromstring` have been renamed
 :func:`tobytes` and :func:`frombytes` to remove ambiguity
 (:pyissue:`8990`).
 
-.. _porting-asyncio:
-
-asyncio
--------
-
-.. index::
-   pair: porting; asyncio
-   single: coroutine
-
-Coroutine functions are a key component of the design of
-:mod:`asyncio`. They provide a language construct for stopping the
-execution of part of a program, preserving the state of that call, and
-re-entering the state at a later time.
-
-Python 3.5 introduced new language features to define such coroutines
-natively using ``async def`` and to yield control using ``await``, and
-the examples here take advantage of the new feature.
-
-Earlier versions of Python 3 can use generator functions wrapped with
-the :func:`asyncio.coroutine` decorator and ``yield from`` to achieve
-the same effect.
-
-
 .. _porting-atexit:
 
 atexit
