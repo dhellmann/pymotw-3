@@ -2,10 +2,11 @@
  Interacting with Domain Name Services
 =======================================
 
-Applications use sockets to communicate with servers for domain name
-service (DNS) operations like converting between hostnames and IP
+Applications use the network to communicate with servers for domain
+name service (DNS) operations like converting between hostnames and IP
 addresses. :mod:`asyncio` has convenience methods on the event loop to
-take care of those operations in the background.
+take care of those operations in the background, to avoid blocking
+during the queries.
 
 Address Lookup by Name
 ======================
@@ -59,7 +60,7 @@ name, where possible.
    :start-after: #end_pymotw_header
 
 This example shows that the IP address for ``pymotw.com`` refers to a
-server at Dreamhost, the hosting company where the site runs. The
+server at DreamHost, the hosting company where the site runs. The
 second IP address examined is for ``python.org``, and it does not
 resolve back to a hostname.
 
@@ -81,4 +82,4 @@ resolve back to a hostname.
 .. seealso::
 
    * The :mod:`socket` module discussion includes a more detailed
-     examination of these values.
+     examination of these operations.

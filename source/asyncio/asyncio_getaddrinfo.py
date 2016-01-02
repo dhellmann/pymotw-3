@@ -13,14 +13,13 @@ import socket
 import sys
 
 
-event_loop = asyncio.get_event_loop()
-
 targets = [
     ('pymotw.com', 'https'),
     ('doughellmann.com', 'https'),
     ('python.org', 'https'),
 ]
 
+event_loop = asyncio.get_event_loop()
 try:
     for target in targets:
         info = event_loop.run_until_complete(

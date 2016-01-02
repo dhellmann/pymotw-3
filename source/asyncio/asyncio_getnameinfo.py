@@ -13,13 +13,12 @@ import socket
 import sys
 
 
-event_loop = asyncio.get_event_loop()
-
 targets = [
     ('66.33.211.242', 443),
     ('104.130.43.121', 443),
 ]
 
+event_loop = asyncio.get_event_loop()
 try:
     for target in targets:
         info = event_loop.run_until_complete(
