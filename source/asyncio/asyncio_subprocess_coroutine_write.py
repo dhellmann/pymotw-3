@@ -10,14 +10,13 @@ import asyncio
 import asyncio.subprocess
 
 
-async def to_upper(loop, input):
+async def to_upper(input):
     print('in to_upper')
 
     create = asyncio.create_subprocess_exec(
         'tr', '[:lower:]', '[:upper:]',
         stdout=asyncio.subprocess.PIPE,
         stdin=asyncio.subprocess.PIPE,
-        loop=loop,
     )
     print('launching process')
     proc = await create
@@ -47,7 +46,7 @@ to all caps.
 event_loop = asyncio.get_event_loop()
 try:
     return_code, results = event_loop.run_until_complete(
-        to_upper(event_loop, MESSAGE)
+        to_upper(MESSAGE)
     )
 finally:
     event_loop.close()

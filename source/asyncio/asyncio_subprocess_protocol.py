@@ -12,6 +12,8 @@ import functools
 
 class DFProtocol(asyncio.SubprocessProtocol):
 
+    FD_NAMES = ['stdin', 'stdout', 'stderr']
+
     def __init__(self, done):
         self.done = done
         self.buffer = bytearray()
@@ -22,8 +24,10 @@ class DFProtocol(asyncio.SubprocessProtocol):
         self.transport = transport
 
     def pipe_data_received(self, fd, data):
-        print('read {} bytes'.format(len(data)))
-        self.buffer.extend(data)
+        print('read {} bytes from {}'.format(len(data),
+                                             self.FD_NAMES[fd]))
+        if fd == 1:
+            self.buffer.extend(data)
 
     def process_exited(self):
         print('process exited')

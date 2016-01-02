@@ -28,7 +28,7 @@ def _parse_results(output):
     return results
 
 
-async def run_df(loop):
+async def run_df():
     print('in run_df')
 
     buffer = bytearray()
@@ -36,7 +36,6 @@ async def run_df(loop):
     create = asyncio.create_subprocess_exec(
         'df', '-hl',
         stdout=asyncio.subprocess.PIPE,
-        loop=loop,
     )
     print('launching process')
     proc = await create
@@ -67,7 +66,7 @@ async def run_df(loop):
 event_loop = asyncio.get_event_loop()
 try:
     return_code, results = event_loop.run_until_complete(
-        run_df(event_loop)
+        run_df()
     )
 finally:
     event_loop.close()

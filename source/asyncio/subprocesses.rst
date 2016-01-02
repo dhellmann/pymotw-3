@@ -21,7 +21,7 @@ on I/O events for the subprocess. Because both the ``stdin`` and
 are not connected to the new process.
 
 .. literalinclude:: asyncio_subprocess_protocol.py
-   :lines: 57-76
+   :lines: 61-80
 
 The class :class:`DFProtocol` is derived from
 :class:`SubprocessProtocol`, which defines the API for a class to
@@ -30,7 +30,7 @@ is expected to be a :class:`Future` that the caller will use to watch
 for the process to finish.
 
 .. literalinclude:: asyncio_subprocess_protocol.py
-   :lines: 13-18
+   :lines: 13-20
 
 As with socket communication, :func:`connection_made` is invoked when
 the input channels to the new process are set up. The ``transport``
@@ -40,15 +40,16 @@ process and write data to the input stream for the process, if the
 process was configured to receive input.
 
 .. literalinclude:: asyncio_subprocess_protocol.py
-   :lines: 20-22
+   :lines: 22-24
 
 When the process has generated output, :func:`pipe_data_received` is
 invoked with the file descriptor where the data was emitted and the
-actual data read from the pipe. The protocol class saves the data in a
-buffer for later processing.
+actual data read from the pipe. The protocol class saves the output
+from the standard output channel of the process in a buffer for later
+processing.
 
 .. literalinclude:: asyncio_subprocess_protocol.py
-   :lines: 24-26
+   :lines: 26-30
 
 When the process terminates, :func:`process_exited` is called. The
 exit code of the process is available from the transport object by
@@ -60,21 +61,21 @@ tells :func:`run_df` that the process has exited, so it cleans up and
 then returns the results.
 
 .. literalinclude:: asyncio_subprocess_protocol.py
-   :lines: 28-37
+   :lines: 32-41
 
 The command output is parsed into a sequence of dictionaries mapping
 the header names to their values for each line of output, and the
 resulting list is returned.
 
 .. literalinclude:: asyncio_subprocess_protocol.py
-   :lines: 39-54
+   :lines: 43-58
 
 The :func:`run_df` coroutine is run using :func:`run_until_complete`,
 then the results are examined and the free space on each device is
 printed.
 
 .. literalinclude:: asyncio_subprocess_protocol.py
-   :lines: 79-
+   :lines: 83-
 
 The output below shows the sequence of steps taken, and the free space
 on three drives on the system where it was run.
@@ -89,9 +90,9 @@ on three drives on the system where it was run.
 	
 	in run_df
 	launching process
-	process started 91637
+	process started 49675
 	waiting for process to complete
-	read 332 bytes
+	read 332 bytes from stdout
 	process exited
 	return code 0
 	parsing results
@@ -114,7 +115,7 @@ coroutine to spawn the subprocess is a :class:`Process` instance that
 can be used to manipulate the subprocess or communicate with it.
 
 .. literalinclude:: asyncio_subprocess_coroutine.py
-   :lines: 31-43
+   :lines: 31-42
 
 In this example, ``df`` does not need any input other than its command
 line arguments, so the next step is to read all of the output. With
@@ -125,7 +126,7 @@ output of the command is buffered, as with the protocol example, so it
 can be parsed later.
 
 .. literalinclude:: asyncio_subprocess_coroutine.py
-   :lines: 45-51
+   :lines: 44-50
 
 The :func:`readline` method returns an empty byte string when there is
 no more output because the program has finished. To ensure the process
@@ -133,7 +134,7 @@ is cleaned up properly, the next step is to wait for the process to
 exit fully.
 
 .. literalinclude:: asyncio_subprocess_coroutine.py
-   :lines: 53-54
+   :lines: 52-53
 
 At that point the exit status can be examined to determine whether to
 parse the output or treat the error as it produced no output. The
@@ -143,13 +144,13 @@ class to hide it in. After the data is parsed, the results and exit
 code are then returned to the caller.
 
 .. literalinclude:: asyncio_subprocess_coroutine.py
-   :lines: 56-64
+   :lines: 55-63
 
 The main program looks similar to the protocol-based example, because
 the implementation changes are isolated in :func:`run_df`.
 
 .. literalinclude:: asyncio_subprocess_coroutine.py
-   :lines: 67-
+   :lines: 66-
 
 Since the output from ``df`` can be read one line at a time, it is
 echoed to show the progress of the program. Otherwise, the output
@@ -165,15 +166,15 @@ looks similar to the previous example.
 	
 	in run_df
 	launching process
-	process started 91640
+	process started 49678
 	read b'Filesystem     Size   Used  Avail Capacity   iused
 	ifree %iused  Mounted on\n'
-	read b'/dev/disk2s2  446Gi  213Gi  233Gi    48%  55976480
-	60993734   48%   /\n'
+	read b'/dev/disk2s2  446Gi  213Gi  233Gi    48%  55955082
+	61015132   48%   /\n'
 	read b'/dev/disk1    465Gi  307Gi  157Gi    67%  80514922
 	41281172   66%   /Volumes/hubertinternal\n'
-	read b'/dev/disk3s2  3.6Ti  1.4Ti  2.3Ti    38% 181812878
-	306505450   37%   /Volumes/hubert-tm\n'
+	read b'/dev/disk3s2  3.6Ti  1.4Ti  2.3Ti    38% 181837749
+	306480579   37%   /Volumes/hubert-tm\n'
 	read b''
 	no more output from command
 	waiting for process to complete
@@ -198,11 +199,11 @@ input stream. In this case, ``tr`` is used to convert lower-case
 letters to upper-case letters.
 
 The :func:`to_upper` coroutine takes as argument an event loop and an
-input string. It spawns a second process running ``tr [:lower:]
-[:upper:]``.
+input string. It spawns a second process running ``"tr [:lower:]
+[:upper:]"``.
 
 .. literalinclude:: asyncio_subprocess_coroutine_write.py
-   :lines: 13-24
+   :lines: 13-23
 
 Next :func:`to_upper` uses the :func:`communicate` method of the
 :class:`Process` to send the input string to the command and read all
@@ -216,26 +217,26 @@ and stderr handles of the :class:`Process` directly instead of calling
 :func:`communicate`.
 
 .. literalinclude:: asyncio_subprocess_coroutine_write.py
-   :lines: 26-27
+   :lines: 25-26
 
 After the I/O is done, waiting for the process to completely exit
 ensures it is cleaned up properly.
 
 .. literalinclude:: asyncio_subprocess_coroutine_write.py
-   :lines: 29-30
+   :lines: 28-29
 
 The return code can then be examined, and the output byte string
 decoded, to prepare the return value from the coroutine.
 
 .. literalinclude:: asyncio_subprocess_coroutine_write.py
-   :lines: 32-39
+   :lines: 31-38
 
 The main part of the program establishes a message string to be
 transformed, and then sets up the event loop to run :func:`to_upper`
 and prints the results.
 
 .. literalinclude:: asyncio_subprocess_coroutine_write.py
-   :lines: 42-
+   :lines: 41-
 
 The output shows the sequence of operations and then how the simple
 text message is transformed.
@@ -250,7 +251,7 @@ text message is transformed.
 	
 	in to_upper
 	launching process
-	pid 91644
+	pid 49684
 	communicating with process
 	waiting for process to complete
 	return code 0
