@@ -13,9 +13,9 @@ Waiting for Multiple Coroutines
 It is often useful to divide one operation into many parts and execute
 them separately. For example, downloading several remote resources or
 querying remote APIs. In situations where the order of execution
-doesn't matter, and there may be an arbitrary number of operations,
-:func:`wait` can be used to pause one coroutine until the other
-background operations complete.
+doesn't matter, and where there may be an arbitrary number of
+operations, :func:`wait` can be used to pause one coroutine until the
+other background operations complete.
 
 .. include:: asyncio_wait.py
    :literal:
@@ -119,10 +119,12 @@ background operations actually completed.
 Handling Background Operations as They Finish
 =============================================
 
-Use :func:`as_completed` to start many operations in the background
-and be notified as each finishes. :func:`as_completed` is a generator
-that manages the execution of a list of coroutines given to it and
-produces their results one at a time as they finish running.
+:func:`as_completed` is a generator that manages the execution of a
+list of coroutines given to it and produces their results one at a
+time as they finish running. As with :func:`wait`, order is not
+guaranteed by :func:`as_completed`, but it is not necessary to wait
+for all of the background operations to complete before taking other
+action.
 
 .. include:: asyncio_as_completed.py
    :literal:
