@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Example of writing a comma separated value file.
 """
 #end_pymotw_header

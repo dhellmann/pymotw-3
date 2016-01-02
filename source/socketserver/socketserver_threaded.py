@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Echo server example for socketserver
 """
 #end_pymotw_header

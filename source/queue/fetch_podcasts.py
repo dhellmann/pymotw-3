@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Use several threads to download enclosures from RSS feeds.
 """
 #end_pymotw_header
