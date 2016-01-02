@@ -2,7 +2,7 @@
 # encoding: utf-8
 #
 # Copyright (c) 2014 Doug Hellmann.  All rights reserved.
-"""Scheduling a callback with call_later
+"""Converting IP addresses and port numbers to host and protocol names
 """
 #end_pymotw_header
 

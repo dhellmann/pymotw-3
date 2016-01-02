@@ -2,7 +2,7 @@
 # encoding: utf-8
 #
 # Copyright (c) 2014 Doug Hellmann.  All rights reserved.
-"""Starting a task
+"""Collecting output from tasks in parallel
 """
 #end_pymotw_header
 

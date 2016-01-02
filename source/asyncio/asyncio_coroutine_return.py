@@ -2,7 +2,7 @@
 # encoding: utf-8
 #
 # Copyright (c) 2014 Doug Hellmann.  All rights reserved.
-"""Starting a coroutine
+"""Returning a value from a coroutine
 """
 #end_pymotw_header
 

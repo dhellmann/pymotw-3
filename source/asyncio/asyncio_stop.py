@@ -2,7 +2,7 @@
 # encoding: utf-8
 #
 # Copyright (c) 2014 Doug Hellmann.  All rights reserved.
-"""Scheduling a callback with call_later
+"""Stopping the event loop
 """
 #end_pymotw_header
 
