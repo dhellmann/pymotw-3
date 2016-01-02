@@ -7,8 +7,8 @@ process, they are still built as concurrent applications. Each
 coroutine or task may execute in an unpredictable order, based on
 delays and interrupts from I/O and other external events. To support
 safe concurrency, :mod:`asyncio` includes implementations of some of
-the same low-level primitives found in :mod:`threading` and
-:mod:`multiprocessing`.
+the same low-level primitives found in the :mod:`threading` and
+:mod:`multiprocessing` modules.
 
 Locks
 =====
@@ -23,8 +23,9 @@ time.
    :start-after: #end_pymotw_header
 
 Locks can be invoked directly, using ``await`` to acquire it and
-calling the :func:`release` method when done, or they can be used as
-asynchronous context managers with the ``with await`` keywords.
+calling the :func:`release` method when done as in :func:`coro2` in
+this example. They also can be used as asynchronous context managers
+with the ``with await`` keywords, as in :func:`coro1`.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'asyncio_lock.py'))
@@ -54,7 +55,8 @@ Events
 
 An :class:`asyncio.Event` is based on :class:`threading.Event`, and is
 used to allow multiple consumers to wait for something to happen
-without looking for a specific value to be associated with the event.
+without looking for a specific value to be associated with the
+notification.
 
 .. include:: asyncio_event.py
    :literal:
@@ -62,8 +64,8 @@ without looking for a specific value to be associated with the event.
 
 As with the :class:`Lock`, both :func:`coro1` and :func:`coro2` wait
 for the event to be set. The difference is that both can start as soon
-as the event state changes, and they do not need to wait to acquire a
-unique hold on the event object.
+as the event state changes, and they do not need to acquire a unique
+hold on the event object.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'asyncio_event.py'))

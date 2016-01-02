@@ -30,7 +30,7 @@ async def coro2(event):
 event_loop = asyncio.get_event_loop()
 try:
     # Create a shared event
-    event = asyncio.Event(loop=event_loop)
+    event = asyncio.Event()
     print('event state: {}'.format(event.is_set()))
 
     event_loop.call_later(

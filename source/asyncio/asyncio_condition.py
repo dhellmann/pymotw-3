@@ -40,7 +40,7 @@ async def manipulate_condition(condition):
 event_loop = asyncio.get_event_loop()
 try:
     # Create a condition
-    condition = asyncio.Condition(loop=event_loop)
+    condition = asyncio.Condition()
 
     # Set up tasks watching the condition
     consumers = [
