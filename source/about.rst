@@ -21,6 +21,19 @@ Source code is available from http://bitbucket.org/dhellmann/pymotw-3/.
 Complete documentation for the standard library can be found on the
 Python web site at http://docs.python.org/3/library/.
 
+Subscribe
+=========
+
+As new articles are written, they are posted to `my blog`_ as well as
+https://pymotw.com.  Updates are available by RSS from
+http://feeds.doughellmann.com/PyMOTW and `email
+<http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US>`_. Follow
+`@pymotw`_ or `@doughellmann`_ for updates as well.
+
+.. _my blog: https://doughellmann.com/
+.. _@pymotw: https://twitter.com/pymotw
+.. _@doughellmann: https://twitter.com/doughellmann
+
 Tools
 =====
 
@@ -54,16 +67,6 @@ CPython (see below for version) and inserted into the text using cog_.
   versions of the standard library. When in doubt, refer to the
   documentation for the version of Python you are using.
 
-
-Subscribe
-=========
-
-As new articles are written, they are posted to `my blog`_ as well as
-https://pymotw.com.  Updates are available by RSS from
-http://feeds.doughellmann.com/PyMOTW and `email
-<http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US>`_.
-
-.. _my blog: https://doughellmann.com/
 
 .. _copyright:
 
