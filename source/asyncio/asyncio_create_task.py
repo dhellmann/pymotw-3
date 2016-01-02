@@ -7,36 +7,24 @@
 #end_pymotw_header
 
 import asyncio
-import functools
-import logging
-import sys
-
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(message)s',
-    stream=sys.stderr,
-)
-LOG = logging.getLogger('')
 
 
 async def task_func():
-    LOG.info('in task_func')
+    print('in task_func')
     return 'the result'
 
 
 event_loop = asyncio.get_event_loop()
-
-LOG.info('creating task')
-task = event_loop.create_task(task_func())
-LOG.info('task: %r' % (task,))
-
 try:
-    LOG.info('entering event loop')
+    print('creating task')
+    task = event_loop.create_task(task_func())
+    print('task: {!r}'.format(task))
+
+    print('entering event loop')
     return_value = event_loop.run_until_complete(task)
-    LOG.info('task: {!r}'.format(task))
-    LOG.info('return value: {!r}'.format(return_value))
+    print('task: {!r}'.format(task))
+    print('return value: {!r}'.format(return_value))
 finally:
-    LOG.info('closing event loop')
     event_loop.close()
 
-LOG.info('task result: %r' % (task.result(),))
+print('task result: {!r}'.format(task.result()))

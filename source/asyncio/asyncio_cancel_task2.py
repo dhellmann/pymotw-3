@@ -8,41 +8,29 @@
 
 import asyncio
 import functools
-import logging
-import sys
-
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(message)s',
-    stream=sys.stderr,
-)
-LOG = logging.getLogger('')
 
 
 async def task_func():
-    LOG.info('in task_func, sleeping')
+    print('in task_func, sleeping')
     try:
         await asyncio.sleep(1)
     except asyncio.CancelledError:
-        LOG.info('task_func was cancelled')
+        print('task_func was cancelled')
         raise
     return 'the result'
 
 
 async def task_canceller(t):
-    LOG.info('in task_canceller')
+    print('in task_canceller')
     t.cancel()
-    LOG.info('cancelled the task')
+    print('cancelled the task')
 
 
 event_loop = asyncio.get_event_loop()
-
-LOG.info('creating task')
-task = event_loop.create_task(task_func())
-
 try:
-    LOG.info('entering event loop')
+    print('creating task')
+    task = event_loop.create_task(task_func())
+
     event_loop.run_until_complete(task_canceller(task))
 finally:
-    LOG.info('closing event loop')
     event_loop.close()

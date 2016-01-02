@@ -4,8 +4,9 @@
 
 Tasks are one of the primary ways to interact with the event
 loop. Tasks wrap coroutines and track when they are complete. Tasks
-are subclasses of :class:`Future`, so they can be waited for and each
-has a result that can be retrieved after the task completes.
+are subclasses of :class:`Future`, so other coroutines can wait for
+them and each has a result that can be retrieved after the task
+completes.
 
 Starting a Task
 ===============
@@ -13,7 +14,7 @@ Starting a Task
 To start a task, use :func:`create_task` to create a
 :class:`Task` instance. The resulting task will run as part of the
 concurrent operations managed by the event loop as long as the loop is
-running.
+running and the coroutine does not return.
 
 .. include:: asyncio_create_task.py
    :literal:
@@ -30,16 +31,14 @@ running until the task returns a result.
 
 	$ python3 asyncio_create_task.py
 	
-	Using selector: KqueueSelector
 	creating task
 	task: <Task pending coro=<task_func() running at
-	asyncio_create_task.py:22>>
+	asyncio_create_task.py:12>>
 	entering event loop
 	in task_func
 	task: <Task finished coro=<task_func() done, defined at
-	asyncio_create_task.py:22> result='the result'>
+	asyncio_create_task.py:12> result='the result'>
 	return value: 'the result'
-	closing event loop
 	task result: 'the result'
 
 .. {{{end}}}
@@ -67,12 +66,10 @@ loop. The result is a :class:`CancelledError` exception from
 
 	$ python3 asyncio_cancel_task.py
 	
-	Using selector: KqueueSelector
 	creating task
 	canceling task
 	entering event loop
 	caught error from cancelled task
-	closing event loop
 
 .. {{{end}}}
 
@@ -96,14 +93,11 @@ already done, if necessary.
 
 	$ python3 asyncio_cancel_task2.py
 	
-	Using selector: KqueueSelector
 	creating task
-	entering event loop
 	in task_func, sleeping
 	in task_canceller
 	cancelled the task
 	task_func was cancelled
-	closing event loop
 
 .. {{{end}}}
 
