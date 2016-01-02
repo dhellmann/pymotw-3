@@ -31,11 +31,11 @@ finished.
    :literal:
    :start-after: #end_pymotw_header
 
-This example uses :mod:`logging` to conveniently indicate which thread
-and function are producing each log message. Because a separate logger
-is used in each call to :func:`blocks`, the output clearly shows the
-same threads being reused to call multiple copies of the function with
-different arguments.
+``asyncio_executor_thread.py`` uses :mod:`logging` to conveniently
+indicate which thread and function are producing each log
+message. Because a separate logger is used in each call to
+:func:`blocks`, the output clearly shows the same threads being reused
+to call multiple copies of the function with different arguments.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'asyncio_executor_thread.py'))
@@ -74,7 +74,7 @@ requires more system resources, but for computationally-intensive
 operations it can make sense to run a separate task on each CPU core.
 
 .. literalinclude:: asyncio_executor_process.py
-   :lines: 46-
+   :lines: 42-
 
 The only change needed to move from threads to processes is to create
 a different type of executor. This example also changes the logging

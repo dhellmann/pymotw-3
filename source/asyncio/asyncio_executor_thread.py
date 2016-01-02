@@ -28,11 +28,7 @@ async def run_blocking_tasks(executor):
     log.info('creating executor tasks')
     loop = asyncio.get_event_loop()
     blocking_tasks = [
-        loop.run_in_executor(
-            executor,
-            blocks,
-            i,
-        )
+        loop.run_in_executor(executor, blocks, i)
         for i in range(6)
     ]
     log.info('waiting for executor tasks')
