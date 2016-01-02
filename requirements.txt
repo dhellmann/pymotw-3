@@ -20,3 +20,5 @@ sphinxcontrib-paverutils==1.10.0
 sphinxcontrib-spelling==2.1.2
 wheel==0.26.0
 feedparser==5.2.1
+pyquery==1.2.9
+python-wordpress-xmlrpc==2.2

@@ -1,13 +1,19 @@
+import configparser
 import http.server
 import os
 import subprocess
 
-from paver.easy import options, Bunch, task, consume_args, sh, info, error
+from paver.easy import options, Bunch, task, consume_args, sh, info, error, cmdopts, dry
 from paver.path import path
 from paver.setuputils import setup
 
+import pyquery
+
 from sphinxcontrib import paverutils  # noqa
 from sphinxcontrib.paverutils import cog, run_script
+
+import wordpress_xmlrpc
+import wordpress_xmlrpc.exceptions
 
 
 # Set PYTHONHASHSEED so ensure the "randomness" for mapping-related
@@ -72,6 +78,14 @@ options(
 
     migrate=Bunch(
         old_loc='../../Python2/book-git/PyMOTW/',
+    ),
+
+    blog=Bunch(
+        outdir='blog_posts',
+        in_file='index.html',
+        out_file='blog.html',
+        no_edit=False,
+        url_base='https://pymotw.com/',
     ),
 
 )
@@ -166,8 +180,12 @@ def _get_module(options):
         module = branch.partition('/')[-1]
         info('using git branch for module: %s' % module)
     if not module:
-        module = path('module').text().rstrip()
-        info('read module from file: %s' % module)
+        try:
+            module = path('module').text().rstrip()
+        except:
+            pass
+        else:
+            info('read module from file: %s' % module)
     if not module:
         error('could not determine the module')
     return module
@@ -312,3 +330,106 @@ def migrate(options):
         for srcfile in dest.glob(source + '_*.py'):
             newname = srcfile.name.replace(source + '_', module + '_')
             srcfile.rename(dest + '/' + newname)
+
+
+def get_post_title(filename):
+    with open(filename, 'r') as f:
+        body = f.read()
+
+    doc = pyquery.PyQuery(body)
+    h1 = doc('h1')
+    return h1.text
+
+
+def gen_blog_post_from_page(input_file, module, url_base):
+    """Generate the blog post body and title
+    """
+    canonical_url = url_base.rstrip('/') + '/' + module + '/'
+    if not input_file.endswith("index.html"):
+        canonical_url += input_base
+
+    print('reading from {}'.format(input_file))
+    raw_body = input_file.text().strip()
+    doc = pyquery.PyQuery(raw_body)
+
+    # Get the title, removing any anchors for the header in the
+    # process
+    title = doc('h1').remove('a').text()
+    if module not in title:
+        title = '{} - {}'.format(module, title)
+    if 'PyMOTW 3' not in title:
+        title = '{} — PyMOTW 3'.format(title)
+
+    # Get the intro paragraph
+    intro = doc('p').eq(0)
+
+    # Convert the paragraph to simple text, removing all formatting.
+    intro = intro.text().replace('\n', ' ')
+
+    output_body = '''<p>{intro}</p>
+<p><a href="{canonical_url}">Read more...</a></p>
+<p><small>This post is part of the Python Module of the Week series for Python 3. See <a href="https://pymotw.com/3/">PyMOTW.com</a> for more articles from the series.</small></p>
+'''.format(intro=intro, canonical_url=canonical_url)
+
+    return (title, output_body)
+
+def post_draft(title, body):
+    cfg_filename = path('~/.wphelper').expanduser()
+    cfg = configparser.ConfigParser()
+    if not cfg.read(cfg_filename):
+        raise RuntimeError('Did not find configuration file {}'.format(cfg_filename))
+    site_url = cfg['site']['url']
+    xmlrpc_url = site_url + '/xmlrpc.php'
+    username = cfg['site']['username']
+    password = cfg['site']['password']
+    wp = wordpress_xmlrpc.Client(xmlrpc_url, username, password)
+    post = wordpress_xmlrpc.WordPressPost()
+    post.title = title
+    post.content = body
+    post.post_status = 'draft'
+    post.terms_names = {
+        'post_tag': ['PyMOTW'],
+    }
+    wp.call(wordpress_xmlrpc.methods.posts.NewPost(post))
+
+
+@task
+@consume_args
+@cmdopts([
+    ('in-file=', 'b', 'Blog input filename (e.g., "-b index.html")'),
+])
+def blog(options):
+    """Generate the blog post version of the HTML for the current module.
+
+    The default behavior generates the post for the current module using
+    its index.html file as input.
+
+    To use a different file within the module directory, use the
+    --in-file or -b option::
+
+      paver blog -b communication.html
+
+    To run against a directory other than a module, use the
+    -s or --sourcedir option::
+
+      paver blog -s PyMOTW/articles -b text_processing.html
+    """
+    options.order('blog', 'sphinx', add_rest=True)
+    module = _get_module(options)
+
+    # Create output directory
+    out = path(options.outdir)
+    if not out.exists():
+        out.mkdir()
+
+    blog_file = path(options.outdir) / module + '.html'
+    title, body = dry(
+        'building blog post body',
+        gen_blog_post_from_page,
+        input_file=path(options.builddir) / 'html' / module / options.in_file,
+        module=module,
+        url_base=options.url_base,
+    )
+    print('title {!r}'.format(title))
+    post_draft(title, body)
+    return

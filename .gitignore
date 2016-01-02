@@ -12,3 +12,4 @@ source/glob/dir
 /source/csv/testout_quoted.csv
 *.egg-info
 dist/
+/blog_posts/
