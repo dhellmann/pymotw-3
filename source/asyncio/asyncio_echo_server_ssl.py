@@ -50,10 +50,9 @@ ssl_context.load_cert_chain('pymotw.crt', 'pymotw.key')
 
 # Create the server and let the loop finish the coroutine before
 # starting the real event loop.
-coroutine = asyncio.start_server(echo, *SERVER_ADDRESS,
-                                 loop=event_loop,
-                                 ssl=ssl_context)
-server = event_loop.run_until_complete(coroutine)
+factory = asyncio.start_server(echo, *SERVER_ADDRESS,
+                               ssl=ssl_context)
+server = event_loop.run_until_complete(factory)
 log.debug('starting up on {} port {}'.format(*SERVER_ADDRESS))
 
 # Enter the event loop permanently to handle all connections.

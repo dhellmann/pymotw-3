@@ -20,7 +20,7 @@ MESSAGES = [
 SERVER_ADDRESS = ('localhost', 10000)
 
 
-async def echo_client(server_address, messages, loop):
+async def echo_client(server_address, messages):
 
     log = logging.getLogger('echo_client')
 
@@ -35,7 +35,7 @@ async def echo_client(server_address, messages, loop):
 
     log.debug('connecting to {} port {}'.format(*server_address))
     reader, writer = await asyncio.open_connection(
-        *server_address, loop=loop, ssl=ssl_context)
+        *server_address, ssl=ssl_context)
 
     # This could be writer.writelines() except that
     # would make it harder to show each part of the message
@@ -71,7 +71,7 @@ event_loop = asyncio.get_event_loop()
 
 try:
     event_loop.run_until_complete(
-        echo_client(SERVER_ADDRESS, MESSAGES, event_loop)
+        echo_client(SERVER_ADDRESS, MESSAGES)
     )
 finally:
     log.debug('closing event loop')

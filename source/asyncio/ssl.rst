@@ -26,14 +26,14 @@ The insecure socket setup in the previous server example uses
 :func:`start_server` to create the listening socket.
 
 .. literalinclude:: asyncio_echo_server_coroutine.py
-   :lines: 45-47
+   :lines: 45-46
 
 To add encryption, create an :class:`SSLContext` with the certificate
 and key just generated and then pass the context to
 :func:`start_server`.
 
 .. literalinclude:: asyncio_echo_server_ssl.py
-   :lines: 44-56
+   :lines: 44-55
 
 Similar changes are needed in the client. The old version uses
 :func:`open_connection` to create the socket connected to the server.
