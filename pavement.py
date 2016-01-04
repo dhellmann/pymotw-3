@@ -26,7 +26,7 @@ setup(
     name="PyMOTW-3",
     packages=[],
     version="0.0",
-    url="http://pymotw.com/3/",
+    url="https://pymotw.com/3/",
     author="Doug Hellmann",
     author_email="doug@doughellmann.com"
 )
@@ -85,7 +85,7 @@ options(
         in_file='index.html',
         out_file='blog.html',
         no_edit=False,
-        url_base='https://pymotw.com/',
+        url_base='https://pymotw.com/3/',
     ),
 
 )
