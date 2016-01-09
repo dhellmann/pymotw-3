@@ -32,7 +32,7 @@ import sys
 import imp
 
 
-class NoisyMetaImportFinder(object):
+class NoisyMetaImportFinder:
 
     def __init__(self, prefix):
         print('Creating NoisyMetaImportFinder for %s' % prefix)
@@ -51,7 +51,7 @@ class NoisyMetaImportFinder(object):
         return None
 
 
-class NoisyMetaImportLoader(object):
+class NoisyMetaImportLoader:
 
     def __init__(self, path_entry):
         self.path_entry = path_entry

@@ -55,7 +55,7 @@ def _get_key_name(fullname, db):
     return None
 
 
-class ShelveFinder(object):
+class ShelveFinder:
     """Find modules collected in a shelve archive."""
 
     _maybe_recursing = False
@@ -101,7 +101,7 @@ class ShelveFinder(object):
         return None
 
 
-class ShelveLoader(object):
+class ShelveLoader:
     """Load source for modules from shelve databases."""
 
     def __init__(self, path_entry):

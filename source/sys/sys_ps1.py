@@ -31,7 +31,7 @@
 import sys
 
 
-class LineCounter(object):
+class LineCounter:
 
     def __init__(self):
         self.count = 0

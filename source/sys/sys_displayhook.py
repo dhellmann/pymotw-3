@@ -31,7 +31,7 @@
 import sys
 
 
-class ExpressionCounter(object):
+class ExpressionCounter:
 
     def __init__(self):
         self.count = 0

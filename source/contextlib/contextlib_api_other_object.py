@@ -8,7 +8,7 @@
 #end_pymotw_header
 
 
-class WithinContext(object):
+class WithinContext:
 
     def __init__(self, context):
         print('WithinContext.__init__(%s)' % context)
@@ -20,7 +20,7 @@ class WithinContext(object):
         print('WithinContext.__del__')
 
 
-class Context(object):
+class Context:
 
     def __init__(self):
         print('Context.__init__()')

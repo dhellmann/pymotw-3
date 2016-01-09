@@ -472,25 +472,25 @@ describing where to go to find the error log.
 	$ python3 cgitb_log_exception.py
 	
 	<p>A problem occurred in a Python script.
-	/Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/cgitb/
-	LOGS/tmp0l4jfvst.txt contains the description of this error.
+	/Users/dhellmann/Dropbox/PyMOTW/Python3/pymotw-3/source/cgitb/LO
+	GS/tmpv5akee5h.txt contains the description of this error.
 
 	$ ls LOGS
 	
-	tmp0l4jfvst.txt
+	tmpv5akee5h.txt
 
 	$ cat LOGS/*.txt
 	
 	ZeroDivisionError
-	Python 3.4.3: /Users/dhellmann/Envs/pymotw34/bin/python3
-	Sun Aug 23 17:05:36 2015
+	Python 3.5.1: /Users/dhellmann/Envs/pymotw35/bin/python3
+	Sat Jan  9 16:41:06 2016
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
 	occurred.
 	
-	 /Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/cgitb
-	 /cgitb_log_exception.py in <module>()
+	 /Users/dhellmann/Dropbox/PyMOTW/Python3/pymotw-3/source/cgitb/c
+	 gitb_log_exception.py in <module>()
 	   19 
 	   20 def func(a, divisor):
 	   21     return a / divisor
@@ -498,8 +498,8 @@ describing where to go to find the error log.
 	   23 func(1, 0)
 	func = <function func>
 	
-	 /Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/cgitb
-	 /cgitb_log_exception.py in func(a=1, divisor=0)
+	 /Users/dhellmann/Dropbox/PyMOTW/Python3/pymotw-3/source/cgitb/c
+	 gitb_log_exception.py in func(a=1, divisor=0)
 	   19 
 	   20 def func(a, divisor):
 	   21     return a / divisor

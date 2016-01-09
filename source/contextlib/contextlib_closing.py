@@ -9,7 +9,7 @@
 import contextlib
 
 
-class Door(object):
+class Door:
 
     def __init__(self):
         print('  __init__()')

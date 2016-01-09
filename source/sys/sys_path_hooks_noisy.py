@@ -31,7 +31,7 @@
 import sys
 
 
-class NoisyImportFinder(object):
+class NoisyImportFinder:
 
     PATH_TRIGGER = 'NoisyImportFinder_PATH_TRIGGER'
 

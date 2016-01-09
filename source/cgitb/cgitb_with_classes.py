@@ -11,7 +11,7 @@ import cgitb
 cgitb.enable(format='text', context=12)
 
 
-class BrokenClass(object):
+class BrokenClass:
     """This class has an error.
     """
 
