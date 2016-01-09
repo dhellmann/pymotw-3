@@ -1353,7 +1353,7 @@ variables, the execution flow cannot be changed at that point.
     -> j = 0
 
     (Pdb) where
-      /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/bdb.py(
+      .../lib/python3.5/bdb.py(
     431)run()
     -> exec cmd in globals, locals
       <string>(1)<module>()
