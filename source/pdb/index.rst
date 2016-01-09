@@ -1735,11 +1735,57 @@ particular project.
     (Pdb)
 
 Any configuration commands that can be typed at the debugger prompt
-can be saved in one of the start-up files, but most commands that
-control the execution (:command:`continue`, :command:`jump`, etc.)
-cannot.  The exception is :command:`run`, which means the command line
-arguments for a debugging session can be set in ``./.pdbrc`` so they
-are consistent across several runs.
+can be saved in one of the start-up files. Some commands that control
+the execution (:command:`continue`, :command:`next`, etc.)  can as
+well.
+
+::
+
+    $ cat .pdbrc
+    break 11
+    continue
+    list
+
+    $ python -m pdb pdb_function_arguments.py
+    Breakpoint 1 at .../pdb_function_arguments.py:11
+      6
+      7  import pdb
+      8
+      9
+      10  def recursive_function(n=5, output='to be printed'):
+      11 B->    if n > 0:
+      12            recursive_function(n - 1)
+      13        else:
+      14            pdb.set_trace()
+      15            print(output)
+      16        return
+    > .../pdb_function_arguments.py(11)recursive_function()
+    -> if n > 0:
+    (Pdb)
+
+Especially useful is :command:`run`, which means the command
+line arguments for a debugging session can be set in ``./.pdbrc`` so
+they are consistent across several runs.
+
+::
+
+    $ cat .pdbrc
+    run a b c "long argument"
+
+    $ python -m pdb pdb_run.py
+    Restarting pdb_run.py with arguments:
+          a b c "long argument"
+    > .../pdb_run.py(7)<module>()
+    -> import sys
+
+    (Pdb) continue
+    Command-line args: ['pdb_run.py', 'a', 'b', 'c', 
+    'long argument']
+    The program finished and will be restarted
+    > .../pdb_run.py(7)<module>()
+    -> import sys
+
+    (Pdb)
 
 .. seealso::
 
