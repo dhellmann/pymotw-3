@@ -1223,6 +1223,21 @@ displays active for the current frame.
 
     (Pdb)
 
+Remove a display expression with :command:`undisplay`.
+
+::
+
+    (Pdb) display
+    Currently displaying:
+    j: 0
+
+    (Pdb) undisplay j
+
+    (Pdb) display
+    Currently displaying:
+
+    (Pdb)
+
 Changing Execution Flow
 =======================
 
