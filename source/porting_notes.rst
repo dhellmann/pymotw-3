@@ -336,6 +336,19 @@ glob
 The new function :func:`escape` implements a work-around for searching
 for files with meta-characters in the name (:pyissue:`8402`).
 
+.. _porting-pdb:
+
+pdb
+---
+
+.. index::
+   pair: porting; pdb
+
+The ``print`` command alias has been removed so that it does not
+shadow the ``print()`` function (:pyissue:`18764`). The ``p`` shortcut
+is retained.
+
+
 .. _porting-shelve:
 
 shelve
@@ -347,7 +360,7 @@ The default output format for :mod:`shelve` may create a file with a
 .. _porting-socketserver:
 
 socketserver
-============
+------------
 
 .. index::
    pair: porting; socketserver
