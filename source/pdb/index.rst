@@ -582,6 +582,62 @@ Before the :command:`until` command was run, the current line was 18,
 the last line of the loop.  After :command:`until` ran, execution was
 on line 19, and the loop had been exhausted.
 
+To let execution run until a specific line, pass the line number to
+the :command:`until` command. Unlike when setting a breakpoint, the
+line number passed to :command:`until` must be higher than the current
+line number, so it is most useful for navigating within a function for
+skipping over loops or other long blocks.
+
+::
+
+    $ python3 pdb_next.py
+    > .../pdb_next.py(23)<module>()
+    -> f(5)
+    (Pdb) list
+     18          print(i, j)
+     19      return
+     20
+     21  if __name__ == '__main__':
+     22      pdb.set_trace()
+     23  ->    f(5)
+    [EOF]
+
+    (Pdb) until 18
+    *** "until" line number is smaller than current line number
+
+    (Pdb) step
+    --Call--
+    > .../pdb_next.py(15)f()
+    -> def f(n):
+
+    (Pdb) step
+    > .../pdb_next.py(16)f()
+    -> for i in range(n):
+
+    (Pdb) list
+     11      j = i * n
+     12      return j
+     13
+     14
+     15  def f(n):
+     16  ->    for i in range(n):
+     17          j = calc(i, n)
+     18          print(i, j)
+     19      return
+     20
+     21  if __name__ == '__main__':
+
+    (Pdb) until 19
+    0 0
+    1 5
+    2 10
+    3 15
+    4 20
+    > .../pdb_next.py(19)f()
+    -> return
+
+    (Pdb)
+
 The :command:`return` command is another short-cut for bypassing parts
 of a function.  It continues executing until the function is about to
 execute a ``return`` statement, and then it pauses, providing time
