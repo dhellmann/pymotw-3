@@ -1,6 +1,6 @@
-=============================
- pdb -- Interactive Debugger
-=============================
+==============================
+ pdb --- Interactive Debugger
+==============================
 
 .. module:: pdb
     :synopsis: Interactive Debugger
@@ -140,10 +140,11 @@ debugger at the point in the call stack where the exception occurred.
 Controlling the Debugger
 ========================
 
-The interface for the debugger is a small command language that
-lets you move around the call stack, examine and change the values of
+The interface for the debugger is a small command language that lets
+you move around the call stack, examine and change the values of
 variables, and control how the debugger executes the program.  The
-interactive debugger uses :mod:`readline` to accept commands.
+interactive debugger uses :mod:`readline` to accept commands, and
+supports tab completion for commands, filenames, and function names.
 Entering a blank line re-runs the previous command again, unless it
 was a :command:`list` operation.
 
@@ -327,8 +328,8 @@ looks like when printed by :command:`where`.
     output = to be printed
 
 The :command:`p` command evaluates an expression given as argument and
-prints the result.  Python's ``print()`` function can be used, but it
-is passed through to the interpreter to be executed rather than
+prints the result.  Python's ``print()`` function is also available,
+but it is passed through to the interpreter to be executed rather than
 running as a command in the debugger.
 
 ::
@@ -392,10 +393,9 @@ uses :mod:`pprint` to format the value for clean printing.
 
     (Pdb)
 
-For more complex interactive exploration and experimentation, it is
-possible to drop from the debugger into a standard Python interactive
-prompt with the globals and locals from the current frame already
-populated.
+For interactive exploration and experimentation it is possible to drop
+from the debugger into a standard Python interactive prompt with the
+globals and locals from the current frame already populated.
 
 ::
 
@@ -489,8 +489,8 @@ being called or the next line of the current function.
     -> f(5)
 
 The interpreter pauses after the call to :func:`set_trace` and gives
-control to the debugger.  The first step causes the execution to enter
-:func:`f`.
+control to the debugger.  The first :command:`step` causes the
+execution to enter :func:`f`.
 
 
 ::
@@ -500,8 +500,8 @@ control to the debugger.  The first step causes the execution to enter
     > .../pdb_step.py(10)f()
     -> def f(n):
 
-One more step moves execution to the first line of :func:`f` and
-starts the loop.
+One more :command:`step` moves execution to the first line of
+:func:`f` and starts the loop.
 
 ::
 
@@ -596,10 +596,10 @@ are executed.
     (Pdb)
 
 
-The :command:`next` command is like step, but does not enter functions
-called from the statement being executed.  In effect, it steps all the
-way through the function call to the next statement in the current
-function in a single operation.
+The :command:`next` command is like :command:`step`, but does not
+enter functions called from the statement being executed.  In effect,
+it steps all the way through the function call to the next statement
+in the current function in a single operation.
 
 ::
 
@@ -663,7 +663,7 @@ To let execution run until a specific line, pass the line number to
 the :command:`until` command. Unlike when setting a breakpoint, the
 line number passed to :command:`until` must be higher than the current
 line number, so it is most useful for navigating within a function for
-skipping over loops or other long blocks.
+skipping over long blocks.
 
 ::
 
@@ -750,7 +750,7 @@ to look at the return value before the function returns.
 Breakpoints
 ===========
 
-As programs grow even longer, even using :command:`next` and
+As programs grow longer, even using :command:`next` and
 :command:`until` will become slow and cumbersome.  Instead of stepping
 through the program by hand, a better solution is to let it run
 normally until it reaches a point where the debugger should interrupt
@@ -762,7 +762,7 @@ monitors the program, and when it reaches the location described by a
 breakpoint the program is paused before the line is executed.
 
 .. literalinclude:: pdb_break.py
-   :linenos: 
+   :linenos:
 
 There are several options to the :command:`break` command used for
 setting break points, including the line number, file, and function
@@ -820,20 +820,20 @@ function.
     > .../pdb_break.py(9)calc()
     -> j = i * n
 
-    (Pdb) 
+    (Pdb)
 
 To specify a breakpoint in another file, prefix the line or function
 argument with a filename.
 
 .. literalinclude:: pdb_break_remote.py
-   :linenos: 
+   :linenos:
 
 Here a breakpoint is set for line 12 of ``pdb_break.py`` after
 starting the main program ``pdb_break_remote.py``.
 
 ::
 
-    $ python3 -m pdb pdb_break_remote.py 
+    $ python3 -m pdb pdb_break_remote.py
 
     > .../pdb_break_remote.py(4)<module>()
     -> from pdb_break import f
@@ -1144,7 +1144,7 @@ the stack frame where the breakpoint is defined.  If the expression
 evaluates as true, execution stops at the breakpoint.
 
 A condition can also be applied to an existing breakpoint using the
-:command:`condition` command.  The arguments are the breakpoint ID and
+:command:`condition` command.  The arguments are the breakpoint id and
 the expression.
 
 ::
@@ -1305,8 +1305,8 @@ Watching Data Change
 --------------------
 
 It is also possible to watch as values change during the course of
-program execution without scripting explicit print commands by using
-the :command:`display` command.
+program execution without scripting explicit :command:`print` commands
+by using the :command:`display` command.
 
 ::
 
@@ -1337,9 +1337,9 @@ the :command:`display` command.
     (Pdb)
 
 Each time execution stops in the frame, the expression is evaluated
-and if it changes the result is printed along with the old value. The
-:command:`display` command with no argument prints a list of the
-displays active for the current frame.
+and if it changes then the result is printed along with the old
+value. The :command:`display` command with no argument prints a list
+of the displays active for the current frame.
 
 ::
 
@@ -1498,7 +1498,7 @@ Illegal Jumps
 -------------
 
 Jumping in and out of certain flow control statements is dangerous or
-undefined, and therefore prevented by the debugger.
+undefined, and therefore, prevented by the debugger.
 
 .. literalinclude:: pdb_no_jump.py
    :linenos: 
@@ -1767,7 +1767,7 @@ Clear the definition of an alias with :command:`unalias`.
 Saving Configuration Settings
 =============================
 
-Debugging a program involves a lot of repetition; running the code,
+Debugging a program involves a lot of repetition: running the code,
 observing the output, adjusting the code or inputs, and running it
 again.  :mod:`pdb` attempts to cut down on the amount of repetition
 needed to control the debugging experience, to let you concentrate on
