@@ -153,7 +153,7 @@ Navigating the Execution Stack
 At any point while the debugger is running use :command:`where`
 (abbreviated :command:`w`) to find out exactly what line is being
 executed and where on the call stack the program is.  In this case,
-the module ``pdb_set_trace.py`` line 17 in the :func:`go` method.
+the module ``pdb_set_trace.py`` line 18 in the :func:`go` method.
 
 ::
 
@@ -260,7 +260,9 @@ arbitrary class, function, or module.
 Move between frames within the current call stack using :command:`up`
 and down.  :command:`up` (abbreviated :command:`u`) moves towards
 older frames on the stack.  :command:`down` (abbreviated :command:`d`)
-moves towards newer frames.
+moves towards newer frames. Each time you move up or down the stack,
+the debugger prints the current location in the same format as
+produced by :command:`where`.
 
 ::
 
@@ -272,8 +274,8 @@ moves towards newer frames.
     > .../pdb_set_trace.py(18)go()
     -> print(i)
 
-Each time you move up or down the stack, the debugger prints the
-current location in the same format as produced by :command:`where`.
+Pass a numerical argument to either :command:`up` or :command:`down`
+to move that many steps up or down the stack at one time.
 
 Examining Variables on the Stack
 --------------------------------
@@ -284,7 +286,7 @@ local to the function being executed and global state information.
 variables.
 
 .. literalinclude:: pdb_function_arguments.py
-   :linenos: 
+   :linenos:
 
 The :command:`args` command (abbreviated :command:`a`) prints all of
 the arguments to the function active in the current frame.  This
