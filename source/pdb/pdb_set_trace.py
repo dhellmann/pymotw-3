@@ -7,7 +7,7 @@
 import pdb
 
 
-class MyObj(object):
+class MyObj:
 
     def __init__(self, num_loops):
         self.count = num_loops
