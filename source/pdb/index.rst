@@ -390,6 +390,81 @@ uses :mod:`pprint` to format the value for clean printing.
 
     (Pdb)
 
+For more complex interactive exploration and experimentation, it is
+possible to drop from the debugger into a standard Python interactive
+prompt with the globals and locals from the current frame already
+populated.
+
+::
+
+    $ python -m pdb pdb_interact.py
+    > .../pdb_interact.py(7)<module>()
+    -> import pdb
+    (Pdb) break 14
+    Breakpoint 1 at .../pdb_interact.py:14
+
+    (Pdb) continue
+    > .../pdb_interact.py(14)f()
+    -> print(l, m, n)
+
+    (Pdb) p l
+    ['a', 'b']
+
+    (Pdb) p m
+    9
+
+    (Pdb) p n
+    5
+
+    (Pdb) interact
+    *interactive*
+
+    >>> l
+    ['a', 'b']
+
+    >>> m
+    9
+
+    >>> n
+    5
+
+Mutable objects such as lists can be changed from the interactive
+debugger.  Immutable objects cannot, and names cannot be rebound to
+new values.
+
+::
+
+    >>> l.append('c')
+    >>> m += 7
+    >>> n = 3
+
+    >>> l
+    ['a', 'b', 'c']
+
+    >>> m
+    16
+
+    >>> n
+    3
+
+Use the end-of-file sequence Ctrl-D to exit the interactive prompt and
+return to the debugger.
+
+::
+
+    >>> ^D
+
+    (Pdb) p l
+    ['a', 'b', 'c']
+
+    (Pdb) p m
+    9
+
+    (Pdb) p n
+    5
+
+    (Pdb)
+
 Stepping Through a Program
 --------------------------
 
