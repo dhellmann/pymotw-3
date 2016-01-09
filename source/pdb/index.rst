@@ -390,7 +390,6 @@ uses :mod:`pprint` to format the value for clean printing.
 
     (Pdb)
 
-
 Stepping Through a Program
 --------------------------
 
@@ -1168,6 +1167,61 @@ This feature is especially useful for debugging code that uses a lot
 of data structures or variables, since the debugger can be made to
 print out all of the values automatically, instead of doing it
 manually each time the breakpoint is encountered.
+
+Watching Data Change
+--------------------
+
+It is also possible to watch as values change during the course of
+program execution without scripting explicit print commands by using
+the :command:`display` command.
+
+::
+
+    $ python3 -m pdb pdb_break.py
+    > .../pdb_break.py(8)<module>()
+    -> def calc(i, n):
+    (Pdb) break 18
+    Breakpoint 1 at .../pdb_break.py:18
+
+    (Pdb) continue
+    > .../pdb_break.py(18)f()
+    -> print('i =', i)
+
+    (Pdb) display j
+    display j: ** raised NameError: name 'j' is not defined **
+
+    (Pdb) next
+    i = 0
+    > .../pdb_break.py(19)f()
+    -> j = calc(i, n)  # noqa
+
+    (Pdb) next
+    j = 0
+    > .../pdb_break.py(17)f()
+    -> for i in range(n):
+    display j: 0  [old: ** raised NameError: name 'j' is not defined **]
+
+    (Pdb)
+
+Each time execution stops in the frame, the expression is evaluated
+and if it changes the result is printed along with the old value. The
+:command:`display` command with no argument prints a list of the
+displays active for the current frame.
+
+::
+
+    (Pdb) display
+    Currently displaying:
+    j: 0
+
+    (Pdb) up
+    > .../pdb_break.py(23)<module>()
+    -> f(5)
+
+    (Pdb) display
+    Currently displaying:
+
+    (Pdb)
 
 Changing Execution Flow
 =======================
