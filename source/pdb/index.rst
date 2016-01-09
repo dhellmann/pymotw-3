@@ -178,7 +178,7 @@ To add more context around the current location, use :command:`list`
      15      def go(self):
      16          for i in range(self.count):
      17              pdb.set_trace()
-     18  ->            print(i)
+     18  ->          print(i)
      19          return
      20
      21  if __name__ == '__main__':
@@ -202,7 +202,7 @@ argument lists 11 lines around that line instead of the current line.
      15      def go(self):
      16          for i in range(self.count):
      17              pdb.set_trace()
-     18  ->            print(i)
+     18  ->          print(i)
      19          return
 
 If :command:`list` receives two arguments, it interprets them as the
@@ -222,7 +222,7 @@ first and last lines to include in its output.
      15      def go(self):
      16          for i in range(self.count):
      17              pdb.set_trace()
-     18  ->            print(i)
+     18  ->          print(i)
      19          return
 
 The :command:`longlist` (``ll``) command prints the source for the
@@ -237,7 +237,7 @@ functions it may produce considerably more output than the default for
      15      def go(self):
      16          for i in range(self.count):
      17              pdb.set_trace()
-     18  ->            print(i)
+     18  ->          print(i)
      19          return
 
 The :command:`source` command loads and prints the full source for an
