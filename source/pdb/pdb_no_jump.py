@@ -7,7 +7,7 @@
 
 def f(n):
     if n < 0:
-        raise ValueError('Invalid n: %s' % n)
+        raise ValueError('Invalid n: {}'.format(n))
     result = []
     j = 0
     for i in range(n):
