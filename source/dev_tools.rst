@@ -70,6 +70,7 @@ without importing the code and potentially triggering side-effects.
 
     cgitb/index
     compileall/index
+    pdb/index
 
 ..
     pydoc/index

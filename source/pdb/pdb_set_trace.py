@@ -1,10 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
 #
 
 import pdb
+
 
 class MyObj(object):
 
@@ -14,7 +15,7 @@ class MyObj(object):
     def go(self):
         for i in range(self.count):
             pdb.set_trace()
-            print i
+            print(i)
         return
 
 if __name__ == '__main__':

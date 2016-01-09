@@ -1,8 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
 #
+
 
 def f(n):
     result = []
@@ -14,6 +15,4 @@ def f(n):
     return result
 
 if __name__ == '__main__':
-    print f(5)
-
-
+    print(f(5))

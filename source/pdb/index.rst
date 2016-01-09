@@ -6,7 +6,6 @@
     :synopsis: Interactive Debugger
 
 :Purpose: Python's Interactive Debugger
-:Python Version: 1.4 and later
 
 :mod:`pdb` implements an interactive debugging environment for Python
 programs.  It includes features to pause a program, look at the values
@@ -32,13 +31,13 @@ command line, giving it the program as input so it knows what to run.
 Running the debugger from the command line causes it to load the
 source file and stop execution on the first statement it finds.  In
 this case, it stops before evaluating the definition of the class
-:class:`MyObj` on line 7.
+:class:`MyObj` on line 8.
 
 ::
 
-    $ python -m pdb pdb_script.py 
+    $ python3 -m pdb pdb_script.py 
 
-    > .../pdb_script.py(7)<module>()
+    > .../pdb_script.py(8)<module>()
     -> class MyObj(object):
     (Pdb) 
 
@@ -60,16 +59,16 @@ interactive interpreter, use :func:`run` or :func:`runeval`.
 
 ::
 
-    $ python
+    $ python3
 
-    Python 2.7 (r27:82508, Jul  3 2010, 21:12:11) 
-    [GCC 4.0.1 (Apple Inc. build 5493)] on darwin
+    Python 3.5.1 (v3.5.1:37a07cee5969, Dec  5 2015, 21:12:44)
+    [GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin
     Type "help", "copyright", "credits" or "license" for more information.
     >>> import pdb_script
     >>> import pdb
     >>> pdb.run('pdb_script.MyObj(5).go()')
     > <string>(1)<module>()
-    (Pdb) 
+    (Pdb)
 
 The argument to :func:`run` is a string expression that can be
 evaluated by the Python interpreter.  The debugger will parse it, then
@@ -86,18 +85,18 @@ later in the program execution, it will be more convenient to start
 the debugger from inside the program using :func:`set_trace`.
 
 .. literalinclude:: pdb_set_trace.py
-   :linenos: 
+   :linenos:
 
-Line 16 of the sample script triggers the debugger at that point in
-execution.
+Line 17 of the sample script triggers the debugger at that point in
+execution, pausing it on line 18.
 
 ::
 
-    $ python ./pdb_set_trace.py 
+    $ python3 ./pdb_set_trace.py 
 
-    > .../pdb_set_trace.py(17)go()
-    -> print i
-    (Pdb) 
+    > .../pdb_set_trace.py(18)go()
+    -> print(i)
+    (Pdb)
 
 :func:`set_trace` is just a Python function, so it can be called at
 any point in a program.  This makes it possible to enter the debugger
@@ -114,31 +113,29 @@ debugging.  :mod:`pdb` supports post-mortem debugging through the
 .. literalinclude:: pdb_post_mortem.py
    :linenos:
 
-Here the incorrect attribute name on line 13 triggers an
+Here the incorrect attribute name on line 14 triggers an
 :class:`AttributeError` exception, causing execution to
 stop. :func:`pm` looks for the active traceback and starts the
 debugger at the point in the call stack where the exception occurred.
 
 ::
 
-    $ python
-
-    Python 2.7 (r27:82508, Jul  3 2010, 21:12:11) 
-    [GCC 4.0.1 (Apple Inc. build 5493)] on darwin
+    $ python3
+    Python 3.5.1 (v3.5.1:37a07cee5969, Dec  5 2015, 21:12:44)
+    [GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin
     Type "help", "copyright", "credits" or "license" for more information.
     >>> from pdb_post_mortem import MyObj
     >>> MyObj(5).go()
     Traceback (most recent call last):
       File "<stdin>", line 1, in <module>
-      File "pdb_post_mortem.py", line 13, in go
+      File ".../pdb_post_mortem.py", line 14, in go
         for i in range(self.num_loops):
     AttributeError: 'MyObj' object has no attribute 'num_loops'
     >>> import pdb
     >>> pdb.pm()
-    > .../pdb_post_mortem.py(13)go()
+    > .../pdb/pdb_post_mortem.py(14)go()
     -> for i in range(self.num_loops):
-    (Pdb) 
-    
+    (Pdb)
 
 Controlling the Debugger
 ========================
@@ -160,34 +157,34 @@ the module ``pdb_set_trace.py`` line 17 in the :func:`go` method.
 
 ::
 
-    $ python pdb_set_trace.py 
-
-    > .../pdb_set_trace.py(17)go()
-    -> print i
+    $ python3 pdb_set_trace.py
+    > .../pdb_set_trace.py(18)go()
+    -> print(i)
     (Pdb) where
-      .../pdb_set_trace.py(21)<module>()
+      .../pdb_set_trace.py(22)<module>()
     -> MyObj(5).go()
-    > .../pdb_set_trace.py(17)go()
-    -> print i
+    > .../pdb_set_trace.py(18)go()
+    -> print(i)
+    (Pdb)
 
 To add more context around the current location, use :command:`list`
 (:command:`l`).
 
 ::
 
-    (Pdb) list
-     12             self.count = num_loops
-     13  
-     14         def go(self):
-     15             for i in range(self.count):
-     16                 pdb.set_trace()
-     17  ->             print i
-     18             return
-     19  
-     20     if __name__ == '__main__':
-     21         MyObj(5).go()
+    (Pdb) l
+     13          self.count = num_loops
+     14
+     15      def go(self):
+     16          for i in range(self.count):
+     17              pdb.set_trace()
+     18  ->            print(i)
+     19          return
+     20
+     21  if __name__ == '__main__':
+     22      MyObj(5).go()
     [EOF]
-    (Pdb) 
+    (Pdb)
 
 The default is to list 11 lines around the current line (five before
 and five after).  Using :command:`list` with a single numerical
@@ -196,39 +193,37 @@ argument lists 11 lines around that line instead of the current line.
 ::
 
     (Pdb) list 14
-      9     class MyObj(object):
-     10  
-     11         def __init__(self, num_loops):
-     12             self.count = num_loops
-     13  
-     14         def go(self):
-     15             for i in range(self.count):
-     16                 pdb.set_trace()
-     17  ->             print i
-     18             return
-     19  
+      9
+     10  class MyObj(object):
+     11
+     12      def __init__(self, num_loops):
+     13          self.count = num_loops
+     14
+     15      def go(self):
+     16          for i in range(self.count):
+     17              pdb.set_trace()
+     18  ->            print(i)
+     19          return
 
 If :command:`list` receives two arguments, it interprets them as the
 first and last lines to include in its output.
 
 ::
 
-    (Pdb) list 5, 19
-      5     #
-      6  
-      7     import pdb
-      8  
-      9     class MyObj(object):
-     10  
-     11         def __init__(self, num_loops):
-     12             self.count = num_loops
-     13  
-     14         def go(self):
-     15             for i in range(self.count):
-     16                 pdb.set_trace()
-     17  ->             print i
-     18             return
-     19  
+    (Pdb) list 7, 19
+      7  import pdb
+      8
+      9
+     10  class MyObj(object):
+     11
+     12      def __init__(self, num_loops):
+     13          self.count = num_loops
+     14
+     15      def go(self):
+     16          for i in range(self.count):
+     17              pdb.set_trace()
+     18  ->            print(i)
+     19          return
 
 Move between frames within the current call stack using :command:`up`
 and down.  :command:`up` (abbreviated :command:`u`) moves towards
@@ -238,12 +233,12 @@ moves towards newer frames.
 ::
 
     (Pdb) up
-    > .../pdb_set_trace.py(21)<module>()
+    > .../pdb_set_trace.py(22)<module>()
     -> MyObj(5).go()
 
     (Pdb) down
-    > .../pdb_set_trace.py(17)go()
-    -> print i
+    > .../pdb_set_trace.py(18)go()
+    -> print(i)
 
 Each time you move up or down the stack, the debugger prints the
 current location in the same format as produced by :command:`where`.
@@ -266,42 +261,39 @@ looks like when printed by :command:`where`.
 
 ::
 
-    $ python pdb_function_arguments.py 
-
-    > .../pdb_function_arguments.py(14)recursive_function()
-    -> return
+    $ python3 pdb_function_arguments.py
+    > .../pdb_function_arguments.py(15)recursive_function()
+    -> print(output)
     (Pdb) where
-      .../pdb_function_arguments.py(17)<module>()
+      .../pdb_function_arguments.py(19)<module>()
     -> recursive_function()
-      .../pdb_function_arguments.py(11)recursive_function()
-    -> recursive_function(n-1)
-      .../pdb_function_arguments.py(11)recursive_function()
-    -> recursive_function(n-1)
-      .../pdb_function_arguments.py(11)recursive_function()
-    -> recursive_function(n-1)
-      .../pdb_function_arguments.py(11)recursive_function()
-    -> recursive_function(n-1)
-      .../pdb_function_arguments.py(11)recursive_function()
-    -> recursive_function(n-1)
-    > .../pdb_function_arguments.py(14)recursive_function()
-    -> return
+      .../pdb_function_arguments.py(12)recursive_function()
+    -> recursive_function(n - 1)
+      .../pdb_function_arguments.py(12)recursive_function()
+    -> recursive_function(n - 1)
+      .../pdb_function_arguments.py(12)recursive_function()
+    -> recursive_function(n - 1)
+      .../pdb_function_arguments.py(12)recursive_function()
+    -> recursive_function(n - 1)
+      .../pdb_function_arguments.py(12)recursive_function()
+    -> recursive_function(n - 1)
+    > .../pdb_function_arguments.py(15)recursive_function()
+    -> print(output)
 
     (Pdb) args
     n = 0
     output = to be printed
 
     (Pdb) up
-    > .../pdb_function_arguments.py(11)recursive_function()
-    -> recursive_function(n-1)
+    > .../pdb_function_arguments.py(12)recursive_function()
+    -> recursive_function(n - 1)
 
     (Pdb) args
     n = 1
     output = to be printed
 
-    (Pdb) 
-
 The :command:`p` command evaluates an expression given as argument and
-prints the result.  Python's ``print`` statement can be used, but it
+prints the result.  Python's ``print()`` function can be used, but it
 is passed through to the interpreter to be executed rather than
 running as a command in the debugger.
 
@@ -310,7 +302,7 @@ running as a command in the debugger.
     (Pdb) p n
     1
 
-    (Pdb) print n
+    (Pdb) print(n)
     1
 
 Similarly, prefixing an expression with :command:`!` passes it to the
@@ -323,10 +315,10 @@ value.
 
 ::
 
-    $ python pdb_function_arguments.py 
+    $ python3 pdb_function_arguments.py 
 
     > .../pdb_function_arguments.py(14)recursive_function()
-    -> print output
+    -> print(output)
 
     (Pdb) !output
     'to be printed'
@@ -338,34 +330,33 @@ value.
 
 For more complicated values such as nested or large data structures,
 use :command:`pp` to "pretty print" them.  This program reads several
-lines of text from a file.  
+lines of text from a file.
 
 .. literalinclude:: pdb_pp.py
-   :linenos: 
+   :linenos:
 
 Printing the variable ``lines`` with :command:`p` results in output
-that is difficult to read because it wraps awkwardly.  :command:`pp`
+that is difficult to read because it may wrap awkwardly.  :command:`pp`
 uses :mod:`pprint` to format the value for clean printing.
 
 ::
 
-    $ python pdb_pp.py 
+    $ python3 pdb_pp.py
 
-    --Return--
     > .../pdb_pp.py(12)<module>()->None
     -> pdb.set_trace()
     (Pdb) p lines
-    ['Lorem ipsum dolor sit amet, consectetuer adipiscing elit. \n',
-     'Donec egestas, enim et consecte
-    tuer ullamcorper, lectus \n', 'ligula rutrum leo, a elementum el
-    it tortor eu quam.\n']          
+    ['Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+    \n', 'Donec egestas, enim et consecte tuer ullamcorper, lect
+    us \n', 'ligula rutrum leo, a elementum el it tortor eu quam
+    .\n']
 
     (Pdb) pp lines
     ['Lorem ipsum dolor sit amet, consectetuer adipiscing elit. \n',
      'Donec egestas, enim et consectetuer ullamcorper, lectus \n',
      'ligula rutrum leo, a elementum elit tortor eu quam.\n']
 
-    (Pdb) 
+    (Pdb)
 
 
 Stepping Through a Program
@@ -376,7 +367,7 @@ is paused, it is also possible to step through execution of the
 program past the point where it enters the debugger.
 
 .. literalinclude:: pdb_step.py
-   :linenos: 
+   :linenos:
 
 Use :command:`step` to execute the current line and then stop at the
 next execution point -- either the first statement inside a function
@@ -384,12 +375,12 @@ being called or the next line of the current function.
 
 ::
 
-    $ python pdb_step.py 
+    $ python3 pdb_step.py 
 
-    > .../pdb_step.py(17)<module>()
+    > .../pdb_step.py(18)<module>()
     -> f(5)
 
-The interpreter pauses at the call to :func:`set_trace` and gives
+The interpreter pauses after the call to :func:`set_trace` and gives
 control to the debugger.  The first step causes the execution to enter
 :func:`f`.
 
@@ -398,7 +389,7 @@ control to the debugger.  The first step causes the execution to enter
 
     (Pdb) step
     --Call--
-    > .../pdb_step.py(9)f()
+    > .../pdb_step.py(10)f()
     -> def f(n):
 
 One more step moves execution to the first line of :func:`f` and
@@ -407,7 +398,7 @@ starts the loop.
 ::
 
     (Pdb) step
-    > .../pdb_step.py(10)f()
+    > .../pdb_step.py(11)f()
     -> for i in range(n):
 
 Stepping again moves to the first line inside the loop where ``j`` is
@@ -416,8 +407,9 @@ defined.
 ::
 
     (Pdb) step
-    > .../pdb_step.py(11)f()
+    > .../pdb_step.py(12)f()
     -> j = i * n
+
     (Pdb) p i
     0
 
@@ -427,16 +419,16 @@ should also be ``0``.
 ::
 
     (Pdb) step
-    > .../pdb_step.py(12)f()
-    -> print i, j
+    > .../pdb_step.py(13)f()
+    -> print(i, j)
 
     (Pdb) p j
     0
 
-    (Pdb) 
+    (Pdb)
 
-Stepping one line at a time like this can become tedious if there is a
-lot of code to cover before the point where the error occurs, or if
+Stepping one line at a time in this way can become tedious if there is
+a lot of code to cover before the point where the error occurs, or if
 the same function is called repeatedly.
 
 .. literalinclude:: pdb_next.py
@@ -449,47 +441,51 @@ are executed.
 
 ::
 
-    $ python pdb_next.py 
+    $ python3 pdb_next.py 
 
-    > .../pdb_next.py(21)<module>()
+    > .../pdb_next.py(23)<module>()
     -> f(5)
     (Pdb) step
     --Call--
-    > .../pdb_next.py(13)f()
+    > .../pdb_next.py(15)f()
     -> def f(n):
 
     (Pdb) step
-    > .../pdb_next.py(14)f()
+    > .../pdb_next.py(16)f()
     -> for i in range(n):
 
     (Pdb) step
-    > .../pdb_next.py(15)f()
+    > .../pdb_next.py(17)f()
     -> j = calc(i, n)
 
     (Pdb) step
     --Call--
-    > .../pdb_next.py(9)calc()
+    > .../pdb_next.py(10)calc()
     -> def calc(i, n):
 
     (Pdb) step
-    > .../pdb_next.py(10)calc()
+    > .../pdb_next.py(11)calc()
     -> j = i * n
 
     (Pdb) step
-    > .../pdb_next.py(11)calc()
+    > .../pdb_next.py(12)calc()
     -> return j
 
     (Pdb) step
     --Return--
-    > .../pdb_next.py(11)calc()->0
+    > .../pdb_next.py(12)calc()->0
     -> return j
 
     (Pdb) step
-    > .../pdb_next.py(16)f()
-    -> print i, j
+    > .../pdb_next.py(18)f()
+    -> print(i, j)
 
     (Pdb) step
     0 0
+
+    > .../pdb_next.py(16)f()
+    -> for i in range(n):
+    (Pdb)
 
 
 The :command:`next` command is like step, but does not enter functions
@@ -499,15 +495,15 @@ function in a single operation.
 
 ::
 
-    > .../pdb_next.py(14)f()
+    > .../pdb_next.py(16)f()
     -> for i in range(n):
     (Pdb) step
-    > .../pdb_next.py(15)f()
+    > .../pdb_next.py(17)f()
     -> j = calc(i, n)
 
     (Pdb) next
-    > .../pdb_next.py(16)f()
-    -> print i, j
+    > .../pdb_next.py(18)f()
+    -> print(i, j)
 
     (Pdb) 
 
@@ -519,26 +515,26 @@ end of a loop.
 
 ::
 
-    $ python pdb_next.py 
+    $ python3 pdb_next.py
 
-    > .../pdb_next.py(21)<module>()
+    > .../pdb_next.py(23)<module>()
     -> f(5)
     (Pdb) step
     --Call--
-    > .../pdb_next.py(13)f()
+    > .../pdb_next.py(15)f()
     -> def f(n):
 
     (Pdb) step
-    > .../pdb_next.py(14)f()
+    > .../pdb_next.py(16)f()
     -> for i in range(n):
 
     (Pdb) step
-    > .../pdb_next.py(15)f()
+    > .../pdb_next.py(17)f()
     -> j = calc(i, n)
 
     (Pdb) next
-    > .../pdb_next.py(16)f()
-    -> print i, j
+    > .../pdb_next.py(18)f()
+    -> print(i, j)
 
     (Pdb) until
     0 0
@@ -546,14 +542,14 @@ end of a loop.
     2 10
     3 15
     4 20
-    > .../pdb_next.py(17)f()
+    > .../pdb_next.py(19)f()
     -> return
 
-    (Pdb) 
+    (Pdb)
 
-Before the :command:`until` command was run, the current line was 16,
+Before the :command:`until` command was run, the current line was 18,
 the last line of the loop.  After :command:`until` ran, execution was
-on line 17, and the loop had been exhausted.
+on line 19, and the loop had been exhausted.
 
 The :command:`return` command is another short-cut for bypassing parts
 of a function.  It continues executing until the function is about to
@@ -562,17 +558,17 @@ to look at the return value before the function returns.
 
 ::
 
-    $ python pdb_next.py 
+    $ python3 pdb_next.py 
 
-    > .../pdb_next.py(21)<module>()
+    > .../pdb_next.py(23)<module>()
     -> f(5)
     (Pdb) step
     --Call--
-    > .../pdb_next.py(13)f()
+    > .../pdb_next.py(15)f()
     -> def f(n):
 
     (Pdb) step
-    > .../pdb_next.py(14)f()
+    > .../pdb_next.py(16)f()
     -> for i in range(n):
 
     (Pdb) return
@@ -582,10 +578,10 @@ to look at the return value before the function returns.
     3 15
     4 20
     --Return--
-    > .../pdb_next.py(17)f()->None
+    > .../pdb_next.py(19)f()->None
     -> return
 
-    (Pdb) 
+    (Pdb)
 
 Breakpoints
 ===========
@@ -611,20 +607,20 @@ of the current file, use ``break lineno``:
 
 ::
 
-    $ python -m pdb pdb_break.py 
+    $ python3 -m pdb pdb_break.py
 
-    > .../pdb_break.py(7)<module>()
+    > .../pdb_break.py(8)<module>()
     -> def calc(i, n):
-    (Pdb) break 11
-    Breakpoint 1 at .../pdb_break.py:11
+    (Pdb) break 12
+    Breakpoint 1 at .../pdb_break.py:12
 
     (Pdb) continue
     i = 0
     j = 0
     i = 1
     j = 5
-    > .../pdb_break.py(11)calc()
-    -> print 'Positive!'
+    > .../pdb_break.py(12)calc()
+    -> print('Positive!')
 
     (Pdb) 
 
@@ -640,24 +636,24 @@ function.
 
 ::
 
-    $ python -m pdb pdb_break.py 
+    $ python3 -m pdb pdb_break.py 
 
-    > .../pdb_break.py(7)<module>()
+    > .../pdb_break.py(8)<module>()
     -> def calc(i, n):
     (Pdb) break calc
-    Breakpoint 1 at .../pdb_break.py:7
+    Breakpoint 1 at .../pdb_break.py:8
 
     (Pdb) continue
     i = 0
-    > .../pdb_break.py(8)calc()
+    > .../pdb_break.py(9)calc()
     -> j = i * n
 
     (Pdb) where
-      .../pdb_break.py(21)<module>()
+      .../pdb_break.py(23)<module>()
     -> f(5)
-      .../pdb_break.py(17)f()
+      .../pdb_break.py(19)f()
     -> j = calc(i, n)
-    > .../pdb_break.py(8)calc()
+    > .../pdb_break.py(9)calc()
     -> j = i * n
 
     (Pdb) 
@@ -668,27 +664,27 @@ argument with a filename.
 .. literalinclude:: pdb_break_remote.py
    :linenos: 
 
-Here a breakpoint is set for line 11 of ``pdb_break.py`` after
+Here a breakpoint is set for line 12 of ``pdb_break.py`` after
 starting the main program ``pdb_break_remote.py``.
 
 ::
 
-    $ python -m pdb pdb_break_remote.py 
+    $ python3 -m pdb pdb_break_remote.py 
 
     > .../pdb_break_remote.py(4)<module>()
     -> from pdb_break import f
-    (Pdb) break pdb_break.py:11
-    Breakpoint 1 at .../pdb_break.py:11
+    (Pdb) break pdb_break.py:12
+    Breakpoint 1 at .../pdb_break.py:12
 
     (Pdb) continue
     i = 0
     j = 0
     i = 1
     j = 5
-    > .../pdb_break.py(11)calc()
-    -> print 'Positive!'
+    > .../pdb_break.py(12)calc()
+    -> print('Positive!')
 
-    (Pdb) 
+    (Pdb)
 
 The filename can be a full path to the source file, or a relative path
 to a file available on ``sys.path``.
@@ -700,35 +696,35 @@ encountered.
 
 ::
 
-    $ python -m pdb pdb_break.py
+    $ python3 -m pdb pdb_break.py
 
-    > .../pdb_break.py(7)<module>()
+    > .../pdb_break.py(8)<module>()
     -> def calc(i, n):
-    (Pdb) break 11
-    Breakpoint 1 at .../pdb_break.py:11
+    (Pdb) break 12
+    Breakpoint 1 at .../pdb_break.py:12
 
     (Pdb) break
     Num Type         Disp Enb   Where
-    1   breakpoint   keep yes   at .../pdb_break.py:11
+    1   breakpoint   keep yes   at .../pdb_break.py:12
 
     (Pdb) continue
     i = 0
     j = 0
     i = 1
     j = 5
-    > .../pdb/pdb_break.py(11)calc()
-    -> print 'Positive!'
+    > .../pdb/pdb_break.py(12)calc()
+    -> print('Positive!')
 
     (Pdb) continue
     Positive!
     i = 2
     j = 10
-    > .../pdb_break.py(11)calc()
-    -> print 'Positive!'
+    > .../pdb_break.py(12)calc()
+    -> print('Positive!')
 
     (Pdb) break
     Num Type         Disp Enb   Where
-    1   breakpoint   keep yes   at .../pdb_break.py:11
+    1   breakpoint   keep yes   at .../pdb_break.py:12
             breakpoint already hit 2 times
 
     (Pdb) 
@@ -744,35 +740,35 @@ reached.  The breakpoint is remembered, but ignored.
 
 ::
 
-    $ python -m pdb pdb_break.py
+    $ python3 -m pdb pdb_break.py
 
-    > .../pdb_break.py(7)<module>()
+    > .../pdb_break.py(8)<module>()
     -> def calc(i, n):
     (Pdb) break calc
-    Breakpoint 1 at .../pdb_break.py:7
+    Breakpoint 1 at .../pdb_break.py:8
 
-    (Pdb) break 11
-    Breakpoint 2 at .../pdb_break.py:11
+    (Pdb) break 12
+    Breakpoint 2 at .../pdb_break.py:12
 
     (Pdb) break
     Num Type         Disp Enb   Where
-    1   breakpoint   keep yes   at .../pdb_break.py:7
-    2   breakpoint   keep yes   at .../pdb_break.py:11
+    1   breakpoint   keep yes   at .../pdb_break.py:8
+    2   breakpoint   keep yes   at .../pdb_break.py:12
 
     (Pdb) disable 1
 
     (Pdb) break
     Num Type         Disp Enb   Where
-    1   breakpoint   keep no    at .../pdb_break.py:7
-    2   breakpoint   keep yes   at .../pdb_break.py:11
+    1   breakpoint   keep no    at .../pdb_break.py:8
+    2   breakpoint   keep yes   at .../pdb_break.py:12
 
     (Pdb) continue
     i = 0
     j = 0
     i = 1
     j = 5
-    > .../pdb_break.py(11)calc()
-    -> print 'Positive!'
+    > .../pdb_break.py(12)calc()
+    -> print('Positive!')
 
     (Pdb) 
 
@@ -783,112 +779,113 @@ encountered, and then the other breakpoint is turned back on with
 
 ::
 
-    $ python -m pdb pdb_break.py
+    $ python3 -m pdb pdb_break.py
 
-    > .../pdb_break.py(7)<module>()
+    > .../pdb_break.py(8)<module>()
     -> def calc(i, n):
     (Pdb) break calc
-    Breakpoint 1 at .../pdb_break.py:7
+    Breakpoint 1 at .../pdb_break.py:8
 
-    (Pdb) break 16
-    Breakpoint 2 at .../pdb_break.py:16
+    (Pdb) break 18
+    Breakpoint 2 at .../pdb_break.py:18
 
     (Pdb) disable 1
 
     (Pdb) continue
-    > .../pdb_break.py(16)f()
-    -> print 'i =', i
+    > .../pdb_break.py(18)f()
+    -> print('i =', i)
 
     (Pdb) list
-     11             print 'Positive!'
-     12         return j
-     13  
-     14     def f(n):
-     15         for i in range(n):
-     16 B->         print 'i =', i
-     17             j = calc(i, n)
-     18         return
-     19  
-     20     if __name__ == '__main__':
-     21         f(5)
+     13      return j
+     14
+     15
+     16  def f(n):
+     17      for i in range(n):
+     18 B->      print('i =', i)
+     19          j = calc(i, n)
+     20      return
+     21
+     22  if __name__ == '__main__':
+     23      f(5)
 
     (Pdb) continue
     i = 0
     j = 0
-    > .../pdb_break.py(16)f()
-    -> print 'i =', i
+    > .../pdb_break.py(18)f()
+    -> print('i =', i)
 
     (Pdb) list
-     11             print 'Positive!'
-     12         return j
-     13  
-     14     def f(n):
-     15         for i in range(n):
-     16 B->         print 'i =', i
-     17             j = calc(i, n)
-     18         return
-     19  
-     20     if __name__ == '__main__':
-     21         f(5)
+     13      return j
+     14
+     15
+     16  def f(n):
+     17      for i in range(n):
+     18 B->      print('i =', i)
+     19          j = calc(i, n)
+     20      return
+     21
+     22  if __name__ == '__main__':
+     23      f(5)
 
     (Pdb) p i
-    1
+     1
 
     (Pdb) enable 1
+    Enabled breakpoint 1 at .../pdb_break.py:8
 
     (Pdb) continue
     i = 1
-    > .../pdb_break.py(8)calc()
+    > .../pdb_break.py(9)calc()
     -> j = i * n
 
     (Pdb) list
-      3     #
-      4     # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
-      5     #
-      6  
-      7 B   def calc(i, n):
-      8  ->     j = i * n
-      9         print 'j =', j
-     10         if j > 0:
-     11             print 'Positive!'
-     12         return j
-     13  
-    
-    (Pdb) 
+      4  # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
+      5  #
+      6
+      7
+      8 B   def calc(i, n):
+      9  ->    j = i * n
+     10        print('j =', j)
+     11        if j > 0:
+     12            print('Positive!')
+     13        return j
+     14
+
+    (Pdb)
 
 The lines prefixed with ``B`` in the output from :command:`list` show
-where the breakpoints are set in the program (lines 7 and 16).
+where the breakpoints are set in the program (lines 8 and 18).
 
 Use :command:`clear` to delete a breakpoint entirely.
 
 ::
 
-    $ python -m pdb pdb_break.py
+    $ python3 -m pdb pdb_break.py
 
-    > .../pdb_break.py(7)<module>()
+    > .../pdb_break.py(8)<module>()
     -> def calc(i, n):
     (Pdb) break calc
-    Breakpoint 1 at .../pdb_break.py:7
+    Breakpoint 1 at .../pdb_break.py:8
 
-    (Pdb) break 11
-    Breakpoint 2 at .../pdb_break.py:11
+    (Pdb) break 12
+    Breakpoint 2 at .../pdb_break.py:12
 
-    (Pdb) break 16
-    Breakpoint 3 at .../pdb_break.py:16
+    (Pdb) break 18
+    Breakpoint 3 at .../pdb_break.py:18
 
     (Pdb) break
     Num Type         Disp Enb   Where
-    1   breakpoint   keep yes   at .../pdb_break.py:7
-    2   breakpoint   keep yes   at .../pdb_break.py:11
-    3   breakpoint   keep yes   at .../pdb_break.py:16
+    1   breakpoint   keep yes   at .../pdb_break.py:8
+    2   breakpoint   keep yes   at .../pdb_break.py:12
+    3   breakpoint   keep yes   at .../pdb_break.py:18
 
     (Pdb) clear 2
     Deleted breakpoint 2
 
     (Pdb) break
     Num Type         Disp Enb   Where
-    1   breakpoint   keep yes   at .../pdb_break.py:7
-    3   breakpoint   keep yes   at .../pdb_break.py:16
+    1   breakpoint   keep yes   at .../pdb_break.py:8
+    3   breakpoint   keep yes   at .../pdb_break.py:18
 
     (Pdb) 
 
@@ -907,21 +904,21 @@ repeatedly.
 
 ::
 
-    $ python -m pdb pdb_break.py
+    $ python3 -m pdb pdb_break.py
 
-    > .../pdb_break.py(7)<module>()
+    > .../pdb_break.py(8)<module>()
     -> def calc(i, n):
-    (Pdb) tbreak 11
-    Breakpoint 1 at .../pdb_break.py:11
+    (Pdb) tbreak 12
+    Breakpoint 1 at .../pdb_break.py:12
 
     (Pdb) continue
     i = 0
     j = 0
     i = 1
     j = 5
-    Deleted breakpoint 1
-    > .../pdb_break.py(11)calc()
-    -> print 'Positive!'
+    Deleted breakpoint 1 at .../pdb_break.py:12
+    > .../pdb_break.py(12)calc()
+    -> print('Positive!')
 
     (Pdb) break
 
@@ -937,12 +934,12 @@ repeatedly.
     j = 20
     Positive!
     The program finished and will be restarted
-    > .../pdb_break.py(7)<module>()
+    > .../pdb_break.py(8)<module>()
     -> def calc(i, n):
 
     (Pdb) 
 
-After the program reaches line 11 the first time, the breakpoint is
+After the program reaches line 12 the first time, the breakpoint is
 removed and execution does not stop again until the program finishes.
 
 Conditional Breakpoints
@@ -957,24 +954,24 @@ is set using :command:`break`.
 
 ::
 
-    $ python -m pdb pdb_break.py
+    $ python3 -m pdb pdb_break.py
 
-    > .../pdb_break.py(7)<module>()
+    > .../pdb_break.py(8)<module>()
     -> def calc(i, n):
-    (Pdb) break 9, j>0
-    Breakpoint 1 at .../pdb_break.py:9
+    (Pdb) break 10, j>0
+    Breakpoint 1 at .../pdb_break.py:10
 
     (Pdb) break
     Num Type         Disp Enb   Where
-    1   breakpoint   keep yes   at .../pdb_break.py:9
+    1   breakpoint   keep yes   at .../pdb_break.py:10
             stop only if j>0
 
     (Pdb) continue
     i = 0
     j = 0
     i = 1
-    > .../pdb_break.py(9)calc()
-    -> print 'j =', j
+    > .../pdb_break.py(10)calc()
+    -> print('j =', j)
 
     (Pdb) 
 
@@ -988,22 +985,22 @@ the expression.
 
 ::
 
-    $ python -m pdb pdb_break.py
+    $ python3 -m pdb pdb_break.py
 
-    > .../pdb_break.py(7)<module>()
+    > .../pdb_break.py(8)<module>()
     -> def calc(i, n):
-    (Pdb) break 9
-    Breakpoint 1 at .../pdb_break.py:9
+    (Pdb) break 10
+    Breakpoint 1 at .../pdb_break.py:10
 
     (Pdb) break
     Num Type         Disp Enb   Where
-    1   breakpoint   keep yes   at .../pdb_break.py:9
+    1   breakpoint   keep yes   at .../pdb_break.py:10
 
     (Pdb) condition 1 j>0
 
     (Pdb) break
     Num Type         Disp Enb   Where
-    1   breakpoint   keep yes   at .../pdb_break.py:9
+    1   breakpoint   keep yes   at .../pdb_break.py:10
             stop only if j>0
 
     (Pdb) 
@@ -1021,21 +1018,21 @@ breakpoint is re-activated.
 
 ::
 
-    $ python -m pdb pdb_break.py
+    $ python3 -m pdb pdb_break.py
 
-    > .../pdb_break.py(7)<module>()
+    > .../pdb_break.py(8)<module>()
     -> def calc(i, n):
-    (Pdb) break 17
-    Breakpoint 1 at .../pdb_break.py:17
+    (Pdb) break 19
+    Breakpoint 1 at .../pdb_break.py:19
 
     (Pdb) continue
     i = 0
-    > .../pdb_break.py(17)f()
+    > .../pdb_break.py(19)f()
     -> j = calc(i, n)
 
     (Pdb) next
     j = 0
-    > .../pdb_break.py(15)f()
+    > .../pdb_break.py(17)f()
     -> for i in range(n):
 
     (Pdb) ignore 1 2
@@ -1043,7 +1040,7 @@ breakpoint is re-activated.
 
     (Pdb) break
     Num Type         Disp Enb   Where
-    1   breakpoint   keep yes   at .../pdb_break.py:17
+    1   breakpoint   keep yes   at .../pdb_break.py:19
             ignore next 2 hits
             breakpoint already hit 1 time
 
@@ -1055,12 +1052,12 @@ breakpoint is re-activated.
     j = 10
     Positive!
     i = 3
-    > .../pdb_break.py(17)f()
+    > .../pdb_break.py(19)f()
     -> j = calc(i, n)
 
     (Pdb) break
     Num Type         Disp Enb   Where
-    1   breakpoint   keep yes   at .../pdb_break.py:17
+    1   breakpoint   keep yes   at .../pdb_break.py:19
             breakpoint already hit 4 times
 
 Explicitly resetting the ignore count to zero re-enables the
@@ -1068,19 +1065,19 @@ breakpoint immediately.
 
 ::
 
-    $ python -m pdb pdb_break.py
+    $ python3 -m pdb pdb_break.py
 
-    > .../pdb_break.py(7)<module>()
+    > .../pdb_break.py(8)<module>()
     -> def calc(i, n):
-    (Pdb) break 17
-    Breakpoint 1 at .../pdb_break.py:17
+    (Pdb) break 19
+    Breakpoint 1 at .../pdb_break.py:19
 
     (Pdb) ignore 1 2
     Will ignore next 2 crossings of breakpoint 1.
 
     (Pdb) break
     Num Type         Disp Enb   Where
-    1   breakpoint   keep yes   at .../pdb_break.py:17
+    1   breakpoint   keep yes   at .../pdb_break.py:19
             ignore next 2 hits
 
     (Pdb) ignore 1 0
@@ -1088,7 +1085,7 @@ breakpoint immediately.
 
     (Pdb) break
     Num Type         Disp Enb   Where
-    1   breakpoint   keep yes   at .../pdb_break.py:17
+    1   breakpoint   keep yes   at .../pdb_break.py:19
 
 Triggering Actions on a Breakpoint
 ----------------------------------
@@ -1103,17 +1100,17 @@ breakpoint number as argument, the debugger prompt changes to
 
 ::
 
-    $ python -m pdb pdb_break.py
+    $ python3 -m pdb pdb_break.py
 
-    > .../pdb_break.py(7)<module>()
+    > .../pdb_break.py(8)<module>()
     -> def calc(i, n):
-    (Pdb) break 9
-    Breakpoint 1 at .../pdb_break.py:9
+    (Pdb) break 10
+    Breakpoint 1 at .../pdb_break.py:10
 
     (Pdb) commands 1
-    (com) print 'debug i =', i
-    (com) print 'debug j =', j
-    (com) print 'debug n =', n
+    (com) print('debug i =', i)
+    (com) print('debug j =', j)
+    (com) print('debug n =', n)
     (com) end
 
     (Pdb) continue
@@ -1121,8 +1118,8 @@ breakpoint number as argument, the debugger prompt changes to
     debug i = 0
     debug j = 0
     debug n = 5
-    > .../pdb_break.py(9)calc()
-    -> print 'j =', j
+    > .../pdb_break.py(10)calc()
+    -> print('j =', j)
 
     (Pdb) continue
     j = 0
@@ -1130,10 +1127,10 @@ breakpoint number as argument, the debugger prompt changes to
     debug i = 1
     debug j = 5
     debug n = 5
-    > .../pdb_break.py(9)calc()
+    > .../pdb_break.py(10)calc()
     -> print 'j =', j
 
-    (Pdb) 
+    (Pdb)
 
 This feature is especially useful for debugging code that uses a lot
 of data structures or variables, since the debugger can be made to
@@ -1160,8 +1157,8 @@ numbers divisible by ``5``.
 
 ::
 
-	$ python pdb_jump.py
-
+	$ python3 pdb_jump.py
+	
 	[5, 15, 30, 50, 75]
 
 .. {{{end}}}
@@ -1176,33 +1173,33 @@ all of the subsequent values that depend on it are a little smaller.
 
 ::
 
-    $ python -m pdb pdb_jump.py  
+    $ python3 -m pdb pdb_jump.py  
 
-    > .../pdb_jump.py(7)<module>()
+    > .../pdb_jump.py(8)<module>()
     -> def f(n):
-    (Pdb) break 12
-    Breakpoint 1 at .../pdb_jump.py:12
+    (Pdb) break 13
+    Breakpoint 1 at .../pdb_jump.py:13
 
     (Pdb) continue
-    > .../pdb_jump.py(12)f()
+    > .../pdb_jump.py(13)f()
     -> j += n
 
     (Pdb) p j
     0
 
     (Pdb) step
-    > .../pdb_jump.py(13)f()
+    > .../pdb_jump.py(14)f()
     -> result.append(j)
 
     (Pdb) p j
     5
 
     (Pdb) continue
-    > .../pdb_jump.py(12)f()
+    > .../pdb_jump.py(13)f()
     -> j += n
 
-    (Pdb) jump 13
-    > .../pdb_jump.py(13)f()
+    (Pdb) jump 14
+    > .../pdb_jump.py(14)f()
     -> result.append(j)
 
     (Pdb) p j
@@ -1214,9 +1211,9 @@ all of the subsequent values that depend on it are a little smaller.
     [5, 10, 25, 45, 70]
 
     The program finished and will be restarted
-    > .../pdb_jump.py(7)<module>()
+    > .../pdb_jump.py(8)<module>()
     -> def f(n):
-    (Pdb) 
+    (Pdb)
 
 Jump Back
 ---------
@@ -1228,26 +1225,26 @@ all larger than they would otherwise be.
 
 ::
 
-    $ python -m pdb pdb_jump.py 
+    $ python3 -m pdb pdb_jump.py 
 
-    > .../pdb_jump.py(7)<module>()
+    > .../pdb_jump.py(8)<module>()
     -> def f(n):
-    (Pdb) break 13
-    Breakpoint 1 at .../pdb_jump.py:13
+    (Pdb) break 14
+    Breakpoint 1 at .../pdb_jump.py:14
 
     (Pdb) continue
-    > .../pdb_jump.py(13)f()
+    > .../pdb_jump.py(14)f()
     -> result.append(j)
 
     (Pdb) p j
     5
 
-    (Pdb) jump 12
-    > .../pdb_jump.py(12)f()
+    (Pdb) jump 13
+    > .../pdb_jump.py(13)f()
     -> j += n
 
     (Pdb) continue
-    > .../pdb_jump.py(13)f()
+    > .../pdb_jump.py(14)f()
     -> result.append(j)
 
     (Pdb) p j
@@ -1259,7 +1256,7 @@ all larger than they would otherwise be.
     [10, 20, 35, 55, 80]
 
     The program finished and will be restarted
-    > .../pdb_jump.py(7)<module>()
+    > .../pdb_jump.py(8)<module>()
     -> def f(n):
     (Pdb) 
 
@@ -1277,15 +1274,15 @@ not defined and the code is unlikely to work.
 
 ::
 
-    $ python -m pdb pdb_no_jump.py 
+    $ python3 -m pdb pdb_no_jump.py 
 
-    > .../pdb_no_jump.py(7)<module>()
-    -> def f(n):
-    (Pdb) break 21
-    Breakpoint 1 at .../pdb_no_jump.py:21
-
-    (Pdb) jump 8
     > .../pdb_no_jump.py(8)<module>()
+    -> def f(n):
+    (Pdb) break 22
+    Breakpoint 1 at .../pdb_no_jump.py:22
+
+    (Pdb) jump 9
+    > .../pdb_no_jump.py(9)<module>()
     -> if n < 0:
 
     (Pdb) p n
@@ -1300,18 +1297,18 @@ not defined and the code is unlikely to work.
 
 ::
 
-    $ python -m pdb pdb_no_jump.py 
+    $ python3 -m pdb pdb_no_jump.py 
 
-    > .../pdb_no_jump.py(7)<module>()
+    > .../pdb_no_jump.py(8)<module>()
     -> def f(n):
-    (Pdb) break 21
-    Breakpoint 1 at .../pdb_no_jump.py:21
+    (Pdb) break 22
+    Breakpoint 1 at .../pdb_no_jump.py:22
 
     (Pdb) continue
-    > .../pdb_no_jump.py(21)<module>()
-    -> print f(5)
+    > .../pdb_no_jump.py(22)<module>()
+    -> print(f(5))
 
-    (Pdb) jump 26
+    (Pdb) jump 27
     *** Jump failed: can't jump into the middle of a block
 
     (Pdb) 
@@ -1321,19 +1318,19 @@ The code in a :command:`finally` block must all be executed, so
 
 ::
 
-    $ python -m pdb pdb_no_jump.py 
+    $ python3 -m pdb pdb_no_jump.py 
 
-    > .../pdb_no_jump.py(7)<module>()
+    > .../pdb_no_jump.py(8)<module>()
     -> def f(n):
-    (Pdb) break 23
-    Breakpoint 1 at .../pdb_no_jump.py:23
+    (Pdb) break 24
+    Breakpoint 1 at .../pdb_no_jump.py:24
 
     (Pdb) continue
     [5, 15, 30, 50, 75]
-    > .../pdb_no_jump.py(23)<module>()
+    > .../pdb_no_jump.py(24)<module>()
     -> print 'Always printed'
 
-    (Pdb) jump 25
+    (Pdb) jump 26
     *** Jump failed: can't jump into or out of a 'finally' block
 
     (Pdb) 
@@ -1344,30 +1341,30 @@ variables, the execution flow cannot be changed at that point.
 
 ::
 
-    $ python -m pdb pdb_no_jump.py 
+    $ python3 -m pdb pdb_no_jump.py 
 
-    > .../pdb_no_jump.py(7)<module>()
+    > .../pdb_no_jump.py(8)<module>()
     -> def f(n):
-    (Pdb) break 11
-    Breakpoint 1 at .../pdb_no_jump.py:11
+    (Pdb) break 12
+    Breakpoint 1 at .../pdb_no_jump.py:12
 
     (Pdb) continue
-    > .../pdb_no_jump.py(11)f()
+    > .../pdb_no_jump.py(12)f()
     -> j = 0
 
     (Pdb) where
-      /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/bdb.py(3
-    79)run()
+      /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/bdb.py(
+    431)run()
     -> exec cmd in globals, locals
       <string>(1)<module>()
-      .../pdb_no_jump.py(21)<module>()
-    -> print f(5)
-    > .../pdb_no_jump.py(11)f()
+      .../pdb_no_jump.py(22)<module>()
+    -> print(f(5))
+    > .../pdb_no_jump.py(12)f()
     -> j = 0
 
     (Pdb) up
-    > .../pdb_no_jump.py(21)<module>()
-    -> print f(5)
+    > .../pdb_no_jump.py(22)<module>()
+    -> print(f(5))
 
     (Pdb) jump 25
     *** You can only jump within the bottom frame
@@ -1392,7 +1389,7 @@ line.
 
 ::
 
-    $ python -m pdb pdb_run.py 
+    $ python3 -m pdb pdb_run.py 
 
     > .../pdb_run.py(7)<module>()
     -> import sys
@@ -1419,7 +1416,8 @@ be restarted with different settings.
     -> import sys
     
     (Pdb) continue
-    Command line args: ['pdb_run.py', 'a', 'b', 'c', 'this is a long value']
+    Command line args: ['pdb_run.py', 'a', 'b', 'c',
+    'this is a long value']
     The program finished and will be restarted
     > .../pdb_run.py(7)<module>()
     -> import sys
@@ -1431,16 +1429,16 @@ restart the program.
 
 ::
 
-    $ python -m pdb pdb_run.py 
+    $ python3 -m pdb pdb_run.py 
 
     > .../pdb_run.py(7)<module>()
     -> import sys
-    (Pdb) break 10
-    Breakpoint 1 at .../pdb_run.py:10
+    (Pdb) break 11
+    Breakpoint 1 at .../pdb_run.py:11
 
     (Pdb) continue
-    > .../pdb_run.py(10)f()
-    -> print 'Command line args:', sys.argv
+    > .../pdb_run.py(11)f()
+    -> print('Command line args:', sys.argv)
 
     (Pdb) run one two three
     Restarting pdb_run.py with arguments:
@@ -1463,24 +1461,24 @@ definitions, so one alias can even invoke another.
 
 ::
 
-    $ python -m pdb pdb_function_arguments.py 
+    $ python3 -m pdb pdb_function_arguments.py 
 
     > .../pdb_function_arguments.py(7)<module>()
     -> import pdb
-    (Pdb) break 10
-    Breakpoint 1 at .../pdb_function_arguments.py:10
+    (Pdb) break 11
+    Breakpoint 1 at .../pdb_function_arguments.py:11
 
     (Pdb) continue
-    > .../pdb_function_arguments.py(10)recursive_function()
+    > .../pdb_function_arguments.py(11)recursive_function()
     -> if n > 0:
 
     (Pdb) pp locals().keys()
-    ['output', 'n']
+    dict_keys(['output', 'n'])
 
     (Pdb) alias pl pp locals().keys()
 
     (Pdb) pl
-    ['output', 'n']
+    dict_keys(['output', 'n'])
 
 Running :command:`alias` without any arguments shows the list of
 defined aliases.  A single argument is assumed to be the name of an
@@ -1493,7 +1491,8 @@ alias, and its definition is printed.
 
     (Pdb) alias pl
     pl = pp locals().keys()
-    (Pdb) 
+
+    (Pdb)
 
 Arguments to the alias are referenced using ``%n`` where *n* is
 replaced with a number indicating the position of the argument,
@@ -1501,20 +1500,23 @@ starting with ``1``.  To consume all of the arguments, use ``%*``.
 
 ::
 
-    $ python -m pdb pdb_function_arguments.py 
+    $ python3 -m pdb pdb_function_arguments.py 
 
     > .../pdb_function_arguments.py(7)<module>()
     -> import pdb
     (Pdb) alias ph !help(%1)
 
     (Pdb) ph locals
-    Help on built-in function locals in module __builtin__:
-        
-    locals(...)
-        locals() -> dictionary
-        
-        Update and return a dictionary containing the current scope's local va
-    riables.
+    Help on built-in function locals in module builtins:
+
+    locals()
+        Return a dictionary containing the current scope's local
+        variables.
+
+        NOTE: Whether or not updates to this dictionary will affect
+        name lookups in the local scope and vice-versa is
+        *implementation dependent* and not covered by any backwards
+        compatibility guarantees.
 
 Clear the definition of an alias with :command:`unalias`.
 
@@ -1556,13 +1558,13 @@ particular project.
     $ cat .pdbrc
 
     # Breakpoints
-    break 10
+    break 11
     # Overridden alias
     alias redefined p 'local definition'
 
-    $ python -m pdb pdb_function_arguments.py 
+    $ python3 -m pdb pdb_function_arguments.py
 
-    Breakpoint 1 at .../pdb_function_arguments.py:10
+    Breakpoint 1 at .../pdb_function_arguments.py:11
     > .../pdb_function_arguments.py(7)<module>()
     -> import pdb
     (Pdb) alias
@@ -1571,9 +1573,9 @@ particular project.
 
     (Pdb) break
     Num Type         Disp Enb   Where
-    1   breakpoint   keep yes   at .../pdb_function_arguments.py:10
+    1   breakpoint   keep yes   at .../pdb_function_arguments.py:11
 
-    (Pdb) 
+    (Pdb)
 
 Any configuration commands that can be typed at the debugger prompt
 can be saved in one of the start-up files, but most commands that
@@ -1584,14 +1586,14 @@ are consistent across several runs.
 
 .. seealso::
 
-    `pdb <http://docs.python.org/library/pdb.html>`_
-        The standard library documentation for this module.
+    * :pydoc:`pdb`
 
-    :mod:`readline`
-        Interactive prompt editing library.
+    * :mod:`readline` -- Interactive prompt editing library.
 
-    :mod:`cmd`
-        Build interactive programs.
+    * :mod:`cmd` -- Build interactive programs.
 
-    :mod:`shlex`
-        Shell command line parsing.
+    * :mod:`shlex` -- Shell command line parsing.
+
+    * :pyissue:`26053` -- If the output of :command:`run` does not
+      match the values presented here, refer to this bug for details
+      about a regression in pdb output between 2.7 and 3.5.
