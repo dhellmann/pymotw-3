@@ -225,6 +225,38 @@ first and last lines to include in its output.
      18  ->            print(i)
      19          return
 
+The :command:`longlist` (``ll``) command prints the source for the
+current function or frame, without having to determine the line
+numbers in advance. The command is "longlist" because for long
+functions it may produce considerably more output than the default for
+:command:`list`.
+
+::
+
+    (Pdb) longlist
+     15      def go(self):
+     16          for i in range(self.count):
+     17              pdb.set_trace()
+     18  ->            print(i)
+     19          return
+
+The :command:`source` command loads and prints the full source for an
+arbitrary class, function, or module.
+
+::
+
+    (Pdb) source MyObj
+     10  class MyObj:
+     11
+     12      def __init__(self, num_loops):
+     13          self.count = num_loops
+     14
+     15      def go(self):
+     16          for i in range(self.count):
+     17              pdb.set_trace()
+     18              print(i)
+     19          return
+
 Move between frames within the current call stack using :command:`up`
 and down.  :command:`up` (abbreviated :command:`u`) moves towards
 older frames on the stack.  :command:`down` (abbreviated :command:`d`)
