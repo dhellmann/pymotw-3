@@ -25,7 +25,7 @@ Printing
 ========
 
 The simplest way to use the module is through the :func:`pprint`
-function. 
+function.
 
 .. include:: pprint_pprint.py
     :literal:
@@ -64,7 +64,7 @@ Formatting
 ==========
 
 To format a data structure without writing it directly to a stream
-(i.e., for logging), use :func:`pformat` to build a string
+(for example, for logging), use :func:`pformat` to build a string
 representation.
 
 .. include:: pprint_pformat.py
@@ -157,7 +157,7 @@ Limiting Nested Output
 For very deep data structures, it may not be desirable for the output
 to include all of the details. The data may not format properly, the
 formatted text might be too large to manage, or some of the data may
-be extraneous.  
+be extraneous.
 
 .. include:: pprint_depth.py
     :literal:
