@@ -26,7 +26,7 @@ which contains a string ``sample_text``.
 Filling Paragraphs
 ==================
 
-The :func:`fill()` function takes text as input and produces formatted
+The :func:`fill` function takes text as input and produces formatted
 text as output.
 
 .. include:: textwrap_fill.py
@@ -62,10 +62,11 @@ Removing Existing Indentation
 The previous example has embedded tabs and extra spaces mixed into the
 middle of the output, so it is not formatted very cleanly. Removing
 the common whitespace prefix from all of the lines in the sample text
-produces better results and allows the use of docstrings or embedded
-multi-line strings straight from Python code while removing the
-formatting of the code itself. The sample string has an artificial
-indent level introduced for illustrating this feature.
+with :func:`dedent` produces better results and allows the use of
+docstrings or embedded multi-line strings straight from Python code
+while removing the formatting of the code itself. The sample string
+has an artificial indent level introduced for illustrating this
+feature.
 
 .. include:: textwrap_dedent.py
     :literal:
@@ -115,7 +116,7 @@ becomes
 Combining Dedent and Fill
 =========================
 
-Next, the dedented text can be passed through :func:`fill()` with a
+Next, the dedented text can be passed through :func:`fill` with a
 few different *width* values.
 
 .. include:: textwrap_fill_width.py
@@ -152,6 +153,77 @@ This produces outputs in the specified widths.
 
 .. {{{end}}}
 
+Indenting Blocks
+================
+
+Use the :func:`indent` function to add consistent prefix text to all
+of the lines in a string. This example formats the same example text
+as though it was part of an email message being quoted in the reply,
+using ``>`` as the prefix for each line.
+
+.. include:: textwrap_indent.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+The block of text is split on newlines, the prefix is added to each
+line that contains text, and then the lines are combined back into a
+new string and returned.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'textwrap_indent.py'))
+.. }}}
+
+::
+
+	$ python3 textwrap_indent.py
+	
+	Quoted block:
+	
+	>  The textwrap module can be used to format text
+	> for output in situations where pretty-printing is
+	> desired.  It offers programmatic functionality
+	> similar to the paragraph wrapping or filling
+	> features found in many text editors.
+	
+	> Second paragraph after a blank line.
+
+.. {{{end}}}
+
+To control which lines receive the new prefix, pass a callable as the
+predicte argument to :func:`indent`. The callable will be invoked for
+each line of text in turn and the prefix will be added for lines where
+the return value is true.
+
+.. include:: textwrap_indent_predicate.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+This example adds the prefix ``EVEN`` to lines that contain an even
+number of characters.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'textwrap_indent_predicate.py'))
+.. }}}
+
+::
+
+	$ python3 textwrap_indent_predicate.py
+	
+	Indent ' The textwrap module can be used to format text\n'?
+	Indent 'for output in situations where pretty-printing is\n'?
+	Indent 'desired.  It offers programmatic functionality\n'?
+	Indent 'similar to the paragraph wrapping or filling\n'?
+	Indent 'features found in many text editors.'?
+	
+	Quoted block:
+	
+	EVEN  The textwrap module can be used to format text
+	for output in situations where pretty-printing is
+	EVEN desired.  It offers programmatic functionality
+	EVEN similar to the paragraph wrapping or filling
+	EVEN features found in many text editors.
+
+.. {{{end}}}
 
 Hanging Indents
 ===============
