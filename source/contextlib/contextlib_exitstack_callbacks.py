@@ -10,7 +10,7 @@ import contextlib
 
 
 def callback(*args, **kwds):
-    print('closing callback(%s, %s)' % (args, kwds))
+    print('closing callback({}, {})'.format(args, kwds))
 
 
 with contextlib.ExitStack() as stack:

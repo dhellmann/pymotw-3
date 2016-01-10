@@ -22,7 +22,7 @@ feed_urls = [
 
 
 def message(s):
-    print('%s: %s' % (threading.current_thread().name, s))
+    print('{}: {}'.format(threading.current_thread().name, s))
 
 
 def download_enclosures(q):
@@ -36,11 +36,11 @@ def download_enclosures(q):
         message('looking for the next enclosure')
         url = q.get()
         filename = url.rpartition('/')[-1]
-        message('downloading %s' % filename)
+        message('downloading {}'.format(filename))
         response = urllib.request.urlopen(url)
         data = response.read()
         # Save the downloaded file to the current directory
-        message('writing to %s' % filename)
+        message('writing to {}'.format(filename))
         with open(filename, 'wb') as outfile:
             outfile.write(data)
         q.task_done()
@@ -51,7 +51,7 @@ for i in range(num_fetch_threads):
     worker = threading.Thread(
         target=download_enclosures,
         args=(enclosure_queue,),
-        name='worker-%s' % i,
+        name='worker-{}'.format(i),
     )
     worker.setDaemon(True)
     worker.start()
@@ -63,8 +63,8 @@ for url in feed_urls:
     for entry in response['entries'][:5]:
         for enclosure in entry.get('enclosures', []):
             parsed_url = urlparse(enclosure['url'])
-            message('queuing %s' %
-                    parsed_url.path.rpartition('/')[-1])
+            message('queuing {}'.format(
+                parsed_url.path.rpartition('/')[-1]))
             enclosure_queue.put(enclosure['url'])
 
 # Now wait for the queue to be empty, indicating that we have

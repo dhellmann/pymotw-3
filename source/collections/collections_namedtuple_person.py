@@ -19,4 +19,4 @@ print('\nField by name:', jane.name)
 
 print('\nFields by index:')
 for p in [bob, jane]:
-    print('%s is %d years old' % p)
+    print('{} is {} years old'.format(*p))

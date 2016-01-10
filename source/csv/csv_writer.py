@@ -15,7 +15,7 @@ with open(sys.argv[1], 'wt') as f:
         row = (
             i + 1,
             chr(ord('a') + i),
-            '08/%02d/07' % (i + 1),
+            '08/{:02d}/07'.format(i + 1),
             unicode_chars[i],
         )
         writer.writerow(row)

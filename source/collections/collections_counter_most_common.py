@@ -16,4 +16,4 @@ with open('/usr/share/dict/words', 'rt') as f:
 
 print('Most common:')
 for letter, count in c.most_common(3):
-    print('%s: %7d' % (letter, count))
+    print('{}: {:>7}'.format(letter, count))

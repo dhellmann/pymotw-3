@@ -41,4 +41,5 @@ objects = [
 ]
 
 for obj in objects:
-    print('%10s : %s' % (type(obj).__name__, sys.getsizeof(obj)))
+    print('{:>10} : {}'.format(type(obj).__name__,
+                               sys.getsizeof(obj)))

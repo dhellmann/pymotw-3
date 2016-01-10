@@ -11,4 +11,4 @@ import fractions
 
 for s in ['1/2', '2/4', '3/6']:
     f = fractions.Fraction(s)
-    print('%s = %s' % (s, f))
+    print('{} = {}'.format(s, f))

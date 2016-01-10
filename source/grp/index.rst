@@ -54,49 +54,50 @@ sorted before printing the report.
 
 	$ python3 grp_getgrall.py
 	
-	37
-	Name                                    GID   Password Members
-	------------------------------- ----------- ---------- ---------
-	---------------------
-	accessibility                            90          * 
-	admin                                    80          * root
-	authedusers                              50          * 
-	bin                                       7          * 
-	certusers                                29          * root, _ja
-	bber, _postfix, _cyrus, _calendar, _dovecot
-	com.apple.access_disabled               396          * 
-	com.apple.access_screensharing          398          * 
-	com.apple.access_sessionkey             397          * 
-	com.apple.access_ssh                    399          * 
-	com.apple.sharepoint.group.1            402          * dhellmann
-	com.apple.sharepoint.group.2            701          * dhellmann
-	consoleusers                             53          * 
-	daemon                                    1          * root
-	dhellmann                               501          * 
-	dialer                                   68          * 
-	everyone                                 12          * 
-	group                                    16          * 
-	interactusers                            51          * 
-	kmem                                      2          * root
-	localaccounts                            61          * 
-	mail                                      6          * _teamsser
-	ver
-	netaccounts                              62          * 
-	netusers                                 52          * 
-	network                                  69          * 
-	nobody                           4294967294          * 
-	nogroup                                  -1          * 
-	operator                                  5          * root
-	owner                                    10          * 
-	procmod                                   9          * root
-	procview                                  8          * root
-	racemi                                  500          * dhellmann
-	smmsp                                   105          * 
-	staff                                    20          * root
-	sys                                       3          * root
-	tty                                       4          * root
-	utmp                                     45          * 
-	wheel                                     0          * root
+	39
+	Name                            GID         Members            
+	------------------------------- ----------- -------------------
+	accessibility                            90                    
+	admin                                    80 root               
+	authedusers                              50                    
+	bin                                       7                    
+	certusers                                29 root, _jabber,
+	                                            _postfix, _cyrus,
+	                                            _calendar, _dovecot
+	com.apple.access_disabled               396                    
+	com.apple.access_ftp                    395                    
+	com.apple.access_screensharing          398                    
+	com.apple.access_sessionkey             397                    
+	com.apple.access_ssh                    399                    
+	com.apple.sharepoint.group.1            402 dhellmann          
+	com.apple.sharepoint.group.2            701 dhellmann          
+	com.apple.sharepoint.group.3            702 dhellmann          
+	consoleusers                             53                    
+	daemon                                    1 root               
+	dhellmann                               501                    
+	dialer                                   68                    
+	everyone                                 12                    
+	group                                    16                    
+	interactusers                            51                    
+	kmem                                      2 root               
+	localaccounts                            61                    
+	mail                                      6 _teamsserver       
+	netaccounts                              62                    
+	netusers                                 52                    
+	network                                  69                    
+	nobody                           4294967294                    
+	nogroup                                  -1                    
+	operator                                  5 root               
+	owner                                    10                    
+	procmod                                   9 root               
+	procview                                  8 root               
+	racemi                                  500 dhellmann          
+	smmsp                                   105                    
+	staff                                    20 root               
+	sys                                       3 root               
+	tty                                       4 root               
+	utmp                                     45                    
+	wheel                                     0 root               
 
 .. {{{end}}}
 
@@ -122,7 +123,7 @@ The set of unique group names is sorted before they are printed.
 	
 	dhellmann belongs to: _lpadmin, admin, com.apple.access_screensh
 	aring, com.apple.access_ssh, com.apple.sharepoint.group.1, com.a
-	pple.sharepoint.group.2, racemi, staff
+	pple.sharepoint.group.2, com.apple.sharepoint.group.3, racemi
 
 .. {{{end}}}
 

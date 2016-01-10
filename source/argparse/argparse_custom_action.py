@@ -38,16 +38,16 @@ class CustomAction(argparse.Action):
         for name, value in sorted(locals().items()):
             if name == 'self' or value is None:
                 continue
-            print('  %s = %r' % (name, value))
+            print('  {} = {!r}'.format(name, value))
         print()
         return
 
     def __call__(self, parser, namespace, values,
                  option_string=None):
-        print('Processing CustomAction for "%s"' % self.dest)
-        print('  parser = %s' % id(parser))
-        print('  values = %r' % values)
-        print('  option_string = %r' % option_string)
+        print('Processing CustomAction for {}'.format(self.dest))
+        print('  parser = {}'.format(id(parser)))
+        print('  values = {!r}'.format(values))
+        print('  option_string = {!r}'.format(option_string))
 
         # Do some arbitrary processing of the input values
         if isinstance(values, list):

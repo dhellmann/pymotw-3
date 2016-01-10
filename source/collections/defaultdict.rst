@@ -30,7 +30,7 @@ library documentation includes several examples of using
 
 	$ python3 collections_defaultdict.py
 	
-	d: defaultdict(<function default_factory at 0x10073c598>, {'foo'
+	d: defaultdict(<function default_factory at 0x1007a6a60>, {'foo'
 	: 'bar'})
 	foo => bar
 	bar => default value

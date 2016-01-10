@@ -21,8 +21,8 @@ class Door:
 
 print('Normal Example:')
 with contextlib.closing(Door()) as door:
-    print('  inside with statement: %s' % door.status)
-print('  outside with statement: %s' % door.status)
+    print('  inside with statement: {}'.format(door.status))
+print('  outside with statement: {}'.format(door.status))
 
 print('\nError handling example:')
 try:

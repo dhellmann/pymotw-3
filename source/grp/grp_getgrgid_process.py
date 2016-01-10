@@ -33,5 +33,5 @@ import os
 
 gid = os.getgid()
 group_info = grp.getgrgid(gid)
-print('Currently running with GID=%s name=%s' %
-      (gid, group_info.gr_name))
+print('Currently running with GID={} name={}'.format(
+    gid, group_info.gr_name))

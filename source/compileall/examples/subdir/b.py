@@ -7,4 +7,4 @@
 """
 #end_pymotw_header
 
-print('running %s' % __file__)
+print('running {}'.format(__file__))

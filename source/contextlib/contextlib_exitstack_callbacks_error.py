@@ -10,7 +10,7 @@ import contextlib
 
 
 def callback(*args, **kwds):
-    print('closing callback(%s, %s)' % (args, kwds))
+    print('closing callback({}, {})'.format(args, kwds))
 
 
 try:
@@ -19,4 +19,4 @@ try:
         stack.callback(callback, arg3='val3')
         raise RuntimeError('thrown error')
 except RuntimeError as err:
-    print('ERROR: %s' % err)
+    print('ERROR: {}'.format(err))

@@ -176,15 +176,15 @@ whether the caller catches and ignores it or not.
 	
 	* Tracing exception:
 	* RuntimeError "generating exception in c()"
-	* on line 28 of c
+	* on line 31 of c
 	
 	* Tracing exception:
 	* RuntimeError "generating exception in c()"
-	* on line 32 of b
+	* on line 35 of b
 	
 	* Tracing exception:
 	* RuntimeError "generating exception in c()"
-	* on line 37 of a
+	* on line 40 of a
 	
 	Exception handler: generating exception in c()
 

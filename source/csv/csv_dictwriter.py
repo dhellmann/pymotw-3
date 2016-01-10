@@ -21,7 +21,7 @@ with open(sys.argv[1], 'wt') as f:
         writer.writerow({
             'Title 1': i + 1,
             'Title 2': chr(ord('a') + i),
-            'Title 3': '08/%02d/07' % (i + 1),
+            'Title 3': '08/{:02d}/07'.format(i + 1),
             'Title 4': unicode_chars[i],
         })
 

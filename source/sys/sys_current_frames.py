@@ -39,8 +39,8 @@ blocker = threading.Lock()
 def block(i):
     t = threading.current_thread()
     with io_lock:
-        print('%s with ident %s going to sleep' %
-              (t.name, t.ident))
+        print('{} with ident {} going to sleep'.format(
+            t.name, t.ident))
     if i:
         blocker.acquire()  # acquired but never released
         time.sleep(0.2)
@@ -68,6 +68,6 @@ with io_lock:
         if not t:
             # Main thread
             continue
-        print('%s stopped in %s at line %s of %s' %
-              (t.name, frame.f_code.co_name,
-               frame.f_lineno, frame.f_code.co_filename))
+        print('{} stopped in {} at line {} of {}'.format(
+            t.name, frame.f_code.co_name,
+            frame.f_lineno, frame.f_code.co_filename))

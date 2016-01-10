@@ -43,11 +43,11 @@ def show_thread(q):
 
 def run_threads():
     interval = sys.getswitchinterval()
-    print('interval = %0.3f' % interval)
+    print('interval = {:0.3f}'.format(interval))
     q = Queue()
     threads = [
         threading.Thread(target=show_thread,
-                         name='T%s' % i,
+                         name='T{}'.format(i),
                          args=(q,))
         for i in range(3)
     ]

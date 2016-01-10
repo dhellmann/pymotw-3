@@ -19,4 +19,4 @@ parser.set('bug_tracker', 'password', 'secret')
 for section in parser.sections():
     print(section)
     for name, value in parser.items(section):
-        print('  %s = %r' % (name, value))
+        print('  {} = {!r}'.format(name, value))

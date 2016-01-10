@@ -15,18 +15,18 @@ b = {'b': 'B', 'c': 'D'}
 m = collections.ChainMap(a, b)
 
 print('Individual Values')
-print('a = %s' % m['a'])
-print('b = %s' % m['b'])
-print('c = %s' % m['c'])
+print('a = {}'.format(m['a']))
+print('b = {}'.format(m['b']))
+print('c = {}'.format(m['c']))
 print()
 
-print('Keys = %s' % list(m.keys()))
-print('Values = %s' % list(m.values()))
+print('Keys = {}'.format(list(m.keys())))
+print('Values = {}'.format(list(m.values())))
 print()
 
 print('Items:')
 for k, v in m.items():
-    print('%s = %s' % (k, v))
+    print('{} = {}'.format(k, v))
 print()
 
-print('"d" in m: %s' % ('d' in m))
+print('"d" in m: {}'.format(('d' in m)))

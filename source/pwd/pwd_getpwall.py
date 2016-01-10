@@ -49,19 +49,28 @@ uid_length = max(len(str(u.pw_uid))
                  for u in interesting_users) + 1
 
 # Print report headers
-fmt = '%-*s %*s %-*s %s'
-print(fmt % (username_length, 'User',
-             uid_length, 'UID',
-             home_length, 'Home Dir',
-             'Description'))
+fmt = ' '.join(['{:<{username_length}}',
+                '{:>{uid_length}}',
+                '{:<{home_length}}',
+                '{}'])
+print(fmt.format('User',
+                 'UID',
+                 'Home Dir',
+                 'Description',
+                 username_length=username_length,
+                 uid_length=uid_length,
+                 home_length=home_length))
 print('-' * username_length,
       '-' * uid_length,
       '-' * home_length,
-      '-' * 30)
+      '-' * 20)
 
 # Print the data
 for u in interesting_users:
-    print(fmt % (username_length, u.pw_name,
-                 uid_length, u.pw_uid,
-                 home_length, u.pw_dir,
-                 u.pw_gecos))
+    print(fmt.format(u.pw_name,
+                     u.pw_uid,
+                     u.pw_dir,
+                     u.pw_gecos,
+                     username_length=username_length,
+                     uid_length=uid_length,
+                     home_length=home_length))

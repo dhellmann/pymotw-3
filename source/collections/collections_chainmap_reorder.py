@@ -15,10 +15,10 @@ b = {'b': 'B', 'c': 'D'}
 m = collections.ChainMap(a, b)
 
 print(m.maps)
-print('c = %s\n' % m['c'])
+print('c = {}\n'.format(m['c']))
 
 # reverse the list
 m.maps = list(reversed(m.maps))
 
 print(m.maps)
-print('c = %s' % m['c'])
+print('c = {}'.format(m['c']))

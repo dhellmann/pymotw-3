@@ -11,7 +11,7 @@
 class WithinContext:
 
     def __init__(self, context):
-        print('WithinContext.__init__(%s)' % context)
+        print('WithinContext.__init__({})'.format(context))
 
     def do_something(self):
         print('WithinContext.do_something()')

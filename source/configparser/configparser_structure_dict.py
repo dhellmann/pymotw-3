@@ -17,5 +17,5 @@ for section_name in parser:
     section = parser[section_name]
     print('  Options:', list(section.keys()))
     for name in section:
-        print('  %s = %s' % (name, section[name]))
+        print('  {} = {}'.format(name, section[name]))
     print()

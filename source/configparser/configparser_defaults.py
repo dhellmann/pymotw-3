@@ -31,7 +31,7 @@ print('Defaults before loading file:')
 defaults = parser.defaults()
 for name in option_names:
     if name in defaults:
-        print('  %-15s = %r' % (name, defaults[name]))
+        print('  {:<15} = {!r}'.format(name, defaults[name]))
 
 # Load the configuration file
 parser.read('with-defaults.ini')
@@ -40,7 +40,7 @@ print('\nDefaults after loading file:')
 defaults = parser.defaults()
 for name in option_names:
     if name in defaults:
-        print('  %-15s = %r' % (name, defaults[name]))
+        print('  {:<15} = {!r}'.format(name, defaults[name]))
 
 # Define some local overrides
 vars = {'from-vars': 'value from vars'}
@@ -49,7 +49,7 @@ vars = {'from-vars': 'value from vars'}
 print('\nOption lookup:')
 for name in option_names:
     value = parser.get('sect', name, vars=vars)
-    print('  %-15s = %r' % (name, value))
+    print('  {:<15} = {!r}'.format(name, value))
 
 # Show error messages for options that do not exist
 print('\nError cases:')

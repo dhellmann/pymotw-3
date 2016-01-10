@@ -52,7 +52,6 @@ the records by name.
 	
 	User               UID Home Dir                 Description
 	---------- ----------- ------------------------ --------------------
-	----------
 	Guest              201 /Users/Guest             Guest User
 	daemon               1 /var/root                System Services
 	daemon               1 /var/root                System Services
