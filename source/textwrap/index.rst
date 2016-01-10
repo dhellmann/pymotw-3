@@ -228,8 +228,8 @@ number of characters.
 Hanging Indents
 ===============
 
-Besides the width of the output, the indent of the first line can be
-controlled independently of subsequent lines.
+Just as the width of the output can be set, the indent of the first
+line can be controlled independently of subsequent lines.
 
 .. include:: textwrap_hanging_indent.py
     :literal:
@@ -254,7 +254,7 @@ first line is indented less than the other lines.
 
 .. {{{end}}}
 
-The indent values can include non-whitespace characters, too, so the
+The indent values can include nonwhitespace characters, too. The
 hanging indent can be prefixed with ``*`` to produce bullet points,
 etc.
 
