@@ -54,6 +54,10 @@ the renames can be found in the dictionary
 ``lib2to3.fixes.fix_imports.MAPPING`` (the keys are the Python 2 name
 and the values are the Python 3 name).
 
+.. index::
+   single: porting; renamed modules
+   single: renamed modules
+
 .. Build the rename table directive dynamically.
 ..
 .. {{{cog
@@ -63,7 +67,7 @@ and the values are the Python 3 name).
 .. cog.out('   :header: "Python 2 Name", "Python 3 Name"\n')
 .. cog.out("\n")
 .. for old, new in sorted(MAPPING.items()):
-..   cog.out("   %s, %s\n" % (old, new))
+..   cog.out("   {}, {}\n".format(old, new))
 .. cog.out("\n")
 .. }}}
 
@@ -145,16 +149,29 @@ Deprecated Modules
 These modules are still present in the standard library, but are
 deprecated and should not be used in new Python 3 programs.
 
+.. index::
+   pair: porting; asyncore
+   pair: porting; asynchat
+
 asyncore and asynchat
   Asynchronous I/O and protocol handlers.
 
   See :mod:`asyncio` instead.
 
+.. index::
+   pair: porting; formatter
+
 formatter
   Generic output formatter and device interface.
 
+.. index::
+   pair: porting; imp
+
 imp
   Access the implementation of the import statement.
+
+.. index::
+   pair: porting; optparse
 
 optparse
   Command-line option parsing library.
@@ -214,6 +231,9 @@ string to stdout instead of stderr (:pyissue:`18920`).
 array
 -----
 
+.. index::
+   pair: porting; array
+
 The ``'c'`` type used for character bytes in early version of Python 2
 has been removed. Use ``'b'`` or ``'B'`` for bytes instead.
 
@@ -243,6 +263,9 @@ shown, without the traceback. This regression was fixed in Python 3.3
 base64
 ------
 
+.. index::
+   pair: porting; base64
+
 The :func:`encodestring` and :func:`decodestring` have been renamed
 :func:`encodebytes` and :func:`decodebytes` respectively. The old
 names still work as aliases, but are deprecated (:pyissue:`3613`).
@@ -257,6 +280,9 @@ files (:pyissue:`17618`).
 bz2
 ---
 
+.. index::
+   pair: porting; bz2
+
 :class:`BZ2File` instances now support the context manager protocol,
 and do not need to be wrapped with :func:`contextlib.closing`.
 
@@ -264,6 +290,9 @@ and do not need to be wrapped with :func:`contextlib.closing`.
 
 contextlib
 ----------
+
+.. index::
+   pair: porting; contextlib
 
 :func:`contextlib.nested` has been removed. Pass multiple context
 managers to the same ``with`` statement instead.
@@ -273,6 +302,9 @@ managers to the same ``with`` statement instead.
 collections
 -----------
 
+.. index::
+   pair: porting; collections
+
 The abstract base classes formerly defined in :mod:`collections` moved
 to :mod:`collections.abc`, with backwards-compatibility imports in
 :mod:`collections`, for now (:pyissue:`11085`).
@@ -281,6 +313,9 @@ to :mod:`collections.abc`, with backwards-compatibility imports in
 
 configparser
 ------------
+
+.. index::
+   pair: porting; configparser
 
 The old ``ConfigParser`` module has been renamed to
 :mod:`configparser`.
@@ -303,6 +338,9 @@ same behavior.
 csv
 ---
 
+.. index::
+   pair: porting; csv
+
 Instead of using the :func:`next` method of a reader directly, use the
 built-in :func:`next` function to invoke the iterator properly.
 
@@ -310,6 +348,9 @@ built-in :func:`next` function to invoke the iterator properly.
 
 datetime
 --------
+
+.. index::
+   pair: porting; datetime
 
 Starting with Python 3.3, equality comparisons between naive and
 timezone-aware :class:`datetime` instances return ``False`` instead of
@@ -324,6 +365,9 @@ behavior has been removed in Python 3.5 (:pyissue:`13936`).
 fractions
 ---------
 
+.. index::
+   pair: porting; fractions
+
 The :func:`from_float` and :func:`from_decimal` class methods are no
 longer needed. Floating point and :class:`Decimal` values can be
 passed directly to the :class:`Fraction` constructor.
@@ -332,6 +376,9 @@ passed directly to the :class:`Fraction` constructor.
 
 glob
 ----
+
+.. index::
+   pair: porting; glob
 
 The new function :func:`escape` implements a work-around for searching
 for files with meta-characters in the name (:pyissue:`8402`).
@@ -353,6 +400,9 @@ is retained.
 
 shelve
 ------
+
+.. index::
+   pair: porting; shelve
 
 The default output format for :mod:`shelve` may create a file with a
 ``.db`` extension added to the name given to :func:`shelve.open`.
@@ -424,6 +474,11 @@ number. The value is now just ``linux`` and not ``linux2`` or
 
 UserDict, UserList, and UserString
 ----------------------------------
+
+.. index::
+   pair: porting; UserDict
+   pair: porting; UserList
+   pair: porting; UserString
 
 .. spelling::
 
