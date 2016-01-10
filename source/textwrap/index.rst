@@ -258,6 +258,50 @@ The indent values can include non-whitespace characters, too, so the
 hanging indent can be prefixed with ``*`` to produce bullet points,
 etc.
 
+Truncating Long Text
+====================
+
+To truncate text to create a summary or preview, use
+:func:`shorten`. All existing whitespace such as tabs, newlines, and
+series of multiple spaces will be standardized to a single space. Then
+the text will be truncated to a length less than or equal to what is
+requested, between word boundaries so that no partial words are
+included.
+
+.. include:: textwrap_shorten.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+If non-whitespace text is removed from the original text as part of
+the truncation, it is replaced with a placeholder value. The default
+value ``[...]`` can be replaced by providing a ``placeholder``
+argument to :func:`shorten`.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'textwrap_shorten.py'))
+.. }}}
+
+::
+
+	$ python3 textwrap_shorten.py
+	
+	Original:
+	
+	 The textwrap module can be used to format text
+	for output in situations where pretty-printing is
+	desired.  It offers programmatic functionality
+	similar to the paragraph wrapping or filling
+	features found in many text editors.
+	
+	Shortened:
+	
+	The textwrap module can be used to format text for
+	output in situations where pretty-printing [...]
+
+.. {{{end}}}
+
+
+
 .. seealso::
 
     * :pydoc:`textwrap`
