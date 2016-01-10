@@ -12,8 +12,8 @@ shell-like syntaxes. It can be used for writing a domain specific
 language, or for parsing quoted strings (a task that is more complex
 than it seems on the surface).
 
-Quoted Strings
-==============
+Parsing Quoted Strings
+======================
 
 A common problem when working with input text is to identify a
 sequence of quoted words as a single entity. Splitting the text on
@@ -100,6 +100,50 @@ The token with the embedded apostrophe is no problem:
 
 .. {{{end}}}
 
+Making Safe Strings for Shells
+==============================
+
+The :func:`quote` function performs the inverse operation, escaping
+existing quotes and adding missing quotes for strings to make them
+safe to use in shell commands.
+
+.. include:: shlex_quote.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+It is still usually safer to use a list of arguments when using
+:class:`subprocess.Popen`, but in situations where that is not
+possible :func:`quote` provides some protection by ensuring that
+special characters and white space are quoted properly.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'shlex_quote.py'))
+.. }}}
+
+::
+
+	$ python3 shlex_quote.py
+	
+	ORIGINAL : Embedded'SingleQuote
+	QUOTED   : 'Embedded'"'"'SingleQuote'
+	
+	ORIGINAL : Embedded"DoubleQuote
+	QUOTED   : 'Embedded"DoubleQuote'
+	
+	ORIGINAL : Embedded Space
+	QUOTED   : 'Embedded Space'
+	
+	ORIGINAL : ~SpecialCharacter
+	QUOTED   : '~SpecialCharacter'
+	
+	ORIGINAL : Back\slash
+	QUOTED   : 'Back\slash'
+	
+
+.. {{{end}}}
+
+
+
 Embedded Comments
 =================
 
@@ -136,8 +180,8 @@ property.
 
 .. {{{end}}}
 
-Split
-=====
+Splitting Strings into Tokens
+=============================
 
 To split an existing string into component tokens, the convenience
 function :func:`split()` is a simple wrapper around the parser.
