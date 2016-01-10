@@ -41,10 +41,10 @@ occur in two inputs, how a document has changed over time, etc.
 .. toctree::
    :maxdepth: 1
 
+   textwrap/index
    difflib/index
 
 ..
    string/index
-   textwrap/index
    re/index
    difflib/index

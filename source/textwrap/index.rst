@@ -1,12 +1,11 @@
-========================================
- textwrap -- Formatting Text Paragraphs
-========================================
+=========================================
+ textwrap --- Formatting Text Paragraphs
+=========================================
 
 .. module:: textwrap
     :synopsis: Formatting text paragraphs
 
 :Purpose: Formatting text by adjusting where line breaks occur in a paragraph.
-:Python Version: 2.5 and later
 
 The :mod:`textwrap` module can be used to format text for output in
 situations where pretty-printing is desired. It offers programmatic
@@ -44,7 +43,7 @@ the front of each subsequent line are embedded in the paragraph.
 
 ::
 
-	$ python textwrap_fill.py
+	$ python3 textwrap_fill.py
 	
 	No dedent:
 	
@@ -72,7 +71,7 @@ indent level introduced for illustrating this feature.
     :literal:
     :start-after: #end_pymotw_header
 
-The results are starting to look better:
+The results are starting to look better.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'textwrap_dedent.py'))
@@ -80,7 +79,7 @@ The results are starting to look better:
 
 ::
 
-	$ python textwrap_dedent.py
+	$ python3 textwrap_dedent.py
 	
 	Dedented:
 	
@@ -132,7 +131,7 @@ This produces outputs in the specified widths.
 
 ::
 
-	$ python textwrap_fill_width.py
+	$ python3 textwrap_fill_width.py
 	
 	45 Columns:
 	
@@ -143,12 +142,12 @@ This produces outputs in the specified widths.
 	wrapping or filling features found in many
 	text editors.
 	
-	70 Columns:
+	60 Columns:
 	
 	The textwrap module can be used to format text for output in
-	situations where pretty-printing is desired.  It offers programmatic
-	functionality similar to the paragraph wrapping or filling features
-	found in many text editors.
+	situations where pretty-printing is desired.  It offers
+	programmatic functionality similar to the paragraph wrapping
+	or filling features found in many text editors.
 	
 
 .. {{{end}}}
@@ -173,7 +172,7 @@ first line is indented less than the other lines.
 
 ::
 
-	$ python textwrap_hanging_indent.py
+	$ python3 textwrap_hanging_indent.py
 	
 	The textwrap module can be used to format text for
 	    output in situations where pretty-printing is
@@ -185,9 +184,8 @@ first line is indented less than the other lines.
 
 The indent values can include non-whitespace characters, too, so the
 hanging indent can be prefixed with ``*`` to produce bullet points,
-etc. 
+etc.
 
 .. seealso::
 
-    `textwrap <http://docs.python.org/lib/module-textwrap.html>`_
-        Standard library documentation for this module.
+    * :pydoc:`textwrap`
