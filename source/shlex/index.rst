@@ -8,7 +8,7 @@
 :Purpose: Lexical analysis of shell-style syntaxes.
 
 The :mod:`shlex` module implements a class for parsing simple
-shell-like syntaxes. It can be used for writing a domain specific
+shell-like syntaxes. It can be used for writing a domain-specific
 language, or for parsing quoted strings (a task that is more complex
 than it seems on the surface).
 
@@ -18,7 +18,7 @@ Parsing Quoted Strings
 A common problem when working with input text is to identify a
 sequence of quoted words as a single entity. Splitting the text on
 quotes does not always work as expected, especially if there are
-nested levels of quotes. Take the following text:
+nested levels of quotes. Take the following text as an example.
 
 .. literalinclude:: quotes.txt
    :language: none
@@ -37,7 +37,7 @@ prints the tokens identified in the input file using the
     :start-after: #end_pymotw_header
 
 When run on data with embedded quotes, the parser produces the list of
-expected tokens:
+expected tokens.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'shlex_example.py quotes.txt'))
@@ -68,13 +68,13 @@ expected tokens:
 
 .. {{{end}}}
 
-Isolated quotes such as apostrophes are also handled.  Given this
-input file:
+Isolated quotes such as apostrophes are also handled.  Consider this
+input file.
 
 .. literalinclude:: apostrophe.txt
    :language: none
 
-The token with the embedded apostrophe is no problem:
+The token with the embedded apostrophe is no problem.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'shlex_example.py apostrophe.txt'))
@@ -142,15 +142,13 @@ special characters and white space are quoted properly.
 
 .. {{{end}}}
 
-
-
 Embedded Comments
 =================
 
 Since the parser is intended to be used with command languages, it
 needs to handle comments. By default, any text following a ``#`` is
-considered part of a comment, and ignored. Due to the nature of the
-parser, only single character comment prefixes are supported. The set
+considered part of a comment and ignored. Due to the nature of the
+parser, only single-character comment prefixes are supported. The set
 of comment characters used can be configured through the :attr:`commenters`
 property.
 
@@ -190,7 +188,7 @@ function :func:`split()` is a simple wrapper around the parser.
     :literal:
     :start-after: #end_pymotw_header
 
-The result is a list:
+The result is a list.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'shlex_split.py'))
@@ -221,14 +219,14 @@ stream to include another. This is similar to the Bourne shell
     :literal:
     :start-after: #end_pymotw_header
 
-The string ``source quotes.txt`` in the original text receives special
+The string "``source quotes.txt``" in the original text receives special
 handling. Since the :attr:`source` property of the lexer is set to
-``"source"``, when the keyword is encountered the filename appearing
+``"source"``, when the keyword is encountered, the filename appearing
 on the next line is automatically included. In order to cause the
 filename to appear as a single token, the ``.`` character needs to be
 added to the list of characters that are included in words (otherwise
 "``quotes.txt``" becomes three tokens, "``quotes``", "``.``",
-"``txt``"). The output looks like:
+"``txt``"). This what the output looks like.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'shlex_source.py', line_break_mode='wrap'))
@@ -265,7 +263,7 @@ added to the list of characters that are included in words (otherwise
 
 .. {{{end}}}
 
-The "source" feature uses a method called :func:`sourcehook()` to load
+The source feature uses a method called :func:`sourcehook()` to load
 the additional input source, so a subclass of :class:`shlex` can
 provide an alternate implementation that loads data from locations
 other than files.
@@ -284,7 +282,7 @@ for example).
     :literal:
     :start-after: #end_pymotw_header
 
-In this example, each table cell is wrapped in vertical bars:
+In this example, each table cell is wrapped in vertical bars.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'shlex_table.py'))
@@ -304,7 +302,7 @@ In this example, each table cell is wrapped in vertical bars:
 .. {{{end}}}
 
 It is also possible to control the whitespace characters used to split
-words.  
+words.
 
 .. include:: shlex_whitespace.py
     :literal:
@@ -363,7 +361,7 @@ invalid line.
     :literal:
     :start-after: #end_pymotw_header
 
-The example produces this output
+The example produces this output.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'shlex_errors.py', ignore_error=True))
@@ -396,14 +394,14 @@ POSIX vs. Non-POSIX Parsing
 ===========================
 
 The default behavior for the parser is to use a backwards-compatible
-style which is not POSIX-compliant. For POSIX behavior, set the *posix*
+style that is not POSIX-compliant. For POSIX behavior, set the *posix*
 argument when constructing the parser.
 
 .. include:: shlex_posix.py
     :literal:
     :start-after: #end_pymotw_header
 
-Here are a few examples of the differences in parsing behavior:
+Here are a few examples of the differences in parsing behavior.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'shlex_posix.py', line_break_mode='wrap'))
