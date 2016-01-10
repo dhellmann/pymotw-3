@@ -348,6 +348,16 @@ The ``print`` command alias has been removed so that it does not
 shadow the ``print()`` function (:pyissue:`18764`). The ``p`` shortcut
 is retained.
 
+.. _porting-pipes:
+
+pipes
+-----
+
+.. index::
+   pair: porting; pipes
+
+:func:`pipes.quote` has moved to :mod:`shlex` (:pyissue:`9723`).
+
 
 .. _porting-shelve:
 
