@@ -75,18 +75,22 @@ be used.
    :maxdepth: 1
 
    argparse/index
+   shlex/index
    configparser/index
    atexit/index
 
 ..
-      getopt/index
-      optparse/index
-      readline/index
-      getpass/index
-      cmd/index
-      shlex/index
-      logging/index
-      fileinput/index
-      sched/index
+   getopt/index
+   optparse/index
+   argparse/index
+   readline/index
+   getpass/index
+   cmd/index
+   shlex/index
+   ConfigParser/index
+   logging/index
+   fileinput/index
+   atexit/index
+   sched/index
 
 ..    runpy/index

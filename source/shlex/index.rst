@@ -1,12 +1,11 @@
-=====================================
- shlex -- Parse Shell-style Syntaxes
-=====================================
+======================================
+ shlex --- Parse Shell-style Syntaxes
+======================================
 
 .. module:: shlex
     :synopsis: Lexical analysis of shell-style syntaxes.
 
 :Purpose: Lexical analysis of shell-style syntaxes.
-:Python Version: 1.5.2 and later
 
 The :mod:`shlex` module implements a class for parsing simple
 shell-like syntaxes. It can be used for writing a domain specific
@@ -21,8 +20,8 @@ sequence of quoted words as a single entity. Splitting the text on
 quotes does not always work as expected, especially if there are
 nested levels of quotes. Take the following text:
 
-.. include:: quotes.txt
-    :literal:
+.. literalinclude:: quotes.txt
+   :language: none
 
 A naive approach would be to construct a regular expression to find
 the parts of the text outside the quotes to separate them from the
@@ -41,15 +40,15 @@ When run on data with embedded quotes, the parser produces the list of
 expected tokens:
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'shlex_example.py quotes.txt', break_lines_at=68))
+.. cog.out(run_script(cog.inFile, 'shlex_example.py quotes.txt'))
 .. }}}
 
 ::
 
-	$ python shlex_example.py quotes.txt
-
-	ORIGINAL: 'This string has embedded "double quotes" and \'single quo
-	tes\' in it,\nand even "a \'nested example\'".\n'
+	$ python3 shlex_example.py quotes.txt
+	
+	ORIGINAL: 'This string has embedded "double quotes" and\n\'singl
+	e quotes\' in it, and even "a \'nested example\'".\n'
 	
 	TOKENS:
 	'This'
@@ -72,8 +71,8 @@ expected tokens:
 Isolated quotes such as apostrophes are also handled.  Given this
 input file:
 
-.. include:: apostrophe.txt
-    :literal:
+.. literalinclude:: apostrophe.txt
+   :language: none
 
 The token with the embedded apostrophe is no problem:
 
@@ -83,8 +82,8 @@ The token with the embedded apostrophe is no problem:
 
 ::
 
-	$ python shlex_example.py apostrophe.txt
-
+	$ python3 shlex_example.py apostrophe.txt
+	
 	ORIGINAL: "This string has an embedded apostrophe, doesn't it?"
 	
 	TOKENS:
@@ -112,15 +111,15 @@ of comment characters used can be configured through the :attr:`commenters`
 property.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'shlex_example.py comments.txt', break_lines_at=70))
+.. cog.out(run_script(cog.inFile, 'shlex_example.py comments.txt'))
 .. }}}
 
 ::
 
-	$ python shlex_example.py comments.txt
-
-	ORIGINAL: 'This line is recognized.\n# But this line is ignored.\nAnd 
-	this line is processed.'
+	$ python3 shlex_example.py comments.txt
+	
+	ORIGINAL: 'This line is recognized.\n# But this line is ignored.
+	\nAnd this line is processed.'
 	
 	TOKENS:
 	'This'
@@ -155,8 +154,8 @@ The result is a list:
 
 ::
 
-	$ python shlex_split.py
-
+	$ python3 shlex_split.py
+	
 	ORIGINAL: 'This text has "quoted parts" inside it.'
 	
 	TOKENS:
@@ -188,14 +187,15 @@ added to the list of characters that are included in words (otherwise
 "``txt``"). The output looks like:
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'shlex_source.py'))
+.. cog.out(run_script(cog.inFile, 'shlex_source.py', line_break_mode='wrap'))
 .. }}}
 
 ::
 
-	$ python shlex_source.py
-
-	ORIGINAL: 'This text says to source quotes.txt before continuing.'
+	$ python3 shlex_source.py
+	
+	ORIGINAL: 'This text says to source quotes.txt before
+	continuing.'
 	
 	TOKENS:
 	'This'
@@ -248,8 +248,8 @@ In this example, each table cell is wrapped in vertical bars:
 
 ::
 
-	$ python shlex_table.py
-
+	$ python3 shlex_table.py
+	
 	ORIGINAL: '|Col 1||Col 2||Col 3|'
 	
 	TOKENS:
@@ -270,15 +270,15 @@ If the example in ``shlex_example.py`` is modified to include period
 and comma, the results change.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'shlex_whitespace.py quotes.txt', break_lines_at=68))
+.. cog.out(run_script(cog.inFile, 'shlex_whitespace.py quotes.txt'))
 .. }}}
 
 ::
 
-	$ python shlex_whitespace.py quotes.txt
-
-	ORIGINAL: 'This string has embedded "double quotes" and \'single quo
-	tes\' in it,\nand even "a \'nested example\'".\n'
+	$ python3 shlex_whitespace.py quotes.txt
+	
+	ORIGINAL: 'This string has embedded "double quotes" and\n\'singl
+	e quotes\' in it, and even "a \'nested example\'".\n'
 	
 	TOKENS:
 	'This'
@@ -322,15 +322,15 @@ invalid line.
 The example produces this output
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'shlex_errors.py', ignore_error=True, break_lines_at=68))
+.. cog.out(run_script(cog.inFile, 'shlex_errors.py', ignore_error=True))
 .. }}}
 
 ::
 
-	$ python shlex_errors.py
-
-	ORIGINAL: 'This line is ok.\nThis line has an "unfinished quote.\nTh
-	is line is ok, too.\n'
+	$ python3 shlex_errors.py
+	
+	ORIGINAL: 'This line is ok.\nThis line has an "unfinished quote.
+	\nThis line is ok, too.\n'
 	
 	TOKENS:
 	'This'
@@ -343,7 +343,7 @@ The example produces this output
 	'has'
 	'an'
 	ERROR: "None", line 4:  No closing quotation
-	following ""unfinished quote."
+	following '"unfinished quote.'
 
 .. {{{end}}}
 
@@ -362,13 +362,13 @@ argument when constructing the parser.
 Here are a few examples of the differences in parsing behavior:
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'shlex_posix.py', break_lines_at=68, line_break_mode='wrap'))
+.. cog.out(run_script(cog.inFile, 'shlex_posix.py', line_break_mode='wrap'))
 .. }}}
 
 ::
 
-	$ python shlex_posix.py
-
+	$ python3 shlex_posix.py
+	
 	ORIGINAL : 'Do"Not"Separate'
 	non-POSIX: ['Do"Not"Separate']
 	POSIX    : ['DoNotSeparate']
@@ -385,12 +385,14 @@ Here are a few examples of the differences in parsing behavior:
 	ORIGINAL : 'Escaped "\\e" Character in double quotes'
 	non-POSIX: ['Escaped', '"\\e"', 'Character', 'in', 'double',
 	'quotes']
-	POSIX    : ['Escaped', '\\e', 'Character', 'in', 'double', 'quotes']
+	POSIX    : ['Escaped', '\\e', 'Character', 'in', 'double',
+	'quotes']
 	
 	ORIGINAL : "Escaped '\\e' Character in single quotes"
 	non-POSIX: ['Escaped', "'\\e'", 'Character', 'in', 'single',
 	'quotes']
-	POSIX    : ['Escaped', '\\e', 'Character', 'in', 'single', 'quotes']
+	POSIX    : ['Escaped', '\\e', 'Character', 'in', 'single',
+	'quotes']
 	
 	ORIGINAL : 'Escaped \'\\\'\' \\"\\\'\\" single quote'
 	non-POSIX: error(No closing quotation)
@@ -410,20 +412,12 @@ Here are a few examples of the differences in parsing behavior:
 
 .. seealso::
 
-    `shlex <http://docs.python.org/lib/module-shlex.html>`_
-        Standard library documentation for this module.
+    * :pydoc:`shlex`
 
-    :mod:`cmd`
-        Tools for building interactive command interpreters.
+    * :mod:`cmd` -- Tools for building interactive command
+      interpreters.
 
-    :mod:`optparse`
-        Command line option parsing.
+    * :mod:`argparse` -- Command line option parsing.
 
-    :mod:`getopt`
-        Command line option parsing.
-
-    :mod:`argparse`
-        Command line option parsing.
-
-    :mod:`subprocess`
-        Run commands after parsing the command line.
+    * :mod:`subprocess` -- Run commands after parsing the command
+      line.
