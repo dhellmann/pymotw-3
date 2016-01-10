@@ -9,7 +9,7 @@
 from pprint import pprint
 
 
-class node(object):
+class node:
 
     def __init__(self, name, contents=[]):
         self.name = name
