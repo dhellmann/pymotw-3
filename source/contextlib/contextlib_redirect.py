@@ -13,8 +13,8 @@ import sys
 
 
 def misbehaving_function(a):
-    sys.stdout.write('(stdout) A: %r\n' % a)
-    sys.stderr.write('(stderr) A: %r\n' % a)
+    sys.stdout.write('(stdout) A: {!r}\n'.format(a))
+    sys.stderr.write('(stderr) A: {!r}\n'.format(a))
 
 
 capture = io.StringIO()

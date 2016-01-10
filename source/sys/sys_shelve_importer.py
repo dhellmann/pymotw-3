@@ -55,7 +55,7 @@ def _get_key_name(fullname, db):
     return None
 
 
-class ShelveFinder(object):
+class ShelveFinder:
     """Find modules collected in a shelve archive."""
 
     _maybe_recursing = False
@@ -77,8 +77,8 @@ class ShelveFinder(object):
             finally:
                 ShelveFinder._maybe_recursing = False
         except Exception as e:
-            print('shelf could not import from %s: %s' %
-                  (path_entry, e))
+            print('shelf could not import from {}: {}'.format(
+                path_entry, e))
             raise
         else:
             print('shelf added to import path:', path_entry)
@@ -86,22 +86,23 @@ class ShelveFinder(object):
         return
 
     def __str__(self):
-        return '<%s for "%s">' % (self.__class__.__name__,
-                                  self.path_entry)
+        return '<{} for {!r}>'.format(self.__class__.__name__,
+                                      self.path_entry)
 
     def find_module(self, fullname, path=None):
         path = path or self.path_entry
-        print('\nlooking for "%s"\n  in %s' % (fullname, path))
+        print('\nlooking for {!r}\n  in {}'.format(
+            fullname, path))
         with shelve.open(self.path_entry, 'r') as db:
             key_name = _get_key_name(fullname, db)
             if key_name:
-                print('  found it as %s' % key_name)
+                print('  found it as {}'.format(key_name))
                 return ShelveLoader(path)
         print('  not found')
         return None
 
 
-class ShelveLoader(object):
+class ShelveLoader:
     """Load source for modules from shelve databases."""
 
     def __init__(self, path_entry):
@@ -114,14 +115,16 @@ class ShelveLoader(object):
         return os.path.join(self.path_entry, fullname)
 
     def get_source(self, fullname):
-        print('loading source for "%s" from shelf' % fullname)
+        print('loading source for {!r} from shelf'.format(
+            fullname))
         try:
             with shelve.open(self.path_entry, 'r') as db:
                 key_name = _get_key_name(fullname, db)
                 if key_name:
                     return db[key_name]
                 raise ImportError(
-                    'could not find source for %s' % fullname
+                    'could not find source for {}'.format(
+                        fullname)
                 )
         except Exception as e:
             print('could not load source:', e)
@@ -129,13 +132,13 @@ class ShelveLoader(object):
 
     def get_code(self, fullname):
         source = self.get_source(fullname)
-        print('compiling code for "%s"' % fullname)
+        print('compiling code for {!r}'.format(fullname))
         return compile(source, self._get_filename(fullname),
                        'exec', dont_inherit=True)
 
     def get_data(self, path):
-        print('looking for data\n  in %s\n  for "%s"' %
-              (self.path_entry, path))
+        print('looking for data\n  in {}\n  for {!r}'.format(
+            self.path_entry, path))
         if not path.startswith(self.path_entry):
             raise IOError
         path = path[len(self.path_entry) + 1:]
@@ -156,12 +159,12 @@ class ShelveLoader(object):
         source = self.get_source(fullname)
 
         if fullname in sys.modules:
-            print('reusing existing module from import of %r' %
-                  fullname)
+            print('reusing module from import of {!r}'.format(
+                fullname))
             mod = sys.modules[fullname]
         else:
-            print('creating a new module object for %r' %
-                  fullname)
+            print('creating a new module object for {!r}'.format(
+                fullname))
             mod = sys.modules.setdefault(
                 fullname,
                 imp.new_module(fullname)

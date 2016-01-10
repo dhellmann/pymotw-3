@@ -1280,13 +1280,13 @@ always ``None``.
 	  option_strings = ['-m']
 	  required = False
 	
-	Processing CustomAction for "a"
-	  parser = 4313709536
+	Processing CustomAction for a
+	  parser = 4312656864
 	  values = 'value'
 	  option_string = '-a'
 	
-	Processing CustomAction for "m"
-	  parser = 4313709536
+	Processing CustomAction for m
+	  parser = 4312656864
 	  values = ['multivalue', 'second']
 	  option_string = '-m'
 	

@@ -213,13 +213,13 @@ containing a single entry.
 
 	$ python3 glob_escape.py
 	
-	Searching for: "dir/*[?].txt"
+	Searching for: 'dir/*[?].txt'
 	dir/file?.txt
 	
-	Searching for: "dir/*[*].txt"
+	Searching for: 'dir/*[*].txt'
 	dir/file*.txt
 	
-	Searching for: "dir/*[[].txt"
+	Searching for: 'dir/*[[].txt'
 	dir/file[.txt
 	
 

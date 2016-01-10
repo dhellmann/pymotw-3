@@ -45,7 +45,7 @@ extensions = [
     'tableref',
 ]
 
-python_version = '%s.%s' % (sys.version_info[:2])
+python_version = '{}.{}'.format(*(sys.version_info[:2]))
 
 extlinks = {
     'pyissue': ('http://bugs.python.org/issue%s', 'Python issue '),
@@ -68,7 +68,7 @@ master_doc = 'index'
 # General information about the project.
 year = datetime.date.today().year
 project = 'PyMOTW-3'
-copyright = '%s, Doug Hellmann' % year
+copyright = '{}, Doug Hellmann'.format(year)
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

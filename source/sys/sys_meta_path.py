@@ -32,16 +32,17 @@ import sys
 import imp
 
 
-class NoisyMetaImportFinder(object):
+class NoisyMetaImportFinder:
 
     def __init__(self, prefix):
-        print('Creating NoisyMetaImportFinder for %s' % prefix)
+        print('Creating NoisyMetaImportFinder for {}'.format(
+            prefix))
         self.prefix = prefix
         return
 
     def find_module(self, fullname, path=None):
-        print('looking for "%s" with path "%s"' %
-              (fullname, path))
+        print('looking for {!r} with path {!r}'.format(
+            fullname, path))
         name_parts = fullname.split('.')
         if name_parts and name_parts[0] == self.prefix:
             print(' ... found prefix, returning loader')
@@ -51,14 +52,14 @@ class NoisyMetaImportFinder(object):
         return None
 
 
-class NoisyMetaImportLoader(object):
+class NoisyMetaImportLoader:
 
     def __init__(self, path_entry):
         self.path_entry = path_entry
         return
 
     def load_module(self, fullname):
-        print('loading %s' % fullname)
+        print('loading {}'.format(fullname))
         if fullname in sys.modules:
             mod = sys.modules[fullname]
         else:

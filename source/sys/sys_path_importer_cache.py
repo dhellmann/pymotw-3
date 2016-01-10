@@ -44,4 +44,4 @@ for name, cache_value in sys.path_importer_cache.items():
     if '..' in name:
         name = os.path.abspath(name)
     name = name.replace(prefix, '...')
-    print('  %s: %r' % (name, cache_value))
+    print('  {}: {!r}'.format(name, cache_value))

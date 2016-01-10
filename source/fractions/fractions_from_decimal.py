@@ -18,4 +18,4 @@ values = [
 ]
 
 for v in values:
-    print('%s = %s' % (v, fractions.Fraction(v)))
+    print('{} = {}'.format(v, fractions.Fraction(v)))

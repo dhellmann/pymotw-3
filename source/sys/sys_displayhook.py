@@ -31,7 +31,7 @@
 import sys
 
 
-class ExpressionCounter(object):
+class ExpressionCounter:
 
     def __init__(self):
         self.count = 0
@@ -44,7 +44,7 @@ class ExpressionCounter(object):
         print()
         if value != self.previous_value:
             self.count += 1
-            sys.ps1 = '(%3d)> ' % self.count
+            sys.ps1 = '({:3d})> '.format(self.count)
         self.previous_value = value
         sys.__displayhook__(value)
 

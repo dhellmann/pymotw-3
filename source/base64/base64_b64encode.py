@@ -23,7 +23,7 @@ num_initial = len(byte_string)
 # There will never be more than 2 padding bytes.
 padding = 3 - (num_initial % 3)
 
-print('%d bytes before encoding' % num_initial)
-print('Expect %d padding bytes' % padding)
-print('%d bytes after encoding\n' % len(encoded_data))
+print('{} bytes before encoding'.format(num_initial))
+print('Expect {} padding bytes'.format(padding))
+print('{} bytes after encoding\n'.format(len(encoded_data)))
 print(encoded_data)

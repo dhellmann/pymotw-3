@@ -21,9 +21,9 @@ def burn(direction, nextSource):
         except IndexError:
             break
         else:
-            print('%8s: %s' % (direction, next))
+            print('{:>8}: {}'.format(direction, next))
             time.sleep(0.1)
-    print('%8s done' % direction)
+    print('{:>8} done'.format(direction))
     return
 
 left = threading.Thread(target=burn,

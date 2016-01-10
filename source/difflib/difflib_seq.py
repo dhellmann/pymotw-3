@@ -22,22 +22,23 @@ matcher = difflib.SequenceMatcher(None, s1, s2)
 for tag, i1, i2, j1, j2 in reversed(matcher.get_opcodes()):
 
     if tag == 'delete':
-        print('Remove %s from positions [%d:%d]' %
-              (s1[i1:i2], i1, i2))
+        print('Remove {} from positions [{}:{}]'.format(
+            s1[i1:i2], i1, i2))
         del s1[i1:i2]
 
     elif tag == 'equal':
-        print('s1[%d:%d] and s2[%d:%d] are the same'
-              % (i1, i2, j1, j2))
+        print('s1[{}:{}] and s2[{}:{}] are the same'.format(
+            i1, i2, j1, j2))
 
     elif tag == 'insert':
-        print('Insert %s from s2[%d:%d] into s1 at %d'
-              % (s2[j1:j2], j1, j2, i1))
+        print('Insert {} from s2[{}:{}] into s1 at {}'.format(
+            s2[j1:j2], j1, j2, i1))
         s1[i1:i2] = s2[j1:j2]
 
     elif tag == 'replace':
-        print('Replace %s from s1[%d:%d] with %s from s2[%d:%d]'
-              % (s1[i1:i2], i1, i2, s2[j1:j2], j1, j2))
+        print(('Replace {} from s1[{}:{}] '
+               'with {} from s2[{}:{}]').format(
+                   s1[i1:i2], i1, i2, s2[j1:j2], j1, j2))
         s1[i1:i2] = s2[j1:j2]
 
     print('  s1 =', s1)

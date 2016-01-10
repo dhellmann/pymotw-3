@@ -19,9 +19,9 @@ with open('lorem.txt', 'r') as input:
             break
         compressed = compressor.compress(block)
         if compressed:
-            print('Compressed: %s' %
-                  binascii.hexlify(compressed))
+            print('Compressed: {}'.format(
+                binascii.hexlify(compressed)))
         else:
             print('buffering...')
     remaining = compressor.flush()
-    print('Flushed: %s' % binascii.hexlify(remaining))
+    print('Flushed: {}'.format(binascii.hexlify(remaining)))

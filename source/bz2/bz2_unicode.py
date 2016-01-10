@@ -16,12 +16,12 @@ with bz2.open('example.bz2', 'wt', encoding='utf-8') as output:
     output.write(data)
 
 with bz2.open('example.bz2', 'rt', encoding='utf-8') as input:
-    print('Full file: %s' % input.read())
+    print('Full file: {}'.format(input.read()))
 
 # Move to the beginning of the accented character.
 with bz2.open('example.bz2', 'rt', encoding='utf-8') as input:
     input.seek(18)
-    print('One character: %s' % input.read(1))
+    print('One character: {}'.format(input.read(1)))
 
 # Move to the middle of the accented character.
 with bz2.open('example.bz2', 'rt', encoding='utf-8') as input:

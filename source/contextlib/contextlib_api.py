@@ -8,7 +8,7 @@
 #end_pymotw_header
 
 
-class Context(object):
+class Context:
 
     def __init__(self):
         print('__init__()')

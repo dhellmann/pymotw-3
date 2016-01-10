@@ -13,6 +13,6 @@ a = {'a': 'A', 'c': 'C'}
 b = {'b': 'B', 'c': 'D'}
 
 m = collections.ChainMap(a, b)
-print('Before: %s' % m['c'])
+print('Before: {}'.format(m['c']))
 a['c'] = 'E'
-print('After : %s' % m['c'])
+print('After : {}'.format(m['c']))

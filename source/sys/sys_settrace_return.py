@@ -13,11 +13,11 @@ def trace_calls_and_returns(frame, event, arg):
     line_no = frame.f_lineno
     filename = co.co_filename
     if event == 'call':
-        print('* Call to %s on line %s of %s' %
-              (func_name, line_no, filename))
+        print('* Call to {} on line {} of {}'.format(
+            func_name, line_no, filename))
         return trace_calls_and_returns
     elif event == 'return':
-        print('* %s => %s' % (func_name, arg))
+        print('* {} => {}'.format(func_name, arg))
     return
 
 

@@ -31,12 +31,12 @@
 import sys
 
 
-class NoisyImportFinder(object):
+class NoisyImportFinder:
 
     PATH_TRIGGER = 'NoisyImportFinder_PATH_TRIGGER'
 
     def __init__(self, path_entry):
-        print('Checking %s:' % path_entry, end=' ')
+        print('Checking {}:'.format(path_entry), end=' ')
         if path_entry != self.PATH_TRIGGER:
             print('wrong finder')
             raise ImportError()
@@ -45,14 +45,14 @@ class NoisyImportFinder(object):
         return
 
     def find_module(self, fullname, path=None):
-        print('Looking for "%s"' % fullname)
+        print('Looking for {!r}'.format(fullname))
         return None
 
 
 sys.path_hooks.append(NoisyImportFinder)
 
 for hook in sys.path_hooks:
-    print('Path hook: %s' % hook)
+    print('Path hook: {}'.format(hook))
 
 sys.path.insert(0, NoisyImportFinder.PATH_TRIGGER)
 

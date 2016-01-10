@@ -13,14 +13,14 @@ class Context(contextlib.ContextDecorator):
 
     def __init__(self, how_used):
         self.how_used = how_used
-        print('__init__(%s)' % how_used)
+        print('__init__({})'.format(how_used))
 
     def __enter__(self):
-        print('__enter__(%s)' % self.how_used)
+        print('__enter__({})'.format(self.how_used))
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        print('__exit__(%s)' % self.how_used)
+        print('__exit__({})'.format(self.how_used))
 
 
 @Context('as decorator')

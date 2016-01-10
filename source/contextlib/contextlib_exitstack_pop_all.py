@@ -37,7 +37,7 @@ try:
         ErrorOnEnter(2),
     ])
 except RuntimeError as err:
-    print('caught error %s' % err)
+    print('caught error {}'.format(err))
 else:
     if cleaner is not None:
         cleaner()
@@ -51,7 +51,7 @@ try:
         ErrorOnEnter(2),
     ])
 except RuntimeError as err:
-    print('caught error %s' % err)
+    print('caught error {}'.format(err))
 else:
     if cleaner is not None:
         cleaner()

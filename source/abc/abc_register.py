@@ -11,7 +11,7 @@ import abc
 from abc_base import PluginBase
 
 
-class LocalBaseClass(object):
+class LocalBaseClass:
     pass
 
 

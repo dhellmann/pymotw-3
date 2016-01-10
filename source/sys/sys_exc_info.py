@@ -35,9 +35,9 @@ import time
 
 def do_something_with_exception():
     exc_type, exc_value = sys.exc_info()[:2]
-    print('Handling %s exception with message "%s" in %s' %
-          (exc_type.__name__, exc_value,
-           threading.current_thread().name))
+    print('Handling {} exception with message "{}" in {}'.format(
+        exc_type.__name__, exc_value,
+        threading.current_thread().name))
 
 
 def cause_exception(delay):

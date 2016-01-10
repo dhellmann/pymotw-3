@@ -15,8 +15,8 @@ class Tracker:
         self.i = i
 
     def msg(self, s):
-        print('  %s(%s): %s' %
-              (self.__class__.__name__, self.i, s))
+        print('  {}({}): {}'.format(
+            self.__class__.__name__, self.i, s))
 
     def __enter__(self):
         self.msg('entering')
@@ -28,8 +28,9 @@ class HandleError(Tracker):
     def __exit__(self, *exc_details):
         received_exc = exc_details[1] is not None
         if received_exc:
-            self.msg('handling exception %r' % exc_details[1])
-        self.msg('exiting %s' % received_exc)
+            self.msg('handling exception {!r}'.format(
+                exc_details[1]))
+        self.msg('exiting {}'.format(received_exc))
         # Return Boolean value indicating whether the exception
         # was handled.
         return received_exc
@@ -41,7 +42,8 @@ class PassError(Tracker):
     def __exit__(self, *exc_details):
         received_exc = exc_details[1] is not None
         if received_exc:
-            self.msg('passing exception %r' % exc_details[1])
+            self.msg('passing exception {!r}'.format(
+                exc_details[1]))
         self.msg('exiting')
         # Return False, indicating any exception was not handled.
         return False
@@ -52,7 +54,7 @@ class ErrorOnExit(Tracker):
 
     def __exit__(self, *exc_details):
         self.msg('throwing error')
-        raise RuntimeError('from %s' % self.i)
+        raise RuntimeError('from {}'.format(self.i))
 
 
 class ErrorOnEnter(Tracker):
@@ -60,7 +62,7 @@ class ErrorOnEnter(Tracker):
 
     def __enter__(self):
         self.msg('throwing error on enter')
-        raise RuntimeError('from %s' % self.i)
+        raise RuntimeError('from {}'.format(self.i))
 
     def __exit__(self, *exc_info):
         self.msg('exiting')

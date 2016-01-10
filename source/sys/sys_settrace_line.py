@@ -11,7 +11,7 @@ def trace_lines(frame, event, arg):
     co = frame.f_code
     func_name = co.co_name
     line_no = frame.f_lineno
-    print('*  %s line %s' % (func_name, line_no))
+    print('*  {} line {}'.format(func_name, line_no))
 
 
 def trace_calls(frame, event, arg, to_be_traced):
@@ -24,8 +24,8 @@ def trace_calls(frame, event, arg, to_be_traced):
         return
     line_no = frame.f_lineno
     filename = co.co_filename
-    print('* Call to %s on line %s of %s' %
-          (func_name, line_no, filename))
+    print('* Call to {} on line {} of {}'.format(
+        func_name, line_no, filename))
     if func_name in to_be_traced:
         # Trace into this function
         return trace_lines

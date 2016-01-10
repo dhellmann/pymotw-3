@@ -26,7 +26,8 @@ for name in sorted(csv.list_dialects()):
     writer = csv.writer(buffer, dialect=dialect)
     writer.writerow(
         ('col1', 1, '10/01/2010',
-         'Special chars " \' %s to parse' % dialect.delimiter)
+         'Special chars " \' {} to parse'.format(
+             dialect.delimiter))
     )
     samples.append((name, dialect, buffer.getvalue()))
 
@@ -34,9 +35,9 @@ for name in sorted(csv.list_dialects()):
 # to parse the data.
 sniffer = csv.Sniffer()
 for name, expected, sample in samples:
-    print('Dialect: "%s"' % name)
-    print('In: %s' % (sample.rstrip(),))
+    print('Dialect: "{}"'.format(name))
+    print('In: {}'.format(sample.rstrip()))
     dialect = sniffer.sniff(sample, delimiters=',\t')
     reader = csv.reader(StringIO(sample), dialect=dialect)
-    print('Parsed:\n  %s\n' %
-          '\n  '.join(repr(r) for r in next(reader)))
+    print('Parsed:\n  {}\n'.format(
+          '\n  '.join(repr(r) for r in next(reader))))

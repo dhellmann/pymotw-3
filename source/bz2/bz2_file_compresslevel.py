@@ -11,10 +11,10 @@ import bz2
 import os
 
 data = open('lorem.txt', 'r').read() * 1024
-print('Input contains %d bytes' % len(data))
+print('Input contains {} bytes'.format(len(data)))
 
 for i in range(1, 10):
-    filename = 'compress-level-%s.bz2' % i
+    filename = 'compress-level-{}.bz2'.format(i)
     with bz2.BZ2File(filename, 'wb', compresslevel=i) as output:
         output.write(data)
-    os.system('cksum %s' % filename)
+    os.system('cksum {}'.format(filename))

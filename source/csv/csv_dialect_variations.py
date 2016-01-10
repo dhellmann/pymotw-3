@@ -51,6 +51,7 @@ for name in sorted(csv.list_dialects()):
     writer = csv.writer(sys.stdout, dialect=dialect)
     writer.writerow(
         ('col1', 1, '10/01/2010',
-         'Special chars: " \' %s to parse' % dialect.delimiter)
+         'Special chars: " \' {} to parse'.format(
+             dialect.delimiter))
     )
     print()

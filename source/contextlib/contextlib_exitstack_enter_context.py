@@ -11,9 +11,9 @@ import contextlib
 
 @contextlib.contextmanager
 def make_context(i):
-    print('%s entering' % i)
+    print('{} entering'.format(i))
     yield {}
-    print('%s exiting' % i)
+    print('{} exiting'.format(i))
 
 
 def variable_stack(n, msg):

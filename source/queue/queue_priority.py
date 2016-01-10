@@ -13,7 +13,7 @@ import threading
 
 
 @functools.total_ordering
-class Job(object):
+class Job:
 
     def __init__(self, priority, description):
         self.priority = priority

@@ -48,8 +48,8 @@ parser.add_argument('--version', action='version',
                     version='%(prog)s 1.0')
 
 results = parser.parse_args()
-print('simple_value     = %r' % results.simple_value)
-print('constant_value   = %r' % results.constant_value)
-print('boolean_switch   = %r' % results.boolean_switch)
-print('collection       = %r' % results.collection)
-print('const_collection = %r' % results.const_collection)
+print('simple_value     = {!r}'.format(results.simple_value))
+print('constant_value   = {!r}'.format(results.constant_value))
+print('boolean_switch   = {!r}'.format(results.boolean_switch))
+print('collection       = {!r}'.format(results.collection))
+print('const_collection = {!r}'.format(results.const_collection))

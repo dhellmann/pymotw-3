@@ -38,7 +38,7 @@ print('Modified limit:', sys.getrecursionlimit())
 
 
 def generate_recursion_error(i):
-    print('generate_recursion_error(%s)' % i)
+    print('generate_recursion_error({})'.format(i))
     generate_recursion_error(i + 1)
 
 

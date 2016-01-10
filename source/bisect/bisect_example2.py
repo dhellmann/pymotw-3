@@ -19,4 +19,4 @@ l = []
 for i in values:
     position = bisect.bisect_left(l, i)
     bisect.insort_left(l, i)
-    print('%3d  %3d' % (i, position), l)
+    print('{:3}  {:3}'.format(i, position), l)

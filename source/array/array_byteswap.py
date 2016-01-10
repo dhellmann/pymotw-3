@@ -26,8 +26,9 @@ a1 = array.array('i', range(start, end))
 a2 = array.array('i', range(start, end))
 a2.byteswap()
 
-fmt = '%12s %12s %12s %12s'
-print(fmt % ('A1 hex', 'A1', 'A2 hex', 'A2'))
-print(fmt % (('-' * 12,) * 4))
+fmt = '{:>12} {:>12} {:>12} {:>12}'
+print(fmt.format('A1 hex', 'A1', 'A2 hex', 'A2'))
+print(fmt.format('-' * 12, '-' * 12, '-' * 12, '-' * 12))
+fmt = '{!r:>12} {:12} {!r:>12} {:12}'
 for values in zip(to_hex(a1), a1, to_hex(a2), a2):
-    print(fmt % values)
+    print(fmt.format(*values))

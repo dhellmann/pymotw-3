@@ -218,7 +218,7 @@ real path on the file system. This test prevents the
 	Path hook: <class '__main__.NoisyImportFinder'>
 	importing target_module
 	Checking NoisyImportFinder_PATH_TRIGGER: works
-	Looking for "target_module"
+	Looking for 'target_module'
 	Import failed: No module named 'target_module'
 
 .. {{{end}}}
@@ -294,10 +294,10 @@ preserved as module-level attributes.
 	Import of "package":
 	shelf added to import path: /tmp/pymotw_import_example.shelve
 	
-	looking for "package"
+	looking for 'package'
 	  in /tmp/pymotw_import_example.shelve
 	  found it as package.__init__
-	loading source for "package" from shelf
+	loading source for 'package' from shelf
 	creating a new module object for 'package'
 	adding path for package
 	execing source...
@@ -310,13 +310,13 @@ preserved as module-level attributes.
 	  __package__: package
 	  __file__   : /tmp/pymotw_import_example.shelve/package
 	  __path__   : ['/tmp/pymotw_import_example.shelve']
-	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x104
-	0864e0>
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x101
+	f7e2b0>
 	
 	Global settings:
 	sys.modules entry:
 	<module 'package' (<sys_shelve_importer.ShelveLoader object at 0
-	x1040864e0>)>
+	x101f7e2b0>)>
 
 .. {{{end}}}
 
@@ -346,20 +346,20 @@ constructs and returns a :class:`module` instance.
 	Import of "package.module1":
 	shelf added to import path: /tmp/pymotw_import_example.shelve
 	
-	looking for "package"
+	looking for 'package'
 	  in /tmp/pymotw_import_example.shelve
 	  found it as package.__init__
-	loading source for "package" from shelf
+	loading source for 'package' from shelf
 	creating a new module object for 'package'
 	adding path for package
 	execing source...
 	package imported
 	done
 	
-	looking for "package.module1"
+	looking for 'package.module1'
 	  in /tmp/pymotw_import_example.shelve
 	  found it as package.module1
-	loading source for "package.module1" from shelf
+	loading source for 'package.module1' from shelf
 	creating a new module object for 'package.module1'
 	imported as regular module
 	execing source...
@@ -372,25 +372,25 @@ constructs and returns a :class:`module` instance.
 	  __package__: package
 	  __file__   : /tmp/pymotw_import_example.shelve/package.module1
 	  __path__   : /tmp/pymotw_import_example.shelve
-	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x105
-	07ec50>
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x101
+	77ebe0>
 	
 	Import of "package.subpackage.module2":
 	
-	looking for "package.subpackage"
+	looking for 'package.subpackage'
 	  in /tmp/pymotw_import_example.shelve
 	  found it as package.subpackage.__init__
-	loading source for "package.subpackage" from shelf
+	loading source for 'package.subpackage' from shelf
 	creating a new module object for 'package.subpackage'
 	adding path for package
 	execing source...
 	package.subpackage imported
 	done
 	
-	looking for "package.subpackage.module2"
+	looking for 'package.subpackage.module2'
 	  in /tmp/pymotw_import_example.shelve
 	  found it as package.subpackage.module2
-	loading source for "package.subpackage.module2" from shelf
+	loading source for 'package.subpackage.module2' from shelf
 	creating a new module object for 'package.subpackage.module2'
 	imported as regular module
 	execing source...
@@ -404,8 +404,8 @@ constructs and returns a :class:`module` instance.
 	  __file__   : /tmp/pymotw_import_example.shelve/package.subpack
 	age.module2
 	  __path__   : /tmp/pymotw_import_example.shelve
-	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x105
-	0a1780>
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x101
+	7a1710>
 
 .. {{{end}}}
 
@@ -434,10 +434,10 @@ reload.
 	First import of "package":
 	shelf added to import path: /tmp/pymotw_import_example.shelve
 	
-	looking for "package"
+	looking for 'package'
 	  in /tmp/pymotw_import_example.shelve
 	  found it as package.__init__
-	loading source for "package" from shelf
+	loading source for 'package' from shelf
 	creating a new module object for 'package'
 	adding path for package
 	execing source...
@@ -446,11 +446,11 @@ reload.
 	
 	Reloading "package":
 	
-	looking for "package"
+	looking for 'package'
 	  in /tmp/pymotw_import_example.shelve
 	  found it as package.__init__
-	loading source for "package" from shelf
-	reusing existing module from import of 'package'
+	loading source for 'package' from shelf
+	reusing module from import of 'package'
 	adding path for package
 	execing source...
 	package imported
@@ -471,8 +471,7 @@ is raised by the main import code.
 Other errors during the import are propagated.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'sys_shelve_importer_missing.py',
-..                    break_lines_at=74))
+.. cog.out(run_script(cog.inFile, 'sys_shelve_importer_missing.py'))
 .. }}}
 
 ::
@@ -481,17 +480,17 @@ Other errors during the import are propagated.
 	
 	shelf added to import path: /tmp/pymotw_import_example.shelve
 	
-	looking for "package"
+	looking for 'package'
 	  in /tmp/pymotw_import_example.shelve
 	  found it as package.__init__
-	loading source for "package" from shelf
+	loading source for 'package' from shelf
 	creating a new module object for 'package'
 	adding path for package
 	execing source...
 	package imported
 	done
 	
-	looking for "package.module3"
+	looking for 'package.module3'
 	  in /tmp/pymotw_import_example.shelve
 	  not found
 	Failed to import: No module named 'package.module3'
@@ -530,10 +529,10 @@ string, or raises :class:`IOError` if the resource does not exist.
 	
 	shelf added to import path: /tmp/pymotw_import_example.shelve
 	
-	looking for "package"
+	looking for 'package'
 	  in /tmp/pymotw_import_example.shelve
 	  found it as package.__init__
-	loading source for "package" from shelf
+	loading source for 'package' from shelf
 	creating a new module object for 'package'
 	adding path for package
 	execing source...
@@ -541,7 +540,7 @@ string, or raises :class:`IOError` if the resource does not exist.
 	done
 	looking for data
 	  in /tmp/pymotw_import_example.shelve
-	  for "/tmp/pymotw_import_example.shelve/README"
+	  for '/tmp/pymotw_import_example.shelve/README'
 	
 	==============
 	package README
@@ -551,7 +550,7 @@ string, or raises :class:`IOError` if the resource does not exist.
 	
 	looking for data
 	  in /tmp/pymotw_import_example.shelve
-	  for "/tmp/pymotw_import_example.shelve/foo"
+	  for '/tmp/pymotw_import_example.shelve/foo'
 	ERROR: Could not load "foo" 
 
 .. {{{end}}}
@@ -647,15 +646,15 @@ simplicity).
 	
 	Creating NoisyMetaImportFinder for foo
 	
-	looking for "foo" with path "None"
+	looking for 'foo' with path None
 	 ... found prefix, returning loader
 	loading foo
 	
-	looking for "foo.bar" with path "['path-entry-goes-here']"
+	looking for 'foo.bar' with path ['path-entry-goes-here']
 	 ... found prefix, returning loader
 	loading foo.bar
 	
-	looking for "bar" with path "None"
+	looking for 'bar' with path None
 	 ... not the right prefix, cannot load
 
 .. {{{end}}}

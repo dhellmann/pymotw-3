@@ -10,7 +10,7 @@
 import abc
 
 
-class PluginBase(object, metaclass=abc.ABCMeta):
+class PluginBase(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def load(self, input):
