@@ -1,12 +1,11 @@
-========================================
- pprint -- Pretty-print Data Structures
-========================================
+=========================================
+ pprint --- Pretty-print Data Structures
+=========================================
 
 .. module:: pprint
     :synopsis: Pretty-print data structures
 
 :Purpose: Pretty-print data structures
-:Python Version: 1.4 and later
 
 :mod:`pprint` contains a "pretty printer" for producing aesthetically
 pleasing views of data structures.  The formatter produces
@@ -41,11 +40,11 @@ passed as argument (or :data:`sys.stdout` by default).
 
 ::
 
-	$ python pprint_pprint.py
+	$ python3 pprint_pprint.py
 	
 	PRINT:
-	[(1, {'a': 'A', 'c': 'C', 'b': 'B', 'd': 'D'}), (2, {'e': 'E', 'g': 
-	'G', 'f': 'F', 'i': 'I', 'h': 'H', 'k': 'K', 'j': 'J', 'l': 'L'})]
+	[(1, {'c': 'C', 'b': 'B', 'd': 'D', 'a': 'A'}), (2, {'k': 'K', 'i': 
+	'I', 'g': 'G', 'f': 'F', 'e': 'E', 'h': 'H', 'l': 'L', 'j': 'J'})]
 	
 	PPRINT:
 	[(1, {'a': 'A', 'b': 'B', 'c': 'C', 'd': 'D'}),
@@ -80,7 +79,7 @@ The formatted string can then be printed or logged independently.
 
 ::
 
-	$ python pprint_pformat.py
+	$ python3 pprint_pformat.py
 	
 	DEBUG    Logging pformatted data
 	DEBUG    [(1, {'a': 'A', 'b': 'B', 'c': 'C', 'd': 'D'}),
@@ -115,7 +114,7 @@ The representations of the nested objects are combined by the
 
 ::
 
-	$ python pprint_arbitrary_object.py
+	$ python3 pprint_arbitrary_object.py
 	
 	[node('node-1', []),
 	 node('node-2', [node('node-2-1', [])]),
@@ -144,10 +143,10 @@ creating a recursive reference.
 
 ::
 
-	$ python pprint_recursion.py
+	$ python3 pprint_recursion.py
 	
-	id(local_data) => 4309215280
-	['a', 'b', 1, 2, <Recursion on list with id=4309215280>]
+	id(local_data) => 4327565192
+	['a', 'b', 1, 2, <Recursion on list with id=4327565192>]
 
 .. {{{end}}}
 
@@ -174,7 +173,7 @@ output are represented by ellipsis.
 
 ::
 
-	$ python pprint_depth.py
+	$ python3 pprint_depth.py
 	
 	[(...), (...)]
 
@@ -201,7 +200,7 @@ syntax.
 
 ::
 
-	$ python pprint_width.py
+	$ python3 pprint_width.py
 	
 	WIDTH = 80
 	[(1, {'a': 'A', 'b': 'B', 'c': 'C', 'd': 'D'}),
@@ -236,5 +235,4 @@ syntax.
 
 .. seealso::
 
-    `pprint <http://docs.python.org/lib/module-pprint.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`pprint`

@@ -74,11 +74,11 @@ container type using one of the abstract base classes defined in
     array/index
     bisect/index
     queue/index
+    pprint/index
 
 ..
     heapq/index
     struct/index
     weakref/index
     copy/index
-    pprint/index
     types/index
