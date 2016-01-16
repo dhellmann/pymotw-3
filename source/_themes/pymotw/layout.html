@@ -99,11 +99,6 @@
 
         <div class="pure-u-1-3">
           <div class="footer-content">
-
-            {%- if last_updated -%}
-            <div class="last-updated">This page was last updated {{last_updated.date()}}.</div>
-            {%- endif -%}
-
             <div class="socialmedia">
               {{ social_link('fa-home', pathto(master_doc), 'Home', None) }}
               {{ social_link('fa-user', pathto('about'), 'About', None) }}

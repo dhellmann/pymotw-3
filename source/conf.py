@@ -177,6 +177,7 @@ html_sidebars = {
     'py-modindex': no_toc_sidebars,
     '**': [
         'sidebar_toc.html',
+        'sidebar_lastupdated.html',
         'sidebar_nav.html',
         'sidebar_book.html',
         'sidebar_ads.html',
