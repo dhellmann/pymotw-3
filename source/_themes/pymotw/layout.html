@@ -68,6 +68,18 @@
         <div class="content">
           {% block body %}
           {% endblock %}
+
+        <div id="footer-nav">
+{%- if prev %}
+<a id="prev-link" href="{{ prev.link|e }}"
+   title="{{ _('previous chapter') }}"><i class="fa fa-arrow-circle-left"></i> {{ prev.title }}</a>
+{%- endif %}
+{%- if next %}
+<a id="next-link" href="{{ next.link|e }}"
+   title="{{ _('next chapter') }}">{{ next.title }} <i class="fa fa-arrow-circle-right"></i></a>
+{%- endif %}
+        </div>
+
         </div>
       </div>
 
