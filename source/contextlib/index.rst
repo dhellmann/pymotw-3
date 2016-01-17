@@ -19,8 +19,8 @@ after the block is exited.  For example, files support the context
 manager API to make it easy to ensure they are closed after all
 reading or writing is done.
 
-.. include:: contextlib_file.py
-   :literal:
+.. literalinclude:: contextlib_file.py
+   :caption:
    :start-after: #end_pymotw_header
 
 A context manager is enabled by the :command:`with` statement, and the
@@ -30,8 +30,8 @@ returns an object to be used within the context.  When execution flow
 leaves the :command:`with` block, the :func:`__exit__` method of the
 context manager is called to clean up any resources being used.
 
-.. include:: contextlib_api.py
-   :literal:
+.. literalinclude:: contextlib_api.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Combining a context manager and the :command:`with` statement is a
@@ -59,8 +59,8 @@ with a name specified in the :command:`as` clause of the
 :command:`with` statement.  In this example, the :class:`Context`
 returns an object that uses the open context.
 
-.. include:: contextlib_api_other_object.py
-   :literal:
+.. literalinclude:: contextlib_api_other_object.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The value associated with the variable :data:`c` is the object
@@ -87,8 +87,8 @@ returned by :func:`__enter__`, which is not necessarily the
 The :func:`__exit__` method receives arguments containing details of
 any exception raised in the :command:`with` block.  
 
-.. include:: contextlib_api_error.py
-   :literal:
+.. literalinclude:: contextlib_api_error.py
+   :caption:
    :start-after: #end_pymotw_header
 
 If the context manager can handle the exception, :func:`__exit__`
@@ -131,8 +131,8 @@ The class :class:`ContextDecorator` adds support to regular context
 manager classes to let them be used as function decorators as well as
 context managers.
 
-.. include:: contextlib_decorator.py
-   :literal:
+.. literalinclude:: contextlib_decorator.py
+   :caption:
    :start-after: #end_pymotw_header
 
 One difference with using the context manager as a decorator is that
@@ -174,8 +174,8 @@ overhead for a trivial bit of context. In those sorts of situations,
 use the :func:`contextmanager()` decorator to convert a generator
 function into a context manager.
 
-.. include:: contextlib_contextmanager.py
-    :literal:
+.. literalinclude:: contextlib_contextmanager.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The generator should initialize the context, yield exactly one time,
@@ -216,8 +216,8 @@ re-raised inside the generator, so they can be handled there.
 The context manager returned by :func:`contextmanager` is derived from
 :class:`ContextDecorator`, so it also works as a function decorator.
 
-.. include:: contextlib_contextmanager_decorator.py
-   :literal:
+.. literalinclude:: contextlib_contextmanager_decorator.py
+   :caption:
    :start-after: #end_pymotw_header
 
 As in the :class:`ContextDecorator` example above, when the context
@@ -273,8 +273,8 @@ legacy classes that use a :func:`close` method but do not support the
 context manager API. To ensure that a handle is closed, use
 :func:`closing()` to create a context manager for it.
 
-.. include:: contextlib_closing.py
-    :literal:
+.. literalinclude:: contextlib_closing.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The handle is closed whether there is an error in the :command:`with`
@@ -311,8 +311,8 @@ achieved, or it can otherwise be ignored. The most common way to
 ignore exceptions is with a ``try:except`` statement with only a
 ``pass`` statement in the ``except`` block.
 
-.. include:: contextlib_ignore_error.py
-   :literal:
+.. literalinclude:: contextlib_ignore_error.py
+   :caption:
    :start-after: #end_pymotw_header
 
 In this case, the operation fails and the error is ignored.
@@ -334,8 +334,8 @@ The ``try:except`` form can be replaced with
 :func:`contextlib.suppress` to more explicitly suppress a class of
 exceptions happening anywhere in the ``with`` block.
 
-.. include:: contextlib_suppress.py
-   :literal:
+.. literalinclude:: contextlib_suppress.py
+   :caption:
    :start-after: #end_pymotw_header
 
 In this updated version, the exception is discarded entirely.
@@ -363,8 +363,8 @@ output destinations. The :func:`redirect_stdout` and
 from functions like this, for which the source cannot be changed to
 accept a new output argument.
 
-.. include:: contextlib_redirect.py
-   :literal:
+.. literalinclude:: contextlib_redirect.py
+   :caption:
    :start-after: #end_pymotw_header
 
 In this example, ``misbehaving_function()`` writes to both ``stdout``
@@ -418,8 +418,8 @@ There are several ways to populate the :class:`ExitStack`.  This
 example uses :func:`enter_context` to add a new context manager to the
 stack.
 
-.. include:: contextlib_exitstack_enter_context.py
-   :literal:
+.. literalinclude:: contextlib_exitstack_enter_context.py
+   :caption:
    :start-after: #end_pymotw_header
 
 :func:`enter_context` first calls :func:`__enter__` on the context
@@ -449,8 +449,8 @@ happen anywhere within the context propagate through the normal error
 handling of the context managers. These context manager classes
 illustrate the way errors propagate.
 
-.. include:: contextlib_context_managers.py
-   :literal:
+.. literalinclude:: contextlib_context_managers.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The examples using these classes is based around
@@ -538,8 +538,8 @@ Arbitrary Context Callbacks
 context, making it easy to clean up resources that are not controlled
 via a context manager.
 
-.. include:: contextlib_exitstack_callbacks.py
-   :literal:
+.. literalinclude:: contextlib_exitstack_callbacks.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Just as with the :func:`__exit__` methods of full context managers,
@@ -563,8 +563,8 @@ The callbacks are invoked regardless of whether an error occurred, and
 they are not given any information about whether an error
 occurred. Their return value is ignored.
 
-.. include:: contextlib_exitstack_callbacks_error.py
-   :literal:
+.. literalinclude:: contextlib_exitstack_callbacks_error.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Because they do not have access to the error, callbacks are unable to
@@ -590,8 +590,8 @@ without the overhead of creating a new context manager class. To
 improve code readability, that logic can be encapsulated in an inline
 function, and :func:`callback` can be used as a decorator.
 
-.. include:: contextlib_exitstack_callbacks_decorator.py
-   :literal:
+.. literalinclude:: contextlib_exitstack_callbacks_decorator.py
+   :caption:
    :start-after: #end_pymotw_header
 
 There is no way to specify the arguments for functions registered
@@ -632,8 +632,8 @@ with those same context managers and callbacks. The :func:`close`
 method of the new stack can be invoked later, after the original stack
 is gone, to clean up the resources.
 
-.. include:: contextlib_exitstack_pop_all.py
-   :literal:
+.. literalinclude:: contextlib_exitstack_pop_all.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example uses the same context manager classes defined earlier,
