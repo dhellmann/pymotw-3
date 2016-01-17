@@ -123,13 +123,19 @@ def clean(options):
 @task
 def css(options):
     "Generate CSS from less"
-    file_base = 'source/_themes/pymotw/static/pymotw'
-    outfile = path(file_base + '.css')
-    if not outfile.exists() or path(file_base + '.less').mtime > outfile.mtime:
+    src_path = 'source/_themes/pymotw/static/'
+    file_base = 'pymotw'
+    outfile = path(src_path + file_base + '.css')
+    rebuild = False
+    if not outfile.exists() or path(src_path + file_base + '.less').mtime > outfile.mtime:
+        rebuild = True
+    elif path(src_path + 'vars.less').mtime > outfile.mtime:
+        rebuild = True
+    if rebuild:
         sh('lessc %(file_base)s.less > %(file_base)s.css' % {
-            'file_base': file_base,
+            'file_base': src_path + file_base,
         })
-        path(file_base + '.css').copy(
+        path(src_path + file_base + '.css').copy(
             options.sphinx.builddir + '/html/_static/pymotw.css')
 
 
