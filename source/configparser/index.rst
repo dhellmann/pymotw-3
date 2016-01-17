@@ -51,8 +51,8 @@ application behavior defaults and then have the application read the
 file, parse it, and act based on its contents.  Use the :func:`read`
 method of :mod:`ConfigParser` to read the configuration file.
 
-.. include:: configparser_read.py
-   :literal:
+.. literalinclude:: configparser_read.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This program reads the ``simple.ini`` file from the previous section
@@ -74,8 +74,8 @@ and prints the value of the :data:`url` option from the
 The :func:`read` method also accepts a list of filenames.  Each name
 in turn is scanned, and if the file exists it is opened and read.
 
-.. include:: configparser_read_many.py
-   :literal:
+.. literalinclude:: configparser_read_many.py
+   :caption:
    :start-after: #end_pymotw_header
 
 :func:`read` returns a list containing the names of the files
@@ -110,8 +110,8 @@ encoding gives:
 The file is opened with the appropriate decoder, converting the UTF-8
 data to native Unicode strings.
 
-.. include:: configparser_unicode.py
-   :literal:
+.. literalinclude:: configparser_unicode.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The value returned by :func:`get` is a Unicode string, so in order to
@@ -146,8 +146,8 @@ And this sample program exercises some of the methods for looking at
 the configuration data, including :func:`sections`, :func:`options`,
 and :func:`items`.
 
-.. include:: configparser_structure.py
-   :literal:
+.. literalinclude:: configparser_structure.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Both :func:`sections` and :func:`options` return lists of strings,
@@ -181,8 +181,8 @@ A :class:`ConfigParser` also supports the same mapping API as `dict`,
 with the :class:`ConfigParser` acting as one dictionary containing
 separate dictionaries for each section.
 
-.. include:: configparser_structure_dict.py
-   :literal:
+.. literalinclude:: configparser_structure_dict.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Using the mapping API to access the same configuration file produces
@@ -220,8 +220,8 @@ Testing Whether Values Are Present
 To test if a section exists, use :func:`has_section`, passing the
 section name.
 
-.. include:: configparser_has_section.py
-   :literal:
+.. literalinclude:: configparser_has_section.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Testing if a section exists before calling :func:`get` avoids
@@ -243,8 +243,8 @@ exceptions for missing data.
 
 Use :func:`has_option` to test if an option exists within a section.
 
-.. include:: configparser_has_option.py
-   :literal:
+.. literalinclude:: configparser_has_option.py
+   :caption:
    :start-after: #end_pymotw_header
 
 If the section does not exist, :func:`has_option` returns ``False``.
@@ -288,8 +288,8 @@ fetch the value as the desired type.  :func:`get` always returns a
 string.  Use :func:`getint` for integers, :func:`getfloat` for
 floating point numbers, and :func:`getboolean` for boolean values.
 
-.. include:: configparser_value_types.py
-   :literal:
+.. literalinclude:: configparser_value_types.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Running this program with the example input produces the following
@@ -328,8 +328,8 @@ the ``converters`` argument to :class:`ConfigParser`. Each converter
 receives a single input value, and should transform that value into
 the appropriate return type.
 
-.. include:: configparser_custom_types.py
-   :literal:
+.. literalinclude:: configparser_custom_types.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Adding a converter causes :class:`ConfigParser` to automatically
@@ -363,8 +363,8 @@ with the :class:`ConfigParser` parameter *allow_no_value* set to
 ``True`` an option can appear by itself on a line in the input file,
 and be used as a flag.
 
-.. include:: configparser_allow_no_value.py
-   :literal:
+.. literalinclude:: configparser_allow_no_value.py
+   :caption:
    :start-after: #end_pymotw_header
 
 When an option has no explicit value, :func:`has_option` reports that
@@ -399,8 +399,7 @@ Multi-line Strings
 String values can span multiple lines, if subsequent lines are
 indented.
 
-.. include:: multiline.ini
-   :literal:
+.. literalinclude:: multiline.ini
 
 Within the indented multi-line values, blank lines are treated as part
 of the value and preserved.
@@ -430,8 +429,8 @@ by reading settings from files, settings can also be populated by
 calling :func:`add_section` to create a new section, and :func:`set`
 to add or change an option.
 
-.. include:: configparser_populate.py
-   :literal:
+.. literalinclude:: configparser_populate.py
+   :caption:
    :start-after: #end_pymotw_header
 
 All options must be set as strings, even if they will be retrieved as
@@ -455,8 +454,8 @@ integer, float, or Boolean values.
 Sections and options can be removed from a :class:`ConfigParser`
 with :func:`remove_section` and :func:`remove_option`.
 
-.. include:: configparser_remove.py
-   :literal:
+.. literalinclude:: configparser_remove.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Removing a section deletes any options it contains.
@@ -498,8 +497,8 @@ makes it possible to provide a user interface for editing the
 configuration settings, without having to write any code to manage the
 file.
 
-.. include:: configparser_write.py
-   :literal:
+.. literalinclude:: configparser_write.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The :func:`write` method takes a file-like object as argument.  It
@@ -560,8 +559,8 @@ This test program includes default settings for options not specified
 in the configuration file, and overrides some values that are defined
 in the file.
 
-.. include:: configparser_defaults.py
-   :literal:
+.. literalinclude:: configparser_defaults.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The output shows the origin for the value of each option and
@@ -628,8 +627,8 @@ Interpolation is performed by default each time :func:`get` is called.
 Pass a true value in the :data:`raw` argument to retrieve the original
 value, without interpolation.
 
-.. include:: configparser_interpolation.py
-   :literal:
+.. literalinclude:: configparser_interpolation.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Because the value is computed by :func:`get`, changing one of the
@@ -661,8 +660,8 @@ With this configuration, the value for ``url`` comes from the
 ``DEFAULT`` section, and the substitution starts by looking in
 ``bug_tracker`` and falling back to ``DEFAULT`` for pieces not found.
 
-.. include:: configparser_interpolation_defaults.py
-   :literal:
+.. literalinclude:: configparser_interpolation_defaults.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The ``hostname`` and ``port`` values come from the ``bug_tracker``
@@ -686,8 +685,8 @@ Substitution Errors
 Substitution stops after :attr:`MAX_INTERPOLATION_DEPTH` steps to
 avoid problems due to recursive references.
 
-.. include:: configparser_interpolation_recursion.py
-   :literal:
+.. literalinclude:: configparser_interpolation_recursion.py
+   :caption:
    :start-after: #end_pymotw_header
 
 An :class:`InterpolationDepthError` exception is raised if there are
@@ -710,8 +709,8 @@ too many substitution steps.
 Missing values result in an :class:`InterpolationMissingOptionError`
 exception.
 
-.. include:: configparser_interpolation_error.py
-   :literal:
+.. literalinclude:: configparser_interpolation_error.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Since no ``server`` value is defined, the ``url`` cannot be
@@ -737,13 +736,12 @@ Escaping Special Characters
 Since ``%`` starts the interpolation instructions, a literal ``%`` in
 a value must be escaped as ``%%``.
 
-.. include:: escape.ini
-   :literal:
+.. literalinclude:: escape.ini
 
 Reading the value does not require any special consideration.
 
-.. include:: configparser_escape.py
-   :literal:
+.. literalinclude:: configparser_escape.py
+   :caption:
    :start-after: #end_pymotw_header
 
 When the value is read, the ``%%`` is converted to ``%``
@@ -771,16 +769,15 @@ example, using :class:`ExtendedInterpolation` instead of the default
 :class:`BasicInterpolation` enables a different syntax using ``${}``
 to indicate variables.
 
-.. include:: configparser_extendedinterpolation.py
-   :literal:
+.. literalinclude:: configparser_extendedinterpolation.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Extended interpolation supports accessing values from other sections
 of the configuration file by prefixing the variable name with the
 section name and a colon (``:``).
 
-.. include:: extended_interpolation.ini
-   :literal:
+.. literalinclude:: extended_interpolation.ini
 
 Referring to values in other sections of the file makes it possible to
 share a hierarchy of values, without placing all defaults in the
@@ -807,8 +804,8 @@ Disabling Interpolation
 To disable interpolation, pass ``None`` instead of an
 :class:`Interpolation` object.
 
-.. include:: configparser_nointerpolation.py
-   :literal:
+.. literalinclude:: configparser_nointerpolation.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This enables any syntax that might have been processed by the
