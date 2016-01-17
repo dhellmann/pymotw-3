@@ -271,29 +271,21 @@ table.field-list tbody tr td {
 	background-color: @source-block-background;
 }
 
-pre {
-	/* Emphasize code blocks with a line down the left side. */
+.code-sample {
 	margin-left: 2em;
 	margin-right: 2em;
-    border-left: 5px solid @source-block-border-color;
-	padding: 0.5em 0.5em;
-}
-
-pre {
-	/* Emphasize code blocks with a line down the left side. */
-	margin-left: 2em;
-	margin-right: 2em;
-    border-left: @trim-thickness solid @source-block-border-color;
 	padding: 0.5em 0.5em;
 	overflow: auto;
 	word-wrap: normal;
 	white-space: pre;
 	.monospaced-font;
+	/* Emphasize code blocks with a line down the left side. */
+	border-left: @trim-thickness solid @source-block-border-color;
 }
 
-/* inline literals */
-.pre {
-	.monospaced-font;
+pre {
+	.code-sample;
+	margin-top: 0;
 }
 
 div.linenodiv pre {
@@ -303,6 +295,23 @@ div.linenodiv pre {
 	margin-right: -1.5em;
 	padding: 0;
 	text-align: right;
+}
+
+.code-block-caption {
+	/* captions with filenames for included files */
+	.code-sample;
+	color: @code-comment;
+	font-style: italic;
+}
+
+.code-block-caption .caption-text:before {
+	/* insert a # before the filename in the caption to make it look like a code comment */
+	content: "# ";
+}
+
+/* inline literals */
+.pre {
+	.monospaced-font;
 }
 
 /*
