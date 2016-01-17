@@ -34,8 +34,8 @@ database, use ``getpwall()``.  The return value is a list with an
 undefined order, so it needs to be sorted before the report is
 printed.
 
-.. include:: pwd_getpwall.py
-    :literal:
+.. literalinclude:: pwd_getpwall.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Most of the example code above deals with formatting the results
@@ -72,8 +72,8 @@ To read information about one user it is not necessary to read the
 entire password database.  Use ``getpwnam()``, to retrieve the
 information about a user by name.
 
-.. include:: pwd_getpwnam.py
-    :literal:
+.. literalinclude:: pwd_getpwnam.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The passwords on the system where this example was run are stored
@@ -114,8 +114,8 @@ Querying User By UID
 It is also possible to look up a user by their numerical user id.
 This is useful to find the owner of a file:
 
-.. include:: pwd_getpwuid_fileowner.py
-    :literal:
+.. literalinclude:: pwd_getpwuid_fileowner.py
+    :caption:
     :start-after: #end_pymotw_header
 
 .. {{{cog
@@ -134,8 +134,8 @@ This is useful to find the owner of a file:
 The numeric user id is can also be used to find information about the
 user currently running a process:
 
-.. include:: pwd_getpwuid_process.py
-    :literal:
+.. literalinclude:: pwd_getpwuid_process.py
+    :caption:
     :start-after: #end_pymotw_header
 
 .. {{{cog
