@@ -36,11 +36,11 @@ numbers.
 
 	$ python3 random_random.py
 	
-	0.215 0.423 0.595 0.567 0.488 
+	0.546 0.311 0.568 0.277 0.331 
 
 	$ python3 random_random.py
 	
-	0.796 0.368 0.999 0.037 0.722 
+	0.225 0.234 0.859 0.428 0.278 
 
 .. {{{end}}}
 
@@ -63,7 +63,7 @@ min) * random()``.
 
 	$ python3 random_uniform.py
 	
-	60.362 12.397 15.175 49.360 39.348 
+	66.034 32.169 15.767 68.444 22.166 
 
 .. {{{end}}}
 
@@ -133,9 +133,7 @@ before and after saving the state, to show that restoring the state
 causes the generator to produce the same values again.
 
 .. {{{cog
-.. state_file = path(cog.inFile).dirname() / 'state.dat'
-.. if state_file.exists():
-..   state_file.unlink()
+.. import os; os.system('rm -f source/random/state.dat')
 .. cog.out(run_script(cog.inFile, 'random_state.py'))
 .. cog.out(run_script(cog.inFile, 'random_state.py', include_prefix=False))
 .. }}}
@@ -144,19 +142,19 @@ causes the generator to produce the same values again.
 
 	$ python3 random_state.py
 	
-	Found state.dat, initializing random module
-	0.217 0.422 0.029 
+	No state.dat, seeding
+	0.134 0.847 0.764 
 	
 	After saving state:
-	0.222 0.438 0.496 
+	0.255 0.495 0.449 
 
 	$ python3 random_state.py
 	
 	Found state.dat, initializing random module
-	0.222 0.438 0.496 
+	0.255 0.495 0.449 
 	
 	After saving state:
-	0.233 0.231 0.219 
+	0.652 0.789 0.094 
 
 .. {{{end}}}
 
@@ -184,8 +182,8 @@ first value should be less than the second.
 
 	$ python3 random_randint.py
 	
-	[1, 100]: 55 43 96 
-	[-5, 5]: -2 1 -3 
+	[1, 100]: 45 2 46 
+	[-5, 5]: -5 0 0 
 
 .. {{{end}}}
 
@@ -209,7 +207,7 @@ range is not actually constructed.
 
 	$ python3 random_randrange.py
 	
-	75 15 20 
+	30 5 80 
 
 .. {{{end}}}
 
@@ -241,8 +239,8 @@ outcome names as keys.
 
 	$ python3 random_choice.py
 	
-	Heads: 5035
-	Tails: 4965
+	Heads: 5004
+	Tails: 4996
 
 .. {{{end}}}
 
@@ -280,21 +278,21 @@ cannot be dealt again.
 	 JS  QH  QD  QC  QS  KH  KD  KC  KS  AH  AD  AC  AS 
 	
 	Shuffled deck:
-	 JS  4H  2H  3H  QD  9S  AD  2C  7H  QC  8D  6C  KS 
-	 KD  3D  KH  5D  AC  JD  JH  9D 10D  5S  7C  7D  AH 
-	 4D  4S  8S  8H  AS  9H 10H  3C  QS 10C  5C  6H  9C 
-	 5H  6D  QH 10S  4C  KC  2D  3S  7S  8C  JC  2S  6S 
+	 4S  JS  QH  9C  5D  3S  4H  3H  QC  3C  3D 10C 10H 
+	 2S  9D 10S  7D  2D  JH  8H  6H  JD  4D  AC  4C  7S 
+	 7C 10D  8S  9S  QS  5S  2C  KD  AD  8D  QD  6D  5H 
+	 6C  8C  JC  AH  2H  KS  9H  KH  7H  AS  5C  6S  KC 
 	
 	Hands:
-	1:  6S  7S  4C  5H 10C 
-	2:  2S  3S 10S  9C  QS 
-	3:  JC  2D  QH  6H  3C 
-	4:  8C  KC  6D  5C 10H 
+	1:  KC  7H  2H  6C  8D 
+	2:  6S  KH  AH  5H  AD 
+	3:  5C  9H  JC  6D  KD 
+	4:  AS  KS  8C  QD  2C 
 	
 	Remaining deck:
-	 JS  4H  2H  3H  QD  9S  AD  2C  7H  QC  8D  6C  KS 
-	 KD  3D  KH  5D  AC  JD  JH  9D 10D  5S  7C  7D  AH 
-	 4D  4S  8S  8H  AS  9H 
+	 4S  JS  QH  9C  5D  3S  4H  3H  QC  3C  3D 10C 10H 
+	 2S  9D 10S  7D  2D  JH  8H  6H  JD  4D  AC  4C  7S 
+	 7C 10D  8S  9S  QS  5S 
 
 .. {{{end}}}
 
@@ -362,15 +360,15 @@ current time, and therefore produce the same values.
 	
 	Default initializiation:
 	
-	0.827  0.300
-	0.733  0.864
-	0.168  0.322
+	0.872  0.028
+	0.024  0.280
+	0.810  0.233
 	
 	Same seed:
 	
-	0.337  0.337
-	0.102  0.102
-	0.847  0.847
+	0.357  0.357
+	0.811  0.811
+	0.628  0.628
 
 .. {{{end}}}
 
@@ -403,15 +401,15 @@ all).
 	
 	Default initializiation:
 	
-	0.286  0.889
-	0.350  0.723
-	0.737  0.001
+	0.585  0.307
+	0.467  0.498
+	0.301  0.815
 	
 	Same seed:
 	
-	0.172  0.293
-	0.330  0.617
-	0.353  0.635
+	0.595  0.300
+	0.257  0.657
+	0.643  0.454
 
 .. {{{end}}}
 
