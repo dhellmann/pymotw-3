@@ -34,7 +34,7 @@
                  file paths.  (Example: "UTF-8")
 -->
 <site
-  base_url="http://pymotw.com/3"
+  base_url="https://pymotw.com/3"
   store_into="build/html/sitemap.xml"
   verbose="1"
   >
