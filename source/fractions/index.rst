@@ -18,8 +18,8 @@ As with the :mod:`decimal` module, new values can be created in
 several ways.  One easy way is to create them from separate numerator
 and denominator values:
 
-.. include:: fractions_create_integers.py
-    :literal:
+.. literalinclude:: fractions_create_integers.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The lowest common denominator is maintained as new values are
@@ -42,8 +42,8 @@ computed.
 Another way to create a :class:`Fraction` is using a string representation of
 ``<numerator> / <denominator>``:
 
-.. include:: fractions_create_strings.py
-    :literal:
+.. literalinclude:: fractions_create_strings.py
+    :caption:
     :start-after: #end_pymotw_header 
 
 The string is parsed to find the numerator and denominator values.
@@ -67,8 +67,8 @@ of series of digits separated by a period. Any string that can be
 parsed by :func:`float` and that does not represent "not a number"
 (``NaN``) or an infinite value is supported.
 
-.. include:: fractions_create_strings_floats.py
-    :literal:
+.. literalinclude:: fractions_create_strings_floats.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The numerator and denominator values represented by the floating point
@@ -93,8 +93,8 @@ It is also possible to create :class:`Fraction` instances directly
 from other representations of rational values, such as :class:`float`
 or :class:`Decimal`.
 
-.. include:: fractions_from_float.py
-    :literal:
+.. literalinclude:: fractions_from_float.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Floating point values that cannot be expressed exactly may yield
@@ -118,8 +118,8 @@ unexpected results.
 Using :mod:`decimal` representations of the values gives the expected
 results.
 
-.. include:: fractions_from_decimal.py
-    :literal:
+.. literalinclude:: fractions_from_decimal.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The internal implementation of the :mod:`decimal` does not suffer from
@@ -148,8 +148,8 @@ Arithmetic
 Once the fractions are instantiated, they can be used in mathematical
 expressions.
 
-.. include:: fractions_arithmetic.py
-    :literal:
+.. literalinclude:: fractions_arithmetic.py
+    :caption:
     :start-after: #end_pymotw_header
 
 All of the standard operators are supported.
@@ -175,8 +175,8 @@ Approximating Values
 A useful feature of :class:`Fraction` is the ability to convert a floating
 point number to an approximate rational value.
 
-.. include:: fractions_limit_denominator.py
-    :literal:
+.. literalinclude:: fractions_limit_denominator.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The value of the fraction can be controlled by limiting the size of
