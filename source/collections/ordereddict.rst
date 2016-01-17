@@ -5,8 +5,8 @@
 An :class:`OrderedDict` is a dictionary subclass that remembers the
 order in which its contents are added.
 
-.. include:: collections_ordereddict_iter.py
-   :literal:
+.. literalinclude:: collections_ordereddict_iter.py
+   :caption:
    :start-after: #end_pymotw_header
 
 A regular :class:`dict` does not track the insertion order, and
@@ -43,8 +43,8 @@ A regular :class:`dict` looks at its contents when testing for
 equality.  An :class:`OrderedDict` also considers the order the items
 were added.
 
-.. include:: collections_ordereddict_equality.py
-   :literal:
+.. literalinclude:: collections_ordereddict_equality.py
+   :caption:
    :start-after: #end_pymotw_header
 
 In this case, since the two ordered dictionaries are created from
@@ -72,8 +72,8 @@ It is possible to change the order of the keys in an
 :class:`OrderedDict` by moving them either to the beginning or the end
 of the sequence using :func:`move_to_end`.
 
-.. include:: collections_ordereddict_move_to_end.py
-   :literal:
+.. literalinclude:: collections_ordereddict_move_to_end.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The ``last`` argument tells :func:`move_to_end` whether to move the

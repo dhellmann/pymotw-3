@@ -15,8 +15,8 @@ constructor can be called with a sequence of items, a dictionary
 containing keys and counts, or using keyword arguments mapping string
 names to counts.
 
-.. include:: collections_counter_init.py
-   :literal:
+.. literalinclude:: collections_counter_init.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The results of all three forms of initialization are the same.
@@ -38,8 +38,8 @@ The results of all three forms of initialization are the same.
 An empty :class:`Counter` can be constructed with no arguments and
 populated via the :func:`update` method.
 
-.. include:: collections_counter_update.py
-   :literal:
+.. literalinclude:: collections_counter_update.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The count values are increased based on the new data, rather than
@@ -66,8 +66,8 @@ Accessing Counts
 Once a :class:`Counter` is populated, its values can be retrieved
 using the dictionary API.
 
-.. include:: collections_counter_get_values.py
-   :literal:
+.. literalinclude:: collections_counter_get_values.py
+   :caption:
    :start-after: #end_pymotw_header
 
 :class:`Counter` does not raise :class:`KeyError` for unknown items.
@@ -93,8 +93,8 @@ example), its count is ``0``.
 The :func:`elements` method returns an iterator that produces all of
 the items known to the :class:`Counter`.
 
-.. include:: collections_counter_elements.py
-   :literal:
+.. literalinclude:: collections_counter_elements.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The order of elements is not guaranteed, and items with counts less
@@ -117,8 +117,8 @@ than or equal to zero are not included.
 Use :func:`most_common` to produce a sequence of the *n* most
 frequently encountered input values and their respective counts.
 
-.. include:: collections_counter_most_common.py
-   :literal:
+.. literalinclude:: collections_counter_most_common.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example counts the letters appearing in all of the words in the
@@ -150,8 +150,8 @@ aggregating results. This example shows the standard operators for
 creating new :class:`Counter` instances, but the in-place operators
 ``+=``, ``-=``, ``&=`` and ``|=`` are also supported.
 
-.. include:: collections_counter_arithmetic.py
-   :literal:
+.. literalinclude:: collections_counter_arithmetic.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Each time a new :class:`Counter` is produced through an operation, any

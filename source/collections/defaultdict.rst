@@ -11,8 +11,8 @@ retrieving a value and establishing a default if the value does not
 exist. By contrast, :class:`defaultdict` lets the caller specify the
 default up front when the container is initialized.
 
-.. include:: collections_defaultdict.py
-    :literal:
+.. literalinclude:: collections_defaultdict.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This method works well as long as it is appropriate for all keys to

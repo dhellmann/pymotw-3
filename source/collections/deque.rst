@@ -9,8 +9,8 @@ elements from either end. The more commonly used stacks and queues are
 degenerate forms of deques, where the inputs and outputs are
 restricted to a single end.
 
-.. include:: collections_deque.py
-    :literal:
+.. literalinclude:: collections_deque.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Since deques are a type of sequence container, they support some of
@@ -40,8 +40,8 @@ Populating
 A deque can be populated from either end, termed "left" and "right" in the
 Python implementation.
 
-.. include:: collections_deque_populating.py
-    :literal:
+.. literalinclude:: collections_deque_populating.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The :func:`extendleft` function iterates over its input and performs
@@ -69,8 +69,8 @@ Consuming
 Similarly, the elements of the :class:`deque` can be consumed from
 both or either end, depending on the algorithm being applied.
 
-.. include:: collections_deque_consuming.py
-    :literal:
+.. literalinclude:: collections_deque_consuming.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Use :func:`pop` to remove an item from the "right" end of the
@@ -95,8 +95,8 @@ Use :func:`pop` to remove an item from the "right" end of the
 Since deques are thread-safe, the contents can even be consumed from
 both ends at the same time from separate threads.
 
-.. include:: collections_deque_both_ends.py
-    :literal:
+.. literalinclude:: collections_deque_both_ends.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The threads in this example alternate between each end, removing items
@@ -123,8 +123,8 @@ Rotating
 Another useful capability of the :class:`deque` is to rotate it in
 either direction, to skip over some items.
 
-.. include:: collections_deque_rotate.py
-    :literal:
+.. literalinclude:: collections_deque_rotate.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Rotating the :class:`deque` to the right (using a positive rotation)
@@ -156,8 +156,8 @@ specified length, existing items are discarded as new items are
 added. This behavior is useful for finding the last *n* items in a
 stream of undetermined length.
 
-.. include:: collections_deque_maxlen.py
-   :literal:
+.. literalinclude:: collections_deque_maxlen.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The deque length is maintained regardless of which end the items are

@@ -7,8 +7,8 @@
 The standard :class:`tuple` uses numerical indexes to access its
 members.
 
-.. include:: collections_tuple.py
-   :literal:
+.. literalinclude:: collections_tuple.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This makes :class:`tuples` convenient containers for simple uses.
@@ -47,8 +47,8 @@ using the :func:`namedtuple` factory function.  The arguments are the
 name of the new class and a string containing the names of the
 elements.
 
-.. include:: collections_namedtuple_person.py
-    :literal:
+.. literalinclude:: collections_namedtuple_person.py
+    :caption:
     :start-after: #end_pymotw_header
 
 As the example illustrates, it is possible to access the fields of the
@@ -79,8 +79,8 @@ immutable. This restriction allows :class:`tuple` instances to have a
 consistent hash value, which makes it possible to use them as keys in
 dictionaries and to be included in sets.
 
-.. include:: collections_namedtuple_immutable.py
-   :literal:
+.. literalinclude:: collections_namedtuple_immutable.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Trying to change a value through its named attribute results in an
@@ -110,8 +110,8 @@ Invalid Field Names
 Field names are invalid if they are repeated or conflict with Python
 keywords.
 
-.. include:: collections_namedtuple_bad_fields.py
-   :literal:
+.. literalinclude:: collections_namedtuple_bad_fields.py
+   :caption:
    :start-after: #end_pymotw_header
 
 As the field names are parsed, invalid values cause
@@ -136,8 +136,8 @@ the rows returned by a database query, where the schema is not known
 in advance), set the *rename* option to ``True`` so the invalid fields
 are renamed.
 
-.. include:: collections_namedtuple_rename.py
-   :literal:
+.. literalinclude:: collections_namedtuple_rename.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The new names for renamed fields depend on their index in the tuple,
@@ -170,8 +170,8 @@ protect the name from collision with user-provided attribute names.
 The names of the fields passed to :class:`namedtuple` to define the
 new class are saved in the :attr:`_fields` attribute.
 
-.. include:: collections_namedtuple_fields.py
-   :literal:
+.. literalinclude:: collections_namedtuple_fields.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Although the argument is a single space-separated string, the stored
@@ -194,8 +194,8 @@ value is the sequence of individual names.
 :class:`namedtuple` instances can be converted to :class:`OrderedDict`
 instances using :func:`_asdict`.
 
-.. include:: collections_namedtuple_asdict.py
-   :literal:
+.. literalinclude:: collections_namedtuple_asdict.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The keys of the :class:`OrderedDict` are in the same order as the
@@ -218,8 +218,8 @@ fields for the :class:`namedtuple`.
 The :func:`_replace` method builds a new instance, replacing the
 values of some fields in the process.
 
-.. include:: collections_namedtuple_replace.py
-   :literal:
+.. literalinclude:: collections_namedtuple_replace.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Although the name implies it is modifying the existing object, because

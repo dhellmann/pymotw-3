@@ -14,8 +14,8 @@ Accessing Values
 The :class:`ChainMap` supports the same API as a regular dictionary
 for accessing existing values.
 
-.. include:: collections_chainmap_read.py
-   :literal:
+.. literalinclude:: collections_chainmap_read.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The child mappings are searched in the order they are passed to the
@@ -55,8 +55,8 @@ searches in a list in its :attr:`maps` attribute. The list is mutable,
 so it is possible to add new mappings directly or to change the order
 of the elements to control look-up and update behavior.
 
-.. include:: collections_chainmap_reorder.py
-   :literal:
+.. literalinclude:: collections_chainmap_reorder.py
+   :caption:
    :start-after: #end_pymotw_header
 
 When the list of mappings is reversed, the value associated with
@@ -85,8 +85,8 @@ A :class:`ChainMap` does not cache the values in the child mappings,
 so if their contents are modified the results are reflected when the
 :class:`ChainMap` is accessed.
 
-.. include:: collections_chainmap_update_behind.py
-   :literal:
+.. literalinclude:: collections_chainmap_update_behind.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Changing the values associated with existing keys and adding new
@@ -109,8 +109,8 @@ It is also possible to set values through the :class:`ChainMap`
 directly, though only the first mapping in the chain is actually
 modified.
 
-.. include:: collections_chainmap_update_directly.py
-   :literal:
+.. literalinclude:: collections_chainmap_update_directly.py
+   :caption:
    :start-after: #end_pymotw_header
 
 When the new value is stored using ``m``, the ``a`` mapping is
@@ -135,8 +135,8 @@ instance with one extra mapping at the front of the :attr:`maps` list
 to make it easy to avoid modifying the existing underlying data
 structures.
 
-.. include:: collections_chainmap_new_child.py
-   :literal:
+.. literalinclude:: collections_chainmap_new_child.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This stacking behavior is what makes it convenient to use
@@ -164,8 +164,8 @@ changes for the next iteration.
 For situations where the new context is known or built in advance it
 is also possible to pass a mapping to :func:`new_child`.
 
-.. include:: collections_chainmap_new_child_explicit.py
-   :literal:
+.. literalinclude:: collections_chainmap_new_child_explicit.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This is the equivalent of
