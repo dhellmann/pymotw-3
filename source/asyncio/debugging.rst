@@ -24,8 +24,8 @@ logic error preventing some of the application code from
 running. Enabling :class:`ResourceWarning` warnings causes these cases
 to be reported when the program exits.
 
-.. include:: asyncio_debug.py
-   :literal:
+.. literalinclude:: asyncio_debug.py
+   :caption:
    :start-after: #end_pymotw_header
 
 When run without debugging enabled, everything looks fine with this

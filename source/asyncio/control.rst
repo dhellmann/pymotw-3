@@ -17,8 +17,8 @@ doesn't matter, and where there may be an arbitrary number of
 operations, :func:`wait` can be used to pause one coroutine until the
 other background operations complete.
 
-.. include:: asyncio_wait.py
-   :literal:
+.. literalinclude:: asyncio_wait.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Internally, :func:`wait` uses a :class:`set` to hold the :class:`Task`
@@ -49,8 +49,8 @@ containing two sets holding the finished and pending tasks.
 There will only be pending operations left if :func:`wait` is used
 with a timeout value.
 
-.. include:: asyncio_wait_timeout.py
-   :literal:
+.. literalinclude:: asyncio_wait_timeout.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Those remaining background operations should either be cancelled or
@@ -89,8 +89,8 @@ If the background phases are well-defined, and only the results of
 those phases matter, then :func:`gather` may be more useful for
 waiting for multiple operations.
 
-.. include:: asyncio_gather.py
-   :literal:
+.. literalinclude:: asyncio_gather.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The tasks created by gather are not exposed, so they cannot be
@@ -126,8 +126,8 @@ guaranteed by :func:`as_completed`, but it is not necessary to wait
 for all of the background operations to complete before taking other
 action.
 
-.. include:: asyncio_as_completed.py
-   :literal:
+.. literalinclude:: asyncio_as_completed.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example starts several background phases that finish in the

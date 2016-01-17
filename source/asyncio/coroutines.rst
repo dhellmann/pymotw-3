@@ -17,8 +17,8 @@ There are a few different ways to have the :mod:`asyncio` event loop
 start a coroutine. The simplest is to use :func:`run_until_complete`,
 passing the coroutine to it directly.
 
-.. include:: asyncio_coroutine.py
-   :literal:
+.. literalinclude:: asyncio_coroutine.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The first step is to obtain a reference to the event loop. The default
@@ -47,8 +47,8 @@ Returning Values from Coroutines
 The return value of a coroutine is passed back to the code that starts
 and waits for it.
 
-.. include:: asyncio_coroutine_return.py
-   :literal:
+.. literalinclude:: asyncio_coroutine_return.py
+   :caption:
    :start-after: #end_pymotw_header
 
 In this case, :func:`run_until_complete` also returns the result of
@@ -76,8 +76,8 @@ results. This makes it easier to decompose a task into reusable parts.
 The following example has two phases that must be executed in order,
 but that can run concurrently with other operations.
 
-.. include:: asyncio_coroutine_chain.py
-   :literal:
+.. literalinclude:: asyncio_coroutine_chain.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The ``await`` keyword is used instead of adding the new coroutines to
@@ -118,8 +118,8 @@ feature. Earlier versions of Python 3 can use generator functions
 wrapped with the :func:`asyncio.coroutine` decorator and ``yield
 from`` to achieve the same effect.
 
-.. include:: asyncio_generator.py
-   :literal:
+.. literalinclude:: asyncio_generator.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The preceding example reproduces ``asyncio_coroutine_chain.py`` using

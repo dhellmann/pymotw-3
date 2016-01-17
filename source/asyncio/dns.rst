@@ -26,8 +26,8 @@ containing five pieces of information.
 Queries can be filtered by protocol, as in this example, where only
 TCP responses are returned.
 
-.. include:: asyncio_getaddrinfo.py
-   :literal:
+.. literalinclude:: asyncio_getaddrinfo.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The example program converts a hostname and protocol name to IP
@@ -55,8 +55,8 @@ The coroutine :func:`getnameinfo` works in the reverse direction,
 converting an IP address to a hostname and a port number to a protocol
 name, where possible.
 
-.. include:: asyncio_getnameinfo.py
-   :literal:
+.. literalinclude:: asyncio_getnameinfo.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example shows that the IP address for ``pymotw.com`` refers to a

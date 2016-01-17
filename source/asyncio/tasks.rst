@@ -16,8 +16,8 @@ To start a task, use :func:`create_task` to create a
 concurrent operations managed by the event loop as long as the loop is
 running and the coroutine does not return.
 
-.. include:: asyncio_create_task.py
-   :literal:
+.. literalinclude:: asyncio_create_task.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example uses :func:`run_until_complete` to keep the event loop
@@ -50,8 +50,8 @@ By retaining the :class:`Task` object returned from
 :func:`create_task`, it is possible to cancel the operation of the
 task before it completes.
 
-.. include:: asyncio_cancel_task.py
-   :literal:
+.. literalinclude:: asyncio_cancel_task.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example creates and then cancels a task before starting the event
@@ -78,8 +78,8 @@ operation, the task is notified of its cancellation by having a
 :class:`CancelledError` exception raised at the point where it is
 waiting.
 
-.. include:: asyncio_cancel_task2.py
-   :literal:
+.. literalinclude:: asyncio_cancel_task2.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Catching the exception provides an opportunity to clean up work
@@ -109,8 +109,8 @@ execution of a coroutine. That :class:`Task` instance can then be
 passed to other code, which can wait for it without knowing how the
 original coroutine was constructed or called.
 
-.. include:: asyncio_ensure_future.py
-   :literal:
+.. literalinclude:: asyncio_ensure_future.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Note that the coroutine given to :func:`ensure_future` is not started

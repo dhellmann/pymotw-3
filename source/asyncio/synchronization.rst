@@ -18,8 +18,8 @@ the holder of the lock can use the resource. Multiple attempts to
 acquire the lock will block so that there is only one holder at a
 time.
 
-.. include:: asyncio_lock.py
-   :literal:
+.. literalinclude:: asyncio_lock.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Locks can be invoked directly, using ``await`` to acquire it and
@@ -58,8 +58,8 @@ used to allow multiple consumers to wait for something to happen
 without looking for a specific value to be associated with the
 notification.
 
-.. include:: asyncio_event.py
-   :literal:
+.. literalinclude:: asyncio_event.py
+   :caption:
    :start-after: #end_pymotw_header
 
 As with the :class:`Lock`, both :func:`coro1` and :func:`coro2` wait
@@ -94,8 +94,8 @@ A :class:`Condition` works similarly to an :class:`Event` except that
 rather than notifying all waiting coroutines the number of waiters
 awakened is controlled with an argument to :func:`notify`.
 
-.. include:: asyncio_condition.py
-   :literal:
+.. literalinclude:: asyncio_condition.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example starts five consumers of the :class:`Condition`. Each
@@ -144,8 +144,8 @@ An :class:`asyncio.Queue` provides a first-in, first-out data
 structure for coroutines like a :class:`queue.Queue` does for threads
 or a :class:`multiprocessing.Queue` does for processes.
 
-.. include:: asyncio_queue.py
-   :literal:
+.. literalinclude:: asyncio_queue.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Adding items with :func:`put` or removing items with :func:`get` are

@@ -27,8 +27,8 @@ coroutine yield control to the event loop while blocking functions run
 in separate threads, and then wake back up when those functions are
 finished.
 
-.. include:: asyncio_executor_thread.py
-   :literal:
+.. literalinclude:: asyncio_executor_thread.py
+   :caption:
    :start-after: #end_pymotw_header
 
 ``asyncio_executor_thread.py`` uses :mod:`logging` to conveniently
@@ -74,6 +74,7 @@ requires more system resources, but for computationally-intensive
 operations it can make sense to run a separate task on each CPU core.
 
 .. literalinclude:: asyncio_executor_process.py
+   :caption:
    :lines: 42-
 
 The only change needed to move from threads to processes is to create

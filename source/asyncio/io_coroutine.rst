@@ -17,6 +17,7 @@ The server starts by importing the modules it needs to set up
 object.
 
 .. literalinclude:: asyncio_echo_server_coroutine.py
+   :caption:
    :lines: 9-13,33-40
 
 It then defines a coroutine to handle communication. Each time a
@@ -93,6 +94,7 @@ it needs to set up :mod:`asyncio` and :mod:`logging`, and then
 creating an event loop object.
 
 .. literalinclude:: asyncio_echo_client_coroutine.py
+   :caption:
    :lines: 9-19,50-57
 
 The ``echo_client`` coroutine takes arguments telling it where the

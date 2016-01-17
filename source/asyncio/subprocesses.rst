@@ -21,7 +21,8 @@ on I/O events for the subprocess. Because both the ``stdin`` and
 are not connected to the new process.
 
 .. literalinclude:: asyncio_subprocess_protocol.py
-   :lines: 61-80
+   :caption:
+   :lines: 9-12,61-80
 
 The class :class:`DFProtocol` is derived from
 :class:`SubprocessProtocol`, which defines the API for a class to
@@ -115,7 +116,8 @@ coroutine to spawn the subprocess is a :class:`Process` instance that
 can be used to manipulate the subprocess or communicate with it.
 
 .. literalinclude:: asyncio_subprocess_coroutine.py
-   :lines: 31-42
+   :caption:
+   :lines: 9-12,31-42
 
 In this example, ``df`` does not need any input other than its command
 line arguments, so the next step is to read all of the output. With
@@ -203,7 +205,8 @@ input string. It spawns a second process running ``"tr [:lower:]
 [:upper:]"``.
 
 .. literalinclude:: asyncio_subprocess_coroutine_write.py
-   :lines: 13-23
+   :caption:
+   :lines: 9-23
 
 Next :func:`to_upper` uses the :func:`communicate` method of the
 :class:`Process` to send the input string to the command and read all

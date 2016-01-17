@@ -12,7 +12,8 @@ up incomplete operations.
 Signal handlers must be regular callables, not coroutines.
 
 .. literalinclude:: asyncio_signal.py
-   :lines: 15-16
+   :caption:
+   :lines: 9-16
 
 The signal handlers are registered using
 :func:`add_signal_handler`. The first argument is the signal and the

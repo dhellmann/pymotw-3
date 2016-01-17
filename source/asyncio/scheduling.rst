@@ -14,8 +14,8 @@ be used to schedule the call for the next iteration of the loop. Any
 extra arguments after the function are passed in when the callback is
 invoked.
 
-.. include:: asyncio_call_soon.py
-   :literal:
+.. literalinclude:: asyncio_call_soon.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The callbacks are invoked in the order they are scheduled. In this
@@ -45,8 +45,8 @@ To postpone a callback until some time in the future, use
 :func:`call_later`. The first argument is the delay in seconds and the
 second argument is the callback.
 
-.. include:: asyncio_call_later.py
-   :literal:
+.. literalinclude:: asyncio_call_later.py
+   :caption:
    :start-after: #end_pymotw_header
 
 In this example, the same callback function is scheduled for several
@@ -82,8 +82,8 @@ to ensure that the value of "now" never regresses. To choose a time
 for a scheduled callback it is necessary to start from the internal
 state of that clock using the loop's :func:`time` method.
 
-.. include:: asyncio_call_at.py
-   :literal:
+.. literalinclude:: asyncio_call_at.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Note that the time according to the loop does not match the value

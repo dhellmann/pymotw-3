@@ -56,7 +56,7 @@ done.
 The old version of the client send loop uses :func:`write_eof`.
 
 .. literalinclude:: asyncio_echo_client_coroutine.py
-   :lines: 30-37
+   :lines: 29-37
 
 The new version uses :func:`close`.
 

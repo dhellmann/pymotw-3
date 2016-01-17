@@ -14,8 +14,8 @@ A :class:`Future` acts like a coroutine, so any techniques useful for
 waiting for a coroutine can also be used to wait for the future to be
 marked done.
 
-.. include:: asyncio_future_wait.py
-   :literal:
+.. literalinclude:: asyncio_future_wait.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The state of the :class:`Future` changes to done when
@@ -46,8 +46,8 @@ In addition to working like a coroutine, a :class:`Future` can invoke
 callbacks when it is completed. Callbacks are invoked in the order
 they are registered.
 
-.. include:: asyncio_future_callback.py
-   :literal:
+.. literalinclude:: asyncio_future_callback.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The callback should expect one argument, the :class:`Future`

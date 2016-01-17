@@ -22,6 +22,7 @@ The server starts by importing the modules it needs to set up
 object.
 
 .. literalinclude:: asyncio_echo_server_protocol.py
+   :caption:
    :lines: 9-14,44-51
 
 It then defines a subclass of :class:`asyncio.Protocol` to handle
@@ -103,6 +104,7 @@ it needs to set up :mod:`asyncio` and :mod:`logging`, and then
 creating an event loop object.
 
 .. literalinclude:: asyncio_echo_client_protocol.py
+   :caption:
    :lines: 9-20,61-68
 
 The client protocol class defines the same methods as the server, with
