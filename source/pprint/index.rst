@@ -17,8 +17,8 @@ lines.
 The examples in this section all depend on ``pprint_data.py``, which
 contains:
 
-.. include:: pprint_data.py
-    :literal:
+.. literalinclude:: pprint_data.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Printing
@@ -27,8 +27,8 @@ Printing
 The simplest way to use the module is through the :func:`pprint`
 function.
 
-.. include:: pprint_pprint.py
-    :literal:
+.. literalinclude:: pprint_pprint.py
+    :caption:
     :start-after: #end_pymotw_header
 
 :func:`pprint` formats an object and writes it to the data stream
@@ -67,8 +67,8 @@ To format a data structure without writing it directly to a stream
 (for example, for logging), use :func:`pformat` to build a string
 representation.
 
-.. include:: pprint_pformat.py
-    :literal:
+.. literalinclude:: pprint_pformat.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The formatted string can then be printed or logged independently.
@@ -101,8 +101,8 @@ Arbitrary Classes
 The :class:`PrettyPrinter` class used by :func:`pprint` can also work
 with custom classes, if they define a :func:`__repr__` method.
 
-.. include:: pprint_arbitrary_object.py
-    :literal:
+.. literalinclude:: pprint_arbitrary_object.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The representations of the nested objects are combined by the
@@ -130,8 +130,8 @@ Recursive data structures are represented with a reference to the
 original source of the data, with the form ``<Recursion on typename
 with id=number>``.
 
-.. include:: pprint_recursion.py
-    :literal:
+.. literalinclude:: pprint_recursion.py
+    :caption:
     :start-after: #end_pymotw_header
 
 In this example, the list :data:`local_data` is added to itself,
@@ -159,8 +159,8 @@ to include all of the details. The data may not format properly, the
 formatted text might be too large to manage, or some of the data may
 be extraneous.
 
-.. include:: pprint_depth.py
-    :literal:
+.. literalinclude:: pprint_depth.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Use the *depth* argument to control how far down into the nested data
@@ -186,8 +186,8 @@ Controlling Output Width
 The default output width for the formatted text is 80 columns. To adjust that
 width, use the *width* argument to :func:`pprint`.
 
-.. include:: pprint_width.py
-    :literal:
+.. literalinclude:: pprint_width.py
+    :caption:
     :start-after: #end_pymotw_header
 
 When the width is too low to accommodate the formatted data structure,
