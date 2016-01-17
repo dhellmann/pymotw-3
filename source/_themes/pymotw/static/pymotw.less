@@ -304,6 +304,11 @@ div.linenodiv pre {
 	font-style: italic;
 }
 
+#sys-current-frames-py .code-block-caption {
+	margin-left: 2.2em;
+	/* margin-bottom: -1px; */
+}
+
 .code-block-caption .caption-text:before {
 	/* insert a # before the filename in the caption to make it look like
        a code comment */
@@ -324,6 +329,12 @@ table {
 
 table.field-list {
 	margin: 0 2em;
+}
+
+table.highlighttable {
+	/* remove all margins and bump the table up one row to join the
+       highlight bar with the caption */
+	margin: -1px 0 0 0;
 }
 
 /*
