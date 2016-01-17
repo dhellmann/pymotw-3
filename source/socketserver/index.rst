@@ -101,6 +101,7 @@ accepts TCP connections and echos back any data sent by the
 client. It starts with the request handler.
 
 .. literalinclude:: socketserver_echo.py
+   :caption:
    :lines: 6-40
 
 The only method that actually needs to be implemented is
@@ -174,8 +175,8 @@ Here is a condensed version of the same server, without the logging
 calls.  Only the :func:`handle` method in the request handler class
 needs to be provided.
 
-.. include:: socketserver_echo_simple.py
-    :literal:
+.. literalinclude:: socketserver_echo_simple.py
+    :caption:
     :start-after: #end_pymotw_header
 
 In this case, no special server class is required since the
@@ -205,8 +206,8 @@ the new child.
 
 For threads, use :class:`ThreadingMixIn`.
 
-.. include:: socketserver_threaded.py
-    :literal:
+.. literalinclude:: socketserver_threaded.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The response from this threaded server includes the identifier of the
@@ -228,8 +229,8 @@ thread where the request is handled.
 
 For separate processes, use the :class:`ForkingMixIn`.
 
-.. include:: socketserver_forking.py
-    :literal:
+.. literalinclude:: socketserver_forking.py
+    :caption:
     :start-after: #end_pymotw_header
 
 In this case, the process ID of the child is included in the response
