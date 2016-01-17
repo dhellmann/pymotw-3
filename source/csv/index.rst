@@ -19,8 +19,8 @@ Use :func:`reader` to create a an object for reading data from a CSV
 file.  The reader can be used as an iterator to process the rows of
 the file in order. For example
 
-.. include:: csv_reader.py
-    :literal:
+.. literalinclude:: csv_reader.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The first argument to :func:`reader` is the source of text lines. In
@@ -28,8 +28,7 @@ this case, it is a file, but any iterable is accepted (a :mod:`StringIO`
 instance, :class:`list`, etc.).  Other optional arguments can be given to
 control how the input data is parsed.
 
-.. include:: testdata.csv
-    :literal:
+.. literalinclude:: testdata.csv
 
 As it is read, each row of the input data is parsed and converted to a
 :class:`list` of strings.
@@ -53,8 +52,7 @@ The parser handles line breaks embedded within strings in a row, which
 is why a "row" is not always the same as a "line" of input from the
 file.
 
-.. include:: testlinebreak.csv
-    :literal:
+.. literalinclude:: testlinebreak.csv
 
 Fields with line breaks in the input retain the internal line breaks
 when they are returned by the parser.
@@ -79,8 +77,8 @@ Writing CSV files is just as easy as reading them. Use :func:`writer`
 to create an object for writing, then iterate over the rows, using
 :func:`writerow` to print them.
 
-.. include:: csv_writer.py
-    :literal:
+.. literalinclude:: csv_writer.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The output does not look exactly like the exported data used in the reader
@@ -169,8 +167,8 @@ module do not need to know the parameter settings in advance.  The
 complete list of registered dialects can be retrieved with
 :func:`list_dialects`.
 
-.. include:: csv_list_dialects.py
-   :literal:
+.. literalinclude:: csv_list_dialects.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The standard library includes three dialects: ``excel``,
@@ -197,13 +195,12 @@ Creating a Dialect
 If, instead of using commas to delimit fields, the input file uses
 pipes (``|``), like this
 
-.. include:: testdata.pipes
-    :literal:
+.. literalinclude:: testdata.pipes
 
 a new dialect can be registered using the appropriate delimiter.
 
-.. include:: csv_dialect.py
-    :literal:
+.. literalinclude:: csv_dialect.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Using the "pipes" dialect, the file can be read just as with the
@@ -244,8 +241,8 @@ to the character used to escape a token.
    skipinitialspace      False                   Ignore whitespace after the field delimiter
    ====================  ======================  =======
    
-.. include:: csv_dialect_variations.py
-   :literal:
+.. literalinclude:: csv_dialect_variations.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This program shows how the same data appears when formatted using
@@ -317,8 +314,8 @@ an educated guess.  The :func:`sniff` method takes a sample of the
 input data and an optional argument giving the possible delimiter
 characters.
 
-.. include:: csv_dialect_sniffer.py
-   :literal:
+.. literalinclude:: csv_dialect_sniffer.py
+   :caption:
    :start-after: #end_pymotw_header
 
 :func:`sniff` returns a :class:`Dialect` instance with the settings to
@@ -388,8 +385,8 @@ classes translate rows to dictionaries instead of lists. Keys for the
 dictionary can be passed in, or inferred from the first row in the
 input (when the row contains headers).
 
-.. include:: csv_dictreader.py
-    :literal:
+.. literalinclude:: csv_dictreader.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The dictionary-based reader and writer are implemented as wrappers
@@ -417,8 +414,8 @@ returned as dictionaries instead of lists or tuples.
 The :class:`DictWriter` must be given a list of field names so it
 knows how to order the columns in the output.
 
-.. include:: csv_dictwriter.py
-    :literal:
+.. literalinclude:: csv_dictwriter.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The field names are not written to the file automatically, but they
