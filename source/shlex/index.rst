@@ -32,8 +32,8 @@ one provided by the :mod:`shlex` module. Here is a simple example that
 prints the tokens identified in the input file using the
 :class:`shlex` class.
 
-.. include:: shlex_example.py
-    :literal:
+.. literalinclude:: shlex_example.py
+    :caption:
     :start-after: #end_pymotw_header
 
 When run on data with embedded quotes, the parser produces the list of
@@ -107,8 +107,8 @@ The :func:`quote` function performs the inverse operation, escaping
 existing quotes and adding missing quotes for strings to make them
 safe to use in shell commands.
 
-.. include:: shlex_quote.py
-   :literal:
+.. literalinclude:: shlex_quote.py
+   :caption:
    :start-after: #end_pymotw_header
 
 It is still usually safer to use a list of arguments when using
@@ -184,8 +184,8 @@ Splitting Strings into Tokens
 To split an existing string into component tokens, the convenience
 function :func:`split()` is a simple wrapper around the parser.
 
-.. include:: shlex_split.py
-    :literal:
+.. literalinclude:: shlex_split.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The result is a list.
@@ -215,8 +215,8 @@ feature for code (or configuration) re-use by allowing one token
 stream to include another. This is similar to the Bourne shell
 :command:`source` operator, hence the name.
 
-.. include:: shlex_source.py
-    :literal:
+.. literalinclude:: shlex_source.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The string "``source quotes.txt``" in the original text receives special
@@ -278,8 +278,8 @@ quotes. Each quote must be a single character, so it is not possible
 to have different open and close quotes (no parsing on parentheses,
 for example).
 
-.. include:: shlex_table.py
-    :literal:
+.. literalinclude:: shlex_table.py
+    :caption:
     :start-after: #end_pymotw_header
 
 In this example, each table cell is wrapped in vertical bars.
@@ -304,8 +304,8 @@ In this example, each table cell is wrapped in vertical bars.
 It is also possible to control the whitespace characters used to split
 words.
 
-.. include:: shlex_whitespace.py
-    :literal:
+.. literalinclude:: shlex_whitespace.py
+    :caption:
     :start-after: #end_pymotw_header
 
 If the example in ``shlex_example.py`` is modified to include period
@@ -357,8 +357,8 @@ similar to Unix compilers, which enables editors such as
 :command:`emacs` to parse the error and take the user directly to the
 invalid line.
 
-.. include:: shlex_errors.py
-    :literal:
+.. literalinclude:: shlex_errors.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The example produces this output.
@@ -397,8 +397,8 @@ The default behavior for the parser is to use a backwards-compatible
 style that is not POSIX-compliant. For POSIX behavior, set the *posix*
 argument when constructing the parser.
 
-.. include:: shlex_posix.py
-    :literal:
+.. literalinclude:: shlex_posix.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Here are a few examples of the differences in parsing behavior.
