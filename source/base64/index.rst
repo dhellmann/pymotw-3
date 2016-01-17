@@ -22,8 +22,8 @@ Base 64 Encoding
 
 This is a basic example of encoding some text.
 
-.. include:: base64_b64encode.py
-    :literal:
+.. literalinclude:: base64_b64encode.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The input must be a byte string, so the unicode string is first
@@ -63,8 +63,8 @@ Base 64 Decoding
 form by taking four bytes and converting them to the original three, using a
 lookup table.
 
-.. include:: base64_b64decode.py
-    :literal:
+.. literalinclude:: base64_b64decode.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The encoding process looks at each sequence of 24 bits in the input
@@ -99,8 +99,8 @@ Because the default base64 alphabet may use ``+`` and ``/``, and those
 two characters are used in URLs, it is often necessary to use an
 alternate encoding with substitutes for those characters.
 
-.. include:: base64_urlsafe.py
-    :literal:
+.. literalinclude:: base64_urlsafe.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The ``+`` is replaced with a ``-``, and ``/`` is replaced with
@@ -132,8 +132,8 @@ Other Encodings
 Besides Base64, the module provides functions for working with Base85,
 Base32, and Base16 (hex) encoded data.
 
-.. include:: base64_base32.py
-    :literal:
+.. literalinclude:: base64_base32.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The Base32 alphabet includes the 26 uppercase letters from the ASCII
@@ -156,8 +156,8 @@ set and the digits 2 through 7.
 
 The Base16 functions work with the hexadecimal alphabet.
 
-.. include:: base64_base16.py
-    :literal:
+.. literalinclude:: base64_base16.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Each time the number of encoding bits goes down, the output in the
@@ -181,8 +181,8 @@ encoded format takes up more space.
 The Base85 functions use an expanded alphabet that is more
 space-efficient than base 64.
 
-.. include:: base64_base85.py
-   :literal:
+.. literalinclude:: base64_base85.py
+   :caption:
    :start-after: #end_pymotw_header
 
 There are several Base85 encodings and different variations are used
