@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -9,13 +9,12 @@
 
 import random
 
-print '[1, 100]:',
+print('[1, 100]:', end=' ')
 
-for i in xrange(3):
-    print random.randint(1, 100),
+for i in range(3):
+    print(random.randint(1, 100), end=' ')
 
-print '\n[-5, 5]:',
-for i in xrange(3):
-    print random.randint(-5, 5),
-print
-
+print('\n[-5, 5]:', end=' ')
+for i in range(3):
+    print(random.randint(-5, 5), end=' ')
+print()

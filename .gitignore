@@ -13,3 +13,4 @@ source/glob/dir
 *.egg-info
 dist/
 /blog_posts/
+/source/random/state.dat

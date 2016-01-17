@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -9,7 +9,6 @@
 
 import random
 
-for i in xrange(5):
-    print '%04.3f' % random.uniform(1, 100),
-print
-
+for i in range(5):
+    print('{:04.3f}'.format(random.uniform(1, 100)), end=' ')
+print()

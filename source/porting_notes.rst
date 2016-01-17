@@ -405,6 +405,16 @@ pipes
 
 :func:`pipes.quote` has moved to :mod:`shlex` (:pyissue:`9723`).
 
+.. _porting-random:
+
+random
+------
+
+.. index::
+   pair: porting; random
+
+The function ``jumpahead()`` was removed.
+
 
 .. _porting-shelve:
 

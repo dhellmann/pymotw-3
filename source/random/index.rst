@@ -1,12 +1,11 @@
 ===========================================
- random -- Pseudorandom Number Generators
+ random --- Pseudorandom Number Generators
 ===========================================
 
 .. module:: random
     :synopsis: Pseudorandom number generators
 
 :Purpose: Implements several types of pseudorandom number generators.
-:Python Version: 1.4 and later
 
 The :mod:`random` module provides a fast pseudorandom number generator
 based on the *Mersenne Twister* algorithm.  Originally developed to
@@ -21,8 +20,8 @@ The :func:`random` function returns the next random floating point
 value from the generated sequence.  All of the return values fall
 within the range ``0 <= n < 1.0``.
 
-.. include:: random_random.py
-   :literal:
+.. literalinclude:: random_random.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Running the program repeatedly produces different sequences of
@@ -35,21 +34,21 @@ numbers.
 
 ::
 
-	$ python random_random.py
+	$ python3 random_random.py
 	
-	0.809 0.485 0.521 0.800 0.247
+	0.215 0.423 0.595 0.567 0.488 
 
-	$ python random_random.py
+	$ python3 random_random.py
 	
-	0.614 0.551 0.705 0.479 0.659
+	0.796 0.368 0.999 0.037 0.722 
 
 .. {{{end}}}
 
 To generate numbers in a specific numerical range, use :func:`uniform`
 instead.  
 
-.. include:: random_uniform.py
-   :literal:
+.. literalinclude:: random_uniform.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Pass minimum and maximum values, and :func:`uniform` adjusts the
@@ -62,9 +61,9 @@ min) * random()``.
 
 ::
 
-	$ python random_uniform.py
+	$ python3 random_uniform.py
 	
-	78.558 96.734 74.521 52.386 98.499
+	60.362 12.397 15.175 49.360 39.348 
 
 .. {{{end}}}
 
@@ -82,8 +81,8 @@ practical for large amounts of data, though, so :mod:`random` includes
 the :func:`seed` function for initializing the pseudorandom generator
 so that it produces an expected set of values.
 
-.. include:: random_seed.py
-   :literal:
+.. literalinclude:: random_seed.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The seed value controls the first value produced by the formula used
@@ -100,13 +99,13 @@ is available.  Otherwise the current time is used.
 
 ::
 
-	$ python random_seed.py
+	$ python3 random_seed.py
 	
-	0.134 0.847 0.764 0.255 0.495
+	0.134 0.847 0.764 0.255 0.495 
 
-	$ python random_seed.py
+	$ python3 random_seed.py
 	
-	0.134 0.847 0.764 0.255 0.495
+	0.134 0.847 0.764 0.255 0.495 
 
 .. {{{end}}}
 
@@ -122,8 +121,8 @@ the earlier input.  The :func:`getstate` function returns data that
 can be used to re-initialize the random number generator later with
 :func:`setstate`.
 
-.. include:: random_state.py
-   :literal:
+.. literalinclude:: random_state.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The data returned by :func:`getstate` is an implementation detail, so
@@ -134,28 +133,30 @@ before and after saving the state, to show that restoring the state
 causes the generator to produce the same values again.
 
 .. {{{cog
-.. (path(cog.inFile).dirname() / 'state.dat').unlink()
+.. state_file = path(cog.inFile).dirname() / 'state.dat'
+.. if state_file.exists():
+..   state_file.unlink()
 .. cog.out(run_script(cog.inFile, 'random_state.py'))
 .. cog.out(run_script(cog.inFile, 'random_state.py', include_prefix=False))
 .. }}}
 
 ::
 
-	$ python random_state.py
-	
-	No state.dat, seeding
-	0.134 0.847 0.764
-	
-	After saving state:
-	0.255 0.495 0.449
-
-	$ python random_state.py
+	$ python3 random_state.py
 	
 	Found state.dat, initializing random module
-	0.255 0.495 0.449
+	0.217 0.422 0.029 
 	
 	After saving state:
-	0.652 0.789 0.094
+	0.222 0.438 0.496 
+
+	$ python3 random_state.py
+	
+	Found state.dat, initializing random module
+	0.222 0.438 0.496 
+	
+	After saving state:
+	0.233 0.231 0.219 
 
 .. {{{end}}}
 
@@ -167,8 +168,8 @@ Random Integers
 convert the results to integers, but using :func:`randint` to generate
 integers directly is more convenient.
 
-.. include:: random_randint.py
-   :literal:
+.. literalinclude:: random_randint.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The arguments to :func:`randint` are the ends of the inclusive range
@@ -181,18 +182,18 @@ first value should be less than the second.
 
 ::
 
-	$ python random_randint.py
+	$ python3 random_randint.py
 	
-	[1, 100]: 91 77 67 
-	[-5, 5]: -5 -3 3
+	[1, 100]: 55 43 96 
+	[-5, 5]: -2 1 -3 
 
 .. {{{end}}}
 
 :func:`randrange` is a more general form of selecting values from a
 range.  
 
-.. include:: random_randrange.py
-   :literal:
+.. literalinclude:: random_randrange.py
+   :caption:
    :start-after: #end_pymotw_header
 
 :func:`randrange` supports a *step* argument, in addition to start and
@@ -206,9 +207,9 @@ range is not actually constructed.
 
 ::
 
-	$ python random_randrange.py
+	$ python3 random_randrange.py
 	
-	50 10 60
+	75 15 20 
 
 .. {{{end}}}
 
@@ -223,8 +224,8 @@ making a random selection from a sequence.  This example simulates
 flipping a coin 10,000 times to count how many times it comes up heads
 and how many times tails.
 
-.. include:: random_choice.py
-   :literal:
+.. literalinclude:: random_choice.py
+   :caption:
    :start-after: #end_pymotw_header
 
 There are only two outcomes allowed, so rather than use numbers and
@@ -238,10 +239,10 @@ outcome names as keys.
 
 ::
 
-	$ python random_choice.py
+	$ python3 random_choice.py
 	
-	Heads: 5038
-	Tails: 4962
+	Heads: 5035
+	Tails: 4965
 
 .. {{{end}}}
 
@@ -255,8 +256,8 @@ once.  Using :func:`choice` could result in the same card being dealt
 twice, so instead the deck can be mixed up with :func:`shuffle` and
 then individual cards removed as they are dealt.
 
-.. include:: random_shuffle.py
-   :literal:
+.. literalinclude:: random_shuffle.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The cards are represented as tuples with the face value and a letter
@@ -270,30 +271,30 @@ cannot be dealt again.
 
 ::
 
-	$ python random_shuffle.py
+	$ python3 random_shuffle.py
 	
 	Initial deck:
-	 2H  2D  2C  2S  3H  3D  3C  3S  4H  4D  4C  4S  5H
-	 5D  5C  5S  6H  6D  6C  6S  7H  7D  7C  7S  8H  8D
-	 8C  8S  9H  9D  9C  9S 10H 10D 10C 10S  JH  JD  JC
-	 JS  QH  QD  QC  QS  KH  KD  KC  KS  AH  AD  AC  AS
+	 2H  2D  2C  2S  3H  3D  3C  3S  4H  4D  4C  4S  5H 
+	 5D  5C  5S  6H  6D  6C  6S  7H  7D  7C  7S  8H  8D 
+	 8C  8S  9H  9D  9C  9S 10H 10D 10C 10S  JH  JD  JC 
+	 JS  QH  QD  QC  QS  KH  KD  KC  KS  AH  AD  AC  AS 
 	
 	Shuffled deck:
-	 3C  KH  QH  6H  JD  AC  7S  5D  3S 10S  7H  QC  2C
-	 5C  7C  4H  6S  9D 10H  4D  2H  3D  7D  5S 10D  9H
-	 2S  9C  KC  5H  6C  8S  3H 10C  JS  2D  AH  KD  AD
-	 4C  QS  8D  8C  JC  8H  4S  JH  QD  9S  AS  KS  6D
+	 JS  4H  2H  3H  QD  9S  AD  2C  7H  QC  8D  6C  KS 
+	 KD  3D  KH  5D  AC  JD  JH  9D 10D  5S  7C  7D  AH 
+	 4D  4S  8S  8H  AS  9H 10H  3C  QS 10C  5C  6H  9C 
+	 5H  6D  QH 10S  4C  KC  2D  3S  7S  8C  JC  2S  6S 
 	
 	Hands:
-	1:  6D  QD  JC  4C  2D
-	2:  KS  JH  8C  AD  JS
-	3:  AS  4S  8D  KD 10C
-	4:  9S  8H  QS  AH  3H
+	1:  6S  7S  4C  5H 10C 
+	2:  2S  3S 10S  9C  QS 
+	3:  JC  2D  QH  6H  3C 
+	4:  8C  KC  6D  5C 10H 
 	
 	Remaining deck:
-	 3C  KH  QH  6H  JD  AC  7S  5D  3S 10S  7H  QC  2C
-	 5C  7C  4H  6S  9D 10H  4D  2H  3D  7D  5S 10D  9H
-	 2S  9C  KC  5H  6C  8S
+	 JS  4H  2H  3H  QD  9S  AD  2C  7H  QC  8D  6C  KS 
+	 KD  3D  KH  5D  AC  JD  JH  9D 10D  5S  7C  7D  AH 
+	 4D  4S  8S  8H  AS  9H 
 
 .. {{{end}}}
 
@@ -305,8 +306,8 @@ values.  The :func:`sample` function generates samples without
 repeating values and without modifying the input sequence.  This
 example prints a random sample of words from the system dictionary.
 
-.. include:: random_sample.py
-   :literal:
+.. literalinclude:: random_sample.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The algorithm for producing the result set takes into account the
@@ -342,8 +343,8 @@ as methods of the :class:`Random` instances, and each instance can be
 initialized and used separately, without interfering with the values
 returned by other instances.
 
-.. include:: random_random_class.py
-   :literal:
+.. literalinclude:: random_random_class.py
+   :caption:
    :start-after: #end_pymotw_header
 
 On a system with good native random value seeding, the instances start
@@ -357,46 +358,19 @@ current time, and therefore produce the same values.
 
 ::
 
-	$ python random_random_class.py
+	$ python3 random_random_class.py
 	
 	Default initializiation:
 	
-	0.370  0.303
-	0.437  0.142
-	0.323  0.088
+	0.827  0.300
+	0.733  0.864
+	0.168  0.322
 	
 	Same seed:
 	
-	0.684  0.684
-	0.060  0.060
-	0.977  0.977
-
-.. {{{end}}}
-
-To ensure that the generators produce values from different parts of
-the random period, use :func:`jumpahead` to shift one of them away
-from its initial state.
-
-.. include:: random_jumpahead.py
-   :literal:
-   :start-after: #end_pymotw_header
-
-The argument to :func:`jumpahead` should be a non-negative integer
-based the number of values needed from each generator.  The internal
-state of the generator is scrambled based on the input value, but not
-simply by incrementing it by the number of steps given.
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'random_jumpahead.py'))
-.. }}}
-
-::
-
-	$ python random_jumpahead.py
-	
-	0.858  0.093
-	0.510  0.707
-	0.444  0.556
+	0.337  0.337
+	0.102  0.102
+	0.847  0.847
 
 .. {{{end}}}
 
@@ -410,8 +384,8 @@ generator.  :mod:`random` exposes this feature through the
 but uses :func:`os.urandom` to generate the values that form the basis
 of all of the other algorithms.
 
-.. include:: random_system_random.py
-   :literal:
+.. literalinclude:: random_system_random.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Sequences produced by :class:`SystemRandom` are not reproducible
@@ -425,19 +399,19 @@ all).
 
 ::
 
-	$ python random_system_random.py
+	$ python3 random_system_random.py
 	
 	Default initializiation:
 	
-	0.551  0.873
-	0.643  0.975
-	0.106  0.268
+	0.286  0.889
+	0.350  0.723
+	0.737  0.001
 	
 	Same seed:
 	
-	0.211  0.985
-	0.101  0.852
-	0.887  0.344
+	0.172  0.293
+	0.330  0.617
+	0.353  0.635
 
 .. {{{end}}}
 
