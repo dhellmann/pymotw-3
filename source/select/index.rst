@@ -37,6 +37,7 @@ to watch for more than one connection at a time by using
 TCP/IP socket and configuring it to listen on an address.
 
 .. literalinclude:: select_echo_server.py
+   :caption:
    :lines: 10-26
 
 The arguments to :func:`select` are three lists containing
@@ -117,6 +118,7 @@ time.  The client starts by connecting each TCP/IP socket to the
 server.
 
 .. literalinclude:: select_echo_multiclient.py
+   :caption:
    :lines: 10-30
 
 Then it sends one piece of the message at a time via each socket and
@@ -204,13 +206,14 @@ argument to the :func:`select` call and handling the empty lists after
 :func:`select` returns.
 
 .. literalinclude:: select_echo_server_timeout.py
+   :caption:
    :lines: 44-52
 
 This "slow" version of the client program pauses after sending each
 message, to simulate latency or other delay in transmission.
 
-.. include:: select_echo_slow_client.py
-   :literal:
+.. literalinclude:: select_echo_slow_client.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Running the new server with the slow client produces:
@@ -271,6 +274,7 @@ An echo server built on :func:`poll` starts with the same socket
 configuration code used in the other examples.
 
 .. literalinclude:: select_poll_echo_server.py
+   :caption:
    :lines: 10-29
 
 The timeout value passed to :func:`poll` is represented in
