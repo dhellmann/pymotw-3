@@ -18,8 +18,8 @@ Example Data
 The examples in this section use the module ``textwrap_example.py``,
 which contains a string ``sample_text``.
 
-.. include:: textwrap_example.py
-    :literal:
+.. literalinclude:: textwrap_example.py
+    :caption:
     :start-after: #end_pymotw_header
 
 
@@ -29,8 +29,8 @@ Filling Paragraphs
 The :func:`fill` function takes text as input and produces formatted
 text as output.
 
-.. include:: textwrap_fill.py
-    :literal:
+.. literalinclude:: textwrap_fill.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The results are something less than desirable.  The text is now left
@@ -68,8 +68,8 @@ while removing the formatting of the code itself. The sample string
 has an artificial indent level introduced for illustrating this
 feature.
 
-.. include:: textwrap_dedent.py
-    :literal:
+.. literalinclude:: textwrap_dedent.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The results are starting to look better.
@@ -119,8 +119,8 @@ Combining Dedent and Fill
 Next, the dedented text can be passed through :func:`fill` with a
 few different *width* values.
 
-.. include:: textwrap_fill_width.py
-    :literal:
+.. literalinclude:: textwrap_fill_width.py
+    :caption:
     :start-after: #end_pymotw_header
 
 
@@ -161,8 +161,8 @@ of the lines in a string. This example formats the same example text
 as though it was part of an email message being quoted in the reply,
 using ``>`` as the prefix for each line.
 
-.. include:: textwrap_indent.py
-   :literal:
+.. literalinclude:: textwrap_indent.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The block of text is split on newlines, the prefix is added to each
@@ -194,8 +194,8 @@ predicte argument to :func:`indent`. The callable will be invoked for
 each line of text in turn and the prefix will be added for lines where
 the return value is true.
 
-.. include:: textwrap_indent_predicate.py
-   :literal:
+.. literalinclude:: textwrap_indent_predicate.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example adds the prefix ``EVEN`` to lines that contain an even
@@ -231,8 +231,8 @@ Hanging Indents
 Just as the width of the output can be set, the indent of the first
 line can be controlled independently of subsequent lines.
 
-.. include:: textwrap_hanging_indent.py
-    :literal:
+.. literalinclude:: textwrap_hanging_indent.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This makes it possible to produce a hanging indent, where the
@@ -268,8 +268,8 @@ the text will be truncated to a length less than or equal to what is
 requested, between word boundaries so that no partial words are
 included.
 
-.. include:: textwrap_shorten.py
-   :literal:
+.. literalinclude:: textwrap_shorten.py
+   :caption:
    :start-after: #end_pymotw_header
 
 If non-whitespace text is removed from the original text as part of
