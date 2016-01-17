@@ -19,8 +19,8 @@ Formatting Examples
 The :func:`prmonth` method is a simple function that produces the
 formatted text output for a month.
 
-.. include:: calendar_textcalendar.py
-    :literal:
+.. literalinclude:: calendar_textcalendar.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The example configures :class:`TextCalendar` to start weeks on Sunday,
@@ -67,8 +67,8 @@ weeks are lists of tuples made up of day number (1-31) and weekday
 number (0-6). Days that fall outside of the month have a day number of
 0.
 
-.. include:: calendar_yeardays2calendar.py
-    :literal:
+.. literalinclude:: calendar_yeardays2calendar.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Calling ``yeardays2calendar(2015, 3)`` returns data for 2015,
@@ -96,8 +96,8 @@ organized with three months per row.
 
 This is equivalent to the data used by :func:`formatyear`.
 
-.. include:: calendar_formatyear.py
-    :literal:
+.. literalinclude:: calendar_formatyear.py
+    :caption:
     :start-after: #end_pymotw_header
 
 For the same arguments, :func:`formatyear` produces this output:
@@ -161,8 +161,8 @@ To produce a calendar formatted for a locale other than the current
 default, use :class:`LocaleTextCalendar` or
 :class:`LocaleHTMLCalendar`.
 
-.. include:: calendar_locale.py
-   :literal:
+.. literalinclude:: calendar_locale.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The first day of the week is not part of the locale settings, and the
@@ -208,8 +208,8 @@ event. For example, the Python Atlanta User's Group meets on the
 second Thursday of every month. To calculate the dates for the
 meetings for a year, use the return value of :func:`monthcalendar`.
 
-.. include:: calendar_monthcalendar.py
-    :literal:
+.. literalinclude:: calendar_monthcalendar.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Some days have a 0 value. Those are days of the week that overlap with
@@ -243,8 +243,8 @@ Thursday of every month, the 0 values indicate whether the Thursday of
 the first week is included in the month (or if the month starts, for
 example, on a Friday).
 
-.. include:: calendar_secondthursday.py
-    :literal:
+.. literalinclude:: calendar_secondthursday.py
+    :caption:
     :start-after: #end_pymotw_header
 
 So the meeting schedule for the year is:
