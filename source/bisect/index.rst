@@ -18,8 +18,8 @@ Inserting in Sorted Order
 Here is a simple example using :func:`insort` to insert items into a
 list in sorted order.
 
-.. include:: bisect_example.py
-    :literal:
+.. literalinclude:: bisect_example.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The first column of the output shows the new random number. The second
@@ -68,8 +68,8 @@ right. The :func:`insort` function is actually an alias for
 corresponding function :func:`insort_left` inserts before the existing
 value.
 
-.. include:: bisect_example2.py
-    :literal:
+.. literalinclude:: bisect_example2.py
+    :caption:
     :start-after: #end_pymotw_header
 
 When the same data is manipulates using :func:`bisect_left` and
