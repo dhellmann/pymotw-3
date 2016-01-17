@@ -66,8 +66,8 @@ An :class:`array` is instantiated with an argument describing the type
 of data to be allowed, and possibly an initial sequence of data to
 store in the array.
 
-.. include:: array_string.py
-    :literal:
+.. literalinclude:: array_string.py
+    :caption:
     :start-after: #end_pymotw_header
 
 In this example, the array is configured to hold a sequence of bytes
@@ -95,8 +95,8 @@ Manipulating Arrays
 An :class:`array` can be extended and otherwise manipulated in the
 same ways as other Python sequences.
 
-.. include:: array_sequence.py
-    :literal:
+.. literalinclude:: array_sequence.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The supported operations include slicing, iterating, and adding
@@ -125,8 +125,8 @@ Arrays and Files
 The contents of an array can be written to and read from files using
 built-in methods coded efficiently for that purpose.
 
-.. include:: array_file.py
-    :literal:
+.. literalinclude:: array_file.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example illustrates reading the data "raw", directly from the
@@ -150,8 +150,8 @@ bytes to the appropriate types.
 :func:`tofile` uses :func:`tobytes` to format the data and `fromfile`
 uses :func:`frombytes` to convert it back to an array instance.
 
-.. include:: array_tobytes.py
-   :literal:
+.. literalinclude:: array_tobytes.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Both :func:`tobytes` and :func:`frombytes` work on byte strings, not
@@ -179,8 +179,8 @@ be swapped before being sent to a system with a different byte order
 (or over the network), it is possible to convert the entire array without
 iterating over the elements from Python.
 
-.. include:: array_byteswap.py
-    :literal:
+.. literalinclude:: array_byteswap.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The :func:`byteswap` method switches the byte order of the items in
