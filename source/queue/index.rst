@@ -28,8 +28,8 @@ The :class:`Queue` class implements a basic first-in, first-out
 container.  Elements are added to one "end" of the sequence using
 :func:`put`, and removed from the other end using :func:`get`.
 
-.. include:: queue_fifo.py
-   :literal:
+.. literalinclude:: queue_fifo.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example uses a single thread to illustrate that elements are
@@ -54,8 +54,8 @@ In contrast to the standard FIFO implementation of :class:`Queue`, the
 :class:`LifoQueue` uses last-in, first-out ordering (normally associated
 with a stack data structure).
 
-.. include:: queue_lifo.py
-   :literal:
+.. literalinclude:: queue_lifo.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The item most recently :class:`put` into the queue is removed by
@@ -85,8 +85,8 @@ the payroll department may take precedence over a code listing printed
 by a developer.  :class:`PriorityQueue` uses the sort order of the
 contents of the queue to decide which to retrieve.
 
-.. include:: queue_priority.py
-   :literal:
+.. literalinclude:: queue_priority.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example has multiple threads consuming the jobs, which are be
@@ -129,6 +129,7 @@ uses hard-coded values for the number of threads and list of URLs to
 fetch.
 
 .. literalinclude:: fetch_podcasts.py
+   :caption:
    :lines: 6-25
 
 The function :func:`download_enclosures` will run in the worker thread
