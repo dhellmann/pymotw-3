@@ -103,7 +103,7 @@
   -->
 
   <directory  path="build/html"
-              url="http://pymotw.com/3" />
+              url="https://pymotw.com/3" />
 
   <!-- ** MODIFY or DELETE **
     "accesslog" nodes tell the script to scan webserver log files to
@@ -168,7 +168,7 @@
   <filter  action="drop"  type="wildcard"  pattern="*~"           />
   <filter  action="drop"  type="wildcard"  pattern="*rst"           />
   <filter  action="drop"  type="wildcard"  pattern="*txt"           />
-  <filter  action="drop"  type="wildcard"  pattern="*_sources"           />
+  <filter  action="drop"  type="wildcard"  pattern="*_sources*"           />
 
   <filter  action="drop"  type="wildcard"  pattern="*_static*"           />
 
