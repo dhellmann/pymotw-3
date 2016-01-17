@@ -39,8 +39,8 @@ new base class to :class:`ABCMeta`, and using decorators to establish
 the public API for the class.  The following examples use
 ``abc_base.py``, which contains:
 
-.. include:: abc_base.py
-    :literal:
+.. literalinclude:: abc_base.py
+    :caption:
     :start-after: #end_pymotw_header
 
 
@@ -54,8 +54,8 @@ class method as a decorator on a concrete class to add it explicitly
 when the class provides the required API, but is not part of the
 inheritance tree of the abstract base class.
 
-.. include:: abc_register.py
-    :literal:
+.. literalinclude:: abc_register.py
+    :caption:
     :start-after: #end_pymotw_header
 
 In this example the :class:`RegisteredImplementation` is derived from
@@ -83,8 +83,8 @@ Implementation Through Subclassing
 Subclassing directly from the base avoids the need to register the
 class explicitly.
 
-.. include:: abc_subclass.py
-    :literal:
+.. literalinclude:: abc_subclass.py
+    :caption:
     :start-after: #end_pymotw_header
 
 In this case, normal Python class management features are used to
@@ -109,8 +109,8 @@ all of the implementations of a plug-in by asking the base class for
 the list of known classes derived from it (this is not an :mod:`abc`
 feature, all classes can do this).
 
-.. include:: abc_find_subclasses.py
-    :literal:
+.. literalinclude:: abc_find_subclasses.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Even though :func:`abc_register` is imported,
@@ -137,8 +137,8 @@ implementations do not have their APIs enforced. To make it easier to
 set up the abstract class properly, a base class is provided that sets
 the meta-class.
 
-.. include:: abc_abc_base.py
-   :literal:
+.. literalinclude:: abc_abc_base.py
+   :caption:
    :start-after: #end_pymotw_header
 
 To create a new abstract class, simply inherit from :class:`ABC`.
@@ -163,8 +163,8 @@ Another benefit of subclassing directly from the abstract base class
 is that the subclass cannot be instantiated unless it fully implements
 the abstract portion of the API.
 
-.. include:: abc_incomplete.py
-    :literal:
+.. literalinclude:: abc_incomplete.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This keeps incomplete implementations from triggering unexpected
@@ -198,8 +198,8 @@ can be invoked via :func:`super`.  This allows common logic to be
 reused by placing it in the base class, but forces subclasses to
 provide an overriding method with (potentially) custom logic.
 
-.. include:: abc_concrete_method.py
-    :literal:
+.. literalinclude:: abc_concrete_method.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Since :func:`ABCWithConcreteImplementation` is an abstract base class,
@@ -231,8 +231,8 @@ If an API specification includes attributes in addition to methods, it
 can require the attributes in concrete classes by combining
 :func:`abstractmethod` with :func:`property`.
 
-.. include:: abc_abstractproperty.py
-    :literal:
+.. literalinclude:: abc_abstractproperty.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The :class:`Base` class in the example cannot be instantiated because
@@ -259,8 +259,8 @@ using a class attribute.
 
 Abstract read-write properties can also be defined.
 
-.. include:: abc_abstractproperty_rw.py
-    :literal:
+.. literalinclude:: abc_abstractproperty_rw.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The concrete property must be defined the same way as the abstract
@@ -294,8 +294,8 @@ Abstract Class and Static Methods
 
 Class and static methods can also be marked as abstract.
 
-.. include:: abc_class_static.py
-   :literal:
+.. literalinclude:: abc_class_static.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Although the class method is invoked on the class rather than an
