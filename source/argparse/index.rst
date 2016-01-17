@@ -76,8 +76,8 @@ Here is a simple example with three different options: a Boolean option
 (``-a``), a simple string option (``-b``), and an integer option
 (``-c``).
 
-.. include:: argparse_short.py
-    :literal:
+.. literalinclude:: argparse_short.py
+    :caption:
     :start-after: #end_pymotw_header
 
 There are a few ways to pass values to single character options. The
@@ -102,8 +102,8 @@ argument before storing it.
 "Long" option names, with more than a single character in their name,
 are handled in the same way.
 
-.. include:: argparse_long.py
-    :literal:
+.. literalinclude:: argparse_long.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The results are similar.
@@ -123,8 +123,8 @@ The results are similar.
 :mod:`argparse` is a full command-line argument parser tool, and
 handles both optional and required arguments.
 
-.. include:: argparse_arguments.py
-   :literal:
+.. literalinclude:: argparse_arguments.py
+   :caption:
    :start-after: #end_pymotw_header
 
 In this example, the "count" argument is an integer and the "units"
@@ -194,8 +194,8 @@ encountered.
 This example program demonstrates each action type, with the minimum
 configuration needed for each to work.
 
-.. include:: argparse_action.py
-   :literal:
+.. literalinclude:: argparse_action.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The ``-t`` and ``-f`` options are configured to modify the same option
@@ -296,8 +296,8 @@ signifying command-line switches using a dash prefix ("``-``").
 the local platform default (i.e., use "``/``" on Windows) or follow a
 different convention.
 
-.. include:: argparse_prefix_chars.py
-   :literal:
+.. literalinclude:: argparse_prefix_chars.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Set the *prefix_chars* parameter for the :class:`ArgumentParser` to a
@@ -369,8 +369,8 @@ when using :mod:`argparse` to process command-line-like instructions
 that do not come from the command-line (such as in a configuration
 file).
 
-.. include:: argparse_with_shlex.py
-   :literal:
+.. literalinclude:: argparse_with_shlex.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example uses :mod:`configparser` to read a configuration file.
@@ -399,8 +399,8 @@ code is to tell :mod:`argparse` how to recognize an argument that
 specifies an input file containing a set of arguments to be processed
 using *fromfile_prefix_chars*.
 
-.. include:: argparse_fromfile_prefix_chars.py
-   :literal:
+.. literalinclude:: argparse_fromfile_prefix_chars.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example stops when it finds an argument prefixed with ``@``, then
@@ -408,8 +408,7 @@ reads the named file to find more arguments.  For example, an input
 file ``argparse_fromfile_prefix_chars.txt`` contains a series of
 arguments, one per line:
 
-.. include:: argparse_fromfile_prefix_chars.txt
-   :literal:
+.. literalinclude:: argparse_fromfile_prefix_chars.txt
 
 The output produced when processing the file is:
 
@@ -435,15 +434,15 @@ Automatically Generated Help
 configured to do so.  The *add_help* argument to
 :class:`ArgumentParser` controls the help-related options.
 
-.. include:: argparse_with_help.py
-   :literal:
+.. literalinclude:: argparse_with_help.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The help options (``-h`` and ``--help``) are added by default, but can
 be disabled by setting *add_help* to false.
 
-.. include:: argparse_without_help.py
-   :literal:
+.. literalinclude:: argparse_without_help.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Although ``-h`` and ``--help`` are defacto standard option names for
@@ -484,8 +483,8 @@ the utility methods of :class:`ArgumentParser` will be useful in
 creating :ref:`custom actions <argparse-custom-actions>` to print help
 with extra information.
 
-.. include:: argparse_custom_help.py
-   :literal:
+.. literalinclude:: argparse_custom_help.py
+   :caption:
    :start-after: #end_pymotw_header
 
 :meth:`print_usage` prints the short usage message for an argument
@@ -521,8 +520,8 @@ appearance of the help output. To change the class, pass
 For example, the :class:`RawDescriptionHelpFormatter` bypasses the
 line wrapping provided by the default formatter.
 
-.. include:: argparse_raw_description_help_formatter.py
-   :literal:
+.. literalinclude:: argparse_raw_description_help_formatter.py
+   :caption:
    :start-after: #end_pymotw_header
 
 All text in the description and epilog of the command will be left
@@ -554,8 +553,8 @@ unchanged.
 
 The :class:`RawTextHelpFormatter` treats all help text as pre-formatted.
 
-.. include:: argparse_raw_text_help_formatter.py
-   :literal:
+.. literalinclude:: argparse_raw_text_help_formatter.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The help text for the ``-a`` argument is no longer wrapped neatly.
@@ -595,8 +594,8 @@ The :class:`MetavarTypeHelpFormatter` prints the name of the type for
 each option, instead of the destination variable, which can be useful
 for applications with a lot of options of different types.
 
-.. include:: argparse_metavar_type_help_formatter.py
-   :literal:
+.. literalinclude:: argparse_metavar_type_help_formatter.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Rather than display the value of ``dest``, the name of the type
@@ -646,14 +645,14 @@ definitions.  Since each subsequent user of the parent parser is going
 to try to add the same help options, causing an exception, automatic
 help generation is turned off in the base parser.
 
-.. include:: argparse_parent_base.py
-   :literal:
+.. literalinclude:: argparse_parent_base.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Next, create another parser with *parents* set:
 
-.. include:: argparse_uses_parent.py
-   :literal:
+.. literalinclude:: argparse_uses_parent.py
+   :caption:
    :start-after: #end_pymotw_header
 
 And the resulting program takes all three options:
@@ -686,8 +685,8 @@ conflict resolution behavior can be changed by passing a
 default), and ``resolve``, which picks a handler based on the order
 they are added.
 
-.. include:: argparse_conflict_handler_resolve.py
-   :literal:
+.. literalinclude:: argparse_conflict_handler_resolve.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Since the last handler with a given argument name is used, in this
@@ -713,8 +712,8 @@ example, the stand-alone option ``-b`` is masked by the alias for
 Switching the order of the calls to :func:`add_argument` unmasks the
 stand-alone option:
 
-.. include:: argparse_conflict_handler_resolve2.py
-   :literal:
+.. literalinclude:: argparse_conflict_handler_resolve2.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Now both options can be used together.
@@ -743,8 +742,8 @@ Argument Groups
 default, it uses two groups, with one for options and another for
 required position-based arguments.
 
-.. include:: argparse_default_grouping.py
-   :literal:
+.. literalinclude:: argparse_default_grouping.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The grouping is reflected in the separate "positional arguments" and
@@ -781,15 +780,15 @@ Create the "authentication" group with :func:`add_argument_group` and
 then add each of the authentication-related options to the group,
 instead of the base parser.
 
-.. include:: argparse_parent_with_group.py
-   :literal:
+.. literalinclude:: argparse_parent_with_group.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The program using the group-based parent lists it in the *parents*
 value, just as before.
 
-.. include:: argparse_uses_parent_with_group.py
-   :literal:
+.. literalinclude:: argparse_uses_parent_with_group.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The help output now shows the authentication options together.
@@ -820,8 +819,8 @@ Defining mutually exclusive options is a special case of the option
 grouping feature, and uses :func:`add_mutually_exclusive_group`
 instead of :func:`add_argument_group`.
 
-.. include:: argparse_mutually_exclusive.py
-   :literal:
+.. literalinclude:: argparse_mutually_exclusive.py
+   :caption:
    :start-after: #end_pymotw_header
 
 :mod:`argparse` enforces the mutual exclusivity, so that only one of
@@ -877,8 +876,8 @@ A program to work with directories on the file system might define
 commands for creating, deleting, and listing the contents of a
 directory like this:
 
-.. include:: argparse_subparsers.py
-   :literal:
+.. literalinclude:: argparse_subparsers.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The help output shows the named sub-parsers as "commands" that can be
@@ -972,8 +971,8 @@ argparse`, based on the number of required or expected arguments.
     ``+``    All, and at least one, argument
    =======  =======
 
-.. include:: argparse_nargs.py
-   :literal:
+.. literalinclude:: argparse_nargs.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The parser enforces the argument count instructions and generates an
@@ -1067,8 +1066,8 @@ told to convert the string to another type.  The *type* parameter to
 :class:`ArgumentParser` to transform the argument value from a string
 to some other type.
 
-.. include:: argparse_type.py
-   :literal:
+.. literalinclude:: argparse_type.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Any callable that takes a single string argument can be passed as
@@ -1139,8 +1138,8 @@ where the input file does not exist, must be handled by the caller.
 To limit an input argument to a value within a pre-defined set, use
 the *choices* parameter.
 
-.. include:: argparse_choices.py
-   :literal:
+.. literalinclude:: argparse_choices.py
+   :caption:
    :start-after: #end_pymotw_header
 
 If the argument to ``--mode`` is not one of the allowed values, an
@@ -1184,8 +1183,8 @@ string argument, that does not include the access mode argument.
 :class:`FileType` provides a more flexible way of specifying that an
 argument should be a file, including the mode and buffer size.
 
-.. include:: argparse_FileType.py
-   :literal:
+.. literalinclude:: argparse_FileType.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The value associated with the argument name is the open file handle.
@@ -1249,8 +1248,8 @@ defining new actions.  The constructor handles the argument
 definitions, so only :func:`__call__` needs to be overridden in the
 subclass.
 
-.. include:: argparse_custom_action.py
-   :literal:
+.. literalinclude:: argparse_custom_action.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The type of *values* depends on the value of *nargs*.  If the argument
