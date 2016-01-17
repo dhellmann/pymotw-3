@@ -19,8 +19,8 @@ Registering Exit Callbacks
 This is an example of registering a function explicitly by calling
 :func:`register`.
 
-.. include:: atexit_simple.py
-    :literal:
+.. literalinclude:: atexit_simple.py
+    :caption:
     :start-after: # end_pymotw_header
 
 Because the program does not do anything else, :func:`all_done` is
@@ -46,8 +46,8 @@ disconnect from databases, remove temporary files, etc.  Instead of
 keeping a list of resources that need to be freed, a separate clean-up
 function can be registered for each resource.
 
-.. include:: atexit_multiple.py
-    :literal:
+.. literalinclude:: atexit_multiple.py
+    :caption:
     :start-after: # end_pymotw_header
 
 The exit functions are called in the reverse of the order in which
@@ -82,8 +82,8 @@ Functions that require no arguments can be registered by using
 convenient for cleanup functions that operate on module-level global
 data.
 
-.. include:: atexit_decorator.py
-   :literal:
+.. literalinclude:: atexit_decorator.py
+   :caption:
    :start-after: # end_pymotw_header
 
 Because the function is registered as it is defined, it is also
@@ -112,8 +112,8 @@ Canceling Callbacks
 To cancel an exit callback, remove it from the registry using
 :func:`unregister`.
 
-.. include:: atexit_unregister.py
-   :literal:
+.. literalinclude:: atexit_unregister.py
+   :caption:
    :start-after: # end_pymotw_header
 
 All calls to the same callback are canceled, regardless of how many
@@ -133,8 +133,8 @@ times it has been registered.
 Removing a callback that was not previously registered is not
 considered an error.
 
-.. include:: atexit_unregister_not_registered.py
-   :literal:
+.. literalinclude:: atexit_unregister_not_registered.py
+   :caption:
    :start-after: # end_pymotw_header
 
 Because it silently ignores unknown callbacks, :func:`unregister` can
@@ -169,15 +169,15 @@ what happens when a program is killed by a signal. Two files are
 involved, the parent and the child programs. The parent starts the
 child, pauses, then kills it.
 
-.. include:: atexit_signal_parent.py
-    :literal:
+.. literalinclude:: atexit_signal_parent.py
+    :caption:
     :start-after: # end_pymotw_header
 
 The child sets up an :mod:`atexit` callback, and then sleeps until the
 signal arrives.
 
-.. include:: atexit_signal_child.py
-    :literal:
+.. literalinclude:: atexit_signal_child.py
+    :caption:
     :start-after: # end_pymotw_header
 
 When run, this is the output.
@@ -202,8 +202,8 @@ The child does not print the message embedded in :func:`not_called()`.
 If a program uses :func:`os._exit`, it can avoid having the
 :mod:`atexit` callbacks invoked.
 
-.. include:: atexit_os_exit.py
-    :literal:
+.. literalinclude:: atexit_os_exit.py
+    :caption:
     :start-after: # end_pymotw_header
 
 Because this example bypasses the normal exit path, the callback is
@@ -224,8 +224,8 @@ To ensure that the callbacks are run, allow the program to terminate
 by running out of statements to execute or by calling
 :func:`sys.exit`.
 
-.. include:: atexit_sys_exit.py
-    :literal:
+.. literalinclude:: atexit_sys_exit.py
+    :caption:
     :start-after: # end_pymotw_header
 
 This example calls :func:`sys.exit`, so the registered callbacks are
@@ -254,8 +254,8 @@ Tracebacks for exceptions raised in :mod:`atexit` callbacks are
 printed to the console and the last exception raised is re-raised to
 be the final error message of the program.
 
-.. include:: atexit_exception.py
-    :literal:
+.. literalinclude:: atexit_exception.py
+    :caption:
     :start-after: # end_pymotw_header
 
 The registration order controls the execution order. If an error in
