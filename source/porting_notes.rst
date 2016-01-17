@@ -413,7 +413,7 @@ random
 .. index::
    pair: porting; random
 
-The function ``jumpahead()`` was removed.
+The function ``jumpahead()`` was removed in Python 3.0.
 
 
 .. _porting-shelve:
