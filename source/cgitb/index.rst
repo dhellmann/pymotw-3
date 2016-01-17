@@ -21,8 +21,8 @@ to the standard error output stream with the call stack leading up to
 the error position.  This basic output frequently contains enough
 information to understand the cause of the exception and permit a fix.
 
-.. include:: cgitb_basic_traceback.py
-   :literal:
+.. literalinclude:: cgitb_basic_traceback.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This sample program has a subtle error in :func:`func2()`.
@@ -55,6 +55,7 @@ replaces :data:`sys.excepthook` with a function that gives extended
 tracebacks.
 
 .. literalinclude:: cgitb_local_vars.py
+   :caption:
    :lines: 10-11
 
 The error report from this example is much more extensive than the
@@ -198,8 +199,8 @@ The code in :mod:`cgitb` that examines the variables used in the stack
 frame leading to the error is smart enough to evaluate object
 attributes to display them, too.
 
-.. include:: cgitb_with_classes.py
-   :literal:
+.. literalinclude:: cgitb_with_classes.py
+   :caption:
    :start-after: #end_pymotw_header
 
 If a function or method includes a lot of in-line comments,
@@ -340,8 +341,8 @@ In addition to the local variables from each stack frame, :mod:`cgitb`
 shows all properties of the exception object.  Extra properties on
 custom exception types are printed as part of the error report.
 
-.. include:: cgitb_exception_properties.py
-   :literal:
+.. literalinclude:: cgitb_exception_properties.py
+   :caption:
    :start-after: #end_pymotw_header
 
 In this example, the *bad_value* property is included along with the
@@ -450,8 +451,8 @@ argument, *logdir*, to enable error logging.  When a directory name is
 provided, each exception is logged to its own file in the given
 directory.
 
-.. include:: cgitb_log_exception.py
-   :literal:
+.. literalinclude:: cgitb_log_exception.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Even though the error display is suppressed, a message is printed
