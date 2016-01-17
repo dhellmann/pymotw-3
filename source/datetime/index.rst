@@ -19,8 +19,8 @@ Time values are represented with the :class:`time` class. A
 :attr:`minute`, :attr:`second`, and :attr:`microsecond` and can also
 include time zone information.
 
-.. include:: datetime_time.py
-    :literal:
+.. literalinclude:: datetime_time.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The arguments to initialize a :class:`time` instance are optional, but
@@ -46,8 +46,8 @@ the default of ``0`` is unlikely to be correct.
 A :class:`time` instance only holds values of time, and not a date
 associated with the time.
 
-.. include:: datetime_time_minmax.py
-    :literal:
+.. literalinclude:: datetime_time_minmax.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The :attr:`min` and :attr:`max` class attributes reflect the valid
@@ -69,8 +69,8 @@ range of times in a single day.
 
 The resolution for :class:`time` is limited to whole microseconds.
 
-.. include:: datetime_time_resolution.py
-    :literal:
+.. literalinclude:: datetime_time_resolution.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Floating point values for microseconds cause a :class:`TypeError`.
@@ -99,8 +99,8 @@ class. Instances have attributes for :attr:`year`, :attr:`month`, and
 :attr:`day`. It is easy to create a date representing the current date
 using the :func:`today` class method.
 
-.. include:: datetime_date.py
-    :literal:
+.. literalinclude:: datetime_date.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example prints the current date in several formats:
@@ -136,8 +136,8 @@ timestamps or integers representing date values from the Gregorian
 calendar, where January 1 of the year 1 is ``1`` and each subsequent
 day increments the value by 1.
 
-.. include:: datetime_date_fromordinal.py
-    :literal:
+.. literalinclude:: datetime_date_fromordinal.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example illustrates the different value types used by
@@ -161,8 +161,8 @@ This example illustrates the different value types used by
 As with :class:`time`, the range of date values supported can be
 determined using the :attr:`min` and :attr:`max` attributes.
 
-.. include:: datetime_date_minmax.py
-    :literal:
+.. literalinclude:: datetime_date_minmax.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The resolution for dates is whole days.
@@ -184,8 +184,8 @@ The resolution for dates is whole days.
 Another way to create new :class:`date` instances uses the
 :func:`replace` method of an existing :class:`date`.
 
-.. include:: datetime_date_replace.py
-    :literal:
+.. literalinclude:: datetime_date_replace.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example changes the year, leaving the day and month unmodified.
@@ -213,8 +213,8 @@ and a :class:`timedelta` can be added or subtracted from a date to
 produce another date. The internal values for a :class:`timedelta` are
 stored in days, seconds, and microseconds.
 
-.. include:: datetime_timedelta.py
-    :literal:
+.. literalinclude:: datetime_timedelta.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Intermediate level values passed to the constructor are converted into
@@ -241,8 +241,8 @@ days, seconds, and microseconds.
 The full duration of a :class:`timedelta` can be retrieved as a number
 of seconds using :func:`total_seconds`.
 
-.. include:: datetime_timedelta_total_seconds.py
-   :literal:
+.. literalinclude:: datetime_timedelta_total_seconds.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The return value is a floating point number, to accommodate sub-second
@@ -271,8 +271,8 @@ Date Arithmetic
 
 Date math uses the standard arithmetic operators.
 
-.. include:: datetime_date_math.py
-    :literal:
+.. literalinclude:: datetime_date_math.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example with date objects illustrates using :class:`timedelta`
@@ -300,8 +300,8 @@ produce timedeltas (including a negative delta value).
 A :class:`timedelta` object also supports arithmetic with integers,
 floats, and other :class:`timedelta` instances.
 
-.. include:: datetime_timedelta_math.py
-   :literal:
+.. literalinclude:: datetime_timedelta_math.py
+   :caption:
    :start-after: #end_pymotw_header
 
 In this example, several multiples of a single day are computed, with
@@ -332,8 +332,8 @@ Comparing Values
 Both date and time values can be compared using the standard
 comparison operators to determine which is earlier or later.
 
-.. include:: datetime_comparing.py
-    :literal:
+.. literalinclude:: datetime_comparing.py
+    :caption:
     :start-after: #end_pymotw_header
 
 All comparison operators are supported.
@@ -365,8 +365,8 @@ and time components. As with :class:`date`, there are several
 convenient class methods to make creating :class:`datetime` instances
 from other common values.
 
-.. include:: datetime_datetime.py
-    :literal:
+.. literalinclude:: datetime_datetime.py
+    :caption:
     :start-after: #end_pymotw_header
 
 As might be expected, the :class:`datetime` instance has all of the
@@ -397,8 +397,8 @@ Just as with :class:`date`, :class:`datetime` provides convenient
 class methods for creating new instances. It also includes
 :func:`fromordinal` and :func:`fromtimestamp`.
 
-.. include:: datetime_datetime_combine.py
-    :literal:
+.. literalinclude:: datetime_datetime_combine.py
+    :caption:
     :start-after: #end_pymotw_header
 
 :func:`combine` creates :class:`datetime` instances from one
@@ -425,8 +425,8 @@ The default string representation of a datetime object uses the
 ISO-8601 format (``YYYY-MM-DDTHH:MM:SS.mmmmmm``). Alternate formats
 can be generated using :func:`strftime`.
 
-.. include:: datetime_datetime_strptime.py
-    :literal:
+.. literalinclude:: datetime_datetime_strptime.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Use :func:`datetime.strptime` to convert formatted strings to
@@ -450,8 +450,8 @@ The same formatting codes can be used with Python's `string formatting
 mini-language`_ by placing them after the ``:`` in the field
 specification of the format string.
 
-.. include:: datetime_format.py
-   :literal:
+.. literalinclude:: datetime_format.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Each datetime format code must still be prefixed with ``%``, and
@@ -561,8 +561,8 @@ not support different offset values on different days of the year,
 such as where daylight savings time applies, or where the offset from
 UTC has changed over time.
 
-.. include:: datetime_timezone.py
-   :literal:
+.. literalinclude:: datetime_timezone.py
+   :caption:
    :start-after: #end_pymotw_header
 
 To convert a datetime value from one time zone to another, use
