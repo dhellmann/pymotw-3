@@ -16,8 +16,8 @@ Compiling One Directory
 :func:`compile_dir` is used to recursively scan a directory and
 byte-compile the files within it.
 
-.. include:: compileall_compile_dir.py
-    :literal:
+.. literalinclude:: compileall_compile_dir.py
+    :caption:
     :start-after: #end_pymotw_header
 
 By default, all of the subdirectories are scanned to a depth of 10.
@@ -52,8 +52,8 @@ Ignoring Files
 To filter directories out, use the ``rx`` argument to provide a
 regular expression to match the names to exclude.
 
-.. include:: compileall_exclude_dirs.py
-    :literal:
+.. literalinclude:: compileall_exclude_dirs.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This version excludes files in the ``subdir`` subdirectory.
@@ -78,8 +78,8 @@ This version excludes files in the ``subdir`` subdirectory.
 The *maxlevels* argument controls the depth of recursion.  For example,
 to avoid recursion entirely pass ``0``.
 
-.. include:: compileall_recursion_depth.py
-    :literal:
+.. literalinclude:: compileall_recursion_depth.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Only files within the directory passed to :func:`compile_dir` are
@@ -107,8 +107,8 @@ Compiling sys.path
 All of the Python source files found in sys.path can be compiled with
 a single call to :func:`compile_path`.
 
-.. include:: compileall_path.py
-    :literal:
+.. literalinclude:: compileall_path.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example replaces the default contents of :data:`sys.path` to
@@ -141,8 +141,8 @@ Compiling Individual Files
 To compile a single file, rather than an entire directory of files,
 use :func:`compile_file`.
 
-.. include:: compileall_compile_file.py
-   :literal:
+.. literalinclude:: compileall_compile_file.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The first argument should be the name to the file, either a full path
