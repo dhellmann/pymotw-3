@@ -70,8 +70,8 @@ Wildcards
 An asterisk (``*``) matches zero or more characters in a segment of a
 name. For example, ``dir/*``.
 
-.. include:: glob_asterisk.py
-    :literal:
+.. literalinclude:: glob_asterisk.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The pattern matches every path name (file or directory) in the
@@ -102,8 +102,8 @@ to make studying the results easier.
 To list files in a subdirectory, the subdirectory must be included in
 the pattern.
 
-.. include:: glob_subdir.py
-    :literal:
+.. literalinclude:: glob_subdir.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The first case shown earlier lists the subdirectory name explicitly,
@@ -134,8 +134,8 @@ Single Character Wildcard
 A question mark (``?``) is another wildcard character. It matches any
 single character in that position in the name.
 
-.. include:: glob_question.py
-    :literal:
+.. literalinclude:: glob_question.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The previous example matches all of the filenames that begin with
@@ -167,8 +167,8 @@ Use a character range (``[a-z]``) instead of a question mark to match
 one of several characters.  This example finds all of the files with a
 digit in the name before the extension.
 
-.. include:: glob_charrange.py
-    :literal:
+.. literalinclude:: glob_charrange.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The character range ``[0-9]`` matches any single digit. The range is
@@ -198,8 +198,8 @@ the special meta-characters :mod:`glob` uses for its patterns. The
 characters "escaped" so they are not expanded or interpreted as
 special by :mod:`glob`.
 
-.. include:: glob_escape.py
-   :literal:
+.. literalinclude:: glob_escape.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Each special character is escaped by building a character range
