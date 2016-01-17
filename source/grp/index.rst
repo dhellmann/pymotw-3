@@ -39,8 +39,8 @@ including their members (where "real" is defined as having a name not
 starting with "``_``").  To load the entire password database, use
 ``getgrall()``.
 
-.. include:: grp_getgrall.py
-    :literal:
+.. literalinclude:: grp_getgrall.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The return value is a list with an undefined order, so it needs to be
@@ -107,8 +107,8 @@ Group Memberships for a User
 Another common task might be to print a list of all the groups for a
 given user:
 
-.. include:: grp_groups_for_user.py
-    :literal:
+.. literalinclude:: grp_groups_for_user.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The set of unique group names is sorted before they are printed.
@@ -133,8 +133,8 @@ Finding a Group By Name
 As with :mod:`pwd`, it is also possible to query for information about
 a specific group, either by name or numeric id.
 
-.. include:: grp_getgrnam.py
-    :literal:
+.. literalinclude:: grp_getgrnam.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The ``admin`` group has two members:
@@ -160,8 +160,8 @@ Finding a Group by ID
 To identify the group running the current process, combine
 ``getgrgid()`` with ``os.getgid()``.
 
-.. include:: grp_getgrgid_process.py
-    :literal:
+.. literalinclude:: grp_getgrgid_process.py
+    :caption:
     :start-after: #end_pymotw_header
 
 .. {{{cog
@@ -179,8 +179,8 @@ To identify the group running the current process, combine
 And to get the group name based on the permissions on a file, look up
 the group returned by :func:`os.stat`.
 
-.. include:: grp_getgrgid_fileowner.py
-    :literal:
+.. literalinclude:: grp_getgrgid_fileowner.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The file status record includes ownership and permission data for the
