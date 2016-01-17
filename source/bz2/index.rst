@@ -25,8 +25,8 @@ The simplest way to work with :mod:`bz2` is to load all of the data to
 be compressed or decompressed in memory, and then use
 :func:`compress()` and :func:`decompress()` to transform it.
 
-.. include:: bz2_memory.py
-    :literal:
+.. literalinclude:: bz2_memory.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The compressed data contains non-ASCII characters, so it needs to be
@@ -60,8 +60,8 @@ For short text, the compressed version can be significantly longer
 than the original.  While the actual results depend on the input data,
 it is interesting to observe the compression overhead.
 
-.. include:: bz2_lengths.py
-    :literal:
+.. literalinclude:: bz2_lengths.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The output lines ending with ``*`` show the points where the
@@ -93,8 +93,8 @@ for real-world use cases.  The alternative is to use :class:`BZ2Compressor`
 and :class:`BZ2Decompressor` objects to manipulate data incrementally so that
 the entire data set does not have to fit into memory.
 
-.. include:: bz2_incremental.py
-   :literal:
+.. literalinclude:: bz2_incremental.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example reads small blocks of data from a plain-text file and
@@ -134,8 +134,8 @@ Mixed Content Streams
 :class:`BZ2Decompressor` can also be used in situations where
 compressed and uncompressed data is mixed together.
 
-.. include:: bz2_mixed.py
-    :literal:
+.. literalinclude:: bz2_mixed.py
+    :caption:
     :start-after: #end_pymotw_header
 
 After decompressing all of the data, the *unused_data* attribute
@@ -162,8 +162,8 @@ Writing Compressed Files
 bzip2-compressed files using the usual methods for writing and reading
 data.
 
-.. include:: bz2_file_write.py
-    :literal:
+.. literalinclude:: bz2_file_write.py
+    :caption:
     :start-after: #end_pymotw_header
 
 To write data into a compressed file, open the file with mode ``'w'``.
@@ -190,8 +190,8 @@ argument.  Valid values range from ``1`` to ``9``, inclusive.  Lower values
 are faster and result in less compression.  Higher values are slower
 and compress more, up to a point.
 
-.. include:: bz2_file_compresslevel.py
-    :literal:
+.. literalinclude:: bz2_file_compresslevel.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The center column of numbers in the output of the script is the size
@@ -217,8 +217,8 @@ for the same input data.  Results will vary for other inputs.
 A :class:`BZ2File` instance also includes a :func:`writelines()`
 method that can be used to write a sequence of strings.
 
-.. include:: bz2_file_writelines.py
-    :literal:
+.. literalinclude:: bz2_file_writelines.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The lines should end in a newline character, as when writing to a
@@ -255,8 +255,8 @@ To read data back from previously compressed files, open the file with
 read mode (``'r'``). The value returned from :func:`read` will be a
 byte string.
 
-.. include:: bz2_file_read.py
-    :literal:
+.. literalinclude:: bz2_file_read.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example reads the file written by ``bz2_file_write.py`` from the
@@ -277,8 +277,8 @@ previous section.
 While reading a file, it is also possible to seek, and to read only part
 of the data.
 
-.. include:: bz2_file_seek.py
-    :literal:
+.. literalinclude:: bz2_file_seek.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The :func:`seek()` position is relative to the *uncompressed* data, so
@@ -312,8 +312,8 @@ necessary. These extra steps can be avoided by using :func:`bz2.open`,
 which sets up an :class:`io.TextIOWrapper` to handle the encoding or
 decoding automatically.
 
-.. include:: bz2_unicode.py
-   :literal:
+.. literalinclude:: bz2_unicode.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The file handle returned by :func:`open` supports :func:`seek`, but
@@ -347,6 +347,7 @@ to :func:`compress()` or :func:`decompress()` does not result in a
 complete block of compressed or uncompressed output.
 
 .. literalinclude:: bz2_server.py
+   :caption:
    :lines: 9-52
 
 The main program starts a server in a thread, combining
@@ -358,8 +359,7 @@ The main program starts a server in a thread, combining
 It then opens a socket to communicate with the server as a client, and
 requests the file (defaulting to ``lorem.txt``) which contains:
 
-.. include:: lorem.txt
-   :literal:
+.. literalinclude:: lorem.txt
 
 .. warning::
 
