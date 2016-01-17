@@ -31,8 +31,8 @@ underlying libraries. For lists of each, look at
 :data:`algorithms_guaranteed` and :data:`algorithms_available`
 respectively.
 
-.. include:: hashlib_algorithms.py
-   :literal:
+.. literalinclude:: hashlib_algorithms.py
+   :caption:
    :start-after: #end_pymotw_header
 
 .. {{{cog
@@ -61,8 +61,8 @@ Sample Data
 
 All of the examples in this section use the same sample data:
 
-.. include:: hashlib_data.py
-    :literal:
+.. literalinclude:: hashlib_data.py
+    :caption:
     :start-after: #end_pymotw_header
 
 
@@ -74,8 +74,8 @@ unicode string converted to a byte string), first create the hash
 object, then add the data and call :func:`digest` or
 :func:`hexdigest`.
 
-.. include:: hashlib_md5.py
-    :literal:
+.. literalinclude:: hashlib_md5.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example uses the :func:`hexdigest()` method instead of
@@ -99,8 +99,8 @@ SHA1 Example
 
 A SHA1 digest is calculated in the same way.
 
-.. include:: hashlib_sha1.py
-    :literal:
+.. literalinclude:: hashlib_sha1.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The digest value is different in this example because the algorithm
@@ -128,8 +128,8 @@ useful, for example, to be able to store the hash type in a
 configuration file. In those cases, use :func:`new()` to create a hash
 calculator.
 
-.. include:: hashlib_new.py
-    :literal:
+.. literalinclude:: hashlib_new.py
+    :caption:
     :start-after: #end_pymotw_header
 
 When run with a variety of arguments:
@@ -171,8 +171,8 @@ repeatedly. Each time, the digest is updated based on the additional
 text fed in. Updating incrementally is more efficient than reading an
 entire file into memory, and produces the same results.
 
-.. include:: hashlib_update.py
-    :literal:
+.. literalinclude:: hashlib_update.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example demonstrates how to update a digest incrementally as data
