@@ -23,8 +23,8 @@ in the more readable :const:`sys.version_info` (a five-part namedtuple
 representing just the version number). The separate C API version used
 by the current interpreter is saved in :const:`sys.api_version`.
 
-.. include:: sys_version_values.py
-    :literal:
+.. literalinclude:: sys_version_values.py
+    :caption:
     :start-after: #end_pymotw_header
 
 All of the values depend on the actual interpreter used to run the
@@ -52,8 +52,8 @@ sample program.
 The operating system platform used to build the interpreter is saved
 as :const:`sys.platform`.
 
-.. include:: sys_platform.py
-    :literal:
+.. literalinclude:: sys_platform.py
+    :caption:
     :start-after: #end_pymotw_header
 
 For most UNIX systems, the value comes from combining the output of
@@ -87,8 +87,8 @@ Python language.  :data:`sys.implementation` is provided to detect the
 current implementation for libraries that need to work around any
 differences in interpreters.
 
-.. include:: sys_implementation.py
-   :literal:
+.. literalinclude:: sys_implementation.py
+   :caption:
    :start-after: #end_pymotw_header
 
 :data:`sys.implementation.version` is the same as
@@ -144,8 +144,8 @@ Flags`.
 Some of these are available for programs to check through
 :const:`sys.flags`.
 
-.. include:: sys_flags.py
-    :literal:
+.. literalinclude:: sys_flags.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Experiment with ``sys_flags.py`` to learn how the command line options
@@ -180,8 +180,8 @@ different for some operating systems, so there is a separate way to
 retrieve the file system setting.  :func:`getfilesystemencoding`
 returns an OS-specific (*not* file system-specific) value.
 
-.. include:: sys_unicode.py
-    :literal:
+.. literalinclude:: sys_unicode.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Rather than relying on the global default encoding, most Unicode
@@ -238,8 +238,8 @@ Either or both prompt can be changed to a different string.
 Alternately, any object that can be converted to a string (via
 ``__str__``) can be used for the prompt.
 
-.. include:: sys_ps1.py
-    :literal:
+.. literalinclude:: sys_ps1.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The :class:`LineCounter` keeps track of how many times it has been
@@ -266,8 +266,8 @@ Display Hook
 time the user enters an expression.  The *result* of the expression is
 passed as the only argument to the function.
 
-.. include:: sys_displayhook.py
-    :literal:
+.. literalinclude:: sys_displayhook.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The default value (saved in :data:`sys.__displayhook__`) prints the
@@ -324,8 +324,8 @@ that might be set based on the interpreter location.
 installation.  It usually includes ``bin`` and ``lib`` directories for
 executables and installed modules, respectively.
 
-.. include:: sys_locations.py
-    :literal:
+.. literalinclude:: sys_locations.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example output was produced on a Mac running a framework build

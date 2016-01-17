@@ -19,8 +19,8 @@ passed to the program being run.  Any remaining options and arguments,
 including the name of the script itself, are saved to
 :const:`sys.argv` in case the program does need to use them.
 
-.. include:: sys_argv.py
-    :literal:
+.. literalinclude:: sys_argv.py
+    :caption:
     :start-after: #end_pymotw_header
 
 In the third example, the ``-u`` option is understood by the
@@ -60,8 +60,8 @@ Input and Output Steams
 Following the UNIX paradigm, Python programs can access three file
 descriptors by default.
 
-.. include:: sys_stdio.py
-    :literal:
+.. literalinclude:: sys_stdio.py
+    :caption:
     :start-after: #end_pymotw_header
 
 :const:`stdin` is the standard way to read input, usually from a
@@ -111,8 +111,8 @@ Returning Status
 To return an exit code from a program, pass an integer value to
 :func:`sys.exit`.
 
-.. include:: sys_exit.py
-    :literal:
+.. literalinclude:: sys_exit.py
+    :caption:
     :start-after: #end_pymotw_header
 
 A nonzero value means the program exited with an error.

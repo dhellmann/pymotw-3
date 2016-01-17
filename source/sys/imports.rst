@@ -25,8 +25,8 @@ Imported Modules
 :data:`sys.modules` is a dictionary mapping the names of imported
 modules to the module object holding the code.
 
-.. include:: sys_modules.py
-    :literal:
+.. literalinclude:: sys_modules.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The contents of :data:`sys.modules` change as new modules are imported.
@@ -63,8 +63,8 @@ managed in :data:`sys.modules` because they were not technically
 imported. The only way to find the available built-in modules is
 through :data:`sys.builtin_module_names`.
 
-.. include:: sys_builtins.py
-    :literal:
+.. literalinclude:: sys_builtins.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The output of this script will vary, especially if run with a
@@ -104,8 +104,8 @@ The search path for modules is managed as a Python list saved in
 of the script used to start the application and the current working
 directory.
 
-.. include:: sys_path_show.py
-    :literal:
+.. literalinclude:: sys_path_show.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The first directory in the search path is the home for the sample
@@ -146,8 +146,8 @@ colon-separated list of directories.
 A program can also modify its path by adding elements to
 :data:`sys.path` directly.
 
-.. include:: sys_path_modify.py
-    :literal:
+.. literalinclude:: sys_path_modify.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Reloading an imported module re-imports the file, and uses the same
@@ -191,8 +191,8 @@ each part of the path is given to a finder until one claims support
 finder is then responsible for searching data storage represented by
 its path entry for named modules.
 
-.. include:: sys_path_hooks_noisy.py
-    :literal:
+.. literalinclude:: sys_path_hooks_noisy.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example illustrates how the finders are instantiated and
@@ -234,8 +234,8 @@ by :mod:`shelve`.
 First, a script is used to populate the shelf with a package
 containing a sub-module and sub-package.
 
-.. include:: sys_shelve_importer_create.py
-    :literal:
+.. literalinclude:: sys_shelve_importer_create.py
+    :caption:
     :start-after: #end_pymotw_header
 
 A real packaging script would read the contents from the file system,
@@ -263,16 +263,16 @@ this.
 The custom importer needs to provide finder and loader classes that
 know how to look in a shelf for the source of a module or package.
 
-.. include:: sys_shelve_importer.py
-    :literal:
+.. literalinclude:: sys_shelve_importer.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Now :class:`ShelveFinder` and :class:`ShelveLoader` can be used to
 import code from a shelf. For example, importing the :mod:`package`
 just created:
 
-.. include:: sys_shelve_importer_package.py
-    :literal:
+.. literalinclude:: sys_shelve_importer_package.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The shelf is added to the import path the first time an import occurs
@@ -325,8 +325,8 @@ Custom Package Importing
 
 Loading other modules and sub-packages proceeds in the same way.
 
-.. include:: sys_shelve_importer_module.py
-    :literal:
+.. literalinclude:: sys_shelve_importer_module.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The finder receives the entire dotted name of the module to load, and
@@ -415,8 +415,8 @@ Reloading Modules in a Custom Importer
 Reloading a module is handled slightly differently. Instead of
 creating a new module object, the existing object is re-used.
 
-.. include:: sys_shelve_importer_reload.py
-    :literal:
+.. literalinclude:: sys_shelve_importer_reload.py
+    :caption:
     :start-after: #end_pymotw_header
 
 By re-using the same object, existing references to the module are
@@ -464,8 +464,8 @@ Handling Import Errors
 When a module cannot be located by any finder, :class:`ImportError`
 is raised by the main import code.
 
-.. include:: sys_shelve_importer_missing.py
-    :literal:
+.. literalinclude:: sys_shelve_importer_missing.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Other errors during the import are propagated.
@@ -510,8 +510,8 @@ associated with the package without considering how the package is
 actually installed (especially without assuming that the package is
 stored as files on a file system).
 
-.. include:: sys_shelve_importer_get_data.py
-    :literal:
+.. literalinclude:: sys_shelve_importer_get_data.py
+    :caption:
     :start-after: #end_pymotw_header
 
 :func:`get_data` takes a path based on the module or package that owns
@@ -568,8 +568,8 @@ become expensive. To save time, :data:`sys.path_importer_cache` is
 maintained as a mapping between a path entry and the loader that can
 use the value to find modules.
 
-.. include:: sys_path_importer_cache.py
-    :literal:
+.. literalinclude:: sys_path_importer_cache.py
+    :caption:
     :start-after: #end_pymotw_header
 
 A :class:`FileFinder` is used for path locations found on the file
@@ -625,8 +625,8 @@ the same as for a regular path. The difference is that the metafinder
 is not limited to a single entry in :data:`sys.path` -- it can search
 anywhere at all.
 
-.. include:: sys_meta_path.py
-    :literal:
+.. literalinclude:: sys_meta_path.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Each finder on the meta-path is interrogated before :data:`sys.path`

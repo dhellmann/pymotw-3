@@ -24,8 +24,8 @@ the interval with :func:`sys.setswitchinterval` may have an impact on
 the performance of an application, depending on the nature of the
 operations being performed.
 
-.. include:: sys_switchinterval.py
-    :literal:
+.. literalinclude:: sys_switchinterval.py
+    :caption:
     :start-after: #end_pymotw_header
 
 When the switch interval is less than the amount of time a thread
@@ -69,6 +69,7 @@ exactly where a thread is stopped.
 
 .. literalinclude:: sys_current_frames.py
    :linenos:
+   :caption:
    :start-after: #end_pymotw_header
 
 The dictionary returned by :func:`sys._current_frames` is keyed on the

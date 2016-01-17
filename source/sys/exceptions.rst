@@ -18,8 +18,8 @@ level.  Another way to achieve the same thing is by setting the
 error type, error value, and traceback) and let it deal with unhandled
 errors.
 
-.. include:: sys_excepthook.py
-    :literal:
+.. literalinclude:: sys_excepthook.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Since there is no :command:`try:except` block around the line where
@@ -57,8 +57,8 @@ traceback.  Using :func:`exc_info` is preferred over the old form
 (with :const:`exc_type`, :const:`exc_value`, and
 :const:`exc_traceback`) because it is thread-safe.
 
-.. include:: sys_exc_info.py
-    :literal:
+.. literalinclude:: sys_exc_info.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example avoids introducing a circular reference between the

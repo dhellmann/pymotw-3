@@ -15,8 +15,8 @@ automatic memory management.  An object is automatically marked to be
 collected when its reference count drops to zero.  To examine the
 reference count of an existing object, use :func:`getrefcount`.
 
-.. include:: sys_getrefcount.py
-    :literal:
+.. literalinclude:: sys_getrefcount.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The value reported is actually one higher than expected because there
@@ -50,8 +50,8 @@ memory leak, but it is not enough to determine what objects are
 consuming the *most* memory.  That requires knowledge about how big
 objects are.
 
-.. include:: sys_getsizeof.py
-    :literal:
+.. literalinclude:: sys_getsizeof.py
+    :caption:
     :start-after: #end_pymotw_header
 
 :func:`getsizeof` reports the size of an object in bytes.
@@ -80,8 +80,8 @@ objects are.
 The reported size for a custom class does not include the size of the
 attribute values.
 
-.. include:: sys_getsizeof_object.py
-    :literal:
+.. literalinclude:: sys_getsizeof_object.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This can give a false impression of the amount of memory being
@@ -104,8 +104,8 @@ For a more complete estimate of the space used by a class, provide a
 :func:`__sizeof__` method to compute the value by aggregating the
 sizes of attributes of an object.
 
-.. include:: sys_getsizeof_custom.py
-    :literal:
+.. literalinclude:: sys_getsizeof_custom.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This version adds the base size of the object to the sizes of all of
@@ -132,8 +132,8 @@ eliminate this situation, the interpreter provides a way to control
 the maximum recursion depth using :func:`setrecursionlimit` and
 :func:`getrecursionlimit`.
 
-.. include:: sys_recursionlimit.py
-    :literal:
+.. literalinclude:: sys_recursionlimit.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Once the recursion limit is reached, the interpreter raises a
@@ -172,8 +172,8 @@ Along with the runtime configurable values, :mod:`sys` includes
 variables defining the maximum values for types that vary from system
 to system.
 
-.. include:: sys_maximums.py
-    :literal:
+.. literalinclude:: sys_maximums.py
+    :caption:
     :start-after: #end_pymotw_header
 
 :const:`maxsize` is the maximum size of a list, dictionary, string, or
@@ -201,8 +201,8 @@ The structure :data:`float_info` contains information about the
 floating-point type representation used by the interpreter, based on
 the underlying system's :c:type:`float` implementation.
 
-.. include:: sys_float_info.py
-    :literal:
+.. literalinclude:: sys_float_info.py
+    :caption:
     :start-after: #end_pymotw_header
 
 These values depend on the compiler and underlying system.  These
@@ -247,8 +247,8 @@ Integer Values
 The structure :data:`int_info` holds information about the internal
 representation of integers used by the interpreter.
 
-.. include:: sys_int_info.py
-   :literal:
+.. literalinclude:: sys_int_info.py
+   :caption:
    :start-after: #end_pymotw_header
 
 These examples were produced on OS X 10.9.5 on an Intel Core i7.
@@ -283,8 +283,8 @@ Byte Ordering
 
 :const:`byteorder` is set to the native byte order.
 
-.. include:: sys_byteorder.py
-   :literal:
+.. literalinclude:: sys_byteorder.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The value is either ``big`` for big-endian or ``little`` for
