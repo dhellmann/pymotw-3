@@ -21,8 +21,8 @@ several common difference formats.
 The examples in this section will all use this common test data in the
 ``difflib_data.py`` module:
 
-.. include:: difflib_data.py
-    :literal:
+.. literalinclude:: difflib_data.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Comparing Bodies of Text
@@ -51,8 +51,8 @@ Breaking the text up into a sequence of individual lines before
 passing it to :func:`compare` produces more readable output than
 passing in large strings.
 
-.. include:: difflib_differ.py
-    :literal:
+.. literalinclude:: difflib_differ.py
+    :caption:
     :start-after: #end_pymotw_header
 
 .. {{{cog
@@ -103,8 +103,8 @@ While the :class:`Differ` class shows all of the input lines, a
 *unified diff* only includes modified lines and a bit of context. The
 :func:`unified_diff` function produces this sort of output.
 
-.. include:: difflib_unified.py
-    :literal:
+.. literalinclude:: difflib_unified.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The *lineterm* argument is used to tell :func:`unified_diff` to skip
@@ -155,8 +155,8 @@ characters within a line should be ignored. These parameters can be
 used to skip over markup or whitespace changes in two versions of a
 file, for example.
 
-.. include:: difflib_junk.py
-    :literal:
+.. literalinclude:: difflib_junk.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The default for :class:`Differ` is to not ignore any lines or
@@ -200,8 +200,8 @@ types, as long as the values are hashable. It uses an algorithm to
 identify the longest contiguous matching blocks from the sequences,
 eliminating "junk" values that do not contribute to the real data.
 
-.. include:: difflib_seq.py
-    :literal:
+.. literalinclude:: difflib_seq.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example compares two lists of integers and uses
