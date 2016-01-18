@@ -11,16 +11,19 @@ import random
 import itertools
 
 FACE_CARDS = ('J', 'Q', 'K', 'A')
-SUITS = ('H', 'D', 'C', 'S')
+SUITS = ('\u2665', '\u2666', '\u2663', '\u2660')
 
 
 def new_deck():
-    return list(
-        itertools.product(
+    return [
+        # Always use 2 places for the value, so the strings
+        # are a consistent width.
+        '{:>2}{}'.format(*c)
+        for c in itertools.product(
             itertools.chain(range(2, 11), FACE_CARDS),
             SUITS,
         )
-    )
+    ]
 
 
 def show_deck(deck):
@@ -29,7 +32,7 @@ def show_deck(deck):
         row = p_deck[:13]
         p_deck = p_deck[13:]
         for j in row:
-            print('{:>2}{}'.format(*j), end=' ')
+            print(j, end=' ')
         print()
 
 # Make a new deck, with the cards in order
@@ -54,7 +57,7 @@ print('\nHands:')
 for n, h in enumerate(hands):
     print('{}:'.format(n + 1), end=' ')
     for c in h:
-        print('{:>2}{}'.format(*c), end=' ')
+        print(c, end=' ')
     print()
 
 # Show the remaining deck
