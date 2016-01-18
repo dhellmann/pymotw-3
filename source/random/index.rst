@@ -45,7 +45,7 @@ numbers.
 .. {{{end}}}
 
 To generate numbers in a specific numerical range, use :func:`uniform`
-instead.  
+instead.
 
 .. literalinclude:: random_uniform.py
    :caption:
@@ -71,7 +71,7 @@ min) * random()``.
 Seeding
 =======
 
-:func:`random` produces different values each time it is called, and
+:func:`random` produces different values each time it is called and
 has a very large period before it repeats any numbers.  This is useful
 for producing unique values or variations, but there are times when
 having the same data set available to be processed in different ways is
@@ -90,7 +90,7 @@ to produce pseudorandom numbers, and since the formula is
 deterministic it also sets the full sequence produced after the seed
 is changed.  The argument to :func:`seed` can be any hashable object.
 The default is to use a platform-specific source of randomness, if one
-is available.  Otherwise the current time is used.
+is available.  Otherwise, the current time is used.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'random_seed.py'))
@@ -251,7 +251,7 @@ Permutations
 A simulation of a card game needs to mix up the deck of cards and then
 deal them to the players, without using the same card more than
 once.  Using :func:`choice` could result in the same card being dealt
-twice, so instead the deck can be mixed up with :func:`shuffle` and
+twice, so instead, the deck can be mixed up with :func:`shuffle` and
 then individual cards removed as they are dealt.
 
 .. literalinclude:: random_shuffle.py
@@ -271,7 +271,6 @@ cannot be dealt again.
 
 	$ python3 random_shuffle.py
 	
-	🂡
 	Initial deck:
 	 2♥  2♦  2♣  2♠  3♥  3♦  3♣  3♠  4♥  4♦  4♣  4♠  5♥ 
 	 5♦  5♣  5♠  6♥  6♦  6♣  6♠  7♥  7♦  7♣  7♠  8♥  8♦ 
@@ -313,23 +312,30 @@ The algorithm for producing the result set takes into account the
 sizes of the input and the sample requested to produce the result as
 efficiently as possible.
 
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'random_sample.py'))
+.. cog.out(run_script(cog.inFile, 'random_sample.py', include_prefix=False))
+.. }}}
+
 ::
 
-	$ python random_sample.py
+	$ python3 random_sample.py
+	
+	unfulfillment
+	outsharpen
+	roundabout
+	pickee
+	Wisconsinite
 
-	pleasureman
-	consequency
-	docibility
-	youdendrift
-	Ituraean
+	$ python3 random_sample.py
+	
+	precontemporary
+	friend
+	preinterfere
+	Himantopus
+	milliary
 
-	$ python random_sample.py
-
-	jigamaree
-	readingdom
-	sporidium
-	pansylike
-	foraminiferan
+.. {{{end}}}
 
 
 Multiple Simultaneous Generators
