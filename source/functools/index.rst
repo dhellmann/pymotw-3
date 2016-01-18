@@ -541,6 +541,95 @@ the function, a :class:`TypeError` is raised.
 
 .. {{{end}}}
 
+Reducing a Data Set
+===================
+
+The :func:`reduce` function takes a callable and a sequence of data as
+input and produces a single value as output based on invoking the
+callable with the values from the sequence and accumulating the
+resulting output.
+
+.. literalinclude:: functools_reduce.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+This example adds up the numbers in the input sequence.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'functools_reduce.py'))
+.. }}}
+
+::
+
+	$ python3 functools_reduce.py
+	
+	range(1, 5)
+	do_reduce(1, 2)
+	do_reduce(3, 3)
+	do_reduce(6, 4)
+	result: 10
+
+.. {{{end}}}
+
+The optional *initializer* argument is placed at the front of the
+sequence and processed along with the other items. This can be used to
+update a previously computed value with new inputs.
+
+.. literalinclude:: functools_reduce_initializer.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+In this example a previous sum of ``99`` is used to initialize the
+value computed by :func:`reduce`.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'functools_reduce_initializer.py'))
+.. }}}
+
+::
+
+	$ python3 functools_reduce_initializer.py
+	
+	range(1, 5)
+	do_reduce(99, 1)
+	do_reduce(100, 2)
+	do_reduce(102, 3)
+	do_reduce(105, 4)
+	result: 109
+
+.. {{{end}}}
+
+Sequences with a single item automatically reduce to that value when
+no initializer is present. Empty lists generate an error, unless an
+initializer is provided.
+
+.. literalinclude:: functools_reduce_short_sequences.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Because the initializer argument serves as a default, but is also
+combined with the new values if the input sequence is not empty, it is
+important to consider carefully whether to use it. When it does not
+make sense to combine the default with new values, it is better to
+catch the :class:`TypeError` rather than passing an initializer.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'functools_reduce_short_sequences.py'))
+.. }}}
+
+::
+
+	$ python3 functools_reduce_short_sequences.py
+	
+	Single item in sequence: 1
+	do_reduce(99, 1)
+	Single item in sequence with initializer: 100
+	Empty sequence with initializer: 99
+	ERROR: reduce() of empty sequence with no initial value
+
+.. {{{end}}}
+
+
 
 .. seealso::
 
