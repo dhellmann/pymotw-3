@@ -477,7 +477,49 @@ are run again, the values must be recomputed.
 
 .. {{{end}}}
 
+To prevent the cache from growing without bounds in a long-running
+process, it is given a maximum size. The default is 128 entries, but
+that can be changed for each cache using the ``maxsize`` argument.
 
+.. literalinclude:: functools_lru_cache_expire.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+In this example the cache size is set to 2 entries. When the third set
+of unique arguments (``3, 4``) is used the oldest item in the cache is
+dropped and replaced with the new result.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'functools_lru_cache_expire.py'))
+.. }}}
+
+::
+
+	$ python3 functools_lru_cache_expire.py
+	
+	Establish the cache
+	(1, 2) called expensive(1, 2)
+	(2, 3) called expensive(2, 3)
+	
+	Use cached items
+	(1, 2) cache hit
+	(2, 3) cache hit
+	
+	Compute a new value, triggering cache expiration
+	(3, 4) called expensive(3, 4)
+	
+	Cache still contains one old item
+	(2, 3) cache hit
+	
+	Oldest item needs to be recomputed
+	(1, 2) called expensive(1, 2)
+
+.. {{{end}}}
+
+
+
+.. expiring items from the cache
+.. args that can't be hashed
 
 .. seealso::
 
