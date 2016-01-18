@@ -516,10 +516,31 @@ dropped and replaced with the new result.
 
 .. {{{end}}}
 
+The keys for the cache managed by :func:`lru_cache` must be hashable,
+so all of the arguments to the function wrapped with the cache lookup
+must be hashable.
 
+.. literalinclude:: functools_lru_cache_arguments.py
+   :caption:
+   :start-after: #end_pymotw_header
 
-.. expiring items from the cache
-.. args that can't be hashed
+If any object that can't be hashed is passed in to
+the function, a :class:`TypeError` is raised.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'functools_lru_cache_arguments.py'))
+.. }}}
+
+::
+
+	$ python3 functools_lru_cache_arguments.py
+	
+	(1, 2) called expensive(1, 2)
+	([1], 2) ERROR: unhashable type: 'list'
+	(1, {'2': 'two'}) ERROR: unhashable type: 'dict'
+
+.. {{{end}}}
+
 
 .. seealso::
 
