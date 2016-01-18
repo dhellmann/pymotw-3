@@ -6,7 +6,6 @@
     :synopsis: Tools for working with functions.
 
 :Purpose: Functions that operate on other functions.
-:Python Version: 2.5 and later
 
 The :mod:`functools` module provides tools for adapting or extending
 functions and other callable objects, without completely rewriting
@@ -32,37 +31,39 @@ function :func:`myfunc`.  The output of :func:`show_details` includes
 the :attr:`func`, :attr:`args`, and :attr:`keywords` attributes of the
 partial object.
 
-.. include:: functools_partial.py
-    :literal:
+.. literalinclude:: functools_partial.py
+    :caption:
     :start-after: #end_pymotw_header
 
 At the end of the example, the first :class:`partial` created is
 invoked without passing a value for *a*, causing an exception.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'functools_partial.py', ignore_error=True, break_lines_at=69))
+.. cog.out(run_script(cog.inFile, 'functools_partial.py', ignore_error=True))
 .. }}}
 
 ::
 
-	$ python functools_partial.py
+	$ python3 functools_partial.py
 	
 	myfunc:
-	  object: <function myfunc at 0x100d9bf50>
+	  object: <function myfunc at 0x101257f28>
 	  __name__: myfunc
 	  called myfunc with: ('a', 3)
 	
 	partial with named default:
-	  object: <functools.partial object at 0x100d993c0>
-	  func: <function myfunc at 0x100d9bf50>
+	  object: functools.partial(<function myfunc at 0x101257f28>, b=
+	4)
+	  func: <function myfunc at 0x101257f28>
 	  args: ()
 	  keywords: {'b': 4}
 	  called myfunc with: ('passing a', 4)
 	  called myfunc with: ('override b', 5)
 	
 	partial with defaults:
-	  object: <functools.partial object at 0x100d99418>
-	  func: <function myfunc at 0x100d9bf50>
+	  object: functools.partial(<function myfunc at 0x101257f28>, 'd
+	efault a', b=99)
+	  func: <function myfunc at 0x101257f28>
 	  args: ('default a',)
 	  keywords: {'b': 99}
 	  called myfunc with: ('default a', 99)
@@ -72,7 +73,7 @@ invoked without passing a value for *a*, causing an exception.
 	Traceback (most recent call last):
 	  File "functools_partial.py", line 51, in <module>
 	    p1()
-	TypeError: myfunc() takes at least 1 argument (1 given)
+	TypeError: myfunc() missing 1 required positional argument: 'a'
 
 .. {{{end}}}
 
@@ -87,8 +88,8 @@ functions are more difficult to debug. Using :func:`update_wrapper`,
 copies or adds attributes from the original function to the
 :class:`partial` object.
 
-.. include:: functools_update_wrapper.py
-    :literal:
+.. literalinclude:: functools_update_wrapper.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The attributes added to the wrapper are defined in
@@ -96,30 +97,33 @@ The attributes added to the wrapper are defined in
 values to be modified.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'functools_update_wrapper.py', break_lines_at=69))
+.. cog.out(run_script(cog.inFile, 'functools_update_wrapper.py', line_break_mode='wrap'))
 .. }}}
 
 ::
 
-	$ python functools_update_wrapper.py
+	$ python3 functools_update_wrapper.py
 	
 	myfunc:
-	  object: <function myfunc at 0x100da2050>
+	  object: <function myfunc at 0x100757f28>
 	  __name__: myfunc
 	  __doc__ 'Docstring for myfunc().'
 	
 	raw wrapper:
-	  object: <functools.partial object at 0x100d993c0>
+	  object: functools.partial(<function myfunc at 0x100757f28>,
+	b=4)
 	  __name__: (no __name__)
-	  __doc__ 'partial(func, *args, **keywords) - new function with parti
-	al application\n    of the given arguments and keywords.\n'
+	  __doc__ 'partial(func, *args, **keywords) - new function with
+	partial application\n    of the given arguments and keywords.\n'
 	
 	Updating wrapper:
-	  assign: ('__module__', '__name__', '__doc__')
+	  assign: ('__module__', '__name__', '__qualname__', '__doc__',
+	'__annotations__')
 	  update: ('__dict__',)
 	
 	updated wrapper:
-	  object: <functools.partial object at 0x100d993c0>
+	  object: functools.partial(<function myfunc at 0x100757f28>,
+	b=4)
 	  __name__: myfunc
 	  __doc__ 'Docstring for myfunc().'
 	
@@ -131,64 +135,65 @@ Other Callables
 
 Partials work with any callable object, not just standalone functions.
 
-.. include:: functools_method.py
-    :literal:
+.. literalinclude:: functools_method.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example creates partials from an instance, and methods of an
 instance.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'functools_method.py', break_lines_at=68))
+.. cog.out(run_script(cog.inFile, 'functools_method.py'))
 .. }}}
 
 ::
 
-	$ python functools_method.py
+	$ python3 functools_method.py
 	
 	method1 straight:
-	  object: <bound method MyClass.method1 of <__main__.MyClass object 
-	at 0x100da3550>>
+	  object: <bound method MyClass.method1 of <__main__.MyClass obj
+	ect at 0x1012de780>>
 	  __name__: method1
 	  __doc__ 'Docstring for method1().'
-	  called method1 with: (<__main__.MyClass object at 0x100da3550>, 'n
-	o default for a', 3)
+	  called method1 with: (<__main__.MyClass object at 0x1012de780>
+	, 'no default for a', 3)
 	
 	method1 wrapper:
-	  object: <functools.partial object at 0x100d99470>
+	  object: functools.partial(<bound method MyClass.method1 of <__
+	main__.MyClass object at 0x1012de780>>, b=4)
 	  __name__: method1
 	  __doc__ 'Docstring for method1().'
-	  called method1 with: (<__main__.MyClass object at 0x100da3550>, 'a
-	 goes here', 4)
+	  called method1 with: (<__main__.MyClass object at 0x1012de780>
+	, 'a goes here', 4)
 	
 	method2:
-	  object: <bound method MyClass.method2 of <__main__.MyClass object 
-	at 0x100da3550>>
+	  object: <bound method MyClass.method2 of <__main__.MyClass obj
+	ect at 0x1012de780>>
 	  __name__: method2
 	  __doc__ 'Docstring for method2'
-	  called method2 with: (<__main__.MyClass object at 0x100da3550>, 'n
-	o default for c', 6)
+	  called method2 with: (<__main__.MyClass object at 0x1012de780>
+	, 'no default for c', 6)
 	
 	wrapped method2:
-	  object: <functools.partial object at 0x100d993c0>
+	  object: functools.partial(<function MyClass.method2 at 0x1012e
+	2048>, 'wrapped c')
 	  __name__: method2
 	  __doc__ 'Docstring for method2'
 	  called method2 with: ('wrapped c', 'no default for c', 6)
-	
 	instance:
-	  object: <__main__.MyClass object at 0x100da3550>
+	  object: <__main__.MyClass object at 0x1012de780>
 	  __name__: (no __name__)
 	  __doc__ 'Demonstration class for functools'
-	  called object with: (<__main__.MyClass object at 0x100da3550>, 'no
-	 default for e', 6)
-	
+	  called object with: (<__main__.MyClass object at 0x1012de780>,
+	 'no default for e', 6)
 	instance wrapper:
-	  object: <functools.partial object at 0x100d994c8>
+	  object: functools.partial(<__main__.MyClass object at 0x1012de
+	780>, f=7)
 	  __name__: (no __name__)
-	  __doc__ 'partial(func, *args, **keywords) - new function with part
-	ial application\n    of the given arguments and keywords.\n'
-	  called object with: (<__main__.MyClass object at 0x100da3550>, 'e 
-	goes here', 7)
+	  __doc__ 'partial(func, *args, **keywords) - new function with 
+	partial application\n    of the given arguments and keywords.\n'
+	  called object with: (<__main__.MyClass object at 0x1012de780>,
+	 'e goes here', 7)
 
 .. {{{end}}}
 
@@ -200,8 +205,8 @@ Updating the properties of a wrapped callable is especially useful
 when used in a decorator, since the transformed function ends up with
 properties of the original "bare" function.
 
-.. include:: functools_wraps.py
-    :literal:
+.. literalinclude:: functools_wraps.py
+    :caption:
     :start-after: #end_pymotw_header
 
 :mod:`functools` provides a decorator, :func:`wraps`, that applies
@@ -213,10 +218,10 @@ properties of the original "bare" function.
 
 ::
 
-	$ python functools_wraps.py
+	$ python3 functools_wraps.py
 	
 	myfunc:
-	  object: <function myfunc at 0x100da3488>
+	  object: <function myfunc at 0x1024cdf28>
 	  __name__: myfunc
 	  __doc__ 'myfunc() is not complicated'
 	
@@ -224,7 +229,7 @@ properties of the original "bare" function.
 	  myfunc: ('unwrapped, passing b', 3)
 	
 	wrapped_myfunc:
-	  object: <function myfunc at 0x100da3500>
+	  object: <function myfunc at 0x1024e2048>
 	  __name__: myfunc
 	  __doc__ 'myfunc() is not complicated'
 	
@@ -234,7 +239,7 @@ properties of the original "bare" function.
 	     myfunc: ('args to wrapped', 4)
 	
 	decorated_myfunc:
-	  object: <function decorated_myfunc at 0x100da35f0>
+	  object: <function decorated_myfunc at 0x1024e2158>
 	  __name__: decorated_myfunc
 	  __doc__ None
 	
@@ -248,15 +253,15 @@ properties of the original "bare" function.
 Comparison
 ==========
 
-Under Python 2, classes can define a :func:`__cmp__` method that
+Under Python 2, classes could define a :func:`__cmp__` method that
 returns ``-1``, ``0``, or ``1`` based on whether the object is less
 than, equal to, or greater than the item being compared.  Python 2.1
-introduces the *rich comparison* methods API (:func:`__lt__`,
+introduced the *rich comparison* methods API (:func:`__lt__`,
 :func:`__le__`, :func:`__eq__`, :func:`__ne__`, :func:`__gt__`, and
 :func:`__ge__`), which perform a single comparison operation and return
 a boolean value.  Python 3 deprecated :func:`__cmp__` in favor of
-these new methods, so :mod:`functools` provides tools to make it
-easier to write Python 2 classes that comply with the new comparison
+these new methods and :mod:`functools` provides tools to make it
+easier to write classes that comply with the new comparison
 requirements in Python 3.
 
 Rich Comparison
@@ -269,8 +274,8 @@ no point in manually creating each of the rich comparison methods.
 The :func:`total_ordering` class decorator takes a class that provides
 some of the methods, and adds the rest of them.
 
-.. include:: functools_total_ordering.py
-   :literal:
+.. literalinclude:: functools_total_ordering.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The class must provide implementation of :func:`__eq__` and one other
@@ -283,21 +288,22 @@ rest of the methods that work by using the comparisons provided.
 
 ::
 
-	$ python functools_total_ordering.py
+	$ python3 functools_total_ordering.py
 	
 	Methods:
 	
-	[('__eq__', <unbound method MyObject.__eq__>),
-	 ('__ge__', <unbound method MyObject.__ge__>),
-	 ('__gt__', <unbound method MyObject.__gt__>),
-	 ('__init__', <unbound method MyObject.__init__>),
-	 ('__le__', <unbound method MyObject.__le__>),
-	 ('__lt__', <unbound method MyObject.__lt__>)]
+	[('__eq__', <function MyObject.__eq__ at 0x101393d90>),
+	 ('__ge__', <function _ge_from_gt at 0x1012d9a60>),
+	 ('__gt__', <function MyObject.__gt__ at 0x101393e18>),
+	 ('__init__', <function MyObject.__init__ at 0x101393d08>),
+	 ('__le__', <function _le_from_gt at 0x1012d9ae8>),
+	 ('__lt__', <function _lt_from_gt at 0x1012d99d8>)]
 	
 	Comparisons:
 	
 	a < b :
-	  testing __gt__(2, 1)
+	  testing __gt__(1, 2)
+	  testing __eq__(1, 2)
 	  result of a < b: True
 	
 	a <= b:
@@ -309,7 +315,8 @@ rest of the methods that work by using the comparisons provided.
 	  result of a == b: False
 	
 	a >= b:
-	  testing __gt__(2, 1)
+	  testing __gt__(1, 2)
+	  testing __eq__(1, 2)
 	  result of a >= b: False
 	
 	a > b :
@@ -323,13 +330,13 @@ Collation Order
 
 Since old-style comparison functions are deprecated in Python 3, the
 :data:`cmp` argument to functions like :func:`sort` are also no longer
-supported.  Python 2 programs that use comparison functions can use
+supported.  Older programs that use comparison functions can use
 :func:`cmp_to_key` to convert them to a function that returns a
 *collation key*, which is used to determine the position in the final
 sequence.
 
-.. include:: functools_cmp_to_key.py
-   :literal:
+.. literalinclude:: functools_cmp_to_key.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Normally :func:`cmp_to_key` would be used directly, but in this
@@ -344,18 +351,23 @@ using the old-style comparison function passed in.  After all of the
 keys are created, the sequence is sorted by comparing the keys.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'functools_cmp_to_key.py'))
+.. cog.out(run_script(cog.inFile, 'functools_cmp_to_key.py', line_break_mode='wrap'))
 .. }}}
 
 ::
 
-	$ python functools_cmp_to_key.py
+	$ python3 functools_cmp_to_key.py
 	
-	key_wrapper(MyObject(5)) -> <functools.K object at 0x100da2a50>
-	key_wrapper(MyObject(4)) -> <functools.K object at 0x100da2a90>
-	key_wrapper(MyObject(3)) -> <functools.K object at 0x100da2ad0>
-	key_wrapper(MyObject(2)) -> <functools.K object at 0x100da2b10>
-	key_wrapper(MyObject(1)) -> <functools.K object at 0x100da2b50>
+	key_wrapper(MyObject(5)) -> <functools.KeyWrapper object at
+	0x1011bf5b0>
+	key_wrapper(MyObject(4)) -> <functools.KeyWrapper object at
+	0x1011bf5d0>
+	key_wrapper(MyObject(3)) -> <functools.KeyWrapper object at
+	0x1011bf5f0>
+	key_wrapper(MyObject(2)) -> <functools.KeyWrapper object at
+	0x1011bf610>
+	key_wrapper(MyObject(1)) -> <functools.KeyWrapper object at
+	0x1011bf4b0>
 	comparing MyObject(4) and MyObject(5)
 	comparing MyObject(3) and MyObject(4)
 	comparing MyObject(2) and MyObject(3)

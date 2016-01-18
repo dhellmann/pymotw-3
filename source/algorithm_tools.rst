@@ -32,10 +32,11 @@ other resources are closed and released at the right time.
 .. toctree::
     :maxdepth: 1
 
+    functools/index
     contextlib/index
 
 ..
-    functools/index
+    x functools/index
     itertools/index
     operator/index
     x contextlib/index
