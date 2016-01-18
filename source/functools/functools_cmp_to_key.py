@@ -16,7 +16,7 @@ class MyObject(object):
         self.val = val
 
     def __str__(self):
-        return 'MyObject(%s)' % self.val
+        return 'MyObject({})'.format(self.val)
 
 
 def compare_obj(a, b):
