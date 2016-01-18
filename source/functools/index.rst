@@ -422,6 +422,61 @@ keys are created, the sequence is sorted by comparing the keys.
 
 .. {{{end}}}
 
+Caching
+=======
+
+The :func:`lru_cache` decorator wraps a function in a
+least-recently-used cache with a fixed size. Arguments to the function
+are used to build a hash key, which is then mapped to the
+result. Subsequent calls with the same arguments will fetch the value
+from the cache instead of calling the function. The decorator also
+adds methods to the function to examine the state of the cache
+(:func:`cache_info`) and empty the cache (:func:`cache_clear`).
+
+.. literalinclude:: functools_lru_cache.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+This example makes several calls to ``expensive()`` in a set of nested
+loops. The second time those calls are made with the same values the
+results appear in the cache. When the cache is cleared and the loops
+are run again, the values must be recomputed.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'functools_lru_cache.py'))
+.. }}}
+
+::
+
+	$ python3 functools_lru_cache.py
+	
+	First set of calls:
+	expensive(0, 0)
+	expensive(0, 1)
+	expensive(1, 0)
+	expensive(1, 1)
+	CacheInfo(hits=0, misses=4, maxsize=128, currsize=4)
+	
+	Second set of calls:
+	expensive(0, 2)
+	expensive(1, 2)
+	expensive(2, 0)
+	expensive(2, 1)
+	expensive(2, 2)
+	CacheInfo(hits=4, misses=9, maxsize=128, currsize=9)
+	
+	Clearing cache:
+	CacheInfo(hits=0, misses=0, maxsize=128, currsize=0)
+	
+	Third set of calls:
+	expensive(0, 0)
+	expensive(0, 1)
+	expensive(1, 0)
+	expensive(1, 1)
+	CacheInfo(hits=0, misses=4, maxsize=128, currsize=4)
+
+.. {{{end}}}
+
 
 
 .. seealso::
@@ -432,5 +487,10 @@ keys are created, the sequence is sorted by comparing the keys.
       <http://docs.python.org/reference/datamodel.html#object.__lt__>`__
       -- Description of the rich comparison methods from the Python
       Reference Guide.
+
+    * `Isolated @memoize
+      <http://nedbatchelder.com/blog/201601/isolated_memoize.html>`__
+      -- Article on creating memoizing decorators that work well with
+      unit tests, by Ned Batchelder.
 
     * :mod:`inspect` -- Introspection API for live objects.
