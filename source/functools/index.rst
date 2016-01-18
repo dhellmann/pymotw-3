@@ -47,23 +47,23 @@ invoked without passing a value for *a*, causing an exception.
 	$ python3 functools_partial.py
 	
 	myfunc:
-	  object: <function myfunc at 0x101257f28>
+	  object: <function myfunc at 0x100757f28>
 	  __name__: myfunc
 	  called myfunc with: ('a', 3)
 	
 	partial with named default:
-	  object: functools.partial(<function myfunc at 0x101257f28>, b=
+	  object: functools.partial(<function myfunc at 0x100757f28>, b=
 	4)
-	  func: <function myfunc at 0x101257f28>
+	  func: <function myfunc at 0x100757f28>
 	  args: ()
 	  keywords: {'b': 4}
 	  called myfunc with: ('passing a', 4)
 	  called myfunc with: ('override b', 5)
 	
 	partial with defaults:
-	  object: functools.partial(<function myfunc at 0x101257f28>, 'd
+	  object: functools.partial(<function myfunc at 0x100757f28>, 'd
 	efault a', b=99)
-	  func: <function myfunc at 0x101257f28>
+	  func: <function myfunc at 0x100757f28>
 	  args: ('default a',)
 	  keywords: {'b': 99}
 	  called myfunc with: ('default a', 99)
@@ -139,7 +139,7 @@ Partials work with any callable object, not just standalone functions.
     :caption:
     :start-after: #end_pymotw_header
 
-This example creates partials from an instance, and methods of an
+This example creates partials from an instance and methods of an
 instance.
 
 .. {{{cog
@@ -150,53 +150,95 @@ instance.
 
 	$ python3 functools_method.py
 	
-	method1 straight:
+	calling method1 directly:
 	  object: <bound method MyClass.method1 of <__main__.MyClass obj
-	ect at 0x1012de780>>
+	ect at 0x1018b1c18>>
 	  __name__: method1
 	  __doc__ 'Docstring for method1().'
-	  called method1 with: (<__main__.MyClass object at 0x1012de780>
+	  called method1 with: (<__main__.MyClass object at 0x1018b1c18>
 	, 'no default for a', 3)
 	
-	method1 wrapper:
+	calling method1 wrapped:
 	  object: functools.partial(<bound method MyClass.method1 of <__
-	main__.MyClass object at 0x1012de780>>, b=4)
+	main__.MyClass object at 0x1018b1c18>>, b=4)
 	  __name__: method1
 	  __doc__ 'Docstring for method1().'
-	  called method1 with: (<__main__.MyClass object at 0x1012de780>
+	  called method1 with: (<__main__.MyClass object at 0x1018b1c18>
 	, 'a goes here', 4)
 	
-	method2:
+	calling method2 directly:
 	  object: <bound method MyClass.method2 of <__main__.MyClass obj
-	ect at 0x1012de780>>
+	ect at 0x1018b1c18>>
 	  __name__: method2
 	  __doc__ 'Docstring for method2'
-	  called method2 with: (<__main__.MyClass object at 0x1012de780>
+	  called method2 with: (<__main__.MyClass object at 0x1018b1c18>
 	, 'no default for c', 6)
 	
-	wrapped method2:
-	  object: functools.partial(<function MyClass.method2 at 0x1012e
+	calling method2 wrapped:
+	  object: functools.partial(<function MyClass.method2 at 0x101ae
 	2048>, 'wrapped c')
 	  __name__: method2
 	  __doc__ 'Docstring for method2'
-	  called method2 with: ('wrapped c', 'no default for c', 6)
+	  called method2 with: ('wrapped c', 'no default for c', 7)
+	
 	instance:
-	  object: <__main__.MyClass object at 0x1012de780>
+	  object: <__main__.MyClass object at 0x1018b1c18>
 	  __name__: (no __name__)
 	  __doc__ 'Demonstration class for functools'
-	  called object with: (<__main__.MyClass object at 0x1012de780>,
+	  called object with: (<__main__.MyClass object at 0x1018b1c18>,
 	 'no default for e', 6)
+	
 	instance wrapper:
-	  object: functools.partial(<__main__.MyClass object at 0x1012de
-	780>, f=7)
+	  object: functools.partial(<__main__.MyClass object at 0x1018b1
+	c18>, f=8)
 	  __name__: (no __name__)
-	  __doc__ 'partial(func, *args, **keywords) - new function with 
-	partial application\n    of the given arguments and keywords.\n'
-	  called object with: (<__main__.MyClass object at 0x1012de780>,
-	 'e goes here', 7)
+	  __doc__ 'Demonstration class for functools'
+	  called object with: (<__main__.MyClass object at 0x1018b1c18>,
+	 'e goes here', 8)
 
 .. {{{end}}}
 
+Methods and Functions
+---------------------
+
+While :func:`partial` returns a callable ready to be used directly,
+:func:`partialmethod` returns a callable ready to be used as an
+unbound method of an object. In the following example, the same
+standalone function is added as an attribute of ``MyClass`` twice,
+once using :func:`partialmethod` as ``method1()`` and again using
+:func:`partial` as ``method2()``.
+
+.. literalinclude:: functools_partialmethod.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+``method1()`` can be called from an instance of ``MyClass``, and the
+instance is passed as the first argument just as with methods defined
+normally. ``method2()`` is not set up as a bound method, and so the
+``self`` argument must be passed explicitly, or the call will result
+in a :class:`TypeError`.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'functools_partialmethod.py', line_break_mode='wrap'))
+.. }}}
+
+::
+
+	$ python3 functools_partialmethod.py
+	
+	standalone
+	  called standalone with: (None, 1, 2)
+	
+	method1 as partialmethod
+	  called standalone with: (<__main__.MyClass object at
+	0x1007b1a20>, 1, 2)
+	  self.attr = instance attribute
+	
+	method2 as partial
+	ERROR: standalone() missing 1 required positional argument:
+	'self'
+
+.. {{{end}}}
 
 Acquiring Function Properties for Decorators
 --------------------------------------------
@@ -221,7 +263,7 @@ properties of the original "bare" function.
 	$ python3 functools_wraps.py
 	
 	myfunc:
-	  object: <function myfunc at 0x1024cdf28>
+	  object: <function myfunc at 0x1014cdf28>
 	  __name__: myfunc
 	  __doc__ 'myfunc() is not complicated'
 	
@@ -229,7 +271,7 @@ properties of the original "bare" function.
 	  myfunc: ('unwrapped, passing b', 3)
 	
 	wrapped_myfunc:
-	  object: <function myfunc at 0x1024e2048>
+	  object: <function myfunc at 0x1014e2048>
 	  __name__: myfunc
 	  __doc__ 'myfunc() is not complicated'
 	
@@ -239,7 +281,7 @@ properties of the original "bare" function.
 	     myfunc: ('args to wrapped', 4)
 	
 	decorated_myfunc:
-	  object: <function decorated_myfunc at 0x1024e2158>
+	  object: <function decorated_myfunc at 0x1014e2158>
 	  __name__: decorated_myfunc
 	  __doc__ None
 	
@@ -292,12 +334,12 @@ rest of the methods that work by using the comparisons provided.
 	
 	Methods:
 	
-	[('__eq__', <function MyObject.__eq__ at 0x101393d90>),
-	 ('__ge__', <function _ge_from_gt at 0x1012d9a60>),
-	 ('__gt__', <function MyObject.__gt__ at 0x101393e18>),
-	 ('__init__', <function MyObject.__init__ at 0x101393d08>),
-	 ('__le__', <function _le_from_gt at 0x1012d9ae8>),
-	 ('__lt__', <function _lt_from_gt at 0x1012d99d8>)]
+	[('__eq__', <function MyObject.__eq__ at 0x101c98d90>),
+	 ('__ge__', <function _ge_from_gt at 0x1019b9a60>),
+	 ('__gt__', <function MyObject.__gt__ at 0x101c98e18>),
+	 ('__init__', <function MyObject.__init__ at 0x101c98d08>),
+	 ('__le__', <function _le_from_gt at 0x1019b9ae8>),
+	 ('__lt__', <function _lt_from_gt at 0x1019b99d8>)]
 	
 	Comparisons:
 	
@@ -359,15 +401,15 @@ keys are created, the sequence is sorted by comparing the keys.
 	$ python3 functools_cmp_to_key.py
 	
 	key_wrapper(MyObject(5)) -> <functools.KeyWrapper object at
-	0x1011bf5b0>
+	0x1011bf430>
 	key_wrapper(MyObject(4)) -> <functools.KeyWrapper object at
-	0x1011bf5d0>
+	0x1011bf450>
 	key_wrapper(MyObject(3)) -> <functools.KeyWrapper object at
-	0x1011bf5f0>
+	0x1011bf470>
 	key_wrapper(MyObject(2)) -> <functools.KeyWrapper object at
-	0x1011bf610>
+	0x1011bf490>
 	key_wrapper(MyObject(1)) -> <functools.KeyWrapper object at
-	0x1011bf4b0>
+	0x1011bf6b0>
 	comparing MyObject(4) and MyObject(5)
 	comparing MyObject(3) and MyObject(4)
 	comparing MyObject(2) and MyObject(3)

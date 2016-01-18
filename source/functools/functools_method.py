@@ -44,28 +44,29 @@ def show_details(name, f):
 
 o = MyClass()
 
-show_details('method1 straight', o.method1)
+show_details('calling method1 directly', o.method1)
 o.method1('no default for a', b=3)
 print()
 
 p1 = functools.partial(o.method1, b=4)
 functools.update_wrapper(p1, o.method1)
-show_details('method1 wrapper', p1)
+show_details('calling method1 wrapped', p1)
 p1('a goes here')
 print()
 
-show_details('method2', o.method2)
+show_details('calling method2 directly', o.method2)
 o.method2('no default for c', d=6)
 print()
 
-show_details('wrapped method2', o.wrapped_method2)
-o.wrapped_method2('no default for c', d=6)
-print
+show_details('calling method2 wrapped', o.wrapped_method2)
+o.wrapped_method2('no default for c', d=7)
+print()
 
 show_details('instance', o)
 o('no default for e')
-print
+print()
 
-p2 = functools.partial(o, f=7)
+p2 = functools.partial(o, f=8)
+functools.update_wrapper(p2, o)
 show_details('instance wrapper', p2)
 p2('e goes here')
