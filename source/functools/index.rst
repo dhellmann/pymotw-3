@@ -669,6 +669,32 @@ the :class:`float` case in this example.
 
 .. {{{end}}}
 
+When no exact match is found for the type, the inheritance order is
+evaluated and the closest matching type is used.
+
+.. literalinclude:: functools_singledispatch_mro.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+In this example, classes ``D`` and ``E`` do not match exactly with any
+registered generic functions, and the function selected depends on the
+class hierarchy.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'functools_singledispatch_mro.py'))
+.. }}}
+
+::
+
+	$ python3 functools_singledispatch_mro.py
+	
+	myfunc_A(A)
+	myfunc_B(B)
+	myfunc_C(C)
+	myfunc_B(D)
+	myfunc_C(E)
+
+.. {{{end}}}
 
 
 .. seealso::
