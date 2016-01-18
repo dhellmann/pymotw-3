@@ -384,11 +384,11 @@ keys are created, the sequence is sorted by comparing the keys.
 
 .. seealso::
 
-    `functools <http://docs.python.org/library/functools.html>`_
-        The standard library documentation for this module.
-    
-    `Rich comparison methods <http://docs.python.org/reference/datamodel.html#object.__lt__>`__
-        Description of the rich comparison methods from the Python Reference Guide.
+    * :pydoc:`functools`
 
-    :mod:`inspect`
-        Introspection API for live objects.
+    * `Rich comparison methods
+      <http://docs.python.org/reference/datamodel.html#object.__lt__>`__
+      -- Description of the rich comparison methods from the Python
+      Reference Guide.
+
+    * :mod:`inspect` -- Introspection API for live objects.
