@@ -1,6 +1,6 @@
-===============================================
- functools -- Tools for Manipulating Functions
-===============================================
+================================================
+ functools --- Tools for Manipulating Functions
+================================================
 
 .. module:: functools
     :synopsis: Tools for working with functions.
@@ -16,7 +16,7 @@ Decorators
 
 The primary tool supplied by the :mod:`functools` module is the class
 :class:`partial`, which can be used to "wrap" a callable object with
-default arguments. The resulting object is itself callable, and can be
+default arguments. The resulting object is itself callable and can be
 treated as though it is the original function.  It takes all of the
 same arguments as the original, and can be invoked with extra
 positional or named arguments as well.  A :class:`partial` can be used
@@ -133,7 +133,7 @@ values to be modified.
 Other Callables
 ---------------
 
-Partials work with any callable object, not just standalone functions.
+Partials work with any callable object, not just with standalone functions.
 
 .. literalinclude:: functools_method.py
     :caption:
@@ -426,12 +426,12 @@ Caching
 =======
 
 The :func:`lru_cache` decorator wraps a function in a
-least-recently-used cache with a fixed size. Arguments to the function
-are used to build a hash key, which is then mapped to the
-result. Subsequent calls with the same arguments will fetch the value
-from the cache instead of calling the function. The decorator also
-adds methods to the function to examine the state of the cache
-(:func:`cache_info`) and empty the cache (:func:`cache_clear`).
+least-recently-used cache. Arguments to the function are used to build
+a hash key, which is then mapped to the result. Subsequent calls with
+the same arguments will fetch the value from the cache instead of
+calling the function. The decorator also adds methods to the function
+to examine the state of the cache (:func:`cache_info`) and empty the
+cache (:func:`cache_clear`).
 
 .. literalinclude:: functools_lru_cache.py
    :caption:
@@ -440,7 +440,7 @@ adds methods to the function to examine the state of the cache
 This example makes several calls to ``expensive()`` in a set of nested
 loops. The second time those calls are made with the same values the
 results appear in the cache. When the cache is cleared and the loops
-are run again, the values must be recomputed.
+are run again the values must be recomputed.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'functools_lru_cache.py'))
@@ -639,7 +639,8 @@ and a single item. It is simple enough to check the type of an
 argument directly, but in cases where the behavioral difference can be
 isolated into separate functions :mod:`functools` provides the
 :func:`singledispatch` decorator to register a set of *generic
-functions* for automatic switching based on the argument type.
+functions* for automatic switching based on the type of the first
+argument to a function.
 
 .. literalinclude:: functools_singledispatch.py
    :caption:
@@ -648,7 +649,7 @@ functions* for automatic switching based on the argument type.
 The :func:`register` attribute of the new function serves as another
 decorator for registering alternative implementations. The first
 function wrapped with :func:`singledispatch` is the default
-implementation, if no other type-specific function is found, as with
+implementation if no other type-specific function is found, as with
 the :class:`float` case in this example.
 
 .. {{{cog
