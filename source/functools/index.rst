@@ -629,6 +629,46 @@ catch the :class:`TypeError` rather than passing an initializer.
 
 .. {{{end}}}
 
+Generic Functions
+=================
+
+In a dynamically typed language like Python it is common to need to
+perform slightly different operation based on the type of an argument,
+especially when dealing with the difference between a list of items
+and a single item. It is simple enough to check the type of an
+argument directly, but in cases where the behavioral difference can be
+isolated into separate functions :mod:`functools` provides the
+:func:`singledispatch` decorator to register a set of *generic
+functions* for automatic switching based on the argument type.
+
+.. literalinclude:: functools_singledispatch.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The :func:`register` attribute of the new function serves as another
+decorator for registering alternative implementations. The first
+function wrapped with :func:`singledispatch` is the default
+implementation, if no other type-specific function is found, as with
+the :class:`float` case in this example.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'functools_singledispatch.py'))
+.. }}}
+
+::
+
+	$ python3 functools_singledispatch.py
+	
+	default myfunc('string argument')
+	myfunc_int(1)
+	default myfunc(2.3)
+	myfunc_list()
+	  a
+	  b
+	  c
+
+.. {{{end}}}
+
 
 
 .. seealso::
@@ -644,5 +684,7 @@ catch the :class:`TypeError` rather than passing an initializer.
       <http://nedbatchelder.com/blog/201601/isolated_memoize.html>`__
       -- Article on creating memoizing decorators that work well with
       unit tests, by Ned Batchelder.
+
+    * :pep:`443` -- "Single-dispatch generic functions"
 
     * :mod:`inspect` -- Introspection API for live objects.
