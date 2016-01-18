@@ -490,16 +490,17 @@ objects.
 
 .. seealso::
 
-    `random <http://docs.python.org/library/random.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`random`
 
-    Mersenne Twister: A 623-dimensionally equidistributed uniform pseudorandom number generator
-        Article by M. Matsumoto and T. Nishimura from *ACM
-        Transactions on Modeling and Computer Simulation* Vol. 8,
-        No. 1, January pp.3-30 1998.
+   * "Mersenne Twister: A 623-dimensionally equidistributed uniform
+     pseudorandom number generator" -- Article by M. Matsumoto
+     and T. Nishimura from *ACM Transactions on Modeling and Computer
+     Simulation* Vol. 8, No. 1, January pp.3-30 1998.
 
-    `Wikipedia: Mersenne Twister <http://en.wikipedia.org/wiki/Mersenne_twister>`_
-        Article about the pseudorandom generator algorithm used by Python.
+   * `Wikipedia: Mersenne Twister
+     <http://en.wikipedia.org/wiki/Mersenne_twister>`_ -- Article
+     about the pseudorandom generator algorithm used by Python.
 
-    `Wikipedia: Uniform distribution <http://en.wikipedia.org/wiki/Uniform_distribution_(continuous)>`_
-        Article about continuous uniform distributions in statistics.
+   * `Wikipedia: Uniform distribution
+     <http://en.wikipedia.org/wiki/Uniform_distribution_(continuous)>`_
+     -- Article about continuous uniform distributions in statistics.
