@@ -13,7 +13,7 @@ from pprint import pprint
 
 
 @functools.total_ordering
-class MyObject(object):
+class MyObject:
 
     def __init__(self, val):
         self.val = val

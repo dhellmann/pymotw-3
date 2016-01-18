@@ -10,7 +10,7 @@
 import functools
 
 
-class MyObject(object):
+class MyObject:
 
     def __init__(self, val):
         self.val = val

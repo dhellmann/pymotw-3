@@ -10,7 +10,7 @@
 import functools
 
 
-class MyClass(object):
+class MyClass:
     "Demonstration class for functools"
 
     def method1(self, a, b=2):
