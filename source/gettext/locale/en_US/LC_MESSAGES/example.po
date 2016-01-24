@@ -1,15 +1,15 @@
 # Messages from gettext_example.py.
 # Copyright (C) 2009 Doug Hellmann
-# Doug Hellmann <doug.hellmann@gmail.com>, 2009.
+# Doug Hellmann <doug@doughellmann.com>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PyMOTW 1.92\n"
-"Report-Msgid-Bugs-To: Doug Hellmann <doug.hellmann@gmail.com>\n"
-"POT-Creation-Date: 2009-06-07 10:31+EDT\n"
-"PO-Revision-Date: 2009-06-07 10:31+EDT\n"
-"Last-Translator: Doug Hellmann <doug.hellmann@gmail.com>\n"
-"Language-Team: US English <doug.hellmann@gmail.com>\n"
+"Report-Msgid-Bugs-To: Doug Hellmann <doug@doughellmann.com>\n"
+"POT-Creation-Date: 2016-01-24 13:04-0500\n"
+"PO-Revision-Date: 2016-01-24 13:04-0500\n"
+"Last-Translator: Doug Hellmann <doug@doughellmann.com>\n"
+"Language-Team: US English <doug@doughellmann.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"

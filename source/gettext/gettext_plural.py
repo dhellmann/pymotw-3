@@ -10,7 +10,7 @@
 from gettext import translation
 import sys
 
-t = translation('gettext_plural', 'locale', fallback=True)
+t = translation('plural', 'locale', fallback=False)
 num = int(sys.argv[1])
 msg = t.ngettext('{num} means singular.',
                  '{num} means plural.',

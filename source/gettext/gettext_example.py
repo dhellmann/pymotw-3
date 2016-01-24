@@ -10,7 +10,7 @@
 import gettext
 
 # Set up message catalog access
-t = gettext.translation('example', 'locale', fallback=True)
+t = gettext.translation('example', 'locale', fallback=False)
 _ = t.gettext
 
 print(_('This message is in the script.'))
