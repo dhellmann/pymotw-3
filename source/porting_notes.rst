@@ -384,6 +384,19 @@ The :func:`from_float` and :func:`from_decimal` class methods are no
 longer needed. Floating point and :class:`Decimal` values can be
 passed directly to the :class:`Fraction` constructor.
 
+.. _porting-gettext:
+
+gettext
+-------
+
+.. index::
+   pair: porting; gettext
+
+All of the translation functions in :mod:`gettext` assume unicode
+input and output, and the unicode variants such as :func:`ugettext`
+have been removed.
+
+
 .. _porting-glob:
 
 glob

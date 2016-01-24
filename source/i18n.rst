@@ -13,6 +13,11 @@ symbol is.  Both modules interface with other tools and the operating
 environment to make the Python application fit in with all of the
 other programs on the system.
 
+.. toctree::
+   :maxdepth: 1
+
+   gettext/index
+
 ..
    .. toctree::
        :maxdepth: 1
