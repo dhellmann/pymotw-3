@@ -39,8 +39,8 @@ with different libraries, but if portability is a requirement, use one
 of the classes in the module to ensure a specific format is selected.
 
 For web applications that work with data in JSON already, using
-:mod:`json` and :mod:`anydbm` provides another persistence mechanism.
-Using :mod:`anydbm` directly is a little more work than :mod:`shelve`
+:mod:`json` and :mod:`dbm` provides another persistence mechanism.
+Using :mod:`dbm` directly is a little more work than :mod:`shelve`
 because the DBM database keys and values must be strings, and the
 objects will not be re-created automatically when the value is
 accessed in the database.
@@ -67,6 +67,7 @@ to another.
 .. toctree::
    :maxdepth: 1
 
+   dbm/index
    csv/index
 
 ..
@@ -75,7 +76,7 @@ to another.
 
        pickle/index
        shelve/index
-       anydbm/index
+       dbm/index
        whichdb/index
        sqlite3/index
        xml/etree/ElementTree/index
