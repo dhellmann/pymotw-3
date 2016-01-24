@@ -31,7 +31,7 @@ They can also be used for other message customizations, including
 Translation Workflow Overview
 =============================
 
-The process for setting up and using translations includes five steps:
+The process for setting up and using translations includes five steps.
 
 1. *Identify and mark up literal strings in the source code that
    contain messages to translate.*
@@ -132,13 +132,14 @@ The output file produced contains the following content.
     :caption:
 
 Message catalogs are installed into directories organized by *domain*
-and *language*.  The domain is usually a unique value like the
-application name.  In this case, the domain in ``gettext_example.py``
-is ``example_domain``.  The language value is provided by the user's
-environment at runtime, through one of the environment variables
-``LANGUAGE``, ``LC_ALL``, ``LC_MESSAGES``, or ``LANG``, depending on
-their configuration and platform.  These examples were all run with
-the language set to ``en_US``.
+and *language*.  The domain is provided by the application or library,
+and is usually a unique value like the application name.  In this
+case, the domain in ``gettext_example.py`` is ``example_domain``.  The
+language value is provided by the user's environment at runtime,
+through one of the environment variables ``LANGUAGE``, ``LC_ALL``,
+``LC_MESSAGES``, or ``LANG``, depending on their configuration and
+platform.  These examples were all run with the language set to
+``en_US``.
 
 Now that the template is ready, the next step is to create the
 required directory structure and copy the template in to the right
@@ -158,7 +159,7 @@ is shown next.
 .. literalinclude:: locale/en_US/LC_MESSAGES/example.po
     :caption:
 
-The catalog is built from the ``.po`` file using ``msgformat``:
+The catalog is built from the ``.po`` file using ``msgformat``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'cd locale/en_US/LC_MESSAGES; msgfmt -o example.mo example.po', 
@@ -173,7 +174,7 @@ The catalog is built from the ``.po`` file using ``msgformat``:
 .. {{{end}}}
 
 The domain in ``gettext_example.py`` is ``example_domain``, but the
-file is called ``example.pot``. To have the example find the right
+file is called ``example.pot``. To have :mod:`gettext` find the right
 translation file, the names need to match.
 
 .. literalinclude:: gettext_example_corrected.py
@@ -326,7 +327,7 @@ The arguments are the messages to be translated and the item count.
 
 Since there are alternate forms to be translated, the replacements are
 listed in an array.  Using an array allows translations for languages
-with multiple plural forms (e.g., Polish has different forms
+with multiple plural forms (for example, Polish has different forms
 indicating the relative quantity).
 
 .. literalinclude:: plural.pot
