@@ -9,8 +9,9 @@
 #end_pymotw_header
 
 import gettext
+
 gettext.install(
-    'gettext_example',
+    'example',
     'locale',
     names=['ngettext'],
 )

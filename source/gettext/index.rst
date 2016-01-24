@@ -108,7 +108,7 @@ printed.
 
 	$ python3 gettext_example.py
 	
-	This message is in the en_US catalog.
+	This message is in the script.
 
 .. {{{end}}}
 
@@ -126,19 +126,19 @@ using ``pygettext.py`` or ``xgettext``.
 
 .. {{{end}}}
 
-The output file produced contains
+The output file produced contains the following content.
 
 .. literalinclude:: example.pot
     :caption:
 
 Message catalogs are installed into directories organized by *domain*
 and *language*.  The domain is usually a unique value like the
-application name.  In this case, the domain is ``example``.
-The language value is provided by the user's environment at runtime,
-through one of the environment variables ``LANGUAGE``, ``LC_ALL``,
-``LC_MESSAGES``, or ``LANG``, depending on their configuration and
-platform.  These examples were all run with the language set to
-``en_US``.
+application name.  In this case, the domain in ``gettext_example.py``
+is ``example_domain``.  The language value is provided by the user's
+environment at runtime, through one of the environment variables
+``LANGUAGE``, ``LC_ALL``, ``LC_MESSAGES``, or ``LANG``, depending on
+their configuration and platform.  These examples were all run with
+the language set to ``en_US``.
 
 Now that the template is ready, the next step is to create the
 required directory structure and copy the template in to the right
@@ -172,16 +172,24 @@ The catalog is built from the ``.po`` file using ``msgformat``:
 
 .. {{{end}}}
 
-Now when the script is run, the message from the catalog is
-printed instead of the in-line string.
+The domain in ``gettext_example.py`` is ``example_domain``, but the
+file is called ``example.pot``. To have the example find the right
+translation file, the names need to match.
+
+.. literalinclude:: gettext_example_corrected.py
+   :caption:
+   :lines: 13-16
+
+Now when the script is run, the message from the catalog is printed
+instead of the in-line string.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'gettext_example.py'))
+.. cog.out(run_script(cog.inFile, 'gettext_example_corrected.py'))
 .. }}}
 
 ::
 
-	$ python3 gettext_example.py
+	$ python3 gettext_example_corrected.py
 	
 	This message is in the en_US catalog.
 
@@ -256,30 +264,30 @@ Although :func:`find` shows the complete list of catalogs, only the
 first one in the sequence is actually loaded for message lookups.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'gettext_example.py'))
-.. cog.out(run_script(cog.inFile, 'LANGUAGE=en_CA python3 gettext_example.py', 
+.. cog.out(run_script(cog.inFile, 'gettext_example_corrected.py'))
+.. cog.out(run_script(cog.inFile, 'LANGUAGE=en_CA python3 gettext_example_corrected.py', 
 ..                    interpreter=None, include_prefix=False))
-.. cog.out(run_script(cog.inFile, 'LANGUAGE=en_CA:en_US python3 gettext_example.py', 
+.. cog.out(run_script(cog.inFile, 'LANGUAGE=en_CA:en_US python3 gettext_example_corrected.py', 
 ..                    interpreter=None, include_prefix=False))
-.. cog.out(run_script(cog.inFile, 'LANGUAGE=en_US:en_CA python3 gettext_example.py', 
+.. cog.out(run_script(cog.inFile, 'LANGUAGE=en_US:en_CA python3 gettext_example_corrected.py', 
 ..                    interpreter=None, include_prefix=False))
 .. }}}
 
 ::
 
-	$ python3 gettext_example.py
+	$ python3 gettext_example_corrected.py
 	
 	This message is in the en_US catalog.
 
-	$ LANGUAGE=en_CA python3 gettext_example.py
+	$ LANGUAGE=en_CA python3 gettext_example_corrected.py
 	
 	This message is in the en_CA catalog.
 
-	$ LANGUAGE=en_CA:en_US python3 gettext_example.py
+	$ LANGUAGE=en_CA:en_US python3 gettext_example_corrected.py
 	
 	This message is in the en_CA catalog.
 
-	$ LANGUAGE=en_US:en_CA python3 gettext_example.py
+	$ LANGUAGE=en_US:en_CA python3 gettext_example_corrected.py
 	
 	This message is in the en_US catalog.
 
@@ -430,13 +438,13 @@ directly, so that multiple catalogs can be used.
    * :mod:`locale` -- Other localization tools.
 
    * `GNU gettext`_ -- The message catalog formats, API, etc. for this
-      module are all based on the original gettext package from GNU.
-      The catalog file formats are compatible, and the command line
-      scripts have similar options (if not identical).  The `GNU
-      gettext manual
-      <http://www.gnu.org/software/gettext/manual/gettext.html>`_ has
-      a detailed description of the file formats and describes GNU
-      versions of the tools for working with them.
+     module are all based on the original gettext package from GNU.
+     The catalog file formats are compatible, and the command line
+     scripts have similar options (if not identical).  The `GNU
+     gettext manual
+     <http://www.gnu.org/software/gettext/manual/gettext.html>`_ has
+     a detailed description of the file formats and describes GNU
+     versions of the tools for working with them.
 
    * `Plural forms
      <http://www.gnu.org/software/gettext/manual/gettext.html#Plural-forms>`__

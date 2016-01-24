@@ -8,7 +8,12 @@
 #end_pymotw_header
 
 import gettext
-t = gettext.translation('example', 'locale', fallback=False)
+
+t = gettext.translation(
+    'example',
+    'locale',
+    fallback=False,
+)
 _ = t.gettext
 ngettext = t.ngettext
 

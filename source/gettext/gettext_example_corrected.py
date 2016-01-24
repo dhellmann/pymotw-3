@@ -11,7 +11,7 @@ import gettext
 
 # Set up message catalog access
 t = gettext.translation(
-    'example_domain', 'locale',
+    'example', 'locale',
     fallback=True,
 )
 _ = t.gettext
