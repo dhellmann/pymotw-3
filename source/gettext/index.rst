@@ -1,16 +1,15 @@
-=============================
- gettext -- Message Catalogs
-=============================
+==============================
+ gettext --- Message Catalogs
+==============================
 
 .. module:: gettext
     :synopsis: Message Catalogs
 
 :Purpose: Message catalog API for internationalization.
-:Python Version: 2.1.3 and later
 
 The :mod:`gettext` module provides a pure-Python implementation
-compatible with the GNU **gettext** library for message translation and
-catalog management.  The tools available with the Python source
+compatible with the GNU **gettext** library for message translation
+and catalog management.  The tools available with the Python source
 distribution enable you to extract messages from a set of source
 files, build a message catalog containing translations, and use that
 message catalog to display an appropriate message for the user at
@@ -25,7 +24,7 @@ They can also be used for other message customizations, including
 
     Although the standard library documentation says all of the
     necessary tools are included with Python, ``pygettext.py`` failed
-    to extract messages wrapped in the ``ungettext`` call, even with
+    to extract messages wrapped in the ``ngettext`` call, even with
     the appropriate command line options. These examples use
     ``xgettext`` from the GNU **gettext** tool set, instead.
 
@@ -77,9 +76,7 @@ Creating Message Catalogs from Source Code
 ==========================================
 
 :mod:`gettext` works by looking up literal strings in a database of
-translations, and pulling out the appropriate translated string.
-There are several variations of the functions for accessing the
-catalog, depending on whether the strings are Unicode or not.  The
+translations, and pulling out the appropriate translated string.  The
 usual pattern is to bind the appropriate lookup function to the name
 "``_``" (a single underscore character) so that the code is not
 cluttered with a lot of calls to functions with longer names.
@@ -93,47 +90,50 @@ extracting messages.
 
 This script has a single message ready to be translated.
 
-.. include:: gettext_example.py
-    :literal:
+.. literalinclude:: gettext_example.py
+    :caption:
     :start-after: #end_pymotw_header
 
-The example uses the Unicode version of the lookup function,
-``ugettext()``.  The text ``"This message is in the script."`` is the
-message to be substituted from the catalog.  Fallback mode is enabled,
-so if the script is run without a message catalog, the in-lined
-message is printed:
+The text ``"This message is in the script."`` is the message to be
+substituted from the catalog.  Fallback mode is enabled, so if the
+script is run without a message catalog, the in-lined message is
+printed.
 
 .. {{{cog
 .. [ f.unlink() for f in (cog.inFile.dirname() / 'locale/en_US/LC_MESSAGES').glob('*.mo') ]
-.. cog.out(run_script(cog.inFile, 'python gettext_example.py', interpreter=None))
+.. cog.out(run_script(cog.inFile, 'python3 gettext_example.py', interpreter=None))
 .. }}}
 
 ::
 
-	$ python gettext_example.py
-
-	This message is in the script.
+	$ python3 gettext_example.py
+	
+	This message is in the en_US catalog.
 
 .. {{{end}}}
 
 The next step is to extract the message and create the ``.pot`` file,
 using ``pygettext.py`` or ``xgettext``.
 
-.. NOT RUNNING
+.. {{{cog
 .. cog.out(run_script(cog.inFile, 'xgettext -o example.pot gettext_example.py', interpreter=None))
+.. }}}
 
 ::
 
 	$ xgettext -o example.pot gettext_example.py
+	
+
+.. {{{end}}}
 
 The output file produced contains
 
-.. include:: example.pot
-    :literal:
+.. literalinclude:: example.pot
+    :caption:
 
 Message catalogs are installed into directories organized by *domain*
 and *language*.  The domain is usually a unique value like the
-application name.  In this case, the domain is ``gettext_example``.
+application name.  In this case, the domain is ``example``.
 The language value is provided by the user's environment at runtime,
 through one of the environment variables ``LANGUAGE``, ``LC_ALL``,
 ``LC_MESSAGES``, or ``LANG``, depending on their configuration and
@@ -155,19 +155,19 @@ The catalog is created by copying ``example.pot`` to
 the values in the header and set the alternate messages.  The result
 is shown next.
 
-.. include:: locale/en_US/LC_MESSAGES/example.po
-    :literal:
+.. literalinclude:: locale/en_US/LC_MESSAGES/example.po
+    :caption:
 
 The catalog is built from the ``.po`` file using ``msgformat``:
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'cd locale/en_US/LC_MESSAGES/; msgfmt -o example.mo example.po', interpreter=None))
+.. cog.out(run_script(cog.inFile, 'cd locale/en_US/LC_MESSAGES; msgfmt -o example.mo example.po', 
+..                    interpreter=None))
 .. }}}
 
 ::
 
-	$ cd locale/en_US/LC_MESSAGES/; msgfmt -o example.mo example.po
-
+	$ cd locale/en_US/LC_MESSAGES; msgfmt -o example.mo example.po
 	
 
 .. {{{end}}}
@@ -181,8 +181,8 @@ printed instead of the in-line string.
 
 ::
 
-	$ python gettext_example.py
-
+	$ python3 gettext_example.py
+	
 	This message is in the en_US catalog.
 
 .. {{{end}}}
@@ -201,8 +201,8 @@ explicitly give a ``localedir`` value than to depend on this default
 being valid.  The :func:`find` function is responsible for locating an
 appropriate message catalog at runtime.
 
-.. include:: gettext_find.py
-   :literal:
+.. literalinclude:: gettext_find.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The language portion of the path is taken from one of several
@@ -213,37 +213,40 @@ selected by separating the values with a colon (``:``).  To see how
 that works, use a second message catalog to run a few experiments.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, '(cd locale/en_CA/LC_MESSAGES/; msgfmt -o example.mo example.po)', 
+.. cog.out(run_script(cog.inFile, 'cd locale/en_CA/LC_MESSAGES; msgfmt -o example.mo example.po', 
 ..                    interpreter=None, trailing_newlines=False))
+.. cog.out(run_script(cog.inFile, 'cd ../../..', 
+..                    interpreter=None, trailing_newlines=False, include_prefix=False))
 .. cog.out(run_script(cog.inFile, 'gettext_find.py', include_prefix=False))
-.. cog.out(run_script(cog.inFile, 'LANGUAGE=en_CA python gettext_find.py', 
+.. cog.out(run_script(cog.inFile, 'LANGUAGE=en_CA python3 gettext_find.py', 
 ..                    interpreter=None, include_prefix=False))
-.. cog.out(run_script(cog.inFile, 'LANGUAGE=en_CA:en_US python gettext_find.py', 
+.. cog.out(run_script(cog.inFile, 'LANGUAGE=en_CA:en_US python3 gettext_find.py', 
 ..                    interpreter=None, include_prefix=False, break_lines_at=68, 
 ..                    line_break_mode='wrap'))
-.. cog.out(run_script(cog.inFile, 'LANGUAGE=en_US:en_CA python gettext_find.py', 
+.. cog.out(run_script(cog.inFile, 'LANGUAGE=en_US:en_CA python3 gettext_find.py', 
 ..                    interpreter=None, include_prefix=False, break_lines_at=68, 
 ..                    line_break_mode='wrap'))
 .. }}}
 
 ::
 
-	$ (cd locale/en_CA/LC_MESSAGES/; msgfmt -o example.mo example.po)
-	$ python gettext_find.py
-
+	$ cd locale/en_CA/LC_MESSAGES; msgfmt -o example.mo example.po
+	$ cd ../../..
+	$ python3 gettext_find.py
+	
 	Catalogs: ['locale/en_US/LC_MESSAGES/example.mo']
 
-	$ LANGUAGE=en_CA python gettext_find.py
-
+	$ LANGUAGE=en_CA python3 gettext_find.py
+	
 	Catalogs: ['locale/en_CA/LC_MESSAGES/example.mo']
 
-	$ LANGUAGE=en_CA:en_US python gettext_find.py
-
+	$ LANGUAGE=en_CA:en_US python3 gettext_find.py
+	
 	Catalogs: ['locale/en_CA/LC_MESSAGES/example.mo',
 	'locale/en_US/LC_MESSAGES/example.mo']
 
-	$ LANGUAGE=en_US:en_CA python gettext_find.py
-
+	$ LANGUAGE=en_US:en_CA python3 gettext_find.py
+	
 	Catalogs: ['locale/en_US/LC_MESSAGES/example.mo',
 	'locale/en_CA/LC_MESSAGES/example.mo']
 
@@ -254,30 +257,30 @@ first one in the sequence is actually loaded for message lookups.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'gettext_example.py'))
-.. cog.out(run_script(cog.inFile, 'LANGUAGE=en_CA python gettext_example.py', 
+.. cog.out(run_script(cog.inFile, 'LANGUAGE=en_CA python3 gettext_example.py', 
 ..                    interpreter=None, include_prefix=False))
-.. cog.out(run_script(cog.inFile, 'LANGUAGE=en_CA:en_US python gettext_example.py', 
+.. cog.out(run_script(cog.inFile, 'LANGUAGE=en_CA:en_US python3 gettext_example.py', 
 ..                    interpreter=None, include_prefix=False))
-.. cog.out(run_script(cog.inFile, 'LANGUAGE=en_US:en_CA python gettext_example.py', 
+.. cog.out(run_script(cog.inFile, 'LANGUAGE=en_US:en_CA python3 gettext_example.py', 
 ..                    interpreter=None, include_prefix=False))
 .. }}}
 
 ::
 
-	$ python gettext_example.py
-
+	$ python3 gettext_example.py
+	
 	This message is in the en_US catalog.
 
-	$ LANGUAGE=en_CA python gettext_example.py
-
+	$ LANGUAGE=en_CA python3 gettext_example.py
+	
 	This message is in the en_CA catalog.
 
-	$ LANGUAGE=en_CA:en_US python gettext_example.py
-
+	$ LANGUAGE=en_CA:en_US python3 gettext_example.py
+	
 	This message is in the en_CA catalog.
 
-	$ LANGUAGE=en_US:en_CA python gettext_example.py
-
+	$ LANGUAGE=en_US:en_CA python3 gettext_example.py
+	
 	This message is in the en_US catalog.
 
 .. {{{end}}}
@@ -295,28 +298,31 @@ forms depending on the level of plurality.  To make managing plurals
 easier (and, in some cases, possible), there is a separate set of
 functions for asking for the plural form of a message.
 
-.. include:: gettext_plural.py
-    :literal:
+.. literalinclude:: gettext_plural.py
+    :caption:
     :start-after: #end_pymotw_header
 
-Use :func:`ungettext` to access the Unicode version of the plural
-substitution for a message.  The arguments are the messages to be
-translated and the item count.
+Use :func:`ngettext` to access the plural substitution for a message.
+The arguments are the messages to be translated and the item count.
 
-.. NOT RUNNING
+.. {{{cog
 .. cog.out(run_script(cog.inFile, 'xgettext -L Python -o plural.pot gettext_plural.py', interpreter=None))
+.. }}}
 
 ::
 
 	$ xgettext -L Python -o plural.pot gettext_plural.py
+	
+
+.. {{{end}}}
 
 Since there are alternate forms to be translated, the replacements are
 listed in an array.  Using an array allows translations for languages
 with multiple plural forms (e.g., Polish has different forms
 indicating the relative quantity).
 
-.. include:: plural.pot
-    :literal:
+.. literalinclude:: plural.pot
+    :caption:
 
 In addition to filling in the translation strings, the library needs
 to be told about the way plurals are formed so it knows how to index
@@ -336,15 +342,18 @@ is treated as plural ("0 bananas").  The ``Plural-Forms`` entry is::
 The singular translation would then go in position 0, and the plural
 translation in position 1.
 
-.. include:: locale/en_US/LC_MESSAGES/plural.po
-    :literal:
+.. literalinclude:: locale/en_US/LC_MESSAGES/plural.po
+    :caption:
 
 Running the test script a few times after the catalog is compiled will
 demonstrate how different values of N are converted to indexes for the
 translation strings.
     
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'cd locale/en_US/LC_MESSAGES/; msgfmt -o plural.mo plural.po', interpreter=None, trailing_newlines=False))
+.. cog.out(run_script(cog.inFile, 'cd locale/en_US/LC_MESSAGES/; msgfmt -o plural.mo plural.po',
+..                    interpreter=None, trailing_newlines=False))
+.. cog.out(run_script(cog.inFile, 'cd ../../..', interpreter=None, include_prefix=False,
+..                    trailing_newlines=False))
 .. cog.out(run_script(cog.inFile, 'gettext_plural.py 0', include_prefix=False))
 .. cog.out(run_script(cog.inFile, 'gettext_plural.py 1', include_prefix=False))
 .. cog.out(run_script(cog.inFile, 'gettext_plural.py 2', include_prefix=False))
@@ -353,17 +362,18 @@ translation strings.
 ::
 
 	$ cd locale/en_US/LC_MESSAGES/; msgfmt -o plural.mo plural.po
-	$ python gettext_plural.py 0
+	$ cd ../../..
+	$ python3 gettext_plural.py 0
+	
+	In en_US, 0 is plural.
 
-	0 means plural.
+	$ python3 gettext_plural.py 1
+	
+	In en_US, 1 is singular.
 
-	$ python gettext_plural.py 1
-
-	1 means singular.
-
-	$ python gettext_plural.py 2
-
-	2 means plural.
+	$ python3 gettext_plural.py 2
+	
+	In en_US, 2 is plural.
 
 .. {{{end}}}
 
@@ -376,31 +386,29 @@ installed and used with a body of code.
 Application Localization
 ------------------------
 
-For application-wide translations, it would be acceptable for the
-author to install a function like :func:`ungettext` globally using the
+For application-wide translations, it is acceptable for the
+author to install a function like :func:`ngettext` globally using the
 ``__builtins__`` namespace, because they have control over the
 top-level of the application's code.
 
-.. include:: gettext_app_builtin.py
-    :literal:
+.. literalinclude:: gettext_app_builtin.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The :func:`install` function binds :func:`gettext` to the name ``_()``
 in the ``__builtins__`` namespace.  It also adds :func:`ngettext` and
-other functions listed in *names*.  If *unicode* is true, the Unicode
-versions of the functions are used instead of the default ASCII
-versions.
+other functions listed in *names*.
 
 Module Localization
 -------------------
 
-For a library, or individual module, modifying ``__builtins__`` is not
+For a library or individual module, modifying ``__builtins__`` is not
 a good idea because it may introduce conflicts with an application
 global value.  Instead, import or re-bind the names of translation
 functions by hand at the top of the module.
 
-.. include:: gettext_module_global.py
-    :literal:
+.. literalinclude:: gettext_module_global.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Switching Translations
@@ -417,30 +425,32 @@ directly, so that multiple catalogs can be used.
 
 .. seealso::
 
-    `gettext <http://docs.python.org/library/gettext.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`gettext`
 
-    :mod:`locale`
-        Other localization tools.
+   * :mod:`locale` -- Other localization tools.
 
-    `GNU gettext`_
-        The message catalog formats, API, etc. for this module are all
-        based on the original gettext package from GNU.  The catalog
-        file formats are compatible, and the command line scripts have
-        similar options (if not identical).  The `GNU gettext manual
-        <http://www.gnu.org/software/gettext/manual/gettext.html>`_
-        has a detailed description of the file formats and describes
-        GNU versions of the tools for working with them.
+   * `GNU gettext`_ -- The message catalog formats, API, etc. for this
+      module are all based on the original gettext package from GNU.
+      The catalog file formats are compatible, and the command line
+      scripts have similar options (if not identical).  The `GNU
+      gettext manual
+      <http://www.gnu.org/software/gettext/manual/gettext.html>`_ has
+      a detailed description of the file formats and describes GNU
+      versions of the tools for working with them.
 
-    `Plural forms <http://www.gnu.org/software/gettext/manual/gettext.html#Plural-forms>`__
-        Handling of plural forms of words and sentences in different languages.
+   * `Plural forms
+     <http://www.gnu.org/software/gettext/manual/gettext.html#Plural-forms>`__
+     -- Handling of plural forms of words and sentences in different
+     languages.
 
-    `Internationalizing Python <http://www.python.org/workshops/1997-10/proceedings/loewis.html>`_
-        A paper by Martin von Löwis about techniques for
-        internationalization of Python applications.
+   * `Internationalizing Python
+     <http://www.python.org/workshops/1997-10/proceedings/loewis.html>`_
+     -- A paper by Martin von Löwis about techniques for
+     internationalization of Python applications.
 
-    `Django Internationalization <http://docs.djangoproject.com/en/dev/topics/i18n/>`_
-        Another good source of information on using gettext, including
-        real-life examples.
+   * `Django Internationalization
+     <http://docs.djangoproject.com/en/dev/topics/i18n/>`_ -- Another
+     good source of information on using gettext, including real-life
+     examples.
 
 .. _GNU gettext: http://www.gnu.org/software/gettext/

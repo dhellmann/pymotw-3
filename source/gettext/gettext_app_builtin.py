@@ -9,7 +9,10 @@
 #end_pymotw_header
 
 import gettext
-gettext.install('gettext_example', 'locale',
-                unicode=True, names=['ngettext'])
+gettext.install(
+    'gettext_example',
+    'locale',
+    names=['ngettext'],
+)
 
 print(_('This message is in the script.'))
