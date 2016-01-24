@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PyMOTW 1.92\n"
+"Project-Id-Version: PyMOTW-3\n"
 "Report-Msgid-Bugs-To: Doug Hellmann <doug.hellmann@gmail.com>\n"
 "POT-Creation-Date: 2009-06-07 10:31+EDT\n"
 "PO-Revision-Date: 2009-06-07 10:31+EDT\n"
