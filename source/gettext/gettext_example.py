@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2009 Doug Hellmann All rights reserved.
@@ -11,6 +11,6 @@ import gettext
 
 # Set up message catalog access
 t = gettext.translation('example', 'locale', fallback=True)
-_ = t.ugettext
+_ = t.gettext
 
-print _('This message is in the script.')
+print(_('This message is in the script.'))
