@@ -1,16 +1,15 @@
-===============================
- anydbm -- DBM-style Databases
-===============================
+==================================
+ dbm --- Unix Key-Value Databases
+==================================
 
-.. module:: anydbm
-    :synopsis: Interface to DBM-style databases
+.. module:: dbm
+    :synopsis: Unix Key-Value Databases
 
-:Purpose: anydbm provides a generic dictionary-like interface to DBM-style, string-keyed databases
-:Python Version: 1.4 and later
+:Purpose: dbm provides a generic dictionary-like interface to DBM-style, string-keyed databases
 
-:mod:`anydbm` is a front-end for DBM-style databases that use simple
+:mod:`dbm` is a front-end for DBM-style databases that use simple
 string values as keys to access records containing strings.  It uses
-:mod:`whichdb` to identify databases, then opens them with the
+:func:`whichdb` to identify databases, then opens them with the
 appropriate module.  It is used as a back-end for :mod:`shelve`, which
 stores objects in a DBM database using :mod:`pickle`.
 
@@ -18,27 +17,23 @@ Database Types
 ==============
 
 Python comes with several modules for accessing DBM-style databases.
-The implementation selected depends on the libraries available on the
-current system and the options used when Python was compiled.
+The default implementation selected depends on the libraries available
+on the current system and the options used when Python was
+compiled. Separate interfaces to the specific implementations allow
+Python programs to exchange data with programs in other languages that
+do not automatically switch between available formats, or to write
+portable data files that will work on multiple platforms.
 
-dbhash
-------
+dbm.gnu
+-------
 
-The :mod:`dbhash` module is the primary back-end for :mod:`anydbm`.  It
-uses the :mod:`bsddb` library to manage database files.  The semantics
-for using :mod:`dbhash` databases are the same as those defined by the
-:mod:`anydbm` API.
-
-gdbm
-----
-
-:mod:`gdbm` is an updated version of the :mod:`dbm` library from the
-GNU project.  It works the same as the other DBM implementations
-described here, with a few changes to the *flags* supported by
-:func:`open`.
+:mod:`dbm.gnu` is an interface to the version of the ``dbm``
+library from the GNU project.  It works the same as the other DBM
+implementations described here, with a few changes to the *flags*
+supported by :func:`open`.
 
 Besides the standard ``'r'``, ``'w'``, ``'c'``, and ``'n'`` flags,
-:func:`gdbm.open` supports:
+:func:`dbm.gnu.open` supports:
 
     * ``'f'`` to open the database in *fast* mode. In fast mode,
       writes to the database are not synchronized.
@@ -48,78 +43,86 @@ Besides the standard ``'r'``, ``'w'``, ``'c'``, and ``'n'`` flags,
       explicitly.
     * ``'u'`` to open the database unlocked.
 
-dbm
----
+dbm.ndbm
+--------
 
-The :mod:`dbm` module provides an interface to one of several C
+The :mod:`dbm.ndbm` module provides an interface to the UNIX ndbm
 implementations of the dbm format, depending on how the module was
 configured during compilation.  The module attribute ``library``
 identifies the name of the library ``configure`` was able to find when
 the extension module was compiled.
 
-dumbdbm
--------
+dbm.dumb
+--------
 
-The :mod:`dumbdbm` module is a portable fallback implementation of the
-DBM API when no other implementations are available.  No external
-dependencies are required to use :mod:`dumbdbm`, but it is slower than
-most other implementations.
+The :mod:`dbm.dumb` module is a portable fallback implementation of
+the DBM API when no other implementations are available.  No external
+dependencies are required to use :mod:`dbm.dumb`, but it is slower
+than most other implementations.
 
 
 Creating a New Database
 =======================
 
-The storage format for new databases is selected by looking for each
-of these modules in order:
+The storage format for new databases is selected by looking for usable
+versions of each of the sub-modules in order.
 
-- :mod:`dbhash`
-- :mod:`gdbm`
-- :mod:`dbm`
-- :mod:`dumbdbm`
+.. {{{cog
+.. import dbm
+.. cog.out('\n')
+.. for n in dbm._names:
+..   cog.out('- ``{}``\n'.format(n))
+.. cog.out('\n')
+.. }}}
+
+- ``dbm.gnu``
+- ``dbm.ndbm``
+- ``dbm.dumb``
+
+.. {{{end}}}
 
 The :func:`open` function takes *flags* to control how the database
 file is managed.  To create a new database when necessary, use
 ``'c'``.  Using ``'n'`` always creates a new database, overwriting an
 existing file.
 
-.. include:: anydbm_new.py
-    :literal:
+.. literalinclude:: dbm_new.py
+    :caption:
     :start-after: #end_pymotw_header
 
-In this example, the file is always re-initialized.  
+In this example, the file is always re-initialized.
 
 .. {{{cog
 .. workdir = path(cog.inFile).dirname()
 .. sh("cd %s; rm -f /tmp/example.db" % workdir)
-.. cog.out(run_script(cog.inFile, 'anydbm_new.py'))
+.. cog.out(run_script(cog.inFile, 'dbm_new.py'))
 .. }}}
 
 ::
 
-	$ python anydbm_new.py
-
+	$ python3 dbm_new.py
 	
 
 .. {{{end}}}
 
-:mod:`whichdb` reports the type of database that was created.
+:func:`whichdb` reports the type of database that was created.
 
-.. include:: anydbm_whichdb.py
-    :literal:
+.. literalinclude:: dbm_whichdb.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Output from the example program will vary, depending on which modules
 are installed on the system.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'anydbm_whichdb.py'))
+.. cog.out(run_script(cog.inFile, 'dbm_whichdb.py'))
 .. }}}
 
 ::
 
-	$ python anydbm_whichdb.py
-
-	dbhash
+	$ python3 dbm_whichdb.py
+	
+	dbm.ndbm
 
 .. {{{end}}}
 
@@ -129,29 +132,30 @@ Opening an Existing Database
 
 To open an existing database, use *flags* of either ``'r'`` (for
 read-only) or ``'w'`` (for read-write).  Existing databases are
-automatically given to :mod:`whichdb` to identify, so it as long as a
+automatically given to :func:`whichdb` to identify, so it as long as a
 file can be identified, the appropriate module is used to open it.
 
-.. include:: anydbm_existing.py
-    :literal:
+.. literalinclude:: dbm_existing.py
+    :caption:
     :start-after: #end_pymotw_header
 
-Once open, ``db`` is a dictionary-like object, with support for the
-usual methods:
+Once open, ``db`` is a dictionary-like object. New keys are always
+converted to byte strings when added to the database, and returned as
+byte strings.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'anydbm_existing.py'))
+.. cog.out(run_script(cog.inFile, 'dbm_existing.py'))
 .. }}}
 
 ::
 
-	$ python anydbm_existing.py
-
-	keys(): ['author', 'key', 'today']
-	iterating: author Doug
-	iterating: key value
-	iterating: today Sunday
-	db["author"] = Doug
+	$ python3 dbm_existing.py
+	
+	keys(): [b'key', b'today', b'author']
+	iterating: b'key' b'value'
+	iterating: b'today' b'Sunday'
+	iterating: b'author' b'Doug'
+	db["author"] = b'Doug'
 
 .. {{{end}}}
 
@@ -160,49 +164,51 @@ Error Cases
 
 The keys of the database need to be strings.
 
-.. include:: anydbm_intkeys.py
-    :literal:
+.. literalinclude:: dbm_intkeys.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Passing another type results in a :class:`TypeError`.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'anydbm_intkeys.py', ignore_error=True))
+.. cog.out(run_script(cog.inFile, 'dbm_intkeys.py', ignore_error=True))
 .. }}}
 
 ::
 
-	$ python anydbm_intkeys.py
-
-	TypeError: Integer keys only allowed for Recno and Queue DB's
+	$ python3 dbm_intkeys.py
+	
+	dbm mappings have bytes or string keys only
 
 .. {{{end}}}
 
 Values must be strings or ``None``.
 
-.. include:: anydbm_intvalue.py
-    :literal:
+.. literalinclude:: dbm_intvalue.py
+    :caption:
     :start-after: #end_pymotw_header
 
 A similar :class:`TypeError` is raised if a value is not a string.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'anydbm_intvalue.py', ignore_error=True))
+.. cog.out(run_script(cog.inFile, 'dbm_intvalue.py', ignore_error=True))
 .. }}}
 
 ::
 
-	$ python anydbm_intvalue.py
-
-	TypeError: Data values must be of type string or None.
+	$ python3 dbm_intvalue.py
+	
+	dbm mappings have byte or string elements only
 
 .. {{{end}}}
 
 .. seealso::
 
-    `anydbm <http://docs.python.org/library/anydbm.html>`_
-        The standard library documentation for this module.
+    * :pydoc:`dbm`
 
-    :mod:`shelve`
-        Examples for the ``shelve`` module, which uses
-        ``anydbm`` to store data.
+    * :ref:`Porting notes for anydbm <porting-anydbm>`
+
+    * :ref:`Porting notes for whichdb <porting-whichdb>`
+
+    * :mod:`shelve` -- Examples for the ``shelve`` module, which uses
+      ``dbm`` to store data.
