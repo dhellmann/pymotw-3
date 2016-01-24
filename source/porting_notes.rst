@@ -199,6 +199,18 @@ The :func:`abstractproperty`, :func:`abstractclassmethod`, and
 and :func:`staticmethod` decorators works as expected
 (:pyissue:`11610`).
 
+.. _porting-dbm:
+.. _porting-anydbm:
+
+anydbm
+------
+
+.. index::
+   pair: porting; anydbm
+   pair: porting; dbm
+
+The ``anydbm`` module has been renamed :mod:`dbm` in Python 3.
+
 .. _porting-argparse:
 
 argparse
@@ -512,3 +524,13 @@ simpler because the content of the container is available directly
 through an instance attribute. The abstract classes in
 :mod:`collections.abc` are also useful for creating custom containers
 that follow the APIs of the built-in types.
+
+.. _porting-whichdb:
+
+whichdb
+-------
+
+.. index::
+   pair: porting; whichdb
+
+The functionality of ``whichdb`` has moved to the :mod:`dbm` module.
