@@ -33,7 +33,7 @@ class ActivePool:
 def worker(s, pool):
     logging.debug('Waiting to join the pool')
     with s:
-        name = threading.currentThread().getName()
+        name = threading.current_thread().getName()
         pool.makeActive(name)
         time.sleep(0.1)
         pool.makeInactive(name)

@@ -535,6 +535,10 @@ been removed, and so many of the old factory functions have been
 converted to standard classes, which allow subclassing
 (:pyissue:`10968`).
 
+The public symbols exported from :mod:`threading` have been renamed to
+be :pep:`8` compliant. The old names are retained for backwards
+compatibility, but they will be removed in a future release.
+
 .. _porting-UserDict:
 .. _porting-UserList:
 .. _porting-UserString:

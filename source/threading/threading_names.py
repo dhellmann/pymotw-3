@@ -12,15 +12,15 @@ import time
 
 
 def worker():
-    print(threading.currentThread().getName(), 'Starting')
+    print(threading.current_thread().getName(), 'Starting')
     time.sleep(0.2)
-    print(threading.currentThread().getName(), 'Exiting')
+    print(threading.current_thread().getName(), 'Exiting')
 
 
 def my_service():
-    print(threading.currentThread().getName(), 'Starting')
+    print(threading.current_thread().getName(), 'Starting')
     time.sleep(0.3)
-    print(threading.currentThread().getName(), 'Exiting')
+    print(threading.current_thread().getName(), 'Exiting')
 
 
 t = threading.Thread(name='my_service', target=my_service)
