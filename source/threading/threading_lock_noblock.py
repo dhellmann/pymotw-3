@@ -59,8 +59,8 @@ holder = threading.Thread(
     target=lock_holder,
     args=(lock,),
     name='LockHolder',
+    daemon=True,
 )
-holder.setDaemon(True)
 holder.start()
 
 worker = threading.Thread(

@@ -28,8 +28,7 @@ logging.basicConfig(
     format='(%(threadName)-10s) %(message)s',
 )
 
-d = threading.Thread(name='daemon', target=daemon)
-d.setDaemon(True)
+d = threading.Thread(name='daemon', target=daemon, daemon=True)
 
 t = threading.Thread(name='non-daemon', target=non_daemon)
 

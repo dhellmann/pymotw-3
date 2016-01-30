@@ -146,9 +146,9 @@ from exiting. Using daemon threads is useful for services where there
 may not be an easy way to interrupt the thread, or where letting the
 thread die in the middle of its work does not lose or corrupt data
 (for example, a thread that generates "heart beats" for a service
-monitoring tool). To mark a thread as a daemon, call its
-:func:`setDaemon()` method with :data:`True`.  The default is for
-threads to not be daemons.
+monitoring tool). To mark a thread as a daemon, pass ``daemon=True``
+when constructing it or call its :func:`setDaemon()` method with
+:data:`True`.  The default is for threads to not be daemons.
 
 .. literalinclude:: threading_daemon.py
     :caption:

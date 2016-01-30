@@ -27,8 +27,7 @@ logging.basicConfig(
 )
 
 for i in range(3):
-    t = threading.Thread(target=worker)
-    t.setDaemon(True)
+    t = threading.Thread(target=worker, daemon=True)
     t.start()
 
 main_thread = threading.main_thread()
