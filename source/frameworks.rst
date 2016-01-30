@@ -78,6 +78,7 @@ be used.
    shlex/index
    configparser/index
    atexit/index
+   fileinput/index
 
 ..
    getopt/index

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -19,6 +19,6 @@ for line in fileinput.input(sys.argv[2:]):
             fmt = '{lineno}:{line}'
         else:
             fmt = '{filename}:{lineno}:{line}'
-        print fmt.format(filename=fileinput.filename(),
+        print(fmt.format(filename=fileinput.filename(),
                          lineno=fileinput.filelineno(),
-                         line=line.rstrip())
+                         line=line.rstrip()))

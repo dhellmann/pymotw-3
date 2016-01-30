@@ -1,12 +1,11 @@
-============================================
- fileinput -- Command line Filter Framework
-============================================
+=============================================
+ fileinput --- Command line Filter Framework
+=============================================
 
 .. module:: fileinput
     :synopsis: Process lines from input streams.
 
 :Purpose: Create command line filter programs to process lines from input streams.
-:Python Version: 1.5.2 and later
 
 The :mod:`fileinput` module is a framework for creating command line
 programs for processing text files as a filter.
@@ -44,13 +43,14 @@ to MP3 files.
 
 Here is the complete program.
 
-.. include:: fileinput_example.py
-   :literal:
+.. literalinclude:: fileinput_example.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This sample input file contains the names of several MP3 files.
 
 .. literalinclude:: sample_data.m3u
+   :caption:
 
 Running ``fileinput_example.py`` with the sample input produces XML
 data using the RSS format.
@@ -61,34 +61,22 @@ data using the RSS format.
 
 ::
 
-	$ python fileinput_example.py sample_data.m3u
-
+	$ python3 fileinput_example.py sample_data.m3u
+	
 	<?xml version="1.0" ?>
 	<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
 	  <channel>
-	    <title>
-	      Sample podcast feed
-	    </title>
-	    <description>
-	      Generated for PyMOTW
-	    </description>
-	    <pubDate>
-	      Sun Nov 28 22:55:09 2010
-	    </pubDate>
-	    <generator>
-	      http://www.doughellmann.com/PyMOTW/
-	    </generator>
+	    <title>Sample podcast feed</title>
+	    <description>Generated for PyMOTW</description>
+	    <pubDate>Sat Jan 30 14:50:08 2016</pubDate>
+	    <generator>https://pymotw.com/</generator>
 	  </channel>
 	  <item>
-	    <title>
-	      episode-one.mp3
-	    </title>
+	    <title>episode-one.mp3</title>
 	    <enclosure type="audio/mpeg" url="episode-one.mp3"/>
 	  </item>
 	  <item>
-	    <title>
-	      episode-two.mp3
-	    </title>
+	    <title>episode-two.mp3</title>
 	    <enclosure type="audio/mpeg" url="episode-two.mp3"/>
 	  </item>
 	</rss>
@@ -105,40 +93,42 @@ that information. :mod:`fileinput` includes functions for accessing
 all of the metadata about the current line (:func:`filename`,
 :func:`filelineno`, and :func:`lineno`).
 
-.. include:: fileinput_grep.py
-   :literal:
+.. literalinclude:: fileinput_grep.py
+   :caption:
    :start-after: #end_pymotw_header
 
 A basic pattern matching loop can be used to find the occurrences of
 the string ``"fileinput"`` in the source for these examples.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'fileinput_grep.py fileinput *.py', break_lines_at=68))
+.. cog.out(run_script(cog.inFile, 'fileinput_grep.py fileinput *.py'))
 .. }}}
 
 ::
 
-	$ python fileinput_grep.py fileinput *.py
-
+	$ python3 fileinput_grep.py fileinput *.py
+	
 	fileinput_change_subnet.py:10:import fileinput
-	fileinput_change_subnet.py:17:for line in fileinput.input(files, inp
-	lace=True):
+	fileinput_change_subnet.py:17:for line in fileinput.input(files,
+	 inplace=True):
 	fileinput_change_subnet_noisy.py:10:import fileinput
-	fileinput_change_subnet_noisy.py:18:for line in fileinput.input(file
-	s, inplace=True):
-	fileinput_change_subnet_noisy.py:19:    if fileinput.isfirstline():
-	fileinput_change_subnet_noisy.py:21:                         fileinp
-	ut.filename())
+	fileinput_change_subnet_noisy.py:18:for line in fileinput.input(
+	files, inplace=True):
+	fileinput_change_subnet_noisy.py:19:    if fileinput.isfirstline
+	():
+	fileinput_change_subnet_noisy.py:21:                         fil
+	einput.filename())
 	fileinput_example.py:6:"""Example for fileinput module.
 	fileinput_example.py:10:import fileinput
-	fileinput_example.py:30:for line in fileinput.input(sys.argv[1:]):
+	fileinput_example.py:30:for line in fileinput.input(sys.argv[1:]
+	):
 	fileinput_grep.py:10:import fileinput
 	fileinput_grep.py:16:for line in fileinput.input(sys.argv[2:]):
 	fileinput_grep.py:18:        if fileinput.isstdin():
-	fileinput_grep.py:22:        print fmt.format(filename=fileinput.fil
-	ename(),
-	fileinput_grep.py:23:                         lineno=fileinput.filel
-	ineno(),
+	fileinput_grep.py:22:        print(fmt.format(filename=fileinput
+	.filename(),
+	fileinput_grep.py:23:                         lineno=fileinput.f
+	ilelineno(),
 
 .. {{{end}}}
 
@@ -146,13 +136,13 @@ Text can also be read from standard input.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'cat *.py | python fileinput_grep.py fileinput', 
-..                    interpreter=None, break_lines_at=68))
+..                    interpreter=None))
 .. }}}
 
 ::
 
 	$ cat *.py | python fileinput_grep.py fileinput
-
+	
 	10:import fileinput
 	17:for line in fileinput.input(files, inplace=True):
 	29:import fileinput
@@ -165,7 +155,7 @@ Text can also be read from standard input.
 	101:import fileinput
 	107:for line in fileinput.input(sys.argv[2:]):
 	109:        if fileinput.isstdin():
-	113:        print fmt.format(filename=fileinput.filename(),
+	113:        print(fmt.format(filename=fileinput.filename(),
 	114:                         lineno=fileinput.filelineno(),
 
 .. {{{end}}}
@@ -178,16 +168,15 @@ Another common file processing operation is to modify the contents of
 a file in-place.  For example, a Unix hosts file might need to be
 updated if a subnet range changes.
 
-.. include:: etc_hosts
-   :literal:
+.. literalinclude:: etc_hosts
 
 The safe way to make the change automatically is to create a new file
 based on the input and then replace the original with the edited copy.
 :mod:`fileinput` supports this automatically using the *inplace*
 option.
 
-.. include:: fileinput_change_subnet.py
-   :literal:
+.. literalinclude:: fileinput_change_subnet.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Although the script uses :command:`print`, no output is produced
@@ -195,14 +184,13 @@ because :mod:`fileinput` redirects standard output to the file being
 overwritten.
 
 .. {{{cog
-.. path('PyMOTW/fileinput/etc_hosts').copy('PyMOTW/fileinput/etc_hosts.txt')
-.. cog.out(run_script(cog.inFile, 'fileinput_change_subnet.py 10.16. 10.17. etc_hosts.txt'))
+.. path('source/fileinput/etc_hosts').copy('source/fileinput/etc_hosts.txt')
+.. cog.out(run_script(cog.inFile, 'fileinput_change_subnet.py 10.16 10.17 etc_hosts.txt'))
 .. }}}
 
 ::
 
-	$ python fileinput_change_subnet.py 10.16. 10.17. etc_hosts.txt
-
+	$ python3 fileinput_change_subnet.py 10.16 10.17 etc_hosts.txt
 	
 
 .. {{{end}}}
@@ -210,27 +198,27 @@ overwritten.
 The updated file has the changed IP addresses of all of the servers on
 the ``10.16.0.0/16`` network.
 
-.. include:: etc_hosts.txt
-   :literal:
+.. literalinclude:: etc_hosts.txt
 
 Before processing begins, a backup file is created using the original
 name plus ``.bak``.  
 
-.. include:: fileinput_change_subnet_noisy.py
-   :literal:
+.. literalinclude:: fileinput_change_subnet_noisy.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The backup file is removed when the input is closed.
 
 .. {{{cog
-.. path('PyMOTW/fileinput/etc_hosts').copy('PyMOTW/fileinput/etc_hosts.txt')
+.. path('source/fileinput/etc_hosts').copy('source/fileinput/etc_hosts.txt')
 .. cog.out(run_script(cog.inFile, 'fileinput_change_subnet_noisy.py 10.16. 10.17. etc_hosts.txt'))
 .. }}}
 
 ::
 
-	$ python fileinput_change_subnet_noisy.py 10.16. 10.17. etc_hosts.txt
-
+	$ python3 fileinput_change_subnet_noisy.py 10.16. 10.17. etc_h\
+	osts.txt
+	
 	Started processing etc_hosts.txt
 	Directory contains: ['etc_hosts.txt', 'etc_hosts.txt.bak']
 	Finished processing
@@ -248,7 +236,7 @@ The backup file is removed when the input is closed.
         Script to convert m3u files listing MP3s to an RSS file
         suitable for use as a podcast feed.
 
-    :ref:`xml.etree.ElementTree.creating`
+    :mod:`xml.etree`
         More details of using ElementTree to produce XML.
 
 .. _m3utorss: http://www.doughellmann.com/projects/m3utorss
