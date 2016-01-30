@@ -1,35 +1,35 @@
 =============================================
- fileinput --- Command line Filter Framework
+ fileinput --- Command-Line Filter Framework
 =============================================
 
 .. module:: fileinput
     :synopsis: Process lines from input streams.
 
-:Purpose: Create command line filter programs to process lines from input streams.
+:Purpose: Create command-line filter programs to process lines from input streams.
 
-The :mod:`fileinput` module is a framework for creating command line
+The :mod:`fileinput` module is a framework for creating command-line
 programs for processing text files as a filter.
 
 Converting M3U files to RSS
 ===========================
 
-An example of a filter is m3utorss, a program to convert a set of
+An example of a filter is m3utorss_, a program to convert a set of
 MP3 files into an RSS feed that can be shared as a podcast.  The
 inputs to the program are one or more m3u files listing the MP3 files
 to be distributed. The output is an RSS feed printed to the
 console. To process the input, the program needs to iterate over the
-list of filenames and:
+list of filenames and
 
-* Open each file
-* Read each line of the file
-* Figure out if the line refers to an mp3 file
-* If it does, extract the information from the mp3 file needed for the RSS feed
-* Print the output
+* Open each file.
+* Read each line of the file.
+* Figure out if the line refers to an mp3 file.
+* If it does, extract the information from the mp3 file needed for the RSS feed.
+* Print the output.
 
-All of that file handling could have been coded by hand. It is not that
-complicated, and with some testing even the error handling would be
-right. But :mod:`fileinput` handles all of the details, so the program
-is simplified.
+All of this file handling could have been coded by hand. It is not
+that complicated and, with some testing, even the error handling would
+be right. But :mod:`fileinput` handles all of the details, so the
+program is simplified.
 
 .. literalinclude:: fileinput_example.py
    :lines: 30-39
@@ -164,9 +164,9 @@ Text can also be read from standard input.
 In-place Filtering
 ==================
 
-Another common file processing operation is to modify the contents of
-a file in-place.  For example, a Unix hosts file might need to be
-updated if a subnet range changes.
+Another common file-processing operation is to modify the contents of
+a file where it is, rather than making a new file.  For example, a
+Unix hosts file might need to be updated if a subnet range changes.
 
 .. literalinclude:: etc_hosts
 
@@ -179,8 +179,8 @@ option.
    :caption:
    :start-after: #end_pymotw_header
 
-Although the script uses :command:`print`, no output is produced
-because :mod:`fileinput` redirects standard output to the file being
+Although the script uses :func:`print`, no output is produced because
+:mod:`fileinput` redirects standard output to the file being
 overwritten.
 
 .. {{{cog
@@ -229,14 +229,12 @@ The backup file is removed when the input is closed.
 
 .. seealso::
 
-    `fileinput <http://docs.python.org/library/fileinput.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`fileinput`
 
-    m3utorss_
-        Script to convert m3u files listing MP3s to an RSS file
-        suitable for use as a podcast feed.
+   * m3utorss_ -- Script to convert m3u files listing MP3s to an RSS
+     file suitable for use as a podcast feed.
 
-    :mod:`xml.etree`
-        More details of using ElementTree to produce XML.
+   * :mod:`xml.etree` -- More details of using ElementTree to
+     produce XML.
 
-.. _m3utorss: http://www.doughellmann.com/projects/m3utorss
+.. _m3utorss: https://pypi.python.org/pypi/m3utorss
