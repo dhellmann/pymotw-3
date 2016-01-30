@@ -156,8 +156,8 @@ threads to not be daemons.
 
 The output does not include the ``"Exiting"`` message from the daemon
 thread, since all of the non-daemon threads (including the main
-thread) exit before the daemon thread wakes up from its two second
-sleep.
+thread) exit before the daemon thread wakes up from the ``sleep()``
+call.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'threading_daemon.py'))
