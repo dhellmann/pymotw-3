@@ -49,7 +49,7 @@ for i in range(2):
     t.start()
 
 logging.debug('Waiting for worker threads')
-main_thread = threading.currentThread()
+main_thread = threading.main_thread()
 for t in threading.enumerate():
     if t is not main_thread:
         t.join()

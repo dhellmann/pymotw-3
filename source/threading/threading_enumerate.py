@@ -31,7 +31,7 @@ for i in range(3):
     t.setDaemon(True)
     t.start()
 
-main_thread = threading.currentThread()
+main_thread = threading.main_thread()
 for t in threading.enumerate():
     if t is main_thread:
         continue
