@@ -30,6 +30,7 @@ def worker(data):
 class MyLocal(threading.local):
 
     def __init__(self, value):
+        super().__init__()
         logging.debug('Initializing %r', self)
         self.value = value
 

@@ -55,13 +55,17 @@ logging.basicConfig(
 
 lock = threading.Lock()
 
-holder = threading.Thread(target=lock_holder,
-                          args=(lock,),
-                          name='LockHolder')
+holder = threading.Thread(
+    target=lock_holder,
+    args=(lock,),
+    name='LockHolder',
+)
 holder.setDaemon(True)
 holder.start()
 
-worker = threading.Thread(target=worker,
-                          args=(lock,),
-                          name='Worker')
+worker = threading.Thread(
+    target=worker,
+    args=(lock,),
+    name='Worker',
+)
 worker.start()

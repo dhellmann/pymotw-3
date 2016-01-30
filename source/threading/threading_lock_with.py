@@ -23,9 +23,10 @@ def worker_no_with(lock):
         lock.release()
 
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='(%(threadName)-10s) %(message)s',
-                    )
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='(%(threadName)-10s) %(message)s',
+)
 
 lock = threading.Lock()
 w = threading.Thread(target=worker_with, args=(lock,))

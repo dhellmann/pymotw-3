@@ -251,14 +251,14 @@ from this program may vary.
 
 	$ python3 threading_enumerate.py
 	
-	(Thread-1  ) sleeping 0.30
-	(Thread-2  ) sleeping 0.30
-	(Thread-3  ) sleeping 0.50
+	(Thread-1  ) sleeping 0.40
+	(Thread-2  ) sleeping 0.40
+	(Thread-3  ) sleeping 0.30
 	(MainThread) joining Thread-1
-	(Thread-2  ) ending
-	(Thread-1  ) ending
-	(MainThread) joining Thread-3
 	(Thread-3  ) ending
+	(Thread-1  ) ending
+	(Thread-2  ) ending
+	(MainThread) joining Thread-3
 	(MainThread) joining Thread-2
 
 .. {{{end}}}
@@ -433,27 +433,27 @@ to the value attribute.
 
 	$ python3 threading_lock.py
 	
-	(Thread-1  ) Sleeping 0.39
-	(Thread-2  ) Sleeping 0.39
+	(Thread-1  ) Sleeping 0.75
+	(Thread-2  ) Sleeping 0.01
 	(MainThread) Waiting for worker threads
 	(Thread-2  ) Waiting for lock
 	(Thread-2  ) Acquired lock
-	(Thread-2  ) Sleeping 0.99
-	(Thread-1  ) Waiting for lock
-	(Thread-1  ) Acquired lock
-	(Thread-1  ) Sleeping 0.29
-	(Thread-1  ) Waiting for lock
-	(Thread-1  ) Acquired lock
-	(Thread-1  ) Done
+	(Thread-2  ) Sleeping 0.37
 	(Thread-2  ) Waiting for lock
 	(Thread-2  ) Acquired lock
 	(Thread-2  ) Done
+	(Thread-1  ) Waiting for lock
+	(Thread-1  ) Acquired lock
+	(Thread-1  ) Sleeping 0.81
+	(Thread-1  ) Waiting for lock
+	(Thread-1  ) Acquired lock
+	(Thread-1  ) Done
 	(MainThread) Counter: 4
 
 .. {{{end}}}
 
 To find out whether another thread has acquired the lock without
-holding up the current thread, pass False for the *blocking* argument
+holding up the current thread, pass ``False`` for the *blocking* argument
 to :func:`acquire()`. In the next example, :func:`worker()` tries to
 acquire the lock three separate times, and counts how many attempts it
 has to make to do so. In the mean time, :func:`lock_holder` cycles
@@ -484,22 +484,16 @@ three separate times.
 	(LockHolder) Holding
 	(Worker    ) Trying to acquire
 	(Worker    ) Iteration 2: Not acquired
-	(Worker    ) Trying to acquire
-	(Worker    ) Iteration 3: Not acquired
 	(LockHolder) Not holding
 	(Worker    ) Trying to acquire
-	(Worker    ) Iteration 4: Acquired
+	(Worker    ) Iteration 3: Acquired
 	(LockHolder) Holding
 	(Worker    ) Trying to acquire
-	(LockHolder) Not holding
-	(Worker    ) Iteration 5: Not acquired
-	(LockHolder) Holding
-	(Worker    ) Trying to acquire
-	(Worker    ) Iteration 6: Not acquired
+	(Worker    ) Iteration 4: Not acquired
 	(LockHolder) Not holding
 	(Worker    ) Trying to acquire
-	(Worker    ) Iteration 7: Acquired
-	(Worker    ) Done after 7 iterations
+	(Worker    ) Iteration 5: Acquired
+	(Worker    ) Done after 5 iterations
 
 .. {{{end}}}
 
@@ -609,12 +603,12 @@ the :class:`Condition`. Using the :func:`acquire()` and
 
 	$ python3 threading_condition.py
 	
-	2016-01-30 11:20:26,460 (c1) Starting consumer thread
-	2016-01-30 11:20:26,663 (c2) Starting consumer thread
-	2016-01-30 11:20:26,863 (p ) Starting producer thread
-	2016-01-30 11:20:26,864 (p ) Making resource available
-	2016-01-30 11:20:26,864 (c1) Resource is available to consumer
-	2016-01-30 11:20:26,864 (c2) Resource is available to consumer
+	2016-01-30 11:38:52,240 (c1) Starting consumer thread
+	2016-01-30 11:38:52,443 (c2) Starting consumer thread
+	2016-01-30 11:38:52,645 (p ) Starting producer thread
+	2016-01-30 11:38:52,645 (p ) Making resource available
+	2016-01-30 11:38:52,645 (c1) Resource is available to consumer
+	2016-01-30 11:38:52,645 (c2) Resource is available to consumer
 
 .. {{{end}}}
 
@@ -647,18 +641,18 @@ threads to show that at most two are running concurrently.
 
 	$ python3 threading_semaphore.py
 	
-	2016-01-30 11:20:26,936 (0 ) Waiting to join the pool
-	2016-01-30 11:20:26,936 (0 ) Running: ['0']
-	2016-01-30 11:20:26,936 (1 ) Waiting to join the pool
-	2016-01-30 11:20:26,936 (1 ) Running: ['0', '1']
-	2016-01-30 11:20:26,937 (2 ) Waiting to join the pool
-	2016-01-30 11:20:26,937 (3 ) Waiting to join the pool
-	2016-01-30 11:20:27,040 (0 ) Running: ['1']
-	2016-01-30 11:20:27,040 (2 ) Running: ['1', '2']
-	2016-01-30 11:20:27,040 (1 ) Running: ['2']
-	2016-01-30 11:20:27,041 (3 ) Running: ['2', '3']
-	2016-01-30 11:20:27,141 (2 ) Running: ['3']
-	2016-01-30 11:20:27,141 (3 ) Running: []
+	2016-01-30 11:38:52,715 (0 ) Waiting to join the pool
+	2016-01-30 11:38:52,715 (0 ) Running: ['0']
+	2016-01-30 11:38:52,716 (1 ) Waiting to join the pool
+	2016-01-30 11:38:52,716 (1 ) Running: ['0', '1']
+	2016-01-30 11:38:52,717 (2 ) Waiting to join the pool
+	2016-01-30 11:38:52,717 (3 ) Waiting to join the pool
+	2016-01-30 11:38:52,818 (0 ) Running: ['1']
+	2016-01-30 11:38:52,819 (2 ) Running: ['1', '2']
+	2016-01-30 11:38:52,819 (1 ) Running: ['2']
+	2016-01-30 11:38:52,820 (3 ) Running: ['2', '3']
+	2016-01-30 11:38:52,924 (2 ) Running: ['3']
+	2016-01-30 11:38:52,925 (3 ) Running: []
 
 .. {{{end}}}
 
@@ -690,7 +684,7 @@ it is set in that thread.
 	(Thread-1  ) No value yet
 	(Thread-1  ) value=90
 	(Thread-2  ) No value yet
-	(Thread-2  ) value=36
+	(Thread-2  ) value=18
 
 .. {{{end}}}
 
@@ -713,16 +707,16 @@ value), once in each thread to set the default values.
 	$ python3 threading_local_defaults.py
 	
 	(MainThread) Initializing <__main__.MyLocal object at
-	0x10125d348>
+	0x10115d348>
 	(MainThread) value=1000
 	(Thread-1  ) Initializing <__main__.MyLocal object at
-	0x10125d348>
+	0x10115d348>
 	(Thread-1  ) value=1000
-	(Thread-1  ) value=72
+	(Thread-1  ) value=85
 	(Thread-2  ) Initializing <__main__.MyLocal object at
-	0x10125d348>
+	0x10115d348>
 	(Thread-2  ) value=1000
-	(Thread-2  ) value=49
+	(Thread-2  ) value=46
 
 .. {{{end}}}
 
