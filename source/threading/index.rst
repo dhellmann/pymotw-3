@@ -727,15 +727,13 @@ value), once in each thread to set the default values.
 .. {{{end}}}
 
 .. seealso::
-    
-    `threading <http://docs.python.org/lib/module-threading.html>`_
-        Standard library documentation for this module.
 
-    :mod:`thread`
-        Lower level thread API.
-    
-    :mod:`Queue`
-        Thread-safe queue, useful for passing messages between threads.
+   * :pydoc:`threading`
 
-    :mod:`multiprocessing`
-        An API for working with processes that mirrors the ``threading`` API.
+   * :mod:`thread` -- Lower level thread API.
+
+   * :mod:`Queue` -- Thread-safe queue, useful for passing messages
+     between threads.
+
+   * :mod:`multiprocessing` -- An API for working with processes that
+     mirrors the ``threading`` API.
