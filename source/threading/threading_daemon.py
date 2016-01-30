@@ -23,9 +23,10 @@ def non_daemon():
     logging.debug('Exiting')
 
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='(%(threadName)-10s) %(message)s',
-                    )
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='(%(threadName)-10s) %(message)s',
+)
 
 d = threading.Thread(name='daemon', target=daemon)
 d.setDaemon(True)

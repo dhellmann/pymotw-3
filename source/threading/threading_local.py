@@ -27,9 +27,10 @@ def worker(data):
     show_value(data)
 
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='(%(threadName)-10s) %(message)s',
-                    )
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='(%(threadName)-10s) %(message)s',
+)
 
 local_data = threading.local()
 show_value(local_data)

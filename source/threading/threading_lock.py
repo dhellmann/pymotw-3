@@ -38,9 +38,10 @@ def worker(c):
     logging.debug('Done')
 
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='(%(threadName)-10s) %(message)s',
-                    )
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='(%(threadName)-10s) %(message)s',
+)
 
 counter = Counter()
 for i in range(2):

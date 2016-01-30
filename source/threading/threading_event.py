@@ -31,9 +31,10 @@ def wait_for_event_timeout(e, t):
             logging.debug('doing other work')
 
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='(%(threadName)-10s) %(message)s',
-                    )
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='(%(threadName)-10s) %(message)s',
+)
 
 e = threading.Event()
 t1 = threading.Thread(name='block',

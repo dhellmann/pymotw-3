@@ -49,9 +49,10 @@ def worker(lock):
     logging.debug('Done after %d iterations', num_tries)
 
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='(%(threadName)-10s) %(message)s',
-                    )
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='(%(threadName)-10s) %(message)s',
+)
 
 lock = threading.Lock()
 

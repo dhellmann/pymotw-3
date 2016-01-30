@@ -34,9 +34,10 @@ class MyLocal(threading.local):
         self.value = value
 
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='(%(threadName)-10s) %(message)s',
-                    )
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='(%(threadName)-10s) %(message)s',
+)
 
 local_data = MyLocal(1000)
 show_value(local_data)

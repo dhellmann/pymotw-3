@@ -10,11 +10,6 @@ import logging
 import threading
 import time
 
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(asctime)s (%(threadName)-2s) %(message)s',
-)
-
 
 def consumer(cond):
     """wait for the condition and use the resource"""
@@ -31,6 +26,11 @@ def producer(cond):
         logging.debug('Making resource available')
         cond.notifyAll()
 
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s (%(threadName)-2s) %(message)s',
+)
 
 condition = threading.Condition()
 c1 = threading.Thread(name='c1', target=consumer,

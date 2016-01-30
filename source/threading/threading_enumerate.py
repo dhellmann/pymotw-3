@@ -22,9 +22,10 @@ def worker():
     return
 
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='(%(threadName)-10s) %(message)s',
-                    )
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='(%(threadName)-10s) %(message)s',
+)
 
 for i in range(3):
     t = threading.Thread(target=worker)
