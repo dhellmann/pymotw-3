@@ -517,6 +517,21 @@ For Linux systems, :data:`sys.platform` no longer includes the version
 number. The value is now just ``linux`` and not ``linux2`` or
 ``linux3``.
 
+.. _porting-threading:
+
+threading
+---------
+
+.. index::
+   pair: porting; threading
+
+The debugging features of :mod:`threading`, including the "verbose"
+argument has been removed from the APIs (:pyissue:`13550`).
+
+.. _porting-UserDict:
+.. _porting-UserList:
+.. _porting-UserString:
+
 UserDict, UserList, and UserString
 ----------------------------------
 

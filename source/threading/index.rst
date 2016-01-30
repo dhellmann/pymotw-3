@@ -724,6 +724,8 @@ value), once in each thread to set the default values.
 
    * :pydoc:`threading`
 
+   * :ref:`Porting notes for threading <porting-threading>`
+
    * :mod:`thread` -- Lower level thread API.
 
    * :mod:`Queue` -- Thread-safe queue, useful for passing messages
