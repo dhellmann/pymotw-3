@@ -15,7 +15,6 @@ class MyThread(threading.Thread):
 
     def run(self):
         logging.debug('running')
-        return
 
 
 logging.basicConfig(level=logging.DEBUG,

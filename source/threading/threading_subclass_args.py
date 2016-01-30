@@ -21,12 +21,10 @@ class MyThreadWithArgs(threading.Thread):
                                   )
         self.args = args
         self.kwargs = kwargs
-        return
 
     def run(self):
         logging.debug('running with %s and %s',
                       self.args, self.kwargs)
-        return
 
 
 logging.basicConfig(level=logging.DEBUG,

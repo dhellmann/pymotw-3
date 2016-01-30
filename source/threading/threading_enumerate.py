@@ -19,7 +19,6 @@ def worker():
     logging.debug('sleeping %0.2f', pause)
     time.sleep(pause)
     logging.debug('ending')
-    return
 
 
 logging.basicConfig(

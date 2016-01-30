@@ -23,7 +23,6 @@ def lock_holder(lock):
             logging.debug('Not holding')
             lock.release()
         time.sleep(0.5)
-    return
 
 
 def worker(lock):

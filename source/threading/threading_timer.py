@@ -14,7 +14,6 @@ import logging
 
 def delayed():
     logging.debug('worker running')
-    return
 
 
 logging.basicConfig(level=logging.DEBUG,

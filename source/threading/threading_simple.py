@@ -13,7 +13,6 @@ import threading
 def worker():
     """thread worker function"""
     print('Worker')
-    return
 
 
 threads = []
