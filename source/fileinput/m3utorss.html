@@ -1,0 +1,206 @@
+<pre><font face="Lucida,Courier New"><font color="#008000">#!/usr/bin/env python
+</font><font color="#008000">#
+</font><font color="#008000"># Copyright 2006 Doug Hellmann.
+</font><font color="#008000">#
+</font><font color="#008000">#
+</font><font color="#008000">#                         All Rights Reserved
+</font><font color="#008000">#
+</font><font color="#008000"># Permission to use, copy, modify, and distribute this software and
+</font><font color="#008000"># its documentation for any purpose and without fee is hereby
+</font><font color="#008000"># granted, provided that the above copyright notice appear in all
+</font><font color="#008000"># copies and that both that copyright notice and this permission
+</font><font color="#008000"># notice appear in supporting documentation, and that the name of Doug
+</font><font color="#008000"># Hellmann not be used in advertising or publicity pertaining to
+</font><font color="#008000"># distribution of the software without specific, written prior
+</font><font color="#008000"># permission.
+</font><font color="#008000">#
+</font><font color="#008000"># DOUG HELLMANN DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
+</font><font color="#008000"># INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN
+</font><font color="#008000"># NO EVENT SHALL DOUG HELLMANN BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+</font><font color="#008000"># CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
+</font><font color="#008000"># OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
+</font><font color="#008000"># NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
+</font><font color="#008000"># CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+</font><font color="#008000">#
+</font>
+<font color="#004080">"""Convert an input m3u file to an RSS podcast feed.
+
+"""</font>
+
+<font color="#000000">__module_id__</font> <font color="#0000C0">=</font> <font color="#004080">"$Id$"</font>
+
+<font color="#008000">#
+</font><font color="#008000"># Import system modules
+</font><font color="#008000">#
+</font><font color="#C00000">import</font> <font color="#000000">fileinput</font>
+<font color="#C00000">import</font> <font color="#000000">os</font>
+<font color="#C00000">import</font> <font color="#000000">sys</font>
+<font color="#C00000">import</font> <font color="#000000">time</font>
+
+<font color="#008000">#
+</font><font color="#008000"># Import local modules
+</font><font color="#008000">#
+</font><font color="#C00000">from</font> <font color="#000000">m3utorsslib</font><font color="#0000C0">.</font><font color="#000000">CommandLineApp</font> <font color="#C00000">import</font> <font color="#000000">CommandLineApp</font>
+<font color="#C00000">from</font> <font color="#000000">m3utorsslib</font> <font color="#C00000">import</font> <font color="#000000">id3reader</font> <font color="#008000"># from http://nedbatchelder.com/code/modules/id3reader.html</font>
+<font color="#C00000">from</font> <font color="#000000">m3utorsslib</font> <font color="#C00000">import</font> <font color="#000000">mp3</font> <font color="#008000"># from http://ibofobi.dk/svn/Jukebox/jukebox/mp3.py</font>
+
+<font color="#008000">#
+</font><font color="#008000"># Module
+</font><font color="#008000">#
+</font>
+<font color="#C00000">def</font> <font color="#000000">mp3secs</font><font color="#0000C0">(</font><font color="#000000">mp3file</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+    <font color="#004080">"""From http://www.nedbatchelder.com/code/utilities/m3utree_py.html
+    """</font>
+    <font color="#000000">secs</font> <font color="#0000C0">=</font> <font color="#0080C0">0</font>
+    <font color="#000000">secs</font> <font color="#0000C0">=</font> <font color="#000000">sum</font><font color="#0000C0">(</font><font color="#0000C0">[</font><font color="#000000">mp3</font><font color="#0000C0">.</font><font color="#000000">time</font><font color="#0000C0">(</font><font color="#000000">h</font><font color="#0000C0">)</font> <font color="#C00000">for</font> <font color="#000000">h</font><font color="#0000C0">,</font><font color="#000000">f</font> <font color="#C00000">in</font> <font color="#000000">mp3</font><font color="#0000C0">.</font><font color="#000000">frames</font><font color="#0000C0">(</font><font color="#000000">mp3file</font><font color="#0000C0">)</font><font color="#0000C0">]</font><font color="#0000C0">)</font>
+    <font color="#C00000">return</font> <font color="#000000">secs</font>
+
+<font color="#C00000">class</font> <font color="#000000">m3utorss</font><font color="#0000C0">(</font><font color="#000000">CommandLineApp</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+    <font color="#004080">"""Convert an input m3u file to an RSS podcast feed.
+    """</font>
+
+    <font color="#000000">title</font> <font color="#0000C0">=</font> <font color="#004080">'m3utorss generated feed'</font>
+    <font color="#C00000">def</font> <font color="#000000">optionHandler_title</font><font color="#0000C0">(</font><font color="#000000">self</font><font color="#0000C0">,</font> <font color="#000000">title</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+        <font color="#004080">"""The title for the RSS feed.
+        """</font>
+        <font color="#000000">self</font><font color="#0000C0">.</font><font color="#000000">title</font> <font color="#0000C0">=</font> <font color="#000000">title</font>
+        <font color="#C00000">return</font>
+
+    <font color="#000000">description</font> <font color="#0000C0">=</font> <font color="#000000">None</font>
+    <font color="#C00000">def</font> <font color="#000000">optionHandler_description</font><font color="#0000C0">(</font><font color="#000000">self</font><font color="#0000C0">,</font> <font color="#000000">description</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+        <font color="#004080">"""The description for the feed.
+        """</font>
+        <font color="#000000">self</font><font color="#0000C0">.</font><font color="#000000">description</font> <font color="#0000C0">=</font> <font color="#000000">description</font>
+        <font color="#C00000">return</font>
+    <font color="#000000">optionHandler_d</font> <font color="#0000C0">=</font> <font color="#000000">optionHandler_description</font>
+
+    <font color="#000000">link</font> <font color="#0000C0">=</font> <font color="#000000">None</font>
+    <font color="#C00000">def</font> <font color="#000000">optionHandler_link</font><font color="#0000C0">(</font><font color="#000000">self</font><font color="#0000C0">,</font> <font color="#000000">link</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+        <font color="#004080">"""The link for the feed.
+        """</font>
+        <font color="#000000">self</font><font color="#0000C0">.</font><font color="#000000">link</font> <font color="#0000C0">=</font> <font color="#000000">link</font>
+        <font color="#C00000">return</font>
+    <font color="#000000">optionHandler_d</font> <font color="#0000C0">=</font> <font color="#000000">optionHandler_link</font>
+
+    <font color="#000000">url_prefix</font> <font color="#0000C0">=</font> <font color="#000000">None</font>
+    <font color="#C00000">def</font> <font color="#000000">optionHandler_prefix</font><font color="#0000C0">(</font><font color="#000000">self</font><font color="#0000C0">,</font> <font color="#000000">url_prefix</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+        <font color="#004080">"""The URL prefix for the MP3 files.
+        """</font>
+        <font color="#000000">self</font><font color="#0000C0">.</font><font color="#000000">url_prefix</font> <font color="#0000C0">=</font> <font color="#000000">url_prefix</font>
+        <font color="#C00000">return</font>
+    <font color="#000000">optionHandler_p</font> <font color="#0000C0">=</font> <font color="#000000">optionHandler_prefix</font>
+
+    <font color="#000000">include_comments</font> <font color="#0000C0">=</font> <font color="#000000">True</font>
+    <font color="#C00000">def</font> <font color="#000000">optionHandler_comments</font><font color="#0000C0">(</font><font color="#000000">self</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+        <font color="#004080">"""Include comments. (default)
+        """</font>
+        <font color="#000000">self</font><font color="#0000C0">.</font><font color="#000000">include_comments</font> <font color="#0000C0">=</font> <font color="#000000">True</font>
+        <font color="#C00000">return</font>
+    <font color="#C00000">def</font> <font color="#000000">optionHandler_no_comments</font><font color="#0000C0">(</font><font color="#000000">self</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+        <font color="#004080">"""Do not include comments.
+        """</font>
+        <font color="#000000">self</font><font color="#0000C0">.</font><font color="#000000">include_comments</font> <font color="#0000C0">=</font> <font color="#000000">False</font>
+        <font color="#C00000">return</font>
+
+    <font color="#C00000">def</font> <font color="#000000">startRSS</font><font color="#0000C0">(</font><font color="#000000">self</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+        <font color="#C00000">print</font> <font color="#004080">'&lt;rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"&gt;'</font>
+        <font color="#C00000">return</font>
+
+    <font color="#C00000">def</font> <font color="#000000">endRSS</font><font color="#0000C0">(</font><font color="#000000">self</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+        <font color="#C00000">print</font> <font color="#004080">'&lt;/rss&gt;'</font>
+        <font color="#C00000">return</font>
+
+    <font color="#C00000">def</font> <font color="#000000">generateChannelInfo</font><font color="#0000C0">(</font><font color="#000000">self</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+        <font color="#C00000">print</font> <font color="#004080">'&lt;channel&gt;'</font>
+        <font color="#C00000">print</font> <font color="#004080">' &lt;title&gt;%s&lt;/title&gt;'</font> <font color="#0000C0">%</font> <font color="#000000">self</font><font color="#0000C0">.</font><font color="#000000">title</font>
+
+        <font color="#C00000">for</font> <font color="#000000">tag</font><font color="#0000C0">,</font> <font color="#000000">value</font> <font color="#C00000">in</font> <font color="#0000C0">[</font> <font color="#0000C0">(</font><font color="#004080">'description'</font><font color="#0000C0">,</font> <font color="#000000">self</font><font color="#0000C0">.</font><font color="#000000">description</font><font color="#0000C0">)</font><font color="#0000C0">,</font>
+                            <font color="#0000C0">(</font><font color="#004080">'link'</font><font color="#0000C0">,</font> <font color="#000000">self</font><font color="#0000C0">.</font><font color="#000000">link</font><font color="#0000C0">)</font><font color="#0000C0">,</font>
+                            <font color="#0000C0">]</font><font color="#0000C0">:</font>
+            <font color="#C00000">if</font> <font color="#000000">value</font> <font color="#C00000">is</font> <font color="#C00000">not</font> <font color="#000000">None</font><font color="#0000C0">:</font>
+                <font color="#C00000">print</font> <font color="#004080">' &lt;%s&gt;%s&lt;/%s&gt;'</font> <font color="#0000C0">%</font> <font color="#0000C0">(</font><font color="#000000">tag</font><font color="#0000C0">,</font> <font color="#000000">value</font><font color="#0000C0">,</font> <font color="#000000">tag</font><font color="#0000C0">)</font>
+
+        <font color="#C00000">print</font> <font color="#004080">' &lt;pubDate&gt;%s&lt;/pubDate&gt;'</font> <font color="#0000C0">%</font> <font color="#000000">time</font><font color="#0000C0">.</font><font color="#000000">asctime</font><font color="#0000C0">(</font><font color="#0000C0">)</font>
+        <font color="#C00000">print</font> <font color="#004080">' &lt;generator&gt;http://www.doughellmann.com/projects/m3utorss/&lt;/generator&gt;'</font>
+        <font color="#C00000">print</font> <font color="#004080">'&lt;/channel&gt;'</font>
+        <font color="#C00000">return</font>
+
+    <font color="#C00000">def</font> <font color="#000000">generateItem</font><font color="#0000C0">(</font><font color="#000000">self</font><font color="#0000C0">,</font> <font color="#000000">mp3filename</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+        <font color="#000000">sys</font><font color="#0000C0">.</font><font color="#000000">stderr</font><font color="#0000C0">.</font><font color="#000000">write</font><font color="#0000C0">(</font><font color="#004080">'Working on: %s\n'</font> <font color="#0000C0">%</font> <font color="#000000">mp3filename</font><font color="#0000C0">)</font>
+        <font color="#C00000">print</font> <font color="#004080">'  &lt;item&gt;'</font>
+
+        <font color="#008000"># Read some info from the mp3 file
+</font>        <font color="#000000">mp3file</font> <font color="#0000C0">=</font> <font color="#000000">open</font><font color="#0000C0">(</font><font color="#000000">mp3filename</font><font color="#0000C0">,</font> <font color="#004080">'rb'</font><font color="#0000C0">)</font>
+        <font color="#C00000">try</font><font color="#0000C0">:</font>
+            <font color="#000000">mp3file</font><font color="#0000C0">.</font><font color="#000000">seek</font><font color="#0000C0">(</font><font color="#0080C0">0</font><font color="#0000C0">)</font>
+            <font color="#000000">id3</font> <font color="#0000C0">=</font> <font color="#000000">id3reader</font><font color="#0000C0">.</font><font color="#000000">Reader</font><font color="#0000C0">(</font><font color="#000000">mp3file</font><font color="#0000C0">)</font>
+
+            <font color="#008000"># who?
+</font>            <font color="#000000">performer</font> <font color="#0000C0">=</font> <font color="#000000">id3</font><font color="#0000C0">.</font><font color="#000000">getValue</font><font color="#0000C0">(</font><font color="#004080">'performer'</font><font color="#0000C0">)</font>
+
+            <font color="#008000"># what?
+</font>            <font color="#000000">album</font> <font color="#0000C0">=</font> <font color="#000000">id3</font><font color="#0000C0">.</font><font color="#000000">getValue</font><font color="#0000C0">(</font><font color="#004080">'album'</font><font color="#0000C0">)</font>
+            <font color="#000000">title</font> <font color="#0000C0">=</font> <font color="#000000">id3</font><font color="#0000C0">.</font><font color="#000000">getValue</font><font color="#0000C0">(</font><font color="#004080">'title'</font><font color="#0000C0">)</font>
+            <font color="#000000">comment</font> <font color="#0000C0">=</font> <font color="#000000">id3</font><font color="#0000C0">.</font><font color="#000000">getValue</font><font color="#0000C0">(</font><font color="#004080">'comment'</font><font color="#0000C0">)</font>
+        <font color="#C00000">finally</font><font color="#0000C0">:</font>
+            <font color="#000000">mp3file</font><font color="#0000C0">.</font><font color="#000000">close</font><font color="#0000C0">(</font><font color="#0000C0">)</font>
+
+        <font color="#008000"># title
+</font>        <font color="#C00000">if</font> <font color="#000000">album</font> <font color="#C00000">and</font> <font color="#000000">title</font><font color="#0000C0">:</font>
+            <font color="#C00000">print</font> <font color="#004080">'    &lt;title&gt;%s - %s&lt;/title&gt;'</font> <font color="#0000C0">%</font> <font color="#0000C0">(</font><font color="#000000">album</font><font color="#0000C0">,</font> <font color="#000000">title</font><font color="#0000C0">)</font>
+        <font color="#C00000">elif</font> <font color="#000000">title</font><font color="#0000C0">:</font>
+            <font color="#C00000">print</font> <font color="#004080">'    &lt;title&gt;%s&lt;/title&gt;'</font> <font color="#0000C0">%</font> <font color="#000000">title</font>
+
+        <font color="#008000"># creator
+</font>        <font color="#C00000">if</font> <font color="#000000">performer</font><font color="#0000C0">:</font>
+            <font color="#C00000">print</font> <font color="#004080">'    &lt;dc:creator&gt;%s&lt;/dc:creator&gt;'</font> <font color="#0000C0">%</font> <font color="#000000">performer</font>
+
+        <font color="#008000"># description
+</font>        <font color="#C00000">if</font> <font color="#000000">comment</font><font color="#0000C0">:</font>
+            <font color="#C00000">print</font> <font color="#004080">'    &lt;description&gt;%s&lt;/description&gt;'</font> <font color="#0000C0">%</font> <font color="#000000">comment</font>
+
+        <font color="#008000"># Build the link...
+</font>        <font color="#000000">mp3_base</font> <font color="#0000C0">=</font> <font color="#000000">os</font><font color="#0000C0">.</font><font color="#000000">path</font><font color="#0000C0">.</font><font color="#000000">basename</font><font color="#0000C0">(</font><font color="#000000">mp3filename</font><font color="#0000C0">)</font>
+        <font color="#C00000">if</font> <font color="#000000">self</font><font color="#0000C0">.</font><font color="#000000">url_prefix</font><font color="#0000C0">:</font>
+            <font color="#C00000">if</font> <font color="#000000">self</font><font color="#0000C0">.</font><font color="#000000">url_prefix</font><font color="#0000C0">.</font><font color="#000000">endswith</font><font color="#0000C0">(</font><font color="#004080">'/'</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+                <font color="#000000">sep</font> <font color="#0000C0">=</font> <font color="#004080">''</font>
+            <font color="#C00000">else</font><font color="#0000C0">:</font>
+                <font color="#000000">sep</font> <font color="#0000C0">=</font> <font color="#004080">'/'</font>
+            <font color="#000000">link</font> <font color="#0000C0">=</font> <font color="#000000">self</font><font color="#0000C0">.</font><font color="#000000">url_prefix</font> <font color="#0000C0">+</font> <font color="#000000">sep</font> <font color="#0000C0">+</font> <font color="#000000">mp3_base</font>
+        <font color="#C00000">else</font><font color="#0000C0">:</font>
+            <font color="#008000"># Assume a relative link
+</font>            <font color="#000000">link</font> <font color="#0000C0">=</font> <font color="#000000">mp3_base</font>
+        <font color="#C00000">print</font> <font color="#004080">'    &lt;link&gt;%s&lt;/link&gt;'</font> <font color="#0000C0">%</font> <font color="#000000">link</font>
+
+        <font color="#008000"># How big is the file?
+</font>        <font color="#000000">statinfo</font> <font color="#0000C0">=</font> <font color="#000000">os</font><font color="#0000C0">.</font><font color="#000000">stat</font><font color="#0000C0">(</font><font color="#000000">mp3filename</font><font color="#0000C0">)</font>
+        <font color="#000000">file_size</font> <font color="#0000C0">=</font> <font color="#000000">statinfo</font><font color="#0000C0">.</font><font color="#000000">st_size</font>
+        <font color="#C00000">print</font> <font color="#004080">'    &lt;enclosure url="%s" type="audio/mpeg" length="%s" /&gt;'</font> <font color="#0000C0">%</font> <font color="#0000C0">(</font><font color="#000000">link</font><font color="#0000C0">,</font> <font color="#000000">file_size</font><font color="#0000C0">)</font>
+
+        <font color="#008000"># pubDate
+</font>        <font color="#C00000">print</font> <font color="#004080">'  &lt;/item&gt;'</font>
+        <font color="#C00000">return</font>
+
+    <font color="#C00000">def</font> <font color="#000000">main</font><font color="#0000C0">(</font><font color="#000000">self</font><font color="#0000C0">,</font> <font color="#0000C0">*</font><font color="#000000">m3ufilenames</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+
+        <font color="#000000">self</font><font color="#0000C0">.</font><font color="#000000">startRSS</font><font color="#0000C0">(</font><font color="#0000C0">)</font>
+
+        <font color="#000000">self</font><font color="#0000C0">.</font><font color="#000000">generateChannelInfo</font><font color="#0000C0">(</font><font color="#0000C0">)</font>
+
+        <font color="#C00000">for</font> <font color="#000000">line</font> <font color="#C00000">in</font> <font color="#000000">fileinput</font><font color="#0000C0">.</font><font color="#000000">input</font><font color="#0000C0">(</font><font color="#000000">m3ufilenames</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+            <font color="#000000">mp3filename</font> <font color="#0000C0">=</font> <font color="#000000">line</font><font color="#0000C0">.</font><font color="#000000">strip</font><font color="#0000C0">(</font><font color="#0000C0">)</font>
+            <font color="#C00000">if</font> <font color="#C00000">not</font> <font color="#000000">mp3filename</font> <font color="#C00000">or</font> <font color="#000000">mp3filename</font><font color="#0000C0">.</font><font color="#000000">startswith</font><font color="#0000C0">(</font><font color="#004080">'#'</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+                <font color="#C00000">continue</font>
+            <font color="#000000">self</font><font color="#0000C0">.</font><font color="#000000">generateItem</font><font color="#0000C0">(</font><font color="#000000">mp3filename</font><font color="#0000C0">)</font>
+
+        <font color="#000000">self</font><font color="#0000C0">.</font><font color="#000000">endRSS</font><font color="#0000C0">(</font><font color="#0000C0">)</font>
+        <font color="#C00000">return</font> <font color="#0080C0">0</font>
+
+
+<font color="#C00000">if</font> <font color="#000000">__name__</font> <font color="#0000C0">==</font> <font color="#004080">'__main__'</font><font color="#0000C0">:</font>
+    <font color="#C00000">try</font><font color="#0000C0">:</font>
+        <font color="#000000">exit_code</font> <font color="#0000C0">=</font> <font color="#000000">m3utorss</font><font color="#0000C0">(</font><font color="#0000C0">)</font><font color="#0000C0">.</font><font color="#000000">run</font><font color="#0000C0">(</font><font color="#0000C0">)</font>
+    <font color="#C00000">except</font> <font color="#000000">m3utorss</font><font color="#0000C0">.</font><font color="#000000">HelpRequested</font><font color="#0000C0">:</font>
+        <font color="#000000">exit_code</font> <font color="#0000C0">=</font> <font color="#0080C0">0</font>
+
+    <font color="#000000">sys</font><font color="#0000C0">.</font><font color="#000000">exit</font><font color="#0000C0">(</font><font color="#000000">exit_code</font><font color="#0000C0">)</font><font color="#000000"></font></font></pre>
