@@ -68,7 +68,7 @@ data using the RSS format.
 	  <channel>
 	    <title>Sample podcast feed</title>
 	    <description>Generated for PyMOTW</description>
-	    <pubDate>Sat Jan 30 14:50:08 2016</pubDate>
+	    <pubDate>Sat Jan 30 15:00:33 2016</pubDate>
 	    <generator>https://pymotw.com/</generator>
 	  </channel>
 	  <item>
@@ -116,8 +116,8 @@ the string ``"fileinput"`` in the source for these examples.
 	files, inplace=True):
 	fileinput_change_subnet_noisy.py:19:    if fileinput.isfirstline
 	():
-	fileinput_change_subnet_noisy.py:21:                         fil
-	einput.filename())
+	fileinput_change_subnet_noisy.py:21:            fileinput.filena
+	me()))
 	fileinput_example.py:6:"""Example for fileinput module.
 	fileinput_example.py:10:import fileinput
 	fileinput_example.py:30:for line in fileinput.input(sys.argv[1:]
@@ -148,7 +148,7 @@ Text can also be read from standard input.
 	29:import fileinput
 	37:for line in fileinput.input(files, inplace=True):
 	38:    if fileinput.isfirstline():
-	40:                         fileinput.filename())
+	40:            fileinput.filename()))
 	54:"""Example for fileinput module.
 	58:import fileinput
 	78:for line in fileinput.input(sys.argv[1:]):
