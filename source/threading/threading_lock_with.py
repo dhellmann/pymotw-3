@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2008 Doug Hellmann All rights reserved.
@@ -9,20 +9,23 @@
 import threading
 import logging
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='(%(threadName)-10s) %(message)s',
-                    )
 
 def worker_with(lock):
     with lock:
         logging.debug('Lock acquired via with')
-        
+
+
 def worker_no_with(lock):
     lock.acquire()
     try:
         logging.debug('Lock acquired directly')
     finally:
         lock.release()
+
+
+logging.basicConfig(level=logging.DEBUG,
+                    format='(%(threadName)-10s) %(message)s',
+                    )
 
 lock = threading.Lock()
 w = threading.Thread(target=worker_with, args=(lock,))

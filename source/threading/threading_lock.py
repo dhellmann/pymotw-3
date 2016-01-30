@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2008 Doug Hellmann All rights reserved.
@@ -12,14 +12,13 @@ import random
 import threading
 import time
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='(%(threadName)-10s) %(message)s',
-                    )
-                    
+
 class Counter(object):
+
     def __init__(self, start=0):
         self.lock = threading.Lock()
         self.value = start
+
     def increment(self):
         logging.debug('Waiting for lock')
         self.lock.acquire()
@@ -29,6 +28,7 @@ class Counter(object):
         finally:
             self.lock.release()
 
+
 def worker(c):
     for i in range(2):
         pause = random.random()
@@ -36,6 +36,11 @@ def worker(c):
         time.sleep(pause)
         c.increment()
     logging.debug('Done')
+
+
+logging.basicConfig(level=logging.DEBUG,
+                    format='(%(threadName)-10s) %(message)s',
+                    )
 
 counter = Counter()
 for i in range(2):

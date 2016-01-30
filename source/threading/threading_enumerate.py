@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2008 Doug Hellmann All rights reserved.
@@ -12,18 +12,19 @@ import threading
 import time
 import logging
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='(%(threadName)-10s) %(message)s',
-                    )
 
 def worker():
     """thread worker function"""
-    t = threading.currentThread()
-    pause = random.randint(1,5)
-    logging.debug('sleeping %s', pause)
+    pause = random.randint(1, 5) / 10
+    logging.debug('sleeping %0.2f', pause)
     time.sleep(pause)
     logging.debug('ending')
     return
+
+
+logging.basicConfig(level=logging.DEBUG,
+                    format='(%(threadName)-10s) %(message)s',
+                    )
 
 for i in range(3):
     t = threading.Thread(target=worker)

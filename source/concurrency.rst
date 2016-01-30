@@ -43,6 +43,7 @@ coroutines. :mod:`asyncio` replaces the old :mod:`asyncore` and
    :maxdepth: 1
 
    asyncio/index
+   threading/index
 
 ..
    .. toctree::

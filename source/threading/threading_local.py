@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2008 Doug Hellmann All rights reserved.
@@ -11,9 +11,6 @@ import random
 import threading
 import logging
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='(%(threadName)-10s) %(message)s',
-                    )
 
 def show_value(data):
     try:
@@ -28,6 +25,11 @@ def worker(data):
     show_value(data)
     data.value = random.randint(1, 100)
     show_value(data)
+
+
+logging.basicConfig(level=logging.DEBUG,
+                    format='(%(threadName)-10s) %(message)s',
+                    )
 
 local_data = threading.local()
 show_value(local_data)

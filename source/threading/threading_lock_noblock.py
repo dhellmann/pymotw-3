@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2008 Doug Hellmann All rights reserved.
@@ -11,10 +11,7 @@ import logging
 import threading
 import time
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='(%(threadName)-10s) %(message)s',
-                    )
-                    
+
 def lock_holder(lock):
     logging.debug('Starting')
     while True:
@@ -27,7 +24,8 @@ def lock_holder(lock):
             lock.release()
         time.sleep(0.5)
     return
-                    
+
+
 def worker(lock):
     logging.debug('Starting')
     num_tries = 0
@@ -50,6 +48,10 @@ def worker(lock):
                 lock.release()
     logging.debug('Done after %d iterations', num_tries)
 
+
+logging.basicConfig(level=logging.DEBUG,
+                    format='(%(threadName)-10s) %(message)s',
+                    )
 
 lock = threading.Lock()
 

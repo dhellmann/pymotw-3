@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2008 Doug Hellmann All rights reserved.
@@ -10,18 +10,15 @@
 import threading
 import logging
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='(%(threadName)-10s) %(message)s',
-                    )
 
 class MyThreadWithArgs(threading.Thread):
 
     def __init__(self, group=None, target=None, name=None,
-                 args=(), kwargs=None, verbose=None):
+                 args=(), kwargs=None):
         threading.Thread.__init__(self, group=group,
                                   target=target,
                                   name=name,
-                                  verbose=verbose)
+                                  )
         self.args = args
         self.kwargs = kwargs
         return
@@ -31,7 +28,12 @@ class MyThreadWithArgs(threading.Thread):
                       self.args, self.kwargs)
         return
 
+
+logging.basicConfig(level=logging.DEBUG,
+                    format='(%(threadName)-10s) %(message)s',
+                    )
+
 for i in range(5):
     t = MyThreadWithArgs(args=(i,),
-                         kwargs={'a':'A', 'b':'B'})
+                         kwargs={'a': 'A', 'b': 'B'})
     t.start()

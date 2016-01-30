@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2008 Doug Hellmann All rights reserved.
@@ -9,10 +9,12 @@
 
 import threading
 
+
 def worker(num):
     """thread worker function"""
-    print 'Worker: %s' % num
+    print('Worker: %s' % num)
     return
+
 
 threads = []
 for i in range(5):
