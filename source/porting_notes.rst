@@ -528,6 +528,13 @@ threading
 The debugging features of :mod:`threading`, including the "verbose"
 argument has been removed from the APIs (:pyissue:`13550`).
 
+Older implementations of :mod:`threading` used factory functions for
+some of the classes because they were implemented in C as extension
+types and could not be subclassed. That limitation of the language has
+been removed, and so many of the old factory functions have been
+converted to standard classes, which allow subclassing
+(:pyissue:`10968`).
+
 .. _porting-UserDict:
 .. _porting-UserList:
 .. _porting-UserString:
