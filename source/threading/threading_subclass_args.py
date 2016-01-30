@@ -15,10 +15,7 @@ class MyThreadWithArgs(threading.Thread):
 
     def __init__(self, group=None, target=None, name=None,
                  args=(), kwargs=None):
-        threading.Thread.__init__(self, group=group,
-                                  target=target,
-                                  name=name,
-                                  )
+        super().__init__(group=group, target=target, name=name)
         self.args = args
         self.kwargs = kwargs
 
@@ -32,6 +29,5 @@ logging.basicConfig(level=logging.DEBUG,
                     )
 
 for i in range(5):
-    t = MyThreadWithArgs(args=(i,),
-                         kwargs={'a': 'A', 'b': 'B'})
+    t = MyThreadWithArgs(args=(i,), kwargs={'a': 'A', 'b': 'B'})
     t.start()
