@@ -612,6 +612,79 @@ the :class:`Condition`. Using the :func:`acquire()` and
 
 .. {{{end}}}
 
+Barriers are another thread synchronization mechanism. A
+:class:`Barrier` establishes a control point and all participating
+threads block until all of the other threads have reached that
+point. It lets threads start up separately and then pause until they
+are all ready to proceed.
+
+.. literalinclude:: threading_barrier.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+In this example, the :class:`Barrier` is configured to wait until
+three threads are waiting. When the condition is met, all of the
+threads are released past the control point at the same time. The
+return value from :func:`wait` indicates the number of the party being
+released, and can be used to limit some threads from taking an action
+like cleaning up a shared resource.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'threading_barrier.py'))
+.. }}}
+
+::
+
+	$ python3 threading_barrier.py
+	
+	worker-0 starting
+	worker-0 waiting for barrier
+	worker-1 starting
+	worker-1 waiting for barrier
+	worker-2 starting
+	worker-2 waiting for barrier
+	worker-2 after barrier 2
+	worker-0 after barrier 0
+	worker-1 after barrier 1
+
+.. {{{end}}}
+
+The :func:`abort` method of :class:`Barrier` causes all of the waiting
+threads to receive a :class:`BrokenBarrierError`. This allows threads
+to clean up if processing is stopped while they are blocked on
+:func:`wait`.
+
+.. literalinclude:: threading_barrier_abort.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+This example configures the :class:`Barrier` to expect one more
+participating thread than is actually started, so that processing in
+the threads blocks. The :func:`abort` call raises an exception in each
+blocked thread.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'threading_barrier_abort.py'))
+.. }}}
+
+::
+
+	$ python3 threading_barrier_abort.py
+	
+	worker-0 starting
+	worker-0 waiting for barrier
+	worker-1 starting
+	worker-1 waiting for barrier
+	worker-2 starting
+	worker-2 waiting for barrier
+	worker-2 aborting
+	worker-0 aborting
+	worker-1 aborting
+
+.. {{{end}}}
+
+
+
 Limiting Concurrent Access to Resources
 =======================================
 
