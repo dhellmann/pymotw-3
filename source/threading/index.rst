@@ -5,19 +5,16 @@
 .. module:: threading
     :synopsis: Manage concurrent operations
 
-:Purpose: Builds on the :mod:`thread` module to more easily manage several threads of execution.
-:Python Version: 1.5.2 and later
+:Purpose: Manage several threads of execution.
 
 Using threads allows a program to run multiple operations concurrently
-in the same process space.  The :mod:`threading` module builds on the
-low-level features of :mod:`thread` to make working with threads
-easier.
+in the same process space.
 
 Thread Objects
 ==============
 
 The simplest way to use a :class:`Thread` is to instantiate it with a
-target function and call :func:`start()` to let it begin working.
+target function and call :func:`start` to let it begin working.
 
 .. literalinclude:: threading_simple.py
     :caption:
@@ -69,12 +66,10 @@ thread.
 
 .. {{{end}}}
 
-
-
 Determining the Current Thread
 ==============================
 
-Using arguments to identify or name the thread is cumbersome, and
+Using arguments to identify or name the thread is cumbersome and
 unnecessary.  Each :class:`Thread` instance has a name with a default
 value that can be changed as the thread is created. Naming threads is
 useful in server processes with multiple service threads handling
@@ -104,7 +99,6 @@ correspond to the unnamed thread :data:`w2`.
 	my_service Exiting
 
 .. {{{end}}}
-
 
 Most programs do not use :command:`print` to debug. The
 :mod:`logging` module supports embedding the thread name in every log
@@ -147,7 +141,7 @@ may not be an easy way to interrupt the thread, or where letting the
 thread die in the middle of its work does not lose or corrupt data
 (for example, a thread that generates "heart beats" for a service
 monitoring tool). To mark a thread as a daemon, pass ``daemon=True``
-when constructing it or call its :func:`setDaemon()` method with
+when constructing it or call its :func:`set_daemon` method with
 :data:`True`.  The default is for threads to not be daemons.
 
 .. literalinclude:: threading_daemon.py
@@ -174,13 +168,13 @@ call.
 .. {{{end}}}
 
 To wait until a daemon thread has completed its work, use the
-:func:`join()` method.
+:func:`join` method.
 
 .. literalinclude:: threading_daemon_join.py
     :caption:
     :start-after: #end_pymotw_header
 
-Waiting for the daemon thread to exit using :func:`join()` means it
+Waiting for the daemon thread to exit using :func:`join` means it
 has a chance to produce its ``"Exiting"`` message.
 
 .. {{{cog
@@ -198,17 +192,17 @@ has a chance to produce its ``"Exiting"`` message.
 
 .. {{{end}}}
 
-By default, :func:`join()` blocks indefinitely. It is also possible to
+By default, :func:`join` blocks indefinitely. It is also possible to
 pass a float value representing the number of seconds to wait for the
 thread to become inactive. If the thread does not complete within the
-timeout period, :func:`join()` returns anyway.
+timeout period, :func:`join` returns anyway.
 
 .. literalinclude:: threading_daemon_join_timeout.py
     :caption:
     :start-after: #end_pymotw_header
 
 Since the timeout passed is less than the amount of time the daemon
-thread sleeps, the thread is still "alive" after :func:`join()`
+thread sleeps, the thread is still "alive" after :func:`join`
 returns.
 
 .. {{{cog
@@ -232,7 +226,7 @@ Enumerating All Threads
 
 It is not necessary to retain an explicit handle to all of the daemon
 threads in order to ensure they have completed before exiting the main
-process. :func:`enumerate()` returns a list of active :class:`Thread`
+process. :func:`enumerate` returns a list of active :class:`Thread`
 instances. The list includes the current thread, and since joining the
 current thread introduces a deadlock situation, it must be skipped.
 
@@ -267,9 +261,9 @@ Subclassing Thread
 ==================
 
 At start-up, a :class:`Thread` does some basic initialization and then
-calls its :func:`run()` method, which calls the target function passed
+calls its :func:`run` method, which calls the target function passed
 to the constructor. To create a subclass of :class:`Thread`, override
-:func:`run()` to do whatever is necessary.
+:func:`run` to do whatever is necessary.
 
 .. literalinclude:: threading_subclass.py
     :caption:
@@ -337,9 +331,10 @@ that delay time period.
     :caption:
     :start-after: #end_pymotw_header
 
-The second timer is never run, and the first timer appears
-to run after the rest of the main program is done. Since it is not a
-daemon thread, it is joined implicitly when the main thread is done.
+The second timer in this example is never run, and the first timer
+appears to run after the rest of the main program is done. Since it is
+not a daemon thread, it is joined implicitly when the main thread is
+done.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'threading_timer.py'))
@@ -365,8 +360,8 @@ operations concurrently, there are times when it is important to be
 able to synchronize the operations in two or more threads.  Event
 objects are a simple way to communicate between threads safely.  An
 :class:`Event` manages an internal flag that callers can control with
-the :func:`set()` and :func:`clear()` methods. Other threads can use
-:func:`wait()` to pause until the flag is set, effectively blocking
+the :func:`set` and :func:`clear` methods. Other threads can use
+:func:`wait` to pause until the flag is set, effectively blocking
 progress until allowed to continue.
 
 .. literalinclude:: threading_event.py
@@ -374,9 +369,9 @@ progress until allowed to continue.
     :start-after: #end_pymotw_header
 
 The :func:`wait` method takes an argument representing the number of
-seconds to wait for the event before timing out.  It returns a boolean
+seconds to wait for the event before timing out.  It returns a Boolean
 indicating whether or not the event is set, so the caller knows why
-:func:`wait` returned.  The :func:`isSet` method can be used
+:func:`wait` returned.  The :func:`is_set` method can be used
 separately on the event without fear of blocking.
 
 In this example, :func:`wait_for_event_timeout` checks the event
@@ -419,7 +414,7 @@ object.
     :caption:
     :start-after: #end_pymotw_header
 
-In this example, the :func:`worker()` function increments a
+In this example, the :func:`worker` function increments a
 :class:`Counter` instance, which manages a :class:`Lock` to prevent
 two threads from changing its internal state at the same time. If the
 :class:`Lock` was not used, there is a possibility of missing a change
@@ -454,8 +449,8 @@ to the value attribute.
 
 To find out whether another thread has acquired the lock without
 holding up the current thread, pass ``False`` for the *blocking* argument
-to :func:`acquire()`. In the next example, :func:`worker()` tries to
-acquire the lock three separate times, and counts how many attempts it
+to :func:`acquire`. In the next example, :func:`worker` tries to
+acquire the lock three separate times and counts how many attempts it
 has to make to do so. In the mean time, :func:`lock_holder` cycles
 between holding and releasing the lock, with short pauses in each
 state used to simulate load.
@@ -508,7 +503,7 @@ lock is accessed by more than one function in the same call chain.
     :caption:
     :start-after: #end_pymotw_header
 
-In this case, the second call to :func:`acquire()` is given a zero
+In this case, the second call to :func:`acquire` is given a zero
 timeout to prevent it from blocking because the lock has been obtained
 by the first call.
 
@@ -559,7 +554,7 @@ explicitly acquire and release the lock.
     :caption:
     :start-after: #end_pymotw_header
 
-The two functions :func:`worker_with()` and :func:`worker_no_with()`
+The two functions :func:`worker_with` and :func:`worker_no_with`
 manage the lock in equivalent ways.
 
 .. {{{cog
@@ -581,9 +576,9 @@ Synchronizing Threads
 In addition to using :class:`Events`, another way of synchronizing
 threads is through using a :class:`Condition` object. Because the
 :class:`Condition` uses a :class:`Lock`, it can be tied to a shared
-resource. This allows threads to wait for the resource to be updated.
-In this example, the :func:`consumer()` threads wait for the
-:class:`Condition` to be set before continuing. The :func:`producer()`
+resource, allowing multiple threads to wait for the resource to be
+updated.  In this example, the :func:`consumer` threads wait for the
+:class:`Condition` to be set before continuing. The :func:`producer`
 thread is responsible for setting the condition and notifying the
 other threads that they can continue.
 
@@ -592,8 +587,8 @@ other threads that they can continue.
     :start-after: #end_pymotw_header
 
 The threads use :command:`with` to acquire the lock associated with
-the :class:`Condition`. Using the :func:`acquire()` and
-:func:`release()` methods explicitly also works.
+the :class:`Condition`. Using the :func:`acquire` and
+:func:`release` methods explicitly also works.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'threading_condition.py'))
@@ -614,15 +609,15 @@ the :class:`Condition`. Using the :func:`acquire()` and
 
 Barriers are another thread synchronization mechanism. A
 :class:`Barrier` establishes a control point and all participating
-threads block until all of the other threads have reached that
-point. It lets threads start up separately and then pause until they
-are all ready to proceed.
+threads block until all of the participating "parties" have reached
+that point. It lets threads start up separately and then pause until
+they are all ready to proceed.
 
 .. literalinclude:: threading_barrier.py
    :caption:
    :start-after: #end_pymotw_header
 
-In this example, the :class:`Barrier` is configured to wait until
+In this example, the :class:`Barrier` is configured to block until
 three threads are waiting. When the condition is met, all of the
 threads are released past the control point at the same time. The
 return value from :func:`wait` indicates the number of the party being
@@ -659,9 +654,9 @@ to clean up if processing is stopped while they are blocked on
    :start-after: #end_pymotw_header
 
 This example configures the :class:`Barrier` to expect one more
-participating thread than is actually started, so that processing in
-the threads blocks. The :func:`abort` call raises an exception in each
-blocked thread.
+participating thread than is actually started so that processing in
+all of the threads is blocked. The :func:`abort` call raises an
+exception in each blocked thread.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'threading_barrier_abort.py'))
@@ -682,8 +677,6 @@ blocked thread.
 	worker-1 aborting
 
 .. {{{end}}}
-
-
 
 Limiting Concurrent Access to Resources
 =======================================
@@ -733,9 +726,9 @@ Thread-specific Data
 ====================
 
 While some resources need to be locked so multiple threads can use
-them, others need to be protected so that they are hidden from 
-threads that do not "own" them. The :func:`local()` function creates
-an object capable of hiding values from view in separate threads.
+them, others need to be protected so that they are hidden from threads
+that do not "own" them. The :func:`local` class creates an object
+capable of hiding values from view in separate threads.
 
 .. literalinclude:: threading_local.py
     :caption:
