@@ -524,6 +524,10 @@ threading
 
 .. index::
    pair: porting; threading
+   pair: porting; thread
+
+The ``thread`` module is deprecated in favor of the API in
+:mod:`threading`.
 
 The debugging features of :mod:`threading`, including the "verbose"
 argument has been removed from the APIs (:pyissue:`13550`).
