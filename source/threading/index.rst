@@ -638,11 +638,11 @@ like cleaning up a shared resource.
 	$ python3 threading_barrier.py
 	
 	worker-0 starting
-	worker-0 waiting for barrier
+	worker-0 waiting for barrier with 0 others
 	worker-1 starting
-	worker-1 waiting for barrier
+	worker-1 waiting for barrier with 1 others
 	worker-2 starting
-	worker-2 waiting for barrier
+	worker-2 waiting for barrier with 2 others
 	worker-2 after barrier 2
 	worker-0 after barrier 0
 	worker-1 after barrier 1
@@ -672,13 +672,13 @@ blocked thread.
 	$ python3 threading_barrier_abort.py
 	
 	worker-0 starting
-	worker-0 waiting for barrier
+	worker-0 waiting for barrier with 0 others
 	worker-1 starting
-	worker-1 waiting for barrier
+	worker-1 waiting for barrier with 1 others
 	worker-2 starting
-	worker-2 waiting for barrier
-	worker-2 aborting
+	worker-2 waiting for barrier with 2 others
 	worker-0 aborting
+	worker-2 aborting
 	worker-1 aborting
 
 .. {{{end}}}

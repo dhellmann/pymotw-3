@@ -11,7 +11,9 @@ import time
 
 
 def worker(barrier):
-    print(threading.current_thread().name, 'waiting for barrier')
+    print(threading.current_thread().name,
+          'waiting for barrier with {} others'.format(
+              barrier.n_waiting))
     worker_id = barrier.wait()
     print(threading.current_thread().name, 'after barrier',
           worker_id)

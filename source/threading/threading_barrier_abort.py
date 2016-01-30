@@ -11,7 +11,9 @@ import time
 
 
 def worker(barrier):
-    print(threading.current_thread().name, 'waiting for barrier')
+    print(threading.current_thread().name,
+          'waiting for barrier with {} others'.format(
+              barrier.n_waiting))
     try:
         worker_id = barrier.wait()
     except threading.BrokenBarrierError:
