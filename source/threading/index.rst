@@ -251,14 +251,14 @@ from this program may vary.
 
 	$ python3 threading_enumerate.py
 	
-	(Thread-1  ) sleeping 0.50
-	(Thread-2  ) sleeping 0.50
-	(Thread-3  ) sleeping 0.40
+	(Thread-1  ) sleeping 0.30
+	(Thread-2  ) sleeping 0.30
+	(Thread-3  ) sleeping 0.50
 	(MainThread) joining Thread-1
-	(Thread-3  ) ending
 	(Thread-2  ) ending
 	(Thread-1  ) ending
 	(MainThread) joining Thread-3
+	(Thread-3  ) ending
 	(MainThread) joining Thread-2
 
 .. {{{end}}}
@@ -433,15 +433,15 @@ to the value attribute.
 
 	$ python3 threading_lock.py
 	
-	(Thread-1  ) Sleeping 0.57
-	(Thread-2  ) Sleeping 0.08
+	(Thread-1  ) Sleeping 0.39
+	(Thread-2  ) Sleeping 0.39
 	(MainThread) Waiting for worker threads
 	(Thread-2  ) Waiting for lock
 	(Thread-2  ) Acquired lock
-	(Thread-2  ) Sleeping 0.95
+	(Thread-2  ) Sleeping 0.99
 	(Thread-1  ) Waiting for lock
 	(Thread-1  ) Acquired lock
-	(Thread-1  ) Sleeping 0.43
+	(Thread-1  ) Sleeping 0.29
 	(Thread-1  ) Waiting for lock
 	(Thread-1  ) Acquired lock
 	(Thread-1  ) Done
@@ -478,12 +478,12 @@ three separate times.
 	(LockHolder) Starting
 	(LockHolder) Holding
 	(Worker    ) Starting
-	(Worker    ) Trying to acquire
-	(Worker    ) Iteration 1: Not acquired
 	(LockHolder) Not holding
 	(Worker    ) Trying to acquire
-	(Worker    ) Iteration 2: Acquired
+	(Worker    ) Iteration 1: Acquired
 	(LockHolder) Holding
+	(Worker    ) Trying to acquire
+	(Worker    ) Iteration 2: Not acquired
 	(Worker    ) Trying to acquire
 	(Worker    ) Iteration 3: Not acquired
 	(LockHolder) Not holding
@@ -491,11 +491,15 @@ three separate times.
 	(Worker    ) Iteration 4: Acquired
 	(LockHolder) Holding
 	(Worker    ) Trying to acquire
+	(LockHolder) Not holding
 	(Worker    ) Iteration 5: Not acquired
+	(LockHolder) Holding
+	(Worker    ) Trying to acquire
+	(Worker    ) Iteration 6: Not acquired
 	(LockHolder) Not holding
 	(Worker    ) Trying to acquire
-	(Worker    ) Iteration 6: Acquired
-	(Worker    ) Done after 6 iterations
+	(Worker    ) Iteration 7: Acquired
+	(Worker    ) Done after 7 iterations
 
 .. {{{end}}}
 
@@ -605,12 +609,12 @@ the :class:`Condition`. Using the :func:`acquire()` and
 
 	$ python3 threading_condition.py
 	
-	2016-01-30 11:01:55,298 (c1) Starting consumer thread
-	2016-01-30 11:01:55,500 (c2) Starting consumer thread
-	2016-01-30 11:01:55,701 (p ) Starting producer thread
-	2016-01-30 11:01:55,701 (p ) Making resource available
-	2016-01-30 11:01:55,702 (c1) Resource is available to consumer
-	2016-01-30 11:01:55,702 (c2) Resource is available to consumer
+	2016-01-30 11:20:26,460 (c1) Starting consumer thread
+	2016-01-30 11:20:26,663 (c2) Starting consumer thread
+	2016-01-30 11:20:26,863 (p ) Starting producer thread
+	2016-01-30 11:20:26,864 (p ) Making resource available
+	2016-01-30 11:20:26,864 (c1) Resource is available to consumer
+	2016-01-30 11:20:26,864 (c2) Resource is available to consumer
 
 .. {{{end}}}
 
@@ -643,18 +647,18 @@ threads to show that at most two are running concurrently.
 
 	$ python3 threading_semaphore.py
 	
-	2016-01-30 11:01:55,777 (0 ) Waiting to join the pool
-	2016-01-30 11:01:55,778 (0 ) Running: ['0']
-	2016-01-30 11:01:55,778 (1 ) Waiting to join the pool
-	2016-01-30 11:01:55,778 (1 ) Running: ['0', '1']
-	2016-01-30 11:01:55,779 (2 ) Waiting to join the pool
-	2016-01-30 11:01:55,779 (3 ) Waiting to join the pool
-	2016-01-30 11:01:55,882 (0 ) Running: ['1']
-	2016-01-30 11:01:55,883 (2 ) Running: ['1', '2']
-	2016-01-30 11:01:55,883 (1 ) Running: ['2']
-	2016-01-30 11:01:55,883 (3 ) Running: ['2', '3']
-	2016-01-30 11:01:55,987 (2 ) Running: ['3']
-	2016-01-30 11:01:55,988 (3 ) Running: []
+	2016-01-30 11:20:26,936 (0 ) Waiting to join the pool
+	2016-01-30 11:20:26,936 (0 ) Running: ['0']
+	2016-01-30 11:20:26,936 (1 ) Waiting to join the pool
+	2016-01-30 11:20:26,936 (1 ) Running: ['0', '1']
+	2016-01-30 11:20:26,937 (2 ) Waiting to join the pool
+	2016-01-30 11:20:26,937 (3 ) Waiting to join the pool
+	2016-01-30 11:20:27,040 (0 ) Running: ['1']
+	2016-01-30 11:20:27,040 (2 ) Running: ['1', '2']
+	2016-01-30 11:20:27,040 (1 ) Running: ['2']
+	2016-01-30 11:20:27,041 (3 ) Running: ['2', '3']
+	2016-01-30 11:20:27,141 (2 ) Running: ['3']
+	2016-01-30 11:20:27,141 (3 ) Running: []
 
 .. {{{end}}}
 
@@ -684,9 +688,9 @@ it is set in that thread.
 	(MainThread) No value yet
 	(MainThread) value=1000
 	(Thread-1  ) No value yet
-	(Thread-1  ) value=9
+	(Thread-1  ) value=90
 	(Thread-2  ) No value yet
-	(Thread-2  ) value=59
+	(Thread-2  ) value=36
 
 .. {{{end}}}
 
@@ -709,16 +713,16 @@ value), once in each thread to set the default values.
 	$ python3 threading_local_defaults.py
 	
 	(MainThread) Initializing <__main__.MyLocal object at
-	0x10146c348>
+	0x10125d348>
 	(MainThread) value=1000
 	(Thread-1  ) Initializing <__main__.MyLocal object at
-	0x10146c348>
+	0x10125d348>
 	(Thread-1  ) value=1000
-	(Thread-1  ) value=44
+	(Thread-1  ) value=72
 	(Thread-2  ) Initializing <__main__.MyLocal object at
-	0x10146c348>
+	0x10125d348>
 	(Thread-2  ) value=1000
-	(Thread-2  ) value=39
+	(Thread-2  ) value=49
 
 .. {{{end}}}
 

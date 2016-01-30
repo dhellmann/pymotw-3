@@ -12,7 +12,7 @@ import threading
 import time
 
 
-class ActivePool(object):
+class ActivePool:
 
     def __init__(self):
         super(ActivePool, self).__init__()

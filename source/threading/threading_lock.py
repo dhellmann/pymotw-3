@@ -13,7 +13,7 @@ import threading
 import time
 
 
-class Counter(object):
+class Counter:
 
     def __init__(self, start=0):
         self.lock = threading.Lock()
