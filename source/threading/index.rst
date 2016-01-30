@@ -41,9 +41,9 @@ The output is five lines with ``"Worker"`` on each.
 
 .. {{{end}}}
 
-It useful to be able to spawn a thread and pass it arguments to tell
-it what work to do. Any type of object can be passed as argument to
-the thread.  This example passes a number, which the thread then
+It is useful to be able to spawn a thread and pass it arguments to
+tell it what work to do. Any type of object can be passed as argument
+to the thread.  This example passes a number, which the thread then
 prints.
 
 .. literalinclude:: threading_simpleargs.py
