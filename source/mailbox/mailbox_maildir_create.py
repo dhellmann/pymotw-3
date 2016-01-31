@@ -1,12 +1,10 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2008 Doug Hellmann All rights reserved.
 #
 """
 """
-
-__version__ = "$Id$"
 #end_pymotw_header
 
 import mailbox
@@ -45,11 +43,11 @@ finally:
     mbox.unlock()
 
 for dirname, subdirs, files in os.walk('Example'):
-    print dirname
-    print '\tDirectories:', subdirs
+    print(dirname)
+    print('\tDirectories:', subdirs)
     for name in files:
         fullname = os.path.join(dirname, name)
-        print
-        print '***', fullname
-        print open(fullname).read()
-        print '*' * 20
+        print()
+        print('***', fullname)
+        print(open(fullname).read())
+        print('*' * 20)

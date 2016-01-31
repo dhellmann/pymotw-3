@@ -47,15 +47,17 @@ messages.
 
 .. {{{cog
 .. from paver.path import path
-.. (path(cog.inFile).dirname() / 'example.mbox').unlink()
+.. example = path(cog.inFile).dirname() / 'example.mbox'
+.. if example.exists():
+..     example.unlink()
 .. cog.out(run_script(cog.inFile, 'mailbox_mbox_create.py'))
 .. }}}
 
 ::
 
-	$ python mailbox_mbox_create.py
-
-	From MAILER-DAEMON Mon Nov 29 02:00:11 2010
+	$ python3 mailbox_mbox_create.py
+	
+	From MAILER-DAEMON Sun Jan 31 16:20:36 2016
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -64,12 +66,13 @@ messages.
 	>From (should be escaped).
 	There are 3 lines.
 	
-	From MAILER-DAEMON Mon Nov 29 02:00:11 2010
+	From MAILER-DAEMON Sun Jan 31 16:20:36 2016
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 2
 	
 	This is the second body.
+	
 	
 
 .. {{{end}}}
@@ -96,8 +99,8 @@ instead of the *keys*.
 
 ::
 
-	$ python mailbox_mbox_read.py
-
+	$ python3 mailbox_mbox_read.py
+	
 	Sample message 1
 	Sample message 2
 
@@ -123,10 +126,10 @@ changes to be written to disk.
 
 ::
 
-	$ python mailbox_mbox_remove.py
-
+	$ python3 mailbox_mbox_remove.py
+	
 	Removing: 1
-	From MAILER-DAEMON Mon Nov 29 02:00:11 2010
+	From MAILER-DAEMON Sun Jan 31 16:20:36 2016
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -134,6 +137,7 @@ changes to be written to disk.
 	This is the body.
 	>From (should be escaped).
 	There are 3 lines.
+	
 	
 
 .. {{{end}}}
@@ -179,8 +183,8 @@ subdirectory.  After they are read, a client could move them to the
 
 ::
 
-	$ python mailbox_maildir_create.py
-
+	$ python3 mailbox_maildir_create.py
+	
 	Example
 		Directories: ['cur', 'new', 'tmp']
 	Example/cur
@@ -188,7 +192,7 @@ subdirectory.  After they are read, a client could move them to the
 	Example/new
 		Directories: []
 	
-	*** Example/new/1290996011.M658966P16077Q1.farnsworth.local
+	*** Example/new/1454257237.M262723P37846Q1.hubert.local
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -199,7 +203,7 @@ subdirectory.  After they are read, a client could move them to the
 	
 	********************
 	
-	*** Example/new/1290996011.M660614P16077Q2.farnsworth.local
+	*** Example/new/1454257237.M267662P37846Q2.hubert.local
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 2
@@ -231,8 +235,8 @@ The messages are not guaranteed to be read in any particular order.
 
 ::
 
-	$ python mailbox_maildir_read.py
-
+	$ python3 mailbox_maildir_read.py
+	
 	Sample message 1
 	Sample message 2
 
@@ -259,9 +263,9 @@ mailbox at the same time.
 
 ::
 
-	$ python mailbox_maildir_remove.py
-
-	Removing: 1290996011.M660614P16077Q2.farnsworth.local
+	$ python3 mailbox_maildir_remove.py
+	
+	Removing: 1454257237.M267662P37846Q2.hubert.local
 	Example
 		Directories: ['cur', 'new', 'tmp']
 	Example/cur
@@ -269,7 +273,7 @@ mailbox at the same time.
 	Example/new
 		Directories: []
 	
-	*** Example/new/1290996011.M658966P16077Q1.farnsworth.local
+	*** Example/new/1454257237.M262723P37846Q1.hubert.local
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -306,12 +310,12 @@ folder name with a period (``.``).
 
 ::
 
-	$ python mailbox_maildir_folders.py
-
+	$ python3 mailbox_maildir_folders.py
+	
 	Example
 	Example/cur
 	Example/new
-	Example/new/1290996011.M658966P16077Q1.farnsworth.local
+	Example/new/1454257237.M262723P37846Q1.hubert.local
 	Example/tmp
 	Example
 	Example/.subfolder
@@ -321,7 +325,7 @@ folder name with a period (``.``).
 	Example/.subfolder/tmp
 	Example/cur
 	Example/new
-	Example/new/1290996011.M658966P16077Q1.farnsworth.local
+	Example/new/1454257237.M262723P37846Q1.hubert.local
 	Example/tmp
 	Example
 	Example/.subfolder
@@ -336,7 +340,7 @@ folder name with a period (``.``).
 	Example/.subfolder/tmp
 	Example/cur
 	Example/new
-	Example/new/1290996011.M658966P16077Q1.farnsworth.local
+	Example/new/1454257237.M262723P37846Q1.hubert.local
 	Example/tmp
 	Example
 	Example/.subfolder
@@ -346,7 +350,7 @@ folder name with a period (``.``).
 	Example/.subfolder/tmp
 	Example/cur
 	Example/new
-	Example/new/1290996011.M658966P16077Q1.farnsworth.local
+	Example/new/1454257237.M262723P37846Q1.hubert.local
 	Example/tmp
 	Before: []
 	

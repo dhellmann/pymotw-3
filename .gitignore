@@ -15,3 +15,5 @@ dist/
 /blog_posts/
 /source/random/state.dat
 /source/gettext/locale/*/LC_MESSAGES/*.mo
+/source/mailbox/example.mbox
+/source/mailbox/Example
