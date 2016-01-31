@@ -171,9 +171,9 @@ compiled to look for case insensitive matches.
 
 .. {{{end}}}
 
-The example program ``warnings_filtering.py`` generates two warnings.
+The example program below generates two warnings.
 
-.. literalinclude:: warnings_filtering.py
+.. literalinclude:: warnings_filter.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -181,22 +181,21 @@ One of the warnings can be ignored using the filter argument on the
 command line.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, '-W "ignore:do not:UserWarning::0" warnings_filtering.py'))
+.. cog.out(run_script(cog.inFile, '-W "ignore:do not:UserWarning::0" warnings_filter.py'))
 .. }}}
 
 ::
 
-	$ python3 -W "ignore:do not:UserWarning::0" warnings_filtering\
-	.py
+	$ python3 -W "ignore:do not:UserWarning::0" warnings_filter.py
 	
-	warnings_filtering.py:12: UserWarning: Show this message
+	warnings_filter.py:12: UserWarning: Show this message
 	  warnings.warn('Show this message')
 
 .. {{{end}}}
 
 The same pattern matching rules apply to the name of the source module
 containing the call generating the warning. Suppress all messages from the
-``warnings_filtering`` module by passing the module name as the
+``warnings_filter`` module by passing the module name as the
 pattern to the *module* argument.
 
 .. literalinclude:: warnings_filterwarnings_module.py
@@ -204,7 +203,7 @@ pattern to the *module* argument.
     :start-after: #end_pymotw_header
 
 Since the filter is in place, no warnings are emitted when
-``warnings_filtering`` is imported.
+``warnings_filter`` is imported.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'warnings_filterwarnings_module.py'))
@@ -217,7 +216,7 @@ Since the filter is in place, no warnings are emitted when
 
 .. {{{end}}}
 
-To suppress only the message on line 13 of ``warnings_filtering``,
+To suppress only the message on line 13 of ``warnings_filter``,
 include the line number as the last argument to
 :func:`filterwarnings`.  Use the actual line number from the source
 file to limit the filter, or ``0`` to have the filter apply to all
@@ -239,7 +238,7 @@ module name and line number.
 	$ python3 warnings_filterwarnings_lineno.py
 	
 	/Users/dhellmann/Dropbox/PyMOTW/Python3/pymotw-3/source/warnings/warni
-	ngs_filtering.py:12: UserWarning: Show this message
+	ngs_filter.py:12: UserWarning: Show this message
 	  warnings.warn('Show this message')
 
 .. {{{end}}}

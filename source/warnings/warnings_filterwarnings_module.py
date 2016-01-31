@@ -13,7 +13,7 @@ warnings.filterwarnings(
     'ignore',
     '.*',
     UserWarning,
-    'warnings_filtering',
+    'warnings_filter',
 )
 
-import warnings_filtering
+import warnings_filter
