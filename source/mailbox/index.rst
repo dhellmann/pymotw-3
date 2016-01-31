@@ -46,10 +46,9 @@ The result of this script is a new mailbox file with two email
 messages.
 
 .. {{{cog
-.. from paver.path import path
-.. example = path(cog.inFile).dirname() / 'example.mbox'
-.. if example.exists():
-..     example.unlink()
+.. import os
+.. os.system('rm -f source/mailbox/example.mbox')
+.. os.system('rm -f example.mbox')
 .. cog.out(run_script(cog.inFile, 'mailbox_mbox_create.py'))
 .. }}}
 
