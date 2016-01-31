@@ -1,12 +1,11 @@
 ======================================
- mailbox -- Manipulate Email Archives
+ mailbox --- Manipulate Email Archives
 ======================================
 
 .. module:: mailbox
     :synopsis: Access and manipulate email archives.
 
 :Purpose: Work with email messages in various local file formats.
-:Python Version: 1.4 and later
 
 The :mod:`mailbox` module defines a common API for accessing email
 messages stored in local disk formats, including:
@@ -39,8 +38,8 @@ Instantiate the :class:`mbox` class by passing the filename to the
 constructor.  If the file does not exist, it is created when
 :func:`add` is used to append messages.
 
-.. include:: mailbox_mbox_create.py
-    :literal:
+.. literalinclude:: mailbox_mbox_create.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The result of this script is a new mailbox file with two email
@@ -83,8 +82,8 @@ object like a dictionary.  The keys are arbitrary values defined by
 the mailbox instance and are not necessary meaningful other than as
 internal identifiers for message objects.
 
-.. include:: mailbox_mbox_read.py
-    :literal:
+.. literalinclude:: mailbox_mbox_read.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The open mailbox supports the iterator protocol, but unlike true
@@ -110,8 +109,8 @@ Removing Messages from an mbox Mailbox
 To remove an existing message from an mbox file, either use its key with
 :meth:`remove` or use :command:`del`.
 
-.. include:: mailbox_mbox_remove.py
-    :literal:
+.. literalinclude:: mailbox_mbox_remove.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The :meth:`lock` and :meth:`unlock` methods are used to prevent issues
@@ -157,8 +156,8 @@ The only real difference between creating a :class:`Maildir` and
 name instead of a file name.  As before, if the mailbox does not
 exist, it is created when messages are added.
 
-.. include:: mailbox_maildir_create.py
-    :literal:
+.. literalinclude:: mailbox_maildir_create.py
+    :caption:
     :start-after: #end_pymotw_header
 
 When messages are added to the mailbox, they go to the ``new``
@@ -220,8 +219,8 @@ Reading a Maildir Mailbox
 Reading from an existing Maildir mailbox works just like an mbox
 mailbox.
 
-.. include:: mailbox_maildir_read.py
-    :literal:
+.. literalinclude:: mailbox_maildir_read.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The messages are not guaranteed to be read in any particular order.
@@ -246,8 +245,8 @@ Removing Messages from a Maildir Mailbox
 To remove an existing message from a Maildir mailbox, either pass its
 key to :meth:`remove` or use :command:`del`.
 
-.. include:: mailbox_maildir_remove.py
-    :literal:
+.. literalinclude:: mailbox_maildir_remove.py
+    :caption:
     :start-after: #end_pymotw_header
 
 There is no way to compute the key for a message, so use :meth:`items`
@@ -294,8 +293,8 @@ directly through the methods of the :class:`Maildir` class.  Callers
 can list, retrieve, create, and remove sub-folders for a given
 mailbox.
 
-.. include:: mailbox_maildir_folders.py
-    :literal:
+.. literalinclude:: mailbox_maildir_folders.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The directory name for the folder is constructed by prefixing the

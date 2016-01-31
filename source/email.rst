@@ -18,6 +18,11 @@ Local message archives can be created and modified with :mod:`mailbox`
 using several standard formats including the popular mbox and
 Maildir formats used by many email client programs.
 
+.. toctree::
+   :maxdepth: 1
+
+   mailbox/index
+
 ..
    .. toctree::
       :maxdepth: 1
