@@ -381,21 +381,17 @@ methods found in the Maildir class.
 
 .. seealso::
 
-    `mailbox <http://docs.python.org/library/mailbox.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`mailbox`
 
-    `mbox manpage from qmail <http://www.qmail.org/man/man5/mbox.html>`_
-        Documentation for the mbox format.
+   * `mbox manpage from qmail
+     <http://www.qmail.org/man/man5/mbox.html>`_ -- Documentation for
+     the mbox format.
 
-    `Maildir manpage from qmail <http://www.qmail.org/man/man5/maildir.html>`_
-        Documentation for the Maildir format.
+   * `Maildir manpage from qmail
+     <http://www.qmail.org/man/man5/maildir.html>`_ -- Documentation
+     for the Maildir format.
 
-    :mod:`email`
-        The ``email`` module.
+   * :mod:`email` -- The ``email`` module.
 
-    :mod:`mhlib`
-        The ``mhlib`` module.
-
-    :mod:`imaplib`
-        The ``imaplib`` module can work with saved email messages on
-        an IMAP server.
+   * :mod:`imaplib` -- The ``imaplib`` module can work with saved
+     email messages on an IMAP server.
