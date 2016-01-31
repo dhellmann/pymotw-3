@@ -408,6 +408,18 @@ glob
 The new function :func:`escape` implements a work-around for searching
 for files with meta-characters in the name (:pyissue:`8402`).
 
+.. _porting-mailbox:
+
+mailbox
+-------
+
+.. index::
+   pair: porting; mailbox
+
+mailbox reads and writes mailbox files in binary mode, relying on the
+email package to parse messages.  StringIO and text file input is
+deprecated (:pyissue:`9124`).
+
 .. _porting-pdb:
 
 pdb

@@ -383,6 +383,8 @@ methods found in the Maildir class.
 
    * :pydoc:`mailbox`
 
+   * :ref:`Porting notes for mailbox <porting-mailbox>`
+
    * `mbox manpage from qmail
      <http://www.qmail.org/man/man5/mbox.html>`_ -- Documentation for
      the mbox format.
