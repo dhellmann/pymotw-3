@@ -56,7 +56,7 @@ messages.
 
 	$ python3 mailbox_mbox_create.py
 	
-	From MAILER-DAEMON Sun Jan 31 16:39:25 2016
+	From MAILER-DAEMON Sun Jan 31 17:19:41 2016
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -65,7 +65,7 @@ messages.
 	>From (will not be escaped).
 	There are 3 lines.
 	
-	From MAILER-DAEMON Sun Jan 31 16:39:25 2016
+	From MAILER-DAEMON Sun Jan 31 17:19:41 2016
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 2
@@ -128,7 +128,7 @@ changes to be written to disk.
 	$ python3 mailbox_mbox_remove.py
 	
 	Removing: 1
-	From MAILER-DAEMON Sun Jan 31 16:39:25 2016
+	From MAILER-DAEMON Sun Jan 31 17:19:41 2016
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -191,7 +191,7 @@ subdirectory.  After they are read, a client could move them to the
 	Example/new
 		Directories: []
 	
-	*** Example/new/1454258365.M762908P48861Q1.hubert.local
+	*** Example/new/1454260781.M968703P57400Q1.hubert.local
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -202,7 +202,7 @@ subdirectory.  After they are read, a client could move them to the
 	
 	********************
 	
-	*** Example/new/1454258365.M766115P48861Q2.hubert.local
+	*** Example/new/1454260781.M971843P57400Q2.hubert.local
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 2
@@ -236,8 +236,8 @@ The messages are not guaranteed to be read in any particular order.
 
 	$ python3 mailbox_maildir_read.py
 	
-	Sample message 1
 	Sample message 2
+	Sample message 1
 
 .. {{{end}}}
 
@@ -264,7 +264,7 @@ mailbox at the same time.
 
 	$ python3 mailbox_maildir_remove.py
 	
-	Removing: 1454258365.M766115P48861Q2.hubert.local
+	Removing: 1454260781.M971843P57400Q2.hubert.local
 	Example
 		Directories: ['cur', 'new', 'tmp']
 	Example/cur
@@ -272,7 +272,7 @@ mailbox at the same time.
 	Example/new
 		Directories: []
 	
-	*** Example/new/1454258365.M762908P48861Q1.hubert.local
+	*** Example/new/1454260781.M968703P57400Q1.hubert.local
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -314,7 +314,7 @@ folder name with a period (``.``).
 	Example
 	Example/cur
 	Example/new
-	Example/new/1454258365.M762908P48861Q1.hubert.local
+	Example/new/1454260781.M968703P57400Q1.hubert.local
 	Example/tmp
 	Example
 	Example/.subfolder
@@ -324,7 +324,7 @@ folder name with a period (``.``).
 	Example/.subfolder/tmp
 	Example/cur
 	Example/new
-	Example/new/1454258365.M762908P48861Q1.hubert.local
+	Example/new/1454260781.M968703P57400Q1.hubert.local
 	Example/tmp
 	Example
 	Example/.subfolder
@@ -339,7 +339,7 @@ folder name with a period (``.``).
 	Example/.subfolder/tmp
 	Example/cur
 	Example/new
-	Example/new/1454258365.M762908P48861Q1.hubert.local
+	Example/new/1454260781.M968703P57400Q1.hubert.local
 	Example/tmp
 	Example
 	Example/.subfolder
@@ -349,7 +349,7 @@ folder name with a period (``.``).
 	Example/.subfolder/tmp
 	Example/cur
 	Example/new
-	Example/new/1454258365.M762908P48861Q1.hubert.local
+	Example/new/1454260781.M968703P57400Q1.hubert.local
 	Example/tmp
 	Before: []
 	
@@ -368,6 +368,68 @@ folder name with a period (``.``).
 
 .. {{{end}}}
 
+Message Flags
+=============
+
+Messages in mailboxes have flags for tracking aspects such as whether
+or not the message has been read, flagged as important by the reader,
+or marked for deletion later. Flags are stored as a sequence of
+format-specific letter codes and the :class:`Message` classes have
+methods to retrieve and change the values of the flags. This example
+shows the flags on the messages in the ``Example`` maildir before
+adding the flag to indicate that the message is considered important.
+
+.. literalinclude:: mailbox_maildir_add_flag.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+By default messages have no flags. Adding a flag changes the message
+in memory, but does not update the message on disk. To update the
+message on disk store the message object in the mailbox using its
+existing identifier.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'mailbox_maildir_add_flag.py'))
+.. }}}
+
+::
+
+	$ python3 mailbox_maildir_add_flag.py
+	
+	Before:
+	       "Sample message 1"
+	
+	After:
+	F       "Sample message 1"
+
+.. {{{end}}}
+
+Adding flags with :func:`add_flag` preserves any existing flags. Using
+:func:`set_flags` writes over any existing set of flags, replacing it
+with the new values passed to the method.
+
+.. literalinclude:: mailbox_maildir_set_flags.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The ``F`` flag added by the previous example is lost when
+:func:`set_flags` replaces the flags with ``S`` in this example.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'mailbox_maildir_set_flags.py'))
+.. }}}
+
+::
+
+	$ python3 mailbox_maildir_set_flags.py
+	
+	Before:
+	F      "Sample message 1"
+	
+	After:
+	S       "Sample message 1"
+
+.. {{{end}}}
 
 Other Formats
 =============
