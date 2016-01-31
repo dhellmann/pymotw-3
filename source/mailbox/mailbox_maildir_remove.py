@@ -29,7 +29,6 @@ for dirname, subdirs, files in os.walk('Example'):
     print('\tDirectories:', subdirs)
     for name in files:
         fullname = os.path.join(dirname, name)
-        print()
-        print('***', fullname)
+        print('\n***', fullname)
         print(open(fullname).read())
         print('*' * 20)

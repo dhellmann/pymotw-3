@@ -16,6 +16,11 @@ from_addr = email.utils.formataddr(('Author',
 to_addr = email.utils.formataddr(('Recipient',
                                   'recipient@example.com'))
 
+payload = '''This is the body.
+From (will not be escaped).
+There are 3 lines.
+'''
+
 mbox = mailbox.Maildir('Example')
 mbox.lock()
 try:
@@ -24,10 +29,7 @@ try:
     msg['From'] = from_addr
     msg['To'] = to_addr
     msg['Subject'] = 'Sample message 1'
-    msg.set_payload('\n'.join(['This is the body.',
-                               'From (will not be escaped).',
-                               'There are 3 lines.\n',
-                               ]))
+    msg.set_payload(payload)
     mbox.add(msg)
     mbox.flush()
 
@@ -47,7 +49,6 @@ for dirname, subdirs, files in os.walk('Example'):
     print('\tDirectories:', subdirs)
     for name in files:
         fullname = os.path.join(dirname, name)
-        print()
-        print('***', fullname)
+        print('\n***', fullname)
         print(open(fullname).read())
         print('*' * 20)
