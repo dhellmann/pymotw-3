@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2008 Doug Hellmann All rights reserved.
@@ -9,10 +9,11 @@
 
 import warnings
 
-warnings.filterwarnings('ignore', 
-                        '.*', 
-                        UserWarning,
-                        'warnings_filtering',
-                        )
+warnings.filterwarnings(
+    'ignore',
+    '.*',
+    UserWarning,
+    'warnings_filtering',
+)
 
 import warnings_filtering

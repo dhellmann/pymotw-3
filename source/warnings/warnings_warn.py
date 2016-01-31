@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2008 Doug Hellmann All rights reserved.
@@ -9,6 +9,6 @@
 
 import warnings
 
-print 'Before the warning'
+print('Before the warning')
 warnings.warn('This is a warning message')
-print 'After the warning'
+print('After the warning')

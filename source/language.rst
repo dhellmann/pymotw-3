@@ -51,6 +51,7 @@ environment for a program.
    :maxdepth: 1
 
    abc/index
+   warnings/index
 
 ..
    warnings/index

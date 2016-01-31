@@ -1,14 +1,13 @@
-==============================
- warnings -- Non-fatal Alerts
-==============================
+===============================
+ warnings --- Non-fatal Alerts
+===============================
 
 .. module:: warnings
     :synopsis: Non-fatal alerts
 
 :Purpose: Deliver non-fatal alerts to the user about issues encountered when running a program.
-:Python Version: 2.1 and later
 
-The :mod:`warnings` module was introduced by PEP 230 as a way to warn
+The :mod:`warnings` module was introduced by :pep:`230` as a way to warn
 programmers about changes in language or library features in
 anticipation of backwards incompatible changes coming with Python 3.0.
 It can also be used to report recoverable configuration errors or
@@ -66,8 +65,8 @@ Generating Warnings
 The simplest way to emit a warning is to call :func:`warn()` with
 the message as an argument.
 
-.. include:: warnings_warn.py
-    :literal:
+.. literalinclude:: warnings_warn.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Then, when the program runs, the message is printed.
@@ -78,7 +77,7 @@ Then, when the program runs, the message is printed.
 
 ::
 
-	$ python -u warnings_warn.py
+	$ python3 -u warnings_warn.py
 	
 	Before the warning
 	warnings_warn.py:13: UserWarning: This is a warning message
@@ -89,10 +88,10 @@ Then, when the program runs, the message is printed.
 
 Even though the warning is printed, the default behavior is to
 continue past that point and run the rest of the program. That
-behavior can be changed with a filter.  
+behavior can be changed with a filter.
 
-.. include:: warnings_warn_raise.py
-    :literal:
+.. literalinclude:: warnings_warn_raise.py
+    :caption:
     :start-after: #end_pymotw_header
 
 In this example, the :func:`simplefilter` function adds an entry to
@@ -105,7 +104,7 @@ an exception when a :class:`UserWarning` warning is issued.
 
 ::
 
-	$ python -u warnings_warn_raise.py
+	$ python3 -u warnings_warn_raise.py
 	
 	Before the warning
 	Traceback (most recent call last):
@@ -129,7 +128,7 @@ module, and line number) separated by colons (``:``). For example, if
 
 ::
 
-	$ python -u -W "error::UserWarning::0" warnings_warn.py
+	$ python3 -u -W "error::UserWarning::0" warnings_warn.py
 	
 	Before the warning
 	Traceback (most recent call last):
@@ -150,8 +149,8 @@ To filter on more complex rules programmatically, use
 of the message text, give a regular expression pattern as the
 *message* argument.
 
-.. include:: warnings_filterwarnings_message.py
-    :literal:
+.. literalinclude:: warnings_filterwarnings_message.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The pattern contains "``do not``", but the actual message uses "``Do
@@ -164,17 +163,18 @@ compiled to look for case insensitive matches.
 
 ::
 
-	$ python warnings_filterwarnings_message.py
+	$ python3 warnings_filterwarnings_message.py
 	
-	warnings_filterwarnings_message.py:14: UserWarning: Show this message
+	warnings_filterwarnings_message.py:14: UserWarning: Show this me
+	ssage
 	  warnings.warn('Show this message')
 
 .. {{{end}}}
 
 The example program ``warnings_filtering.py`` generates two warnings.
 
-.. include:: warnings_filtering.py
-    :literal:
+.. literalinclude:: warnings_filtering.py
+    :caption:
     :start-after: #end_pymotw_header
 
 One of the warnings can be ignored using the filter argument on the
@@ -186,7 +186,8 @@ command line.
 
 ::
 
-	$ python -W "ignore:do not:UserWarning::0" warnings_filtering.py
+	$ python3 -W "ignore:do not:UserWarning::0" warnings_filtering\
+	.py
 	
 	warnings_filtering.py:12: UserWarning: Show this message
 	  warnings.warn('Show this message')
@@ -198,8 +199,8 @@ containing the call generating the warning. Suppress all messages from the
 ``warnings_filtering`` module by passing the module name as the
 pattern to the *module* argument.
 
-.. include:: warnings_filterwarnings_module.py
-    :literal:
+.. literalinclude:: warnings_filterwarnings_module.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Since the filter is in place, no warnings are emitted when
@@ -211,7 +212,7 @@ Since the filter is in place, no warnings are emitted when
 
 ::
 
-	$ python warnings_filterwarnings_module.py
+	$ python3 warnings_filterwarnings_module.py
 	
 
 .. {{{end}}}
@@ -222,8 +223,8 @@ include the line number as the last argument to
 file to limit the filter, or ``0`` to have the filter apply to all
 occurrences of the message.
 
-.. include:: warnings_filterwarnings_lineno.py
-    :literal:
+.. literalinclude:: warnings_filterwarnings_lineno.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The pattern matches any message, so the important arguments are the
@@ -235,10 +236,10 @@ module name and line number.
 
 ::
 
-	$ python warnings_filterwarnings_lineno.py
+	$ python3 warnings_filterwarnings_lineno.py
 	
-	/Users/dhellmann/Documents/PyMOTW/book/PyMOTW/warnings/warnings_filter
-	ing.py:12: UserWarning: Show this message
+	/Users/dhellmann/Dropbox/PyMOTW/Python3/pymotw-3/source/warnings/warni
+	ngs_filtering.py:12: UserWarning: Show this message
 	  warnings.warn('Show this message')
 
 .. {{{end}}}
@@ -251,8 +252,8 @@ By default, most types of warnings are only printed the first time
 they occur in a given location, with "location" defined by the
 combination of module and line number where the warning is generated.
 
-.. include:: warnings_repeated.py
-    :literal:
+.. literalinclude:: warnings_repeated.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example calls the same function several times, but produces a single warning.
@@ -263,9 +264,9 @@ This example calls the same function several times, but produces a single warnin
 
 ::
 
-	$ python warnings_repeated.py
+	$ python3 warnings_repeated.py
 	
-	warnings_repeated.py:13: UserWarning: This is a warning!
+	warnings_repeated.py:14: UserWarning: This is a warning!
 	  warnings.warn('This is a warning!')
 
 .. {{{end}}}
@@ -274,8 +275,8 @@ This example calls the same function several times, but produces a single warnin
 The ``"once"`` action can be used to suppress instances of the same
 message from different locations.
 
-.. include:: warnings_once.py
-    :literal:
+.. literalinclude:: warnings_once.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The message text for all warnings is saved and only unique messages
@@ -287,7 +288,7 @@ are printed.
 
 ::
 
-	$ python warnings_once.py
+	$ python3 warnings_once.py
 	
 	warnings_once.py:14: UserWarning: This is a warning!
 	  warnings.warn('This is a warning!')
@@ -306,8 +307,8 @@ behavior by replacing the :func:`showwarning()` function inside the
 instead of standard error, replace :func:`showwarning()` with a
 function that logs the warning.
 
-.. include:: warnings_showwarning.py
-    :literal:
+.. literalinclude:: warnings_showwarning.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The warnings are emitted with the rest of the log messages when
@@ -319,9 +320,9 @@ The warnings are emitted with the rest of the log messages when
 
 ::
 
-	$ python warnings_showwarning.py
+	$ python3 warnings_showwarning.py
 	
-	WARNING:root:warnings_showwarning.py:24: UserWarning:message
+	WARNING:root:warnings_showwarning.py:28: UserWarning:message
 
 .. {{{end}}}
 
@@ -331,8 +332,8 @@ Formatting
 If warnings should go to standard error, but they need to be
 reformatted, replace :func:`formatwarning()`.
 
-.. include:: warnings_formatwarning.py
-    :literal:
+.. literalinclude:: warnings_formatwarning.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The format function must return a single string containing the
@@ -344,11 +345,13 @@ representation of the warning to be displayed to the user.
 
 ::
 
-	$ python -u warnings_formatwarning.py
+	$ python3 -u warnings_formatwarning.py
 	
-	warnings_formatwarning.py:17: UserWarning: Warning message, before
+	warnings_formatwarning.py:18: UserWarning: Warning message, befo
+	re
 	  warnings.warn('Warning message, before')
-	-> warnings_formatwarning.py:19: UserWarning:Warning message, after
+	-> warnings_formatwarning.py:20: UserWarning:Warning message, af
+	ter
 
 .. {{{end}}}
 
@@ -375,10 +378,10 @@ levels, one for itself and one for :func:`old_function()`.
 
 ::
 
-	$ python warnings_warn_stacklevel.py
+	$ python3 warnings_warn_stacklevel.py
 	
-	warnings_warn_stacklevel.py:12: UserWarning: old_function() is deprecated,
-	 use new_function() instead
+	warnings_warn_stacklevel.py:14: UserWarning: old_function() is deprecated,
+	 use new_function()
 	  old_function()
 
 .. {{{end}}}
