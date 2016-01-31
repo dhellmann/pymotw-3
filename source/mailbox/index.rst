@@ -215,6 +215,45 @@ subdirectory.  After they are read, a client could move them to the
 
 .. {{{end}}}
 
+After they are read, a client could move them to the ``cur``
+subdirectory using the :func:`set_subdir` method of the
+:class:`MaildirMessage`.
+
+.. literalinclude:: mailbox_maildir_set_subdir.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Although a maildir includes a "``tmp``" directory, the only valid
+arguments for :func:`set_subdir` are "``cur``" and "``new``".
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'mailbox_maildir_set_subdir.py'))
+.. }}}
+
+::
+
+	$ python3 mailbox_maildir_set_subdir.py
+	
+	Before:
+	new    "Sample message 1"
+	new    "Sample message 2"
+	
+	After:
+	cur    "Sample message 1"
+	cur    "Sample message 2"
+	
+	Example
+		Directories: ['cur', 'new', 'tmp']
+	Example/cur
+		Directories: []
+	Example/cur/1454262577.M795475P86582Q1.hubert.local
+	Example/cur/1454262577.M800486P86582Q2.hubert.local
+	Example/new
+		Directories: []
+	Example/tmp
+		Directories: []
+
+.. {{{end}}}
 
 Reading a Maildir Mailbox
 -------------------------
