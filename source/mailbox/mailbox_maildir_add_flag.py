@@ -26,5 +26,5 @@ finally:
 print('\nAfter:')
 mbox = mailbox.Maildir('Example')
 for message in mbox:
-    print('{:7} "{}"'.format(message.get_flags(),
+    print('{:6} "{}"'.format(message.get_flags(),
                              message['subject']))
