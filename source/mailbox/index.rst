@@ -56,16 +56,16 @@ messages.
 
 	$ python3 mailbox_mbox_create.py
 	
-	From MAILER-DAEMON Sun Jan 31 16:20:36 2016
+	From MAILER-DAEMON Sun Jan 31 16:39:25 2016
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
 	
 	This is the body.
-	>From (should be escaped).
+	>From (will not be escaped).
 	There are 3 lines.
 	
-	From MAILER-DAEMON Sun Jan 31 16:20:36 2016
+	From MAILER-DAEMON Sun Jan 31 16:39:25 2016
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 2
@@ -128,13 +128,13 @@ changes to be written to disk.
 	$ python3 mailbox_mbox_remove.py
 	
 	Removing: 1
-	From MAILER-DAEMON Sun Jan 31 16:20:36 2016
+	From MAILER-DAEMON Sun Jan 31 16:39:25 2016
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
 	
 	This is the body.
-	>From (should be escaped).
+	>From (will not be escaped).
 	There are 3 lines.
 	
 	
@@ -191,7 +191,7 @@ subdirectory.  After they are read, a client could move them to the
 	Example/new
 		Directories: []
 	
-	*** Example/new/1454257237.M262723P37846Q1.hubert.local
+	*** Example/new/1454258365.M762908P48861Q1.hubert.local
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -202,7 +202,7 @@ subdirectory.  After they are read, a client could move them to the
 	
 	********************
 	
-	*** Example/new/1454257237.M267662P37846Q2.hubert.local
+	*** Example/new/1454258365.M766115P48861Q2.hubert.local
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 2
@@ -264,7 +264,7 @@ mailbox at the same time.
 
 	$ python3 mailbox_maildir_remove.py
 	
-	Removing: 1454257237.M267662P37846Q2.hubert.local
+	Removing: 1454258365.M766115P48861Q2.hubert.local
 	Example
 		Directories: ['cur', 'new', 'tmp']
 	Example/cur
@@ -272,7 +272,7 @@ mailbox at the same time.
 	Example/new
 		Directories: []
 	
-	*** Example/new/1454257237.M262723P37846Q1.hubert.local
+	*** Example/new/1454258365.M762908P48861Q1.hubert.local
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -314,7 +314,7 @@ folder name with a period (``.``).
 	Example
 	Example/cur
 	Example/new
-	Example/new/1454257237.M262723P37846Q1.hubert.local
+	Example/new/1454258365.M762908P48861Q1.hubert.local
 	Example/tmp
 	Example
 	Example/.subfolder
@@ -324,7 +324,7 @@ folder name with a period (``.``).
 	Example/.subfolder/tmp
 	Example/cur
 	Example/new
-	Example/new/1454257237.M262723P37846Q1.hubert.local
+	Example/new/1454258365.M762908P48861Q1.hubert.local
 	Example/tmp
 	Example
 	Example/.subfolder
@@ -339,7 +339,7 @@ folder name with a period (``.``).
 	Example/.subfolder/tmp
 	Example/cur
 	Example/new
-	Example/new/1454257237.M262723P37846Q1.hubert.local
+	Example/new/1454258365.M762908P48861Q1.hubert.local
 	Example/tmp
 	Example
 	Example/.subfolder
@@ -349,7 +349,7 @@ folder name with a period (``.``).
 	Example/.subfolder/tmp
 	Example/cur
 	Example/new
-	Example/new/1454257237.M262723P37846Q1.hubert.local
+	Example/new/1454258365.M762908P48861Q1.hubert.local
 	Example/tmp
 	Before: []
 	
