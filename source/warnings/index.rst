@@ -62,7 +62,7 @@ in :table:`Warning Filter Actions`.
 Generating Warnings
 ===================
 
-The simplest way to emit a warning is to call :func:`warn()` with
+The simplest way to emit a warning is to call :func:`warn` with
 the message as an argument.
 
 .. literalinclude:: warnings_warn.py
@@ -145,7 +145,7 @@ Filtering with Patterns
 =======================
 
 To filter on more complex rules programmatically, use
-:func:`filterwarnings()`. For example, to filter based on the content
+:func:`filterwarnings`. For example, to filter based on the content
 of the message text, give a regular expression pattern as the
 *message* argument.
 
@@ -302,9 +302,9 @@ Alternate Message Delivery Functions
 ====================================
 
 Normally warnings are printed to :data:`sys.stderr`.  Change that
-behavior by replacing the :func:`showwarning()` function inside the
+behavior by replacing the :func:`showwarning` function inside the
 :mod:`warnings` module. For example, to send warnings to a log file
-instead of standard error, replace :func:`showwarning()` with a
+instead of standard error, replace :func:`showwarning` with a
 function that logs the warning.
 
 .. literalinclude:: warnings_showwarning.py
@@ -312,7 +312,7 @@ function that logs the warning.
     :start-after: #end_pymotw_header
 
 The warnings are emitted with the rest of the log messages when
-:func:`warn()` is called.
+:func:`warn` is called.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'warnings_showwarning.py'))
@@ -330,7 +330,7 @@ Formatting
 ==========
 
 If warnings should go to standard error, but they need to be
-reformatted, replace :func:`formatwarning()`.
+reformatted, replace :func:`formatwarning`.
 
 .. literalinclude:: warnings_formatwarning.py
     :caption:
@@ -361,7 +361,7 @@ Stack Level in Warnings
 By default, the warning message includes the source line that
 generated it, when available. It is not always useful to see the line
 of code with the actual warning message, though. Instead,
-:func:`warn()` can be told how far up the stack it has to go to find
+:func:`warn` can be told how far up the stack it has to go to find
 the line that called the function containing the warning.  That way,
 users of a deprecated function can see where the function is called,
 instead of the implementation of the function.
@@ -369,8 +369,8 @@ instead of the implementation of the function.
 .. literalinclude:: warnings_warn_stacklevel.py
    :linenos:
 
-In this example :func:`warn()` needs to go up the stack two
-levels, one for itself and one for :func:`old_function()`.
+In this example :func:`warn` needs to go up the stack two
+levels, one for itself and one for :func:`old_function`.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'warnings_warn_stacklevel.py', break_lines_at=74))
@@ -388,15 +388,11 @@ levels, one for itself and one for :func:`old_function()`.
 
 .. seealso::
 
-    `warnings <http://docs.python.org/lib/module-warnings.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`warnings`
 
-    :pep:`230`
-        Warning Framework
+   * :pep:`230` -- Warning Framework
 
-    :mod:`exceptions`
-        Base classes for exceptions and warnings.
+   * :mod:`exceptions` -- Base classes for exceptions and warnings.
 
-    :mod:`logging`
-        An alternative mechanism for delivering warnings is to write
-        to the log.
+   * :mod:`logging` -- An alternative mechanism for delivering
+     warnings is to write to the log.
