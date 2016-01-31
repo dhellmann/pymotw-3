@@ -56,7 +56,7 @@ messages.
 
 	$ python3 mailbox_mbox_create.py
 	
-	From MAILER-DAEMON Sun Jan 31 17:19:41 2016
+	From MAILER-DAEMON Sun Jan 31 17:52:59 2016
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -65,7 +65,7 @@ messages.
 	>From (will not be escaped).
 	There are 3 lines.
 	
-	From MAILER-DAEMON Sun Jan 31 17:19:41 2016
+	From MAILER-DAEMON Sun Jan 31 17:52:59 2016
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 2
@@ -89,8 +89,8 @@ internal identifiers for message objects.
     :start-after: #end_pymotw_header
 
 The open mailbox supports the iterator protocol, but unlike true
-dictionary objects, the default iterator for a mailbox works on the *values*
-instead of the *keys*.
+dictionary objects the default iterator for a mailbox works on the
+*values* instead of the *keys*.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'mailbox_mbox_read.py'))
@@ -128,7 +128,7 @@ changes to be written to disk.
 	$ python3 mailbox_mbox_remove.py
 	
 	Removing: 1
-	From MAILER-DAEMON Sun Jan 31 17:19:41 2016
+	From MAILER-DAEMON Sun Jan 31 17:52:59 2016
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -164,8 +164,7 @@ exist, it is created when messages are added.
     :start-after: #end_pymotw_header
 
 When messages are added to the mailbox, they go to the ``new``
-subdirectory.  After they are read, a client could move them to the
-``cur`` subdirectory.
+subdirectory.
 
 .. warning::
 
@@ -191,7 +190,7 @@ subdirectory.  After they are read, a client could move them to the
 	Example/new
 		Directories: []
 	
-	*** Example/new/1454260781.M968703P57400Q1.hubert.local
+	*** Example/new/1454262779.M922085P88018Q1.hubert.local
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -202,7 +201,7 @@ subdirectory.  After they are read, a client could move them to the
 	
 	********************
 	
-	*** Example/new/1454260781.M971843P57400Q2.hubert.local
+	*** Example/new/1454262779.M926856P88018Q2.hubert.local
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 2
@@ -235,19 +234,19 @@ arguments for :func:`set_subdir` are "``cur``" and "``new``".
 	$ python3 mailbox_maildir_set_subdir.py
 	
 	Before:
-	new    "Sample message 1"
 	new    "Sample message 2"
+	new    "Sample message 1"
 	
 	After:
-	cur    "Sample message 1"
 	cur    "Sample message 2"
+	cur    "Sample message 1"
 	
 	Example
 		Directories: ['cur', 'new', 'tmp']
 	Example/cur
 		Directories: []
-	Example/cur/1454262577.M795475P86582Q1.hubert.local
-	Example/cur/1454262577.M800486P86582Q2.hubert.local
+	Example/cur/1454262779.M922085P88018Q1.hubert.local
+	Example/cur/1454262779.M926856P88018Q2.hubert.local
 	Example/new
 		Directories: []
 	Example/tmp
@@ -303,15 +302,13 @@ mailbox at the same time.
 
 	$ python3 mailbox_maildir_remove.py
 	
-	Removing: 1454260781.M971843P57400Q2.hubert.local
+	Removing: 1454262779.M926856P88018Q2.hubert.local
 	Example
 		Directories: ['cur', 'new', 'tmp']
 	Example/cur
 		Directories: []
-	Example/new
-		Directories: []
 	
-	*** Example/new/1454260781.M968703P57400Q1.hubert.local
+	*** Example/cur/1454262779.M922085P88018Q1.hubert.local
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -321,6 +318,8 @@ mailbox at the same time.
 	There are 3 lines.
 	
 	********************
+	Example/new
+		Directories: []
 	Example/tmp
 		Directories: []
 
@@ -352,8 +351,8 @@ folder name with a period (``.``).
 	
 	Example
 	Example/cur
+	Example/cur/1454262779.M922085P88018Q1.hubert.local
 	Example/new
-	Example/new/1454260781.M968703P57400Q1.hubert.local
 	Example/tmp
 	Example
 	Example/.subfolder
@@ -362,8 +361,8 @@ folder name with a period (``.``).
 	Example/.subfolder/new
 	Example/.subfolder/tmp
 	Example/cur
+	Example/cur/1454262779.M922085P88018Q1.hubert.local
 	Example/new
-	Example/new/1454260781.M968703P57400Q1.hubert.local
 	Example/tmp
 	Example
 	Example/.subfolder
@@ -377,8 +376,8 @@ folder name with a period (``.``).
 	Example/.subfolder/new
 	Example/.subfolder/tmp
 	Example/cur
+	Example/cur/1454262779.M922085P88018Q1.hubert.local
 	Example/new
-	Example/new/1454260781.M968703P57400Q1.hubert.local
 	Example/tmp
 	Example
 	Example/.subfolder
@@ -387,8 +386,8 @@ folder name with a period (``.``).
 	Example/.subfolder/new
 	Example/.subfolder/tmp
 	Example/cur
+	Example/cur/1454262779.M922085P88018Q1.hubert.local
 	Example/new
-	Example/new/1454260781.M968703P57400Q1.hubert.local
 	Example/tmp
 	Before: []
 	
@@ -439,7 +438,7 @@ existing identifier.
 	       "Sample message 1"
 	
 	After:
-	F       "Sample message 1"
+	F      "Sample message 1"
 
 .. {{{end}}}
 
@@ -466,7 +465,7 @@ The ``F`` flag added by the previous example is lost when
 	F      "Sample message 1"
 	
 	After:
-	S       "Sample message 1"
+	S      "Sample message 1"
 
 .. {{{end}}}
 
