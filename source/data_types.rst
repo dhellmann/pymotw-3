@@ -8,6 +8,11 @@ part of its built-in types.  Many applications do not require other
 structures, but when they do, the standard library provides powerful
 and well-tested versions that are ready to be used.
 
+The :mod:`enum` module provides an implementation of an *enumeration*
+type, with iteration and comparison capabilities. It can be used to
+create well-defined symbols for values, instead of using literal
+integer or strings.
+
 The :mod:`collections` module includes implementations of several data
 structures that extend those found in other modules.  For example,
 :class:`Deque` is a double-ended queue, and allows the addition or
@@ -70,6 +75,7 @@ container type using one of the abstract base classes defined in
 .. toctree::
     :maxdepth: 1
 
+    enum/index
     collections/index
     array/index
     bisect/index
