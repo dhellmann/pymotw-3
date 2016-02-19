@@ -112,8 +112,6 @@ to behave more like numbers, for example to support comparisons.
 
 	$ python3 enum_intenum.py
 	
-	Equal   : False True
-	Identity: False True
 	Ordered by value:
 	  fix_released
 	  fix_committed
@@ -130,7 +128,6 @@ to behave more like numbers, for example to support comparisons.
 .. comparison
 .. unique values
 .. functional API for creating
-.. integer enums
 .. non-integer values of enum members (tuple, such as planet example, or fancier)
 
 
