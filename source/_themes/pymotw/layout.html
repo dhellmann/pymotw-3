@@ -10,6 +10,10 @@
 
 {%- set rss_link_text = rss_link_text is not defined and None or rss_link_text -%}
 
+{%- macro twitter_link() -%}
+    {{ social_link('fa-twitter', 'http://www.twitter.com/pymotw', 'Twitter', None) }}
+{%- endmacro -%}
+
 {%- macro rss_link() -%}
 {{ social_link('fa-rss-square', 'http://feeds.doughellmann.com/PyMOTW', "Subscribe via RSS", rss_link_text) }}
 {%- endmacro -%}
@@ -58,6 +62,7 @@
       <ul id="top-menu">
         <li><a href="{{ pathto('py-modindex') }}"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
         <li><a href="{{ pathto('genindex') }}"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+        <li>{{ twitter_link() }}</a>
         <li>{{ rss_link() }}</li>
       </ul>
     </div>
@@ -114,7 +119,7 @@
             <div class="socialmedia">
               {{ social_link('fa-home', pathto(master_doc), 'Home', None) }}
               {{ social_link('fa-user', pathto('about'), 'About', None) }}
-              {{ social_link('fa-twitter', 'http://www.twitter.com/doughellmann', 'Twitter', None) }}
+              {{ twitter_link() }}
               {{ rss_link() }}
               {{ social_link('fa-envelope', 'http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US', 'Subscribe via Email', None) }}
             </div>
