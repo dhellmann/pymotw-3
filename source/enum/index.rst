@@ -123,10 +123,74 @@ to behave more like numbers, for example to support comparisons.
 
 .. {{{end}}}
 
+Unique Enumeration Values
+=========================
+
+Enum members with the same value are tracked as alias references to
+the same member object. Any aliases do not cause repeated values to be
+present in the iterator for the :class:`Enum`.
+
+.. literalinclude:: enum_aliases.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Because ``by_design`` and ``closed`` are aliases for other members,
+they do not appear separately in the output when iterating over the
+:class:`Enum`. The canonical name for a member is the first name
+attached to the value.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'enum_aliases.py'))
+.. }}}
+
+::
+
+	$ python3 enum_aliases.py
+	
+	new             = 7
+	incomplete      = 6
+	invalid         = 5
+	wont_fix        = 4
+	in_progress     = 3
+	fix_committed   = 2
+	fix_released    = 1
+	
+	Same: by_design is wont_fix:  True
+	Same: closed is fix_released:  True
+
+.. {{{end}}}
+
+To require all members to have unique values, add the ``@unique``
+decorator to the :class:`Enum`.
+
+.. literalinclude:: enum_unique_enforce.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Members with repeated values trigger a :class:`ValueError` exception
+when the :class:`Enum` class is being interpreted.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'enum_unique_enforce.py', ignore_error=True, 
+..                    line_break_mode='wrap'))
+.. }}}
+
+::
+
+	$ python3 enum_unique_enforce.py
+	
+	Traceback (most recent call last):
+	  File "enum_unique_enforce.py", line 11, in <module>
+	    class BugStatus(enum.Enum):
+	  File "/Library/Frameworks/Python.framework/Versions/3.5/lib/py
+	thon3.5/enum.py", line 567, in unique
+	    (enumeration, alias_details))
+	ValueError: duplicate values found in <enum 'BugStatus'>:
+	by_design -> wont_fix, closed -> fix_released
+
+.. {{{end}}}
 
 
-.. comparison
-.. unique values
 .. functional API for creating
 .. non-integer values of enum members (tuple, such as planet example, or fancier)
 
