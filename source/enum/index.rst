@@ -190,8 +190,79 @@ when the :class:`Enum` class is being interpreted.
 
 .. {{{end}}}
 
+Creating Enumerations Programmatically
+======================================
 
-.. functional API for creating
+There are cases when it is more convenient to create enumerations
+programmatically, rather than hard-coding them in a class
+definition. For those situations, :class:`Enum` also supports passing
+the member names and values to the class constructor.
+
+.. literalinclude:: enum_programmatic_create.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The ``value`` argument is the name of the enumeration, used to build
+the representation of members. The ``names`` argument lists the
+members of the enumeration. When a single string is passed, it is
+split on whitespace and commas and the resulting tokens are used as
+names for the members, which are automatically assigned values
+starting with ``1``.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'enum_programmatic_create.py'))
+.. }}}
+
+::
+
+	$ python3 enum_programmatic_create.py
+	
+	Member: BugStatus.new
+	
+	All members:
+	fix_released    = 1
+	fix_committed   = 2
+	in_progress     = 3
+	wont_fix        = 4
+	invalid         = 5
+	incomplete      = 6
+	new             = 7
+
+.. {{{end}}}
+
+For more control over the values associated with members, the
+``names`` string can be replaced with a sequence of two-part tuples or
+a dictionary mapping names to values.
+
+.. literalinclude:: enum_programmatic_mapping.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+In this example a list of two-part tuples is given instead of a single
+string containing only the member names. This makes it possible to
+reconstruct the ``BugStatus`` enumeration with the members in the same
+order as the version defined in ``enum_create.py``.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'enum_programmatic_mapping.py'))
+.. }}}
+
+::
+
+	$ python3 enum_programmatic_mapping.py
+	
+	All members:
+	new             = 7
+	incomplete      = 6
+	invalid         = 5
+	wont_fix        = 4
+	in_progress     = 3
+	fix_committed   = 2
+	fix_released    = 1
+
+.. {{{end}}}
+
+
 .. non-integer values of enum members (tuple, such as planet example, or fancier)
 
 
