@@ -27,6 +27,6 @@ match, mismatch, errors = filecmp.cmpfiles(
     'example/dir2',
     common_files,
 )
-print('Match   :', match)
-print('Mismatch:', mismatch)
-print('Errors  :', errors)
+print('Match       :', match)
+print('Mismatch    :', mismatch)
+print('Errors      :', errors)

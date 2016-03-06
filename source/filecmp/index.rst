@@ -102,9 +102,10 @@ Comparing Files
 The *shallow* argument tells :func:`cmp` whether to look at the
 contents of the file, in addition to its metadata. The default is to
 perform a shallow comparison using the information available from
-:func:`os.stat` without looking at content.  Files of the same
-size created at the same time are reported as the same, if their
-contents are not compared.
+:func:`os.stat`. If the stat results are the same, the files are
+considered the same so files of the same size created at the same time
+are reported as the same, even if their contents differ. When
+*shallow* is ``False``, the contents of the file are always compared.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'filecmp_cmp.py'))
@@ -114,9 +115,9 @@ contents are not compared.
 
 	$ python3 filecmp_cmp.py
 	
-	common_file:TrueTrue
-	not_the_same:TrueFalse
-	identical:TrueTrue
+	common_file : True True
+	not_the_same: True False
+	identical   : True True
 
 .. {{{end}}}
 
@@ -145,9 +146,9 @@ compared (due to permission problems or for any other reason).
 	$ python3 filecmp_cmpfiles.py
 	
 	Common files: ['not_the_same', 'file_in_dir1', 'common_file']
-	Match   : ['not_the_same', 'common_file']
-	Mismatch: ['file_in_dir1']
-	Errors  : []
+	Match       : ['not_the_same', 'common_file']
+	Mismatch    : ['file_in_dir1']
+	Errors      : []
 
 .. {{{end}}}
 
@@ -426,7 +427,7 @@ name to new :class:`dircmp` objects.
 	$ python3 filecmp_dircmp_subdirs.py
 	
 	Subdirectories:
-	{'common_dir': <filecmp.dircmp object at 0x1010b1a20>}
+	{'common_dir': <filecmp.dircmp object at 0x1018b1a20>}
 
 .. {{{end}}}
 
