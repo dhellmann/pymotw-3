@@ -408,6 +408,20 @@ glob
 The new function :func:`escape` implements a work-around for searching
 for files with meta-characters in the name (:pyissue:`8402`).
 
+.. _porting-imaplib:
+
+imaplib
+-------
+
+.. index::
+   pair: porting; imaplib
+
+Under Python 3, :mod:`imaplib` returns byte-strings encoded as
+UTF-8. There is support for accepting unicode strings and encoding
+them automatically as outgoing commands are sent or as the username
+and password for logging in to the server.
+
+
 .. _porting-mailbox:
 
 mailbox

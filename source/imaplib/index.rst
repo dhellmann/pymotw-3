@@ -864,4 +864,6 @@ not notified about the deletions when :meth:`close()` is called.
       higher-level client for talking to IMAP servers, written by
       Menno Smits.
 
+    * :ref:`Porting notes for imaplib <porting-imaplib>`
+
 .. _IMAP Backup Script: http://snipplr.com/view/7955/imap-backup-script/
