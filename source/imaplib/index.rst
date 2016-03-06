@@ -50,11 +50,11 @@ information from a file in the user's home directory, then opens the
 
 ::
 
-    $ python imaplib_connect.py
-
-    Connecting to mail.example.com
-    Logging in as example
-    <imaplib.IMAP4_SSL instance at 0x928cb0>
+	$ python3 imaplib_connect.py
+	
+	Connecting to pymotw.hellfly.net
+	Logging in as example
+	<imaplib.IMAP4_SSL object at 0x10421e320>
 
 The other examples in this section reuse this module, to avoid
 duplicating the code.
@@ -74,28 +74,26 @@ exception.
 
 ::
 
-    $ python imaplib_connect_fail.py
-
-    Connecting to mail.example.com
-    Logging in as example
-    ERROR: Authentication failed.
-
+	$ python3 imaplib_connect_fail.py
+	
+	Connecting to pymotw.hellfly.net
+	Logging in as example
+	ERROR: b'[AUTHENTICATIONFAILED] Authentication failed.'
 
 Example Configuration
 =====================
 
-The example account has three mailboxes, ``INBOX``,
-``Archive``, and ``2008`` (a sub-folder of ``Archive``).  The mailbox
-hierarchy is:
+The example account has several in a hierarchy:
 
 - INBOX
+- Deleted Messages
 - Archive
+- Example
 
-  - 2008
+  - 2016
 
 There is one unread message in the ``INBOX`` folder, and one read
-message in ``Archive/2008``.
-
+message in ``Example/2016``.
 
 Listing Mailboxes
 =================
@@ -115,13 +113,15 @@ name* for each mailbox.
 
 ::
 
-    $ python imaplib_list.py
-
-    Response code: OK
-    Response:
-    ['(\\HasNoChildren) "." INBOX',
-     '(\\HasChildren) "." "Archive"',
-     '(\\HasNoChildren) "." "Archive.2008"']
+	$ python3 imaplib_list.py
+	
+	Response code: OK
+	Response:
+	[b'(\\HasChildren) "." Example',
+	 b'(\\HasNoChildren) "." Example.2016',
+	 b'(\\HasNoChildren) "." Archive',
+	 b'(\\HasNoChildren) "." "Deleted Messages"',
+	 b'(\\HasNoChildren) "." INBOX']
 
 Each response string can be split into three parts using :mod:`re` or
 :mod:`csv` (see *IMAP Backup Script* in the references at the end of
@@ -137,32 +137,37 @@ back to the server later.
 
 ::
 
-    $ python imaplib_list_parse.py
-
-    Response code: OK
-    Server response: (\HasNoChildren) "." INBOX
-    Parsed response: ('\\HasNoChildren', '.', 'INBOX')
-    Server response: (\HasChildren) "." "Archive"
-    Parsed response: ('\\HasChildren', '.', 'Archive')
-    Server response: (\HasNoChildren) "." "Archive.2008"
-    Parsed response: ('\\HasNoChildren', '.', 'Archive.2008')
+	$ python3 imaplib_list_parse.py
+	
+	Response code: OK
+	Server response: b'(\\HasChildren) "." Example'
+	Parsed response: ('\\HasChildren', '.', 'Example')
+	Server response: b'(\\HasNoChildren) "." Example.2016'
+	Parsed response: ('\\HasNoChildren', '.', 'Example.2016')
+	Server response: b'(\\HasNoChildren) "." Archive'
+	Parsed response: ('\\HasNoChildren', '.', 'Archive')
+	Server response: b'(\\HasNoChildren) "." "Deleted Messages"'
+	Parsed response: ('\\HasNoChildren', '.', 'Deleted Messages')
+	Server response: b'(\\HasNoChildren) "." INBOX'
+	Parsed response: ('\\HasNoChildren', '.', 'INBOX')
 
 :meth:`list()` takes arguments to specify mailboxes in part of the
-hierarchy.  For example, to list sub-folders of ``Archive``, pass
-``"Archive"`` as the *directory* argument.
+hierarchy.  For example, to list sub-folders of ``Example``, pass
+``"Example"`` as the *directory* argument.
 
 .. literalinclude:: imaplib_list_subfolders.py
    :caption:
    :start-after: #end_pymotw_header
 
-Only the single subfolder is returned.
+The parent and subfolder are returned.
 
 ::
 
-    $ python imaplib_list_subfolders.py
-
-    Response code: OK
-    Server response: (\HasNoChildren) "." "Archive.2008"
+	$ python3 imaplib_list_subfolders.py
+	
+	Response code: OK
+	Server response: b'(\\HasChildren) "." Example'
+	Server response: b'(\\HasNoChildren) "." Example.2016'
 
 Alternately, to list folders matching a pattern pass the *pattern*
 argument.
@@ -171,17 +176,16 @@ argument.
    :caption:
    :start-after: #end_pymotw_header
 
-In this case, both ``Archive`` and ``Archive.2008`` are included in
+In this case, both ``Example`` and ``Example.2016`` are included in
 the response.
 
 ::
 
-    $ python imaplib_list_pattern.py
-
-    Response code: OK
-    Server response: (\HasChildren) "." "Archive"
-    Server response: (\HasNoChildren) "." "Archive.2008"
-
+	$ python3 imaplib_list_pattern.py
+	
+	Response code: OK
+	Server response: b'(\\HasChildren) "." Example'
+	Server response: b'(\\HasNoChildren) "." Example.2016'
 
 Mailbox Status
 ==============
@@ -204,7 +208,9 @@ conditions defined by the standard.
 
 The status conditions must be formatted as a space separated string
 enclosed in parentheses, the encoding for a "list" in the IMAP4
-specification.
+specification. The mailbox name is wrapped in ``"`` in case any of the
+names include spaces or other characters that would throw of the
+parser.
 
 .. literalinclude:: imaplib_status.py
    :caption:
@@ -217,15 +223,34 @@ in quotes, then the status conditions and values in parentheses.
 
 ::
 
-    $ python imaplib_status.py
-
-    ('OK', ['"INBOX" (MESSAGES 1 RECENT 0 UIDNEXT 3 UIDVALIDITY 
-    1222003700 UNSEEN 1)'])
-    ('OK', ['"Archive" (MESSAGES 0 RECENT 0 UIDNEXT 1 UIDVALIDITY 
-    1222003809 UNSEEN 0)'])
-    ('OK', ['"Archive.2008" (MESSAGES 1 RECENT 0 UIDNEXT 2 UIDVALIDITY 
-    1222003831 UNSEEN 0)'])
-
+	$ python3 imaplib_status.py
+	
+	Response code: OK
+	Server response: b'(\\HasChildren) "." Example'
+	Parsed response: ('\\HasChildren', '.', 'Example')
+	Server response: b'(\\HasNoChildren) "." Example.2016'
+	Parsed response: ('\\HasNoChildren', '.', 'Example.2016')
+	Server response: b'(\\HasNoChildren) "." Archive'
+	Parsed response: ('\\HasNoChildren', '.', 'Archive')
+	Server response: b'(\\HasNoChildren) "." "Deleted Messages"'
+	Parsed response: ('\\HasNoChildren', '.', 'Deleted Messages')
+	Server response: b'(\\HasNoChildren) "." INBOX'
+	Parsed response: ('\\HasNoChildren', '.', 'INBOX')
+	Mailbox: Example
+	('OK', [b'Example (MESSAGES 0 RECENT 0 UIDNEXT 2 UIDVALIDITY 145
+	7297771 UNSEEN 0)'])
+	Mailbox: Example.2016
+	('OK', [b'Example.2016 (MESSAGES 1 RECENT 0 UIDNEXT 3 UIDVALIDIT
+	Y 1457297772 UNSEEN 0)'])
+	Mailbox: Archive
+	('OK', [b'Archive (MESSAGES 0 RECENT 0 UIDNEXT 1 UIDVALIDITY 145
+	7297770 UNSEEN 0)'])
+	Mailbox: Deleted Messages
+	('OK', [b'"Deleted Messages" (MESSAGES 3 RECENT 0 UIDNEXT 4 UIDV
+	ALIDITY 1457297773 UNSEEN 0)'])
+	Mailbox: INBOX
+	('OK', [b'INBOX (MESSAGES 2 RECENT 0 UIDNEXT 6 UIDVALIDITY 14572
+	97769 UNSEEN 1)'])
 
 Selecting a Mailbox
 ===================
@@ -245,10 +270,10 @@ mailbox.
 
 ::
 
-    $ python imaplib_select.py
-
-    OK ['1']
-    There are 1 messages in INBOX
+	$ python3 imaplib_select.py
+	
+	OK [b'1']
+	There are 1 messages in INBOX
 
 If an invalid mailbox is specified, the response code is ``NO``.
 
@@ -260,10 +285,9 @@ The data contains an error message describing the problem.
 
 ::
 
-    $ python imaplib_select_invalid.py
-
-    NO ["Mailbox doesn't exist: Does Not Exist"]
-
+	$ python3 imaplib_select_invalid.py
+	
+	NO [b"Mailbox doesn't exist: Does-Not-Exist"]
 
 Searching for Messages
 ======================
@@ -282,15 +306,27 @@ identifiers for messages, but not all servers implement both.
 
 ::
 
-    $ python imaplib_search_all.py
+	$ python3 imaplib_search_all.py
+	
+	Response code: OK
+	Server response: b'(\\HasChildren) "." Example'
+	Parsed response: ('\\HasChildren', '.', 'Example')
+	Server response: b'(\\HasNoChildren) "." Example.2016'
+	Parsed response: ('\\HasNoChildren', '.', 'Example.2016')
+	Server response: b'(\\HasNoChildren) "." Archive'
+	Parsed response: ('\\HasNoChildren', '.', 'Archive')
+	Server response: b'(\\HasNoChildren) "." "Deleted Messages"'
+	Parsed response: ('\\HasNoChildren', '.', 'Deleted Messages')
+	Server response: b'(\\HasNoChildren) "." INBOX'
+	Parsed response: ('\\HasNoChildren', '.', 'INBOX')
+	Example OK [b'']
+	Example.2016 OK [b'1']
+	Archive OK [b'']
+	Deleted Messages OK [b'']
+	INBOX OK [b'1']
 
-    INBOX OK ['1']
-    Archive OK ['']
-    Archive.2008 OK ['1']
-
-In this case, ``INBOX`` and ``Archive.2008`` each have a different
-message with id ``1``.  The other mailboxes are empty.
-
+In this case, ``INBOX`` and ``Example.2016`` each have a different
+message with id ``1``. The other mailboxes are empty.
 
 Search Criteria
 ===============
@@ -299,12 +335,12 @@ A variety of other search criteria can be used, including looking at
 dates for the message, flags, and other headers.  Refer to section
 6.4.4. of RFC 3501 for complete details.
 
-To look for messages with ``'test message 2'`` in the subject, the
+To look for messages with ``'Example message 2'`` in the subject, the
 search criteria should be constructed as::
 
-  (SUBJECT "test message 2")
-  
-This example finds all messages with the title "test message 2" in all
+  (SUBJECT "Example message 2")
+
+This example finds all messages with the title "Example message 2" in all
 mailboxes:
 
 .. literalinclude:: imaplib_search_subject.py
@@ -316,11 +352,24 @@ There is only one such message in the account, and it is in the
 
 ::
 
-    $ python imaplib_search_subject.py
-
-    INBOX OK ['1']
-    Archive OK ['']
-    Archive.2008 OK ['']
+	$ python3 imaplib_search_subject.py
+	
+	Response code: OK
+	Server response: b'(\\HasChildren) "." Example'
+	Parsed response: ('\\HasChildren', '.', 'Example')
+	Server response: b'(\\HasNoChildren) "." Example.2016'
+	Parsed response: ('\\HasNoChildren', '.', 'Example.2016')
+	Server response: b'(\\HasNoChildren) "." Archive'
+	Parsed response: ('\\HasNoChildren', '.', 'Archive')
+	Server response: b'(\\HasNoChildren) "." "Deleted Messages"'
+	Parsed response: ('\\HasNoChildren', '.', 'Deleted Messages')
+	Server response: b'(\\HasNoChildren) "." INBOX'
+	Parsed response: ('\\HasNoChildren', '.', 'INBOX')
+	Example OK [b'']
+	Example.2016 OK [b'']
+	Archive OK [b'']
+	Deleted Messages OK [b'']
+	INBOX OK [b'1']
 
 Search criteria can also be combined.
 
@@ -332,12 +381,24 @@ The criteria are combined with a logical :command:`and` operation.
 
 ::
 
-    $ python imaplib_search_from.py
-
-    INBOX OK ['1']
-    Archive OK ['']
-    Archive.2008 OK ['']
-
+	$ python3 imaplib_search_from.py
+	
+	Response code: OK
+	Server response: b'(\\HasChildren) "." Example'
+	Parsed response: ('\\HasChildren', '.', 'Example')
+	Server response: b'(\\HasNoChildren) "." Example.2016'
+	Parsed response: ('\\HasNoChildren', '.', 'Example.2016')
+	Server response: b'(\\HasNoChildren) "." Archive'
+	Parsed response: ('\\HasNoChildren', '.', 'Archive')
+	Server response: b'(\\HasNoChildren) "." "Deleted Messages"'
+	Parsed response: ('\\HasNoChildren', '.', 'Deleted Messages')
+	Server response: b'(\\HasNoChildren) "." INBOX'
+	Parsed response: ('\\HasNoChildren', '.', 'INBOX')
+	Example OK [b'']
+	Example.2016 OK [b'']
+	Archive OK [b'']
+	Deleted Messages OK [b'']
+	INBOX OK [b'1']
 
 Fetching Messages
 =================
@@ -373,52 +434,138 @@ and server to understand why this is so.
 
 ::
 
-    $ python imaplib_fetch_raw.py
-    
-    13:12.54 imaplib version 2.58
-    13:12.54 new IMAP4 connection, tag=CFKH
-    13:12.54 < * OK dovecot ready.
-    13:12.54 > CFKH0 CAPABILITY
-    13:12.54 < * CAPABILITY IMAP4rev1 SORT THREAD=REFERENCES MULTIAPPEND
-     UNSELECT IDLE CHILDREN LISTEXT LIST-SUBSCRIBED NAMESPACE AUTH=PLAIN
-    13:12.54 < CFKH0 OK Capability completed.
-    13:12.54 CAPABILITIES: ('IMAP4REV1', 'SORT', 'THREAD=REFERENCES', 'M
-    ULTIAPPEND', 'UNSELECT', 'IDLE', 'CHILDREN', 'LISTEXT', 'LIST-SUBSCR
-    IBED', 'NAMESPACE', 'AUTH=PLAIN')
-    13:12.54 > CFKH1 LOGIN example "password"
-    13:13.18 < CFKH1 OK Logged in.
-    13:13.18 > CFKH2 EXAMINE INBOX
-    13:13.20 < * FLAGS (\Answered \Flagged \Deleted \Seen \Draft $NotJun
-    k $Junk)
-    13:13.20 < * OK [PERMANENTFLAGS ()] Read-only mailbox.
-    13:13.20 < * 2 EXISTS
-    13:13.20 < * 1 RECENT
-    13:13.20 < * OK [UNSEEN 1] First unseen.
-    13:13.20 < * OK [UIDVALIDITY 1222003700] UIDs valid
-    13:13.20 < * OK [UIDNEXT 4] Predicted next UID
-    13:13.20 < CFKH2 OK [READ-ONLY] Select completed.
-    13:13.20 > CFKH3 FETCH 1 (BODY.PEEK[HEADER] FLAGS)
-    13:13.20 < * 1 FETCH (FLAGS ($NotJunk) BODY[HEADER] {595}
-    13:13.20 read literal size 595
-    13:13.20 < )
-    13:13.20 < CFKH3 OK Fetch completed.
-    13:13.20 > CFKH4 CLOSE
-    13:13.21 < CFKH4 OK Close completed.
-    13:13.21 > CFKH5 LOGOUT
-    13:13.21 < * BYE Logging out
-    13:13.21 BYE response: Logging out
-    13:13.21 < CFKH5 OK Logout completed.
-    '1 (FLAGS ($NotJunk) BODY[HEADER] {595}',
-    'Return-Path: <dhellmann@example.com>\r\nReceived: from example.com 
-    (localhost [127.0.0.1])\r\n\tby example.com (8.13.4/8.13.4) with ESM
-    TP id m8LDTGW4018260\r\n\tfor <example@example.com>; Sun, 21 Sep 200
-    8 09:29:16 -0400\r\nReceived: (from dhellmann@localhost)\r\n\tby exa
-    mple.com (8.13.4/8.13.4/Submit) id m8LDTGZ5018259\r\n\tfor example@e
-    xample.com; Sun, 21 Sep 2008 09:29:16 -0400\r\nDate: Sun, 21 Sep 200
-    8 09:29:16 -0400\r\nFrom: Doug Hellmann <dhellmann@example.com>\r\nM
-    essage-Id: <200809211329.m8LDTGZ5018259@example.com>\r\nTo: example@
-    example.com\r\nSubject: test message 2\r\n\r\n'),
-    )']
+	$ python3 imaplib_fetch_raw.py
+	
+	  19:40.68 imaplib version 2.58
+	  19:40.68 new IMAP4 connection, tag=b'IIEN'
+	  19:40.70 < b'* OK [CAPABILITY IMAP4rev1 LITERAL+ SASL-IR LOGIN
+	-REFERRALS ID ENABLE IDLE AUTH=PLAIN] Dovecot (Ubuntu) ready.'
+	  19:40.70 > b'IIEN0 CAPABILITY'
+	  19:40.73 < b'* CAPABILITY IMAP4rev1 LITERAL+ SASL-IR LOGIN-REF
+	ERRALS ID ENABLE IDLE AUTH=PLAIN'
+	  19:40.73 < b'IIEN0 OK Pre-login capabilities listed, post-logi
+	n capabilities have more.'
+	  19:40.73 CAPABILITIES: ('IMAP4REV1', 'LITERAL+', 'SASL-IR', 'L
+	OGIN-REFERRALS', 'ID', 'ENABLE', 'IDLE', 'AUTH=PLAIN')
+	  19:40.73 > b'IIEN1 LOGIN example "TMFw00fpymotw"'
+	  19:40.79 < b'* CAPABILITY IMAP4rev1 LITERAL+ SASL-IR LOGIN-REF
+	ERRALS ID ENABLE IDLE SORT SORT=DISPLAY THREAD=REFERENCES THREAD
+	=REFS THREAD=ORDEREDSUBJECT MULTIAPPEND URL-PARTIAL CATENATE UNS
+	ELECT CHILDREN NAMESPACE UIDPLUS LIST-EXTENDED I18NLEVEL=1 CONDS
+	TORE QRESYNC ESEARCH ESORT SEARCHRES WITHIN CONTEXT=SEARCH LIST-
+	STATUS SPECIAL-USE BINARY MOVE'
+	  19:40.79 < b'IIEN1 OK Logged in'
+	  19:40.79 > b'IIEN2 EXAMINE INBOX'
+	  19:40.82 < b'* FLAGS (\\Answered \\Flagged \\Deleted \\Seen \\
+	Draft)'
+	  19:40.82 < b'* OK [PERMANENTFLAGS ()] Read-only mailbox.'
+	  19:40.82 < b'* 2 EXISTS'
+	  19:40.82 < b'* 0 RECENT'
+	  19:40.82 < b'* OK [UNSEEN 1] First unseen.'
+	  19:40.82 < b'* OK [UIDVALIDITY 1457297769] UIDs valid'
+	  19:40.82 < b'* OK [UIDNEXT 6] Predicted next UID'
+	  19:40.82 < b'* OK [HIGHESTMODSEQ 20] Highest'
+	  19:40.82 < b'IIEN2 OK [READ-ONLY] Examine completed (0.000 sec
+	s).'
+	  19:40.82 > b'IIEN3 FETCH 1 (BODY.PEEK[HEADER] FLAGS)'
+	  19:40.86 < b'* 1 FETCH (FLAGS () BODY[HEADER] {3108}'
+	  19:40.86 read literal size 3108
+	  19:40.86 < b')'
+	  19:40.89 < b'IIEN3 OK Fetch completed.'
+	  19:40.89 > b'IIEN4 LOGOUT'
+	  19:40.93 < b'* BYE Logging out'
+	  19:40.93 BYE response: b'Logging out'
+	[(b'1 (FLAGS () BODY[HEADER] {3108}',
+	  b'Return-Path: <doug@doughellmann.com>\r\nReceived: from compu
+	te4.internal ('
+	  b'compute4.nyi.internal [10.202.2.44])\r\n\t by sloti26t01 (Cy
+	rus 3.0.0-beta1'
+	  b'-git-fastmail-12410) with LMTPA;\r\n\t Sun, 06 Mar 2016 16:1
+	6:03 -0500\r'
+	  b'\nX-Sieve: CMU Sieve 2.4\r\nX-Spam-known-sender: yes, fadd1c
+	f2-dc3a-4984-a0'
+	  b'8b-02cef3cf1221="doug",\r\n  ea349ad0-9299-47b5-b632-6ff1e39
+	4cc7d="both he'
+	  b'llfly"\r\nX-Spam-score: 0.0\r\nX-Spam-hits: ALL_TRUSTED -1, 
+	BAYES_00 -1.'
+	  b'9, LANGUAGES unknown, BAYES_USED global,\r\n  SA_VERSION 3.3
+	.2\r\nX-Spam'
+	  b"-source: IP='127.0.0.1', Host='unk', Country='unk', FromHead
+	er='com',\r\n "
+	  b" MailFrom='com'\r\nX-Spam-charsets: plain='us-ascii'\r\nX-Re
+	solved-to: d"
+	  b'oughellmann@fastmail.fm\r\nX-Delivered-to: doug@doughellmann
+	.com\r\nX-Ma'
+	  b'il-from: doug@doughellmann.com\r\nReceived: from mx5 ([10.20
+	2.2.204])\r'
+	  b'\n  by compute4.internal (LMTPProxy); Sun, 06 Mar 2016 16:16
+	:03 -0500\r\nRe'
+	  b'ceived: from mx5.nyi.internal (localhost [127.0.0.1])\r\n\tb
+	y mx5.nyi.inter'
+	  b'nal (Postfix) with ESMTP id 47CBA280DB3\r\n\tfor <doug@dough
+	ellmann.com>; S'
+	  b'un,  6 Mar 2016 16:16:03 -0500 (EST)\r\nReceived: from mx5.n
+	yi.internal (l'
+	  b'ocalhost [127.0.0.1])\r\n    by mx5.nyi.internal (Authentica
+	tion Milter) w'
+	  b'ith ESMTP\r\n    id A717886846E.30BA4280D81;\r\n    Sun, 6 M
+	ar 2016 16:1'
+	  b'6:03 -0500\r\nAuthentication-Results: mx5.nyi.internal;\r\n 
+	   dkim=pass'
+	  b' (1024-bit rsa key) header.d=messagingengine.com header.i=@m
+	essagingengi'
+	  b'ne.com header.b=Jrsm+pCo;\r\n    x-local-ip=pass\r\nReceived
+	: from mailo'
+	  b'ut.nyi.internal (gateway1.nyi.internal [10.202.2.221])\r\n\t
+	(using TLSv1.2 '
+	  b'with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))\r\n\
+	t(No client cer'
+	  b'tificate requested)\r\n\tby mx5.nyi.internal (Postfix) with 
+	ESMTPS id 30BA4'
+	  b'280D81\r\n\tfor <doug@doughellmann.com>; Sun,  6 Mar 2016 16
+	:16:03 -0500 (E'
+	  b'ST)\r\nReceived: from compute2.internal (compute2.nyi.intern
+	al [10.202.2.4'
+	  b'2])\r\n\tby mailout.nyi.internal (Postfix) with ESMTP id 174
+	0420D0A\r\n\tf'
+	  b'or <doug@doughellmann.com>; Sun,  6 Mar 2016 16:16:03 -0500 
+	(EST)\r\nRecei'
+	  b'ved: from frontend2 ([10.202.2.161])\r\n  by compute2.intern
+	al (MEProxy); '
+	  b'Sun, 06 Mar 2016 16:16:03 -0500\r\nDKIM-Signature: v=1; a=rs
+	a-sha1; c=rela'
+	  b'xed/relaxed; d=\r\n\tmessagingengine.com; h=content-transfer
+	-encoding:conte'
+	  b'nt-type\r\n\t:date:from:message-id:mime-version:subject:to:x
+	-sasl-enc\r\n'
+	  b'\t:x-sasl-enc; s=smtpout; bh=P98NTsEo015suwJ4gk71knAWLa4=; b
+	=Jrsm+\r\n\t'
+	  b'pCovRIoQIRyp8Fl0L6JHOI8sbZy2obx7O28JF2iTlTWmX33Rhlq9403XRklw
+	N3JA\r\n\t7KSPq'
+	  b'MTp30Qdx6yIUaADwQqlO+QMuQq/QxBHdjeebmdhgVfjhqxrzTbSMww/ZNhL\
+	r\n\tYwv/QM/oDH'
+	  b'bXiLSUlB3Qrg+9wsE/0jU/EOisiU=\r\nX-Sasl-enc: 8ZJ+4ZRE8AGPzdL
+	RWQFivGymJb8pa'
+	  b'4G9JGcb7k4xKn+I 1457298962\r\nReceived: from [192.168.1.14] 
+	(75-137-1-34.d'
+	  b'hcp.nwnn.ga.charter.com [75.137.1.34])\r\n\tby mail.messagin
+	gengine.com (Po'
+	  b'stfix) with ESMTPA id C0B366801CD\r\n\tfor <doug@doughellman
+	n.com>; Sun,  6'
+	  b' Mar 2016 16:16:02 -0500 (EST)\r\nFrom: Doug Hellmann <doug@
+	doughellmann.c'
+	  b'om>\r\nContent-Type: text/plain; charset=us-ascii\r\nContent
+	-Transfer-En'
+	  b'coding: 7bit\r\nSubject: PyMOTW Example message 2\r\nMessage
+	-Id: <00ABCD'
+	  b'46-DADA-4912-A451-D27165BC3A2F@doughellmann.com>\r\nDate: Su
+	n, 6 Mar 2016 '
+	  b'16:16:02 -0500\r\nTo: Doug Hellmann <doug@doughellmann.com>\
+	r\nMime-Vers'
+	  b'ion: 1.0 (Mac OS X Mail 9.2 \\(3112\\))\r\nX-Mailer: Apple M
+	ail (2.3112)'
+	  b'\r\n\r\n'),
+	 b')']
 
 The response from the ``FETCH`` command starts with the flags, then
 indicates that there are 595 bytes of header data.  The client
@@ -438,31 +585,67 @@ use :func:`ParseFlags()` to parse the flags from the response.
 
 ::
 
-    $ python imaplib_fetch_separately.py
-
-    HEADER:
-    Return-Path: <dhellmann@example.com>
-    Received: from example.com (localhost [127.0.0.1])
-        by example.com (8.13.4/8.13.4) with ESMTP id m8LDTGW4018260
-        for <example@example.com>; Sun, 21 Sep 2008 09:29:16 -0400
-    Received: (from dhellmann@localhost)
-        by example.com (8.13.4/8.13.4/Submit) id m8LDTGZ5018259
-        for example@example.com; Sun, 21 Sep 2008 09:29:16 -0400
-    Date: Sun, 21 Sep 2008 09:29:16 -0400
-    From: Doug Hellmann <dhellmann@example.com>
-    Message-Id: <200809211329.m8LDTGZ5018259@example.com>
-    To: example@example.com
-    Subject: test message 2
-    
-    
-    BODY TEXT:
-    second message
-
-
-    FLAGS:
-    1 (FLAGS ($NotJunk))
-    ('$NotJunk',)
-
+	$ python3 imaplib_fetch_separately.py
+	
+	HEADER:
+	b'Return-Path: <doug@doughellmann.com>\r\nReceived: from compute
+	4.internal (compute4.nyi.internal [10.202.2.44])\r\n\t by sloti2
+	6t01 (Cyrus 3.0.0-beta1-git-fastmail-12410) with LMTPA;\r\n\t Su
+	n, 06 Mar 2016 16:16:03 -0500\r\nX-Sieve: CMU Sieve 2.4\r\nX-Spa
+	m-known-sender: yes, fadd1cf2-dc3a-4984-a08b-02cef3cf1221="doug"
+	,\r\n  ea349ad0-9299-47b5-b632-6ff1e394cc7d="both hellfly"\r\nX-
+	Spam-score: 0.0\r\nX-Spam-hits: ALL_TRUSTED -1, BAYES_00 -1.9, L
+	ANGUAGES unknown, BAYES_USED global,\r\n  SA_VERSION 3.3.2\r\nX-
+	Spam-source: IP=\'127.0.0.1\', Host=\'unk\', Country=\'unk\', Fr
+	omHeader=\'com\',\r\n  MailFrom=\'com\'\r\nX-Spam-charsets: plai
+	n=\'us-ascii\'\r\nX-Resolved-to: doughellmann@fastmail.fm\r\nX-D
+	elivered-to: doug@doughellmann.com\r\nX-Mail-from: doug@doughell
+	mann.com\r\nReceived: from mx5 ([10.202.2.204])\r\n  by compute4
+	.internal (LMTPProxy); Sun, 06 Mar 2016 16:16:03 -0500\r\nReceiv
+	ed: from mx5.nyi.internal (localhost [127.0.0.1])\r\n\tby mx5.ny
+	i.internal (Postfix) with ESMTP id 47CBA280DB3\r\n\tfor <doug@do
+	ughellmann.com>; Sun,  6 Mar 2016 16:16:03 -0500 (EST)\r\nReceiv
+	ed: from mx5.nyi.internal (localhost [127.0.0.1])\r\n    by mx5.
+	nyi.internal (Authentication Milter) with ESMTP\r\n    id A71788
+	6846E.30BA4280D81;\r\n    Sun, 6 Mar 2016 16:16:03 -0500\r\nAuth
+	entication-Results: mx5.nyi.internal;\r\n    dkim=pass (1024-bit
+	 rsa key) header.d=messagingengine.com header.i=@messagingengine
+	.com header.b=Jrsm+pCo;\r\n    x-local-ip=pass\r\nReceived: from
+	 mailout.nyi.internal (gateway1.nyi.internal [10.202.2.221])\r\n
+	\t(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/25
+	6 bits))\r\n\t(No client certificate requested)\r\n\tby mx5.nyi.
+	internal (Postfix) with ESMTPS id 30BA4280D81\r\n\tfor <doug@dou
+	ghellmann.com>; Sun,  6 Mar 2016 16:16:03 -0500 (EST)\r\nReceive
+	d: from compute2.internal (compute2.nyi.internal [10.202.2.42])\
+	r\n\tby mailout.nyi.internal (Postfix) with ESMTP id 1740420D0A\
+	r\n\tfor <doug@doughellmann.com>; Sun,  6 Mar 2016 16:16:03 -050
+	0 (EST)\r\nReceived: from frontend2 ([10.202.2.161])\r\n  by com
+	pute2.internal (MEProxy); Sun, 06 Mar 2016 16:16:03 -0500\r\nDKI
+	M-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=\r\n\tmessagi
+	ngengine.com; h=content-transfer-encoding:content-type\r\n\t:dat
+	e:from:message-id:mime-version:subject:to:x-sasl-enc\r\n\t:x-sas
+	l-enc; s=smtpout; bh=P98NTsEo015suwJ4gk71knAWLa4=; b=Jrsm+\r\n\t
+	pCovRIoQIRyp8Fl0L6JHOI8sbZy2obx7O28JF2iTlTWmX33Rhlq9403XRklwN3JA
+	\r\n\t7KSPqMTp30Qdx6yIUaADwQqlO+QMuQq/QxBHdjeebmdhgVfjhqxrzTbSMw
+	w/ZNhL\r\n\tYwv/QM/oDHbXiLSUlB3Qrg+9wsE/0jU/EOisiU=\r\nX-Sasl-en
+	c: 8ZJ+4ZRE8AGPzdLRWQFivGymJb8pa4G9JGcb7k4xKn+I 1457298962\r\nRe
+	ceived: from [192.168.1.14] (75-137-1-34.dhcp.nwnn.ga.charter.co
+	m [75.137.1.34])\r\n\tby mail.messagingengine.com (Postfix) with
+	 ESMTPA id C0B366801CD\r\n\tfor <doug@doughellmann.com>; Sun,  6
+	 Mar 2016 16:16:02 -0500 (EST)\r\nFrom: Doug Hellmann <doug@doug
+	hellmann.com>\r\nContent-Type: text/plain; charset=us-ascii\r\nC
+	ontent-Transfer-Encoding: 7bit\r\nSubject: PyMOTW Example messag
+	e 2\r\nMessage-Id: <00ABCD46-DADA-4912-A451-D27165BC3A2F@doughel
+	lmann.com>\r\nDate: Sun, 6 Mar 2016 16:16:02 -0500\r\nTo: Doug H
+	ellmann <doug@doughellmann.com>\r\nMime-Version: 1.0 (Mac OS X M
+	ail 9.2 \\(3112\\))\r\nX-Mailer: Apple Mail (2.3112)\r\n\r\n'
+	
+	BODY TEXT:
+	b'This is the second example message.\r\n'
+	
+	FLAGS:
+	b'1 (FLAGS ())'
+	()
 
 Whole Messages
 ==============
@@ -482,12 +665,11 @@ for each message.
 
 ::
 
-    $ python imaplib_fetch_rfc822.py
-
-    SUBJECT : test message 2
-    TO      : example@example.com
-    FROM    : Doug Hellmann <dhellmann@example.com>
-
+	$ python3 imaplib_fetch_rfc822.py
+	
+	SUBJECT : PyMOTW Example message 2
+	   TO   : Doug Hellmann <doug@doughellmann.com>
+	  FROM  : Doug Hellmann <doug@doughellmann.com>
 
 Uploading Messages
 ==================
@@ -504,51 +686,72 @@ The *payload* used in this example is a simple plaintext email body.
 :class:`Message` also supports MIME-encoded multi-part messages.
 
 ::
-    
-    pymotw
-    Subject: subject goes here
-    From: pymotw@example.com
-    To: example@example.com
-    
-    This is the body of the message.
-    
-    
-    1:
-    Return-Path: <dhellmann@example.com>
-    Received: from example.com (localhost [127.0.0.1])
-        by example.com (8.13.4/8.13.4) with ESMTP id m8LDTGW4018260
-        for <example@example.com>; Sun, 21 Sep 2008 09:29:16 -0400
-    Received: (from dhellmann@localhost)
-        by example.com (8.13.4/8.13.4/Submit) id m8LDTGZ5018259
-        for example@example.com; Sun, 21 Sep 2008 09:29:16 -0400
-    Date: Sun, 21 Sep 2008 09:29:16 -0400
-    From: Doug Hellmann <dhellmann@example.com>
-    Message-Id: <200809211329.m8LDTGZ5018259@example.com>
-    To: example@example.com
-    Subject: test message 2
-    
-    
-    
-    2:
-    Return-Path: <doug.hellmann@example.com>
-    Message-Id: <0D9C3C50-462A-4FD7-9E5A-11EE222D721D@example.com>
-    From: Doug Hellmann <doug.hellmann@example.com>
-    To: example@example.com
-    Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-    Content-Transfer-Encoding: 7bit
-    Mime-Version: 1.0 (Apple Message framework v929.2)
-    Subject: lorem ipsum
-    Date: Sun, 21 Sep 2008 12:53:16 -0400
-    X-Mailer: Apple Mail (2.929.2)
-    
-    
-    
-    3:
-    pymotw
-    Subject: subject goes here
-    From: pymotw@example.com
-    To: example@example.com
 
+	$ python3 imaplib_append.py
+	
+	Subject: subject goes here
+	From: pymotw@example.com
+	To: example@example.com
+	
+	This is the body of the message.
+	
+	
+	b'1':
+	b'Return-Path: <doug@doughellmann.com>\r\nReceived: from compute
+	4.internal (compute4.nyi.internal [10.202.2.44])\r\n\t by sloti2
+	6t01 (Cyrus 3.0.0-beta1-git-fastmail-12410) with LMTPA;\r\n\t Su
+	n, 06 Mar 2016 16:16:03 -0500\r\nX-Sieve: CMU Sieve 2.4\r\nX-Spa
+	m-known-sender: yes, fadd1cf2-dc3a-4984-a08b-02cef3cf1221="doug"
+	,\r\n  ea349ad0-9299-47b5-b632-6ff1e394cc7d="both hellfly"\r\nX-
+	Spam-score: 0.0\r\nX-Spam-hits: ALL_TRUSTED -1, BAYES_00 -1.9, L
+	ANGUAGES unknown, BAYES_USED global,\r\n  SA_VERSION 3.3.2\r\nX-
+	Spam-source: IP=\'127.0.0.1\', Host=\'unk\', Country=\'unk\', Fr
+	omHeader=\'com\',\r\n  MailFrom=\'com\'\r\nX-Spam-charsets: plai
+	n=\'us-ascii\'\r\nX-Resolved-to: doughellmann@fastmail.fm\r\nX-D
+	elivered-to: doug@doughellmann.com\r\nX-Mail-from: doug@doughell
+	mann.com\r\nReceived: from mx5 ([10.202.2.204])\r\n  by compute4
+	.internal (LMTPProxy); Sun, 06 Mar 2016 16:16:03 -0500\r\nReceiv
+	ed: from mx5.nyi.internal (localhost [127.0.0.1])\r\n\tby mx5.ny
+	i.internal (Postfix) with ESMTP id 47CBA280DB3\r\n\tfor <doug@do
+	ughellmann.com>; Sun,  6 Mar 2016 16:16:03 -0500 (EST)\r\nReceiv
+	ed: from mx5.nyi.internal (localhost [127.0.0.1])\r\n    by mx5.
+	nyi.internal (Authentication Milter) with ESMTP\r\n    id A71788
+	6846E.30BA4280D81;\r\n    Sun, 6 Mar 2016 16:16:03 -0500\r\nAuth
+	entication-Results: mx5.nyi.internal;\r\n    dkim=pass (1024-bit
+	 rsa key) header.d=messagingengine.com header.i=@messagingengine
+	.com header.b=Jrsm+pCo;\r\n    x-local-ip=pass\r\nReceived: from
+	 mailout.nyi.internal (gateway1.nyi.internal [10.202.2.221])\r\n
+	\t(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/25
+	6 bits))\r\n\t(No client certificate requested)\r\n\tby mx5.nyi.
+	internal (Postfix) with ESMTPS id 30BA4280D81\r\n\tfor <doug@dou
+	ghellmann.com>; Sun,  6 Mar 2016 16:16:03 -0500 (EST)\r\nReceive
+	d: from compute2.internal (compute2.nyi.internal [10.202.2.42])\
+	r\n\tby mailout.nyi.internal (Postfix) with ESMTP id 1740420D0A\
+	r\n\tfor <doug@doughellmann.com>; Sun,  6 Mar 2016 16:16:03 -050
+	0 (EST)\r\nReceived: from frontend2 ([10.202.2.161])\r\n  by com
+	pute2.internal (MEProxy); Sun, 06 Mar 2016 16:16:03 -0500\r\nDKI
+	M-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=\r\n\tmessagi
+	ngengine.com; h=content-transfer-encoding:content-type\r\n\t:dat
+	e:from:message-id:mime-version:subject:to:x-sasl-enc\r\n\t:x-sas
+	l-enc; s=smtpout; bh=P98NTsEo015suwJ4gk71knAWLa4=; b=Jrsm+\r\n\t
+	pCovRIoQIRyp8Fl0L6JHOI8sbZy2obx7O28JF2iTlTWmX33Rhlq9403XRklwN3JA
+	\r\n\t7KSPqMTp30Qdx6yIUaADwQqlO+QMuQq/QxBHdjeebmdhgVfjhqxrzTbSMw
+	w/ZNhL\r\n\tYwv/QM/oDHbXiLSUlB3Qrg+9wsE/0jU/EOisiU=\r\nX-Sasl-en
+	c: 8ZJ+4ZRE8AGPzdLRWQFivGymJb8pa4G9JGcb7k4xKn+I 1457298962\r\nRe
+	ceived: from [192.168.1.14] (75-137-1-34.dhcp.nwnn.ga.charter.co
+	m [75.137.1.34])\r\n\tby mail.messagingengine.com (Postfix) with
+	 ESMTPA id C0B366801CD\r\n\tfor <doug@doughellmann.com>; Sun,  6
+	 Mar 2016 16:16:02 -0500 (EST)\r\nFrom: Doug Hellmann <doug@doug
+	hellmann.com>\r\nContent-Type: text/plain; charset=us-ascii\r\nC
+	ontent-Transfer-Encoding: 7bit\r\nSubject: PyMOTW Example messag
+	e 2\r\nMessage-Id: <00ABCD46-DADA-4912-A451-D27165BC3A2F@doughel
+	lmann.com>\r\nDate: Sun, 6 Mar 2016 16:16:02 -0500\r\nTo: Doug H
+	ellmann <doug@doughellmann.com>\r\nMime-Version: 1.0 (Mac OS X M
+	ail 9.2 \\(3112\\))\r\nX-Mailer: Apple Mail (2.3112)\r\n\r\n'
+	
+	b'2':
+	b'Subject: subject goes here\r\nFrom: pymotw@example.com\r\nTo: 
+	example@example.com\r\n\r\n'
 
 Moving and Copying Messages
 ===========================
@@ -561,16 +764,17 @@ operate on message id ranges, just as :meth:`fetch()` does.
    :caption:
    :start-after: #end_pymotw_header
 
-This example script creates a new mailbox under ``Archive`` and copies
+This example script creates a new mailbox under ``Example`` and copies
 the read messages from ``INBOX`` into it.
 
 ::
 
-    $ python imaplib_archive_read.py
-
-    CREATED Archive.Today: ['Create completed.']
-    COPYING: 1,2
-    COPIED: 1 2
+	$ python3 imaplib_archive_read.py
+	
+	CREATED Example.Today: [b'[ALREADYEXISTS] Mailbox already exists
+	']
+	COPYING: 2
+	COPIED: b'1'
 
 Running the same script again shows the importance to checking return
 codes.  Instead of raising an exception, the call to :meth:`create()`
@@ -578,12 +782,12 @@ to make the new mailbox reports that the mailbox already exists.
 
 ::
 
-    $ python imaplib_archive_read.py
-
-    CREATED Archive.Today: ['Mailbox exists.']
-    COPYING: 1,2
-    COPIED: 1 2 3 4
-
+	$ python3 imaplib_archive_read.py
+	
+	CREATED Example.Today: [b'[ALREADYEXISTS] Mailbox already exists
+	']
+	COPYING: 2
+	COPIED: b'1 2'
 
 Deleting Messages
 =================
@@ -607,18 +811,28 @@ not notified about the deletions when :meth:`close()` is called.
 
 ::
 
-    $ python imaplib_delete_messages.py
-
-    Starting messages: 1 2 3 4
-    Matching messages: 1,3
-    Flags before: ['1 (FLAGS (\\Seen $NotJunk))', '3 (FLAGS (\\Seen 
-    \\Recent $NotJunk))']
-    Flags after: ['1 (FLAGS (\\Deleted \\Seen $NotJunk))', 
-    '3 (FLAGS (\\Deleted \\Seen \\Recent $NotJunk))']
-    Expunged: ['1', '2']
-    Remaining messages: 1 2
-
-
+	$ python3 imaplib_delete_messages.py
+	
+	Response code: OK
+	Server response: b'(\\HasChildren) "." Example'
+	Parsed response: ('\\HasChildren', '.', 'Example')
+	Server response: b'(\\HasNoChildren) "." Example.Today'
+	Parsed response: ('\\HasNoChildren', '.', 'Example.Today')
+	Server response: b'(\\HasNoChildren) "." Example.2016'
+	Parsed response: ('\\HasNoChildren', '.', 'Example.2016')
+	Server response: b'(\\HasNoChildren) "." Archive'
+	Parsed response: ('\\HasNoChildren', '.', 'Archive')
+	Server response: b'(\\HasNoChildren) "." "Deleted Messages"'
+	Parsed response: ('\\HasNoChildren', '.', 'Deleted Messages')
+	Server response: b'(\\HasNoChildren) "." INBOX'
+	Parsed response: ('\\HasNoChildren', '.', 'INBOX')
+	Starting messages: b'1 2'
+	Matching messages: 1,2
+	Flags before: [b'1 (FLAGS (\\Seen))', b'2 (FLAGS (\\Seen))']
+	Flags after: [b'1 (FLAGS (\\Deleted \\Seen))', b'2 (FLAGS (\\Del
+	eted \\Seen))']
+	Expunged: [b'2', b'1']
+	Remaining messages: b''
 
 .. seealso::
 

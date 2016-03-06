@@ -18,7 +18,7 @@ list_response_pattern = re.compile(
 
 
 def parse_list_response(line):
-    match = list_response_pattern.match(line)
+    match = list_response_pattern.match(line.decode('utf-8'))
     flags, delimiter, mailbox_name = match.groups()
     mailbox_name = mailbox_name.strip('"')
     return (flags, delimiter, mailbox_name)

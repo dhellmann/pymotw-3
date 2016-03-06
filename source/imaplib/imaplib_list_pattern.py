@@ -12,7 +12,7 @@ import imaplib
 from imaplib_connect import open_connection
 
 with open_connection() as c:
-    typ, data = c.list(pattern='*Archive*')
+    typ, data = c.list(pattern='*Example*')
 
 print('Response code:', typ)
 

@@ -24,7 +24,7 @@ print(new_message)
 with imaplib_connect.open_connection() as c:
     c.append('INBOX', '',
              imaplib.Time2Internaldate(time.time()),
-             str(new_message))
+             str(new_message).encode('utf-8'))
 
     # Show the headers for all messages in the mailbox
     c.select('INBOX')

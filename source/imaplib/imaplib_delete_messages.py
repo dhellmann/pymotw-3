@@ -12,15 +12,18 @@ import imaplib_connect
 from imaplib_list_parse import parse_list_response
 
 with imaplib_connect.open_connection() as c:
-    c.select('Archive.Today')
+    c.select('Example.Today')
 
     # What ids are in the mailbox?
     typ, [msg_ids] = c.search(None, 'ALL')
     print('Starting messages:', msg_ids)
 
     # Find the message(s)
-    typ, [msg_ids] = c.search(None, '(SUBJECT "Lorem ipsum")')
-    msg_ids = ','.join(msg_ids.split(' '))
+    typ, [msg_ids] = c.search(
+        None,
+        '(SUBJECT "subject goes here")',
+    )
+    msg_ids = ','.join(msg_ids.decode('utf-8').split(' '))
     print('Matching messages:', msg_ids)
 
     # What are the current flags?

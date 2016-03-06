@@ -20,7 +20,7 @@ with imaplib_connect.open_connection() as c:
         if isinstance(response_part, tuple):
             print(response_part[1])
 
-    print('BODY TEXT:')
+    print('\nBODY TEXT:')
     typ, msg_data = c.fetch('1', '(BODY.PEEK[TEXT])')
     for response_part in msg_data:
         if isinstance(response_part, tuple):

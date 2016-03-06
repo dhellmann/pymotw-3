@@ -9,7 +9,12 @@
 
 import imaplib
 import email
+import email.parser
+
 import imaplib_connect
+
+
+email_parser = email.parser.BytesFeedParser()
 
 with imaplib_connect.open_connection() as c:
     c.select('INBOX', readonly=True)
@@ -17,7 +22,8 @@ with imaplib_connect.open_connection() as c:
     typ, msg_data = c.fetch('1', '(RFC822)')
     for response_part in msg_data:
         if isinstance(response_part, tuple):
-            msg = email.message_from_string(response_part[1])
+            email_parser.feed(response_part[1])
+            msg = email_parser.close()
             for header in ['subject', 'to', 'from']:
                 print('{:^8}: {}'.format(
                     header.upper(), msg[header]))

@@ -16,17 +16,17 @@ with imaplib_connect.open_connection() as c:
     typ, [response] = c.search(None, 'SEEN')
     if typ != 'OK':
         raise RuntimeError(response)
+    msg_ids = ','.join(response.decode('utf-8').split(' '))
 
     # Create a new mailbox, "Archive.Today"
-    msg_ids = ','.join(response.split(' '))
-    typ, create_response = c.create('Archive.Today')
-    print('CREATED Archive.Today:', create_response)
+    typ, create_response = c.create('Example.Today')
+    print('CREATED Example.Today:', create_response)
 
     # Copy the messages
     print('COPYING:', msg_ids)
-    c.copy(msg_ids, 'Archive.Today')
+    c.copy(msg_ids, 'Example.Today')
 
     # Look at the results
-    c.select('Archive.Today')
+    c.select('Example.Today')
     typ, [response] = c.search(None, 'ALL')
     print('COPIED:', response)
