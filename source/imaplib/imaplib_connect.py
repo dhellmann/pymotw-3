@@ -8,13 +8,13 @@
 #end_pymotw_header
 
 import imaplib
-import ConfigParser
+import configparser
 import os
 
 
 def open_connection(verbose=False):
     # Read the config file
-    config = ConfigParser.ConfigParser()
+    config = configparser.ConfigParser()
     config.read([os.path.expanduser('~/.pymotw')])
 
     # Connect to the server
