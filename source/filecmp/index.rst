@@ -16,9 +16,9 @@ Example Data
 The examples in this discussion use a set of test files created by
 ``filecmp_mkexamples.py``.
 
-.. include:: filecmp_mkexamples.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: filecmp_mkexamples.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 .. We don't care about the output of the script that creates the
 .. example files, so run it, but don't include the output.
@@ -30,8 +30,8 @@ The examples in this discussion use a set of test files created by
 .. }}}
 .. {{{end}}}
 
-Running ``filecmp_mkexamples.py`` produces a tree of files under the
-directory ``example``:
+Running the script produces a tree of files under the directory
+``example``:
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'find example', interpreter=None))
@@ -95,10 +95,9 @@ Comparing Files
 
 :func:`cmp` compares two files on the file system.
 
-.. include:: filecmp_cmp.py
-    :literal:
-    :start-after: #end_pymotw_header
-
+.. literalinclude:: filecmp_cmp.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The *shallow* argument tells :func:`cmp` whether to look at the
 contents of the file, in addition to its metadata. The default is to
@@ -129,9 +128,9 @@ mismatch) and the files must be present in both locations. The next
 example shows a simple way to build the common list. The comparison
 also takes the *shallow* flag, just as with :func:`cmp`.
 
-.. include:: filecmp_cmpfiles.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: filecmp_cmpfiles.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 :func:`cmpfiles` returns three lists of filenames containing files
 that match, files that do not match, and files that could not be
@@ -162,9 +161,9 @@ for more complete analysis, the :class:`dircmp` class is more
 useful. In its simplest use case, :func:`report` prints a report
 comparing two directories.
 
-.. include:: filecmp_dircmp_report.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: filecmp_dircmp_report.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The output is a plain-text report showing the results of just the
 contents of the directories given, without recursing. In this case,
@@ -192,14 +191,14 @@ the contents of files like :func:`cmp` does.
 For more detail, and a recursive comparison, use
 :func:`report_full_closure`:
 
-.. include:: filecmp_dircmp_report_full_closure.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: filecmp_dircmp_report_full_closure.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The output includes comparisons of all parallel subdirectories.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'filecmp_dircmp_report_full_closure.py', break_lines_at=69))
+.. cog.out(run_script(cog.inFile, 'filecmp_dircmp_report_full_closure.py', line_break_mode='wrap'))
 .. }}}
 
 ::
@@ -217,30 +216,30 @@ The output includes comparisons of all parallel subdirectories.
 	Common subdirectories : ['dir1', 'dir2']
 	
 	diff example/dir1/common_dir/dir1 example/dir2/common_dir/dir1
-	Identical files : ['common_file', 'file_in_dir1', 'file_only_in_dir1'
-	, 'not_the_same']
+	Identical files : ['common_file', 'file_in_dir1',
+	'file_only_in_dir1', 'not_the_same']
 	Common subdirectories : ['common_dir', 'dir_only_in_dir1']
 	
-	diff example/dir1/common_dir/dir1/dir_only_in_dir1 example/dir2/commo
-	n_dir/dir1/dir_only_in_dir1
+	diff example/dir1/common_dir/dir1/dir_only_in_dir1
+	example/dir2/common_dir/dir1/dir_only_in_dir1
 	
-	diff example/dir1/common_dir/dir1/common_dir example/dir2/common_dir/
-	dir1/common_dir
+	diff example/dir1/common_dir/dir1/common_dir
+	example/dir2/common_dir/dir1/common_dir
 	
 	diff example/dir1/common_dir/dir2 example/dir2/common_dir/dir2
-	Identical files : ['common_file', 'file_only_in_dir2', 'not_the_same'
-	]
-	Common subdirectories : ['common_dir', 'dir_only_in_dir2', 'file_in_d
-	ir1']
+	Identical files : ['common_file', 'file_only_in_dir2',
+	'not_the_same']
+	Common subdirectories : ['common_dir', 'dir_only_in_dir2',
+	'file_in_dir1']
 	
-	diff example/dir1/common_dir/dir2/common_dir example/dir2/common_dir/
-	dir2/common_dir
+	diff example/dir1/common_dir/dir2/common_dir
+	example/dir2/common_dir/dir2/common_dir
 	
-	diff example/dir1/common_dir/dir2/file_in_dir1 example/dir2/common_di
-	r/dir2/file_in_dir1
+	diff example/dir1/common_dir/dir2/file_in_dir1
+	example/dir2/common_dir/dir2/file_in_dir1
 	
-	diff example/dir1/common_dir/dir2/dir_only_in_dir2 example/dir2/commo
-	n_dir/dir2/dir_only_in_dir2
+	diff example/dir1/common_dir/dir2/dir_only_in_dir2
+	example/dir2/common_dir/dir2/dir_only_in_dir2
 
 .. {{{end}}}
 
@@ -252,9 +251,9 @@ files that can be used in programs directly. Each of the following
 attributes is calculated only when requested, so creating a
 :class:`dircmp` instance does not incur overhead for unused data.
 
-.. include:: filecmp_dircmp_list.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: filecmp_dircmp_list.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The files and subdirectories contained in the directories being
 compared are listed in :attr:`left_list` and :attr:`right_list`.
@@ -289,15 +288,15 @@ The inputs can be filtered by passing a list of names to ignore to the
 constructor. By default the names ``RCS``, ``CVS``, and ``tags`` are
 ignored.
 
-.. include:: filecmp_dircmp_list_filter.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: filecmp_dircmp_list_filter.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 In this case, the "``common_file``" is left out of the list of files to be
 compared.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'filecmp_dircmp_list_filter.py', break_lines_at=79))
+.. cog.out(run_script(cog.inFile, 'filecmp_dircmp_list_filter.py'))
 .. }}}
 
 ::
@@ -324,9 +323,9 @@ The names of files common to both input directories are saved in
 :attr:`common`, and the files unique to each directory are listed in
 :attr:`left_only`, and :attr:`right_only`.  
 
-.. include:: filecmp_dircmp_membership.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: filecmp_dircmp_membership.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The "left" directory is the first argument to :func:`dircmp` and the
 "right" directory is the second.
@@ -354,9 +353,9 @@ The common members can be further broken down into files, directories
 and "funny" items (anything that has a different type in the two
 directories or where there is an error from :func:`os.stat`).
 
-.. include:: filecmp_dircmp_common.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: filecmp_dircmp_common.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 In the example data, the item named "``file_in_dir1``" is a file in one
 directory and a subdirectory in the other, so it shows up in the
@@ -386,9 +385,9 @@ funny list.
 
 The differences between files are broken down similarly.
 
-.. include:: filecmp_dircmp_diff.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: filecmp_dircmp_diff.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The file ``not_the_same`` is only being compared via :func:`os.stat`,
 and the contents are not examined, so it is included in the
@@ -411,27 +410,32 @@ and the contents are not examined, so it is included in the
 Finally, the subdirectories are also saved to allow easy recursive
 comparison.
 
-.. include:: filecmp_dircmp_subdirs.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: filecmp_dircmp_subdirs.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The attribute :attr:`subdirs` is a dictionary mapping the directory
 name to new :class:`dircmp` objects.
 
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'filecmp_dircmp_subdirs.py'))
+.. }}}
+
 ::
 
-    $ python filecmp_dircmp_subdirs.py
+	$ python3 filecmp_dircmp_subdirs.py
+	
+	Subdirectories:
+	{'common_dir': <filecmp.dircmp object at 0x1010b1a20>}
 
-    Subdirectories:
-    {'common_dir': <filecmp.dircmp instance at 0x85da0>}
+.. {{{end}}}
 
 .. seealso::
 
-    `filecmp <http://docs.python.org/library/filecmp.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`filecmp`
 
-    :ref:`os-directories`
-        Listing the contents of a directory using :mod:`os`.
+   * :mod:`difflib` -- Computing the differences between two
+     sequences.
 
-    :mod:`difflib`
-        Computing the differences between two sequences.
+.. * :ref:`os-directories` -- Listing the contents of a directory
+     using :mod:`os`.

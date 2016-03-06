@@ -9,4 +9,5 @@
 
 import filecmp
 
-filecmp.dircmp('example/dir1', 'example/dir2').report()
+dc = filecmp.dircmp('example/dir1', 'example/dir2')
+dc.report()

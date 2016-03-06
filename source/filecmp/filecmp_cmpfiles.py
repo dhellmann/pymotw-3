@@ -22,9 +22,11 @@ common_files = [
 print('Common files:', common_files)
 
 # Compare the directories
-match, mismatch, errors = filecmp.cmpfiles('example/dir1',
-                                           'example/dir2',
-                                           common_files)
+match, mismatch, errors = filecmp.cmpfiles(
+    'example/dir1',
+    'example/dir2',
+    common_files,
+)
 print('Match   :', match)
 print('Mismatch:', mismatch)
 print('Errors  :', errors)

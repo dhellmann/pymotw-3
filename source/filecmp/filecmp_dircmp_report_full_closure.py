@@ -9,5 +9,5 @@
 
 import filecmp
 
-comparison = filecmp.dircmp('example/dir1', 'example/dir2')
-comparison.report_full_closure()
+dc = filecmp.dircmp('example/dir1', 'example/dir2')
+dc.report_full_closure()
