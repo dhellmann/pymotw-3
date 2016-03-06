@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2008 Doug Hellmann All rights reserved.
@@ -12,11 +12,11 @@ import fnmatch
 import os
 
 pattern = 'FNMATCH_*.PY'
-print 'Pattern :', pattern
-print
+print('Pattern :', pattern)
+print()
 
 files = os.listdir('.')
 
 for name in files:
-    print 'Filename: %-25s %s' % \
-        (name, fnmatch.fnmatchcase(name, pattern))
+    print('Filename: {:<25} {}'.format(
+        name, fnmatch.fnmatchcase(name, pattern)))

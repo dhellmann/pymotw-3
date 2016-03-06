@@ -1,12 +1,11 @@
-=============================================
- fnmatch -- Unix-style Glob Pattern Matching
-=============================================
+==============================================
+ fnmatch --- Unix-style Glob Pattern Matching
+==============================================
 
 .. module:: fnmatch
     :synopsis: Compare filenames with Unix-style glob patterns.
 
 :Purpose: Handle Unix-style filename comparisons.
-:Python Version: 1.4 and later.
 
 The :mod:`fnmatch` module is used to compare filenames against
 glob-style patterns such as used by Unix shells.
@@ -19,10 +18,9 @@ returns a boolean, indicating whether or not they match. The comparison
 is case-sensitive when the operating system uses a case-sensitive
 file system.
 
-.. include:: fnmatch_fnmatch.py
-    :literal:
-    :start-after: #end_pymotw_header
-
+.. literalinclude:: fnmatch_fnmatch.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 In this example, the pattern matches all files starting with
 ``'fnmatch_'`` and ending in ``'.py'``.
@@ -33,11 +31,10 @@ In this example, the pattern matches all files starting with
 
 ::
 
-	$ python fnmatch_fnmatch.py
-
+	$ python3 fnmatch_fnmatch.py
+	
 	Pattern : fnmatch_*.py
 	
-	Filename: __init__.py               False
 	Filename: fnmatch_filter.py         True
 	Filename: fnmatch_fnmatch.py        True
 	Filename: fnmatch_fnmatchcase.py    True
@@ -49,9 +46,9 @@ In this example, the pattern matches all files starting with
 To force a case-sensitive comparison, regardless of the file system and
 operating system settings, use :func:`fnmatchcase`.
 
-.. include:: fnmatch_fnmatchcase.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: fnmatch_fnmatchcase.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Since the OS X system used to test this program uses a case-sensitive
 file system, no files match the modified pattern.
@@ -62,11 +59,10 @@ file system, no files match the modified pattern.
 
 ::
 
-	$ python fnmatch_fnmatchcase.py
-
+	$ python3 fnmatch_fnmatchcase.py
+	
 	Pattern : FNMATCH_*.PY
 	
-	Filename: __init__.py               False
 	Filename: fnmatch_filter.py         False
 	Filename: fnmatch_fnmatch.py        False
 	Filename: fnmatch_fnmatchcase.py    False
@@ -81,9 +77,9 @@ Filtering
 To test a sequence of filenames, use :func:`filter`, which returns a
 list of the names that match the pattern argument.
 
-.. include:: fnmatch_filter.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: fnmatch_filter.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 In this example, :func:`filter` returns the list of names of the
 example source files associated with this section.
@@ -94,13 +90,12 @@ example source files associated with this section.
 
 ::
 
-	$ python fnmatch_filter.py
-
+	$ python3 fnmatch_filter.py
+	
 	Pattern : fnmatch_*.py
 	
 	Files   :
-	['__init__.py',
-	 'fnmatch_filter.py',
+	['fnmatch_filter.py',
 	 'fnmatch_fnmatch.py',
 	 'fnmatch_fnmatchcase.py',
 	 'fnmatch_translate.py',
@@ -122,9 +117,9 @@ expression and uses the :mod:`re` module to compare the name and
 pattern. The :func:`translate` function is the public API for
 converting glob patterns to regular expressions.
 
-.. include:: fnmatch_translate.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: fnmatch_translate.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Some of the characters are escaped to make a valid expression.
 
@@ -134,22 +129,19 @@ Some of the characters are escaped to make a valid expression.
 
 ::
 
-	$ python fnmatch_translate.py
-
+	$ python3 fnmatch_translate.py
+	
 	Pattern : fnmatch_*.py
-	Regex   : fnmatch\_.*\.py\Z(?ms)
+	Regex   : fnmatch_.*\.py\Z(?ms)
 
 .. {{{end}}}
 
 .. seealso::
 
-    `fnmatch <http://docs.python.org/library/fnmatch.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`fnmatch`
 
-    :mod:`glob`
-        The glob module combines :mod:`fnmatch` matching with
-        ``os.listdir()`` to produce lists of files and directories
-        matching patterns.
+   * :mod:`glob` -- The glob module combines :mod:`fnmatch` matching
+     with ``os.listdir()`` to produce lists of files and directories
+     matching patterns.
 
-    :mod:`re`
-        Regular expression pattern matching.
+   * :mod:`re` -- Regular expression pattern matching.

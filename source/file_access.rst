@@ -70,6 +70,7 @@ a file, but does not reside on disk.
     :maxdepth: 1
     
     glob/index
+    fnmatch/index
     filecmp/index
 
 ..
