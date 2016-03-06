@@ -1,12 +1,10 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2008 Doug Hellmann All rights reserved.
 #
 """
 """
-
-__version__ = "$Id$"
 #end_pymotw_header
 
 import imaplib
@@ -21,10 +19,9 @@ new_message['From'] = 'pymotw@example.com'
 new_message['To'] = 'example@example.com'
 new_message.set_payload('This is the body of the message.\n')
 
-print new_message
+print(new_message)
 
-c = imaplib_connect.open_connection()
-try:
+with imaplib_connect.open_connection() as c:
     c.append('INBOX', '',
              imaplib.Time2Internaldate(time.time()),
              str(new_message))
@@ -36,12 +33,5 @@ try:
         typ, msg_data = c.fetch(num, '(BODY.PEEK[HEADER])')
         for response_part in msg_data:
             if isinstance(response_part, tuple):
-                print '\n%s:' % num
-                print response_part[1]
-        
-finally:
-    try:
-        c.close()
-    except:
-        pass
-    c.logout()
+                print('\n{}:'.format(num))
+                print(response_part[1])

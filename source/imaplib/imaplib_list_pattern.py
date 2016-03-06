@@ -1,25 +1,20 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2008 Doug Hellmann All rights reserved.
 #
 """
 """
-
-__version__ = "$Id$"
 #end_pymotw_header
 
 import imaplib
 
 from imaplib_connect import open_connection
 
-if __name__ == '__main__':
-    c = open_connection()
-    try:
-        typ, data = c.list(pattern='*Archive*')
-    finally:
-        c.logout()
-    print 'Response code:', typ
+with open_connection() as c:
+    typ, data = c.list(pattern='*Archive*')
 
-    for line in data:
-        print 'Server response:', line
+print('Response code:', typ)
+
+for line in data:
+    print('Server response:', line)

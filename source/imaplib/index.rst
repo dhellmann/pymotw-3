@@ -1,14 +1,13 @@
 .. This module does not use cog because of the IMAP server requirements.
 
-================================
- imaplib - IMAP4 Client Library
-================================
+==================================
+ imaplib --- IMAP4 Client Library
+==================================
 
 .. module:: imaplib
     :synopsis: IMAP4 client library
 
 :Purpose: Client library for IMAP4 communication.
-:Python Version: 1.5.2 and later
 
 :mod:`imaplib` implements a client for communicating with Internet
 Message Access Protocol (IMAP) version 4 servers.  The IMAP protocol
@@ -41,9 +40,9 @@ First, set up the socket connection itself.  Second, authenticate as a
 user with an account on the server.  The following example code will
 read server and user information from a configuration file.
 
-.. include:: imaplib_connect.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: imaplib_connect.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 When run, :func:`open_connection()` reads the configuration
 information from a file in the user's home directory, then opens the
@@ -66,9 +65,9 @@ Authentication Failure
 If the connection is established but authentication fails, an
 exception is raised.
 
-.. include:: imaplib_connect_fail.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: imaplib_connect_fail.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 This example uses the wrong password on purpose to trigger the
 exception.
@@ -104,9 +103,9 @@ Listing Mailboxes
 To retrieve the mailboxes available for an account, use the
 :func:`list()` method.
 
-.. include:: imaplib_list.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: imaplib_list.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The return value is a :class:`tuple` containing a response code and
 the data returned by the server.  The response code is ``OK``, unless
@@ -128,9 +127,9 @@ Each response string can be split into three parts using :mod:`re` or
 :mod:`csv` (see *IMAP Backup Script* in the references at the end of
 this section for an example using :mod:`csv`).
 
-.. include:: imaplib_list_parse.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: imaplib_list_parse.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The server quotes the mailbox name if it includes spaces, but those
 quotes need to be stripped out to use the mailbox name in other calls
@@ -152,9 +151,9 @@ back to the server later.
 hierarchy.  For example, to list sub-folders of ``Archive``, pass
 ``"Archive"`` as the *directory* argument.
 
-.. include:: imaplib_list_subfolders.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: imaplib_list_subfolders.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Only the single subfolder is returned.
 
@@ -168,9 +167,9 @@ Only the single subfolder is returned.
 Alternately, to list folders matching a pattern pass the *pattern*
 argument.
 
-.. include:: imaplib_list_pattern.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: imaplib_list_pattern.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 In this case, both ``Archive`` and ``Archive.2008`` are included in
 the response.
@@ -207,9 +206,9 @@ The status conditions must be formatted as a space separated string
 enclosed in parentheses, the encoding for a "list" in the IMAP4
 specification.
 
-.. include:: imaplib_status.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: imaplib_status.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The return value is the usual :class:`tuple` containing a response
 code and a list of information from the server.  In this case, the
@@ -237,9 +236,9 @@ the mailbox.  The connection is stateful, so after a mailbox is
 selected all commands operate on messages in that mailbox until a new
 mailbox is selected.
 
-.. include:: imaplib_select.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: imaplib_select.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The response data contains the total number of messages in the
 mailbox.
@@ -253,9 +252,9 @@ mailbox.
 
 If an invalid mailbox is specified, the response code is ``NO``.
 
-.. include:: imaplib_select_invalid.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: imaplib_select_invalid.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The data contains an error message describing the problem.
 
@@ -272,9 +271,9 @@ Searching for Messages
 After selecting the mailbox, use :meth:`search()` to retrieve the IDs
 of messages in the mailbox.
 
-.. include:: imaplib_search_all.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: imaplib_search_all.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Message IDs are assigned by the server, and are implementation
 dependent.  The IMAP4 protocol makes a distinction between sequential
@@ -308,9 +307,9 @@ search criteria should be constructed as::
 This example finds all messages with the title "test message 2" in all
 mailboxes:
 
-.. include:: imaplib_search_subject.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: imaplib_search_subject.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 There is only one such message in the account, and it is in the
 ``INBOX``.
@@ -325,9 +324,9 @@ There is only one such message in the account, and it is in the
 
 Search criteria can also be combined.
 
-.. include:: imaplib_search_from.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: imaplib_search_from.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The criteria are combined with a logical :command:`and` operation.
 
@@ -363,9 +362,9 @@ of the messages in a mailbox, use :meth:`fetch()` with the argument
   has a side-effect of implicitly marking the message as read, which
   is undesirable in many cases.
 
-.. include:: imaplib_fetch_raw.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: imaplib_fetch_raw.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The return value of :meth:`fetch()` has been partially parsed so it is
 somewhat harder to work with than the return value of :meth:`list()`.
@@ -430,9 +429,9 @@ this formatting, it may be easier to fetch different pieces of
 information separately, or to recombine the response and parse it in
 the client.
 
-.. include:: imaplib_fetch_separately.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: imaplib_fetch_separately.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Fetching values separately has the added benefit of making it easy to
 use :func:`ParseFlags()` to parse the flags from the response.
@@ -473,9 +472,9 @@ parts of the message separately.  It is also possible to retrieve the
 entire message as an RFC 2822 formatted mail message and parse it
 with classes from the :mod:`email` module.
 
-.. include:: imaplib_fetch_rfc822.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: imaplib_fetch_rfc822.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The parser in the :mod:`email` module make it very easy to access and
 manipulate messages.  This example prints just a few of the headers
@@ -497,9 +496,9 @@ To add a new message to a mailbox, construct a :class:`Message`
 instance and pass it to the :meth:`append()` method, along with the
 timestamp for the message.
 
-.. include:: imaplib_append.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: imaplib_append.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The *payload* used in this example is a simple plaintext email body.
 :class:`Message` also supports MIME-encoded multi-part messages.
@@ -558,9 +557,9 @@ Once a message is on the server, it can be moved or copied without
 downloading it using :meth:`move()` or :meth:`copy()`.  These methods
 operate on message id ranges, just as :meth:`fetch()` does.
 
-.. include:: imaplib_archive_read.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: imaplib_archive_read.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 This example script creates a new mailbox under ``Archive`` and copies
 the read messages from ``INBOX`` into it.
@@ -598,9 +597,9 @@ archived messages with "Lorem ipsum" in the subject, sets the deleted
 flag, then shows that the messages are still present in the folder by
 querying the server again.
 
-.. include:: imaplib_delete_messages.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: imaplib_delete_messages.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Explicitly calling :meth:`expunge()` removes the messages, but calling
 :meth:`close()` has the same effect.  The difference is the client is
@@ -623,37 +622,32 @@ not notified about the deletions when :meth:`close()` is called.
 
 .. seealso::
 
-    `imaplib <http://docs.python.org/library/imaplib.html>`_
-        The standard library documentation for this module.
+    * :pydoc:`imaplib`
 
-    `What is IMAP? <http://www.imap.org/about/whatisIMAP.html>`_
-        imap.org description of the IMAP protocol
+    * :mod:`rfc822` -- The ``rfc822`` module includes an RFC 822 / RFC 2822 parser.
 
-    `University of Washington IMAP Information Center <http://www.washington.edu/imap/>`_
-        Good resource for IMAP information, along with source code.
+    * :mod:`email` -- The ``email`` module for parsing email messages.
 
-    :rfc:`3501`
-        Internet Message Access Protocol
+    * :mod:`mailbox` -- Local mailbox parser.
 
-    :rfc:`2822`
-        Internet Message Format
+    * :mod:`ConfigParser` -- Read and write configuration files.
 
-    `IMAP Backup Script`_
-        A script to backup email from an IMAP server.
+    * `What is IMAP? <http://www.imap.org/about/whatisIMAP.html>`_ --
+      imap.org description of the IMAP protocol
 
-        .. _IMAP Backup Script: http://snipplr.com/view/7955/imap-backup-script/
+    * `University of Washington IMAP Information Center
+      <http://www.washington.edu/imap/>`_ -- Good resource for IMAP
+      information, along with source code.
 
-    :mod:`rfc822`
-        The ``rfc822`` module includes an RFC 822 / RFC 2822 parser.
+    * :rfc:`3501` -- Internet Message Access Protocol
 
-    :mod:`email`
-        The ``email`` module for parsing email messages.
+    * :rfc:`2822` -- Internet Message Format
 
-    :mod:`mailbox`
-        Local mailbox parser.
+    * `IMAP Backup Script`_ -- A script to backup email from an IMAP
+      server.
 
-    :mod:`ConfigParser`
-        Read and write configuration files.
+    * `IMAPClient <http://imapclient.freshfoo.com/>`_ -- A
+      higher-level client for talking to IMAP servers, written by
+      Menno Smits.
 
-    `IMAPClient <http://imapclient.freshfoo.com/>`_
-        A higher-level client for talking to IMAP servers, written by Menno Smits.
+.. _IMAP Backup Script: http://snipplr.com/view/7955/imap-backup-script/

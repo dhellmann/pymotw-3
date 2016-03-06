@@ -1,23 +1,17 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2008 Doug Hellmann All rights reserved.
 #
 """
 """
-
-__version__ = "$Id$"
 #end_pymotw_header
 
 import imaplib
 import imaplib_connect
 
-c = imaplib_connect.open_connection()
-try:
+with imaplib_connect.open_connection() as c:
     typ, data = c.select('INBOX')
-    print typ, data
+    print(typ, data)
     num_msgs = int(data[0])
-    print 'There are %d messages in INBOX' % num_msgs
-finally:
-    c.close()
-    c.logout()
+    print('There are {} messages in INBOX'.format(num_msgs))
