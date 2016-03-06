@@ -17,3 +17,4 @@ dist/
 /source/gettext/locale/*/LC_MESSAGES/*.mo
 /source/mailbox/example.mbox
 /source/mailbox/Example
+/source/filecmp/example

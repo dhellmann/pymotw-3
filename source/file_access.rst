@@ -40,11 +40,9 @@ to their content.  The :mod:`shutil` module includes high-level file
 operations such as copying files and directories, and setting
 permissions.
 
-.. only:: bonus
-
-   The :mod:`filecmp` module compares files and directories by looking
-   at the bytes they contain, but without any special knowledge about
-   their format.
+The :mod:`filecmp` module compares files and directories by looking at
+the bytes they contain, but without any special knowledge about their
+format.
 
 The built-in :class:`file` class can be used to read and write files
 visible on local file systems.  A program's performance can suffer when
@@ -72,6 +70,7 @@ a file, but does not reside on disk.
     :maxdepth: 1
     
     glob/index
+    filecmp/index
 
 ..
     ospath/index

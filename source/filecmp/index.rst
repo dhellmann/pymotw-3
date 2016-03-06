@@ -1,12 +1,11 @@
-==========================
- filecmp -- Compare Files
-==========================
+===========================
+ filecmp --- Compare Files
+===========================
 
 .. module:: filecmp
     :synopsis: Compare files and directories on the file system.
 
 :Purpose: Compare files and directories on the file system.
-:Python Version: 2.1 and later
 
 The :mod:`filecmp` module includes functions and a class for comparing
 files and directories on the file system.
@@ -41,7 +40,7 @@ directory ``example``:
 ::
 
 	$ find example
-
+	
 	example
 	example/dir1
 	example/dir1/common_dir
@@ -114,11 +113,11 @@ contents are not compared.
 
 ::
 
-	$ python filecmp_cmp.py
-
-	common_file: True True
-	not_the_same: True False
-	identical: True True
+	$ python3 filecmp_cmp.py
+	
+	common_file:TrueTrue
+	not_the_same:TrueFalse
+	identical:TrueTrue
 
 .. {{{end}}}
 
@@ -144,8 +143,8 @@ compared (due to permission problems or for any other reason).
 
 ::
 
-	$ python filecmp_cmpfiles.py
-
+	$ python3 filecmp_cmpfiles.py
+	
 	Common files: ['not_the_same', 'file_in_dir1', 'common_file']
 	Match   : ['not_the_same', 'common_file']
 	Mismatch: ['file_in_dir1']
@@ -179,8 +178,8 @@ the contents of files like :func:`cmp` does.
 
 ::
 
-	$ python filecmp_dircmp_report.py
-
+	$ python3 filecmp_dircmp_report.py
+	
 	diff example/dir1 example/dir2
 	Only in example/dir1 : ['dir_only_in_dir1', 'file_only_in_dir1']
 	Only in example/dir2 : ['dir_only_in_dir2', 'file_only_in_dir2']
@@ -205,8 +204,8 @@ The output includes comparisons of all parallel subdirectories.
 
 ::
 
-	$ python filecmp_dircmp_report_full_closure.py
-
+	$ python3 filecmp_dircmp_report_full_closure.py
+	
 	diff example/dir1 example/dir2
 	Only in example/dir1 : ['dir_only_in_dir1', 'file_only_in_dir1']
 	Only in example/dir2 : ['dir_only_in_dir2', 'file_only_in_dir2']
@@ -217,6 +216,17 @@ The output includes comparisons of all parallel subdirectories.
 	diff example/dir1/common_dir example/dir2/common_dir
 	Common subdirectories : ['dir1', 'dir2']
 	
+	diff example/dir1/common_dir/dir1 example/dir2/common_dir/dir1
+	Identical files : ['common_file', 'file_in_dir1', 'file_only_in_dir1'
+	, 'not_the_same']
+	Common subdirectories : ['common_dir', 'dir_only_in_dir1']
+	
+	diff example/dir1/common_dir/dir1/dir_only_in_dir1 example/dir2/commo
+	n_dir/dir1/dir_only_in_dir1
+	
+	diff example/dir1/common_dir/dir1/common_dir example/dir2/common_dir/
+	dir1/common_dir
+	
 	diff example/dir1/common_dir/dir2 example/dir2/common_dir/dir2
 	Identical files : ['common_file', 'file_only_in_dir2', 'not_the_same'
 	]
@@ -226,22 +236,11 @@ The output includes comparisons of all parallel subdirectories.
 	diff example/dir1/common_dir/dir2/common_dir example/dir2/common_dir/
 	dir2/common_dir
 	
-	diff example/dir1/common_dir/dir2/dir_only_in_dir2 example/dir2/commo
-	n_dir/dir2/dir_only_in_dir2
-	
 	diff example/dir1/common_dir/dir2/file_in_dir1 example/dir2/common_di
 	r/dir2/file_in_dir1
 	
-	diff example/dir1/common_dir/dir1 example/dir2/common_dir/dir1
-	Identical files : ['common_file', 'file_in_dir1', 'file_only_in_dir1'
-	, 'not_the_same']
-	Common subdirectories : ['common_dir', 'dir_only_in_dir1']
-	
-	diff example/dir1/common_dir/dir1/common_dir example/dir2/common_dir/
-	dir1/common_dir
-	
-	diff example/dir1/common_dir/dir1/dir_only_in_dir1 example/dir2/commo
-	n_dir/dir1/dir_only_in_dir1
+	diff example/dir1/common_dir/dir2/dir_only_in_dir2 example/dir2/commo
+	n_dir/dir2/dir_only_in_dir2
 
 .. {{{end}}}
 
@@ -266,8 +265,8 @@ compared are listed in :attr:`left_list` and :attr:`right_list`.
 
 ::
 
-	$ python filecmp_dircmp_list.py
-
+	$ python3 filecmp_dircmp_list.py
+	
 	Left:
 	['common_dir',
 	 'common_file',
@@ -303,8 +302,8 @@ compared.
 
 ::
 
-	$ python filecmp_dircmp_list_filter.py
-
+	$ python3 filecmp_dircmp_list_filter.py
+	
 	Left:
 	['common_dir',
 	 'dir_only_in_dir1',
@@ -338,16 +337,16 @@ The "left" directory is the first argument to :func:`dircmp` and the
 
 ::
 
-	$ python filecmp_dircmp_membership.py
-
+	$ python3 filecmp_dircmp_membership.py
+	
 	Common:
-	['not_the_same', 'common_file', 'file_in_dir1', 'common_dir']
+	['file_in_dir1', 'common_file', 'common_dir', 'not_the_same']
 	
 	Left:
 	['dir_only_in_dir1', 'file_only_in_dir1']
 	
 	Right:
-	['dir_only_in_dir2', 'file_only_in_dir2']
+	['file_only_in_dir2', 'dir_only_in_dir2']
 
 .. {{{end}}}
 
@@ -369,16 +368,16 @@ funny list.
 
 ::
 
-	$ python filecmp_dircmp_common.py
-
+	$ python3 filecmp_dircmp_common.py
+	
 	Common:
-	['not_the_same', 'common_file', 'file_in_dir1', 'common_dir']
+	['file_in_dir1', 'common_file', 'common_dir', 'not_the_same']
 	
 	Directories:
 	['common_dir']
 	
 	Files:
-	['not_the_same', 'common_file']
+	['common_file', 'not_the_same']
 	
 	Funny:
 	['file_in_dir1']
@@ -401,9 +400,9 @@ and the contents are not examined, so it is included in the
 
 ::
 
-	$ python filecmp_dircmp_diff.py
-
-	Same      : ['not_the_same', 'common_file']
+	$ python3 filecmp_dircmp_diff.py
+	
+	Same      : ['common_file', 'not_the_same']
 	Different : []
 	Funny     : []
 

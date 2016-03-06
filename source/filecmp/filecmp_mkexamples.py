@@ -1,20 +1,20 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2008 Doug Hellmann All rights reserved.
 #
 """This script creates the example directory and its contents.
 """
-
-__version__ = "$Id$"
 #end_pymotw_header
 
 import os
+
 
 def mkfile(filename, body=None):
     with open(filename, 'w') as f:
         f.write(body or filename)
     return
+
 
 def make_example_dir(top):
     if not os.path.exists(top):
@@ -42,7 +42,7 @@ def make_example_dir(top):
 
     mkfile('dir1/file_in_dir1', 'This is a file in dir1')
     os.mkdir('dir2/file_in_dir1')
-    
+
     os.chdir(curdir)
     return
 
@@ -51,4 +51,3 @@ if __name__ == '__main__':
     make_example_dir('example')
     make_example_dir('example/dir1/common_dir')
     make_example_dir('example/dir2/common_dir')
-    
