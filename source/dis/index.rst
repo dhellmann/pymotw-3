@@ -88,7 +88,7 @@ it into a function (:const:`LOAD_CONST`, :const:`MAKE_FUNCTION`), but
 	$ python3 -m dis dis_function.py
 	
 	  5           0 LOAD_CONST               0 (<code object f at
-	0x101315c90, file "dis_function.py", line 5>)
+	0x101c24c90, file "dis_function.py", line 5>)
 	              3 LOAD_CONST               1 ('f')
 	              6 MAKE_FUNCTION            0
 	              9 STORE_NAME               0 (f)
@@ -142,6 +142,41 @@ To see inside the function, the function itself must be passed to
 
 .. {{{end}}}
 
+To print a summary of the function, including information about the
+arguments and names it uses, call :func:`show_code`, passing the
+function as the first argument.
+
+.. literalinclude:: dis_show_code.py
+
+The argument to :func:`show_code` is passed to :func:`code_info`,
+which returns a nicely formatted summary of the function, method, code
+string, or other code object, ready to be printed.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'dis_show_code.py'))
+.. }}}
+
+::
+
+	$ python3 dis_show_code.py
+	
+	Name:              f
+	Filename:          dis_show_code.py
+	Argument count:    0
+	Kw-only arguments: 0
+	Number of locals:  2
+	Stack size:        3
+	Flags:             OPTIMIZED, NEWLOCALS, VARARGS, NOFREE
+	Constants:
+	   0: None
+	Names:
+	   0: len
+	   1: print
+	Variable names:
+	   0: args
+	   1: nargs
+
+.. {{{end}}}
 
 Classes
 =======
