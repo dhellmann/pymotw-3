@@ -1,5 +1,10 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # encoding: utf-8
+#
+# Copyright (c) 2016 Doug Hellmann.  All rights reserved.
+# Written for https://pymotw.com
+#
+#end_pymotw_header
 
 import dis
 

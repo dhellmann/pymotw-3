@@ -191,7 +191,7 @@ The methods are listed in alphabetical order, not the order they
 appear in the file.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'dis_class.py'))
+.. cog.out(run_script(cog.inFile, 'dis_class.py', line_break_mode='wrap'))
 .. }}}
 
 ::
@@ -210,8 +210,8 @@ appear in the file.
 	              3 LOAD_ATTR                0 (format)
 	              6 LOAD_FAST                0 (self)
 	              9 LOAD_ATTR                1 (name)
-	             12 CALL_FUNCTION            1 (1 positional, 0 keyw
-	ord pair)
+	             12 CALL_FUNCTION            1 (1 positional, 0
+	keyword pair)
 	             15 RETURN_VALUE
 	
 
