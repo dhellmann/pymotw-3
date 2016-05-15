@@ -88,7 +88,7 @@ it into a function (:const:`LOAD_CONST`, :const:`MAKE_FUNCTION`), but
 	$ python3 -m dis dis_function.py
 	
 	  5           0 LOAD_CONST               0 (<code object f at
-	0x101c24c90, file "dis_function.py", line 5>)
+	0x101324c90, file "dis_function.py", line 5>)
 	              3 LOAD_CONST               1 ('f')
 	              6 MAKE_FUNCTION            0
 	              9 STORE_NAME               0 (f)
@@ -214,6 +214,57 @@ appear in the file.
 	ord pair)
 	             15 RETURN_VALUE
 	
+
+.. {{{end}}}
+
+Source Code
+===========
+
+It is often more convenient to work with the source code for a program
+than with the code objects themselves. The functions in :mod:`dis`
+accept string arguments containing source code, and convert them to
+code objects before producing the disassembly or other output.
+
+.. literalinclude:: dis_string.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Passing a string lets you save the step of compiling the code and
+holding a reference to the results yourself, which is more convenient
+in cases when statements outside of a function are being examined.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'dis_string.py'))
+.. }}}
+
+::
+
+	$ python3 dis_string.py
+	
+	Disassembly:
+	
+	  2           0 LOAD_CONST               0 ('a')
+	              3 LOAD_CONST               1 (1)
+	              6 BUILD_MAP                1
+	              9 STORE_NAME               0 (my_dict)
+	             12 LOAD_CONST               2 (None)
+	             15 RETURN_VALUE
+	
+	Code details:
+	
+	Name:              <module>
+	Filename:          <disassembly>
+	Argument count:    0
+	Kw-only arguments: 0
+	Number of locals:  0
+	Stack size:        2
+	Flags:             NOFREE
+	Constants:
+	   0: 'a'
+	   1: 1
+	   2: None
+	Names:
+	   0: my_dict
 
 .. {{{end}}}
 
