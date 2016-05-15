@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 
-class Dictionary(object):
+class Dictionary:
 
     def __init__(self, words):
         self.by_letter = {}

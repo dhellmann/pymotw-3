@@ -4,7 +4,7 @@
 import string
 
 
-class Dictionary(object):
+class Dictionary:
 
     def __init__(self, words):
         self.by_letter = {

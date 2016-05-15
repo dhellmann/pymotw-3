@@ -4,7 +4,7 @@
 import dis
 
 
-class MyObject(object):
+class MyObject:
     """Example for dis."""
 
     CLASS_ATTRIBUTE = 'some value'

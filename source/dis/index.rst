@@ -88,7 +88,7 @@ it into a function (:const:`LOAD_CONST`, :const:`MAKE_FUNCTION`), but
 	$ python3 -m dis dis_function.py
 	
 	  5           0 LOAD_CONST               0 (<code object f at
-	0x101624c90, file "dis_function.py", line 5>)
+	0x101315c90, file "dis_function.py", line 5>)
 	              3 LOAD_CONST               1 ('f')
 	              6 MAKE_FUNCTION            0
 	              9 STORE_NAME               0 (f)
