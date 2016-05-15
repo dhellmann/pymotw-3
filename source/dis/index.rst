@@ -88,7 +88,7 @@ it into a function (:const:`LOAD_CONST`, :const:`MAKE_FUNCTION`), but
 	$ python3 -m dis dis_function.py
 	
 	  5           0 LOAD_CONST               0 (<code object f at
-	0x101424c90, file "dis_function.py", line 5>)
+	0x101624c90, file "dis_function.py", line 5>)
 	              3 LOAD_CONST               1 ('f')
 	              6 MAKE_FUNCTION            0
 	              9 STORE_NAME               0 (f)
@@ -568,28 +568,28 @@ involved, the evaluation has to be delayed to runtime.
 
 .. seealso::
 
-    `dis <http://docs.python.org/library/dis.html>`_
-        The standard library documentation for this module, including
-        the list of `bytecode instructions
-        <http://docs.python.org/library/dis.html#python-bytecode-instructions>`_.
+    * :pydoc:`dis` -- Includes the list of `bytecode instructions
+      <https://docs.python.org/3.5/library/dis.html#python-bytecode-instructions>`_.
 
-    ``Include/opcode.h``
-        The source code for the CPython interpreter defines the byte
-        codes in ``opcode.h``.
+    * ``Include/opcode.h`` -- The source code for the CPython
+      interpreter defines the byte codes in ``opcode.h``.
 
-    *Python Essential Reference*, 4th Edition, David M. Beazley
-        http://www.informit.com/store/product.aspx?isbn=0672329786
+    * *Python Essential Reference*, 4th Edition, David M. Beazley --
+      http://www.informit.com/store/product.aspx?isbn=0672329786
 
-    `thomas.apestaart.org "Python Disassembly" <http://thomas.apestaart.org/log/?p=927>`_
-        A short discussion of the difference between storing values in
-        a dictionary between Python 2.5 and 2.6.
+    * `thomas.apestaart.org "Python Disassembly"
+      <http://thomas.apestaart.org/log/?p=927>`_ -- A short discussion
+      of the difference between storing values in a dictionary between
+      Python 2.5 and 2.6.
 
-    `Why is looping over range() in Python faster than using a while loop? <http://stackoverflow.com/questions/869229/why-is-looping-over-range-in-python-faster-than-using-a-while-loop>`_
-        A discussion on StackOverflow.com comparing 2 looping examples
-        via their disassembled bytecodes.
+    * `Why is looping over range() in Python faster than using a while
+      loop?
+      <http://stackoverflow.com/questions/869229/why-is-looping-over-range-in-python-faster-than-using-a-while-loop>`_
+      -- A discussion on StackOverflow.com comparing 2 looping
+      examples via their disassembled bytecodes.
 
-    `Decorator for binding constants at compile time <http://code.activestate.com/recipes/277940/>`_
-        Python Cookbook recipe by Raymond Hettinger and Skip Montanaro
-        with a function decorator that re-writes the bytecodes for a
-        function to insert global constants to avoid runtime name
-        lookups.
+    * `Decorator for binding constants at compile time
+      <http://code.activestate.com/recipes/277940/>`_ -- Python
+      Cookbook recipe by Raymond Hettinger and Skip Montanaro with a
+      function decorator that re-writes the bytecodes for a function
+      to insert global constants to avoid runtime name lookups.
