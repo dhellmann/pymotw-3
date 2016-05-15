@@ -39,19 +39,18 @@ them.  Introspection can be used to generate documentation for source
 code, adapt behavior at runtime dynamically, or examine the execution
 environment for a program.
 
-.. only:: bonus
-
-   The :mod:`exceptions` module defines common exceptions used
-   throughout the standard library and third-party modules.  Becoming
-   familiar with the class hierarchy for exceptions will make it
-   easier to understand error messages and create robust code that
-   handles exceptions properly.
+The :mod:`exceptions` module defines common exceptions used throughout
+the standard library and third-party modules.  Becoming familiar with
+the class hierarchy for exceptions will make it easier to understand
+error messages and create robust code that handles exceptions
+properly.
 
 .. toctree::
    :maxdepth: 1
 
    abc/index
    warnings/index
+   dis/index
 
 ..
    warnings/index
