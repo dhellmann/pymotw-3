@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # encoding: utf-8
 #
-# Copyright (c) 2009 Doug Hellmann All rights reserved.
+# Copyright (c) 2016 Doug Hellmann.  All rights reserved.
+# Written for https://pymotw.com
 #
 """
 """
@@ -9,6 +10,7 @@
 
 import dis
 import sys
+import textwrap
 import timeit
 
 module_name = sys.argv[1]
@@ -18,10 +20,14 @@ Dictionary = module.Dictionary
 dis.dis(Dictionary.load_data)
 print
 t = timeit.Timer(
-    'd = Dictionary(words)', 
-    """from %(module_name)s import Dictionary
-words = [l.strip() for l in open('/usr/share/dict/words', 'rt')]
-    """ % locals()
-    )
+    'd = Dictionary(words)',
+    textwrap.dedent("""
+    from {module_name} import Dictionary
+    words = [
+        l.strip()
+        for l in open('/usr/share/dict/words', 'rt')
+    ]
+    """).format(module_name=module_name)
+)
 iterations = 10
-print 'TIME: %0.4f' % (t.timeit(iterations)/iterations)
+print('TIME: {:0.4f}'.format(t.timeit(iterations) / iterations))

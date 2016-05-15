@@ -1,11 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 
 i = 1
 j = 0
 k = 3
-
-# ... many lines removed ...
 
 try:
     result = k * (i / j) + (i / k)

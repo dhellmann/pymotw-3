@@ -1,13 +1,16 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 
 import string
 
+
 class Dictionary(object):
 
     def __init__(self, words):
-        self.by_letter = dict( (letter, []) 
-                                for letter in string.letters)
+        self.by_letter = {
+            letter: []
+            for letter in string.ascii_letters
+        }
         self.load_data(words)
 
     def load_data(self, words):

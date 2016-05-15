@@ -1,8 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 
 import operator
 import itertools
+
 
 class Dictionary(object):
 
@@ -12,7 +13,12 @@ class Dictionary(object):
 
     def load_data(self, words):
         # Arrange by letter
-        grouped = itertools.groupby(words, key=operator.itemgetter(0))
+        grouped = itertools.groupby(
+            words,
+            key=operator.itemgetter(0),
+        )
         # Save arranged sets of words
-        self.by_letter = dict((group[0][0], group) for group in grouped)
-        
+        self.by_letter = {
+            group[0][0]: group
+            for group in grouped
+        }
