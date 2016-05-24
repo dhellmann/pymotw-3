@@ -40,10 +40,6 @@ options(
         warnerror=True,
     ),
 
-    spelling=Bunch(
-        builder='spelling',
-    ),
-
     # Some of the files include [[[ as part of a nested list data
     # structure, so change the tags cog looks for to something
     # less likely to appear.
@@ -145,14 +141,6 @@ def html(options):
     paverutils.html(options)
     css(options)
     return
-
-
-@task
-def spelling(options):
-    "Check spelling."
-    rc = paverutils.run_sphinx(options, 'spelling')
-    if rc:
-        raise ValueError('Found spelling mistake')
 
 
 @task
@@ -307,7 +295,6 @@ def push(options):
 
 @task
 def publish(options):
-    # spelling(options)
     deploy(options)
     push(options)
 

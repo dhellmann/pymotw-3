@@ -1,7 +1,3 @@
-.. spelling::
-
-   tokenizer
-
 ===========================
 Application Building Blocks
 ===========================

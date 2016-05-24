@@ -2,13 +2,6 @@
  grp --- UNIX Group Database
 =============================
 
-.. spelling::
-
-   passwd
-   grp
-   mem
-   gid
-
 .. module:: grp
     :synopsis: UNIX Group Database
 

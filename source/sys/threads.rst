@@ -99,10 +99,6 @@ cannot because **Thread-2** already has it.
 
 .. {{{end}}}
 
-.. spelling::
-
-   Pitrou
-
 .. seealso::
 
     * :mod:`threading` -- The ``threading`` module includes classes

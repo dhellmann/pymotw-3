@@ -2,12 +2,6 @@
  argparse --- Command-Line Option and Argument Parsing
 =======================================================
 
-.. spelling::
-
-   defacto
-   epilog
-   pre
-
 .. module:: argparse
     :synopsis: Command-line option and argument parsing.
 

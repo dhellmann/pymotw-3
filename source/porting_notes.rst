@@ -5,11 +5,6 @@
      porting - starts new section
      mod - builds reference to a module
 
-.. spelling::
-
-   Lennart
-   Regebro
-
 ===============
  Porting Notes
 ===============
@@ -580,10 +575,6 @@ UserDict, UserList, and UserString
    pair: porting; UserDict
    pair: porting; UserList
    pair: porting; UserString
-
-.. spelling::
-
-   subclassed
 
 The UserDict, UserList, and UserString classes have been moved out of
 their own modules into the :mod:`collections` module. :class:`dict`,

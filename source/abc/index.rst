@@ -2,11 +2,6 @@
  abc --- Abstract Base Classes
 ===============================
 
-.. spelling::
-
-   Subclassing
-   subclassing
-
 .. module:: abc
    :synopsis: Abstract Base Classes
 
