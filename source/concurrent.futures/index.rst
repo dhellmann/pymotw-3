@@ -53,7 +53,7 @@ a :class:`list`).
 	Thread-1: sleeping 5
 	Thread-2: sleeping 4
 	main: unprocessed results <generator object
-	Executor.map.<locals>.result_iterator at 0x1048c70a0>
+	Executor.map.<locals>.result_iterator at 0x1016c80a0>
 	main: waiting for real results
 	Thread-2: done with 4
 	Thread-2: sleeping 3
@@ -91,11 +91,11 @@ result is made available.
 	
 	main: starting
 	Thread-1: sleeping 5
-	main: future: <Future at 0x1012e40b8 state=running>
+	main: future: <Future at 0x1024c60b8 state=running>
 	main: waiting for results
 	Thread-1: done with 5
 	main: result: 0.5
-	main: future after result: <Future at 0x1012e40b8 state=finished
+	main: future after result: <Future at 0x1024c60b8 state=finished
 	 returned float>
 
 .. {{{end}}}
@@ -131,6 +131,9 @@ object passed in to the callback before using it in any way.
 	5: value returned: 0.5
 
 .. {{{end}}}
+
+Canceling Tasks
+===============
 
 A :class:`Future` can be cancelled, if it has been submitted but not
 started, by calling its :func:`cancel` method.
@@ -178,8 +181,73 @@ was able to be cancelled.
 
 .. {{{end}}}
 
+Exceptions in Tasks
+===================
 
+If a task raises an unhandled exception, it is saved to the
+:class:`Future` for the task and made available through the
+:func:`result` or :func:`exception` methods.
+
+.. literalinclude:: futures_future_exception.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+If :func:`result` is called after an unhandled exception is raised
+within a task function, the same exception is re-raised in the current
+context.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'futures_future_exception.py'))
+.. }}}
+
+::
+
+	$ python3 futures_future_exception.py
+	
+	main: starting
+	5: starting
+	main: error: the value 5 is no good
+	main: saw error the value 5 is no good when accessing result
+
+.. {{{end}}}
+
+Process Pools
+=============
+
+The :class:`ProcessPoolExecutor` works in the same way as
+:class:`ThreadPoolExecutor`, but uses processes instead of
+threads. This allows CPU-intensive operations to use a separate CPU
+and not be blocked by the CPython interpreter's global interpreter
+lock.
+
+.. literalinclude:: futures_process_pool_map.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+As with the thread pool, individual worker processes are reused for
+multiple tasks.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'futures_process_pool_map.py'))
+.. }}}
+
+::
+
+	$ python3 futures_process_pool_map.py
+	
+	ran task 5 in process 40976
+	ran task 4 in process 40977
+	ran task 3 in process 40976
+	ran task 2 in process 40976
+	ran task 1 in process 40977
+
+.. {{{end}}}
 
 .. seealso::
+
+   * :pydoc:`concurrent.futures`
+
+   * :pep:`3148` -- The proposal for creating the
+     :mod:`concurrent.futures` feature set.
 
    * :ref:`asyncio-executors`
