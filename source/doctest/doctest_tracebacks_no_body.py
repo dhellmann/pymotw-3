@@ -14,5 +14,9 @@ def this_raises():
     >>> this_raises()
     Traceback (most recent call last):
     RuntimeError: here is the error
+
+    >>> this_raises()
+    Traceback (innermost last):
+    RuntimeError: here is the error
     """
     raise RuntimeError('here is the error')
