@@ -25,7 +25,7 @@ def get_state(fn):
     if fn.running():
         return 'running'
     elif fn.cancelled():
-        return 'cancelled'
+        return 'canceled'
     elif fn.done():
         return 'no longer running'
     else:
