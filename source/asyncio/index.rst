@@ -67,6 +67,8 @@ working on.
 
     * :pep:`492` -- *Coroutines with async and await syntax*
 
+    * :mod:`concurrent.futures` -- Manage Pools of Concurrent Tasks
+
     * :mod:`socket` -- Low-level network communication
 
     * :mod:`select` -- Low-level asynchronous I/O tools
