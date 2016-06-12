@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -8,6 +8,7 @@
 #end_pymotw_header
 
 _module_data = {}
+
 
 class TestGlobals(object):
 
@@ -24,6 +25,3 @@ class TestGlobals(object):
         >>> 'var' in _module_data
         False
         """
-    
-
-

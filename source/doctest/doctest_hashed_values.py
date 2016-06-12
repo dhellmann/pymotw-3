@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -7,19 +7,19 @@
 """
 #end_pymotw_header
 
-keys = [ 'a', 'aa', 'aaa' ]
+keys = ['a', 'aa', 'aaa']
 
-d1 = dict( (k,len(k)) for k in keys )
-d2 = dict( (k,len(k)) for k in reversed(keys) )
+d1 = {k: len(k) for k in keys}
+d2 = {k: len(k) for k in reversed(keys)}
 
-print 'd1:', d1
-print 'd2:', d2
-print 'd1 == d2:', d1 == d2
+print('d1:', d1)
+print('d2:', d2)
+print('d1 == d2:', d1 == d2)
 
 s1 = set(keys)
 s2 = set(reversed(keys))
 
-print
-print 's1:', s1
-print 's2:', s2
-print 's1 == s2:', s1 == s2
+print()
+print('s1:', s1)
+print('s2:', s2)
+print('s1 == s2:', s1 == s2)

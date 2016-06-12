@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -7,8 +7,10 @@
 """
 #end_pymotw_header
 
+
 class MyClass(object):
     pass
+
 
 def unpredictable(obj):
     """Returns a new list containing obj.

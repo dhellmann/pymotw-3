@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -10,7 +10,7 @@
 import doctest_private_tests_external
 
 __test__ = {
-    'numbers':"""
+    'numbers': """
 >>> my_function(2, 3)
 6
 
@@ -18,7 +18,7 @@ __test__ = {
 6.0
 """,
 
-    'strings':"""
+    'strings': """
 >>> my_function('a', 3)
 'aaa'
 
@@ -26,12 +26,11 @@ __test__ = {
 'aaa'
 """,
 
-    'external':doctest_private_tests_external,
-    
-    }
+    'external': doctest_private_tests_external,
+}
+
 
 def my_function(a, b):
     """Returns a * b
     """
     return a * b
-

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -6,6 +6,9 @@
 """Demonstrate how insertion order affects dictonaries and sets.
 """
 #end_pymotw_header
+
+import collections
+
 
 def group_by_length(words):
     """Returns a dictionary grouping words into sets by length.
@@ -20,9 +23,7 @@ def group_by_length(words):
     True
 
     """
-    d = {}
+    d = collections.defaultdict(set)
     for word in words:
-        s = d.setdefault(len(word), set())
-        s.add(word)
+        d[len(word)].add(word)
     return d
-

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -6,6 +6,7 @@
 """Show the globals exposed in a test.
 """
 #end_pymotw_header
+
 
 class TestGlobals(object):
 
@@ -21,4 +22,3 @@ class TestGlobals(object):
         >>> 'var' in globals()
         False
         """
-    
