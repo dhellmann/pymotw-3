@@ -1129,32 +1129,29 @@ the caller.
 
 .. seealso::
 
-    `doctest <http://docs.python.org/library/doctest.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`doctest`
 
-    `The Mighty Dictionary <http://blip.tv/file/3332763>`__
-        Presentation by Brandon Rhodes at PyCon 2010 about the
-        internal operations of the :class:`dict`.
+   * `The Mighty Dictionary <http://blip.tv/file/3332763>`__ --
+     Presentation by Brandon Rhodes at PyCon 2010 about the internal
+     operations of the :class:`dict`.
 
-    :mod:`difflib`
-        Python's sequence difference computation library, used to
-        produce the ndiff output.
+   * :mod:`difflib` -- Python's sequence difference computation
+     library, used to produce the ndiff output.
 
-    `Sphinx <http://sphinx.pocoo.org/>`_
-        As well as being the documentation processing tool for
-        Python's standard library, Sphinx has been adopted by many
-        third-party projects because it is easy to use and produces
-        clean output in several digital and print formats.  Sphinx
-        includes an extension for running doctests as is processes
-        documentation source files, so the examples are always
-        accurate.
+   * `Sphinx <http://www.sphinx-doc.org/>`_ -- As well as being the
+     documentation processing tool for Python's standard library,
+     Sphinx has been adopted by many third-party projects because it
+     is easy to use and produces clean output in several digital and
+     print formats.  Sphinx includes an extension for running doctests
+     as is processes documentation source files, so the examples are
+     always accurate.
 
-    `nose <http://somethingaboutorange.com/mrl/projects/nose/>`_
-        Third-party test runner with :mod:`doctest` support.
+   * `py.test <http://codespeak.net/py/dist/test/>`_ -- Third-party
+     test runner with :mod:`doctest` support.
 
-    `py.test <http://codespeak.net/py/dist/test/>`_
-        Third-party test runner with :mod:`doctest` support.
+   * `nose2 <https://nose2.readthedocs.io/en/latest/>`_ -- Third-party
+     test runner with :mod:`doctest` support.
 
-    `Manuel <http://packages.python.org/manuel/>`_
-        Third-party documentation-based test runner with more advanced
-        test case extraction and integration with Sphinx.
+   * `Manuel <http://packages.python.org/manuel/>`_ -- Third-party
+     documentation-based test runner with more advanced test case
+     extraction and integration with Sphinx.
