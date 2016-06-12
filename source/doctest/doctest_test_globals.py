@@ -8,7 +8,7 @@
 #end_pymotw_header
 
 
-class TestGlobals(object):
+class TestGlobals:
 
     def one(self):
         """

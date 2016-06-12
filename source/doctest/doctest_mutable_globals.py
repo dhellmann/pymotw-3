@@ -10,7 +10,7 @@
 _module_data = {}
 
 
-class TestGlobals(object):
+class TestGlobals:
 
     def one(self):
         """

@@ -11,7 +11,7 @@ False
 """
 
 
-class A(object):
+class A:
     """Simple class.
 
     >>> A('instance_name').name

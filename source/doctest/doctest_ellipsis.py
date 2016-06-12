@@ -8,7 +8,7 @@
 #end_pymotw_header
 
 
-class MyClass(object):
+class MyClass:
     pass
 
 

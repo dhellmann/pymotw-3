@@ -148,7 +148,7 @@ into a different part of memory.
 	Expected:
 	    [<doctest_unpredictable.MyClass object at 0x10055a2d0>]
 	Got:
-	    [<doctest_unpredictable.MyClass object at 0x103999908>]
+	    [<doctest_unpredictable.MyClass object at 0x1030b8908>]
 	2 items had no tests:
 	    doctest_unpredictable
 	    doctest_unpredictable.MyClass
