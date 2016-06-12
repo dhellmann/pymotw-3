@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # encoding: utf-8
+#end_pymotw_header
 
 """Tests can appear in any docstring within the module.
 
@@ -26,7 +27,7 @@ class A(object):
         >>> A('name').method()
         'eman'
         """
-        return ''.join(reversed(list(self.name)))
+        return ''.join(reversed(self.name))
 
 
 class B(A):
