@@ -8,9 +8,7 @@
 """
 #end_pymotw_header
 
-import argparse
 from concurrent import futures
-import threading
 import time
 
 
@@ -21,19 +19,7 @@ def task(n):
     return n / 10
 
 
-def get_state(fn):
-    if fn.running():
-        return 'running'
-    elif fn.cancelled():
-        return 'canceled'
-    elif fn.done():
-        return 'no longer running'
-    else:
-        return 'unknown state'
-
-
 def done(fn):
-    print('{}: {}'.format(fn.arg, get_state(fn)))
     if fn.cancelled():
         print('{}: canceled'.format(fn.arg))
     elif fn.done():

@@ -9,9 +9,7 @@
 #end_pymotw_header
 
 from concurrent import futures
-import logging
 import random
-import threading
 import time
 
 

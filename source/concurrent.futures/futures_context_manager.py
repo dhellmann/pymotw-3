@@ -9,9 +9,6 @@
 #end_pymotw_header
 
 from concurrent import futures
-import logging
-import threading
-import time
 
 
 def task(n):
