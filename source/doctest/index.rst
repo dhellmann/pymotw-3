@@ -148,7 +148,7 @@ into a different part of memory.
 	Expected:
 	    [<doctest_unpredictable.MyClass object at 0x10055a2d0>]
 	Got:
-	    [<doctest_unpredictable.MyClass object at 0x104299908>]
+	    [<doctest_unpredictable.MyClass object at 0x103999908>]
 	2 items had no tests:
 	    doctest_unpredictable
 	    doctest_unpredictable.MyClass
@@ -171,11 +171,11 @@ to ignore portions of the verification value.
    :caption:
    :start-after: #end_pymotw_header
 
-The comment after the call to :func:`unpredictable` (``#doctest:
-+ELLIPSIS``) tells :mod:`doctest` to turn on the :const:`ELLIPSIS`
-option for that test.  The ``...`` replaces the memory address in the
-object id, so that portion of the expected value is ignored and the
-actual output matches and the test passes.
+The "``#doctest: +ELLIPSIS``" comment after the call to
+:func:`unpredictable` tells :mod:`doctest` to turn on the
+:const:`ELLIPSIS` option for that test.  The ``...`` replaces the
+memory address in the object id, so that portion of the expected value
+is ignored and the actual output matches and the test passes.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '-m doctest -v doctest_ellipsis.py'))
@@ -212,33 +212,26 @@ keys are added.
    :caption:
    :start-after: #end_pymotw_header
 
-Because of cache collision, the internal key list order is different
-for the two dictionaries, even though they contain the same values and
-are considered to be equal.  Sets use the same hashing algorithm, and
-exhibit the same behavior.
+Because of hash randomization and key collision, the internal key list
+order may be different for the dictionary each time the script
+runs. Sets use the same hashing algorithm, and exhibit the same
+behavior.
 
-.. {{{cog
-.. cog.out(run_script(cog.inFile, '-m doctest -v doctest_hashed_values.py'))
-.. }}}
+.. NOT RUNNING -- producing different orders isn't predictable
+.. cog.out(run_script(cog.inFile, 'doctest_hashed_values.py'))
+.. cog.out(run_script(cog.inFile, 'doctest_hashed_values.py', include_prefix=False))
 
 ::
 
-	$ python3 -m doctest -v doctest_hashed_values.py
+	$ python3 doctest_hashed_values.py
 	
-	d1: {'aa': 2, 'a': 1, 'aaa': 3}
-	d2: {'aa': 2, 'a': 1, 'aaa': 3}
-	d1 == d2: True
-	
-	s1: {'aa', 'a', 'aaa'}
-	s2: {'aa', 'a', 'aaa'}
-	s1 == s2: True
-	1 items had no tests:
-	    doctest_hashed_values
-	0 tests in 1 items.
-	0 passed and 0 failed.
-	Test passed.
+	dict: {'aa': 2, 'a': 1, 'aaa': 3}
+	set : {'aa', 'a', 'aaa'}
 
-.. {{{end}}}
+	$ python3 doctest_hashed_values.py
+	
+	dict: {'a': 1, 'aa': 2, 'aaa': 3}
+	set : {'a', 'aa', 'aaa'}
 
 The best way to deal with these potential discrepancies is to create
 tests that produce values that are not likely to change.  In the case
@@ -293,8 +286,8 @@ Tracebacks
 
 Tracebacks are a special case of changing data.  Since the paths in a
 traceback depend on the location where a module is installed on the
-file system on a given system, it would be impossible to write portable
-tests if they were treated the same as other output.
+file system, it would be impossible to write portable tests if they
+were treated the same as other output.
 
 .. literalinclude:: doctest_tracebacks.py
    :caption:
@@ -339,10 +332,9 @@ omitted.
    :start-after: #end_pymotw_header
 
 When :mod:`doctest` sees a traceback header line (either "``Traceback
-(most recent call last):``" or "``Traceback (innermost last):``",
-depending on the version of Python being used), it skips ahead to find
-the exception type and message, ignoring the intervening lines
-entirely.
+(most recent call last):``" or "``Traceback (innermost last):``", to
+support different versions of Python), it skips ahead to find the
+exception type and message, ignoring the intervening lines entirely.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '-m doctest -v doctest_tracebacks_no_body.py'))
@@ -358,12 +350,18 @@ entirely.
 	    Traceback (most recent call last):
 	    RuntimeError: here is the error
 	ok
+	Trying:
+	    this_raises()
+	Expecting:
+	    Traceback (innermost last):
+	    RuntimeError: here is the error
+	ok
 	1 items had no tests:
 	    doctest_tracebacks_no_body
 	1 items passed all tests:
-	   1 tests in doctest_tracebacks_no_body.this_raises
-	1 tests in 2 items.
-	1 passed and 0 failed.
+	   2 tests in doctest_tracebacks_no_body.this_raises
+	2 tests in 2 items.
+	2 passed and 0 failed.
 	Test passed.
 
 .. {{{end}}}
@@ -644,6 +642,7 @@ the docstrings elsewhere in the module.
 
 .. literalinclude:: doctest_docstrings.py
    :caption:
+   :start-after: #end_pymotw_header
 
 Docstrings at the module, class, and function levels can all contain
 tests.
@@ -710,6 +709,7 @@ docstring.
 
 .. literalinclude:: doctest_private_tests_external.py
    :caption:
+   :start-after: #end_pymotw_header
 
 After scanning the example file, :mod:`doctest` finds a total of five tests to run.
 
