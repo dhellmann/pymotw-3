@@ -1,6 +1,6 @@
-====================================
- Processes, Threads, and Coroutines
-====================================
+=====================================================
+ Concurrency with Processes, Threads, and Coroutines
+=====================================================
 
 Python includes sophisticated tools for managing concurrent operations
 using processes and threads.  Even many relatively simple programs can
@@ -39,11 +39,16 @@ I/O management using either a class-based protocol system or
 coroutines. :mod:`asyncio` replaces the old :mod:`asyncore` and
 :mod:`asynchat` modules, which are still available but deprecated.
 
+:mod:`concurrent.futures` provides implementation of thread and
+process-based executors for managing resources pools for running
+concurrent tasks.
+
 .. toctree::
    :maxdepth: 1
 
    asyncio/index
    threading/index
+   concurrent.futures/index
 
 ..
    .. toctree::

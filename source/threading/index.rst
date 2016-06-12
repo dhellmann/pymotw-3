@@ -1,6 +1,6 @@
-============================================
- threading --- Manage Concurrent Operations
-============================================
+=============================================================
+ threading --- Manage Concurrent Operations Within a Process
+=============================================================
 
 .. module:: threading
     :synopsis: Manage concurrent operations
