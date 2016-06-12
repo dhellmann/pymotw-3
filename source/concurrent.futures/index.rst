@@ -53,16 +53,16 @@ a :class:`list`).
 	Thread-1: sleeping 5
 	Thread-2: sleeping 4
 	main: unprocessed results <generator object
-	Executor.map.<locals>.result_iterator at 0x1016c80a0>
+	Executor.map.<locals>.result_iterator at 0x1015c80a0>
 	main: waiting for real results
 	Thread-2: done with 4
 	Thread-2: sleeping 3
 	Thread-1: done with 5
 	Thread-1: sleeping 2
-	Thread-2: done with 3
-	Thread-2: sleeping 1
 	Thread-1: done with 2
-	Thread-2: done with 1
+	Thread-1: sleeping 1
+	Thread-2: done with 3
+	Thread-1: done with 1
 	main: results: [0.5, 0.4, 0.3, 0.2, 0.1]
 
 .. {{{end}}}
@@ -91,11 +91,11 @@ result is made available.
 	
 	main: starting
 	Thread-1: sleeping 5
-	main: future: <Future at 0x1024c60b8 state=running>
+	main: future: <Future at 0x1010e60b8 state=running>
 	main: waiting for results
 	Thread-1: done with 5
 	main: result: 0.5
-	main: future after result: <Future at 0x1024c60b8 state=finished
+	main: future after result: <Future at 0x1010e60b8 state=finished
 	 returned float>
 
 .. {{{end}}}
@@ -235,13 +235,47 @@ multiple tasks.
 
 	$ python3 futures_process_pool_map.py
 	
-	ran task 5 in process 40976
-	ran task 4 in process 40977
-	ran task 3 in process 40976
-	ran task 2 in process 40976
-	ran task 1 in process 40977
+	ran task 5 in process 44911
+	ran task 4 in process 44912
+	ran task 3 in process 44911
+	ran task 2 in process 44912
+	ran task 1 in process 44911
 
 .. {{{end}}}
+
+Context Manager
+===============
+
+Executors work as context managers, running tasks concurrently and
+waiting for them all to complete. When the context manager exits, the
+:func:`shutdown` method of the executor is called.
+
+.. literalinclude:: futures_context_manager.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+This mode of using the executor is useful when the thread or process
+resources should be cleaned up when execution leaves the current
+scope.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'futures_context_manager.py'))
+.. }}}
+
+::
+
+	$ python3 futures_context_manager.py
+	
+	main: starting
+	1
+	2
+	3
+	4
+	main: done
+
+.. {{{end}}}
+
+
 
 .. seealso::
 
