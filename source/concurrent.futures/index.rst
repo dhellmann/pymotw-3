@@ -53,16 +53,16 @@ a :class:`list`).
 	Thread-1: sleeping 5
 	Thread-2: sleeping 4
 	main: unprocessed results <generator object
-	Executor.map.<locals>.result_iterator at 0x1014a8f10>
+	Executor.map.<locals>.result_iterator at 0x1048c70a0>
 	main: waiting for real results
 	Thread-2: done with 4
 	Thread-2: sleeping 3
 	Thread-1: done with 5
 	Thread-1: sleeping 2
-	Thread-1: done with 2
-	Thread-1: sleeping 1
 	Thread-2: done with 3
-	Thread-1: done with 1
+	Thread-2: sleeping 1
+	Thread-1: done with 2
+	Thread-2: done with 1
 	main: results: [0.5, 0.4, 0.3, 0.2, 0.1]
 
 .. {{{end}}}
@@ -70,9 +70,9 @@ a :class:`list`).
 Scheduling Individual Tasks
 ===========================
 
-Besides using :func:`map`, it is possible to schedule an individual
-task with an executor and receive the :class:`Future` instance to wait
-for that task's results by using :func:`submit`.
+In addition to using :func:`map`, it is possible to schedule an
+individual task with an executor using :func:`submit`, and use the
+:class:`Future` instance returned to wait for that task's results.
 
 .. literalinclude:: futures_thread_pool_submit.py
    :caption:
@@ -91,11 +91,11 @@ result is made available.
 	
 	main: starting
 	Thread-1: sleeping 5
-	main: future: <Future at 0x101be40b8 state=running>
+	main: future: <Future at 0x1012e40b8 state=running>
 	main: waiting for results
 	Thread-1: done with 5
 	main: result: 0.5
-	main: future after result: <Future at 0x101be40b8 state=finished
+	main: future after result: <Future at 0x1012e40b8 state=finished
 	 returned float>
 
 .. {{{end}}}
@@ -103,14 +103,18 @@ result is made available.
 Future Callbacks
 ================
 
-To take some action without explicitly waiting for the result, use
-:func:`add_done_callback` to specify a new function to call when the
-:class:`Future` is done. The callback should be a callable taking a
-single argument, the :class:`Future` instance.
+To take some action when a task completed, without explicitly waiting
+for the result, use :func:`add_done_callback` to specify a new
+function to call when the :class:`Future` is done. The callback should
+be a callable taking a single argument, the :class:`Future` instance.
 
 .. literalinclude:: futures_future_callback.py
    :caption:
    :start-after: #end_pymotw_header
+
+The callback is invoked regardless of the reason the :class:`Future`
+is considered "done," so it is necessary to check the status of the
+object passed in to the callback before using it in any way.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'futures_future_callback.py', line_break_mode='wrap'))
@@ -121,12 +125,56 @@ single argument, the :class:`Future` instance.
 	$ python3 futures_future_callback.py
 	
 	main: starting
-	Thread-1: sleeping 5
-	Thread-1: done with 5
-	callback checking status of <Future at 0x10155d518
-	state=finished returned float>
-	done
-	value returned: 0.5
+	5: sleeping
+	5: done
+	5: no longer running
+	5: value returned: 0.5
+
+.. {{{end}}}
+
+A :class:`Future` can be cancelled, if it has been submitted but not
+started, by calling its :func:`cancel` method.
+
+.. literalinclude:: futures_future_callback_cancel.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+:func:`cancel` returns a Boolean indicating whether or not the task
+was able to be cancelled.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'futures_future_callback_cancel.py'))
+.. }}}
+
+::
+
+	$ python3 futures_future_callback_cancel.py
+	
+	main: starting
+	main: submitting 10
+	10: sleeping
+	10: done
+	main: submitting 9
+	main: submitting 8
+	main: submitting 7
+	main: submitting 6
+	main: submitting 5
+	main: submitting 4
+	main: submitting 3
+	main: submitting 2
+	main: submitting 1
+	1: cancelled
+	2: cancelled
+	3: cancelled
+	4: cancelled
+	5: cancelled
+	6: cancelled
+	7: cancelled
+	8: cancelled
+	9: cancelled
+	main: did not cancel 10
+	10: no longer running
+	10: value returned: 1.0
 
 .. {{{end}}}
 

@@ -15,37 +15,41 @@ import time
 
 
 def task(n):
-    print('{}: sleeping {}'.format(
-        threading.current_thread().name,
-        n)
-    )
-    time.sleep(n / 10)
-    print('{}: done with {}'.format(
-        threading.current_thread().name,
-        n)
-    )
+    print('{}: sleeping'.format(n))
+    time.sleep(0.5)
+    print('{}: done'.format(n))
     return n / 10
 
 
-def done(fn):
-    print('callback checking status of {}'.format(fn))
+def get_state(fn):
     if fn.running():
-        print('still running')
+        return 'running'
     elif fn.cancelled():
-        print('cancelled')
+        return 'cancelled'
     elif fn.done():
-        print('done')
-        error = fn.exception()
-        if error:
-            print('error returned: {}'.format(error))
-        else:
-            result = fn.result()
-            print('value returned: {}'.format(result))
+        return 'no longer running'
+    else:
+        return 'unknown state'
+
+
+def done(fn):
+    print('{}: {}'.format(fn.arg, get_state(fn)))
+    if not fn.done():
+        return
+    if fn.cancelled():
+        return
+    error = fn.exception()
+    if error:
+        print('{}: error returned: {}'.format(fn.arg, error))
+    else:
+        result = fn.result()
+        print('{}: value returned: {}'.format(fn.arg, result))
 
 
 if __name__ == '__main__':
     ex = futures.ThreadPoolExecutor(max_workers=2)
     print('main: starting')
     f = ex.submit(task, 5)
+    f.arg = 5
     f.add_done_callback(done)
     result = f.result()
