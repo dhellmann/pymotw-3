@@ -140,15 +140,14 @@ into a different part of memory.
 	    [<doctest_unpredictable.MyClass object at 0x10055a2d0>]
 	****************************************************************
 	******
-	File "/Users/dhellmann/Dropbox/PyMOTW/Python3/pymotw-3/source/do
-	ctest/doctest_unpredictable.py", line 18, in doctest_unpredictab
-	le.unpredictable
+	File ".../doctest_unpredictable.py", line 18, in doctest_unpredi
+	ctable.unpredictable
 	Failed example:
 	    unpredictable(MyClass())
 	Expected:
 	    [<doctest_unpredictable.MyClass object at 0x10055a2d0>]
 	Got:
-	    [<doctest_unpredictable.MyClass object at 0x1030b8908>]
+	    [<doctest_unpredictable.MyClass object at 0x104994d30>]
 	2 items had no tests:
 	    doctest_unpredictable
 	    doctest_unpredictable.MyClass
@@ -395,9 +394,8 @@ double-spaced with blank lines between.
 	    Line one.
 	****************************************************************
 	******
-	File "/Users/dhellmann/Dropbox/PyMOTW/Python3/pymotw-3/source/do
-	ctest/doctest_blankline_fail.py", line 14, in doctest_blankline_
-	fail.double_space
+	File ".../doctest_blankline_fail.py", line 14, in doctest_blankl
+	ine_fail.double_space
 	Failed example:
 	    double_space(['Line one.', 'Line two.'])
 	Expected:
@@ -486,9 +484,8 @@ report as well.
 	    6 
 	****************************************************************
 	******
-	File "/Users/dhellmann/Dropbox/PyMOTW/Python3/pymotw-3/source/do
-	ctest/doctest_extra_space.py", line 17, in doctest_extra_space.m
-	y_function
+	File ".../doctest_extra_space.py", line 17, in doctest_extra_spa
+	ce.my_function
 	Failed example:
 	    my_function(2, 3)
 	Expected:
@@ -537,8 +534,8 @@ also available, for output where those formats are more readable.
 	    6 
 	****************************************************************
 	******
-	File "/Users/dhellmann/Dropbox/PyMOTW/Python3/pymotw-3/source/do
-	ctest/doctest_ndiff.py", line 17, in doctest_ndiff.my_function
+	File ".../doctest_ndiff.py", line 17, in doctest_ndiff.my_functi
+	on
 	Failed example:
 	    my_function(2, 3) #doctest: +REPORT_NDIFF
 	Differences (ndiff with -expected +actual):
@@ -1098,9 +1095,8 @@ The module variable ``_module_data`` is changed by the tests for
 	    False
 	****************************************************************
 	******
-	File "/Users/dhellmann/Dropbox/PyMOTW/Python3/pymotw-3/source/do
-	ctest/doctest_mutable_globals.py", line 25, in doctest_mutable_g
-	lobals.TestGlobals.two
+	File ".../doctest_mutable_globals.py", line 25, in doctest_mutab
+	le_globals.TestGlobals.two
 	Failed example:
 	    'var' in _module_data
 	Expected:

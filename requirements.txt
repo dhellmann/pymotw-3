@@ -16,7 +16,7 @@ six==1.10.0
 snowballstemmer==1.2.0
 Sphinx==1.3.2
 sphinx-rtd-theme==0.1.9
-sphinxcontrib-paverutils==1.10.0
+sphinxcontrib-paverutils==1.11.0
 wheel==0.26.0
 feedparser==5.2.1
 lxml==3.5.0

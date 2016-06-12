@@ -237,8 +237,7 @@ module name and line number.
 
 	$ python3 warnings_filterwarnings_lineno.py
 	
-	/Users/dhellmann/Dropbox/PyMOTW/Python3/pymotw-3/source/warnings/warni
-	ngs_filter.py:12: UserWarning: Show this message
+	.../warnings_filter.py:12: UserWarning: Show this message
 	  warnings.warn('Show this message')
 
 .. {{{end}}}

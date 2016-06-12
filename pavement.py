@@ -87,10 +87,18 @@ options(
 )
 
 
+def _elide_path_prefix(infile, line):
+    """Replace any absolute path references to my working dir with ...
+    """
+    rundir = os.path.abspath(path(infile).dirname())
+    return line.replace(rundir, '...')
+
+
 # Replace run_script with local wrapper
 def run_script(input_file, script_name, break_lines_at=64, **kwds):
     return paverutils.run_script(input_file, script_name,
                                  break_lines_at=break_lines_at,
+                                 line_cleanups=[_elide_path_prefix],
                                  **kwds)
 
 # Stuff commonly used symbols into the builtins so we don't have to
