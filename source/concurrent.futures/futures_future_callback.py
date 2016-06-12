@@ -34,16 +34,17 @@ def get_state(fn):
 
 def done(fn):
     print('{}: {}'.format(fn.arg, get_state(fn)))
-    if not fn.done():
-        return
     if fn.cancelled():
-        return
-    error = fn.exception()
-    if error:
-        print('{}: error returned: {}'.format(fn.arg, error))
-    else:
-        result = fn.result()
-        print('{}: value returned: {}'.format(fn.arg, result))
+        print('{}: canceled'.format(fn.arg))
+    elif fn.done():
+        error = fn.exception()
+        if error:
+            print('{}: error returned: {}'.format(
+                fn.arg, error))
+        else:
+            result = fn.result()
+            print('{}: value returned: {}'.format(
+                fn.arg, result))
 
 
 if __name__ == '__main__':

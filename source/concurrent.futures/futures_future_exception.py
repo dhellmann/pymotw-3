@@ -31,6 +31,6 @@ print('main: error: {}'.format(error))
 try:
     result = f.result()
 except ValueError as e:
-    print('main: saw error {} when accessing result'.format(e))
+    print('main: saw error "{}" when accessing result'.format(e))
 else:
     print('main: result: {}'.format(result))
