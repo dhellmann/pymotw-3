@@ -68,6 +68,7 @@ without importing the code and potentially triggering side-effects.
 .. toctree::
     :maxdepth: 1
 
+    doctest/index
     cgitb/index
     compileall/index
     pdb/index
