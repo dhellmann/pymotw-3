@@ -81,6 +81,7 @@ container type using one of the abstract base classes defined in
     bisect/index
     queue/index
     pprint/index
+    copy/index
 
 ..
     heapq/index

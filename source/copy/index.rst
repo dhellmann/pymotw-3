@@ -1,13 +1,11 @@
-===========================
- copy -- Duplicate Objects
-===========================
+============================
+ copy --- Duplicate Objects
+============================
 
 .. module:: copy
     :synopsis: Duplicating objects.
 
 :Purpose: Provides functions for duplicating objects using shallow or deep copy semantics.
-:Python Version: 1.4 and later
-
 
 The :mod:`copy` module includes two functions, :func:`copy` and
 :func:`deepcopy`, for duplicating existing objects.
