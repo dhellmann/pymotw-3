@@ -1,0 +1,218 @@
+===========================
+ copy -- Duplicate Objects
+===========================
+
+.. module:: copy
+    :synopsis: Duplicating objects.
+
+:Purpose: Provides functions for duplicating objects using shallow or deep copy semantics.
+:Python Version: 1.4 and later
+
+
+The :mod:`copy` module includes two functions, :func:`copy` and
+:func:`deepcopy`, for duplicating existing objects.
+
+Shallow Copies
+==============
+
+The *shallow copy* created by :func:`copy` is a new container
+populated with references to the contents of the original object. When
+making a shallow copy of a :class:`list` object, a new :class:`list`
+is constructed and the elements of the original object are appended to
+it.
+
+.. include:: copy_shallow.py
+    :literal:
+    :start-after: #end_pymotw_header
+
+For a shallow copy, the :class:`MyClass` instance is not duplicated, so
+the reference in the :data:`dup` list is to the same object that is in 
+:data:`my_list`.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'copy_shallow.py'))
+.. }}}
+
+::
+
+	$ python copy_shallow.py
+
+	             my_list: [<__main__.MyClass instance at 0x100dadc68>]
+	                 dup: [<__main__.MyClass instance at 0x100dadc68>]
+	      dup is my_list: False
+	      dup == my_list: True
+	dup[0] is my_list[0]: True
+	dup[0] == my_list[0]: True
+
+.. {{{end}}}
+
+
+Deep Copies
+===========
+
+The *deep copy* created by :func:`deepcopy` is a new container
+populated with copies of the contents of the original object. To make
+a deep copy of a :class:`list`, a new :class:`list` is constructed,
+the elements of the original list are copied, then those copies are
+appended to the new list.
+
+Replacing the call to :func:`copy` with :func:`deepcopy` makes the
+difference in the output apparent.
+
+::
+
+    dup = copy.deepcopy(my_list)
+
+The first element of the list is no longer the same object reference,
+but when the two objects are compared they still evaluate as being
+equal.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'copy_deep.py'))
+.. }}}
+
+::
+
+	$ python copy_deep.py
+
+	             my_list: [<__main__.MyClass instance at 0x100dadc68>]
+	                 dup: [<__main__.MyClass instance at 0x100dadc20>]
+	      dup is my_list: False
+	      dup == my_list: True
+	dup[0] is my_list[0]: False
+	dup[0] == my_list[0]: True
+
+.. {{{end}}}
+
+
+Customizing Copy Behavior
+=========================
+
+It is possible to control how copies are made using the
+:func:`__copy__` and :func:`__deepcopy__` special methods.
+
+* :func:`__copy__` is called without any arguments and should return a
+  shallow copy of the object.
+
+* :func:`__deepcopy__` is called with a memo dictionary, and should
+  return a deep copy of the object. Any member attributes that need to
+  be deep-copied should be passed to :func:`copy.deepcopy`, along with
+  the memo dictionary, to control for recursion (The memo dictionary
+  is explained in more detail later.).
+
+This example illustrates how the methods are called:
+
+.. include:: copy_hooks.py
+    :literal:
+    :start-after: #end_pymotw_header
+
+The memo dictionary is used to keep track of the values that have been
+copied already, to avoid infinite recursion.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'copy_hooks.py'))
+.. }}}
+
+::
+
+	$ python copy_hooks.py
+
+	__copy__()
+	__deepcopy__({})
+
+.. {{{end}}}
+
+
+Recursion in Deep Copy
+======================
+
+To avoid problems with duplicating recursive data structures,
+:func:`deepcopy` uses a dictionary to track objects that have already
+been copied. This dictionary is passed to the :func:`__deepcopy__`
+method so it can be examined there as well.
+
+This example shows how an interconnected data structure such as a
+directed graph can assist with protecting against recursion by
+implementing a :func:`__deepcopy__` method.
+
+.. include:: copy_recursion.py
+    :literal:
+    :start-after: #end_pymotw_header
+
+The :class:`Graph` class includes a few basic directed graph
+methods. An instance can be initialized with a name and a list of
+existing nodes to which it is connected. The :func:`add_connection`
+method is used to set up bi-directional connections. It is also used
+by the deepcopy operator.
+
+The :func:`__deepcopy__` method prints messages to show how it is
+called, and manages the memo dictionary contents as needed. Instead of
+copying the connection list wholesale, it creates a new list and
+appends copies of the individual connections to it. That ensures that
+the memo dictionary is updated as each new node is duplicated, and
+avoids recursion issues or extra copies of nodes. As before, it
+returns the copied object when it is done.
+
+.. digraph:: copy_example
+   :caption: Deep copy for an Object Graph With Cycles
+
+   "root";
+   "a" -> "root";
+   "b" -> "root";
+   "b" -> "a";
+   "root" -> "a";
+   "root" -> "b";
+
+There are several cycles in the graph shown in :figure:`copy_example`,
+but handling the recursion with the memo dictionary prevents the
+traversal from causing a stack overflow error.  When the *root* node
+is copied, the output is:
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'copy_recursion.py'))
+.. }}}
+
+::
+
+	$ python copy_recursion.py
+	
+	Calling __deepcopy__ for Graph(name=root, id=4309347072)
+	  Memo dictionary:
+	{   }
+	  Copying to new object Graph(name=root, id=4309347360)
+	
+	Calling __deepcopy__ for Graph(name=a, id=4309347144)
+	  Memo dictionary:
+	{   Graph(name=root, id=4309347072): Graph(name=root, id=4309347360),
+	    4307936896: ['root'],
+	    4309253504: 'root'}
+	  Copying to new object Graph(name=a, id=4309347504)
+	
+	Calling __deepcopy__ for Graph(name=root, id=4309347072)
+	  Already copied to Graph(name=root, id=4309347360)
+	
+	Calling __deepcopy__ for Graph(name=b, id=4309347216)
+	  Memo dictionary:
+	{   Graph(name=root, id=4309347072): Graph(name=root, id=4309347360),
+	    Graph(name=a, id=4309347144): Graph(name=a, id=4309347504),
+	    4307936896: [   'root',
+	                    'a',
+	                    Graph(name=root, id=4309347072),
+	                    Graph(name=a, id=4309347144)],
+	    4308678136: 'a',
+	    4309253504: 'root',
+	    4309347072: Graph(name=root, id=4309347360),
+	    4309347144: Graph(name=a, id=4309347504)}
+	  Copying to new object Graph(name=b, id=4309347864)
+
+.. {{{end}}}
+
+The second time the *root* node is encountered, while the *a* node is
+being copied, :func:`__deepcopy__` detects the recursion and re-uses
+the existing value from the memo dictionary instead of creating a new
+object.
+
+.. seealso::
+
+    `copy <http://docs.python.org/library/copy.html>`_
+        The standard library documentation for this module.
