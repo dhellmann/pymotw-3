@@ -210,5 +210,4 @@ object.
 
 .. seealso::
 
-    `copy <http://docs.python.org/library/copy.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`copy`
