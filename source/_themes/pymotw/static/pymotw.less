@@ -199,6 +199,7 @@ a.headerlink {
 	font-weight: normal;
 	font-style: normal;
 }
+p.caption:hover > a.headerlink,
 h1:hover > a.headerlink,
 h2:hover > a.headerlink,
 h3:hover > a.headerlink,
@@ -313,6 +314,12 @@ div.linenodiv pre {
 	/* insert a # before the filename in the caption to make it look like
        a code comment */
 	content: "# ";
+}
+
+/* center captions for figures under their image */
+div.figure p.caption {
+	text-align: center;
+	font-weight: bold;
 }
 
 /* inline literals */
