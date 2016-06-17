@@ -71,6 +71,7 @@ be used.
    :maxdepth: 1
 
    argparse/index
+   getpass/index
    shlex/index
    configparser/index
    atexit/index
