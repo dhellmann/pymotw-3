@@ -29,7 +29,7 @@ class MyClass:
         return MyClass(self.name)
 
     def __deepcopy__(self, memo):
-        print('__deepcopy__(%s)' % str(memo))
+        print('__deepcopy__({})'.format(memo))
         return MyClass(copy.deepcopy(self.name, memo))
 
 
