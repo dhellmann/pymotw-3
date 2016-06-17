@@ -42,6 +42,7 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.extlinks',
     'tableref',
+    'figureref',
 ]
 
 python_version = '{}.{}'.format(*(sys.version_info[:2]))
