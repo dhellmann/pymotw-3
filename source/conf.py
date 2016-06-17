@@ -41,6 +41,7 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.ifconfig',
     'sphinx.ext.extlinks',
+    'sphinx.ext.graphviz',
     'tableref',
     'figureref',
 ]
