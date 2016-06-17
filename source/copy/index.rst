@@ -19,9 +19,9 @@ making a shallow copy of a :class:`list` object, a new :class:`list`
 is constructed and the elements of the original object are appended to
 it.
 
-.. include:: copy_shallow.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: copy_shallow.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 For a shallow copy, the :class:`MyClass` instance is not duplicated, so
 the reference in the :data:`dup` list is to the same object that is in 
@@ -33,10 +33,10 @@ the reference in the :data:`dup` list is to the same object that is in
 
 ::
 
-	$ python copy_shallow.py
-
-	             my_list: [<__main__.MyClass instance at 0x100dadc68>]
-	                 dup: [<__main__.MyClass instance at 0x100dadc68>]
+	$ python3 copy_shallow.py
+	
+	             my_list: [<__main__.MyClass object at 0x1007a9780>]
+	                 dup: [<__main__.MyClass object at 0x1007a9780>]
 	      dup is my_list: False
 	      dup == my_list: True
 	dup[0] is my_list[0]: True
@@ -57,9 +57,10 @@ appended to the new list.
 Replacing the call to :func:`copy` with :func:`deepcopy` makes the
 difference in the output apparent.
 
-::
-
-    dup = copy.deepcopy(my_list)
+.. literalinclude:: copy_deep.py
+   :caption:
+   :start-after: #end_pymotw_header
+   :emphasize-lines: 20
 
 The first element of the list is no longer the same object reference,
 but when the two objects are compared they still evaluate as being
@@ -71,10 +72,10 @@ equal.
 
 ::
 
-	$ python copy_deep.py
-
-	             my_list: [<__main__.MyClass instance at 0x100dadc68>]
-	                 dup: [<__main__.MyClass instance at 0x100dadc20>]
+	$ python3 copy_deep.py
+	
+	             my_list: [<__main__.MyClass object at 0x1018a9780>]
+	                 dup: [<__main__.MyClass object at 0x1018b1b38>]
 	      dup is my_list: False
 	      dup == my_list: True
 	dup[0] is my_list[0]: False
@@ -100,9 +101,9 @@ It is possible to control how copies are made using the
 
 This example illustrates how the methods are called:
 
-.. include:: copy_hooks.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: copy_hooks.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The memo dictionary is used to keep track of the values that have been
 copied already, to avoid infinite recursion.
@@ -113,8 +114,8 @@ copied already, to avoid infinite recursion.
 
 ::
 
-	$ python copy_hooks.py
-
+	$ python3 copy_hooks.py
+	
 	__copy__()
 	__deepcopy__({})
 
@@ -129,13 +130,13 @@ To avoid problems with duplicating recursive data structures,
 been copied. This dictionary is passed to the :func:`__deepcopy__`
 method so it can be examined there as well.
 
-This example shows how an interconnected data structure such as a
+The next example shows how an interconnected data structure such as a
 directed graph can assist with protecting against recursion by
 implementing a :func:`__deepcopy__` method.
 
-.. include:: copy_recursion.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: copy_recursion.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The :class:`Graph` class includes a few basic directed graph
 methods. An instance can be initialized with a name and a list of
@@ -172,36 +173,33 @@ is copied, the output is:
 
 ::
 
-	$ python copy_recursion.py
+	$ python3 copy_recursion.py
 	
-	Calling __deepcopy__ for Graph(name=root, id=4309347072)
+	
+	Calling __deepcopy__ for Graph(name=root, id=4303035248)
 	  Memo dictionary:
-	{   }
-	  Copying to new object Graph(name=root, id=4309347360)
+	{}
+	  Copying to new object Graph(name=root, id=4313858232)
 	
-	Calling __deepcopy__ for Graph(name=a, id=4309347144)
+	Calling __deepcopy__ for Graph(name=a, id=4312651424)
 	  Memo dictionary:
-	{   Graph(name=root, id=4309347072): Graph(name=root, id=4309347360),
-	    4307936896: ['root'],
-	    4309253504: 'root'}
-	  Copying to new object Graph(name=a, id=4309347504)
+	{   Graph(name=root, id=4303035248): Graph(name=root, id=4313858
+	232)}
+	  Copying to new object Graph(name=a, id=4313950640)
 	
-	Calling __deepcopy__ for Graph(name=root, id=4309347072)
-	  Already copied to Graph(name=root, id=4309347360)
+	Calling __deepcopy__ for Graph(name=root, id=4303035248)
+	  Already copied to Graph(name=root, id=4313858232)
 	
-	Calling __deepcopy__ for Graph(name=b, id=4309347216)
+	Calling __deepcopy__ for Graph(name=b, id=4312652544)
 	  Memo dictionary:
-	{   Graph(name=root, id=4309347072): Graph(name=root, id=4309347360),
-	    Graph(name=a, id=4309347144): Graph(name=a, id=4309347504),
-	    4307936896: [   'root',
-	                    'a',
-	                    Graph(name=root, id=4309347072),
-	                    Graph(name=a, id=4309347144)],
-	    4308678136: 'a',
-	    4309253504: 'root',
-	    4309347072: Graph(name=root, id=4309347360),
-	    4309347144: Graph(name=a, id=4309347504)}
-	  Copying to new object Graph(name=b, id=4309347864)
+	{   Graph(name=root, id=4303035248): Graph(name=root, id=4313858
+	232),
+	    Graph(name=a, id=4312651424): Graph(name=a, id=4313950640),
+	    4303035248: Graph(name=root, id=4313858232),
+	    4312651424: Graph(name=a, id=4313950640),
+	    4312699784: [   Graph(name=root, id=4303035248),
+	                    Graph(name=a, id=4312651424)]}
+	  Copying to new object Graph(name=b, id=4313950752)
 
 .. {{{end}}}
 
