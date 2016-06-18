@@ -30,6 +30,11 @@ includes support for modifying the import path for a package, so that
 the contents can be installed into multiple directories but appear as
 part of the same package.
 
+.. toctree::
+   :maxdepth: 1
+
+   zipimport/index
+
 ..
    .. toctree::
        :maxdepth: 1

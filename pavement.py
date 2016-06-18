@@ -107,20 +107,31 @@ def run_script(input_file, script_name, break_lines_at=64, **kwds):
                                  line_cleanups=[_elide_path_prefix],
                                  **kwds)
 
+def safe_unlink(pathname):
+    "Remove a file, but only if it exists."
+    print('safe_unlink({})'.format(pathname))
+    p = path(pathname)
+    if not p.exists():
+        return
+    if p.isdir():
+        p.rmtree()
+    else:
+        p.unlink()
+
+
 # Stuff commonly used symbols into the builtins so we don't have to
 # import them in all of the cog blocks where we want to use them.
 __builtins__['run_script'] = run_script
 __builtins__['path'] = path
 __builtins__['sh'] = sh
+__builtins__['unlink'] = safe_unlink
 
 
 def remake_directories(*dirnames):
     """Remove the directories and recreate them.
     """
     for d in dirnames:
-        d = path(d)
-        if d.exists():
-            d.rmtree()
+        safe_unlink(d)
         d.mkdir()
     return
 

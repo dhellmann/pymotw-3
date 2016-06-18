@@ -1,14 +1,13 @@
 .. _zipimport-ref:
 
-=================================================
- zipimport -- Load Python Code from ZIP Archives
-=================================================
+==================================================
+ zipimport --- Load Python Code from ZIP Archives
+==================================================
 
 .. module:: zipimport
     :synopsis: Load Python code from ZIP archives.
 
 :Purpose: Import Python modules saved as members of ZIP archives.
-:Python Version: 2.3 and later
 
 The :mod:`zipimport` module implements the :class:`zipimporter` class,
 which can be used to find and load Python modules inside ZIP
@@ -28,12 +27,12 @@ Example
 =======
 
 These examples reuse some of the code from the discussion of
-:mod:`zipfile` to create an example ZIP archive containing a few Python
-modules.  
+:mod:`zipfile` to create an example ZIP archive containing a few
+Python modules.
 
-.. include:: zipimport_make_example.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: zipimport_make_example.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Run ``zipimport_make_example.py`` before any of the rest of the
 examples to create a ZIP archive containing all of the modules in the
@@ -43,14 +42,20 @@ in this section.
 .. {{{cog
 .. # clean up pyc files in case the interpreter version has
 .. # changed since the last build
-.. [ p.unlink() for p in path(cog.inFile).parent.glob('*.pyc') ]
-.. (path(cog.inFile).parent / 'zipimport_example.zip').unlink()
+.. workdir = path(cog.inFile).dirname()
+.. print('removing *.pyc')
+.. sh("find %s -name '*.pyc' | xargs rm" % workdir)
+.. print('removing __pycache__')
+.. sh("rm -rf %s" % (workdir / '__pycache__'))
+.. print('removing example_package/__pycache__')
+.. sh("rm -rf %s" % (workdir / 'example_package/__pycache__'))
+.. unlink(workdir / 'zipimport_example.zip')
 .. cog.out(run_script(cog.inFile, 'zipimport_make_example.py'))
 .. }}}
 
 ::
 
-	$ python zipimport_make_example.py
+	$ python3 zipimport_make_example.py
 	
 	__init__.pyc
 	example_package/__init__.pyc
@@ -75,24 +80,25 @@ Finding a Module
 Given the full name of a module, :func:`find_module()` will try to
 locate that module inside the ZIP archive.
 
-.. include:: zipimport_find_module.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: zipimport_find_module.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 If the module is found, the :class:`zipimporter` instance is
 returned. Otherwise, ``None`` is returned.
 
 .. {{{cog
 .. (path(cog.inFile).parent / 'zipimport_example.zip').unlink()
-.. run_script(cog.inFile, 'zipimport_make_example.py', break_lines_at=65, line_break_mode='wrap')
-.. cog.out(run_script(cog.inFile, 'zipimport_find_module.py'))
+.. run_script(cog.inFile, 'zipimport_make_example.py')
+.. cog.out(run_script(cog.inFile, 'zipimport_find_module.py', line_break_mode='wrap'))
 .. }}}
 
 ::
 
-	$ python zipimport_find_module.py
+	$ python3 zipimport_find_module.py
 	
-	zipimport_find_module : <zipimporter object "zipimport_example.zip">
+	zipimport_find_module : <zipimporter object
+	"zipimport_example.zip">
 	not_there : None
 
 .. {{{end}}}
@@ -103,9 +109,9 @@ Accessing Code
 The :func:`get_code()` method loads the code object for a module from
 the archive.
 
-.. include:: zipimport_get_code.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: zipimport_get_code.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The code object is not the same as a :class:`module` object, but is
 used to create one.
@@ -119,19 +125,19 @@ used to create one.
 
 ::
 
-	$ python zipimport_get_code.py
+	$ python3 zipimport_get_code.py
 	
-	<code object <module> at 0x1002cc330, file
-	"./zipimport_get_code.py", line 7>
+	<code object <module> at 0x102233810, file
+	"./zipimport_get_code.py", line 6>
 
 .. {{{end}}}
 
 To load the code as a usable module, use :func:`load_module()`
 instead.
 
-.. include:: zipimport_load_module.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: zipimport_load_module.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The result is a module object configured as though the code had been
 loaded from a regular import.
@@ -145,14 +151,14 @@ loaded from a regular import.
 
 ::
 
-	$ python zipimport_load_module.py
+	$ python3 zipimport_load_module.py
 	
-	<code object <module> at 0x1004306b0, file
-	"./zipimport_get_code.py", line 7>
+	<code object <module> at 0x1021b48a0, file
+	"./zipimport_get_code.py", line 6>
 	Name   : zipimport_get_code
 	Loader : <zipimporter object "zipimport_example.zip">
-	Code   : <code object <module> at 0x1004306b0, file
-	"./zipimport_get_code.py", line 7>
+	Code   : <code object <module> at 0x1021b48a0, file
+	"./zipimport_get_code.py", line 6>
 
 .. {{{end}}}
 
@@ -165,9 +171,9 @@ the source. In the case of the example, only
 ``zipimport_get_source.py`` is added to ``zipimport_example.zip`` (the
 rest of the modules are just added as the ``.pyc`` files).
 
-.. include:: zipimport_get_source.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: zipimport_get_source.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 If the source for a module is not available, :func:`get_source()`
 returns ``None``.
@@ -181,7 +187,7 @@ returns ``None``.
 
 ::
 
-	$ python zipimport_get_source.py
+	$ python3 zipimport_get_source.py
 	
 	=================================================================
 	zipimport_get_code
@@ -191,26 +197,29 @@ returns ``None``.
 	=================================================================
 	zipimport_get_source
 	=================================================================
-	#!/usr/bin/env python
+	#!/usr/bin/env python3
 	#
 	# Copyright 2007 Doug Hellmann.
 	#
-	
 	"""Retrieving the source code for a module within a zip archive.
-	
 	"""
 	#end_pymotw_header
 	
 	import zipimport
 	
+	modules = [
+	    'zipimport_get_code',
+	    'zipimport_get_source',
+	]
+	
 	importer = zipimport.zipimporter('zipimport_example.zip')
-	for module_name in ['zipimport_get_code', 'zipimport_get_source']
+	for module_name in modules:
 	    source = importer.get_source(module_name)
-	    print '=' * 80
-	    print module_name
-	    print '=' * 80
-	    print source
-	    print
+	    print('=' * 80)
+	    print(module_name)
+	    print('=' * 80)
+	    print(source)
+	    print()
 	
 	
 
@@ -222,9 +231,9 @@ Packages
 To determine if a name refers to a package instead of a regular module, use
 :func:`is_package()`.
 
-.. include:: zipimport_is_package.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: zipimport_is_package.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 In this case, ``zipimport_is_package`` came from a module and the
 ``example_package`` is a package.
@@ -237,7 +246,7 @@ In this case, ``zipimport_is_package`` came from a module and the
 
 ::
 
-	$ python zipimport_is_package.py
+	$ python3 zipimport_is_package.py
 	
 	zipimport_is_package False
 	example_package True
@@ -257,9 +266,9 @@ For example, with a "normal" module, the file system path can be
 constructed from the :attr:`__file__` attribute of the imported
 package like this:
 
-.. include:: zipimport_get_data_nozip.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: zipimport_get_data_nozip.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The output will depend on where the sample code is located on the
 file system.
@@ -272,11 +281,13 @@ file system.
 
 ::
 
-	$ python zipimport_get_data_nozip.py
+	$ python3 zipimport_get_data_nozip.py
 	
 	example_package/README.txt :
-	This file represents sample data which could be embedded in the ZIP
-	archive.  You could include a configuration file, images, or any other
+	This file represents sample data which could be embedded in the 
+	ZIP
+	archive.  You could include a configuration file, images, or any
+	 other
 	sort of noncode data.
 	
 
@@ -285,9 +296,9 @@ file system.
 If the ``example_package`` is imported from the ZIP archive instead of
 the file system, using :attr:`__file__` does not work:
 
-.. include:: zipimport_get_data_zip.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: zipimport_get_data_zip.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The :attr:`__file__` of the package refers to the ZIP archive, and not
 a directory, so building up the path to the ``README.txt`` file gives
@@ -302,14 +313,14 @@ the wrong value.
 
 ::
 
-	$ python zipimport_get_data_zip.py
+	$ python3 zipimport_get_data_zip.py
 	
 	zipimport_example.zip/example_package/__init__.pyc
 	zipimport_example.zip/example_package/README.txt :
 	Traceback (most recent call last):
-	  File "zipimport_get_data_zip.py", line 40, in <module>
-	    print open(data_filename, 'rt').read()
-	IOError: [Errno 20] Not a directory:
+	  File "zipimport_get_data_zip.py", line 20, in <module>
+	    print(open(data_filename, 'rt').read())
+	NotADirectoryError: [Errno 20] Not a directory:
 	'zipimport_example.zip/example_package/README.txt'
 
 .. {{{end}}}
@@ -319,9 +330,9 @@ A more reliable way to retrieve the file is to use the
 loaded the module can be accessed through the :attr:`__loader__`
 attribute of the imported module:
 
-.. include:: zipimport_get_data.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: zipimport_get_data.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 :func:`pkgutil.get_data` uses this interface to access data from
 within a package.
@@ -334,13 +345,12 @@ within a package.
 
 ::
 
-	$ python zipimport_get_data.py
+	$ python3 zipimport_get_data.py
 	
 	zipimport_example.zip/example_package/__init__.pyc
-	This file represents sample data which could be embedded in the ZIP
-	archive.  You could include a configuration file, images, or any other
-	sort of noncode data.
-	
+	b'This file represents sample data which could be embedded in th
+	e ZIP\narchive.  You could include a configuration file, images,
+	 or any other\nsort of noncode data.\n'
 
 .. {{{end}}}
 

@@ -19,3 +19,4 @@ dist/
 /source/mailbox/Example
 /source/filecmp/example
 /source/mmap/lorem_copy.txt
+/source/zipimport/zipimport_example.zip
