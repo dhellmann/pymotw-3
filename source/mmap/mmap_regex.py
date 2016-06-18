@@ -8,7 +8,6 @@
 
 import mmap
 import re
-import contextlib
 
 pattern = re.compile(rb'(\.\W+)?([^.]?nulla[^.]*?\.)',
                      re.DOTALL | re.IGNORECASE | re.MULTILINE)

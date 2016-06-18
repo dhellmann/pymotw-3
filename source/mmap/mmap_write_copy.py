@@ -8,7 +8,6 @@
 
 import mmap
 import shutil
-import contextlib
 
 # Copy the example file
 shutil.copyfile('lorem.txt', 'lorem_copy.txt')

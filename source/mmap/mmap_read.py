@@ -7,7 +7,6 @@
 #end_pymotw_header
 
 import mmap
-import contextlib
 
 with open('lorem.txt', 'r') as f:
     with mmap.mmap(f.fileno(), 0,
