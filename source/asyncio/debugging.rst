@@ -65,23 +65,15 @@ exits.
 	   INFO: enabling debugging
 	   INFO: entering event loop
 	   INFO: outer starting
-	WARNING: Executing <Task pending coro=<outer() running at
-	asyncio_debug.py:44> wait_for=<Task pending coro=<inner()
-	running at asyncio_debug.py:34> cb=[Task._wakeup()] created at
-	asyncio_debug.py:44> cb=[_run_until_complete_cb() at /Library/Fr
-	ameworks/Python.framework/Versions/3.5/lib/python3.5/asyncio/bas
-	e_events.py:118] created at /Library/Frameworks/Python.framework
-	/Versions/3.5/lib/python3.5/asyncio/base_events.py:317> took
-	0.004 seconds
 	   INFO: inner starting
 	   INFO: inner completed
 	WARNING: Executing <Task finished coro=<inner() done, defined at
 	asyncio_debug.py:34> result=None created at asyncio_debug.py:44>
-	took 0.109 seconds
+	took 0.102 seconds
 	   INFO: outer completed
-	/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/
-	asyncio/base_events.py:379: ResourceWarning: unclosed event loop
-	<_UnixSelectorEventLoop running=False closed=False debug=True>
+	.../lib/python3.5/asyncio/base_events.py:379: ResourceWarning:
+	unclosed event loop <_UnixSelectorEventLoop running=False
+	closed=False debug=True>
 	  DEBUG: Close <_UnixSelectorEventLoop running=False
 	closed=False debug=True>
 

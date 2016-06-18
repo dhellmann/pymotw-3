@@ -91,7 +91,10 @@ def _elide_path_prefix(infile, line):
     """Replace any absolute path references to my working dir with ...
     """
     rundir = os.path.abspath(path(infile).dirname())
-    return line.replace(rundir, '...')
+    line = line.replace(rundir, '...')
+    line = line.replace('/Library/Frameworks/Python.framework/Versions/3.5',
+                        '...')
+    return line
 
 
 # Replace run_script with local wrapper
