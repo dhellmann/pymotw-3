@@ -1,12 +1,11 @@
-==========================
- mmap -- Memory-map Files
-==========================
+===========================
+ mmap --- Memory-map Files
+===========================
 
 .. module:: mmap
     :synopsis: Memory-map files
 
 :Purpose: Memory-map files instead of reading the contents directly.
-:Python Version: 2.1 and later
 
 Memory-mapping a file uses the operating system virtual memory system
 to access the data on the file system directly, instead of using normal
@@ -25,13 +24,13 @@ methods like :func:`find`.
 All of the examples use the text file ``lorem.txt``, containing a bit
 of Lorem Ipsum. For reference, the text of the file is
 
-.. include:: lorem.txt
-    :literal:
+.. literalinclude:: lorem.txt
+   :caption:
 
 .. note::
 
   There are differences in the arguments and behaviors for
-  :func:`mmap` between Unix and Windows, which are not fully discussed
+  :func:`mmap` between UNIX and Windows, which are not fully discussed
   here. For more details, refer to the standard library documentation.
 
 Reading
@@ -58,9 +57,9 @@ platforms. Use :const:`ACCESS_READ` for read-only access,
 directly to the file), or :const:`ACCESS_COPY` for copy-on-write
 (assignments to memory are not written to the file).
 
-.. include:: mmap_read.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: mmap_read.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The file pointer tracks the last byte accessed through a slice
 operation.  In this example, the pointer moves ahead 10 bytes after
@@ -94,9 +93,9 @@ it. Then use any of the API methods that change the data
 The next example uses the default access mode of :const:`ACCESS_WRITE`
 and assigning to a slice to modify part of a line in place.
 
-.. include:: mmap_write_slice.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: mmap_write_slice.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The word "``consectetuer``" is replaced in the middle of the first
 line in memory and in the file.
@@ -126,9 +125,9 @@ Copy Mode
 Using the access setting :const:`ACCESS_COPY` does not write changes
 to the file on disk.
 
-.. include:: mmap_write_copy.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: mmap_write_copy.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 It is necessary to rewind the file handle in this example separately
 from the :class:`mmap` handle, because the internal state of the two
@@ -162,9 +161,9 @@ other modules that operate on strings, such as regular
 expressions. This example finds all of the sentences with "``nulla``" in
 them.
 
-.. include:: mmap_regex.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: mmap_regex.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Because the pattern includes two groups, the return value from
 :func:`findall` is a sequence of tuples. The :command:`print`
