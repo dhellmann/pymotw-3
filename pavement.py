@@ -73,7 +73,10 @@ options(
     ),
 
     migrate=Bunch(
-        old_loc='../../Python2/book-git/PyMOTW/',
+        old_locs=[
+            '../../Python2/book-git/PyMOTW/',
+            '../../Python2/src/PyMOTW/',
+        ],
     ),
 
     blog=Bunch(
@@ -326,7 +329,13 @@ def migrate(options):
     dest = path('source/' + module)
     if dest.exists():
         raise ValueError('%s already exists' % dest)
-    path(options.migrate.old_loc + '/' + source).copytree(dest)
+    for src_path in options.migrate.old_locs:
+        the_src = path(src_path + '/' + source)
+        if not the_src.exists():
+            print('did not find {}'.format(the_src))
+            continue
+        the_src.copytree(dest)
+        break
     (dest + '/__init__.py').remove()
     if source != module:
         # Rename any modules that have the old source module name to
