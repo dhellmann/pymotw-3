@@ -132,7 +132,7 @@ def remake_directories(*dirnames):
     """
     for d in dirnames:
         safe_unlink(d)
-        d.mkdir()
+        path(d).mkdir()
     return
 
 
