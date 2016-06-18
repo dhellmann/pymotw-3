@@ -90,8 +90,7 @@ the command line as well as from within your Python program.
 
 	$ python3 -m webbrowser
 	
-	Usage: /Library/Frameworks/Python.framework/Versions/3.5/lib/pyt
-	hon3.5/webbrowser.py [-n | -t] url
+	Usage: .../lib/python3.5/webbrowser.py [-n | -t] url
 	    -n: open new window
 	    -t: open new tab
 
@@ -100,5 +99,4 @@ the command line as well as from within your Python program.
 
 .. seealso::
 
-    `webbrowser <http://docs.python.org/lib/module-webbrowser.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`webbrowser`
