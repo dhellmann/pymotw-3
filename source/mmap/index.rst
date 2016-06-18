@@ -186,15 +186,8 @@ spaces so each result prints on a single line.
 
 .. seealso::
 
-    `mmap <http://docs.python.org/lib/module-mmap.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`mmap`
 
-    :mod:`os`
-        The ``os`` module.
+   * :mod:`os` -- The ``os`` module.
 
-    :mod:`contextlib`
-        Use the :func:`closing` function to create a context manager
-        for a memory mapped file.
-
-    :mod:`re`
-        Regular expressions.
+   * :mod:`re` -- Regular expressions.
