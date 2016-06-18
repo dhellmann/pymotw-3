@@ -72,6 +72,7 @@ a file, but does not reside on disk.
     glob/index
     fnmatch/index
     filecmp/index
+    mmap/index
 
 ..
     ospath/index
