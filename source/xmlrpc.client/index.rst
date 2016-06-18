@@ -115,40 +115,34 @@ combined to create more complex data structures.
 
 The simple types are
 
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'xmlrpc_types.py'))
-.. }}}
-
 ::
 
 	$ python3 xmlrpc_types.py
-	
-	boolean     : True
-	              <class 'bool'>
-	              True
-	integer     : 1
-	              <class 'int'>
-	              1
-	float       : 2.5
-	              <class 'float'>
-	              2.5
-	string      : some text
-	              <class 'str'>
-	              some text
-	datetime    : 20160618T19:27:29
-	              <class 'xmlrpc.client.DateTime'>
-	              20160618T19:27:29
-	array       : ['a', 'list']
-	              <class 'list'>
-	              ['a', 'list']
-	array       : ['a', 'tuple']
-	              <class 'list'>
-	              ['a', 'tuple']
-	structure   : {'a': 'dictionary'}
-	              <class 'dict'>
-	              {'a': 'dictionary'}
 
-.. {{{end}}}
+    boolean     : True
+                  <class 'bool'>
+                  True
+    integer     : 1
+                  <class 'int'>
+                  1
+    float       : 2.5
+                  <class 'float'>
+                  2.5
+    string      : some text
+                  <class 'str'>
+                  some text
+    datetime    : 20160618T19:31:47
+                  <class 'xmlrpc.client.DateTime'>
+                  20160618T19:31:47
+    array       : ['a', 'list']
+                  <class 'list'>
+                  ['a', 'list']
+    array       : ['a', 'tuple']
+                  <class 'list'>
+                  ['a', 'tuple']
+    structure   : {'a': 'dictionary'}
+                  <class 'dict'>
+                  {'a': 'dictionary'}
 
 The supported types can be nested to create values of arbitrary
 complexity.
@@ -161,10 +155,6 @@ This program passes a list of dictionaries containing all of the
 supported types to the sample server, which returns the data.  Tuples
 are converted to lists and :class:`datetime` instances are converted
 to :class:`DateTime` objects, but otherwise the data is unchanged.
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'xmlrpc_types_nested.py', line_break_mode='wrap'))
-.. }}}
 
 ::
 
@@ -215,8 +205,6 @@ to :class:`DateTime` objects, but otherwise the data is unchanged.
 	  'integer': 2,
 	  'string': 'some text',
 	  'structure': {'a': 'dictionary'}}]
-
-.. {{{end}}}
 
 XML-RPC supports dates as a native type, and :mod:`xmlrpclib` can use
 one of two classes to represent the date values in the outgoing proxy

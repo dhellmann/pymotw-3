@@ -25,6 +25,6 @@ data = [
 
 for t, v in data:
     as_string, type_name, value = server.show_type(v)
-    print('%-12s:' % t, as_string)
-    print('%12s ' % '', type_name)
-    print('%12s ' % '', value)
+    print('{:<12}: {}'.format(t, as_string))
+    print('{:12}  {}'.format('', type_name))
+    print('{:12}  {}'.format('', value))
