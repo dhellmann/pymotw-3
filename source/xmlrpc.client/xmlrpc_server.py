@@ -11,12 +11,6 @@ from xmlrpc.server import SimpleXMLRPCServer
 from xmlrpc.client import Binary
 import datetime
 
-server = SimpleXMLRPCServer(('localhost', 9000),
-                            logRequests=True,
-                            allow_none=True)
-server.register_introspection_functions()
-server.register_multicall_functions()
-
 
 class ExampleService:
 
@@ -55,10 +49,17 @@ class ExampleService:
         return response
 
 
-server.register_instance(ExampleService())
+if __name__ == '__main__':
+    server = SimpleXMLRPCServer(('localhost', 9000),
+                                logRequests=True,
+                                allow_none=True)
+    server.register_introspection_functions()
+    server.register_multicall_functions()
 
-try:
-    print('Use Control-C to exit')
-    server.serve_forever()
-except KeyboardInterrupt:
-    print('Exiting')
+    server.register_instance(ExampleService())
+
+    try:
+        print('Use Control-C to exit')
+        server.serve_forever()
+    except KeyboardInterrupt:
+        print('Exiting')

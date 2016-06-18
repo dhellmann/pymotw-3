@@ -28,5 +28,5 @@ print('o  :', o)
 pprint.pprint(server.show_type(o))
 
 o2 = MyObj(2, o)
-print('o2 :', o2)
+print('\no2 :', o2)
 pprint.pprint(server.show_type(o2))

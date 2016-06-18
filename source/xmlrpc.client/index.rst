@@ -13,7 +13,7 @@ communicate with an XML-RPC server written in any language.
 
 All of the examples in this section use the server defined in
 ``xmlrpc_server.py``, available in the source distribution and
-included here for reference:
+included here for reference.
 
 .. literalinclude:: xmlrpc_server.py
    :caption:
@@ -30,8 +30,8 @@ example, the demo server runs on port 9000 of localhost:
    :caption:
    :start-after: #end_pymotw_header
 
-In this case, the :func:`ping()` method of the service takes no
-arguments and returns a single boolean value.
+In this case, the :func:`ping` method of the service takes no
+arguments and returns a single Boolean value.
 
 ::
 
@@ -99,9 +99,8 @@ allow ``None``.
 
     $ python3 xmlrpc_ServerProxy_allow_none.py
 
-    Allowed: ['None', "<type 'NoneType'>", None]
     ERROR: cannot marshal None unless allow_none is enabled
-
+    Allowed: ['None', "<class 'NoneType'>", None]
 
 Data Types
 ==========
@@ -113,7 +112,6 @@ combined to create more complex data structures.
 .. literalinclude:: xmlrpc_types.py
    :caption:
    :start-after: #end_pymotw_header
-
 
 The simple types are
 
@@ -137,9 +135,9 @@ The simple types are
 	string      : some text
 	              <class 'str'>
 	              some text
-	datetime    : 20160618T17:16:23
+	datetime    : 20160618T19:27:29
 	              <class 'xmlrpc.client.DateTime'>
-	              20160618T17:16:23
+	              20160618T19:27:29
 	array       : ['a', 'list']
 	              <class 'list'>
 	              ['a', 'list']
@@ -165,7 +163,7 @@ are converted to lists and :class:`datetime` instances are converted
 to :class:`DateTime` objects, but otherwise the data is unchanged.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'xmlrpc_types_nested.py'))
+.. cog.out(run_script(cog.inFile, 'xmlrpc_types_nested.py', line_break_mode='wrap'))
 .. }}}
 
 ::
@@ -175,24 +173,21 @@ to :class:`DateTime` objects, but otherwise the data is unchanged.
 	Before:
 	[{'array': ('a', 'tuple'),
 	  'boolean': True,
-	  'datetime': datetime.datetime(2016, 6, 18, 17, 16, 23, 652391)
-	,
+	  'datetime': datetime.datetime(2016, 6, 18, 19, 27, 30, 45333),
 	  'floating-point number': 2.5,
 	  'integer': 0,
 	  'string': 'some text',
 	  'structure': {'a': 'dictionary'}},
 	 {'array': ('a', 'tuple'),
 	  'boolean': True,
-	  'datetime': datetime.datetime(2016, 6, 18, 17, 16, 23, 652391)
-	,
+	  'datetime': datetime.datetime(2016, 6, 18, 19, 27, 30, 45333),
 	  'floating-point number': 2.5,
 	  'integer': 1,
 	  'string': 'some text',
 	  'structure': {'a': 'dictionary'}},
 	 {'array': ('a', 'tuple'),
 	  'boolean': True,
-	  'datetime': datetime.datetime(2016, 6, 18, 17, 16, 23, 652391)
-	,
+	  'datetime': datetime.datetime(2016, 6, 18, 19, 27, 30, 45333),
 	  'floating-point number': 2.5,
 	  'integer': 2,
 	  'string': 'some text',
@@ -201,21 +196,21 @@ to :class:`DateTime` objects, but otherwise the data is unchanged.
 	After:
 	[{'array': ['a', 'tuple'],
 	  'boolean': True,
-	  'datetime': <DateTime '20160618T17:16:23' at 0x1016ccb00>,
+	  'datetime': <DateTime '20160618T19:27:30' at 0x101ecfac8>,
 	  'floating-point number': 2.5,
 	  'integer': 0,
 	  'string': 'some text',
 	  'structure': {'a': 'dictionary'}},
 	 {'array': ['a', 'tuple'],
 	  'boolean': True,
-	  'datetime': <DateTime '20160618T17:16:23' at 0x1016cccc0>,
+	  'datetime': <DateTime '20160618T19:27:30' at 0x101ecfcc0>,
 	  'floating-point number': 2.5,
 	  'integer': 1,
 	  'string': 'some text',
 	  'structure': {'a': 'dictionary'}},
 	 {'array': ['a', 'tuple'],
 	  'boolean': True,
-	  'datetime': <DateTime '20160618T17:16:23' at 0x1016cce10>,
+	  'datetime': <DateTime '20160618T19:27:30' at 0x101ecfe10>,
 	  'floating-point number': 2.5,
 	  'integer': 2,
 	  'string': 'some text',
@@ -225,9 +220,22 @@ to :class:`DateTime` objects, but otherwise the data is unchanged.
 
 XML-RPC supports dates as a native type, and :mod:`xmlrpclib` can use
 one of two classes to represent the date values in the outgoing proxy
-or when they are received from the server.  By default an internal
-version of :class:`DateTime` is used, but the *use_datetime* option
-turns on support for using the classes in the :mod:`datetime` module.
+or when they are received from the server.
+
+.. literalinclude:: xmlrpc_ServerProxy_use_datetime.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+By default an internal version of :class:`DateTime` is used, but the
+*use_datetime* option turns on support for using the classes in the
+:mod:`datetime` module.
+
+::
+
+    $ python3 source/xmlrpc.client/xmlrpc_ServerProxy_use_datetime.py
+
+    With: 2016-06-18 19:18:31 <class 'datetime.datetime'> datetime
+    Without: 20160618T19:18:31 <class 'xmlrpc.client.DateTime'> DateTime
 
 Passing Objects
 ===============
@@ -252,6 +260,7 @@ as part of a class.
     o  : MyObj(1, 'b goes here')
     ["{'b': 'b goes here', 'a': 1}", "<class 'dict'>",
     {'a': 1, 'b': 'b goes here'}]
+
     o2 : MyObj(2, MyObj(1, 'b goes here'))
     ["{'b': {'b': 'b goes here', 'a': 1}, 'a': 2}",
      "<class 'dict'>",
@@ -278,12 +287,10 @@ an exception is raised in the XML parser as it processes the response.
 
     $ python3 xmlrpc_Binary.py
 
-    Local string: This is a string with control characters
-    As binary: This is a string with control characters
-    As string: 
-    ERROR: <Fault 1: "<class 'xml.parsers.expat.ExpatError'>:not 
-    well-formed (invalid token): line 6, column 55">
+    Local string: b'This is a string with control characters\x00'
+    As binary: b'This is a string with control characters\x00'
 
+    ERROR: not well-formed (invalid token): line 6, column 55
 
 :class:`Binary` objects can also be used to send objects using
 :mod:`pickle`. The normal security issues related to sending what
@@ -294,7 +301,6 @@ this unless the communication channel is secure).
     :literal:
     :start-after: #end_pymotw_header
 
-
 The data attribute of the :class:`Binary` instance contains the
 pickled version of the object, so it has to be unpickled before it can
 be used. That results in a different object (with a new id value).
@@ -302,15 +308,15 @@ be used. That results in a different object (with a new id value).
 ::
 
     $ python3 xmlrpc_Binary_pickle.py
-    
-    Local: 4321077872
+
+    Local: 4327262304
     MyObj(1, 'b goes here')
-    
+
     As object:
-    ["{'a': 1, 'b': 'b goes here'}", "<type 'dict'>", 
-     {'a': 1, 'b': 'b goes here'}]
-    
-    From pickle: 4321252344
+    ["{'a': 1, 'b': 'b goes here'}", "<class 'dict'>",
+    {'a': 1, 'b': 'b goes here'}]
+
+    From pickle: 4327262472
     MyObj(1, 'b goes here')
 
 Exception Handling
@@ -333,16 +339,14 @@ attribute, and :attr:`faultCode` is set to an XML-RPC error number.
     $ python3 xmlrpc_exception.py
 
     Fault code: 1
-    Message   : <type 'exceptions.RuntimeError'>:A message
-
+    Message   : <class 'RuntimeError'>:A message
 
 Combining Calls Into One Message
 ================================
 
-Multicall is an extension to the XML-RPC protocol that allows more than
-one call to be sent at the same time, with the responses collected and
-returned to the caller. The :class:`MultiCall` class was added to
-:mod:`xmlrpclib` in Python 2.4. 
+Multicall is an extension to the XML-RPC protocol that allows more
+than one call to be sent at the same time, with the responses
+collected and returned to the caller.
 
 .. literalinclude:: xmlrpc_MultiCall.py
    :caption:
@@ -358,9 +362,8 @@ that yields the results from all of the calls.
     $ python3 xmlrpc_MultiCall.py
 
     0 True
-    1 ['1', "<type 'int'>", 1]
-    2 ['string', "<type 'str'>", 'string']
-
+    1 ['1', "<class 'int'>", 1]
+    2 ['string', "<class 'str'>", 'string']
 
 If one of the calls causes a :class:`Fault`, the exception is raised
 when the result is produced from the iterator and no more results are
@@ -376,16 +379,15 @@ exception, the response from :func:`show_type` is not accessible.
 ::
 
     $ python3 xmlrpc_MultiCall_exception.py
-    
+
     0 True
-    1 ['1', "<type 'int'>", 1]
-    ERROR: <Fault 1: "<type 'exceptions.RuntimeError'>:Next to last call 
-    stops execution">
+    1 ['1', "<class 'int'>", 1]
+    ERROR: <Fault 1: "<class 'RuntimeError'>:Next to last call stops execution">
 
 .. seealso::
 
-    `xmlrpclib <http://docs.python.org/lib/module-xmlrpclib.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`xmlrpc.client`
 
-    :mod:`SimpleXMLRPCServer`
-        An XML-RPC server implementation.
+   * :mod:`xmlrpc.server` -- An XML-RPC server implementation.
+
+   * :mod:`http.server` -- An HTTP server implementation.

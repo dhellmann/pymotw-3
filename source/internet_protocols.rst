@@ -45,13 +45,14 @@ procedure call mechanisms.  The JavaScript Object Notation (JSON)
 encoding scheme used in AJAX communication is implemented in
 :mod:`json`.  It works equally well in the client or the server.
 Complete XML-RPC client and server libraries are also included in
-:mod:`xmlrpclib` and :mod:`SimpleXMLRPCServer` respectively.
+:mod:`xmlrpc.client` and :mod:`xmlrpc.server` respectively.
 
 .. toctree::
     :maxdepth: 1
 
     base64/index
     webbrowser/index
+    xmlrpc.client/index
 
 ..
     urlparse/index

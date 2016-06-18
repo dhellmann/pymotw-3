@@ -31,7 +31,7 @@ for i in range(3):
     arg.append(d)
 
 print('Before:')
-pprint.pprint(arg)
+pprint.pprint(arg, width=40)
 
 print('\nAfter:')
-pprint.pprint(server.show_type(arg)[-1])
+pprint.pprint(server.show_type(arg)[-1], width=40)
