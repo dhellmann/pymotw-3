@@ -605,3 +605,14 @@ whichdb
    pair: porting; whichdb
 
 The functionality of ``whichdb`` has moved to the :mod:`dbm` module.
+
+.. _porting-zipimport:
+
+zipimport
+---------
+
+.. index::
+   pair: porting; zipimport
+
+The data returned from :func:`get_data` is a byte string, and needs to
+be decoded before being used as a unicode string.

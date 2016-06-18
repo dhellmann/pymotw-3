@@ -361,6 +361,8 @@ The ``__loader__`` is not set for modules not imported via
 
    * :pydoc:`zipimport`
 
+   * :ref:`Porting notes for zipimport <porting-zipimport>`
+
    * :mod:`imp` -- Other import-related functions.
 
    * :mod:`pkgutil` -- Provides a more generic interface to
