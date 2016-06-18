@@ -120,6 +120,36 @@ The simple types are
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'xmlrpc_types.py'))
 .. }}}
+
+::
+
+	$ python3 xmlrpc_types.py
+	
+	boolean     : True
+	              <class 'bool'>
+	              True
+	integer     : 1
+	              <class 'int'>
+	              1
+	float       : 2.5
+	              <class 'float'>
+	              2.5
+	string      : some text
+	              <class 'str'>
+	              some text
+	datetime    : 20160618T17:16:23
+	              <class 'xmlrpc.client.DateTime'>
+	              20160618T17:16:23
+	array       : ['a', 'list']
+	              <class 'list'>
+	              ['a', 'list']
+	array       : ['a', 'tuple']
+	              <class 'list'>
+	              ['a', 'tuple']
+	structure   : {'a': 'dictionary'}
+	              <class 'dict'>
+	              {'a': 'dictionary'}
+
 .. {{{end}}}
 
 The supported types can be nested to create values of arbitrary
@@ -137,6 +167,60 @@ to :class:`DateTime` objects, but otherwise the data is unchanged.
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'xmlrpc_types_nested.py'))
 .. }}}
+
+::
+
+	$ python3 xmlrpc_types_nested.py
+	
+	Before:
+	[{'array': ('a', 'tuple'),
+	  'boolean': True,
+	  'datetime': datetime.datetime(2016, 6, 18, 17, 16, 23, 652391)
+	,
+	  'floating-point number': 2.5,
+	  'integer': 0,
+	  'string': 'some text',
+	  'structure': {'a': 'dictionary'}},
+	 {'array': ('a', 'tuple'),
+	  'boolean': True,
+	  'datetime': datetime.datetime(2016, 6, 18, 17, 16, 23, 652391)
+	,
+	  'floating-point number': 2.5,
+	  'integer': 1,
+	  'string': 'some text',
+	  'structure': {'a': 'dictionary'}},
+	 {'array': ('a', 'tuple'),
+	  'boolean': True,
+	  'datetime': datetime.datetime(2016, 6, 18, 17, 16, 23, 652391)
+	,
+	  'floating-point number': 2.5,
+	  'integer': 2,
+	  'string': 'some text',
+	  'structure': {'a': 'dictionary'}}]
+	
+	After:
+	[{'array': ['a', 'tuple'],
+	  'boolean': True,
+	  'datetime': <DateTime '20160618T17:16:23' at 0x1016ccb00>,
+	  'floating-point number': 2.5,
+	  'integer': 0,
+	  'string': 'some text',
+	  'structure': {'a': 'dictionary'}},
+	 {'array': ['a', 'tuple'],
+	  'boolean': True,
+	  'datetime': <DateTime '20160618T17:16:23' at 0x1016cccc0>,
+	  'floating-point number': 2.5,
+	  'integer': 1,
+	  'string': 'some text',
+	  'structure': {'a': 'dictionary'}},
+	 {'array': ['a', 'tuple'],
+	  'boolean': True,
+	  'datetime': <DateTime '20160618T17:16:23' at 0x1016cce10>,
+	  'floating-point number': 2.5,
+	  'integer': 2,
+	  'string': 'some text',
+	  'structure': {'a': 'dictionary'}}]
+
 .. {{{end}}}
 
 XML-RPC supports dates as a native type, and :mod:`xmlrpclib` can use
@@ -192,7 +276,7 @@ an exception is raised in the XML parser as it processes the response.
 
 ::
 
-    $ python xmlrpc_Binary.py
+    $ python3 xmlrpc_Binary.py
 
     Local string: This is a string with control characters
     As binary: This is a string with control characters
@@ -206,7 +290,7 @@ an exception is raised in the XML parser as it processes the response.
 amounts to executable code over the wire apply here (i.e., do not do
 this unless the communication channel is secure).
 
-.. include:: xmlrpclib_Binary_pickle.py
+.. include:: xmlrpc_Binary_pickle.py
     :literal:
     :start-after: #end_pymotw_header
 
@@ -217,7 +301,7 @@ be used. That results in a different object (with a new id value).
 
 ::
 
-    $ python xmlrpclib_Binary_pickle.py
+    $ python3 xmlrpc_Binary_pickle.py
     
     Local: 4321077872
     MyObj(1, 'b goes here')
@@ -246,7 +330,7 @@ attribute, and :attr:`faultCode` is set to an XML-RPC error number.
 
 ::
 
-    $ python xmlrpclib_exception.py
+    $ python3 xmlrpc_exception.py
 
     Fault code: 1
     Message   : <type 'exceptions.RuntimeError'>:A message
@@ -271,7 +355,7 @@ that yields the results from all of the calls.
 
 ::
 
-    $ python xmlrpclib_MultiCall.py
+    $ python3 xmlrpc_MultiCall.py
 
     0 True
     1 ['1', "<type 'int'>", 1]
@@ -291,7 +375,7 @@ exception, the response from :func:`show_type` is not accessible.
 
 ::
 
-    $ python xmlrpclib_MultiCall_exception.py
+    $ python3 xmlrpc_MultiCall_exception.py
     
     0 True
     1 ['1', "<type 'int'>", 1]
