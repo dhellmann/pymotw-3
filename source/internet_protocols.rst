@@ -51,6 +51,7 @@ Complete XML-RPC client and server libraries are also included in
     :maxdepth: 1
 
     base64/index
+    webbrowser/index
 
 ..
     urlparse/index
