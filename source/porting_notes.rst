@@ -429,6 +429,17 @@ mailbox reads and writes mailbox files in binary mode, relying on the
 email package to parse messages.  StringIO and text file input is
 deprecated (:pyissue:`9124`).
 
+.. _porting-mmap:
+
+mmap
+----
+
+.. index::
+   pair: porting; mmap
+
+Values returned from read APIs are byte strings, and need to be
+decoded before being treated as text.
+
 .. _porting-pdb:
 
 pdb

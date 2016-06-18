@@ -188,6 +188,8 @@ spaces so each result prints on a single line.
 
    * :pydoc:`mmap`
 
+   * :ref:`Porting notes for mmap <porting-mmap>`
+
    * :mod:`os` -- The ``os`` module.
 
    * :mod:`re` -- Regular expressions.
