@@ -83,7 +83,7 @@ class explicitly.
     :start-after: #end_pymotw_header
 
 In this case, normal Python class management features are used to
-recognize :class:`PluginImplementation` as implementing the abstract
+recognize :class:`SubclassImplementation` as implementing the abstract
 :class:`PluginBase`.
 
 .. {{{cog
