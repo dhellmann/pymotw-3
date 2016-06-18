@@ -1,12 +1,11 @@
-================================
-webbrowser -- Displays web pages
-================================
+===================================
+ webbrowser --- Displays web pages
+===================================
 
 .. module:: webbrowser
     :synopsis: Displays web pages
 
 :Purpose: Use the `webbrowser` module to display web pages to your users.
-:Available In: 2.1.3 and later
 
 The :mod:`webbrowser` module includes functions to open URLs in interactive
 browser applications. The module includes a registry of available
@@ -18,9 +17,9 @@ Simple Example
 
 To open a page in the browser, use the :func:`open()` function.
 
-.. include:: webbrowser_open.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: webbrowser_open.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The URL is opened in a browser window, and that window is raised to
 the top of the window stack. The documentation says that an existing
@@ -33,12 +32,11 @@ Windows vs. Tabs
 
 If you always want a new window used, use :func:`open_new()`.
 
-.. include:: webbrowser_open_new.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: webbrowser_open_new.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 If you would rather create a new tab, use :func:`open_new_tab()` instead.
-
 
 Using a specific browser
 ========================
@@ -49,14 +47,12 @@ you can access the set of registered browser controllers using the
 :func:`open()`, :func:`open_new()`, and :func:`open_new_tab()`. This
 example forces the use of the lynx browser:
 
-.. include:: webbrowser_get.py
-    :literal:
-    :start-after: #end_pymotw_header
-
+.. literalinclude:: webbrowser_get.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Refer to the module documentation for a list of available browser
 types.
-
 
 ``BROWSER`` variable
 ====================
@@ -74,7 +70,7 @@ available, no matter what other browsers are registered.
 
 ::
 
-    $ BROWSER=lynx python webbrowser_open.py 
+    $ BROWSER=lynx python3 webbrowser_open.py 
 
 If none of the names in ``BROWSER`` work, :mod:`webbrowser` falls back
 to its default behavior.
