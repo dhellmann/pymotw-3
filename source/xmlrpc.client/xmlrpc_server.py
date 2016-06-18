@@ -7,8 +7,8 @@
 """
 #end_pymotw_header
 
-from SimpleXMLRPCServer import SimpleXMLRPCServer
-from xmlrpclib import Binary
+from xmlrpc.server import SimpleXMLRPCServer
+from xmlrpc.client import Binary
 import datetime
 
 server = SimpleXMLRPCServer(('localhost', 9000),
@@ -17,14 +17,15 @@ server = SimpleXMLRPCServer(('localhost', 9000),
 server.register_introspection_functions()
 server.register_multicall_functions()
 
+
 class ExampleService:
-    
+
     def ping(self):
         """Simple function to respond when called
         to demonstrate connectivity.
         """
         return True
-        
+
     def now(self):
         """Returns the server current date and time."""
         return datetime.datetime.now()
@@ -32,10 +33,12 @@ class ExampleService:
     def show_type(self, arg):
         """Illustrates how types are passed in and out of
         server methods.
-        
-        Accepts one argument of any type.  
-        Returns a tuple with string representation of the value, 
-        the name of the type, and the value itself.
+
+        Accepts one argument of any type.
+
+        Returns a tuple with string representation of the value, the
+        name of the type, and the value itself.
+
         """
         return (str(arg), str(type(arg)), arg)
 
@@ -47,13 +50,15 @@ class ExampleService:
         """Accepts single Binary argument, and unpacks and
         repacks it to return it."""
         data = bin.data
+        print('send_back_binary({!r})'.format(data))
         response = Binary(data)
         return response
+
 
 server.register_instance(ExampleService())
 
 try:
-    print 'Use Control-C to exit'
+    print('Use Control-C to exit')
     server.serve_forever()
 except KeyboardInterrupt:
-    print 'Exiting'
+    print('Exiting')

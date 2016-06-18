@@ -7,7 +7,7 @@
 """
 #end_pymotw_header
 
-import xmlrpclib
+import xmlrpc.client
 
-server = xmlrpclib.ServerProxy('http://localhost:9000')
-print 'Ping:', server.ping()
+server = xmlrpc.client.ServerProxy('http://localhost:9000')
+print('Ping:', server.ping())
