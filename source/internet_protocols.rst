@@ -53,6 +53,7 @@ Complete XML-RPC client and server libraries are also included in
     base64/index
     webbrowser/index
     xmlrpc.client/index
+    xmlrpc.server/index
 
 ..
     urlparse/index

@@ -1,24 +1,21 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2008 Doug Hellmann All rights reserved.
 #
 """
 """
-
-__version__ = "$Id$"
 #end_pymotw_header
 
-import xmlrpclib
+import xmlrpc.client
 
-proxy = xmlrpclib.ServerProxy('http://localhost:9000')
-print 'public():', proxy.prefix.public()
+proxy = xmlrpc.client.ServerProxy('http://localhost:9000')
+print('public():', proxy.prefix.public())
 try:
-    print 'private():', proxy.prefix.private()
-except Exception, err:
-    print '\nERROR:', err
+    print('private():', proxy.prefix.private())
+except Exception as err:
+    print('\nERROR:', err)
 try:
-    print 'public() without prefix:', proxy.public()
-except Exception, err:
-    print '\nERROR:', err
-
+    print('public() without prefix:', proxy.public())
+except Exception as err:
+    print('\nERROR:', err)
