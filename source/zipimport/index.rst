@@ -127,7 +127,7 @@ used to create one.
 
 	$ python3 zipimport_get_code.py
 	
-	<code object <module> at 0x102233810, file
+	<code object <module> at 0x101353810, file
 	"./zipimport_get_code.py", line 6>
 
 .. {{{end}}}
@@ -153,11 +153,11 @@ loaded from a regular import.
 
 	$ python3 zipimport_load_module.py
 	
-	<code object <module> at 0x1021b48a0, file
+	<code object <module> at 0x1011b48a0, file
 	"./zipimport_get_code.py", line 6>
 	Name   : zipimport_get_code
 	Loader : <zipimporter object "zipimport_example.zip">
-	Code   : <code object <module> at 0x1021b48a0, file
+	Code   : <code object <module> at 0x1011b48a0, file
 	"./zipimport_get_code.py", line 6>
 
 .. {{{end}}}
@@ -284,11 +284,9 @@ file system.
 	$ python3 zipimport_get_data_nozip.py
 	
 	example_package/README.txt :
-	This file represents sample data which could be embedded in the 
-	ZIP
-	archive.  You could include a configuration file, images, or any
-	 other
-	sort of noncode data.
+	This file represents sample data which could be embedded in the
+	ZIP archive.  You could include a configuration file, images, or
+	any other sort of noncode data.
 	
 
 .. {{{end}}}
@@ -349,8 +347,8 @@ within a package.
 	
 	zipimport_example.zip/example_package/__init__.pyc
 	b'This file represents sample data which could be embedded in th
-	e ZIP\narchive.  You could include a configuration file, images,
-	 or any other\nsort of noncode data.\n'
+	e\nZIP archive.  You could include a configuration file, images,
+	 or\nany other sort of noncode data.\n'
 
 .. {{{end}}}
 
@@ -359,14 +357,13 @@ The ``__loader__`` is not set for modules not imported via
 
 .. seealso::
 
-    `zipimport <http://docs.python.org/lib/module-zipimport.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`zipimport`
 
-    :mod:`imp`
-        Other import-related functions.
+   * :mod:`imp` -- Other import-related functions.
 
-    :pep:`302`
-        New Import Hooks
+   * :mod:`pkgutil` -- Provides a more generic interface to
+     :func:`get_data`.
 
-    :mod:`pkgutil`
-        Provides a more generic interface to :func:`get_data`.
+   * :mod:`zipfile` -- Read and write ZIP archive files.
+
+   * :pep:`302` -- New Import Hooks
