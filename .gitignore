@@ -18,3 +18,4 @@ dist/
 /source/mailbox/example.mbox
 /source/mailbox/Example
 /source/filecmp/example
+/source/mmap/lorem_copy.txt

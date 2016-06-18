@@ -74,11 +74,11 @@ in the file.
 
 ::
 
-	$ python mmap_read.py
-
-	First 10 bytes via read : Lorem ipsu
-	First 10 bytes via slice: Lorem ipsu
-	2nd   10 bytes via read : m dolor si
+	$ python3 mmap_read.py
+	
+	First 10 bytes via read : b'Lorem ipsu'
+	First 10 bytes via slice: b'Lorem ipsu'
+	2nd   10 bytes via read : b'm dolor si'
 
 .. {{{end}}}
 
@@ -106,16 +106,16 @@ line in memory and in the file.
 
 ::
 
-	$ python mmap_write_slice.py
-
-	Looking for    : consectetuer
-	Replacing with : reutetcesnoc
+	$ python3 mmap_write_slice.py
+	
+	Looking for    : b'consectetuer'
+	Replacing with : b'reutetcesnoc'
 	Before:
-	Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec
+	b'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.'
 	After :
-	Lorem ipsum dolor sit amet, reutetcesnoc adipiscing elit. Donec
+	b'Lorem ipsum dolor sit amet, reutetcesnoc adipiscing elit.'
 	File  :
-	Lorem ipsum dolor sit amet, reutetcesnoc adipiscing elit. Donec
+	Lorem ipsum dolor sit amet, reutetcesnoc adipiscing elit.
 
 .. {{{end}}}
 
@@ -139,17 +139,17 @@ objects is maintained separately.
 
 ::
 
-	$ python mmap_write_copy.py
-
+	$ python3 mmap_write_copy.py
+	
 	Memory Before:
-	Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec
+	b'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.'
 	File Before  :
-	Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec
+	Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
 	
 	Memory After :
-	Lorem ipsum dolor sit amet, reutetcesnoc adipiscing elit. Donec
+	b'Lorem ipsum dolor sit amet, reutetcesnoc adipiscing elit.'
 	File After   :
-	Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec
+	Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
 
 .. {{{end}}}
 
@@ -176,10 +176,10 @@ spaces so each result prints on a single line.
 
 ::
 
-	$ python mmap_regex.py
-
-	Nulla facilisi.
-	Nulla feugiat augue eleifend nulla.
+	$ python3 mmap_regex.py
+	
+	b'Nulla facilisi.'
+	b'Nulla feugiat augue eleifend nulla.'
 
 .. {{{end}}}
 
