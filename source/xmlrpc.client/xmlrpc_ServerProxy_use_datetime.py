@@ -9,10 +9,12 @@
 
 import xmlrpclib
 
-server = xmlrpclib.ServerProxy('http://localhost:9000', use_datetime=True)
+server = xmlrpclib.ServerProxy('http://localhost:9000',
+                               use_datetime=True)
 now = server.now()
-print 'With:', now, type(now), now.__class__.__name__
+print('With:', now, type(now), now.__class__.__name__)
 
-server = xmlrpclib.ServerProxy('http://localhost:9000', use_datetime=False)
+server = xmlrpclib.ServerProxy('http://localhost:9000',
+                               use_datetime=False)
 now = server.now()
-print 'Without:', now, type(now), now.__class__.__name__
+print('Without:', now, type(now), now.__class__.__name__)

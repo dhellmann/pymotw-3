@@ -36,8 +36,8 @@ class ExampleService:
 
         Accepts one argument of any type.
 
-        Returns a tuple with string representation of the value, the
-        name of the type, and the value itself.
+        Returns a tuple with string representation of the value,
+        the name of the type, and the value itself.
 
         """
         return (str(arg), str(type(arg)), arg)

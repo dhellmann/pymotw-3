@@ -13,15 +13,16 @@ import pprint
 
 server = xmlrpc.client.ServerProxy('http://localhost:9000')
 
-data = { 'boolean':True, 
-         'integer': 1,
-         'floating-point number': 2.5,
-         'string': 'some text',
-         'datetime': datetime.datetime.now(),
-         'array': ['a', 'list'],
-         'array': ('a', 'tuple'),
-         'structure': {'a':'dictionary'},
-         }
+data = {
+    'boolean': True,
+    'integer': 1,
+    'floating-point number': 2.5,
+    'string': 'some text',
+    'datetime': datetime.datetime.now(),
+    'array': ['a', 'list'],
+    'array': ('a', 'tuple'),
+    'structure': {'a': 'dictionary'},
+}
 arg = []
 for i in range(3):
     d = {}
