@@ -127,7 +127,7 @@ used to create one.
 
 	$ python3 zipimport_get_code.py
 	
-	<code object <module> at 0x101353810, file
+	<code object <module> at 0x101253810, file
 	"./zipimport_get_code.py", line 6>
 
 .. {{{end}}}
@@ -153,11 +153,11 @@ loaded from a regular import.
 
 	$ python3 zipimport_load_module.py
 	
-	<code object <module> at 0x1011b48a0, file
+	<code object <module> at 0x1012b48a0, file
 	"./zipimport_get_code.py", line 6>
 	Name   : zipimport_get_code
 	Loader : <zipimporter object "zipimport_example.zip">
-	Code   : <code object <module> at 0x1011b48a0, file
+	Code   : <code object <module> at 0x1012b48a0, file
 	"./zipimport_get_code.py", line 6>
 
 .. {{{end}}}
@@ -333,7 +333,8 @@ attribute of the imported module:
    :start-after: #end_pymotw_header
 
 :func:`pkgutil.get_data` uses this interface to access data from
-within a package.
+within a package. The value returned is a byte string, which needs to
+be decoded to a unicode string before printing.
 
 .. {{{cog
 .. (path(cog.inFile).parent / 'zipimport_example.zip').unlink()
@@ -346,9 +347,10 @@ within a package.
 	$ python3 zipimport_get_data.py
 	
 	zipimport_example.zip/example_package/__init__.pyc
-	b'This file represents sample data which could be embedded in th
-	e\nZIP archive.  You could include a configuration file, images,
-	 or\nany other sort of noncode data.\n'
+	This file represents sample data which could be embedded in the
+	ZIP archive.  You could include a configuration file, images, or
+	any other sort of noncode data.
+	
 
 .. {{{end}}}
 
