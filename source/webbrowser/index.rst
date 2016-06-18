@@ -82,12 +82,20 @@ Command Line Interface
 All of the features of the :mod:`webbrowser` module are available via
 the command line as well as from within your Python program.
 
+.. {{{cog
+.. cog.out(run_script(cog.inFile, '-m webbrowser', ignore_error=True))
+.. }}}
+
 ::
 
-    $ python -m webbrowser   
-    Usage: /Library/Frameworks/Python.framework/Versions/2.5/lib/python2.5/webbrowser.py [-n | -t] url
-        -n: open new window
-        -t: open new tab
+	$ python3 -m webbrowser
+	
+	Usage: /Library/Frameworks/Python.framework/Versions/3.5/lib/pyt
+	hon3.5/webbrowser.py [-n | -t] url
+	    -n: open new window
+	    -t: open new tab
+
+.. {{{end}}}
 
 
 .. seealso::
