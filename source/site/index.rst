@@ -20,7 +20,7 @@ later.  Under Windows, the suffixes are an empty string and
 ``lib/site-packages``.  For Unix-like platforms, the values are
 ``lib/python$version/site-packages`` (where ``$version`` is replaced
 by the major and minor version number of the interpreter, such as
-``2.7``) and ``lib/site-python``.
+``3.5``) and ``lib/site-python``.
 
 .. literalinclude:: site_import_path.py
    :caption:
@@ -30,42 +30,19 @@ Each of the paths resulting from the combinations is tested, and those
 that exist are added to :data:`sys.path`.  This output shows the
 framework version of Python installed on a Mac OS X system.
 
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'site_import_path.py', line_cleanups=[]))
-.. }}}
+.. DO NOT COG because virtualenv gives misleading output
 
 ::
 
-	$ python3 site_import_path.py
-	
-	Path prefixes:
-	   /Users/dhellmann/Envs/pymotw35/bin/..
-	   /Users/dhellmann/Envs/pymotw35/bin/..
-	
-	/Users/dhellmann/Envs/pymotw35/bin/..
-	
-	  lib/python3.5/site-packages
-	   exists : True
-	   in path: False
-	
-	  lib/site-python
-	   exists : False
-	   in path: False
+    $ python3 site_import_path.py
 
-.. {{{end}}}
-
-
-::
-    
-    $ python3 site_import_path.py 
-        
     Path prefixes:
-       /Library/Frameworks/Python.framework/Versions/2.7
-       /Library/Frameworks/Python.framework/Versions/2.7
+       /Library/Frameworks/Python.framework/Versions/3.5
+       /Library/Frameworks/Python.framework/Versions/3.5
     
-    /Library/Frameworks/Python.framework/Versions/2.7
+    /Library/Frameworks/Python.framework/Versions/3.5
     
-      lib/python2.7/site-packages
+      lib/python3.5/site-packages
        exists : True
        in path: True
     
@@ -140,15 +117,15 @@ with :option:`-s`.
 
 ::
 
-	$ python3 site_enable_user_site.py
-	
+    $ python3 site_enable_user_site.py
+    
     Flag   : True
     Meaning: Enabled
 
-	$ python3 -s site_enable_user_site.py
-	
-	Flag   : False
-	Meaning: Disabled by command-line option
+    $ python3 -s site_enable_user_site.py
+    
+    Flag   : False
+    Meaning: Disabled by command-line option
 
 Path Configuration Files
 ========================
@@ -156,7 +133,7 @@ Path Configuration Files
 As paths are added to the import path, they are also scanned for *path
 configuration files*.  A path configuration file is a plain text file
 with the extension ``.pth``.  Each line in the file can take one of
-four forms:
+four forms.
 
 - A full or relative path to another location that should be added to
   the import path.
@@ -385,9 +362,9 @@ explicitly to ensure the module is picked up.
 
 ::
 
-	$ PYTHONPATH=with_usercustomize python3 with_usercustomize/site\
-	_usercustomize.py
-	
+    $ PYTHONPATH=with_usercustomize python3 with_usercustomize/site\
+    _usercustomize.py
+    
     Loading usercustomize.py
     Adding new path /Users/dhellmann/python/3.5/Darwin-15.5.0-x86_64\
     -i386-64bit
