@@ -1,9 +1,11 @@
-  ..
-     Snippets
-     --------
-     pyissue - builds reference to a python bug
-     porting - starts new section
-     mod - builds reference to a module
+:tocdepth: 2
+
+..
+   Snippets
+   --------
+   pyissue - builds reference to a python bug
+   porting - starts new section
+   mod - builds reference to a module
 
 ===============
  Porting Notes
