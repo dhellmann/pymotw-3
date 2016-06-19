@@ -55,6 +55,7 @@ generate paths and other settings dynamically.
 .. toctree::
     :maxdepth: 1
 
+    site/index
     sys/index
     sysconfig/index
 
