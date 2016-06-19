@@ -36,31 +36,18 @@ list of directories is combined with the path value passed as the
 first argument and returned as a single list, suitable for use as the
 package import path.
 
-An example package called :mod:`demopkg` includes these files
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, "find demopkg1 -name '*.py'", interpreter=''))
-.. }}}
-
-::
-
-	$ find demopkg1 -name '*.py'
-	
-	demopkg1/__init__.py
-	demopkg1/shared.py
-
-.. {{{end}}}
-
-The ``__init__.py`` file in ``demopkg1`` contains :command:`print`
-statements to show the search path before and after it is modified, to
-highlight the difference.
+An example package called :mod:`demopkg` includes two files,
+``__init__.py`` and ``shared.py``.  The ``__init__.py`` file in
+``demopkg1`` contains :command:`print` statements to show the search
+path before and after it is modified, to highlight the difference.
 
 .. literalinclude:: demopkg1/__init__.py
    :caption:
    :start-after: #end_pymotw_header
 
 The ``extension`` directory, with add-on features for :mod:`demopkg`,
-contains three more source files.
+contains three more source files. There is an ``__init__.py`` at each
+directory level, and a ``not_shared.py``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, "find extension -name '*.py'", interpreter=''))
@@ -148,39 +135,24 @@ modules.
 Development Versions of Packages
 ================================
 
-While developing enhancements to a project, it is common to need to test
-changes to an installed package. Replacing the installed copy with a
-development version may be a bad idea, since it is not necessarily
-correct and other tools on the system are likely to depend on the
-installed package. 
+While developing enhancements to a project, it is common to need to
+test changes to an installed package. Replacing the installed copy
+with a development version may be a bad idea, since it is not
+necessarily correct and other tools on the system are likely to depend
+on the installed package.
 
 A completely separate copy of the package could be configured in a
-development environment using :command:`virtualenv`, but for small
-modifications the overhead of setting up a virtual environment with
-all of the dependencies may be excessive.
+development environment using :command:`virtualenv` or :mod:`venv`,
+but for small modifications the overhead of setting up a virtual
+environment with all of the dependencies may be excessive.
 
 Another option is to use :mod:`pkgutil` to modify the module search
 path for modules that belong to the package under development. In this
 case, however, the path must be reversed so development version
 overrides the installed version.
 
-Given a package :mod:`demopkg2` like this:
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, "find demopkg2 -name '*.py'", interpreter=None))
-.. }}}
-
-::
-
-	$ find demopkg2 -name '*.py'
-	
-	demopkg2/__init__.py
-	demopkg2/overloaded.py
-
-.. {{{end}}}
-
-
-With the function under development located in
+Given a package :mod:`demopkg2` containing an ``__init__.py`` and
+``overloaded.py``, with the function under development located in
 ``demopkg2/overloaded.py``. The installed version contains
 
 .. literalinclude:: demopkg2/overloaded.py
@@ -224,19 +196,15 @@ installed version of :func:`func`.
 A development directory containing
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, "find develop -name '*.py'", interpreter=None))
+.. cog.out(run_script(cog.inFile, "find develop/demopkg2 -name '*.py'", interpreter=None))
 .. }}}
 
 ::
 
-	$ find develop -name '*.py'
+	$ find develop/demopkg2 -name '*.py'
 	
 	develop/demopkg2/__init__.py
 	develop/demopkg2/overloaded.py
-	develop/nested/__init__.py
-	develop/nested/second/__init__.py
-	develop/nested/second/deep.py
-	develop/nested/shallow.py
 
 .. {{{end}}}
 
@@ -283,6 +251,7 @@ This example uses the same :mod:`demopkg1` files, and also includes
 the following files:
 
 .. {{{cog
+.. sh("find . -name __pycache__ | xargs rm -rf")
 .. cog.out(run_script(cog.inFile, "find os_* -type f", interpreter=None))
 .. }}}
 
@@ -291,11 +260,9 @@ the following files:
 	$ find os_* -type f
 	
 	os_one/demopkg1/__init__.py
-	os_one/demopkg1/__pycache__/not_shared.cpython-35.pyc
 	os_one/demopkg1/not_shared.py
 	os_one/demopkg1.pkg
 	os_two/demopkg1/__init__.py
-	os_two/demopkg1/__pycache__/not_shared.cpython-35.pyc
 	os_two/demopkg1/not_shared.py
 	os_two/demopkg1.pkg
 
@@ -481,7 +448,6 @@ With a package :mod:`pkgwithdata` containing a ``templates`` directory
 	$ find pkgwithdata -type f
 	
 	pkgwithdata/__init__.py
-	pkgwithdata/__pycache__/__init__.cpython-35.pyc
 	pkgwithdata/templates/base.html
 
 .. {{{end}}}
@@ -501,7 +467,7 @@ and print them out.
 
 The arguments to :func:`get_data` are the dotted name of the package,
 and a filename relative to the top of the package.  The return value
-is a byte sequence, so it is encoded as UTF-8 before being printed.
+is a byte sequence, so it is decoded from UTF-8 before being printed.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'pkgutil_get_data.py'))
@@ -527,7 +493,7 @@ is a byte sequence, so it is encoded as UTF-8 before being printed.
 .. {{{end}}}
 
 :func:`get_data` is distribution format-agnostic because it uses the
-import hooks defined in PEP 302 to access the package contents.
+import hooks defined in :pep:`302` to access the package contents.
 Any loader that provides the hooks can be used, including the ZIP
 archive importer in :mod:`zipfile`.
 
@@ -543,15 +509,15 @@ print it.  Refer to the discussion of :mod:`zipfile` for more details
 about using :func:`writepy`.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'pkgutil_get_data_zip.py'))
+.. cog.out(run_script(cog.inFile, 'pkgutil_get_data_zip.py', line_break_mode='wrap'))
 .. }}}
 
 ::
 
 	$ python3 pkgutil_get_data_zip.py
 	
-	Loading pkgwithdata from pkgwithdatainzip.zip/pkgwithdata/__init
-	__.pyc
+	Loading pkgwithdata from
+	pkgwithdatainzip.zip/pkgwithdata/__init__.pyc
 	
 	Template:
 	<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
@@ -572,27 +538,20 @@ about using :func:`writepy`.
 
 .. seealso::
 
-    `pkgutil <http://docs.python.org/lib/module-pkgutil.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`pkgutil`
 
-    `virtualenv`_
-        Ian Bicking's virtual environment script.
+   * `virtualenv`_ -- Ian Bicking's virtual environment script.
 
-    :mod:`distutils`
-        Packaging tools from Python standard library.
+   * :mod:`distutils` -- Packaging tools from Python standard library.
 
-    `Distribute`_
-        Next-generation packaging tools.
+   * `setuptools`_ -- Next-generation packaging tools.
 
-    :pep:`302`
-        Import Hooks
+   * :pep:`302` -- Import Hooks
 
-    :mod:`zipfile`
-        Create importable ZIP archives.
+   * :mod:`zipfile` -- Create importable ZIP archives.
 
-    :mod:`zipimport`
-        Importer for packages in ZIP archives.
+   * :mod:`zipimport` -- Importer for packages in ZIP archives.
 
 .. _virtualenv: http://pypi.python.org/pypi/virtualenv
 
-.. _Distribute: http://packages.python.org/distribute/
+.. _setuptools: https://setuptools.readthedocs.io/en/latest/
