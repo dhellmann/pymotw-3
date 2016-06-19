@@ -3,9 +3,12 @@
 """
 #end_pymotw_header
 
+import dbm
 import shelve
 
 with shelve.open('test_shelf.db', flag='r') as s:
-    existing = s['key1']
-
-print(existing)
+    print('Existing:', s['key1'])
+    try:
+        s['key1'] = 'new value'
+    except dbm.error as err:
+        print('ERROR: {}'.format(err))

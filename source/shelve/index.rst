@@ -13,13 +13,13 @@ The :mod:`shelve` module can be used as a simple persistent storage
 option for Python objects when a relational database is not
 required. The shelf is accessed by keys, just as with a
 dictionary. The values are pickled and written to a database created
-and managed by :mod:`anydbm`.
+and managed by :mod:`dbm`.
 
 Creating a new Shelf
 ====================
 
 The simplest way to use :mod:`shelve` is via the :class:`DbfilenameShelf`
-class. It uses :mod:`anydbm` to store the data. The class can be used
+class. It uses :mod:`dbm` to store the data. The class can be used
 directly, or by calling :func:`shelve.open()`:
 
 .. literalinclude:: shelve_create.py
@@ -41,10 +41,10 @@ Running both sample scripts produces:
 
 ::
 
-	$ python shelve_create.py
-	$ python shelve_existing.py
+	$ python3 shelve_create.py
+	$ python3 shelve_existing.py
 	
-	{'int': 10, 'float': 9.5, 'string': 'Sample data'}
+	{'string': 'Sample data', 'int': 10, 'float': 9.5}
 
 .. {{{end}}}
 
@@ -60,7 +60,20 @@ read-only clients. If a client will not be modifying the shelf, tell
 
 If the program tries to modify the database while it is opened read-only, an
 access error exception is generated. The exception type depends on the
-database module selected by :mod:`anydbm` when the database was created.
+database module selected by :mod:`dbm` when the database was created.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'shelve_readonly.py'))
+.. }}}
+
+::
+
+	$ python3 shelve_readonly.py
+	
+	Existing: {'string': 'Sample data', 'int': 10, 'float': 9.5}
+	ERROR: cannot add item to database
+
+.. {{{end}}}
 
 Write-back
 ==========
@@ -84,11 +97,11 @@ shelf is re-opened, the changes have not been preserved.
 
 ::
 
-	$ python shelve_create.py
-	$ python shelve_withoutwriteback.py
+	$ python3 shelve_create.py
+	$ python3 shelve_withoutwriteback.py
 	
-	{'int': 10, 'float': 9.5, 'string': 'Sample data'}
-	{'int': 10, 'float': 9.5, 'string': 'Sample data'}
+	{'string': 'Sample data', 'int': 10, 'float': 9.5}
+	{'string': 'Sample data', 'int': 10, 'float': 9.5}
 
 .. {{{end}}}
 
@@ -118,8 +131,8 @@ more than it writes, writeback will impact performance unnecessarily.
 
 ::
 
-	$ python shelve_create.py
-	$ python shelve_writeback.py
+	$ python3 shelve_create.py
+	$ python3 shelve_writeback.py
 	
 	Initial data:
 	{'float': 9.5, 'int': 10, 'string': 'Sample data'}
@@ -153,15 +166,13 @@ subclass :class:`Shelf` for a custom solution.
 
 .. seealso::
 
-    `shelve <http://docs.python.org/lib/module-shelve.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`shelve`
 
-    :mod:`anydbm`
-        The ``anydbm`` module finds an available DBM library to create
-        a new database.
+   * :mod:`dbm` -- The ``dbm`` module finds an available DBM
+     library to create a new database.
 
-    `feedcache <http://www.doughellmann.com/projects/feedcache/>`_
-        The ``feedcache`` module uses ``shelve`` as a default storage option.
+   * `feedcache <https://bitbucket.org/dhellmann/feedcache>`_ -- The
+     ``feedcache`` module uses ``shelve`` as a default storage option.
 
-    `shove <http://pypi.python.org/pypi/shove/>`_
-        Shove implements a similar API with more back-end formats.
+   * `shove <http://pypi.python.org/pypi/shove/>`_ -- Shove implements
+     a similar API with more back-end formats.
