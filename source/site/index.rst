@@ -31,14 +31,33 @@ that exist are added to :data:`sys.path`.  This output shows the
 framework version of Python installed on a Mac OS X system.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'site_import_path.py'))
+.. cog.out(run_script(cog.inFile, 'site_import_path.py', line_cleanups=[]))
 .. }}}
+
+::
+
+	$ python3 site_import_path.py
+	
+	Path prefixes:
+	   /Users/dhellmann/Envs/pymotw35/bin/..
+	   /Users/dhellmann/Envs/pymotw35/bin/..
+	
+	/Users/dhellmann/Envs/pymotw35/bin/..
+	
+	  lib/python3.5/site-packages
+	   exists : True
+	   in path: False
+	
+	  lib/site-python
+	   exists : False
+	   in path: False
+
 .. {{{end}}}
 
 
 ::
     
-    $ python site_import_path.py 
+    $ python3 site_import_path.py 
         
     Path prefixes:
        /Library/Frameworks/Python.framework/Versions/2.7
@@ -78,10 +97,10 @@ platform-specific suffix values described earlier.
 
 ::
 
-	$ python site_user_base.py
+	$ python3 site_user_base.py
 	
 	Base: /Users/dhellmann/.local
-	Site: /Users/dhellmann/.local/lib/python2.7/site-packages
+	Site: /Users/dhellmann/.local/lib/python3.5/site-packages
 
 .. {{{end}}}
 
@@ -91,15 +110,15 @@ environment variable, and has platform-specific defaults
 non-Windows).
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'PYTHONUSERBASE=/tmp/$USER python site_user_base.py', interpreter=None))
+.. cog.out(run_script(cog.inFile, 'PYTHONUSERBASE=/tmp/$USER python3 site_user_base.py', interpreter=None))
 .. }}}
 
 ::
 
-	$ PYTHONUSERBASE=/tmp/$USER python site_user_base.py
+	$ PYTHONUSERBASE=/tmp/$USER python3 site_user_base.py
 	
 	Base: /tmp/dhellmann
-	Site: /tmp/dhellmann/lib/python2.7/site-packages
+	Site: /tmp/dhellmann/lib/python3.5/site-packages
 
 .. {{{end}}}
 
@@ -116,24 +135,20 @@ it).  An application can check the setting by examining
 The user directory can also be explicitly disabled on the command line
 with :option:`-s`.
 
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'site_enable_user_site.py'))
-.. cog.out(run_script(cog.inFile, '-s site_enable_user_site.py', include_prefix=False))
-.. }}}
+.. CANNOT COG THIS because virtualenv forces the flag off if
+.. no-global-site-packages.txt exists
 
 ::
 
-	$ python site_enable_user_site.py
+	$ python3 site_enable_user_site.py
 	
-	Flag   : True
-	Meaning: Enabled
+    Flag   : True
+    Meaning: Enabled
 
-	$ python -s site_enable_user_site.py
+	$ python3 -s site_enable_user_site.py
 	
 	Flag   : False
 	Meaning: Disabled by command-line option
-
-.. {{{end}}}
 
 Path Configuration Files
 ========================
@@ -182,9 +197,9 @@ issue.
 
 ::
 
-	$ python site_addsitedir.py with_modules
+	$ python3 site_addsitedir.py with_modules
 	
-	Could not import mymodule: No module named mymodule
+	Could not import mymodule: No module named 'mymodule'
 	
 	New paths:
 	./with_modules
@@ -213,9 +228,9 @@ though the module is not in that directory because both ``with_pth`` and
 
 ::
 
-	$ python site_addsitedir.py with_pth
+	$ python3 site_addsitedir.py with_pth
 	
-	Could not import mymodule: No module named mymodule
+	Could not import mymodule: No module named 'mymodule'
 	
 	New paths:
 	./with_pth
@@ -257,15 +272,14 @@ In this case, the module is found in ``multiple_pth/from_a``
 because ``a.pth`` is read before ``b.pth``.
 
 .. {{{cog
-.. (path(cog.inFile).dirname() / 'multiple_pth/from_a/mymodule.pyc').unlink()
 .. cog.out(run_script(cog.inFile, 'site_addsitedir.py multiple_pth'))
 .. }}}
 
 ::
 
-	$ python site_addsitedir.py multiple_pth
+	$ python3 site_addsitedir.py multiple_pth
 	
-	Could not import mymodule: No module named mymodule
+	Could not import mymodule: No module named 'mymodule'
 	
 	New paths:
 	./multiple_pth
@@ -315,18 +329,19 @@ should be installed somewhere in the default path (usually in the
 explicitly to ensure the module is picked up.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'PYTHONPATH=with_sitecustomize python with_sitecustomize/site_sitecustomize.py', interpreter=None))
+.. cog.out(run_script(cog.inFile, 'PYTHONPATH=with_sitecustomize python3 with_sitecustomize/site_sitecustomize.py', interpreter=None))
 .. }}}
 
 ::
 
-	$ PYTHONPATH=with_sitecustomize python with_sitecustomize/site_sitecusto\
-	mize.py
+	$ PYTHONPATH=with_sitecustomize python3 with_sitecustomize/sit\
+	e_sitecustomize.py
 	
 	Loading sitecustomize.py
-	Adding new path /opt/python/2.7/Darwin-10.5.0-i386-64bit
-	Running main program
-	End of path: /opt/python/2.7/Darwin-10.5.0-i386-64bit
+	Adding new path /opt/python/3.5/Darwin-15.5.0-x86_64-i386-64bit
+	Running main program from
+	with_sitecustomize/site_sitecustomize.py
+	End of path: /opt/python/3.5/Darwin-15.5.0-x86_64-i386-64bit
 
 .. {{{end}}}
 
@@ -365,40 +380,38 @@ path, but not on the site-wide path. The default ``USER_BASE``
 directory is a good location.  This example sets ``PYTHONPATH``
 explicitly to ensure the module is picked up.
 
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'PYTHONPATH=with_usercustomize python with_usercustomize/site_usercustomize.py', interpreter=None))
-.. }}}
+.. CANNOT COG because virtualenv disables user-site which in turns
+.. disables usercustomize.
 
 ::
 
-	$ PYTHONPATH=with_usercustomize python with_usercustomize/site_usercusto\
-	mize.py
+	$ PYTHONPATH=with_usercustomize python3 with_usercustomize/site\
+	_usercustomize.py
 	
-	Loading usercustomize.py
-	Adding new path /Users/dhellmann/python/2.7/Darwin-10.5.0-i386-64bit
-	Running main program
-	End of path: /Users/dhellmann/python/2.7/Darwin-10.5.0-i386-64bit
-
-.. {{{end}}}
+    Loading usercustomize.py
+    Adding new path /Users/dhellmann/python/3.5/Darwin-15.5.0-x86_64\
+    -i386-64bit
+    Running main program from
+    with_usercustomize/site_usercustomize.py
+    End of path: /Users/dhellmann/python/3.5/Darwin-15.5.0-x86_64\
+    -i386-64bit
 
 When the user site directory feature is disabled, :mod:`usercustomize`
 is not imported, whether it is located in the user site directory or
 elsewhere.
 
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'PYTHONPATH=with_usercustomize python -s with_usercustomize/site_usercustomize.py', interpreter=None, break_lines_at=74))
-.. }}}
+.. CANNOT COG because virtualenv disables user-site which in turns
+.. disables usercustomize.
 
 ::
 
-	$ PYTHONPATH=with_usercustomize python -s with_usercustomize/site_usercu\
-	stomize.py
+	$ PYTHONPATH=with_usercustomize python3 -s with_usercustomize/s\
+	ite_usercustomize.py
 	
-	Running main program
-	End of path: /Library/Frameworks/Python.framework/Versions/2.7/lib/python2
-	.7/site-packages
-
-.. {{{end}}}
+	Running main program from
+	with_usercustomize/site_usercustomize.py
+	End of path: /Users/dhellmann/Envs/pymotw35/lib/python3.5/site-
+	packages
 
 
 Disabling the site Module
@@ -409,8 +422,27 @@ before the automatic import was added, the interpreter accepts an
 :option:`-S` option.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, '-S site_import_path.py'))
+.. cog.out(run_script(cog.inFile, '-S site_import_path.py', line_cleanups=[]))
 .. }}}
+
+::
+
+	$ python3 -S site_import_path.py
+	
+	Path prefixes:
+	   /Users/dhellmann/Envs/pymotw35/bin/..
+	   /Users/dhellmann/Envs/pymotw35/bin/..
+	
+	/Users/dhellmann/Envs/pymotw35/bin/..
+	
+	  lib/python3.5/site-packages
+	   exists : True
+	   in path: False
+	
+	  lib/site-python
+	   exists : False
+	   in path: False
+
 .. {{{end}}}
 
 .. seealso::

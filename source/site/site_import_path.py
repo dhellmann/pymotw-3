@@ -9,10 +9,9 @@
 
 import sys
 import os
-import platform
 import site
 
-if 'Windows' in platform.platform():
+if 'Windows' in sys.platform:
     SUFFIXES = [
         '',
         'lib/site-packages',
