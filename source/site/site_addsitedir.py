@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -19,12 +19,12 @@ try:
 except ImportError, err:
     print 'Could not import mymodule:', err
 
-print
+print()
 before_len = len(sys.path)
 site.addsitedir(module_directory)
-print 'New paths:'
+print('New paths:')
 for p in sys.path[before_len:]:
-    print p.replace(os.getcwd(), '.') # shorten dirname
+    print(p.replace(os.getcwd(), '.')) # shorten dirname
 
-print
+print()
 import mymodule
