@@ -167,9 +167,9 @@ four forms:
 
 Path configuration files can be used to extend the import path to look
 in locations that would not have been added automatically.  For
-example, the **Distribute** package  adds a path to ``easy-install.pth`` when it
-installs a package in development mode using ``python setup.py
-develop``.
+example, the ``setuptools`` package adds a path to
+``easy-install.pth`` when it installs a package in development mode
+using ``python setup.py develop``.
 
 The function for extending :data:`sys.path` is public, and it can be used
 in example programs to show how the path configuration files work.
@@ -447,16 +447,13 @@ before the automatic import was added, the interpreter accepts an
 
 .. seealso::
 
-    `site <http://docs.python.org/library/site.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`site`
 
-    :ref:`sys-imports`
-        Description of how the import path defined in :mod:`sys` works.
+   * :ref:`sys-imports` -- Description of how the import path defined
+     in :mod:`sys` works.
 
-    `Running code at Python startup <http://nedbatchelder.com/blog/201001/running_code_at_python_startup.html>`__
-        Post from Ned Batchelder discussing ways to cause the Python
-        interpreter to run custom initialization code before
-        starting the main program execution.
-
-    `Distribute <http://packages.python.org/distribute>`_
-        Distribute is a Python packaging library based on :mod:`setuptools` and :mod:`distutils`.
+   * `Running code at Python startup
+     <http://nedbatchelder.com/blog/201001/running_code_at_python_startup.html>`__
+     -- Post from Ned Batchelder discussing ways to cause the Python
+     interpreter to run custom initialization code before starting the
+     main program execution.
