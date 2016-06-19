@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -10,4 +10,4 @@
 import pkgutil
 
 template = pkgutil.get_data('pkgwithdata', 'templates/base.html')
-print template.encode('utf-8')
+print(template.decode('utf-8'))

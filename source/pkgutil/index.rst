@@ -1,12 +1,12 @@
-==============================
- pkgutil -- Package Utilities
-==============================
+===============================
+ pkgutil --- Package Utilities
+===============================
 
 .. module:: pkgutil
     :synopsis: Package utilities
 
-:Purpose: Add to the module search path for a specific package and work with resources included in a package.
-:Python Version: 2.3 and later
+:Purpose: Add to the module search path for a specific package and
+          work with resources included in a package.
 
 The :mod:`pkgutil` module includes functions for changing the import
 rules for Python packages and for loading non-code resources from
@@ -36,81 +36,105 @@ list of directories is combined with the path value passed as the
 first argument and returned as a single list, suitable for use as the
 package import path.
 
-An example package called :mod:`demopkg` includes these files:
+An example package called :mod:`demopkg` includes these files
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, "find demopkg1 -name '*.py'", interpreter=''))
+.. }}}
 
 ::
 
-    $ find demopkg1 -name '*.py'
+	$ find demopkg1 -name '*.py'
+	
+	demopkg1/__init__.py
+	demopkg1/shared.py
 
-    demopkg1/__init__.py
-    demopkg1/shared.py
+.. {{{end}}}
 
 The ``__init__.py`` file in ``demopkg1`` contains :command:`print`
 statements to show the search path before and after it is modified, to
 highlight the difference.
 
-.. include:: demopkg1/__init__.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: demopkg1/__init__.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The ``extension`` directory, with add-on features for :mod:`demopkg`,
 contains three more source files.
 
+.. {{{cog
+.. cog.out(run_script(cog.inFile, "find extension -name '*.py'", interpreter=''))
+.. }}}
+
 ::
 
-    $ find extension -name '*.py'
+	$ find extension -name '*.py'
+	
+	extension/__init__.py
+	extension/demopkg1/__init__.py
+	extension/demopkg1/not_shared.py
 
-    extension/__init__.py
-    extension/demopkg1/__init__.py
-    extension/demopkg1/not_shared.py
+.. {{{end}}}
 
 This simple test program imports the :mod:`demopkg1` package.
 
-.. include:: pkgutil_extend_path.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: pkgutil_extend_path.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 When this test program is run directly from the command line, the
-:mod:`not_shared` module is not found.  
+:mod:`not_shared` module is not found.
 
 .. note::
 
   The full file system paths in these examples have been shortened to
   emphasize the parts that change.
 
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'pkgutil_extend_path.py'))
+.. }}}
+
 ::
 
-	$ python pkgutil_extend_path.py
-
+	$ python3 pkgutil_extend_path.py
+	
 	demopkg1.__path__ before:
-	['.../PyMOTW/pkgutil/demopkg1']
+	['.../demopkg1']
 	
 	demopkg1.__path__ after:
-	['.../PyMOTW/pkgutil/demopkg1']
+	['.../demopkg1']
 	
-	demopkg1           : .../PyMOTW/pkgutil/demopkg1/__init__.py
-	demopkg1.shared    : .../PyMOTW/pkgutil/demopkg1/shared.py
-	demopkg1.not_shared: Not found (No module named not_shared)
+	demopkg1           : .../demopkg1/__init__.py
+	demopkg1.shared    : .../demopkg1/shared.py
+	demopkg1.not_shared: Not found (No module named 'demopkg1.not_sh
+	ared')
+
+.. {{{end}}}
 
 However, if the ``extension`` directory is added to the
 :data:`PYTHONPATH` and the program is run again, different results are
 produced.
 
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'PYTHONPATH=extension python3 pkgutil_extend_path.py', interpreter=None))
+.. }}}
+
 ::
 
-    $ export PYTHONPATH=extension
-    $ python pkgutil_extend_path.py
+	$ PYTHONPATH=extension python3 pkgutil_extend_path.py
+	
+	demopkg1.__path__ before:
+	['.../demopkg1']
+	
+	demopkg1.__path__ after:
+	['.../demopkg1',
+	 '.../extension/demopkg1']
+	
+	demopkg1           : .../demopkg1/__init__.py
+	demopkg1.shared    : .../demopkg1/shared.py
+	demopkg1.not_shared: .../extension/demopkg1/not_shared.py
 
-    demopkg1.__path__ before:
-    ['.../PyMOTW/pkgutil/demopkg1']
-
-    demopkg1.__path__ after:
-    ['.../PyMOTW/pkgutil/demopkg1',
-     '.../PyMOTW/pkgutil/extension/demopkg1']
-
-    demopkg1           : .../PyMOTW/pkgutil/demopkg1/__init__.pyc
-    demopkg1.shared    : .../PyMOTW/pkgutil/demopkg1/shared.pyc
-    demopkg1.not_shared: .../PyMOTW/pkgutil/extension/demopkg1/not_shared.py
+.. {{{end}}}
 
 The version of :mod:`demopkg1` inside the ``extension`` directory has
 been added to the search path, so the :mod:`not_shared` module is
@@ -142,25 +166,32 @@ overrides the installed version.
 
 Given a package :mod:`demopkg2` like this:
 
+.. {{{cog
+.. cog.out(run_script(cog.inFile, "find demopkg2 -name '*.py'", interpreter=None))
+.. }}}
+
 ::
 
-    $ find demopkg2 -name '*.py'
+	$ find demopkg2 -name '*.py'
+	
+	demopkg2/__init__.py
+	demopkg2/overloaded.py
 
-    demopkg2/__init__.py
-    demopkg2/overloaded.py
+.. {{{end}}}
+
 
 With the function under development located in
 ``demopkg2/overloaded.py``. The installed version contains
 
-.. include:: demopkg2/overloaded.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: demopkg2/overloaded.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 and ``demopkg2/__init__.py`` contains
 
-.. include:: demopkg2/__init__.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: demopkg2/__init__.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 :func:`reverse` is used to ensure that any directories added to the
 search path by :mod:`pkgutil` are scanned for imports *before* the
@@ -168,46 +199,70 @@ default location.
 
 This program imports :mod:`demopkg2.overloaded` and calls :func:`func`:
 
-.. include:: pkgutil_devel.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: pkgutil_devel.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Running it without any special path treatment produces output from the
 installed version of :func:`func`.
 
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'pkgutil_devel.py'))
+.. }}}
+
 ::
 
-    $ python pkgutil_devel.py
+	$ python3 pkgutil_devel.py
+	
+	demopkg2           : .../demopkg2/__init__.py
+	demopkg2.overloaded: .../demopkg2/overloaded.py
+	
+	This is the installed version of func().
 
-    demopkg2           : .../PyMOTW/pkgutil/demopkg2/__init__.py
-    demopkg2.overloaded: .../PyMOTW/pkgutil/demopkg2/overloaded.py
+.. {{{end}}}
 
 A development directory containing
 
+.. {{{cog
+.. cog.out(run_script(cog.inFile, "find develop -name '*.py'", interpreter=None))
+.. }}}
+
 ::
 
-    $ find develop -name '*.py'
+	$ find develop -name '*.py'
+	
+	develop/demopkg2/__init__.py
+	develop/demopkg2/overloaded.py
+	develop/nested/__init__.py
+	develop/nested/second/__init__.py
+	develop/nested/second/deep.py
+	develop/nested/shallow.py
 
-    develop/demopkg2/__init__.py
-    develop/demopkg2/overloaded.py
+.. {{{end}}}
 
 and a modified version of :mod:`overloaded`
 
-.. include:: develop/demopkg2/overloaded.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: develop/demopkg2/overloaded.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 will be loaded when the test program is run with the ``develop``
 directory in the search path.
 
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'PYTHONPATH=develop python3 pkgutil_devel.py', interpreter=None))
+.. }}}
+
 ::
 
-    $ export PYTHONPATH=develop 
-    $ python pkgutil_devel.py
+	$ PYTHONPATH=develop python3 pkgutil_devel.py
+	
+	demopkg2           : .../demopkg2/__init__.py
+	demopkg2.overloaded: .../develop/demopkg2/overloaded.py
+	
+	This is the development version of func().
 
-    demopkg2           : .../PyMOTW/pkgutil/demopkg2/__init__.pyc
-    demopkg2.overloaded: .../PyMOTW/pkgutil/develop/demopkg2/overloaded.pyc
-
+.. {{{end}}}
 
 Managing Paths with PKG Files
 =============================
@@ -227,16 +282,24 @@ search path.
 This example uses the same :mod:`demopkg1` files, and also includes
 the following files:
 
+.. {{{cog
+.. cog.out(run_script(cog.inFile, "find os_* -type f", interpreter=None))
+.. }}}
+
 ::
 
-    $ find os_* -type f
+	$ find os_* -type f
+	
+	os_one/demopkg1/__init__.py
+	os_one/demopkg1/__pycache__/not_shared.cpython-35.pyc
+	os_one/demopkg1/not_shared.py
+	os_one/demopkg1.pkg
+	os_two/demopkg1/__init__.py
+	os_two/demopkg1/__pycache__/not_shared.cpython-35.pyc
+	os_two/demopkg1/not_shared.py
+	os_two/demopkg1.pkg
 
-    os_one/demopkg1/__init__.py
-    os_one/demopkg1/not_shared.py
-    os_one/demopkg1.pkg
-    os_two/demopkg1/__init__.py
-    os_two/demopkg1/not_shared.py
-    os_two/demopkg1.pkg
+.. {{{end}}}
 
 The PKG files are named ``demopkg1.pkg`` to match the package
 being extended.  They both contain::
@@ -245,52 +308,59 @@ being extended.  They both contain::
 
 This demo program shows the version of the module being imported.
 
-.. include:: pkgutil_os_specific.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: pkgutil_os_specific.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 A simple wrapper script can be used to switch between the two
 packages.
 
-.. include:: with_os.sh
-    :literal:
+.. literalinclude:: with_os.sh
+   :caption:
 
 And when run with ``"one"`` or ``"two"`` as the arguments, the path is
 adjusted:
 
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'one', interpreter='./with_os.sh'))
+.. cog.out(run_script(cog.inFile, 'two', interpreter='./with_os.sh', include_prefix=False))
+.. }}}
+
 ::
 
-    $ ./with_os.sh one
+	$ ./with_os.sh one
+	
+	PYTHONPATH=os_one
+	
+	demopkg1.__path__ before:
+	['.../demopkg1']
+	
+	demopkg1.__path__ after:
+	['.../demopkg1',
+	 '.../os_one/demopkg1',
+	 'demopkg']
+	
+	demopkg1: .../demopkg1/__init__.py
+	demopkg1.shared: .../demopkg1/shared.py
+	demopkg1.not_shared: .../os_one/demopkg1/not_shared.py
 
-    PYTHONPATH=os_one
+	$ ./with_os.sh two
+	
+	PYTHONPATH=os_two
+	
+	demopkg1.__path__ before:
+	['.../demopkg1']
+	
+	demopkg1.__path__ after:
+	['.../demopkg1',
+	 '.../os_two/demopkg1',
+	 'demopkg']
+	
+	demopkg1: .../demopkg1/__init__.py
+	demopkg1.shared: .../demopkg1/shared.py
+	demopkg1.not_shared: .../os_two/demopkg1/not_shared.py
 
-    demopkg1.__path__ before:
-    ['.../PyMOTW/pkgutil/demopkg1']
-
-    demopkg1.__path__ after:
-    ['.../PyMOTW/pkgutil/demopkg1',
-     '.../PyMOTW/pkgutil/os_one/demopkg1',
-     'demopkg']
-
-    demopkg1           : .../PyMOTW/pkgutil/demopkg1/__init__.pyc
-    demopkg1.shared    : .../PyMOTW/pkgutil/demopkg1/shared.pyc
-    demopkg1.not_shared: .../PyMOTW/pkgutil/os_one/demopkg1/not_shared.pyc
-    
-    $ ./with_os.sh two
-
-    PYTHONPATH=os_two
-
-    demopkg1.__path__ before:
-    ['.../PyMOTW/pkgutil/demopkg1']
-
-    demopkg1.__path__ after:
-    ['.../PyMOTW/pkgutil/demopkg1',
-     '.../PyMOTW/pkgutil/os_two/demopkg1',
-     'demopkg']
-
-    demopkg1           : .../PyMOTW/pkgutil/demopkg1/__init__.pyc
-    demopkg1.shared    : .../PyMOTW/pkgutil/demopkg1/shared.pyc
-    demopkg1.not_shared: .../PyMOTW/pkgutil/os_two/demopkg1/not_shared.pyc
+.. {{{end}}}
 
 PKG files can appear anywhere in the normal search path, so a
 single PKG file in the current working directory could also be
@@ -302,31 +372,43 @@ Nested Packages
 For nested packages, it is only necessary to modify the path of the top-level
 package. For example, with this directory structure
 
+.. {{{cog
+.. cog.out(run_script(cog.inFile, "find nested -name '*.py'", interpreter=None))
+.. }}}
+
 ::
 
-    $ find nested -name '*.py'
+	$ find nested -name '*.py'
+	
+	nested/__init__.py
+	nested/second/__init__.py
+	nested/second/deep.py
+	nested/shallow.py
 
-    nested/__init__.py
-    nested/second/__init__.py
-    nested/second/deep.py
-    nested/shallow.py
+.. {{{end}}}
 
 Where ``nested/__init__.py`` contains
 
-.. include:: nested/__init__.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: nested/__init__.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 and a development tree like
 
+.. {{{cog
+.. cog.out(run_script(cog.inFile, "find develop/nested -name '*.py'", interpreter=None))
+.. }}}
+
 ::
 
-    $ find develop/nested -name '*.py'
+	$ find develop/nested -name '*.py'
+	
+	develop/nested/__init__.py
+	develop/nested/second/__init__.py
+	develop/nested/second/deep.py
+	develop/nested/shallow.py
 
-    develop/nested/__init__.py
-    develop/nested/second/__init__.py
-    develop/nested/second/deep.py
-    develop/nested/shallow.py
+.. {{{end}}}
 
 Both the :mod:`shallow` and :mod:`deep` modules contain a simple
 function to print out a message indicating whether or not they come
@@ -334,36 +416,49 @@ from the installed or development version.
 
 This test program exercises the new packages.
 
-.. include:: pkgutil_nested.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: pkgutil_nested.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 When ``pkgutil_nested.py`` is run without any path manipulation, the
 installed version of both modules are used.
 
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'pkgutil_nested.py'))
+.. }}}
+
 ::
 
-    $ python pkgutil_nested.py
+	$ python3 pkgutil_nested.py
+	
+	nested.shallow: .../nested/shallow.py
+	This func() comes from the installed version of nested.shallow
+	
+	nested.second.deep: .../nested/second/deep.py
+	This func() comes from the installed version of nested.second.de
+	ep
 
-    nested.shallow: .../PyMOTW/pkgutil/nested/shallow.pyc
-    This func() comes from the installed version of nested.shallow
-
-    nested.second.deep: .../PyMOTW/pkgutil/nested/second/deep.pyc
-    This func() comes from the installed version of nested.second.deep
+.. {{{end}}}
 
 When the ``develop`` directory is added to the path, the development
 version of both functions override the installed versions.
 
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'PYTHONPATH=develop python3 pkgutil_nested.py', interpreter=None))
+.. }}}
+
 ::
 
-    $ export PYTHONPATH=develop 
-    $ python pkgutil_nested.py 
+	$ PYTHONPATH=develop python3 pkgutil_nested.py
+	
+	nested.shallow: .../develop/nested/shallow.py
+	This func() comes from the development version of nested.shallow
+	
+	nested.second.deep: .../develop/nested/second/deep.py
+	This func() comes from the development version of nested.second.
+	deep
 
-    nested.shallow: .../PyMOTW/pkgutil/develop/nested/shallow.pyc
-    This func() comes from the development version of nested.shallow
-
-    nested.second.deep: .../PyMOTW/pkgutil/develop/nested/second/deep.pyc
-    This func() comes from the development version of nested.second.deep
+.. {{{end}}}
 
 Package Data
 ============
@@ -377,23 +472,31 @@ frozen binary, or regular files on the file system.
 
 With a package :mod:`pkgwithdata` containing a ``templates`` directory
 
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'find pkgwithdata -type f', interpreter=None))
+.. }}}
+
 ::
 
-    $ find pkgwithdata -type f
-    
-    pkgwithdata/__init__.py
-    pkgwithdata/templates/base.html
+	$ find pkgwithdata -type f
+	
+	pkgwithdata/__init__.py
+	pkgwithdata/__pycache__/__init__.cpython-35.pyc
+	pkgwithdata/templates/base.html
+
+.. {{{end}}}
 
 The file ``pkgwithdata/templates/base.html`` contains a simple HTML
 template.
 
 .. literalinclude:: pkgwithdata/templates/base.html
+   :caption:
 
 This program uses :func:`get_data` to retrieve the template contents
 and print them out.
 
-.. include:: pkgutil_get_data.py
-   :literal:
+.. literalinclude:: pkgutil_get_data.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The arguments to :func:`get_data` are the dotted name of the package,
@@ -406,8 +509,8 @@ is a byte sequence, so it is encoded as UTF-8 before being printed.
 
 ::
 
-	$ python pkgutil_get_data.py
-
+	$ python3 pkgutil_get_data.py
+	
 	<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 	<html> <head>
 	<title>PyMOTW Template</title>
@@ -428,8 +531,8 @@ import hooks defined in PEP 302 to access the package contents.
 Any loader that provides the hooks can be used, including the ZIP
 archive importer in :mod:`zipfile`.
 
-.. include:: pkgutil_get_data_zip.py
-   :literal:
+.. literalinclude:: pkgutil_get_data_zip.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example uses :func:`PyZipFile.writepy` to create a ZIP archive
@@ -445,9 +548,10 @@ about using :func:`writepy`.
 
 ::
 
-	$ python pkgutil_get_data_zip.py
-
-	Loading pkgwithdata from pkgwithdatainzip.zip/pkgwithdata/__init__.pyc
+	$ python3 pkgutil_get_data_zip.py
+	
+	Loading pkgwithdata from pkgwithdatainzip.zip/pkgwithdata/__init
+	__.pyc
 	
 	Template:
 	<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">

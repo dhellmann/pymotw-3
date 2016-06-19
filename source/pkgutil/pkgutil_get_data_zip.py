@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -25,9 +25,9 @@ sys.path.insert(0, 'pkgwithdatainzip.zip')
 
 # Import pkgwithdata to show that it comes from the ZIP archive.
 import pkgwithdata
-print 'Loading pkgwithdata from', pkgwithdata.__file__
+print('Loading pkgwithdata from', pkgwithdata.__file__)
 
 # Print the template body
-print '\nTemplate:'
+print('\nTemplate:')
 data = pkgutil.get_data('pkgwithdata', 'templates/fromzip.html')
-print data.encode('utf-8')
+print(data.decode('utf-8'))

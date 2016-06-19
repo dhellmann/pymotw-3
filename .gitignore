@@ -21,3 +21,4 @@ dist/
 /source/mmap/lorem_copy.txt
 /source/zipimport/zipimport_example.zip
 /source/shelve/test_shelf.db.db
+/source/pkgutil/pkgwithdatainzip.zip
