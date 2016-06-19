@@ -1,0 +1,436 @@
+=================================
+ site -- Site-wide Configuration
+=================================
+
+.. module:: site
+    :synopsis: Site-wide configuration
+
+The :mod:`site` module handles site-specific configuration, especially
+the import path.
+
+Import Path
+===========
+
+:mod:`site` is automatically imported each time the interpreter starts
+up.  On import, it extends :data:`sys.path` with site-specific names
+constructed by combining the prefix values :data:`sys.prefix` and
+:data:`sys.exec_prefix` with several suffixes.  The prefix values used
+are saved in the module-level variable :data:`PREFIXES` for reference
+later.  Under Windows, the suffixes are an empty string and
+``lib/site-packages``.  For Unix-like platforms, the values are
+``lib/python$version/site-packages`` (where ``$version`` is replaced
+by the major and minor version number of the interpreter, such as
+``2.7``) and ``lib/site-python``.
+
+.. include:: site_import_path.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+Each of the paths resulting from the combinations is tested, and those
+that exist are added to :data:`sys.path`.  This output shows the
+framework version of Python installed on a Mac OS X system.
+
+::
+    
+    $ python site_import_path.py 
+        
+    Path prefixes:
+       /Library/Frameworks/Python.framework/Versions/2.7
+       /Library/Frameworks/Python.framework/Versions/2.7
+    
+    /Library/Frameworks/Python.framework/Versions/2.7
+    
+      lib/python2.7/site-packages
+       exists : True
+       in path: True
+    
+      lib/site-python
+       exists : False
+       in path: False
+
+User Directories
+================
+
+In addition to the global site-packages paths, :mod:`site` is
+responsible for adding the user-specific locations to the import path.
+The user-specific paths are all based on the :data:`USER_BASE`
+directory, which usually located in a part of the file system owned
+(and writable) by the current user. Inside the :data:`USER_BASE`
+directory is a ``site-packages`` directory, with the path accessible
+as :data:`USER_SITE`.
+
+.. include:: site_user_base.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+The :data:`USER_SITE` path name is created using the same
+platform-specific suffix values described earlier.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'site_user_base.py'))
+.. }}}
+
+::
+
+	$ python site_user_base.py
+	
+	Base: /Users/dhellmann/.local
+	Site: /Users/dhellmann/.local/lib/python2.7/site-packages
+
+.. {{{end}}}
+
+The user base directory can be set through the :data:`PYTHONUSERBASE`
+environment variable, and has platform-specific defaults
+(``~/Python$version/site-packages`` for Windows and ``~/.local`` for
+non-Windows).
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'PYTHONUSERBASE=/tmp/$USER python site_user_base.py', interpreter=None))
+.. }}}
+
+::
+
+	$ PYTHONUSERBASE=/tmp/$USER python site_user_base.py
+	
+	Base: /tmp/dhellmann
+	Site: /tmp/dhellmann/lib/python2.7/site-packages
+
+.. {{{end}}}
+
+The user directory is disabled under some circumstances that would
+pose security issues (for example, if the process is running with a
+different effective user or group id than the actual user that started
+it).  An application can check the setting by examining
+``ENABLE_USER_SITE``.
+
+.. include:: site_enable_user_site.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+The user directory can also be explicitly disabled on the command line
+with :option:`-s`.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'site_enable_user_site.py'))
+.. cog.out(run_script(cog.inFile, '-s site_enable_user_site.py', include_prefix=False))
+.. }}}
+
+::
+
+	$ python site_enable_user_site.py
+	
+	Flag   : True
+	Meaning: Enabled
+
+	$ python -s site_enable_user_site.py
+	
+	Flag   : False
+	Meaning: Disabled by command-line option
+
+.. {{{end}}}
+
+Path Configuration Files
+========================
+
+As paths are added to the import path, they are also scanned for *path
+configuration files*.  A path configuration file is a plain text file
+with the extension ``.pth``.  Each line in the file can take one of
+four forms:
+
+- A full or relative path to another location that should be added to
+  the import path.
+- A Python statement to be executed.  All such lines must begin with
+  an ``import`` statement.
+- Blank lines are ignored.
+- A line starting with ``#`` is treated as a comment and ignored.
+
+Path configuration files can be used to extend the import path to look
+in locations that would not have been added automatically.  For
+example, the **Distribute** package  adds a path to ``easy-install.pth`` when it
+installs a package in development mode using ``python setup.py
+develop``.
+
+The function for extending :data:`sys.path` is public, and it can be used
+in example programs to show how the path configuration files work.
+Given a directory named ``with_modules`` containing the file ``mymodule.py``
+with this ``print`` statement showing how the module was imported:
+
+.. include:: with_modules/mymodule.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+This script shows how :func:`addsitedir()` extends the import path so
+the interpreter can find the desired module.
+
+.. include:: site_addsitedir.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+After the directory containing the module is added
+to :data:`sys.path`, the script can import :mod:`mymodule` without
+issue.
+
+.. {{{cog
+.. (path(cog.inFile).dirname() / 'with_modules/mymodule.pyc').unlink()
+.. cog.out(run_script(cog.inFile, 'site_addsitedir.py with_modules'))
+.. }}}
+
+::
+
+	$ python site_addsitedir.py with_modules
+	
+	Could not import mymodule: No module named mymodule
+	
+	New paths:
+	./with_modules
+	
+	Loaded mymodule from with_modules/mymodule.py
+
+.. {{{end}}}
+
+The path changes by :func:`addsitedir` go beyond simply appending the
+argument to :data:`sys.path`.  If the directory given to
+:func:`addsitedir()` includes any files matching the pattern
+``*.pth``, they are loaded as path configuration files.  For example,
+if ``with_pth/pymotw.pth`` contains:
+
+.. literalinclude:: with_pth/pymotw.pth
+
+and ``mymodule.py`` is copied to ``with_pth/subdir/mymodule.py``, then
+it can be imported by adding ``with_pth`` as a site directory, even
+though the module is not in that directory because both ``with_pth`` and
+``with_pth/subdir`` are added to the import path.
+
+.. {{{cog
+.. (path(cog.inFile).dirname() / 'with_pth/subdir/mymodule.pyc').unlink()
+.. cog.out(run_script(cog.inFile, 'site_addsitedir.py with_pth'))
+.. }}}
+
+::
+
+	$ python site_addsitedir.py with_pth
+	
+	Could not import mymodule: No module named mymodule
+	
+	New paths:
+	./with_pth
+	./with_pth/subdir
+	
+	Loaded mymodule from with_pth/subdir/mymodule.py
+
+.. {{{end}}}
+
+If a site directory contains multiple ``.pth`` files, they are
+processed in alphabetical order.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'ls -F multiple_pth', interpreter=None))
+.. cog.out(run_script(cog.inFile, 'cat multiple_pth/a.pth', interpreter=None, include_prefix=False))
+.. cog.out(run_script(cog.inFile, 'cat multiple_pth/b.pth', interpreter=None, include_prefix=False))
+.. }}}
+
+::
+
+	$ ls -F multiple_pth
+	
+	a.pth
+	b.pth
+	from_a/
+	from_b/
+
+	$ cat multiple_pth/a.pth
+	
+	./from_a
+
+	$ cat multiple_pth/b.pth
+	
+	./from_b
+
+.. {{{end}}}
+
+In this case, the module is found in ``multiple_pth/from_a``
+because ``a.pth`` is read before ``b.pth``.
+
+.. {{{cog
+.. (path(cog.inFile).dirname() / 'multiple_pth/from_a/mymodule.pyc').unlink()
+.. cog.out(run_script(cog.inFile, 'site_addsitedir.py multiple_pth'))
+.. }}}
+
+::
+
+	$ python site_addsitedir.py multiple_pth
+	
+	Could not import mymodule: No module named mymodule
+	
+	New paths:
+	./multiple_pth
+	./multiple_pth/from_a
+	./multiple_pth/from_b
+	
+	Loaded mymodule from multiple_pth/from_a/mymodule.py
+
+.. {{{end}}}
+
+
+.. module:: sitecustomize
+    :synopsis: Site-specific configuration
+
+Customizing Site Configuration
+==============================
+
+The :mod:`site` module is also responsible for loading site-wide
+customization defined by the local site owner in a
+:mod:`sitecustomize` module.  Uses for :mod:`sitecustomize` include
+extending the import path and enabling coverage,
+profiling, or other development tools.
+
+For example, this ``sitecustomize.py`` script extends the import path
+with a directory based on the current platform.  The platform-specific
+path in ``/opt/python`` is added to the import path, so any packages
+installed there can be imported.  A system like this is useful for
+sharing packages containing compiled extension modules between hosts
+on a network via a shared file system.  Only the ``sitecustomize.py``
+script needs to be installed on each host, and the other packages can
+be accessed from the file server.
+
+.. include:: with_sitecustomize/sitecustomize.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+A simple script can be used to show that ``sitecustomize.py`` is
+imported before Python starts running your own code.
+
+.. include:: with_sitecustomize/site_sitecustomize.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+Since :mod:`sitecustomize` is meant for system-wide configuration, it
+should be installed somewhere in the default path (usually in the
+``site-packages`` directory).  This example sets ``PYTHONPATH``
+explicitly to ensure the module is picked up.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'PYTHONPATH=with_sitecustomize python with_sitecustomize/site_sitecustomize.py', interpreter=None))
+.. }}}
+
+::
+
+	$ PYTHONPATH=with_sitecustomize python with_sitecustomize/site_sitecusto\
+	mize.py
+	
+	Loading sitecustomize.py
+	Adding new path /opt/python/2.7/Darwin-10.5.0-i386-64bit
+	Running main program
+	End of path: /opt/python/2.7/Darwin-10.5.0-i386-64bit
+
+.. {{{end}}}
+
+.. module:: usercustomize
+    :synopsis: User-specific configuration
+
+Customizing User Configuration
+==============================
+
+Similar to :mod:`sitecustomize`, the :mod:`usercustomize` module can
+be used to set up user-specific settings each time the interpreter
+starts up.  :mod:`usercustomize` is loaded after :mod:`sitecustomize`,
+so site-wide customizations can be overridden.
+
+In environments where a user's home directory is shared on several
+servers running different operating systems or versions, the standard
+user directory mechanism may not work for user-specific installations
+of packages.  In these cases, a platform-specific directory tree can be
+used instead.
+
+.. include:: with_usercustomize/usercustomize.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+Another simple script, similar to the one used for
+:mod:`sitecustomize`, can be used to show that ``usercustomize.py`` is
+imported before Python starts running other code.
+
+.. include:: with_usercustomize/site_usercustomize.py
+   :literal:
+   :start-after: #end_pymotw_header
+
+Since :mod:`usercustomize` is meant for user-specific configuration
+for a user, it should be installed somewhere in the user's default
+path, but not on the site-wide path. The default ``USER_BASE``
+directory is a good location.  This example sets ``PYTHONPATH``
+explicitly to ensure the module is picked up.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'PYTHONPATH=with_usercustomize python with_usercustomize/site_usercustomize.py', interpreter=None))
+.. }}}
+
+::
+
+	$ PYTHONPATH=with_usercustomize python with_usercustomize/site_usercusto\
+	mize.py
+	
+	Loading usercustomize.py
+	Adding new path /Users/dhellmann/python/2.7/Darwin-10.5.0-i386-64bit
+	Running main program
+	End of path: /Users/dhellmann/python/2.7/Darwin-10.5.0-i386-64bit
+
+.. {{{end}}}
+
+When the user site directory feature is disabled, :mod:`usercustomize`
+is not imported, whether it is located in the user site directory or
+elsewhere.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'PYTHONPATH=with_usercustomize python -s with_usercustomize/site_usercustomize.py', interpreter=None, break_lines_at=74))
+.. }}}
+
+::
+
+	$ PYTHONPATH=with_usercustomize python -s with_usercustomize/site_usercu\
+	stomize.py
+	
+	Running main program
+	End of path: /Library/Frameworks/Python.framework/Versions/2.7/lib/python2
+	.7/site-packages
+
+.. {{{end}}}
+
+
+Disabling the site Module
+=========================
+
+To maintain backwards-compatibility with versions of Python from
+before the automatic import was added, the interpreter accepts an
+:option:`-S` option.
+
+::
+
+    $ python -S site_import_path.py 
+
+    Path prefixes:
+       sys.prefix     : /Library/Frameworks/Python.framework/Versions/2.7
+       sys.exec_prefix: /Library/Frameworks/Python.framework/Versions/2.7
+    
+    /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packa
+    ges
+       exists: True
+      in path: False
+    /Library/Frameworks/Python.framework/Versions/2.7/lib/site-python
+       exists: False
+      in path: False
+
+.. seealso::
+
+    `site <http://docs.python.org/library/site.html>`_
+        The standard library documentation for this module.
+
+    :ref:`sys-imports`
+        Description of how the import path defined in :mod:`sys` works.
+
+    `Running code at Python startup <http://nedbatchelder.com/blog/201001/running_code_at_python_startup.html>`__
+        Post from Ned Batchelder discussing ways to cause the Python
+        interpreter to run custom initialization code before
+        starting the main program execution.
+
+    `Distribute <http://packages.python.org/distribute>`_
+        Distribute is a Python packaging library based on :mod:`setuptools` and :mod:`distutils`.

@@ -1,0 +1,98 @@
+# installing zipimport hook
+import zipimport # builtin
+# installed zipimport hook
+# /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/site.pyc has bad mtime
+import site # from /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/site.py
+# wrote /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/site.pyc
+# /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/os.pyc matches /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/os.py
+import os # precompiled from /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/os.pyc
+import errno # builtin
+import posix # builtin
+# /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/posixpath.pyc matches /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/posixpath.py
+import posixpath # precompiled from /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/posixpath.pyc
+# /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/stat.pyc matches /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/stat.py
+import stat # precompiled from /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/stat.pyc
+# /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/genericpath.pyc matches /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/genericpath.py
+import genericpath # precompiled from /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/genericpath.pyc
+# /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/warnings.pyc matches /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/warnings.py
+import warnings # precompiled from /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/warnings.pyc
+# /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/linecache.pyc matches /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/linecache.py
+import linecache # precompiled from /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/linecache.pyc
+# /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/types.pyc matches /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/types.py
+import types # precompiled from /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/types.pyc
+# /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/UserDict.pyc matches /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/UserDict.py
+import UserDict # precompiled from /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/UserDict.pyc
+# /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/_abcoll.pyc matches /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/_abcoll.py
+import _abcoll # precompiled from /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/_abcoll.pyc
+# /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/abc.pyc matches /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/abc.py
+import abc # precompiled from /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/abc.pyc
+# /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/copy_reg.pyc matches /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/copy_reg.py
+import copy_reg # precompiled from /Users/dhellmann/.virtualenvs/pymotw/bin/../lib/python2.6/copy_reg.pyc
+import sitecustomize # from /Users/dhellmann/Documents/PyMOTW/book/PyMOTW/site/with_sitecustomize/sitecustomize.py
+# wrote /Users/dhellmann/Documents/PyMOTW/book/PyMOTW/site/with_sitecustomize/sitecustomize.pyc
+import encodings # directory /Users/dhellmann/.virtualenvs/pymotw/lib/python2.6/encodings
+# /Users/dhellmann/.virtualenvs/pymotw/lib/python2.6/encodings/__init__.pyc matches /Users/dhellmann/.virtualenvs/pymotw/lib/python2.6/encodings/__init__.py
+import encodings # precompiled from /Users/dhellmann/.virtualenvs/pymotw/lib/python2.6/encodings/__init__.pyc
+# /Users/dhellmann/.virtualenvs/pymotw/lib/python2.6/codecs.pyc matches /Users/dhellmann/.virtualenvs/pymotw/lib/python2.6/codecs.py
+import codecs # precompiled from /Users/dhellmann/.virtualenvs/pymotw/lib/python2.6/codecs.pyc
+import _codecs # builtin
+# /Users/dhellmann/.virtualenvs/pymotw/lib/python2.6/encodings/aliases.pyc matches /Users/dhellmann/.virtualenvs/pymotw/lib/python2.6/encodings/aliases.py
+import encodings.aliases # precompiled from /Users/dhellmann/.virtualenvs/pymotw/lib/python2.6/encodings/aliases.pyc
+# /Users/dhellmann/.virtualenvs/pymotw/lib/python2.6/encodings/utf_8.pyc matches /Users/dhellmann/.virtualenvs/pymotw/lib/python2.6/encodings/utf_8.py
+import encodings.utf_8 # precompiled from /Users/dhellmann/.virtualenvs/pymotw/lib/python2.6/encodings/utf_8.pyc
+Python 2.6.2 (r262:71600, Apr 16 2009, 09:17:39) 
+[GCC 4.0.1 (Apple Computer, Inc. build 5250)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+# clear __builtin__._
+# clear sys.path
+# clear sys.argv
+# clear sys.ps1
+# clear sys.ps2
+# clear sys.exitfunc
+# clear sys.exc_type
+# clear sys.exc_value
+# clear sys.exc_traceback
+# clear sys.last_type
+# clear sys.last_value
+# clear sys.last_traceback
+# clear sys.path_hooks
+# clear sys.path_importer_cache
+# clear sys.meta_path
+# clear sys.flags
+# clear sys.float_info
+# restore sys.stdin
+# restore sys.stdout
+# restore sys.stderr
+# cleanup __main__
+# cleanup[1] encodings
+# cleanup[1] site
+# cleanup[1] abc
+# cleanup[1] _codecs
+# cleanup[1] _warnings
+# cleanup[1] zipimport
+# cleanup[1] encodings.utf_8
+# cleanup[1] codecs
+# cleanup[1] sitecustomize
+# cleanup[1] signal
+# cleanup[1] posix
+# cleanup[1] encodings.aliases
+# cleanup[1] exceptions
+# cleanup[2] copy_reg
+# cleanup[2] posixpath
+# cleanup[2] errno
+# cleanup[2] _abcoll
+# cleanup[2] types
+# cleanup[2] genericpath
+# cleanup[2] stat
+# cleanup[2] warnings
+# cleanup[2] UserDict
+# cleanup[2] os.path
+# cleanup[2] linecache
+# cleanup[2] os
+# cleanup sys
+# cleanup __builtin__
+Loading sitecustomize.py
+Running main program
+/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/setuptools-0.6c11-py2.6.egg-info
+# cleanup ints: 19 unfreed ints
+# cleanup floats
