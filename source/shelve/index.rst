@@ -1,11 +1,13 @@
-=========================================
- shelve -- Persistent Storage of Objects
-=========================================
+==========================================
+ shelve --- Persistent Storage of Objects
+==========================================
 
 .. module:: shelve
     :synopsis: Persistent storage of objects
 
-:Purpose: The shelve module implements persistent storage for arbitrary Python objects that can be pickled, using a dictionary-like API.
+:Purpose: The shelve module implements persistent storage for
+          arbitrary Python objects that can be pickled, using a
+          dictionary-like API.
 
 The :mod:`shelve` module can be used as a simple persistent storage
 option for Python objects when a relational database is not
@@ -20,15 +22,15 @@ The simplest way to use :mod:`shelve` is via the :class:`DbfilenameShelf`
 class. It uses :mod:`anydbm` to store the data. The class can be used
 directly, or by calling :func:`shelve.open()`:
 
-.. include:: shelve_create.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: shelve_create.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 To access the data again, open the shelf and use it like a dictionary:
 
-.. include:: shelve_existing.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: shelve_existing.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Running both sample scripts produces:
 
@@ -52,9 +54,9 @@ to the same database at the same time, but it does support concurrent
 read-only clients. If a client will not be modifying the shelf, tell
 :mod:`shelve` to open the database read-only by passing ``flag='r'``.
 
-.. include:: shelve_readonly.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: shelve_readonly.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 If the program tries to modify the database while it is opened read-only, an
 access error exception is generated. The exception type depends on the
@@ -68,9 +70,9 @@ default. That means if the contents of an item stored in the shelf are
 changed, the shelf must be updated explicitly by storing the entire item
 again.
 
-.. include:: shelve_withoutwriteback.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: shelve_withoutwriteback.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 In this example, the dictionary at ``'key1'`` is not stored again, so when the
 shelf is re-opened, the changes have not been preserved.
@@ -90,15 +92,15 @@ shelf is re-opened, the changes have not been preserved.
 
 .. {{{end}}}
 
-To automatically catch changes to volatile objects stored in the shelf, open
-it with writeback enabled. The *writeback* flag causes the shelf to
-remember all of the objects retrieved from the database using an in-memory
-cache. Each cache object is also written back to the database when the shelf
-is closed. 
+To automatically catch changes to volatile objects stored in the
+shelf, open it with writeback enabled. The *writeback* flag causes the
+shelf to remember all of the objects retrieved from the database using
+an in-memory cache. Each cache object is also written back to the
+database when the shelf is closed.
 
-.. include:: shelve_writeback.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: shelve_writeback.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Although it reduces the chance of programmer error, and can make
 object persistence more transparent, using writeback mode may not be
@@ -135,7 +137,6 @@ more than it writes, writeback will impact performance unnecessarily.
 	 'string': 'Sample data'}
 
 .. {{{end}}}
-
 
 .. _shelve-shelf-types:
 
