@@ -56,6 +56,7 @@ generate paths and other settings dynamically.
     :maxdepth: 1
 
     sys/index
+    sysconfig/index
 
 ..
     site/index

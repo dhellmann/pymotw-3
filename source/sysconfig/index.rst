@@ -1,6 +1,6 @@
-===================================================
+======================================================
  sysconfig --- Interpreter Compile-time Configuration
-===================================================
+======================================================
 
 .. module:: sysconfig
     :synopsis: Interpreter Compile-time Configuration
@@ -32,36 +32,39 @@ systems such as Windows, the settings are limited to a few paths,
 filename extensions, and version details.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'sysconfig_get_config_vars.py'))
+.. cog.out(run_script(cog.inFile, 'sysconfig_get_config_vars.py',
+..                    line_cleanups=[], line_break_mode='wrap'))
 .. }}}
 
 ::
 
-	$ python sysconfig_get_config_vars.py
+	$ python3 sysconfig_get_config_vars.py
 	
-	Found 511 configuration settings
+	Found 663 configuration settings
 	
 	Some highlights:
 	
-	  Installation prefixes:
-	    prefix=/Library/Frameworks/Python.framework/Versions/2.7
-	    exec_prefix=/Library/Frameworks/Python.framework/Versions/2.7
+	 Installation prefixes:
+	  prefix=/Library/Frameworks/Python.framework/Versions/3.5
+	  exec_prefix=/Library/Frameworks/Python.framework/Versions/3.5
 	
-	  Version info:
-	    py_version=2.7
-	    py_version_short=2.7
-	    py_version_nodot=27
+	 Version info:
+	  py_version=3.5.1
+	  py_version_short=3.5
+	  py_version_nodot=35
 	
-	  Base directories:
-	    base=/Users/dhellmann/.virtualenvs/pymotw
-	    platbase=/Users/dhellmann/.virtualenvs/pymotw
-	    userbase=/Users/dhellmann/Library/Python/2.7
-	    srcdir=/Users/sysadmin/X/r27
+	 Base directories:
+	  base=/Users/dhellmann/Envs/pymotw35
+	  platbase=/Users/dhellmann/Envs/pymotw35
+	  userbase=/Users/dhellmann/Library/Python/3.5
+	  srcdir=/Library/Frameworks/Python.framework/Versions/3.5/lib/p
+	ython3.5/config-3.5m
 	
-	  Compiler and linker flags:
-	    LDFLAGS=-arch i386 -arch ppc -arch x86_64 -isysroot / -g
-	    BASECFLAGS=-fno-strict-aliasing -fno-common -dynamic
-	    Py_ENABLE_SHARED=0
+	 Compiler and linker flags:
+	  LDFLAGS=-arch i386 -arch x86_64  -g
+	  BASECFLAGS=-fno-strict-aliasing -Wsign-compare -Wunreachable-
+	code -fno-common -dynamic
+	  Py_ENABLE_SHARED=0
 
 .. {{{end}}}
 
@@ -77,17 +80,18 @@ This example builds a list of all of the installation base directories
 where modules can be found on the current system.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'sysconfig_get_config_vars_by_name.py'))
+.. cog.out(run_script(cog.inFile, 'sysconfig_get_config_vars_by_name.py',
+..                    line_cleanups=[]))
 .. }}}
 
 ::
 
-	$ python sysconfig_get_config_vars_by_name.py
+	$ python3 sysconfig_get_config_vars_by_name.py
 	
 	Base directories:
-	   /Users/dhellmann/.virtualenvs/pymotw
-	   /Users/dhellmann/.virtualenvs/pymotw
-	   /Users/dhellmann/Library/Python/2.7
+	   /Users/dhellmann/Envs/pymotw35
+	   /Users/dhellmann/Envs/pymotw35
+	   /Users/dhellmann/Library/Python/3.5
 
 .. {{{end}}}
 
@@ -107,9 +111,9 @@ instead of raising an exception.
 
 ::
 
-	$ python sysconfig_get_config_var.py
+	$ python3 sysconfig_get_config_var.py
 	
-	User base directory: /Users/dhellmann/Library/Python/2.7
+	User base directory: /Users/dhellmann/Library/Python/3.5
 	Unknown variable   : None
 
 .. {{{end}}}
@@ -148,12 +152,10 @@ Otherwise the default is the operating system name, as defined by
 
 ::
 
-	$ python sysconfig_get_scheme_names.py
+	$ python3 sysconfig_get_scheme_names.py
 	
 	nt
 	nt_user
-	os2
-	os2_home
 	osx_framework_user
 	posix_home
 	posix_prefix
@@ -196,7 +198,7 @@ and their meaning.
 
 ::
 
-	$ python sysconfig_get_path_names.py
+	$ python3 sysconfig_get_path_names.py
 	
 	stdlib
 	platstdlib
@@ -220,59 +222,56 @@ for ``posix_prefix`` under a framework build on Mac OS X, and the
 user-specific values for ``posix_user``.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'sysconfig_get_paths.py'))
+.. cog.out(run_script(cog.inFile, 'sysconfig_get_paths.py', line_cleanups=[]))
 .. }}}
-.. {{{end}}}
-
-
-
-.. NOT RUNNING
-.. cog.out(run_script(cog.inFile, 'sysconfig_get_paths.py'))
 
 ::
 
-    $ python sysconfig_get_paths.py
-    
-    posix_prefix
-    ============
-    prefix = /Library/Frameworks/Python.framework/Versions/2.7
-    
-    data
-      .
-    include
-      ./include/python2.7
-    platinclude
-      ./include/python2.7
-    platlib
-      ./lib/python2.7/site-packages
-    platstdlib
-      ./lib/python2.7
-    purelib
-      ./lib/python2.7/site-packages
-    scripts
-      ./bin
-    stdlib
-      ./lib/python2.7
-    
-    posix_user
-    ==========
-    prefix = /Users/dhellmann/Library/Python/2.7
-    
-    data
-      .
-    include
-      ./include/python2.7
-    platlib
-      ./lib/python2.7/site-packages
-    platstdlib
-      ./lib/python2.7
-    purelib
-      ./lib/python2.7/site-packages
-    scripts
-      ./bin
-    stdlib
-      ./lib/python2.7
-    
+	$ python3 sysconfig_get_paths.py
+	
+	posix_prefix
+	============
+	prefix = /Users/dhellmann/Envs/pymotw35
+	
+	data
+	  .
+	include
+	  ./include/python3.5m
+	platinclude
+	  ./include/python3.5m
+	platlib
+	  ./lib/python3.5/site-packages
+	platstdlib
+	  ./lib/python3.5
+	purelib
+	  ./lib/python3.5/site-packages
+	scripts
+	  ./bin
+	stdlib
+	  ./lib/python3.5
+	
+	posix_user
+	==========
+	prefix = /Users/dhellmann/Library/Python/3.5
+	
+	data
+	  .
+	include
+	  ./include/python3.5
+	platlib
+	  ./lib/python3.5/site-packages
+	platstdlib
+	  ./lib/python3.5
+	purelib
+	  ./lib/python3.5/site-packages
+	scripts
+	  ./bin
+	stdlib
+	  ./lib/python3.5
+	
+
+.. {{{end}}}
+
 For an individual path, call :func:`get_path`.
 
 .. literalinclude:: sysconfig_get_path.py
@@ -285,27 +284,25 @@ If several paths are needed, :func:`get_paths` is more efficient
 because it does not recompute all of the paths each time.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'sysconfig_get_path.py'))
+.. cog.out(run_script(cog.inFile, 'sysconfig_get_path.py', line_cleanups=[]))
 .. }}}
-.. {{{end}}}
-
-
-.. NOT RUNNING
-.. cog.out(run_script(cog.inFile, 'sysconfig_get_path.py', break_lines_at=65, line_break_mode='continue'))
 
 ::
 
-	$ python sysconfig_get_path.py
+	$ python3 sysconfig_get_path.py
 	
 	posix_prefix
 	============
-	purelib = /Library/Frameworks/Python.framework/Versions/2.7/site-\
-	packages
+	purelib = /Users/dhellmann/Envs/pymotw35/lib/python3.5/site-pack
+	ages
 	
 	posix_user
 	==========
-	purelib = /Users/dhellmann/Library/Python/2.7/lib/python2.7/site-\
-	packages
+	purelib = /Users/dhellmann/Library/Python/3.5/lib/python3.5/site
+	-packages
+	
+
+.. {{{end}}}
 
 Python Version and Platform
 ===========================
@@ -331,9 +328,9 @@ number included in the platform string.
 
 ::
 
-	$ python sysconfig_get_platform.py
+	$ python3 sysconfig_get_platform.py
 	
-	macosx-10.5-fat3
+	macosx-10.6-intel
 
 .. {{{end}}}
 
@@ -354,14 +351,14 @@ building a version-specific path.
 
 ::
 
-	$ python sysconfig_get_python_version.py
+	$ python3 sysconfig_get_python_version.py
 	
-	sysconfig.get_python_version(): 2.7
+	sysconfig.get_python_version(): 3.5
 	
 	sys.version_info:
-	  major       : 2
-	  minor       : 7
-	  micro       : 0
+	  major       : 3
+	  minor       : 5
+	  micro       : 1
 	  releaselevel: final
 	  serial      : 0
 
@@ -369,21 +366,16 @@ building a version-specific path.
 
 .. seealso::
 
-    `sysconfig <http://docs.python.org/library/sysconfig.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`sysconfig`
 
-    :mod:`distutils`
-        ``sysconfig`` used to be part of the ``distutils`` package.
+   * :mod:`distutils` -- :mod:`sysconfig` used to be part of the
+     ``distutils`` package.
 
-    `distutils2 <http://hg.python.org/distutils2/>`_
-        Updates to ``distutils``, managed by Tarek Ziadé.
+   * :mod:`site` -- The ``site`` module describes the paths searched
+     when importing in more detail.
 
-    :mod:`site`
-        The ``site`` module describes the paths searched when
-        importing in more detail.
+   * :mod:`os` -- Includes ``os.name``, the name of the current
+     operating system.
 
-    :mod:`os`
-        Includes ``os.name``, the name of the current operating system.
-
-    :mod:`sys`
-        Includes other build-time information such as the platform.
+   * :mod:`sys` -- Includes other build-time information such as the
+     platform.
