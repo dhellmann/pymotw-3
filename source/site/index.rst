@@ -1,6 +1,6 @@
-=================================
- site -- Site-wide Configuration
-=================================
+==================================
+ site --- Site-wide Configuration
+==================================
 
 .. module:: site
     :synopsis: Site-wide configuration
@@ -22,13 +22,19 @@ later.  Under Windows, the suffixes are an empty string and
 by the major and minor version number of the interpreter, such as
 ``2.7``) and ``lib/site-python``.
 
-.. include:: site_import_path.py
-   :literal:
+.. literalinclude:: site_import_path.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Each of the paths resulting from the combinations is tested, and those
 that exist are added to :data:`sys.path`.  This output shows the
 framework version of Python installed on a Mac OS X system.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'site_import_path.py'))
+.. }}}
+.. {{{end}}}
+
 
 ::
     
@@ -59,8 +65,8 @@ directory, which usually located in a part of the file system owned
 directory is a ``site-packages`` directory, with the path accessible
 as :data:`USER_SITE`.
 
-.. include:: site_user_base.py
-   :literal:
+.. literalinclude:: site_user_base.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The :data:`USER_SITE` path name is created using the same
@@ -103,8 +109,8 @@ different effective user or group id than the actual user that started
 it).  An application can check the setting by examining
 ``ENABLE_USER_SITE``.
 
-.. include:: site_enable_user_site.py
-   :literal:
+.. literalinclude:: site_enable_user_site.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The user directory can also be explicitly disabled on the command line
@@ -155,15 +161,15 @@ in example programs to show how the path configuration files work.
 Given a directory named ``with_modules`` containing the file ``mymodule.py``
 with this ``print`` statement showing how the module was imported:
 
-.. include:: with_modules/mymodule.py
-   :literal:
+.. literalinclude:: with_modules/mymodule.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This script shows how :func:`addsitedir()` extends the import path so
 the interpreter can find the desired module.
 
-.. include:: site_addsitedir.py
-   :literal:
+.. literalinclude:: site_addsitedir.py
+   :caption:
    :start-after: #end_pymotw_header
 
 After the directory containing the module is added
@@ -171,7 +177,6 @@ to :data:`sys.path`, the script can import :mod:`mymodule` without
 issue.
 
 .. {{{cog
-.. (path(cog.inFile).dirname() / 'with_modules/mymodule.pyc').unlink()
 .. cog.out(run_script(cog.inFile, 'site_addsitedir.py with_modules'))
 .. }}}
 
@@ -195,6 +200,7 @@ argument to :data:`sys.path`.  If the directory given to
 if ``with_pth/pymotw.pth`` contains:
 
 .. literalinclude:: with_pth/pymotw.pth
+   :caption:
 
 and ``mymodule.py`` is copied to ``with_pth/subdir/mymodule.py``, then
 it can be imported by adding ``with_pth`` as a site directory, even
@@ -202,7 +208,6 @@ though the module is not in that directory because both ``with_pth`` and
 ``with_pth/subdir`` are added to the import path.
 
 .. {{{cog
-.. (path(cog.inFile).dirname() / 'with_pth/subdir/mymodule.pyc').unlink()
 .. cog.out(run_script(cog.inFile, 'site_addsitedir.py with_pth'))
 .. }}}
 
@@ -293,15 +298,15 @@ on a network via a shared file system.  Only the ``sitecustomize.py``
 script needs to be installed on each host, and the other packages can
 be accessed from the file server.
 
-.. include:: with_sitecustomize/sitecustomize.py
-   :literal:
+.. literalinclude:: with_sitecustomize/sitecustomize.py
+   :caption:
    :start-after: #end_pymotw_header
 
 A simple script can be used to show that ``sitecustomize.py`` is
 imported before Python starts running your own code.
 
-.. include:: with_sitecustomize/site_sitecustomize.py
-   :literal:
+.. literalinclude:: with_sitecustomize/site_sitecustomize.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Since :mod:`sitecustomize` is meant for system-wide configuration, it
@@ -326,7 +331,7 @@ explicitly to ensure the module is picked up.
 .. {{{end}}}
 
 .. module:: usercustomize
-    :synopsis: User-specific configuration
+   :synopsis: User-specific configuration
 
 Customizing User Configuration
 ==============================
@@ -342,16 +347,16 @@ user directory mechanism may not work for user-specific installations
 of packages.  In these cases, a platform-specific directory tree can be
 used instead.
 
-.. include:: with_usercustomize/usercustomize.py
-   :literal:
+.. literalinclude:: with_usercustomize/usercustomize.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Another simple script, similar to the one used for
 :mod:`sitecustomize`, can be used to show that ``usercustomize.py`` is
 imported before Python starts running other code.
 
-.. include:: with_usercustomize/site_usercustomize.py
-   :literal:
+.. literalinclude:: with_usercustomize/site_usercustomize.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Since :mod:`usercustomize` is meant for user-specific configuration
@@ -403,21 +408,10 @@ To maintain backwards-compatibility with versions of Python from
 before the automatic import was added, the interpreter accepts an
 :option:`-S` option.
 
-::
-
-    $ python -S site_import_path.py 
-
-    Path prefixes:
-       sys.prefix     : /Library/Frameworks/Python.framework/Versions/2.7
-       sys.exec_prefix: /Library/Frameworks/Python.framework/Versions/2.7
-    
-    /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packa
-    ges
-       exists: True
-      in path: False
-    /Library/Frameworks/Python.framework/Versions/2.7/lib/site-python
-       exists: False
-      in path: False
+.. {{{cog
+.. cog.out(run_script(cog.inFile, '-S site_import_path.py'))
+.. }}}
+.. {{{end}}}
 
 .. seealso::
 
