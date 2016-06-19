@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -10,6 +10,6 @@
 import sysconfig
 
 bases = sysconfig.get_config_vars('base', 'platbase', 'userbase')
-print 'Base directories:'
+print('Base directories:')
 for b in bases:
-    print '  ', b
+    print('  ', b)

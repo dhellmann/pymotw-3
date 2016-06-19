@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -9,4 +9,4 @@
 
 import sysconfig
 
-print sysconfig.get_platform()
+print(sysconfig.get_platform())

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -9,5 +9,5 @@
 
 import sysconfig
 
-print 'User base directory:', sysconfig.get_config_var('userbase')
-print 'Unknown variable   :', sysconfig.get_config_var('NoSuchVariable')
+print('User base directory:', sysconfig.get_config_var('userbase'))
+print('Unknown variable   :', sysconfig.get_config_var('NoSuchVariable'))
