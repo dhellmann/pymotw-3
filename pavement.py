@@ -95,6 +95,8 @@ def _elide_path_prefix(infile, line):
     """
     rundir = os.path.abspath(path(infile).dirname())
     line = line.replace(rundir, '...')
+    if 'VIRTUAL_ENV' in os.environ:
+        line = line.replace(os.environ['VIRTUAL_ENV'], '...')
     line = line.replace('/Library/Frameworks/Python.framework/Versions/3.5',
                         '...')
     return line
@@ -102,9 +104,10 @@ def _elide_path_prefix(infile, line):
 
 # Replace run_script with local wrapper
 def run_script(input_file, script_name, break_lines_at=64, **kwds):
+    if 'line_cleanups' not in kwds:
+        kwds['line_cleanups'] = [_elide_path_prefix]
     return paverutils.run_script(input_file, script_name,
                                  break_lines_at=break_lines_at,
-                                 line_cleanups=[_elide_path_prefix],
                                  **kwds)
 
 def safe_unlink(pathname):
