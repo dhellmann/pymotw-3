@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -7,7 +7,7 @@
 """
 #end_pymotw_header
 
-print 'Loading usercustomize.py'
+print('Loading usercustomize.py')
 
 import site
 import platform
@@ -19,7 +19,6 @@ path = os.path.expanduser(os.path.join('~',
                                        sys.version[:3],
                                        platform.platform(),
                                        ))
-print 'Adding new path', path
-                    
+print('Adding new path', path)
+
 site.addsitedir(path)
-    
