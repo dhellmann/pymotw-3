@@ -1,15 +1,14 @@
 ===================================================
-sysconfig -- Interpreter Compile-time Configuration
+ sysconfig --- Interpreter Compile-time Configuration
 ===================================================
 
 .. module:: sysconfig
     :synopsis: Interpreter Compile-time Configuration
 
 :Purpose: Access the configuration settings used to build Python.
-:Python Version: 2.7 and later
 
-In Python 2.7 :mod:`sysconfig` has been extracted from
-:mod:`distutils` to become a stand-alone module.  It includes
+The features of :mod:`sysconfig` have been extracted from
+:mod:`distutils` to create a stand-alone module.  It includes
 functions for determining the settings used to compile and install the
 current interpreter.
 
@@ -20,8 +19,8 @@ Access the build-time configuration settings is provided through two
 functions.  :func:`get_config_vars` returns a dictionary mapping the
 configuration variable names to values.
 
-.. include:: sysconfig_get_config_vars.py
-   :literal:
+.. literalinclude:: sysconfig_get_config_vars.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The level of detail available through the :mod:`sysconfig` API depends
@@ -70,8 +69,8 @@ Passing variable names to :func:`get_config_vars` changes the return
 value to a :class:`list` created by appending all of the values for
 those variables together.
 
-.. include:: sysconfig_get_config_vars_by_name.py
-   :literal:
+.. literalinclude:: sysconfig_get_config_vars_by_name.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example builds a list of all of the installation base directories
@@ -95,8 +94,8 @@ where modules can be found on the current system.
 When only a single configuration value is needed, use
 :func:`get_config_var` to retrieve it.
 
-.. include:: sysconfig_get_config_var.py
-   :literal:
+.. literalinclude:: sysconfig_get_config_var.py
+   :caption:
    :start-after: #end_pymotw_header
 
 If the variable is not found, :func:`get_config_var` returns ``None``
@@ -132,8 +131,8 @@ different schemes for installing into a site-wide location or a
 private directory owned by the user.  The full set of schemes can be
 accessed with :func:`get_scheme_names`.
 
-.. include:: sysconfig_get_scheme_names.py
-   :literal:
+.. literalinclude:: sysconfig_get_scheme_names.py
+   :caption:
    :start-after: #end_pymotw_header
 
 There is no concept of a "current scheme" per se.  The default scheme
@@ -165,8 +164,8 @@ Otherwise the default is the operating system name, as defined by
 Each scheme defines a set of paths used for installing packages.  For
 a list of the path names, use :func:`get_path_names`.
 
-.. include:: sysconfig_get_path_names.py
-   :literal:
+.. literalinclude:: sysconfig_get_path_names.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Some of the paths may be the same for a given scheme, but installers
@@ -212,13 +211,19 @@ and their meaning.
 Use :func:`get_paths` to retrieve the actual directories associated
 with a scheme.
 
-.. include:: sysconfig_get_paths.py
-   :literal:
+.. literalinclude:: sysconfig_get_paths.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example shows the difference between the system-wide paths used
 for ``posix_prefix`` under a framework build on Mac OS X, and the
 user-specific values for ``posix_user``.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'sysconfig_get_paths.py'))
+.. }}}
+.. {{{end}}}
+
 
 
 .. NOT RUNNING
@@ -270,14 +275,20 @@ user-specific values for ``posix_user``.
     
 For an individual path, call :func:`get_path`.
 
-.. include:: sysconfig_get_path.py
-   :literal:
+.. literalinclude:: sysconfig_get_path.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Using :func:`get_path` is equivalent to saving the value of
 :func:`get_paths` and looking up the individual key in the dictionary.
 If several paths are needed, :func:`get_paths` is more efficient
 because it does not recompute all of the paths each time.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'sysconfig_get_path.py'))
+.. }}}
+.. {{{end}}}
+
 
 .. NOT RUNNING
 .. cog.out(run_script(cog.inFile, 'sysconfig_get_path.py', break_lines_at=65, line_break_mode='continue'))
@@ -306,8 +317,8 @@ always include information about hardware architecture, instruction size, or
 other values that effect the compatibility of binary libraries.  For a
 more precise platform specifier, use :func:`get_platform`.
 
-.. include:: sysconfig_get_platform.py
-   :literal:
+.. literalinclude:: sysconfig_get_platform.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Although this sample output was prepared on an OS X 10.6 system, the
@@ -330,8 +341,8 @@ As a convenience, the interpreter version from
 :data:`sys.version_info` is also available through
 :func:`get_python_version` in :mod:`sysconfig`.
 
-.. include:: sysconfig_get_python_version.py
-   :literal:
+.. literalinclude:: sysconfig_get_python_version.py
+   :caption:
    :start-after: #end_pymotw_header
 
 :func:`get_python_version` returns a string suitable for use when
