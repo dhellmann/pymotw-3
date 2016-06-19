@@ -18,7 +18,7 @@ if 'Windows' in sys.platform:
     ]
 else:
     SUFFIXES = [
-        'lib/python%s/site-packages' % sys.version[:3],
+        'lib/python{}/site-packages'.format(sys.version[:3]),
         'lib/site-python',
     ]
 
