@@ -148,7 +148,7 @@ deprecated and should not be used in new Python 3 programs.
    pair: porting; asyncore
    pair: porting; asynchat
 
-asyncore and asynchat
+:mod:`asyncore` and :mod:`asynchat`
   Asynchronous I/O and protocol handlers.
 
   See :mod:`asyncio` instead.
@@ -156,25 +156,40 @@ asyncore and asynchat
 .. index::
    pair: porting; formatter
 
-formatter
+:mod:`formatter`
   Generic output formatter and device interface.
+
+  See :pyissue:`18716` for details.
 
 .. index::
    pair: porting; imp
+   pair: porting; importlib
 
-imp
+:mod:`imp`
   Access the implementation of the import statement.
+
+  See :mod:`importlib` instead.
 
 .. index::
    pair: porting; optparse
+   pair: porting; argparse
 
-optparse
+:mod:`optparse`
   Command-line option parsing library.
 
   The API for :mod:`argparse` is similar to the one provided by
   :mod:`optparse`, and in many cases :mod:`argparse` can be used as a
   straightforward replacement by updating the names of the classes and
   methods used.
+
+.. index::
+   pair: porting; thread
+   pair: porting; threading
+
+:mod:`thread`
+  Low-level access to system threads for concurrency.
+
+  Use the higher-level API in :mod:`threading` instead.
 
 
 Summary of Changes to Modules
