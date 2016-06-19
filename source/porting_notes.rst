@@ -38,16 +38,26 @@ For more information about porting to Python 3, refer to
   <http://mail.python.org/mailman/listinfo/python-porting>`__ mailing
   list.
 
+New Modules
+===========
+
+Python 3 includes a number of new modules, providing features not
+present in Python 2.
+
+:mod:`asyncio`
+  Asynchronous I/O, event loop, and other concurrency tools.
+
 Renamed Modules
 ===============
 
 Many standard library modules were renamed between Python 2 and 3 as
 part of :pep:`3108` (*Standard Library Reorganization*). All of the
 new module names use consistent lower case, and some have been moved
-into packages to better organize related modules. A complete list of
-the renames can be found in the dictionary
-``lib2to3.fixes.fix_imports.MAPPING`` (the keys are the Python 2 name
-and the values are the Python 3 name).
+into packages to better organize related modules. Often, code using
+these modules can be updated to work with Python 3 just by fixing the
+import statements. A complete list of the renames can be found in the
+dictionary ``lib2to3.fixes.fix_imports.MAPPING`` (the keys are the
+Python 2 name and the values are the Python 3 name).
 
 .. index::
    single: porting; renamed modules
@@ -61,62 +71,61 @@ and the values are the Python 3 name).
 .. cog.out(".. csv-table:: Renamed Modules\n")
 .. cog.out('   :header: "Python 2 Name", "Python 3 Name"\n')
 .. cog.out("\n")
-.. for old, new in sorted(MAPPING.items()):
-..   cog.out("   {}, {}\n".format(old, new))
+.. for old, new in sorted(MAPPING.items(), key=lambda x: x[0].lower()):
+..   if new.startswith('_'):
+..     continue
+..   cog.out("   ``{}``, :mod:`{}`\n".format(old, new))
 .. cog.out("\n")
 .. }}}
 
 .. csv-table:: Renamed Modules
    :header: "Python 2 Name", "Python 3 Name"
 
-   BaseHTTPServer, http.server
-   CGIHTTPServer, http.server
-   ConfigParser, configparser
-   Cookie, http.cookies
-   Dialog, tkinter.dialog
-   DocXMLRPCServer, xmlrpc.server
-   FileDialog, tkinter.filedialog
-   HTMLParser, html.parser
-   Queue, queue
-   ScrolledText, tkinter.scrolledtext
-   SimpleDialog, tkinter.simpledialog
-   SimpleHTTPServer, http.server
-   SimpleXMLRPCServer, xmlrpc.server
-   SocketServer, socketserver
-   StringIO, io
-   Tix, tkinter.tix
-   Tkconstants, tkinter.constants
-   Tkdnd, tkinter.dnd
-   Tkinter, tkinter
-   UserList, collections
-   UserString, collections
-   __builtin__, builtins
-   _winreg, winreg
-   cPickle, pickle
-   cStringIO, io
-   commands, subprocess
-   cookielib, http.cookiejar
-   copy_reg, copyreg
-   dbhash, dbm.bsd
-   dbm, dbm.ndbm
-   dumbdbm, dbm.dumb
-   dummy_thread, _dummy_thread
-   gdbm, dbm.gnu
-   htmlentitydefs, html.entities
-   httplib, http.client
-   markupbase, _markupbase
-   repr, reprlib
-   robotparser, urllib.robotparser
-   thread, _thread
-   tkColorChooser, tkinter.colorchooser
-   tkCommonDialog, tkinter.commondialog
-   tkFileDialog, tkinter.filedialog
-   tkFont, tkinter.font
-   tkMessageBox, tkinter.messagebox
-   tkSimpleDialog, tkinter.simpledialog
-   ttk, tkinter.ttk
-   urlparse, urllib.parse
-   xmlrpclib, xmlrpc.client
+   ``__builtin__``, :mod:`builtins`
+   ``_winreg``, :mod:`winreg`
+   ``BaseHTTPServer``, :mod:`http.server`
+   ``CGIHTTPServer``, :mod:`http.server`
+   ``commands``, :mod:`subprocess`
+   ``ConfigParser``, :mod:`configparser`
+   ``Cookie``, :mod:`http.cookies`
+   ``cookielib``, :mod:`http.cookiejar`
+   ``copy_reg``, :mod:`copyreg`
+   ``cPickle``, :mod:`pickle`
+   ``cStringIO``, :mod:`io`
+   ``dbhash``, :mod:`dbm.bsd`
+   ``dbm``, :mod:`dbm.ndbm`
+   ``Dialog``, :mod:`tkinter.dialog`
+   ``DocXMLRPCServer``, :mod:`xmlrpc.server`
+   ``dumbdbm``, :mod:`dbm.dumb`
+   ``FileDialog``, :mod:`tkinter.filedialog`
+   ``gdbm``, :mod:`dbm.gnu`
+   ``htmlentitydefs``, :mod:`html.entities`
+   ``HTMLParser``, :mod:`html.parser`
+   ``httplib``, :mod:`http.client`
+   ``Queue``, :mod:`queue`
+   ``repr``, :mod:`reprlib`
+   ``robotparser``, :mod:`urllib.robotparser`
+   ``ScrolledText``, :mod:`tkinter.scrolledtext`
+   ``SimpleDialog``, :mod:`tkinter.simpledialog`
+   ``SimpleHTTPServer``, :mod:`http.server`
+   ``SimpleXMLRPCServer``, :mod:`xmlrpc.server`
+   ``SocketServer``, :mod:`socketserver`
+   ``StringIO``, :mod:`io`
+   ``Tix``, :mod:`tkinter.tix`
+   ``tkColorChooser``, :mod:`tkinter.colorchooser`
+   ``tkCommonDialog``, :mod:`tkinter.commondialog`
+   ``Tkconstants``, :mod:`tkinter.constants`
+   ``Tkdnd``, :mod:`tkinter.dnd`
+   ``tkFileDialog``, :mod:`tkinter.filedialog`
+   ``tkFont``, :mod:`tkinter.font`
+   ``Tkinter``, :mod:`tkinter`
+   ``tkMessageBox``, :mod:`tkinter.messagebox`
+   ``tkSimpleDialog``, :mod:`tkinter.simpledialog`
+   ``ttk``, :mod:`tkinter.ttk`
+   ``urlparse``, :mod:`urllib.parse`
+   ``UserList``, :mod:`collections`
+   ``UserString``, :mod:`collections`
+   ``xmlrpclib``, :mod:`xmlrpc.client`
 
 .. {{{end}}}
 
@@ -132,68 +141,221 @@ and the values are the Python 3 name).
 
 .. _six: http://pythonhosted.org/six/
 
-New Modules
-===========
+Removed Modules
+===============
 
-asyncio
-  Asynchronous I/O, event loop, and other concurrency tools.
+.. index::
+   single: porting; removed modules
+
+These modules are either no longer present at all, or have had their
+features merged into other existing modules.
+
+bsddb
+-----
+
+The :mod:`bsddb` and :mod:`dbm.bsd` modules have been
+removed. Bindings for Berkeley DB are now maintained `outside of the
+standard library <https://pypi.python.org/pypi/bsddb3>`__ as
+``bsddb3``.
+
+commands
+--------
+
+.. index::
+   pair: porting; subprocess
+
+The :mod:`commands` module was deprecated in Python 2.6 and removed
+in Python 3.0. See :mod:`subprocess` instead.
+
+compiler
+--------
+
+
+.. index::
+   pair: porting; ast
+
+The :mod:`compiler` module has been removed. See :mod:`ast` instead.
+
+dircache
+--------
+
+The :mod:`dircache` module has been removed, without a replacement.
+
+EasyDialogs
+-----------
+
+.. index::
+   pair: porting; tkinter
+
+The :mod:`EasyDialogs` module has been removed. See :mod:`tkinter`
+instead.
+
+exception
+---------
+
+The :mod:`exception` module has been removed because all of the
+exceptions defined there are available as built-in classes.
+
+htmllib
+-------
+
+.. index::
+   pair: porting; html.parser
+
+The :mod:`htmllib` module has been removed. See :mod:`html.parser`
+instead.
+
+md5
+---
+
+.. index::
+   pair: porting; hashlib
+
+The implementation of the MD5 message digest algorithm has moved to
+:mod:`hashlib`.
+
+mimetools, MimeWriter, mimify, multifile, and rfc822
+----------------------------------------------------
+
+.. index::
+   pair: porting; email
+
+The :mod:`mimetools`, :mod:`MimeWriter`, :mod:`mimify`,
+:mod:`multifile`, and :mod:`rfc822` modules have been removed. See
+:mod:`email` instead.
+
+popen2
+------
+
+.. index::
+   pair: porting; subprocess
+
+The :mod:`popen2` module has been removed. See :mod:`subprocess`
+instead.
+
+posixfile
+---------
+
+.. index::
+   pair: porting; io
+
+The :mod:`posixfile` module has been removed. See :mod:`io` instead.
+
+sets
+----
+
+The :mod:`sets` module was deprecated in Python 2.6 and removed in
+Python 3.0. Use the built-in types :class:`set` and
+:class:`orderedset` instead.
+
+sha
+---
+
+.. index::
+   pair: porting; hashlib
+
+The implementation of the SHA-1 message digest algorithm has moved
+to :mod:`hashlib`.
+
+sre
+---
+
+.. index::
+   pair: porting; re
+
+The :mod:`sre` module was deprecated in Python 2.5 and removed in
+Python 3.0. Use :mod:`re` instead.
+
+statvfs
+-------
+
+.. index::
+   pair: porting; os
+
+The :mod:`statvfs` module was deprecated in Python 2.6 and removed
+in Python 3.0. See :func:`os.statvfs` in the :mod:`os` module
+instead.
+
+thread
+------
+
+.. index::
+   pair: porting; threading
+
+The :mod:`thread` module has been removed.  Use the higher-level API
+in :mod:`threading` instead.
+
+user
+----
+
+.. index::
+   pair: porting; site
+
+The :mod:`user` module was deprecated in Python 2.6 and removed in
+Python 3.0. See user-customization features provided by the
+:mod:`site` module instead.
 
 Deprecated Modules
 ==================
 
+.. index::
+   single: porting; deprecated modules
+
 These modules are still present in the standard library, but are
 deprecated and should not be used in new Python 3 programs.
+
+asyncore and asynchat
+---------------------
 
 .. index::
    pair: porting; asyncore
    pair: porting; asynchat
 
-:mod:`asyncore` and :mod:`asynchat`
-  Asynchronous I/O and protocol handlers.
+Asynchronous I/O and protocol handlers.
 
-  See :mod:`asyncio` instead.
+See :mod:`asyncio` instead.
+
+formatter
+---------
 
 .. index::
    pair: porting; formatter
 
-:mod:`formatter`
-  Generic output formatter and device interface.
+Generic output formatter and device interface.
 
-  See :pyissue:`18716` for details.
+See :pyissue:`18716` for details.
+
+imp
+---
 
 .. index::
    pair: porting; imp
    pair: porting; importlib
 
-:mod:`imp`
-  Access the implementation of the import statement.
+Access the implementation of the import statement.
 
-  See :mod:`importlib` instead.
+See :mod:`importlib` instead.
+
+optparse
+--------
 
 .. index::
    pair: porting; optparse
    pair: porting; argparse
 
-:mod:`optparse`
-  Command-line option parsing library.
+Command-line option parsing library.
 
-  The API for :mod:`argparse` is similar to the one provided by
-  :mod:`optparse`, and in many cases :mod:`argparse` can be used as a
-  straightforward replacement by updating the names of the classes and
-  methods used.
-
-.. index::
-   pair: porting; thread
-   pair: porting; threading
-
-:mod:`thread`
-  Low-level access to system threads for concurrency.
-
-  Use the higher-level API in :mod:`threading` instead.
+The API for :mod:`argparse` is similar to the one provided by
+:mod:`optparse`, and in many cases :mod:`argparse` can be used as a
+straightforward replacement by updating the names of the classes and
+methods used.
 
 
 Summary of Changes to Modules
 =============================
+
+.. index::
+   single: porting; changed modules
 
 .. _porting-abc:
 
