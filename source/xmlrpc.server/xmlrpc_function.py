@@ -12,7 +12,7 @@ import logging
 import os
 
 # Set up logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 server = SimpleXMLRPCServer(
     ('localhost', 9000),
@@ -22,7 +22,7 @@ server = SimpleXMLRPCServer(
 
 # Expose a function
 def list_contents(dir_name):
-    logging.debug('list_contents(%s)', dir_name)
+    logging.info('list_contents(%s)', dir_name)
     return os.listdir(dir_name)
 server.register_function(list_contents)
 

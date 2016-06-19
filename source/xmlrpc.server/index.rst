@@ -1,14 +1,13 @@
-=========================================
- SimpleXMLRPCServer -- An XML-RPC server
-=========================================
+==========================================
+ SimpleXMLRPCServer --- An XML-RPC server
+==========================================
 
-.. module:: SimpleXMLRPCServer
+.. module:: xmlrpc.server
     :synopsis: Implements an XML-RPC server.
 
 :Purpose: Implements an XML-RPC server.
-:Python Version: 2.2 and later
 
-The :mod:`SimpleXMLRPCServer` module contains classes for creating
+The :mod:`xmlrpc.server` module contains classes for creating
 cross-platform, language-independent servers using the XML-RPC
 protocol. Client libraries exist for many other languages besides
 Python, making XML-RPC an easy choice for building RPC-style services.
@@ -38,17 +37,17 @@ requests.
     it on a server on the open Internet or in any environment where
     security might be an issue.
 
-.. include:: SimpleXMLRPCServer_function.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: xmlrpc_function.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The server can be accessed at the URL ``http://localhost:9000`` using
-:mod:`xmlrpclib`.  This client code illustrates how to call the
-:func:`list_contents()` service from Python.
+:mod:`xmlrpc.client`.  This client code illustrates how to call the
+:func:`list_contents` service from Python.
 
-.. include:: SimpleXMLRPCServer_function_client.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: xmlrpc_function_client.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The :class:`ServerProxy` is connected to the server using its base
 URL, and then methods are called directly on the proxy. Each method
@@ -59,9 +58,11 @@ to call based on the method name invoked from the client. The
 arguments are passed to the function, and the return value is
 translated back to XML to be returned to the client.
 
-Starting the server gives::
+Starting the server gives the following output.
 
-    $ python SimpleXMLRPCServer_function.py 
+::
+
+    $ python3 xmlrpc_function.py 
 
     Use Control-C to exit
 
@@ -70,28 +71,27 @@ Running the client in a second window shows the contents of the
 
 ::
 
-    $ python SimpleXMLRPCServer_function_client.py 
+    $ python3 xmlrpc_function_client.py 
 
-    ['.s.PGSQL.5432', '.s.PGSQL.5432.lock', '.X0-lock', '.X11-unix', 
-    'ccc_exclude.1mkahl', 'ccc_exclude.BKG3gb', 'ccc_exclude.M5jrgo', 
-    'ccc_exclude.SPecwL', 'com.hp.launchport', 'emacs527',
-    'hsperfdata_dhellmann', 'launch-8hGHUp', 'launch-RQnlcc', 
-    'launch-trsdly', 'launchd-242.T5UzTy', 'var_backups']
+    ['com.apple.launchd.aoGXonn8nV', 'com.apple.launchd.ilryIaQugf',
+    'example.db.db',
+    'KSOutOfProcessFetcher.501.ppfIhqX0vjaTSb8AJYobDV7Cu68=',
+    'pymotw_import_example.shelve.db']
 
 After the request is finished, log output appears in the server
 window.
 
 ::
 
-    $ python SimpleXMLRPCServer_function.py 
+    $ python3 xmlrpc_function.py 
 
     Use Control-C to exit
-    DEBUG:root:list_contents(/tmp)
-    localhost - - [29/Jun/2008 09:32:07] "POST /RPC2 HTTP/1.0" 200 -
+    INFO:root:list_contents(/tmp)
+    127.0.0.1 - - [18/Jun/2016 19:54:54] "POST /RPC2 HTTP/1.1" 200 -
 
-The first line of output is from the :func:`logging.debug` call inside
-:func:`list_contents()`. The second line is from the server logging
-the request because *logRequests* is ``True``.
+The first line of output is from the :func:`logging.info` call inside
+:func:`list_contents`. The second line is from the server logging the
+request because *logRequests* is ``True``.
 
 Alternate API Names
 ===================
@@ -104,33 +104,31 @@ can be replaced with stubs for testing.  To register a function with
 an alternate name, pass the name as the second argument to
 :func:`register_function()`, like this:
 
-.. include:: SimpleXMLRPCServer_alternate_name.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: xmlrpc_alternate_name.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The client should now use the name :func:`dir` instead of
 :func:`list_contents`:
 
-.. include:: SimpleXMLRPCServer_alternate_name_client.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: xmlrpc_alternate_name_client.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Calling :func:`list_contents` results in an error, since the server no
 longer has a handler registered by that name.
 
 ::
 
-    $ python SimpleXMLRPCServer_alternate_name_client.py
-    
-    dir(): ['ccc_exclude.GIqLcR', 'ccc_exclude.kzR42t', 
-    'ccc_exclude.LV04nf', 'ccc_exclude.Vfzylm', 'emacs527', 
-    'icssuis527', 'launch-9hTTwf', 'launch-kCXjtT', 
-    'launch-Nwc3AB', 'launch-pwCgej', 'launch-Xrku4Q', 
-    'launch-YtDZBJ', 'launchd-167.AfaNuZ', 'var_backups']
-    
-    list_contents(): 
-    ERROR: <Fault 1: '<type \'exceptions.Exception\'>:method 
-    "list_contents" is not supported'>
+    $ python3 xmlrpc_alternate_name_client.py
+
+    dir(): ['com.apple.launchd.aoGXonn8nV',
+    'com.apple.launchd.ilryIaQugf', 'example.db.db',
+    'KSOutOfProcessFetcher.501.ppfIhqX0vjaTSb8AJYobDV7Cu68=',
+    'pymotw_import_example.shelve.db']
+
+    ERROR: <Fault 1: '<class \'Exception\'>:method "list_contents"
+    is not supported'>
 
 
 Dotted API Names
@@ -146,24 +144,23 @@ different prefix. One other difference in this example is that some of
 the functions return ``None``, so the server has to be told to
 translate the ``None`` values to a nil value.
 
-.. include:: SimpleXMLRPCServer_dotted_name.py
-    :literal:
-    :start-after: #end_pymotw_header
-
+.. literalinclude:: xmlrpc_dotted_name.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 To call the service functions in the client, simply refer to them with the
 dotted name.
 
-.. include:: SimpleXMLRPCServer_dotted_name_client.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: xmlrpc_dotted_name_client.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Assuming there is no ``/tmp/EXAMPLE`` file on the current system,
 the output for the sample client script is:
 
 ::
 
-    $ python SimpleXMLRPCServer_dotted_name_client.py
+    $ python3 xmlrpc_dotted_name_client.py
 
     BEFORE       : False
     CREATE       : None
@@ -180,17 +177,17 @@ names that are otherwise invalid Python object attribute names. This
 example service registers a function with the name "``multiply
 args``".
 
-.. include:: SimpleXMLRPCServer_arbitrary_name.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: xmlrpc_arbitrary_name.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Since the registered name contains a space, dot notation cannot be
 used to access it directly from the proxy.  Using :func:`getattr` does
 work, however.
 
-.. include:: SimpleXMLRPCServer_arbitrary_name_client.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: xmlrpc_arbitrary_name_client.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Avoid creating services with names like this, though.  This example is
 provided not necessarily because it is a good idea, but because
@@ -199,10 +196,9 @@ need to be able to call them.
 
 ::
 
-    $ python SimpleXMLRPCServer_arbitrary_name_client.py
+    $ python3 xmlrpc_arbitrary_name_client.py
 
     25
-
 
 Exposing Methods of Objects
 ===========================
@@ -213,53 +209,53 @@ incorporate namespacing into an API is to use instances of classes and
 expose their methods. The first example can be recreated using an
 instance with a single method.
 
-.. include:: SimpleXMLRPCServer_instance.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: xmlrpc_instance.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 A client can call the method directly:
 
-.. include:: SimpleXMLRPCServer_instance_client.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: xmlrpc_instance_client.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The output is::
 
-    $ python SimpleXMLRPCServer_instance_client.py
+    $ python3 xmlrpc_instance_client.py
 
-    ['ccc_exclude.1mkahl', 'ccc_exclude.BKG3gb', 'ccc_exclude.M5jrgo', 
-    'ccc_exclude.SPecwL', 'com.hp.launchport', 'emacs527', 
-    'hsperfdata_dhellmann', 'launch-8hGHUp', 'launch-RQnlcc', 
-    'launch-trsdly', 'launchd-242.T5UzTy', 'var_backups']
+    ['com.apple.launchd.aoGXonn8nV', 'com.apple.launchd.ilryIaQugf',
+    'example.db.db',
+    'KSOutOfProcessFetcher.501.ppfIhqX0vjaTSb8AJYobDV7Cu68=',
+    'pymotw_import_example.shelve.db']
 
 The "``dir.``" prefix for the service has been lost, though.  It can
 be restored by defining a class to set up a service tree that can be
 invoked from clients.
 
-.. include:: SimpleXMLRPCServer_instance_dotted_names.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: xmlrpc_instance_dotted_names.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 By registering the instance of :class:`ServiceRoot` with
 *allow_dotted_names* enabled, the server has permission to walk the
 tree of objects when a request comes in to find the named method using
 :func:`getattr`.
 
-.. include:: SimpleXMLRPCServer_instance_dotted_names_client.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: xmlrpc_instance_dotted_names_client.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The output of :func:`dir.list` is the same as with the previous
 implementations.
 
 ::
 
-    $ python SimpleXMLRPCServer_instance_dotted_names_client.py
+    $ python3 xmlrpc_instance_dotted_names_client.py
 
-    ['ccc_exclude.1mkahl', 'ccc_exclude.BKG3gb', 'ccc_exclude.M5jrgo', 
-    'ccc_exclude.SPecwL', 'com.hp.launchport', 'emacs527', 
-    'hsperfdata_dhellmann', 'launch-8hGHUp', 'launch-RQnlcc', 
-    'launch-trsdly', 'launchd-242.T5UzTy', 'var_backups']
+    ['com.apple.launchd.aoGXonn8nV', 'com.apple.launchd.ilryIaQugf',
+    'example.db.db',
+    'KSOutOfProcessFetcher.501.ppfIhqX0vjaTSb8AJYobDV7Cu68=',
+    'pymotw_import_example.shelve.db']
 
 
 Dispatching Calls
@@ -270,9 +266,9 @@ of the instance with names not starting with an underscore ("``_``") and registe
 them with their name. To be more careful about the exposed methods,
 custom dispatching logic can be used. For example:
 
-.. include:: SimpleXMLRPCServer_instance_with_prefix.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: xmlrpc_instance_with_prefix.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The :func:`public()` method of :class:`MyService` is marked as exposed
 to the XML-RPC service while :func:`private()` is not. The
@@ -285,22 +281,22 @@ using a decorator for convenience.
 
 Here are a few sample client calls:
 
-.. include:: SimpleXMLRPCServer_instance_with_prefix_client.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: xmlrpc_instance_with_prefix_client.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 and the resulting output, with the expected error messages trapped and
 reported::
 
-    $ python SimpleXMLRPCServer_instance_with_prefix_client.py
+    $ python3 xmlrpc_instance_with_prefix_client.py
 
     public(): This is public
-    private(): 
-    ERROR: <Fault 1: '<type \'exceptions.Exception\'>:method 
-    "prefix.private" is not supported'>
-    public() without prefix: 
-    ERROR: <Fault 1: '<type \'exceptions.Exception\'>:method 
-    "public" is not supported'>
+
+    ERROR: <Fault 1: '<class \'Exception\'>:method "prefix.private" is
+    not supported'>
+
+    ERROR: <Fault 1: '<class \'Exception\'>:method "public" is not
+    supported'>
 
 There are several other ways to override the dispatching mechanism,
 including subclassing directly from :class:`SimpleXMLRPCServer`. Refer
@@ -319,9 +315,9 @@ for :func:`system.listMethods()` and :func:`system.methodHelp()` can
 be added to a service by defining :func:`_listMethods()` and
 :func:`_methodHelp()` on the service class.
 
-.. include:: SimpleXMLRPCServer_introspection.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: xmlrpc_introspection.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 In this case, the convenience function :func:`list_public_methods()`
 scans an instance to return the names of callable attributes that do
@@ -333,62 +329,61 @@ be written to build a help string from another source.
 This client queries the server and reports on all of the publicly
 callable methods.
 
-.. include:: SimpleXMLRPCServer_introspection_client.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: xmlrpc_introspection_client.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The system methods are included in the results.
 
 ::
 
-    $ python SimpleXMLRPCServer_introspection_client.py
-
+    $ python3 xmlrpc_introspection_client.py
+    
     ============================================================
     list
     ------------------------------------------------------------
     list(dir_name) => [<filenames>]
-
-    Returns a list containing the contents of the named directory.
-
+    
+    Returns a list containing the contents of
+    the named directory.
+    
     ============================================================
     system.listMethods
     ------------------------------------------------------------
     system.listMethods() => ['add', 'subtract', 'multiple']
-
+    
     Returns a list of the methods supported by the server.
-
+    
     ============================================================
     system.methodHelp
     ------------------------------------------------------------
     system.methodHelp('add') => "Adds two integers together"
-
+    
     Returns a string containing documentation for the specified method.
-
+    
     ============================================================
     system.methodSignature
     ------------------------------------------------------------
     system.methodSignature('add') => [double, int, int]
-
+    
     Returns a list describing the signature of the method. In the
     above example, the add method takes two integers as arguments
     and returns a double result.
-
+    
     This server does NOT support system.methodSignature.
-
 
 .. seealso::
 
-    `SimpleXMLRPCServer <http://docs.python.org/lib/module-SimpleXMLRPCServer.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`xmlrpc.server`
 
-    `XML-RPC How To <http://www.tldp.org/HOWTO/XML-RPC-HOWTO/index.html>`_
-        Describes how to use XML-RPC to implement clients and servers in 
-        a variety of languages.
+   * :mod:`xmlrpc.client` -- XML-RPC client.
 
-    `XML-RPC Extensions`_
-        Specifies an extension to the XML-RPC protocol.
+   * `XML-RPC How To
+     <http://www.tldp.org/HOWTO/XML-RPC-HOWTO/index.html>`_ --
+     Describes how to use XML-RPC to implement clients and servers in
+     a variety of languages.
 
-    :mod:`xmlrpclib`
-        XML-RPC client library
+   * `XML-RPC Extensions`_ -- Specifies an extension to the XML-RPC
+     protocol.
 
 .. _XML-RPC Extensions: http://ontosys.com/xml-rpc/extensions.php

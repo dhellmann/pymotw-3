@@ -379,3 +379,8 @@ exception, the response from :func:`show_type` is not accessible.
    * :mod:`xmlrpc.server` -- An XML-RPC server implementation.
 
    * :mod:`http.server` -- An HTTP server implementation.
+
+   * `XML-RPC How To
+     <http://www.tldp.org/HOWTO/XML-RPC-HOWTO/index.html>`_ --
+     Describes how to use XML-RPC to implement clients and servers in
+     a variety of languages.
