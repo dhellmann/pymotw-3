@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """More complete example which parses and uses the options.
 """
 #end_pymotw_header
@@ -10,21 +10,21 @@ version = '1.0'
 verbose = False
 output_filename = 'default.out'
 
-print 'ARGV      :', sys.argv[1:]
+print('ARGV      :', sys.argv[1:])
 
 try:
     options, remainder = getopt.gnu_getopt(
         sys.argv[1:],
         'o:v',
-        ['output=', 
+        ['output=',
          'verbose',
          'version=',
          ])
 except getopt.GetoptError as err:
-    print 'ERROR:', err
+    print('ERROR:', err)
     sys.exit(1)
-    
-print 'OPTIONS   :', options
+
+print('OPTIONS   :', options)
 
 for opt, arg in options:
     if opt in ('-o', '--output'):
@@ -34,7 +34,7 @@ for opt, arg in options:
     elif opt == '--version':
         version = arg
 
-print 'VERSION   :', version
-print 'VERBOSE   :', verbose
-print 'OUTPUT    :', output_filename
-print 'REMAINING :', remainder
+print('VERSION   :', version)
+print('VERBOSE   :', verbose)
+print('OUTPUT    :', output_filename)
+print('REMAINING :', remainder)
