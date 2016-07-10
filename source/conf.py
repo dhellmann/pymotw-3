@@ -277,6 +277,9 @@ latex_elements = {
 \listoftables
 ''',
 
+    # disable the release line in the output since I don't tag
+    # releases
+    'releasename': '',
 
     # disable font inclusion
     # from https://github.com/jterrace/sphinxtr/blob/master/conf.py
