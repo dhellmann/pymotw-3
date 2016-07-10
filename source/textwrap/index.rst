@@ -41,7 +41,7 @@ the front of each subsequent line are embedded in the paragraph.
 .. cog.out(run_script(cog.inFile, 'textwrap_fill.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 textwrap_fill.py
 	
@@ -78,7 +78,7 @@ The results are starting to look better.
 .. cog.out(run_script(cog.inFile, 'textwrap_dedent.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 textwrap_dedent.py
 	
@@ -99,7 +99,7 @@ will not be removed.
 
 Input like
 
-::
+.. code-block:: none
 
   ␣Line one.
   ␣␣␣Line two.
@@ -107,7 +107,7 @@ Input like
 
 becomes
 
-::
+.. code-block:: none
 
   Line one.
   ␣␣Line two.
@@ -130,7 +130,7 @@ This produces outputs in the specified widths.
 .. cog.out(run_script(cog.inFile, 'textwrap_fill_width.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 textwrap_fill_width.py
 	
@@ -173,7 +173,7 @@ new string and returned.
 .. cog.out(run_script(cog.inFile, 'textwrap_indent.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 textwrap_indent.py
 	
@@ -205,7 +205,7 @@ number of characters.
 .. cog.out(run_script(cog.inFile, 'textwrap_indent_predicate.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 textwrap_indent_predicate.py
 	
@@ -242,7 +242,7 @@ first line is indented less than the other lines.
 .. cog.out(run_script(cog.inFile, 'textwrap_hanging_indent.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 textwrap_hanging_indent.py
 	
@@ -281,7 +281,7 @@ argument to :func:`shorten`.
 .. cog.out(run_script(cog.inFile, 'textwrap_shorten.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 textwrap_shorten.py
 	

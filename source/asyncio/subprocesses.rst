@@ -85,7 +85,7 @@ on three drives on the system where it was run.
 .. cog.out(run_script(cog.inFile, 'asyncio_subprocess_protocol.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_subprocess_protocol.py
 	
@@ -162,7 +162,7 @@ looks similar to the previous example.
 .. cog.out(run_script(cog.inFile, 'asyncio_subprocess_coroutine.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_subprocess_coroutine.py
 	
@@ -248,7 +248,7 @@ text message is transformed.
 .. cog.out(run_script(cog.inFile, 'asyncio_subprocess_coroutine_write.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_subprocess_coroutine_write.py
 	

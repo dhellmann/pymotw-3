@@ -28,7 +28,7 @@ assigned to the name in the class definition.
 .. cog.out(run_script(cog.inFile, 'enum_create.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 enum_create.py
 	
@@ -55,7 +55,7 @@ definition. The names and values are not used to sort them in any way.
 .. cog.out(run_script(cog.inFile, 'enum_iterate.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 enum_iterate.py
 	
@@ -86,7 +86,7 @@ The greater-than and less-than comparison operators raise a
 .. cog.out(run_script(cog.inFile, 'enum_comparison.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 enum_comparison.py
 	
@@ -108,7 +108,7 @@ to behave more like numbers, for example to support comparisons.
 .. cog.out(run_script(cog.inFile, 'enum_intenum.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 enum_intenum.py
 	
@@ -143,7 +143,7 @@ attached to the value.
 .. cog.out(run_script(cog.inFile, 'enum_aliases.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 enum_aliases.py
 	
@@ -175,7 +175,7 @@ when the :class:`Enum` class is being interpreted.
 ..                    line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 enum_unique_enforce.py
 	
@@ -212,7 +212,7 @@ starting with ``1``.
 .. cog.out(run_script(cog.inFile, 'enum_programmatic_create.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 enum_programmatic_create.py
 	
@@ -246,7 +246,7 @@ order as the version defined in ``enum_create.py``.
 .. cog.out(run_script(cog.inFile, 'enum_programmatic_mapping.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 enum_programmatic_mapping.py
 	
@@ -282,7 +282,7 @@ valid transitions away from the current state.
 .. cog.out(run_script(cog.inFile, 'enum_complex_values.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 enum_complex_values.py
 	

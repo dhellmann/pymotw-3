@@ -25,7 +25,7 @@ modules into a single package namespace.
 The most common way to call :func:`extend_path` is by adding these two
 lines to the ``__init__.py`` inside the package:
 
-::
+.. code-block:: none
 
     import pkgutil
     __path__ = pkgutil.extend_path(__path__, __name__)
@@ -53,7 +53,7 @@ directory level, and a ``not_shared.py``.
 .. cog.out(run_script(cog.inFile, "find extension -name '*.py'", interpreter=''))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ find extension -name '*.py'
 	
@@ -81,7 +81,7 @@ When this test program is run directly from the command line, the
 .. cog.out(run_script(cog.inFile, 'pkgutil_extend_path.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 pkgutil_extend_path.py
 	
@@ -106,7 +106,7 @@ produced.
 .. cog.out(run_script(cog.inFile, 'PYTHONPATH=extension python3 pkgutil_extend_path.py', interpreter=None))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ PYTHONPATH=extension python3 pkgutil_extend_path.py
 	
@@ -182,7 +182,7 @@ installed version of :func:`func`.
 .. cog.out(run_script(cog.inFile, 'pkgutil_devel.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 pkgutil_devel.py
 	
@@ -199,7 +199,7 @@ A development directory containing
 .. cog.out(run_script(cog.inFile, "find develop/demopkg2 -name '*.py'", interpreter=None))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ find develop/demopkg2 -name '*.py'
 	
@@ -221,7 +221,7 @@ directory in the search path.
 .. cog.out(run_script(cog.inFile, 'PYTHONPATH=develop python3 pkgutil_devel.py', interpreter=None))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ PYTHONPATH=develop python3 pkgutil_devel.py
 	
@@ -255,7 +255,7 @@ the following files:
 .. cog.out(run_script(cog.inFile, "find os_* -type f", interpreter=None))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ find os_* -type f
 	
@@ -284,6 +284,7 @@ packages.
 
 .. literalinclude:: with_os.sh
    :caption:
+   :language: bash
 
 And when run with ``"one"`` or ``"two"`` as the arguments, the path is
 adjusted:
@@ -293,7 +294,7 @@ adjusted:
 .. cog.out(run_script(cog.inFile, 'two', interpreter='./with_os.sh', include_prefix=False))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ ./with_os.sh one
 	
@@ -343,7 +344,7 @@ package. For example, with this directory structure
 .. cog.out(run_script(cog.inFile, "find nested -name '*.py'", interpreter=None))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ find nested -name '*.py'
 	
@@ -366,7 +367,7 @@ and a development tree like
 .. cog.out(run_script(cog.inFile, "find develop/nested -name '*.py'", interpreter=None))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ find develop/nested -name '*.py'
 	
@@ -394,7 +395,7 @@ installed version of both modules are used.
 .. cog.out(run_script(cog.inFile, 'pkgutil_nested.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 pkgutil_nested.py
 	
@@ -414,7 +415,7 @@ version of both functions override the installed versions.
 .. cog.out(run_script(cog.inFile, 'PYTHONPATH=develop python3 pkgutil_nested.py', interpreter=None))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ PYTHONPATH=develop python3 pkgutil_nested.py
 	
@@ -443,7 +444,7 @@ With a package :mod:`pkgwithdata` containing a ``templates`` directory
 .. cog.out(run_script(cog.inFile, 'find pkgwithdata -type f', interpreter=None))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ find pkgwithdata -type f
 	
@@ -457,6 +458,7 @@ template.
 
 .. literalinclude:: pkgwithdata/templates/base.html
    :caption:
+   :language: html
 
 This program uses :func:`get_data` to retrieve the template contents
 and print them out.
@@ -473,7 +475,7 @@ is a byte sequence, so it is decoded from UTF-8 before being printed.
 .. cog.out(run_script(cog.inFile, 'pkgutil_get_data.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 pkgutil_get_data.py
 	
@@ -512,7 +514,7 @@ about using :func:`writepy`.
 .. cog.out(run_script(cog.inFile, 'pkgutil_get_data_zip.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 pkgutil_get_data_zip.py
 	

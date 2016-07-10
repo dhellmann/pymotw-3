@@ -30,7 +30,7 @@ called right away.
 .. cog.out(run_script(cog.inFile, 'atexit_simple.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 atexit_simple.py
 	
@@ -60,7 +60,7 @@ conflicts.
 .. cog.out(run_script(cog.inFile, 'atexit_multiple.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 atexit_multiple.py
 	
@@ -96,7 +96,7 @@ an error.
 .. cog.out(run_script(cog.inFile, 'atexit_decorator.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 atexit_decorator.py
 	
@@ -123,7 +123,7 @@ times it has been registered.
 .. cog.out(run_script(cog.inFile, 'atexit_unregister.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 atexit_unregister.py
 	
@@ -144,7 +144,7 @@ be used even when the sequence of registrations might not be known.
 .. cog.out(run_script(cog.inFile, 'atexit_unregister_not_registered.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 atexit_unregister_not_registered.py
 	
@@ -186,7 +186,7 @@ When run, this is the output.
 .. cog.out(run_script(cog.inFile, 'atexit_signal_parent.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 atexit_signal_parent.py
 	
@@ -213,7 +213,7 @@ not run.
 .. cog.out(run_script(cog.inFile, 'atexit_os_exit.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 atexit_os_exit.py
 	
@@ -235,7 +235,7 @@ invoked.
 .. cog.out(run_script(cog.inFile, 'atexit_sys_exit.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 atexit_sys_exit.py
 	
@@ -267,7 +267,7 @@ error message to show the user.
 .. cog.out(run_script(cog.inFile, 'atexit_exception.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 atexit_exception.py
 	

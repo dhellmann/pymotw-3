@@ -130,7 +130,7 @@ reads all responses available after writing new data.
 Run the server in one window and the client in another.  The output
 will look like this, with different port numbers.
 
-::
+.. code-block:: none
 
    $ python3 select_echo_server.py
    starting up on localhost port 10000
@@ -174,7 +174,7 @@ will look like this, with different port numbers.
 The client output shows the data being sent and received using both
 sockets.
 
-::
+.. code-block:: none
 
    $ python3 select_echo_multiclient.py
    connecting to localhost port 10000
@@ -218,7 +218,7 @@ message, to simulate latency or other delay in transmission.
 
 Running the new server with the slow client produces:
 
-::
+.. code-block:: none
 
    $ python3 select_echo_server_timeout.py
    starting up on localhost port 10000
@@ -251,7 +251,7 @@ Running the new server with the slow client produces:
 
 And this is the client output:
 
-::
+.. code-block:: none
 
    $ python3 select_echo_slow_client.py
    connecting to localhost port 10000
@@ -386,7 +386,7 @@ When the poll-based server is run together with
 ``select_echo_multiclient.py`` (the client program that uses multiple
 sockets), this is the output.
 
-::
+.. code-block:: none
 
    $ python3 select_poll_echo_server.py
    starting up on localhost port 10000

@@ -33,7 +33,7 @@ example, the demo server runs on port 9000 of localhost:
 In this case, the :func:`ping` method of the service takes no
 arguments and returns a single Boolean value.
 
-::
+.. code-block:: none
 
     $ python3 xmlrpc_ServerProxy.py
 
@@ -52,7 +52,7 @@ example, to implement XML-RPC over SMTP.
 The *verbose* option gives debugging information useful for resolving
 communication errors.
 
-::
+.. code-block:: none
 
     $ python3 xmlrpc_ServerProxy_verbose.py
 
@@ -77,7 +77,7 @@ is needed.
 
 The server automatically detects the correct encoding.
 
-::
+.. code-block:: none
 
     $ python3 xmlrpc_ServerProxy_encoding.py
 
@@ -95,7 +95,7 @@ The error is raised locally if the client does not allow ``None``, but
 can also be raised from within the server if it is not configured to
 allow ``None``.
 
-::
+.. code-block:: none
 
     $ python3 xmlrpc_ServerProxy_allow_none.py
 
@@ -115,7 +115,7 @@ combined to create more complex data structures.
 
 The simple types are
 
-::
+.. code-block:: none
 
 	$ python3 xmlrpc_types.py
 
@@ -156,7 +156,7 @@ supported types to the sample server, which returns the data.  Tuples
 are converted to lists and :class:`datetime` instances are converted
 to :class:`DateTime` objects, but otherwise the data is unchanged.
 
-::
+.. code-block:: none
 
 	$ python3 xmlrpc_types_nested.py
 	
@@ -218,7 +218,7 @@ By default an internal version of :class:`DateTime` is used, but the
 *use_datetime* option turns on support for using the classes in the
 :mod:`datetime` module.
 
-::
+.. code-block:: none
 
     $ python3 source/xmlrpc.client/xmlrpc_ServerProxy_use_datetime.py
 
@@ -241,7 +241,7 @@ is a dictionary on the client, since there is nothing encoded in the
 values to tell the server (or client) that it should be instantiated
 as part of a class.
 
-::
+.. code-block:: none
 
     $ python3 xmlrpc_types_object.py
 
@@ -271,7 +271,7 @@ best to use the :class:`Binary` class to encode it for transport.
 If the string containing a NULL byte is passed to :func:`show_type()`,
 an exception is raised in the XML parser as it processes the response.
 
-::
+.. code-block:: none
 
     $ python3 xmlrpc_Binary.py
 
@@ -293,7 +293,7 @@ The data attribute of the :class:`Binary` instance contains the
 pickled version of the object, so it has to be unpickled before it can
 be used. That results in a different object (with a new id value).
 
-::
+.. code-block:: none
 
     $ python3 xmlrpc_Binary_pickle.py
 
@@ -322,7 +322,7 @@ exceptions locally in the client.
 The original error message is saved in the :attr:`faultString`
 attribute, and :attr:`faultCode` is set to an XML-RPC error number.
 
-::
+.. code-block:: none
 
     $ python3 xmlrpc_exception.py
 
@@ -345,7 +345,7 @@ a :class:`ServerProxy`, then call the object with no arguments to
 actually run the remote functions. The return value is an iterator
 that yields the results from all of the calls.
 
-::
+.. code-block:: none
 
     $ python3 xmlrpc_MultiCall.py
 
@@ -364,7 +364,7 @@ available.
 Since the third response, from :func:`raises_exception`, generates an
 exception, the response from :func:`show_type` is not accessible.
 
-::
+.. code-block:: none
 
     $ python3 xmlrpc_MultiCall_exception.py
 

@@ -62,7 +62,7 @@ treat it as though it is derived from :class:`PluginBase`.
 .. cog.out(run_script(cog.inFile, 'abc_register.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 abc_register.py
 	
@@ -90,7 +90,7 @@ recognize :class:`SubclassImplementation` as implementing the abstract
 .. cog.out(run_script(cog.inFile, 'abc_subclass.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 abc_subclass.py
 	
@@ -116,7 +116,7 @@ because it is not actually derived from the base.
 .. cog.out(run_script(cog.inFile, 'abc_find_subclasses.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 abc_find_subclasses.py
 	
@@ -142,7 +142,7 @@ To create a new abstract class, simply inherit from :class:`ABC`.
 .. cog.out(run_script(cog.inFile, 'abc_abc_base.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 abc_abc_base.py
 	
@@ -170,7 +170,7 @@ errors at runtime.
 ..                    break_lines_at=65, line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 abc_incomplete.py
 	
@@ -206,7 +206,7 @@ case the concrete class sorts the data before returning it.
 .. cog.out(run_script(cog.inFile, 'abc_concrete_method.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 abc_concrete_method.py
 	
@@ -241,7 +241,7 @@ using a class attribute.
 ..                    break_lines_at=65, line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 abc_abstractproperty.py
 	
@@ -268,7 +268,7 @@ property read-only.
 ..                    break_lines_at=65, line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 abc_abstractproperty_rw.py
 	
@@ -301,7 +301,7 @@ not defined.
 .. cog.out(run_script(cog.inFile, 'abc_class_static.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 abc_class_static.py
 	

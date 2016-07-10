@@ -20,7 +20,7 @@ an iterator.
 .. cog.out(run_script(cog.inFile, 'collections_ordereddict_iter.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_ordereddict_iter.py
 	
@@ -54,7 +54,7 @@ values in a different order, they are considered to be different.
 .. cog.out(run_script(cog.inFile, 'collections_ordereddict_equality.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_ordereddict_equality.py
 	
@@ -84,7 +84,7 @@ first (when ``False``).
 .. cog.out(run_script(cog.inFile, 'collections_ordereddict_move_to_end.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_ordereddict_move_to_end.py
 	

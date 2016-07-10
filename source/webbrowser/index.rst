@@ -68,7 +68,7 @@ obtain a controller object from the registry.
 For example, this command opens the web page in lynx, assuming it is
 available, no matter what other browsers are registered.
 
-::
+.. code-block:: none
 
     $ BROWSER=lynx python3 webbrowser_open.py 
 
@@ -86,7 +86,7 @@ the command line as well as from within your Python program.
 .. cog.out(run_script(cog.inFile, '-m webbrowser', ignore_error=True))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -m webbrowser
 	

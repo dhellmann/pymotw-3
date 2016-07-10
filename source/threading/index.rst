@@ -26,7 +26,7 @@ The output is five lines with ``"Worker"`` on each.
 .. cog.out(run_script(cog.inFile, 'threading_simple.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 threading_simple.py
 	
@@ -54,7 +54,7 @@ thread.
 .. cog.out(run_script(cog.inFile, 'threading_simpleargs.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 threading_simpleargs.py
 	
@@ -87,7 +87,7 @@ correspond to the unnamed thread :data:`w2`.
 .. cog.out(run_script(cog.inFile, 'threading_names.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 threading_names.py
 	
@@ -117,7 +117,7 @@ are kept distinct in the output.
 .. cog.out(run_script(cog.inFile, 'threading_names_log.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 threading_names_log.py
 	
@@ -157,7 +157,7 @@ call.
 .. cog.out(run_script(cog.inFile, 'threading_daemon.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 threading_daemon.py
 	
@@ -181,7 +181,7 @@ has a chance to produce its ``"Exiting"`` message.
 .. cog.out(run_script(cog.inFile, 'threading_daemon_join.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 threading_daemon_join.py
 	
@@ -209,7 +209,7 @@ returns.
 .. cog.out(run_script(cog.inFile, 'threading_daemon_join_timeout.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 threading_daemon_join_timeout.py
 	
@@ -241,18 +241,18 @@ from this program may vary.
 .. cog.out(run_script(cog.inFile, 'threading_enumerate.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 threading_enumerate.py
 	
-	(Thread-1  ) sleeping 0.40
-	(Thread-2  ) sleeping 0.40
-	(Thread-3  ) sleeping 0.30
+	(Thread-1  ) sleeping 0.20
+	(Thread-2  ) sleeping 0.30
+	(Thread-3  ) sleeping 0.40
 	(MainThread) joining Thread-1
-	(Thread-3  ) ending
 	(Thread-1  ) ending
-	(Thread-2  ) ending
 	(MainThread) joining Thread-3
+	(Thread-2  ) ending
+	(Thread-3  ) ending
 	(MainThread) joining Thread-2
 
 .. {{{end}}}
@@ -275,7 +275,7 @@ The return value of :func:`run` is ignored.
 .. cog.out(run_script(cog.inFile, 'threading_subclass.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 threading_subclass.py
 	
@@ -306,7 +306,7 @@ thread, as with any other class.
 .. cog.out(run_script(cog.inFile, 'threading_subclass_args.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 threading_subclass_args.py
 	
@@ -340,7 +340,7 @@ done.
 .. cog.out(run_script(cog.inFile, 'threading_timer.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 threading_timer.py
 	
@@ -383,7 +383,7 @@ event status changes.
 .. cog.out(run_script(cog.inFile, 'threading_event.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 threading_event.py
 	
@@ -424,25 +424,25 @@ to the value attribute.
 .. cog.out(run_script(cog.inFile, 'threading_lock.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 threading_lock.py
 	
-	(Thread-1  ) Sleeping 0.75
-	(Thread-2  ) Sleeping 0.01
+	(Thread-1  ) Sleeping 0.18
+	(Thread-2  ) Sleeping 0.93
 	(MainThread) Waiting for worker threads
-	(Thread-2  ) Waiting for lock
-	(Thread-2  ) Acquired lock
-	(Thread-2  ) Sleeping 0.37
-	(Thread-2  ) Waiting for lock
-	(Thread-2  ) Acquired lock
-	(Thread-2  ) Done
 	(Thread-1  ) Waiting for lock
 	(Thread-1  ) Acquired lock
-	(Thread-1  ) Sleeping 0.81
+	(Thread-1  ) Sleeping 0.11
 	(Thread-1  ) Waiting for lock
 	(Thread-1  ) Acquired lock
 	(Thread-1  ) Done
+	(Thread-2  ) Waiting for lock
+	(Thread-2  ) Acquired lock
+	(Thread-2  ) Sleeping 0.81
+	(Thread-2  ) Waiting for lock
+	(Thread-2  ) Acquired lock
+	(Thread-2  ) Done
 	(MainThread) Counter: 4
 
 .. {{{end}}}
@@ -466,7 +466,7 @@ three separate times.
 .. cog.out(run_script(cog.inFile, 'threading_lock_noblock.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 threading_lock_noblock.py
 	
@@ -511,7 +511,7 @@ by the first call.
 .. cog.out(run_script(cog.inFile, 'threading_lock_reacquire.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 threading_lock_reacquire.py
 	
@@ -534,7 +534,7 @@ The only change to the code from the previous example was substituting
 .. cog.out(run_script(cog.inFile, 'threading_rlock.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 threading_rlock.py
 	
@@ -561,7 +561,7 @@ manage the lock in equivalent ways.
 .. cog.out(run_script(cog.inFile, 'threading_lock_with.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 threading_lock_with.py
 	
@@ -594,16 +594,16 @@ the :class:`Condition`. Using the :func:`acquire` and
 .. cog.out(run_script(cog.inFile, 'threading_condition.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 threading_condition.py
 	
-	2016-01-30 11:38:52,240 (c1) Starting consumer thread
-	2016-01-30 11:38:52,443 (c2) Starting consumer thread
-	2016-01-30 11:38:52,645 (p ) Starting producer thread
-	2016-01-30 11:38:52,645 (p ) Making resource available
-	2016-01-30 11:38:52,645 (c1) Resource is available to consumer
-	2016-01-30 11:38:52,645 (c2) Resource is available to consumer
+	2016-07-10 10:45:28,170 (c1) Starting consumer thread
+	2016-07-10 10:45:28,376 (c2) Starting consumer thread
+	2016-07-10 10:45:28,581 (p ) Starting producer thread
+	2016-07-10 10:45:28,581 (p ) Making resource available
+	2016-07-10 10:45:28,582 (c1) Resource is available to consumer
+	2016-07-10 10:45:28,582 (c2) Resource is available to consumer
 
 .. {{{end}}}
 
@@ -628,7 +628,7 @@ like cleaning up a shared resource.
 .. cog.out(run_script(cog.inFile, 'threading_barrier.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 threading_barrier.py
 	
@@ -662,7 +662,7 @@ exception in each blocked thread.
 .. cog.out(run_script(cog.inFile, 'threading_barrier_abort.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 threading_barrier_abort.py
 	
@@ -703,22 +703,22 @@ threads to show that at most two are running concurrently.
 .. cog.out(run_script(cog.inFile, 'threading_semaphore.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 threading_semaphore.py
 	
-	2016-01-30 11:38:52,715 (0 ) Waiting to join the pool
-	2016-01-30 11:38:52,715 (0 ) Running: ['0']
-	2016-01-30 11:38:52,716 (1 ) Waiting to join the pool
-	2016-01-30 11:38:52,716 (1 ) Running: ['0', '1']
-	2016-01-30 11:38:52,717 (2 ) Waiting to join the pool
-	2016-01-30 11:38:52,717 (3 ) Waiting to join the pool
-	2016-01-30 11:38:52,818 (0 ) Running: ['1']
-	2016-01-30 11:38:52,819 (2 ) Running: ['1', '2']
-	2016-01-30 11:38:52,819 (1 ) Running: ['2']
-	2016-01-30 11:38:52,820 (3 ) Running: ['2', '3']
-	2016-01-30 11:38:52,924 (2 ) Running: ['3']
-	2016-01-30 11:38:52,925 (3 ) Running: []
+	2016-07-10 10:45:29,398 (0 ) Waiting to join the pool
+	2016-07-10 10:45:29,398 (0 ) Running: ['0']
+	2016-07-10 10:45:29,399 (1 ) Waiting to join the pool
+	2016-07-10 10:45:29,399 (1 ) Running: ['0', '1']
+	2016-07-10 10:45:29,399 (2 ) Waiting to join the pool
+	2016-07-10 10:45:29,399 (3 ) Waiting to join the pool
+	2016-07-10 10:45:29,501 (1 ) Running: ['0']
+	2016-07-10 10:45:29,501 (0 ) Running: []
+	2016-07-10 10:45:29,502 (3 ) Running: ['3']
+	2016-07-10 10:45:29,502 (2 ) Running: ['3', '2']
+	2016-07-10 10:45:29,607 (3 ) Running: ['2']
+	2016-07-10 10:45:29,608 (2 ) Running: []
 
 .. {{{end}}}
 
@@ -741,16 +741,16 @@ it is set in that thread.
 .. cog.out(run_script(cog.inFile, 'threading_local.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 threading_local.py
 	
 	(MainThread) No value yet
 	(MainThread) value=1000
 	(Thread-1  ) No value yet
-	(Thread-1  ) value=90
+	(Thread-1  ) value=33
 	(Thread-2  ) No value yet
-	(Thread-2  ) value=18
+	(Thread-2  ) value=74
 
 .. {{{end}}}
 
@@ -768,21 +768,21 @@ value), once in each thread to set the default values.
 .. cog.out(run_script(cog.inFile, 'threading_local_defaults.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 threading_local_defaults.py
 	
 	(MainThread) Initializing <__main__.MyLocal object at
-	0x10115d348>
+	0x101c6c288>
 	(MainThread) value=1000
 	(Thread-1  ) Initializing <__main__.MyLocal object at
-	0x10115d348>
+	0x101c6c288>
 	(Thread-1  ) value=1000
-	(Thread-1  ) value=85
+	(Thread-1  ) value=18
 	(Thread-2  ) Initializing <__main__.MyLocal object at
-	0x10115d348>
+	0x101c6c288>
 	(Thread-2  ) value=1000
-	(Thread-2  ) value=46
+	(Thread-2  ) value=77
 
 .. {{{end}}}
 

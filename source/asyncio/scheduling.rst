@@ -26,7 +26,7 @@ the loop's :func:`stop` method to cause the event loop to exit.
 .. cog.out(run_script(cog.inFile, 'asyncio_call_soon.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_call_soon.py
 	
@@ -59,7 +59,7 @@ that "soon" usually implies a minimal delay.
 .. cog.out(run_script(cog.inFile, 'asyncio_call_later.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_call_later.py
 	
@@ -93,7 +93,7 @@ returned by :func:`time.time`.
 .. cog.out(run_script(cog.inFile, 'asyncio_call_at.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_call_at.py
 	

@@ -31,7 +31,7 @@ with the ``with await`` keywords, as in :func:`coro1`.
 .. cog.out(run_script(cog.inFile, 'asyncio_lock.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_lock.py
 	
@@ -71,7 +71,7 @@ hold on the event object.
 .. cog.out(run_script(cog.inFile, 'asyncio_event.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_event.py
 	
@@ -107,7 +107,7 @@ consumers, then all of the remaining consumers.
 .. cog.out(run_script(cog.inFile, 'asyncio_condition.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_condition.py
 	
@@ -157,7 +157,7 @@ fetch an item).
 .. cog.out(run_script(cog.inFile, 'asyncio_queue.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_queue.py
 	

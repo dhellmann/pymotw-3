@@ -43,7 +43,7 @@ to call multiple copies of the function with different arguments.
 .. cog.out(run_script(cog.inFile, 'asyncio_executor_thread.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_executor_thread.py
 	
@@ -88,7 +88,7 @@ demonstrate that the tasks are in fact running in separate processes.
 .. cog.out(run_script(cog.inFile, 'asyncio_executor_process.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_executor_process.py
 	

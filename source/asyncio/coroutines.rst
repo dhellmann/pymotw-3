@@ -31,7 +31,7 @@ object and stops the loop when the coroutine exits by returning.
 .. cog.out(run_script(cog.inFile, 'asyncio_coroutine.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_coroutine.py
 	
@@ -58,7 +58,7 @@ the coroutine it is waiting for.
 .. cog.out(run_script(cog.inFile, 'asyncio_coroutine_return.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_coroutine_return.py
 	
@@ -89,7 +89,7 @@ the new coroutines.
 .. cog.out(run_script(cog.inFile, 'asyncio_coroutine_chain.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_coroutine_chain.py
 	
@@ -129,7 +129,7 @@ generator functions instead of native coroutines.
 .. cog.out(run_script(cog.inFile, 'asyncio_generator.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_generator.py
 	

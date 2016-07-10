@@ -31,20 +31,18 @@ The contents of :data:`sys.modules` change as new modules are imported.
 .. cog.out(run_script(cog.inFile, 'sys_modules.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_modules.py
 	
-	__main__, _bootlocale, _codecs, _collections, _collections_abc,
-	_frozen_importlib, _frozen_importlib_external, _functools,
-	_heapq, _imp, _io, _locale, _operator, _signal, _sre, _stat,
-	_thread, _warnings, _weakref, _weakrefset, abc, builtins,
-	codecs, collections, collections.abc, copyreg, encodings,
+	__main__, _bootlocale, _codecs, _collections_abc,
+	_frozen_importlib, _frozen_importlib_external, _imp, _io,
+	_locale, _signal, _sre, _stat, _thread, _warnings, _weakref,
+	_weakrefset, abc, builtins, codecs, copyreg, encodings,
 	encodings.aliases, encodings.latin_1, encodings.utf_8, errno,
-	functools, genericpath, heapq, io, itertools, keyword, marshal,
-	operator, os, os.path, posix, posixpath, re, reprlib, site,
-	sphinxcontrib, sre_compile, sre_constants, sre_parse, stat, sys,
-	textwrap, types, weakref, zipimport
+	genericpath, io, marshal, os, os.path, posix, posixpath, re,
+	site, sre_compile, sre_constants, sre_parse, stat, sys,
+	textwrap, zipimport
 
 .. {{{end}}}
 
@@ -72,7 +70,7 @@ installer for OS X.
 .. cog.out(run_script(cog.inFile, 'sys_builtins.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_builtins.py
 	
@@ -109,7 +107,7 @@ script itself. That is followed by a series of platform-specific paths
 where compiled extension modules (written in C) might be installed,
 and then the global ``site-packages`` directory is listed last.
 
-::
+.. code-block:: none
 
     $ python3 sys_path_show.py
 
@@ -125,7 +123,7 @@ The import search-path list can be modified before starting the
 interpreter by setting the shell variable :data:`PYTHONPATH` to a
 colon-separated list of directories.
 
-::
+.. code-block:: none
 
     $ PYTHONPATH=/my/private/site-packages:/my/shared/site-packages \
     > python sys_path_show.py
@@ -155,7 +153,7 @@ module may be loaded the second time.
 .. cog.out(run_script(cog.inFile, 'sys_path_modify.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_path_modify.py
 	
@@ -203,14 +201,14 @@ real path on the file system. This test prevents the
 ..                    break_lines_at=65, line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_path_hooks_noisy.py
 	
 	Path hook: <class 'zipimport.zipimporter'>
 	Path hook: <function
 	FileFinder.path_hook.<locals>.path_hook_for_FileFinder at
-	0x100734950>
+	0x101833950>
 	Path hook: <class '__main__.NoisyImportFinder'>
 	importing target_module
 	Checking NoisyImportFinder_PATH_TRIGGER: works
@@ -242,7 +240,7 @@ this.
 .. cog.out(run_script(cog.inFile, 'sys_shelve_importer_create.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_shelve_importer_create.py
 	
@@ -283,7 +281,7 @@ preserved as module-level attributes.
 .. cog.out(run_script(cog.inFile, 'sys_shelve_importer_package.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_shelve_importer_package.py
 	
@@ -307,12 +305,12 @@ preserved as module-level attributes.
 	  __file__   : /tmp/pymotw_import_example.shelve/package
 	  __path__   : ['/tmp/pymotw_import_example.shelve']
 	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x101
-	f7e2b0>
+	c875f8>
 	
 	Global settings:
 	sys.modules entry:
 	<module 'package' (<sys_shelve_importer.ShelveLoader object at 0
-	x101f7e2b0>)>
+	x101c875f8>)>
 
 .. {{{end}}}
 
@@ -335,7 +333,7 @@ constructs and returns a :class:`module` instance.
 .. cog.out(run_script(cog.inFile, 'sys_shelve_importer_module.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_shelve_importer_module.py
 	
@@ -369,7 +367,7 @@ constructs and returns a :class:`module` instance.
 	  __file__   : /tmp/pymotw_import_example.shelve/package.module1
 	  __path__   : /tmp/pymotw_import_example.shelve
 	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x101
-	77ebe0>
+	c6bcf8>
 	
 	Import of "package.subpackage.module2":
 	
@@ -401,7 +399,7 @@ constructs and returns a :class:`module` instance.
 	age.module2
 	  __path__   : /tmp/pymotw_import_example.shelve
 	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x101
-	7a1710>
+	c93828>
 
 .. {{{end}}}
 
@@ -423,7 +421,7 @@ reload.
 .. cog.out(run_script(cog.inFile, 'sys_shelve_importer_reload.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_shelve_importer_reload.py
 	
@@ -470,7 +468,7 @@ Other errors during the import are propagated.
 .. cog.out(run_script(cog.inFile, 'sys_shelve_importer_missing.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_shelve_importer_missing.py
 	
@@ -519,7 +517,7 @@ string, or raises :class:`IOError` if the resource does not exist.
 ..                    ignore_error=True))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_shelve_importer_get_data.py
 	
@@ -579,7 +577,7 @@ constraints.
 
 .. cog.out(run_script(cog.inFile, 'sys_path_importer_cache.py'))
 
-::
+.. code-block:: none
 
 	$ python3 sys_path_importer_cache.py
 	
@@ -636,7 +634,7 @@ simplicity).
 .. cog.out(run_script(cog.inFile, 'sys_meta_path.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_meta_path.py
 	

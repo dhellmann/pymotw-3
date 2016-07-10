@@ -59,7 +59,7 @@ data using the RSS format.
 .. cog.out(run_script(cog.inFile, 'fileinput_example.py sample_data.m3u'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 fileinput_example.py sample_data.m3u
 	
@@ -68,7 +68,7 @@ data using the RSS format.
 	  <channel>
 	    <title>Sample podcast feed</title>
 	    <description>Generated for PyMOTW</description>
-	    <pubDate>Sat Jan 30 15:00:33 2016</pubDate>
+	    <pubDate>Sun Jul 10 10:45:01 2016</pubDate>
 	    <generator>https://pymotw.com/</generator>
 	  </channel>
 	  <item>
@@ -104,7 +104,7 @@ the string ``"fileinput"`` in the source for these examples.
 .. cog.out(run_script(cog.inFile, 'fileinput_grep.py fileinput *.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 fileinput_grep.py fileinput *.py
 	
@@ -139,7 +139,7 @@ Text can also be read from standard input.
 ..                    interpreter=None))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ cat *.py | python fileinput_grep.py fileinput
 	
@@ -188,7 +188,7 @@ overwritten.
 .. cog.out(run_script(cog.inFile, 'fileinput_change_subnet.py 10.16 10.17 etc_hosts.txt'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 fileinput_change_subnet.py 10.16 10.17 etc_hosts.txt
 	
@@ -214,7 +214,7 @@ The backup file is removed when the input is closed.
 .. cog.out(run_script(cog.inFile, 'fileinput_change_subnet_noisy.py 10.16. 10.17. etc_hosts.txt'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 fileinput_change_subnet_noisy.py 10.16. 10.17. etc_h\
 	osts.txt

@@ -26,7 +26,7 @@ the result given to the method for retrieval later.
 .. cog.out(run_script(cog.inFile, 'asyncio_future_wait.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_future_wait.py
 	
@@ -58,7 +58,7 @@ instance. To pass additional arguments to the callbacks, so use
 .. cog.out(run_script(cog.inFile, 'asyncio_future_callback.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_future_callback.py
 	

@@ -60,7 +60,7 @@ translated back to XML to be returned to the client.
 
 Starting the server gives the following output.
 
-::
+.. code-block:: none
 
     $ python3 xmlrpc_function.py 
 
@@ -69,7 +69,7 @@ Starting the server gives the following output.
 Running the client in a second window shows the contents of the
 ``/tmp`` directory.
 
-::
+.. code-block:: none
 
     $ python3 xmlrpc_function_client.py 
 
@@ -81,7 +81,7 @@ Running the client in a second window shows the contents of the
 After the request is finished, log output appears in the server
 window.
 
-::
+.. code-block:: none
 
     $ python3 xmlrpc_function.py 
 
@@ -118,7 +118,7 @@ The client should now use the name :func:`dir` instead of
 Calling :func:`list_contents` results in an error, since the server no
 longer has a handler registered by that name.
 
-::
+.. code-block:: none
 
     $ python3 xmlrpc_alternate_name_client.py
 
@@ -158,7 +158,7 @@ dotted name.
 Assuming there is no ``/tmp/EXAMPLE`` file on the current system,
 the output for the sample client script is:
 
-::
+.. code-block:: none
 
     $ python3 xmlrpc_dotted_name_client.py
 
@@ -194,7 +194,7 @@ provided not necessarily because it is a good idea, but because
 existing services with arbitrary names exist, and new programs may
 need to be able to call them.
 
-::
+.. code-block:: none
 
     $ python3 xmlrpc_arbitrary_name_client.py
 
@@ -219,7 +219,9 @@ A client can call the method directly:
    :caption:
    :start-after: #end_pymotw_header
 
-The output is::
+The output is:
+
+.. code-block:: none
 
     $ python3 xmlrpc_instance_client.py
 
@@ -248,7 +250,7 @@ tree of objects when a request comes in to find the named method using
 The output of :func:`dir.list` is the same as with the previous
 implementations.
 
-::
+.. code-block:: none
 
     $ python3 xmlrpc_instance_dotted_names_client.py
 
@@ -286,7 +288,9 @@ Here are a few sample client calls:
    :start-after: #end_pymotw_header
 
 and the resulting output, with the expected error messages trapped and
-reported::
+reported:
+
+.. code-block:: none
 
     $ python3 xmlrpc_instance_with_prefix_client.py
 
@@ -335,7 +339,7 @@ callable methods.
 
 The system methods are included in the results.
 
-::
+.. code-block:: none
 
     $ python3 xmlrpc_introspection_client.py
     

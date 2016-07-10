@@ -31,7 +31,7 @@ based on the Python interpreter version.
 .. cog.out(run_script(cog.inFile, 'compileall_compile_dir.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 compileall_compile_dir.py
 	
@@ -65,7 +65,7 @@ This version excludes files in the ``subdir`` subdirectory.
 .. cog.out(run_script(cog.inFile, 'compileall_exclude_dirs.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 compileall_exclude_dirs.py
 	
@@ -92,7 +92,7 @@ compiled.
 .. cog.out(run_script(cog.inFile, 'compileall_recursion_depth.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 compileall_recursion_depth.py
 	
@@ -123,7 +123,7 @@ defaults to ``0``.
 .. cog.out(run_script(cog.inFile, 'compileall_path.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 compileall_path.py
 	
@@ -155,7 +155,7 @@ or a relative path.
 .. cog.out(run_script(cog.inFile, 'compileall_compile_file.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 compileall_compile_file.py
 	
@@ -180,7 +180,7 @@ example:
 ..                    line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -m compileall -h
 	
@@ -241,7 +241,7 @@ To recreate the earlier example, skipping the ``subdir`` directory, run:
 .. cog.out(run_script(cog.inFile, "-m compileall -x '/subdir' examples"))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -m compileall -x '/subdir' examples
 	

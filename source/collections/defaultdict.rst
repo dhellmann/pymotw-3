@@ -22,11 +22,11 @@ library documentation includes several examples of using
 .. cog.out(run_script(cog.inFile, 'collections_defaultdict.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_defaultdict.py
 	
-	d: defaultdict(<function default_factory at 0x1007a6a60>, {'foo'
+	d: defaultdict(<function default_factory at 0x1010969d8>, {'foo'
 	: 'bar'})
 	foo => bar
 	bar => default value

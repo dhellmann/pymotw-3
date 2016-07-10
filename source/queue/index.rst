@@ -39,7 +39,7 @@ removed from the queue in the same order they are inserted.
 .. cog.out(run_script(cog.inFile, 'queue_fifo.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 queue_fifo.py
 	
@@ -65,7 +65,7 @@ The item most recently :class:`put` into the queue is removed by
 .. cog.out(run_script(cog.inFile, 'queue_lifo.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 queue_lifo.py
 	
@@ -99,7 +99,7 @@ context switching.
 .. cog.out(run_script(cog.inFile, 'queue_priority.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 queue_priority.py
 	
@@ -165,7 +165,7 @@ using :func:`join`.
 
 Running the sample script produces output similar to the following.
 
-::
+.. code-block:: none
 
     $ python fetch_podcasts.py 
     

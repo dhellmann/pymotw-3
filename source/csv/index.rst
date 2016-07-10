@@ -37,7 +37,7 @@ As it is read, each row of the input data is parsed and converted to a
 .. cog.out(run_script(cog.inFile, 'csv_reader.py testdata.csv'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 csv_reader.py testdata.csv
 	
@@ -61,7 +61,7 @@ when they are returned by the parser.
 .. cog.out(run_script(cog.inFile, 'csv_reader.py testlinebreak.csv'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 csv_reader.py testlinebreak.csv
 	
@@ -88,7 +88,7 @@ example because it lacks quotes around some of the values.
 .. cog.out(run_script(cog.inFile, 'csv_writer.py testout.csv'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 csv_writer.py testout.csv
 	
@@ -110,7 +110,7 @@ second and third columns in the previous example are not quoted. To
 add quoting, set the *quoting* arguments to one of the other quoting
 modes.
 
-::
+.. code-block:: none
 
     writer = csv.writer(f, quoting=csv.QUOTE_NONNUMERIC)
 
@@ -121,7 +121,7 @@ that contain values that are not numbers.
 .. cog.out(run_script(cog.inFile, 'csv_writer_quoted.py testout_quoted.csv'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 csv_writer_quoted.py testout_quoted.csv
 	
@@ -181,7 +181,7 @@ double-quotes and uses ``\n`` as the record separator.
 .. cog.out(run_script(cog.inFile, 'csv_list_dialects.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 csv_list_dialects.py
 	
@@ -210,7 +210,7 @@ comma-delimited file.
 .. cog.out(run_script(cog.inFile, 'csv_dialect.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 csv_dialect.py
 	
@@ -252,7 +252,7 @@ several different dialects.
 .. cog.out(run_script(cog.inFile, 'csv_dialect_variations.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 csv_dialect_variations.py
 	
@@ -326,7 +326,7 @@ demonstrated by the "escaped" dialect in the example.
 .. cog.out(run_script(cog.inFile, 'csv_dialect_sniffer.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 csv_dialect_sniffer.py
 	
@@ -398,7 +398,7 @@ returned as dictionaries instead of lists or tuples.
 .. cog.out(run_script(cog.inFile, 'csv_dictreader.py testdata.csv'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 csv_dictreader.py testdata.csv
 	
@@ -425,7 +425,7 @@ can be written explicitly using the :func:`writeheader` method.
 .. cog.out(run_script(cog.inFile, 'csv_dictwriter.py testout.csv'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 csv_dictwriter.py testout.csv
 	

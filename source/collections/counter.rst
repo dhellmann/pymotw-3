@@ -25,7 +25,7 @@ The results of all three forms of initialization are the same.
 .. cog.out(run_script(cog.inFile, 'collections_counter_init.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_counter_init.py
 	
@@ -50,7 +50,7 @@ replaced.  In this example, the count for ``a`` goes from ``3`` to
 .. cog.out(run_script(cog.inFile, 'collections_counter_update.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_counter_update.py
 	
@@ -78,7 +78,7 @@ example), its count is ``0``.
 .. cog.out(run_script(cog.inFile, 'collections_counter_get_values.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_counter_get_values.py
 	
@@ -104,7 +104,7 @@ than or equal to zero are not included.
 .. cog.out(run_script(cog.inFile, 'collections_counter_elements.py', break_lines_at=65))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_counter_elements.py
 	
@@ -131,7 +131,7 @@ frequency.
 .. cog.out(run_script(cog.inFile, 'collections_counter_most_common.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_counter_most_common.py
 	
@@ -164,7 +164,7 @@ zero.
 ..                    break_lines_at=74, line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_counter_arithmetic.py
 	

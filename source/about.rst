@@ -49,7 +49,7 @@ CPython (see below for version) and inserted into the text using cog_.
 .. cog.out(run_script(cog.inFile, '-V'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -V
 	

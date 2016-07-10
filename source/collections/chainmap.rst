@@ -26,7 +26,7 @@ constructor, so the value reported for the key ``'c'`` comes from the
 .. cog.out(run_script(cog.inFile, 'collections_chainmap_read.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_chainmap_read.py
 	
@@ -66,7 +66,7 @@ When the list of mappings is reversed, the value associated with
 .. cog.out(run_script(cog.inFile, 'collections_chainmap_reorder.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_chainmap_reorder.py
 	
@@ -96,7 +96,7 @@ elements works the same way.
 .. cog.out(run_script(cog.inFile, 'collections_chainmap_update_behind.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_chainmap_update_behind.py
 	
@@ -120,7 +120,7 @@ updated.
 .. cog.out(run_script(cog.inFile, 'collections_chainmap_update_directly.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_chainmap_update_directly.py
 	
@@ -148,7 +148,7 @@ changes for the next iteration.
 .. cog.out(run_script(cog.inFile, 'collections_chainmap_new_child.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_chainmap_new_child.py
 	
@@ -170,7 +170,7 @@ is also possible to pass a mapping to :func:`new_child`.
 
 This is the equivalent of
 
-::
+.. code-block:: none
 
   m2 = collections.ChainMap(c, *m1.maps)
 
@@ -180,7 +180,7 @@ and produces
 .. cog.out(run_script(cog.inFile, 'collections_chainmap_new_child_explicit.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_chainmap_new_child_explicit.py
 	

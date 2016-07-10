@@ -104,7 +104,7 @@ printed.
 .. cog.out(run_script(cog.inFile, 'python3 gettext_example.py', interpreter=None))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 gettext_example.py
 	
@@ -119,7 +119,7 @@ using ``pygettext.py`` or ``xgettext``.
 .. cog.out(run_script(cog.inFile, 'xgettext -o example.pot gettext_example.py', interpreter=None))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ xgettext -o example.pot gettext_example.py
 	
@@ -166,7 +166,7 @@ The catalog is built from the ``.po`` file using ``msgformat``.
 ..                    interpreter=None))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ cd locale/en_US/LC_MESSAGES; msgfmt -o example.mo example.po
 	
@@ -188,7 +188,7 @@ instead of the in-line string.
 .. cog.out(run_script(cog.inFile, 'gettext_example_corrected.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 gettext_example_corrected.py
 	
@@ -237,7 +237,7 @@ that works, use a second message catalog to run a few experiments.
 ..                    line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ cd locale/en_CA/LC_MESSAGES; msgfmt -o example.mo example.po
 	$ cd ../../..
@@ -274,7 +274,7 @@ first one in the sequence is actually loaded for message lookups.
 ..                    interpreter=None, include_prefix=False))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 gettext_example_corrected.py
 	
@@ -318,7 +318,7 @@ The arguments are the messages to be translated and the item count.
 .. cog.out(run_script(cog.inFile, 'xgettext -L Python -o plural.pot gettext_plural.py', interpreter=None))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ xgettext -L Python -o plural.pot gettext_plural.py
 	
@@ -368,7 +368,7 @@ translation strings.
 .. cog.out(run_script(cog.inFile, 'gettext_plural.py 2', include_prefix=False))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ cd locale/en_US/LC_MESSAGES/; msgfmt -o plural.mo plural.po
 	$ cd ../../..

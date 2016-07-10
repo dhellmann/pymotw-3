@@ -53,7 +53,7 @@ in this section.
 .. cog.out(run_script(cog.inFile, 'zipimport_make_example.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 zipimport_make_example.py
 	
@@ -93,7 +93,7 @@ returned. Otherwise, ``None`` is returned.
 .. cog.out(run_script(cog.inFile, 'zipimport_find_module.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 zipimport_find_module.py
 	
@@ -123,11 +123,11 @@ used to create one.
 ..                    break_lines_at=65, line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 zipimport_get_code.py
 	
-	<code object <module> at 0x101253810, file
+	<code object <module> at 0x1018af8a0, file
 	"./zipimport_get_code.py", line 6>
 
 .. {{{end}}}
@@ -149,15 +149,15 @@ loaded from a regular import.
 ..                    break_lines_at=65, line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 zipimport_load_module.py
 	
-	<code object <module> at 0x1012b48a0, file
+	<code object <module> at 0x1018afc90, file
 	"./zipimport_get_code.py", line 6>
 	Name   : zipimport_get_code
 	Loader : <zipimporter object "zipimport_example.zip">
-	Code   : <code object <module> at 0x1012b48a0, file
+	Code   : <code object <module> at 0x1018afc90, file
 	"./zipimport_get_code.py", line 6>
 
 .. {{{end}}}
@@ -185,7 +185,7 @@ returns ``None``.
 ..                    break_lines_at=65, line_break_mode='truncate'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 zipimport_get_source.py
 	
@@ -244,7 +244,7 @@ In this case, ``zipimport_is_package`` came from a module and the
 .. cog.out(run_script(cog.inFile, 'zipimport_is_package.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 zipimport_is_package.py
 	
@@ -279,7 +279,7 @@ file system.
 .. cog.out(run_script(cog.inFile, 'zipimport_get_data_nozip.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 zipimport_get_data_nozip.py
 	
@@ -309,7 +309,7 @@ the wrong value.
 ..                    break_lines_at=65, line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 zipimport_get_data_zip.py
 	
@@ -342,7 +342,7 @@ be decoded to a unicode string before printing.
 .. cog.out(run_script(cog.inFile, 'zipimport_get_data.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 zipimport_get_data.py
 	

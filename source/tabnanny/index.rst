@@ -20,7 +20,9 @@ names, the directories are scanned recursively to find `.py` files to
 check.
 
 Running tabnanny across the PyMOTW source code exposed one old
-module with tabs instead of spaces::
+module with tabs instead of spaces:
+
+.. code-block:: none
 
     $ python3 -m tabnanny .
     ./source/queue/fetch_podcasts.py 65 "    \t\tparsed_url = urlparse(enclosure['url'])\n"
@@ -40,14 +42,14 @@ If you want to scan files, but not see the details about the error,
 you can use the `-q` option to suppress all information except the
 filename.
 
-::
+.. code-block:: none
 
     $ python3 -m tabnanny -q .
     ./source/queue/fetch_podcasts.py
 
 To see more information about the files being scanned, use the `-v` option.
 
-::
+.. code-block:: none
 
     'source/queue/': listing directory
     'source/queue/fetch_podcasts.py': *** Line 65: trouble in tab city! ***

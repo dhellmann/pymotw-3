@@ -38,7 +38,7 @@ reformatted to have at most 40 characters on each line.
 .. cog.out(run_script(cog.inFile, 'bz2_memory.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 bz2_memory.py
 	
@@ -71,7 +71,7 @@ compressed data is longer than the raw input.
 .. cog.out(run_script(cog.inFile, 'bz2_lengths.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 bz2_lengths.py
 	
@@ -110,7 +110,7 @@ to close the final block and return the rest of the compressed data.
 .. cog.out(run_script(cog.inFile, 'bz2_incremental.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 bz2_incremental.py
 	
@@ -145,7 +145,7 @@ contains any data not used.
 .. cog.out(run_script(cog.inFile, 'bz2_mixed.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 bz2_mixed.py
 	
@@ -176,7 +176,7 @@ To write data into a compressed file, open the file with mode ``'w'``.
 .. cog.out(run_script(cog.inFile, 'bz2_file_write.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 bz2_file_write.py
 	
@@ -199,9 +199,9 @@ in bytes of the files produced.  For this input data, the higher
 compression values do not always pay off in decreased storage space
 for the same input data.  Results will vary for other inputs.
 
-::
+.. code-block:: none
 
-	$ python bz2_file_compresslevel.py
+	$ python3 bz2_file_compresslevel.py
 
 	3018243926 8771 compress-level-1.bz2
 	1942389165 4949 compress-level-2.bz2
@@ -230,7 +230,7 @@ regular file.
 .. cog.out(run_script(cog.inFile, 'bz2_file_writelines.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 bz2_file_writelines.py
 	
@@ -266,7 +266,7 @@ previous section.
 .. cog.out(run_script(cog.inFile, 'bz2_file_read.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 bz2_file_read.py
 	
@@ -290,7 +290,7 @@ expecting a regular uncompressed file.
 .. cog.out(run_script(cog.inFile, 'bz2_file_seek.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 bz2_file_seek.py
 	
@@ -324,7 +324,7 @@ and may end up in the middle of an encoded character.
 .. cog.out(run_script(cog.inFile, 'bz2_unicode.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 bz2_unicode.py
 	
@@ -373,11 +373,11 @@ Running ``bz2_server.py`` produces:
 .. cog.out(run_script(cog.inFile, 'bz2_server.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 bz2_server.py
 	
-	Client: Contacting server on 127.0.0.1:51781
+	Client: Contacting server on 127.0.0.1:55479
 	Client: sending filename: "lorem.txt"
 	Server: client asked for: "lorem.txt"
 	Server: RAW b'Lorem ipsum dolor sit amet, cons'

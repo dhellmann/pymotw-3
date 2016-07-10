@@ -36,7 +36,7 @@ present in the current working directory.
 .. cog.out(run_script(cog.inFile, 'glob_maketestdata.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 glob_maketestdata.py
 	
@@ -76,7 +76,7 @@ to make studying the results easier.
 .. cog.out(run_script(cog.inFile, 'glob_asterisk.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 glob_asterisk.py
 	
@@ -106,7 +106,7 @@ while the second case depends on a wildcard to find the directory.
 .. cog.out(run_script(cog.inFile, 'glob_subdir.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 glob_subdir.py
 	
@@ -138,7 +138,7 @@ The previous example matches all of the filenames that begin with
 .. cog.out(run_script(cog.inFile, 'glob_question.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 glob_question.py
 	
@@ -173,7 +173,7 @@ range value could be written ``[0123456789]``.
 .. cog.out(run_script(cog.inFile, 'glob_charrange.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 glob_charrange.py
 	
@@ -202,7 +202,7 @@ containing a single entry.
 .. cog.out(run_script(cog.inFile, 'glob_escape.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 glob_escape.py
 	

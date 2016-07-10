@@ -37,14 +37,14 @@ address and port number.
 .. cog.out(run_script(cog.inFile, 'asyncio_getaddrinfo.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_getaddrinfo.py
 	
 	pymotw.com          : 66.33.211.242
 	doughellmann.com    : 66.33.211.240
-	python.org          : 104.130.43.121
-	python.org          : 2001:4802:7901::e60a:1375:0:5
+	python.org          : 23.253.135.79
+	python.org          : 2001:4802:7901::e60a:1375:0:6
 
 .. {{{end}}}
 
@@ -68,7 +68,7 @@ resolve back to a hostname.
 .. cog.out(run_script(cog.inFile, 'asyncio_getnameinfo.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_getnameinfo.py
 	

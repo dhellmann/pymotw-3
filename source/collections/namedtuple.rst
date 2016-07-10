@@ -17,7 +17,7 @@ This makes :class:`tuples` convenient containers for simple uses.
 .. cog.out(run_script(cog.inFile, 'collections_tuple.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_tuple.py
 	
@@ -59,7 +59,7 @@ well as using the positional indexes of standard tuples.
 .. cog.out(run_script(cog.inFile, 'collections_namedtuple_person.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_namedtuple_person.py
 	
@@ -90,7 +90,7 @@ Trying to change a value through its named attribute results in an
 .. cog.out(run_script(cog.inFile, 'collections_namedtuple_immutable.py', ignore_error=True))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_namedtuple_immutable.py
 	
@@ -121,7 +121,7 @@ As the field names are parsed, invalid values cause
 .. cog.out(run_script(cog.inFile, 'collections_namedtuple_bad_fields.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_namedtuple_bad_fields.py
 	
@@ -148,7 +148,7 @@ so the field with name ``class`` becomes ``_1`` and the duplicate
 .. cog.out(run_script(cog.inFile, 'collections_namedtuple_rename.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_namedtuple_rename.py
 	
@@ -181,7 +181,7 @@ value is the sequence of individual names.
 .. cog.out(run_script(cog.inFile, 'collections_namedtuple_fields.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_namedtuple_fields.py
 	
@@ -205,7 +205,7 @@ fields for the :class:`namedtuple`.
 .. cog.out(run_script(cog.inFile, 'collections_namedtuple_asdict.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_namedtuple_asdict.py
 	
@@ -230,7 +230,7 @@ returns a new object.
 .. cog.out(run_script(cog.inFile, 'collections_namedtuple_replace.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_namedtuple_replace.py
 	

@@ -43,7 +43,7 @@ expected tokens.
 .. cog.out(run_script(cog.inFile, 'shlex_example.py quotes.txt'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 shlex_example.py quotes.txt
 	
@@ -80,7 +80,7 @@ The token with the embedded apostrophe is no problem.
 .. cog.out(run_script(cog.inFile, 'shlex_example.py apostrophe.txt'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 shlex_example.py apostrophe.txt
 	
@@ -120,7 +120,7 @@ special characters and white space are quoted properly.
 .. cog.out(run_script(cog.inFile, 'shlex_quote.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 shlex_quote.py
 	
@@ -156,7 +156,7 @@ property.
 .. cog.out(run_script(cog.inFile, 'shlex_example.py comments.txt'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 shlex_example.py comments.txt
 	
@@ -194,7 +194,7 @@ The result is a list.
 .. cog.out(run_script(cog.inFile, 'shlex_split.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 shlex_split.py
 	
@@ -232,7 +232,7 @@ added to the list of characters that are included in words (otherwise
 .. cog.out(run_script(cog.inFile, 'shlex_source.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 shlex_source.py
 	
@@ -288,7 +288,7 @@ In this example, each table cell is wrapped in vertical bars.
 .. cog.out(run_script(cog.inFile, 'shlex_table.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 shlex_table.py
 	
@@ -315,7 +315,7 @@ and comma, the results change.
 .. cog.out(run_script(cog.inFile, 'shlex_whitespace.py quotes.txt'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 shlex_whitespace.py quotes.txt
 	
@@ -367,7 +367,7 @@ The example produces this output.
 .. cog.out(run_script(cog.inFile, 'shlex_errors.py', ignore_error=True))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 shlex_errors.py
 	
@@ -407,7 +407,7 @@ Here are a few examples of the differences in parsing behavior.
 .. cog.out(run_script(cog.inFile, 'shlex_posix.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 shlex_posix.py
 	

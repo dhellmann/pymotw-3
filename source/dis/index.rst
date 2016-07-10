@@ -42,7 +42,7 @@ name, and any arguments passed to the opcode.
 .. cog.out(run_script(cog.inFile, '-m dis dis_simple.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -m dis dis_simple.py
 	
@@ -83,12 +83,12 @@ it into a function (:const:`LOAD_CONST`, :const:`MAKE_FUNCTION`), but
 .. cog.out(run_script(cog.inFile, '-m dis dis_function.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -m dis dis_function.py
 	
 	  5           0 LOAD_CONST               0 (<code object f at
-	0x101324c90, file "dis_function.py", line 5>)
+	0x10141ba50, file "dis_function.py", line 5>)
 	              3 LOAD_CONST               1 ('f')
 	              6 MAKE_FUNCTION            0
 	              9 STORE_NAME               0 (f)
@@ -121,7 +121,7 @@ To see inside the function, the function itself must be passed to
 .. cog.out(run_script(cog.inFile, 'dis_function.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 dis_function.py
 	
@@ -156,7 +156,7 @@ string, or other code object, ready to be printed.
 .. cog.out(run_script(cog.inFile, 'dis_show_code.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 dis_show_code.py
 	
@@ -194,7 +194,7 @@ appear in the file.
 .. cog.out(run_script(cog.inFile, 'dis_class.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 dis_class.py
 	
@@ -237,7 +237,7 @@ in cases when statements outside of a function are being examined.
 .. cog.out(run_script(cog.inFile, 'dis_string.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 dis_string.py
 	
@@ -279,7 +279,7 @@ interactive interpreter to report about the last exception.  If no
 argument is passed to :func:`dis`, then it looks for an exception and
 shows the disassembly of the top of the stack that caused it.
 
-::
+.. code-block:: none
 
     $ python3
     Python 3.5.1 (v3.5.1:37a07cee5969, Dec  5 2015, 21:12:44)
@@ -323,7 +323,7 @@ stack.
 .. cog.out('\n\n    ...trimmed...\n\n')
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 dis_traceback.py
 	
@@ -384,7 +384,7 @@ program and the amount of time it takes to run.
 .. timing values are sensitive to other operations, so don't cog
 .. cog.out(run_script(cog.inFile, 'dis_test_loop.py dis_slow_loop', line_break_mode='wrap'))
 
-::
+.. code-block:: none
 
 	$ python3 dis_test_loop.py dis_slow_loop
 	
@@ -463,7 +463,7 @@ some overhead, but not a significant amount.
 
 .. cog.out(run_script(cog.inFile, 'dis_test_loop.py dis_faster_loop', line_break_mode='wrap'))
 
-::
+.. code-block:: none
 
 	$ python3 dis_test_loop.py dis_faster_loop
 	
@@ -507,7 +507,7 @@ is down to 0.0473 seconds.
 
 .. cog.out(run_script(cog.inFile, 'dis_test_loop.py dis_fastest_loop', line_break_mode='wrap'))
 
-::
+.. code-block:: none
 
 	$ python3 dis_test_loop.py dis_fastest_loop
 	
@@ -554,7 +554,7 @@ The :mod:`itertools` version takes only 0.0332 seconds to run, about
 
 .. cog.out(run_script(cog.inFile, 'dis_test_loop.py dis_eliminate_loop', line_break_mode='wrap'))
 
-::
+.. code-block:: none
 
 	$ python3 dis_test_loop.py dis_eliminate_loop
 	
@@ -613,7 +613,7 @@ involved, the evaluation has to be delayed to runtime.
 .. cog.out(run_script(cog.inFile, '-m dis dis_constant_folding.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -m dis dis_constant_folding.py
 	

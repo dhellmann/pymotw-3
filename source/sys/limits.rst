@@ -27,7 +27,7 @@ itself.
 .. cog.out(run_script(cog.inFile, 'sys_getrefcount.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_getrefcount.py
 	
@@ -60,7 +60,7 @@ objects are.
 .. cog.out(run_script(cog.inFile, 'sys_getsizeof.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_getsizeof.py
 	
@@ -91,7 +91,7 @@ consumed.
 .. cog.out(run_script(cog.inFile, 'sys_getsizeof_object.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_getsizeof_object.py
 	
@@ -115,7 +115,7 @@ the attributes stored in the internal :data:`__dict__`.
 .. cog.out(run_script(cog.inFile, 'sys_getsizeof_custom.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_getsizeof_custom.py
 	
@@ -145,7 +145,7 @@ program has an opportunity to handle the situation.
 ..                       line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_recursionlimit.py
 	
@@ -185,7 +185,7 @@ the interpreter as currently configured.
 .. cog.out(run_script(cog.inFile, 'sys_maximums.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_maximums.py
 	
@@ -212,7 +212,7 @@ examples were produced on OS X 10.9.5 on an Intel Core i7.
 .. cog.out(run_script(cog.inFile, 'sys_float_info.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_float_info.py
 	
@@ -257,7 +257,7 @@ These examples were produced on OS X 10.9.5 on an Intel Core i7.
 .. cog.out(run_script(cog.inFile, 'sys_int_info.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_int_info.py
 	
@@ -294,7 +294,7 @@ little-endian.
 .. cog.out(run_script(cog.inFile, 'sys_byteorder.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_byteorder.py
 	

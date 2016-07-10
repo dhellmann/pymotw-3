@@ -68,16 +68,19 @@ including the fact that the ``,`` character was added.
 
 .. literalinclude:: output.diff
    :lines: 3-5
+   :language: none
 
 The next few lines of the output show that an extra space was removed.
 
 .. literalinclude:: output.diff
    :lines: 7-10
+   :language: none
 
 Next, a more complex change was made, replacing several words in a phrase.
 
 .. literalinclude:: output.diff
    :lines: 11-16
+   :language: none
 
 The last sentence in the paragraph was changed significantly, so the
 difference is represented by removing the old version and adding the
@@ -85,6 +88,7 @@ new.
 
 .. literalinclude:: output.diff
    :lines: 17-
+   :language: none
 
 The :func:`ndiff` function produces essentially the same output.
 The processing is specifically tailored for working with text data and
@@ -111,7 +115,7 @@ many common version control tools.
 .. cog.out(run_script(cog.inFile, 'difflib_unified.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 difflib_unified.py
 	
@@ -162,7 +166,7 @@ characters explicitly, but to rely on the ability of
 .. cog.out(run_script(cog.inFile, 'difflib_junk.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 difflib_junk.py
 	
@@ -208,7 +212,7 @@ are added and removed.
 .. cog.out(run_script(cog.inFile, 'difflib_seq.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 difflib_seq.py
 	

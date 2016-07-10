@@ -22,7 +22,7 @@ from the middle by matching identity.
 .. cog.out(run_script(cog.inFile, 'collections_deque.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_deque.py
 	
@@ -52,7 +52,7 @@ is the :class:`deque` contains the input sequence in reverse order.
 .. cog.out(run_script(cog.inFile, 'collections_deque_populating.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_deque_populating.py
 	
@@ -80,7 +80,7 @@ Use :func:`pop` to remove an item from the "right" end of the
 .. cog.out(run_script(cog.inFile, 'collections_deque_consuming.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_deque_consuming.py
 	
@@ -105,7 +105,7 @@ until the :class:`deque` is empty.
 .. NOT RUNNING
 .. cog.out(run_script(cog.inFile, 'collections_deque_both_ends.py'))
 
-::
+.. code-block:: none
 
 	$ python collections_deque_both_ends.py
     
@@ -137,7 +137,7 @@ the items in the deque as being engraved along the edge of a dial.
 .. cog.out(run_script(cog.inFile, 'collections_deque_rotate.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_deque_rotate.py
 	
@@ -167,7 +167,7 @@ added to.
 .. cog.out(run_script(cog.inFile, 'collections_deque_maxlen.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 collections_deque_maxlen.py
 	

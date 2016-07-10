@@ -72,7 +72,7 @@ in the file.
 .. cog.out(run_script(cog.inFile, 'mmap_read.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 mmap_read.py
 	
@@ -104,7 +104,7 @@ line in memory and in the file.
 .. cog.out(run_script(cog.inFile, 'mmap_write_slice.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 mmap_write_slice.py
 	
@@ -137,7 +137,7 @@ objects is maintained separately.
 .. cog.out(run_script(cog.inFile, 'mmap_write_copy.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 mmap_write_copy.py
 	
@@ -174,7 +174,7 @@ spaces so each result prints on a single line.
 .. cog.out(run_script(cog.inFile, 'mmap_regex.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 mmap_regex.py
 	

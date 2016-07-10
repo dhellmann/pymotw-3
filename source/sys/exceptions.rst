@@ -31,7 +31,7 @@ run, even though the except hook is set.
 ..                       line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_excepthook.py
 	
@@ -72,7 +72,7 @@ local variable (using ``del``) to avoid cycles.
 ..                       line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_exc_info.py
 	
@@ -93,7 +93,7 @@ variables in :mod:`sys` (:const:`last_type`, :const:`last_value`, and
 debugging.  Using the postmortem debugger in :mod:`pdb` avoids any
 need to use the values directly.
 
-::
+.. code-block:: none
 
    $ python3
    Python 3.4.2 (v3.4.2:ab2c023a9432, Oct  5 2014, 20:42:22)

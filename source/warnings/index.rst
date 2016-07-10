@@ -75,7 +75,7 @@ Then, when the program runs, the message is printed.
 .. cog.out(run_script(cog.inFile, '-u warnings_warn.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -u warnings_warn.py
 	
@@ -102,7 +102,7 @@ an exception when a :class:`UserWarning` warning is issued.
 .. cog.out(run_script(cog.inFile, '-u warnings_warn_raise.py', ignore_error=True))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -u warnings_warn_raise.py
 	
@@ -116,7 +116,7 @@ an exception when a :class:`UserWarning` warning is issued.
 
 
 The filter behavior can also be controlled from the command line by
-using the :option:`-W` option to the interpreter.  Specify the filter
+using the ``-W`` option to the interpreter.  Specify the filter
 properties as a string with the five parts (action, message, category,
 module, and line number) separated by colons (``:``). For example, if
 ``warnings_warn.py`` is run with a filter set to raise an error on
@@ -126,7 +126,7 @@ module, and line number) separated by colons (``:``). For example, if
 .. cog.out(run_script(cog.inFile, '-u -W "error::UserWarning::0" warnings_warn.py', ignore_error=True))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -u -W "error::UserWarning::0" warnings_warn.py
 	
@@ -161,7 +161,7 @@ compiled to look for case insensitive matches.
 .. cog.out(run_script(cog.inFile, 'warnings_filterwarnings_message.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 warnings_filterwarnings_message.py
 	
@@ -184,7 +184,7 @@ command line.
 .. cog.out(run_script(cog.inFile, '-W "ignore:do not:UserWarning::0" warnings_filter.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -W "ignore:do not:UserWarning::0" warnings_filter.py
 	
@@ -209,7 +209,7 @@ Since the filter is in place, no warnings are emitted when
 .. cog.out(run_script(cog.inFile, 'warnings_filterwarnings_module.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 warnings_filterwarnings_module.py
 	
@@ -233,7 +233,7 @@ module name and line number.
 .. cog.out(run_script(cog.inFile, 'warnings_filterwarnings_lineno.py', break_lines_at=70))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 warnings_filterwarnings_lineno.py
 	
@@ -260,7 +260,7 @@ This example calls the same function several times, but produces a single warnin
 .. cog.out(run_script(cog.inFile, 'warnings_repeated.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 warnings_repeated.py
 	
@@ -284,7 +284,7 @@ are printed.
 .. cog.out(run_script(cog.inFile, 'warnings_once.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 warnings_once.py
 	
@@ -316,7 +316,7 @@ The warnings are emitted with the rest of the log messages when
 .. cog.out(run_script(cog.inFile, 'warnings_showwarning.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 warnings_showwarning.py
 	
@@ -341,7 +341,7 @@ representation of the warning to be displayed to the user.
 .. cog.out(run_script(cog.inFile, '-u warnings_formatwarning.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -u warnings_formatwarning.py
 	
@@ -374,7 +374,7 @@ levels, one for itself and one for :func:`old_function`.
 .. cog.out(run_script(cog.inFile, 'warnings_warn_stacklevel.py', break_lines_at=74))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 warnings_warn_stacklevel.py
 	

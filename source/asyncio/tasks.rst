@@ -27,7 +27,7 @@ running until the task returns a result.
 .. cog.out(run_script(cog.inFile, 'asyncio_create_task.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_create_task.py
 	
@@ -62,7 +62,7 @@ loop. The result is a :class:`CancelledError` exception from
 .. cog.out(run_script(cog.inFile, 'asyncio_cancel_task.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_cancel_task.py
 	
@@ -89,7 +89,7 @@ already done, if necessary.
 .. cog.out(run_script(cog.inFile, 'asyncio_cancel_task2.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_cancel_task2.py
 	
@@ -120,7 +120,7 @@ until something uses ``await`` to allow it to be executed.
 .. cog.out(run_script(cog.inFile, 'asyncio_ensure_future.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_ensure_future.py
 	

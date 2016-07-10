@@ -98,7 +98,7 @@ In this example, the file is always re-initialized.
 .. cog.out(run_script(cog.inFile, 'dbm_new.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 dbm_new.py
 	
@@ -118,7 +118,7 @@ are installed on the system.
 .. cog.out(run_script(cog.inFile, 'dbm_whichdb.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 dbm_whichdb.py
 	
@@ -147,7 +147,7 @@ byte strings.
 .. cog.out(run_script(cog.inFile, 'dbm_existing.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 dbm_existing.py
 	
@@ -174,7 +174,7 @@ Passing another type results in a :class:`TypeError`.
 .. cog.out(run_script(cog.inFile, 'dbm_intkeys.py', ignore_error=True))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 dbm_intkeys.py
 	
@@ -194,7 +194,7 @@ A similar :class:`TypeError` is raised if a value is not a string.
 .. cog.out(run_script(cog.inFile, 'dbm_intvalue.py', ignore_error=True))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 dbm_intvalue.py
 	

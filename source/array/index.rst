@@ -77,7 +77,7 @@ and is initialized with a simple byte string.
 .. cog.out(run_script(cog.inFile, 'array_string.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 array_string.py
 	
@@ -106,7 +106,7 @@ elements to the end.
 .. cog.out(run_script(cog.inFile, 'array_sequence.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 array_sequence.py
 	
@@ -137,7 +137,7 @@ bytes to the appropriate types.
 .. cog.out(run_script(cog.inFile, 'array_file.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 array_file.py
 	
@@ -161,7 +161,7 @@ unicode strings.
 .. cog.out(run_script(cog.inFile, 'array_tobytes.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 array_tobytes.py
 	
@@ -191,7 +191,7 @@ over the data in Python.
 .. cog.out(run_script(cog.inFile, 'array_byteswap.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 array_byteswap.py
 	

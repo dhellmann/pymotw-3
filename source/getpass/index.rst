@@ -28,7 +28,7 @@ the caller.
 The default prompt, if none is specified by the caller, is
 "``Password:``".
 
-::
+.. code-block:: none
 
     $ python3 getpass_defaults.py
 
@@ -44,7 +44,7 @@ The prompt can be changed to any value needed.
 Some programs ask for a "pass phrase" instead of a simple password, to
 give better security.
 
-::
+.. code-block:: none
 
     $ python3 getpass_prompt.py
 
@@ -69,7 +69,7 @@ Using :data:`sys.stderr` for the prompt means standard output can be
 redirected (to a pipe or file) without seeing the password prompt. The
 value entered by the user is still not echoed back to the screen.
 
-::
+.. code-block:: none
 
     $ python3 getpass_stream.py >/dev/null
 
@@ -84,7 +84,7 @@ will not be read from a non-terminal stream redirected to standard
 input. Instead, :mod:`getpass` tries to get to the tty for a process,
 and no error is raised if they can access it.
 
-::
+.. code-block:: none
 
     $ echo "not sekret" | python3 getpass_defaults.py
 
@@ -100,7 +100,7 @@ and use an alternate method for reading in that case.
 
 With a tty:
 
-::
+.. code-block:: none
 
     $ python3 ./getpass_noterminal.py
 
@@ -109,7 +109,7 @@ With a tty:
 
 Without a tty:
 
-::
+.. code-block:: none
 
     $ echo "sekret" | python3 ./getpass_noterminal.py
 

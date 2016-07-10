@@ -38,7 +38,7 @@ passed as argument (or :data:`sys.stdout` by default).
 .. cog.out(run_script(cog.inFile, 'pprint_pprint.py', break_lines_at=68))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 pprint_pprint.py
 	
@@ -77,7 +77,7 @@ The formatted string can then be printed or logged independently.
 .. cog.out(run_script(cog.inFile, 'pprint_pformat.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 pprint_pformat.py
 	
@@ -112,7 +112,7 @@ The representations of the nested objects are combined by the
 .. cog.out(run_script(cog.inFile, 'pprint_arbitrary_object.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 pprint_arbitrary_object.py
 	
@@ -141,12 +141,12 @@ creating a recursive reference.
 .. cog.out(run_script(cog.inFile, 'pprint_recursion.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 pprint_recursion.py
 	
-	id(local_data) => 4327565192
-	['a', 'b', 1, 2, <Recursion on list with id=4327565192>]
+	id(local_data) => 4316128264
+	['a', 'b', 1, 2, <Recursion on list with id=4316128264>]
 
 .. {{{end}}}
 
@@ -171,7 +171,7 @@ output are represented by ellipsis.
 .. cog.out(run_script(cog.inFile, 'pprint_depth.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 pprint_depth.py
 	
@@ -198,7 +198,7 @@ syntax.
 .. cog.out(run_script(cog.inFile, 'pprint_width.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 pprint_width.py
 	

@@ -43,7 +43,7 @@ exception is raised.
 .. cog.out(run_script(cog.inFile, 'contextlib_api.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 contextlib_api.py
 	
@@ -71,13 +71,13 @@ returned by :func:`__enter__`, which is not necessarily the
 .. cog.out(run_script(cog.inFile, 'contextlib_api_other_object.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 contextlib_api_other_object.py
 	
 	Context.__init__()
 	Context.__enter__()
-	WithinContext.__init__(<__main__.Context object at 0x1007a9748>)
+	WithinContext.__init__(<__main__.Context object at 0x1007b1978>)
 	WithinContext.do_something()
 	Context.__exit__()
 	WithinContext.__del__
@@ -100,7 +100,7 @@ re-raised after :func:`__exit__` returns.
 .. cog.out(run_script(cog.inFile, 'contextlib_api_error.py', ignore_error=True))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 contextlib_api_error.py
 	
@@ -145,7 +145,7 @@ available in the usual way.
 .. cog.out(run_script(cog.inFile, 'contextlib_decorator.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 contextlib_decorator.py
 	
@@ -189,7 +189,7 @@ re-raised inside the generator, so they can be handled there.
 ..                    ignore_error=True))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 contextlib_contextmanager.py
 	
@@ -231,7 +231,7 @@ the decorated function are still available, as demonstrated by
 ..                    ignore_error=True))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 contextlib_contextmanager_decorator.py
 	
@@ -283,7 +283,7 @@ block or not.
 .. cog.out(run_script(cog.inFile, 'contextlib_closing.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 contextlib_closing.py
 	
@@ -320,7 +320,7 @@ In this case, the operation fails and the error is ignored.
 .. cog.out(run_script(cog.inFile, 'contextlib_ignore_error.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 contextlib_ignore_error.py
 	
@@ -343,7 +343,7 @@ In this updated version, the exception is discarded entirely.
 .. cog.out(run_script(cog.inFile, 'contextlib_suppress.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 contextlib_suppress.py
 	
@@ -374,7 +374,7 @@ same :class:`io.StringIO` instance where it is saved to be used later.
 .. cog.out(run_script(cog.inFile, 'contextlib_redirect.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 contextlib_redirect.py
 	
@@ -430,7 +430,7 @@ to be invoked as the stack is undone.
 ..                    ignore_error=True))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 contextlib_exitstack_enter_context.py
 	
@@ -489,7 +489,7 @@ any other context managers.
 .. cog.out(run_script(cog.inFile, 'contextlib_exitstack_enter_context_errors.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 contextlib_exitstack_enter_context_errors.py
 	
@@ -549,7 +549,7 @@ registered.
 .. cog.out(run_script(cog.inFile, 'contextlib_exitstack_callbacks.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 contextlib_exitstack_callbacks.py
 	
@@ -574,7 +574,7 @@ context managers.
 .. cog.out(run_script(cog.inFile, 'contextlib_exitstack_callbacks_error.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 contextlib_exitstack_callbacks_error.py
 	
@@ -602,7 +602,7 @@ defined in the calling code.
 .. cog.out(run_script(cog.inFile, 'contextlib_exitstack_callbacks_decorator.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 contextlib_exitstack_callbacks_decorator.py
 	
@@ -649,7 +649,7 @@ is propagated.
 .. cog.out(run_script(cog.inFile, 'contextlib_exitstack_pop_all.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 contextlib_exitstack_pop_all.py
 	

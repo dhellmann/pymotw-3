@@ -29,7 +29,7 @@ In this example, the pattern matches all files starting with
 .. cog.out(run_script(cog.inFile, 'fnmatch_fnmatch.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 fnmatch_fnmatch.py
 	
@@ -57,7 +57,7 @@ file system, no files match the modified pattern.
 .. cog.out(run_script(cog.inFile, 'fnmatch_fnmatchcase.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 fnmatch_fnmatchcase.py
 	
@@ -88,7 +88,7 @@ example source files associated with this section.
 .. cog.out(run_script(cog.inFile, 'fnmatch_filter.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 fnmatch_filter.py
 	
@@ -127,7 +127,7 @@ Some of the characters are escaped to make a valid expression.
 .. cog.out(run_script(cog.inFile, 'fnmatch_translate.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 fnmatch_translate.py
 	

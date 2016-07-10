@@ -64,7 +64,7 @@ write to :const:`sys.stdout`.
 .. cog.out(run_script(cog.inFile, 'sys_settrace_call.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_settrace_call.py
 	
@@ -99,7 +99,7 @@ In this example, the list of functions is kept in the variable
 .. cog.out(run_script(cog.inFile, 'sys_settrace_line.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_settrace_line.py
 	
@@ -135,7 +135,7 @@ when a function is called, so the return value can be monitored.
 .. cog.out(run_script(cog.inFile, 'sys_settrace_return.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_settrace_return.py
 	
@@ -170,7 +170,7 @@ whether the caller catches and ignores it or not.
 .. cog.out(run_script(cog.inFile, 'sys_settrace_exception.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_settrace_exception.py
 	

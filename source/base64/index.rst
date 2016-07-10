@@ -40,7 +40,7 @@ expand to 248 bytes after being encoded.
 .. cog.out(run_script(cog.inFile, 'base64_b64encode.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 base64_b64encode.py
 	
@@ -77,7 +77,7 @@ evenly divisible by 24, in this example.
 .. cog.out(run_script(cog.inFile, 'base64_b64decode.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 base64_b64decode.py
 	
@@ -110,7 +110,7 @@ underscore (``_``).  Otherwise, the alphabet is the same.
 .. cog.out(run_script(cog.inFile, 'base64_urlsafe.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 base64_urlsafe.py
 	
@@ -143,7 +143,7 @@ set and the digits 2 through 7.
 .. cog.out(run_script(cog.inFile, 'base64_base32.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 base64_base32.py
 	
@@ -167,7 +167,7 @@ encoded format takes up more space.
 .. cog.out(run_script(cog.inFile, 'base64_base16.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 base64_base16.py
 	
@@ -195,7 +195,7 @@ used by PDF files.
 .. cog.out(run_script(cog.inFile, 'base64_base85.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 base64_base85.py
 	

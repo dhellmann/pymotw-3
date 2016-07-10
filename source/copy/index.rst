@@ -31,12 +31,12 @@ the reference in the :data:`dup` list is to the same object that is in
 .. cog.out(run_script(cog.inFile, 'copy_shallow.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 copy_shallow.py
 	
-	             my_list: [<__main__.MyClass object at 0x1007a9780>]
-	                 dup: [<__main__.MyClass object at 0x1007a9780>]
+	             my_list: [<__main__.MyClass object at 0x1007a87b8>]
+	                 dup: [<__main__.MyClass object at 0x1007a87b8>]
 	      dup is my_list: False
 	      dup == my_list: True
 	dup[0] is my_list[0]: True
@@ -70,12 +70,12 @@ equal.
 .. cog.out(run_script(cog.inFile, 'copy_deep.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 copy_deep.py
 	
-	             my_list: [<__main__.MyClass object at 0x101aa9780>]
-	                 dup: [<__main__.MyClass object at 0x101ab1b38>]
+	             my_list: [<__main__.MyClass object at 0x1018a87b8>]
+	                 dup: [<__main__.MyClass object at 0x1018b1b70>]
 	      dup is my_list: False
 	      dup == my_list: True
 	dup[0] is my_list[0]: False
@@ -112,7 +112,7 @@ copied already, to avoid infinite recursion.
 .. cog.out(run_script(cog.inFile, 'copy_hooks.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 copy_hooks.py
 	
@@ -171,35 +171,35 @@ is copied, the output is:
 .. cog.out(run_script(cog.inFile, 'copy_recursion.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 copy_recursion.py
 	
 	
-	Calling __deepcopy__ for Graph(name=root, id=4312472152)
+	Calling __deepcopy__ for Graph(name=root, id=4314569528)
 	  Memo dictionary:
 	    (empty)
-	  Copying to new object Graph(name=root, id=4315798720)
+	  Copying to new object Graph(name=root, id=4315093592)
 	
-	Calling __deepcopy__ for Graph(name=a, id=4312472320)
+	Calling __deepcopy__ for Graph(name=a, id=4314569584)
 	  Memo dictionary:
-	    Graph(name=root, id=4312472152): Graph(name=root,
-	id=4315798720)
-	  Copying to new object Graph(name=a, id=4315799056)
+	    Graph(name=root, id=4314569528): Graph(name=root,
+	id=4315093592)
+	  Copying to new object Graph(name=a, id=4315094208)
 	
-	Calling __deepcopy__ for Graph(name=root, id=4312472152)
-	  Already copied to Graph(name=root, id=4315798720)
+	Calling __deepcopy__ for Graph(name=root, id=4314569528)
+	  Already copied to Graph(name=root, id=4315093592)
 	
-	Calling __deepcopy__ for Graph(name=b, id=4312472432)
+	Calling __deepcopy__ for Graph(name=b, id=4315092248)
 	  Memo dictionary:
-	    Graph(name=a, id=4312472320): Graph(name=a, id=4315799056)
-	    4312472152: Graph(name=root, id=4315798720)
-	    4312472320: Graph(name=a, id=4315799056)
-	    Graph(name=root, id=4312472152): Graph(name=root,
-	id=4315798720)
-	    4315762440: [Graph(name=root, id=4312472152), Graph(name=a,
-	id=4312472320)]
-	  Copying to new object Graph(name=b, id=4315816176)
+	    4314569528: Graph(name=root, id=4315093592)
+	    4315692808: [Graph(name=root, id=4314569528), Graph(name=a,
+	id=4314569584)]
+	    Graph(name=root, id=4314569528): Graph(name=root,
+	id=4315093592)
+	    4314569584: Graph(name=a, id=4315094208)
+	    Graph(name=a, id=4314569584): Graph(name=a, id=4315094208)
+	  Copying to new object Graph(name=b, id=4315177536)
 
 .. {{{end}}}
 

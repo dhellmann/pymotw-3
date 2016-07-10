@@ -13,7 +13,7 @@ can be updated with a few small changes. The first step is to create
 the certificate and key files. A self-signed certificate can be
 created with a command like:
 
-::
+.. code-block:: none
 
   $ openssl req -newkey rsa:2048 -nodes -keyout pymotw.key \
   -x509 -days 365 -out pymotw.crt
@@ -66,7 +66,7 @@ The new version uses :func:`close`.
 Running the server in one window, and the client in another, produces
 this output.
 
-::
+.. code-block:: none
 
     $ python3 asyncio_echo_server_ssl.py
     asyncio: Using selector: KqueueSelector
@@ -78,7 +78,7 @@ this output.
     echo_::1_55235: sent b'It will be sent in parts.'
     echo_::1_55235: closing
 
-::
+.. code-block:: none
 
     $ python3 asyncio_echo_client_ssl.py
     asyncio: Using selector: KqueueSelector

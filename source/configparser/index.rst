@@ -63,7 +63,7 @@ and prints the value of the :data:`url` option from the
 .. cog.out(run_script(cog.inFile, 'configparser_read.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 configparser_read.py
 	
@@ -87,7 +87,7 @@ condition as an error.
 .. cog.out(run_script(cog.inFile, 'configparser_read_many.py', line_break_mode='fill'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 configparser_read_many.py
 	
@@ -106,6 +106,7 @@ input to contain Unicode characters and saving the results in UTF-8
 encoding gives:
 
 .. literalinclude:: unicode.ini
+   :language: none
 
 The file is opened with the appropriate decoder, converting the UTF-8
 data to native Unicode strings.
@@ -121,7 +122,7 @@ print it safely it must be re-encoded as UTF-8.
 .. cog.out(run_script(cog.inFile, 'configparser_unicode.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 configparser_unicode.py
 	
@@ -158,7 +159,7 @@ pairs.
 .. cog.out(run_script(cog.inFile, 'configparser_structure.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 configparser_structure.py
 	
@@ -192,7 +193,7 @@ the same output.
 .. cog.out(run_script(cog.inFile, 'configparser_structure_dict.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 configparser_structure_dict.py
 	
@@ -231,7 +232,7 @@ exceptions for missing data.
 .. cog.out(run_script(cog.inFile, 'configparser_has_section.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 configparser_has_section.py
 	
@@ -253,7 +254,7 @@ If the section does not exist, :func:`has_option` returns ``False``.
 .. cog.out(run_script(cog.inFile, 'configparser_has_option.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 configparser_has_option.py
 	
@@ -299,7 +300,7 @@ output.
 .. cog.out(run_script(cog.inFile, 'configparser_value_types.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 configparser_value_types.py
 	
@@ -341,7 +342,7 @@ converter causes a new :func:`getdatetime` method to be added.
 .. cog.out(run_script(cog.inFile, 'configparser_custom_types.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 configparser_custom_types.py
 	
@@ -374,7 +375,7 @@ the option exists and :func:`get` returns ``None``.
 .. cog.out(run_script(cog.inFile, 'configparser_allow_no_value.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 configparser_allow_no_value.py
 	
@@ -408,7 +409,7 @@ of the value and preserved.
 .. cog.out(run_script(cog.inFile, 'configparser_multiline.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 configparser_multiline.py
 	
@@ -440,7 +441,7 @@ integer, float, or Boolean values.
 .. cog.out(run_script(cog.inFile, 'configparser_populate.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 configparser_populate.py
 	
@@ -464,7 +465,7 @@ Removing a section deletes any options it contains.
 .. cog.out(run_script(cog.inFile, 'configparser_remove.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 configparser_remove.py
 	
@@ -509,7 +510,7 @@ writes the data out in the INI format so it can be parsed again by
 .. cog.out(run_script(cog.inFile, 'configparser_write.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 configparser_write.py
 	
@@ -571,7 +572,7 @@ values.
 .. cog.out(run_script(cog.inFile, 'configparser_defaults.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 configparser_defaults.py
 	
@@ -638,7 +639,7 @@ settings being used by the ``url`` value changes the return value.
 .. cog.out(run_script(cog.inFile, 'configparser_interpolation.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 configparser_interpolation.py
 	
@@ -671,7 +672,7 @@ section, but the ``protocol`` comes from ``DEFAULT``.
 .. cog.out(run_script(cog.inFile, 'configparser_interpolation_defaults.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 configparser_interpolation_defaults.py
 	
@@ -696,7 +697,7 @@ too many substitution steps.
 .. cog.out(run_script(cog.inFile, 'configparser_interpolation_recursion.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 configparser_interpolation_recursion.py
 	
@@ -720,7 +721,7 @@ constructed.
 .. cog.out(run_script(cog.inFile, 'configparser_interpolation_error.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 configparser_interpolation_error.py
 	
@@ -751,7 +752,7 @@ automatically.
 .. cog.out(run_script(cog.inFile, 'configparser_escape.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 configparser_escape.py
 	
@@ -778,6 +779,7 @@ of the configuration file by prefixing the variable name with the
 section name and a colon (``:``).
 
 .. literalinclude:: extended_interpolation.ini
+   :language: none
 
 Referring to values in other sections of the file makes it possible to
 share a hierarchy of values, without placing all defaults in the
@@ -787,7 +789,7 @@ share a hierarchy of values, without placing all defaults in the
 .. cog.out(run_script(cog.inFile, 'configparser_extendedinterpolation.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 configparser_extendedinterpolation.py
 	
@@ -815,7 +817,7 @@ interpolation object to be safely ignored.
 .. cog.out(run_script(cog.inFile, 'configparser_nointerpolation.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 configparser_nointerpolation.py
 	

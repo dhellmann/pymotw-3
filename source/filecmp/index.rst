@@ -37,7 +37,7 @@ Running the script produces a tree of files under the directory
 .. cog.out(run_script(cog.inFile, 'find example', interpreter=None))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ find example
 	
@@ -111,7 +111,7 @@ are reported as the same, even if their contents differ. When
 .. cog.out(run_script(cog.inFile, 'filecmp_cmp.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 filecmp_cmp.py
 	
@@ -141,7 +141,7 @@ compared (due to permission problems or for any other reason).
 .. cog.out(run_script(cog.inFile, 'filecmp_cmpfiles.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 filecmp_cmpfiles.py
 	
@@ -176,7 +176,7 @@ the contents of files like :func:`cmp` does.
 .. cog.out(run_script(cog.inFile, 'filecmp_dircmp_report.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 filecmp_dircmp_report.py
 	
@@ -202,7 +202,7 @@ The output includes comparisons of all parallel subdirectories.
 .. cog.out(run_script(cog.inFile, 'filecmp_dircmp_report_full_closure.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 filecmp_dircmp_report_full_closure.py
 	
@@ -263,7 +263,7 @@ compared are listed in :attr:`left_list` and :attr:`right_list`.
 .. cog.out(run_script(cog.inFile, 'filecmp_dircmp_list.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 filecmp_dircmp_list.py
 	
@@ -300,7 +300,7 @@ compared.
 .. cog.out(run_script(cog.inFile, 'filecmp_dircmp_list_filter.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 filecmp_dircmp_list_filter.py
 	
@@ -335,7 +335,7 @@ The "left" directory is the first argument to :func:`dircmp` and the
 .. cog.out(run_script(cog.inFile, 'filecmp_dircmp_membership.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 filecmp_dircmp_membership.py
 	
@@ -366,7 +366,7 @@ funny list.
 .. cog.out(run_script(cog.inFile, 'filecmp_dircmp_common.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 filecmp_dircmp_common.py
 	
@@ -398,7 +398,7 @@ and the contents are not examined, so it is included in the
 .. cog.out(run_script(cog.inFile, 'filecmp_dircmp_diff.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 filecmp_dircmp_diff.py
 	
@@ -422,12 +422,12 @@ name to new :class:`dircmp` objects.
 .. cog.out(run_script(cog.inFile, 'filecmp_dircmp_subdirs.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 filecmp_dircmp_subdirs.py
 	
 	Subdirectories:
-	{'common_dir': <filecmp.dircmp object at 0x1018b1a20>}
+	{'common_dir': <filecmp.dircmp object at 0x101356400>}
 
 .. {{{end}}}
 

@@ -33,7 +33,7 @@ The output looks like:
 .. cog.out(run_script(cog.inFile, 'calendar_textcalendar.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 calendar_textcalendar.py
 	
@@ -78,7 +78,7 @@ organized with three months per row.
 .. cog.out(run_script(cog.inFile, 'calendar_yeardays2calendar.py', break_lines_at=66))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 calendar_yeardays2calendar.py
 	
@@ -106,7 +106,7 @@ For the same arguments, :func:`formatyear` produces this output:
 .. cog.out(run_script(cog.inFile, 'calendar_formatyear.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 calendar_formatyear.py
 	
@@ -173,7 +173,7 @@ the regular :class:`TextCalendar`.
 .. cog.out(run_script(cog.inFile, 'calendar_locale.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 calendar_locale.py
 	
@@ -219,7 +219,7 @@ the given month, but that are part of another month.
 .. cog.out(run_script(cog.inFile, 'calendar_monthcalendar.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 calendar_monthcalendar.py
 	
@@ -253,7 +253,7 @@ So the meeting schedule for the year is:
 .. cog.out(run_script(cog.inFile, 'calendar_secondthursday.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 calendar_secondthursday.py
 	

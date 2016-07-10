@@ -52,11 +52,11 @@ messages.
 .. cog.out(run_script(cog.inFile, 'mailbox_mbox_create.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 mailbox_mbox_create.py
 	
-	From MAILER-DAEMON Sun Jan 31 17:52:59 2016
+	From MAILER-DAEMON Sun Jul 10 14:45:06 2016
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -65,7 +65,7 @@ messages.
 	>From (will not be escaped).
 	There are 3 lines.
 	
-	From MAILER-DAEMON Sun Jan 31 17:52:59 2016
+	From MAILER-DAEMON Sun Jul 10 14:45:06 2016
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 2
@@ -96,7 +96,7 @@ dictionary objects the default iterator for a mailbox works on the
 .. cog.out(run_script(cog.inFile, 'mailbox_mbox_read.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 mailbox_mbox_read.py
 	
@@ -123,12 +123,12 @@ changes to be written to disk.
 .. cog.out(run_script(cog.inFile, 'mailbox_mbox_remove.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 mailbox_mbox_remove.py
 	
 	Removing: 1
-	From MAILER-DAEMON Sun Jan 31 17:52:59 2016
+	From MAILER-DAEMON Sun Jul 10 14:45:06 2016
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -179,7 +179,7 @@ subdirectory.
 .. cog.out(run_script(cog.inFile, 'mailbox_maildir_create.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 mailbox_maildir_create.py
 	
@@ -190,7 +190,7 @@ subdirectory.
 	Example/new
 		Directories: []
 	
-	*** Example/new/1454262779.M922085P88018Q1.hubert.local
+	*** Example/new/1468161907.M47549P22409Q1.lrrr.local
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -201,7 +201,7 @@ subdirectory.
 	
 	********************
 	
-	*** Example/new/1454262779.M926856P88018Q2.hubert.local
+	*** Example/new/1468161907.M52295P22409Q2.lrrr.local
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 2
@@ -229,7 +229,7 @@ arguments for :func:`set_subdir` are "``cur``" and "``new``".
 .. cog.out(run_script(cog.inFile, 'mailbox_maildir_set_subdir.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 mailbox_maildir_set_subdir.py
 	
@@ -245,8 +245,8 @@ arguments for :func:`set_subdir` are "``cur``" and "``new``".
 		Directories: ['cur', 'new', 'tmp']
 	Example/cur
 		Directories: []
-	Example/cur/1454262779.M922085P88018Q1.hubert.local
-	Example/cur/1454262779.M926856P88018Q2.hubert.local
+	Example/cur/1468161907.M47549P22409Q1.lrrr.local
+	Example/cur/1468161907.M52295P22409Q2.lrrr.local
 	Example/new
 		Directories: []
 	Example/tmp
@@ -270,7 +270,7 @@ The messages are not guaranteed to be read in any particular order.
 .. cog.out(run_script(cog.inFile, 'mailbox_maildir_read.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 mailbox_maildir_read.py
 	
@@ -298,17 +298,17 @@ mailbox at the same time.
 .. cog.out(run_script(cog.inFile, 'mailbox_maildir_remove.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 mailbox_maildir_remove.py
 	
-	Removing: 1454262779.M926856P88018Q2.hubert.local
+	Removing: 1468161907.M52295P22409Q2.lrrr.local
 	Example
 		Directories: ['cur', 'new', 'tmp']
 	Example/cur
 		Directories: []
 	
-	*** Example/cur/1454262779.M922085P88018Q1.hubert.local
+	*** Example/cur/1468161907.M47549P22409Q1.lrrr.local
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -345,13 +345,13 @@ folder name with a period (``.``).
 .. cog.out(run_script(cog.inFile, 'mailbox_maildir_folders.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 mailbox_maildir_folders.py
 	
 	Example
 	Example/cur
-	Example/cur/1454262779.M922085P88018Q1.hubert.local
+	Example/cur/1468161907.M47549P22409Q1.lrrr.local
 	Example/new
 	Example/tmp
 	Example
@@ -361,7 +361,7 @@ folder name with a period (``.``).
 	Example/.subfolder/new
 	Example/.subfolder/tmp
 	Example/cur
-	Example/cur/1454262779.M922085P88018Q1.hubert.local
+	Example/cur/1468161907.M47549P22409Q1.lrrr.local
 	Example/new
 	Example/tmp
 	Example
@@ -376,7 +376,7 @@ folder name with a period (``.``).
 	Example/.subfolder/new
 	Example/.subfolder/tmp
 	Example/cur
-	Example/cur/1454262779.M922085P88018Q1.hubert.local
+	Example/cur/1468161907.M47549P22409Q1.lrrr.local
 	Example/new
 	Example/tmp
 	Example
@@ -386,7 +386,7 @@ folder name with a period (``.``).
 	Example/.subfolder/new
 	Example/.subfolder/tmp
 	Example/cur
-	Example/cur/1454262779.M922085P88018Q1.hubert.local
+	Example/cur/1468161907.M47549P22409Q1.lrrr.local
 	Example/new
 	Example/tmp
 	Before: []
@@ -430,7 +430,7 @@ existing identifier.
 .. cog.out(run_script(cog.inFile, 'mailbox_maildir_add_flag.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 mailbox_maildir_add_flag.py
 	
@@ -457,7 +457,7 @@ The ``F`` flag added by the previous example is lost when
 .. cog.out(run_script(cog.inFile, 'mailbox_maildir_set_flags.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 mailbox_maildir_set_flags.py
 	

@@ -15,7 +15,7 @@ argument) pairs and a sequence of non-option arguments.
 
 Supported option syntax includes short and long form options:
 
-::
+.. code-block:: none
 
     -a
     -bval
@@ -68,7 +68,7 @@ to show the way they are processed.
 .. cog.out(run_script(cog.inFile, 'getopt_short.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 getopt_short.py
 	
@@ -96,7 +96,7 @@ second argument to :func:`getopt` is an empty string.
 .. cog.out(run_script(cog.inFile, 'getopt_long.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 getopt_long.py
 	
@@ -126,7 +126,7 @@ without any arguments at all, the default settings are used.
 .. cog.out(run_script(cog.inFile, 'getopt_example.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 getopt_example.py
 	
@@ -146,7 +146,7 @@ whitespace.
 .. cog.out(run_script(cog.inFile, 'getopt_example.py -o foo'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 getopt_example.py -o foo
 	
@@ -165,7 +165,7 @@ Or the option and value can be combined into a single argument.
 .. cog.out(run_script(cog.inFile, 'getopt_example.py -ofoo'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 getopt_example.py -ofoo
 	
@@ -184,7 +184,7 @@ A long form option can similarly be separate from the value.
 .. cog.out(run_script(cog.inFile, 'getopt_example.py --output foo'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 getopt_example.py --output foo
 	
@@ -204,7 +204,7 @@ value should be separated by a single ``=``.
 .. cog.out(run_script(cog.inFile, 'getopt_example.py --output=foo'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 getopt_example.py --output=foo
 	
@@ -228,7 +228,7 @@ command line, as long as a unique prefix is provided.
 .. cog.out(run_script(cog.inFile, 'getopt_example.py --o foo'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 getopt_example.py --o foo
 	
@@ -248,7 +248,7 @@ If a unique prefix is not provided, an exception is raised.
 ..                    ignore_error=True, break_lines_at=70))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 getopt_example.py --ver 2.0
 	
@@ -267,7 +267,7 @@ argument is encountered.
 .. cog.out(run_script(cog.inFile, 'getopt_example.py -v not_an_option --output foo'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 getopt_example.py -v not_an_option --output foo
 	
@@ -294,7 +294,7 @@ becomes clear.
 .. cog.out(run_script(cog.inFile, 'getopt_gnu.py -v not_an_option --output foo'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 getopt_gnu.py -v not_an_option --output foo
 	
@@ -320,7 +320,7 @@ that start with a dash ("``-``").
 .. cog.out(run_script(cog.inFile, 'getopt_example.py -v -- --output foo'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 getopt_example.py -v -- --output foo
 	

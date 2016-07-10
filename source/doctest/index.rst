@@ -38,7 +38,7 @@ output more verbose.
 .. cog.out(run_script(cog.inFile, '-m doctest -v doctest_simple.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -m doctest -v doctest_simple.py
 	
@@ -81,7 +81,7 @@ are the same.
 .. cog.out(run_script(cog.inFile, '-m doctest -v doctest_simple_with_docs.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -m doctest -v doctest_simple_with_docs.py
 	
@@ -130,7 +130,7 @@ into a different part of memory.
 .. cog.out(run_script(cog.inFile, '-m doctest -v doctest_unpredictable.py', ignore_error=True))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -m doctest -v doctest_unpredictable.py
 	
@@ -147,7 +147,7 @@ into a different part of memory.
 	Expected:
 	    [<doctest_unpredictable.MyClass object at 0x10055a2d0>]
 	Got:
-	    [<doctest_unpredictable.MyClass object at 0x104994d30>]
+	    [<doctest_unpredictable.MyClass object at 0x1016889e8>]
 	2 items had no tests:
 	    doctest_unpredictable
 	    doctest_unpredictable.MyClass
@@ -180,7 +180,7 @@ is ignored and the actual output matches and the test passes.
 .. cog.out(run_script(cog.inFile, '-m doctest -v doctest_ellipsis.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -m doctest -v doctest_ellipsis.py
 	
@@ -220,7 +220,7 @@ behavior.
 .. cog.out(run_script(cog.inFile, 'doctest_hashed_values.py'))
 .. cog.out(run_script(cog.inFile, 'doctest_hashed_values.py', include_prefix=False))
 
-::
+.. code-block:: none
 
 	$ python3 doctest_hashed_values.py
 	
@@ -252,7 +252,7 @@ boolean result of the comparison operation.
 ..                    line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -m doctest -v doctest_hashed_values_tests.py
 	
@@ -299,7 +299,7 @@ ignore the parts that might change from system to system.
 .. cog.out(run_script(cog.inFile, '-m doctest -v doctest_tracebacks.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -m doctest -v doctest_tracebacks.py
 	
@@ -339,7 +339,7 @@ exception type and message, ignoring the intervening lines entirely.
 .. cog.out(run_script(cog.inFile, '-m doctest -v doctest_tracebacks_no_body.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -m doctest -v doctest_tracebacks_no_body.py
 	
@@ -384,7 +384,7 @@ double-spaced with blank lines between.
 .. cog.out(run_script(cog.inFile, '-m doctest -v doctest_blankline_fail.py', ignore_error=True))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -m doctest -v doctest_blankline_fail.py
 	
@@ -435,7 +435,7 @@ values match and the test passes.
 .. cog.out(run_script(cog.inFile, '-m doctest -v doctest_blankline.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -m doctest -v doctest_blankline.py
 	
@@ -474,7 +474,7 @@ report as well.
 .. cog.out(run_script(cog.inFile, '-m doctest -v doctest_extra_space.py', ignore_error=True))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -m doctest -v doctest_extra_space.py
 	
@@ -524,7 +524,7 @@ also available, for output where those formats are more readable.
 .. cog.out(run_script(cog.inFile, '-m doctest -v doctest_ndiff.py', ignore_error=True))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -m doctest -v doctest_ndiff.py
 	
@@ -581,7 +581,7 @@ second has extra whitespace after ``[`` and before ``]``, so it fails.
 .. NOT RUNNING
 .. cog.out(run_script(cog.inFile, '-m doctest -v doctest_normalize_whitespace.py', ignore_error=True))
 
-::
+.. code-block:: none
 
     $ python -m doctest -v doctest_normalize_whitespace.py
 
@@ -648,7 +648,7 @@ tests.
 .. cog.out(run_script(cog.inFile, '-m doctest -v doctest_docstrings.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -m doctest -v doctest_docstrings.py
 	
@@ -714,7 +714,7 @@ After scanning the example file, :mod:`doctest` finds a total of five tests to r
 .. cog.out(run_script(cog.inFile, '-m doctest -v doctest_private_tests.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -m doctest -v doctest_private_tests.py
 	
@@ -774,6 +774,7 @@ to find and run them.
 
 .. literalinclude:: doctest_in_help.txt
    :caption:
+   :language: none
 
 The tests in the text file can be run from the command line, just as
 with the Python source modules.
@@ -782,7 +783,7 @@ with the Python source modules.
 .. cog.out(run_script(cog.inFile, '-m doctest -v doctest_in_help.txt'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -m doctest -v doctest_in_help.txt
 	
@@ -853,7 +854,7 @@ invoked as a main program.
 .. cog.out(run_script(cog.inFile, 'doctest_testmod.py -v'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 doctest_testmod.py -v
 	
@@ -893,7 +894,7 @@ module and running its tests.
 .. cog.out(run_script(cog.inFile, 'doctest_testmod_other_module.py -v'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 doctest_testmod_other_module.py -v
 	
@@ -937,7 +938,7 @@ about those features -- most of the time they are not needed.
 .. cog.out(run_script(cog.inFile, 'doctest_testfile.py -v'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 doctest_testfile.py -v
 	
@@ -993,7 +994,7 @@ instead of being reported individually.
 .. cog.out(run_script(cog.inFile, 'doctest_unittest.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 doctest_unittest.py
 	
@@ -1031,7 +1032,7 @@ the test for :func:`two` looks for it (expecting not to find it).
 .. cog.out(run_script(cog.inFile, '-m doctest -v doctest_test_globals.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -m doctest -v doctest_test_globals.py
 	
@@ -1076,7 +1077,7 @@ The module variable ``_module_data`` is changed by the tests for
 .. cog.out(run_script(cog.inFile, '-m doctest -v doctest_mutable_globals.py', ignore_error=True))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -m doctest -v doctest_mutable_globals.py
 	

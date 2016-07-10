@@ -29,7 +29,7 @@ computed.
 .. cog.out(run_script(cog.inFile, 'fractions_create_integers.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 fractions_create_integers.py
 	
@@ -52,7 +52,7 @@ The string is parsed to find the numerator and denominator values.
 .. cog.out(run_script(cog.inFile, 'fractions_create_strings.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 fractions_create_strings.py
 	
@@ -78,7 +78,7 @@ value is computed automatically.
 .. cog.out(run_script(cog.inFile, 'fractions_create_strings_floats.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 fractions_create_strings_floats.py
 	
@@ -104,7 +104,7 @@ unexpected results.
 .. cog.out(run_script(cog.inFile, 'fractions_from_float.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 fractions_from_float.py
 	
@@ -129,7 +129,7 @@ the precision errors of the standard floating point representation.
 .. cog.out(run_script(cog.inFile, 'fractions_from_decimal.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 fractions_from_decimal.py
 	
@@ -158,7 +158,7 @@ All of the standard operators are supported.
 .. cog.out(run_script(cog.inFile, 'fractions_arithmetic.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 fractions_arithmetic.py
 	
@@ -186,7 +186,7 @@ the denominator.
 .. cog.out(run_script(cog.inFile, 'fractions_limit_denominator.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 fractions_limit_denominator.py
 	

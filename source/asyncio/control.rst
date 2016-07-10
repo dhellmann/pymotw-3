@@ -30,7 +30,7 @@ containing two sets holding the finished and pending tasks.
 .. cog.out(run_script(cog.inFile, 'asyncio_wait.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_wait.py
 	
@@ -64,7 +64,7 @@ reported.
 .. cog.out(run_script(cog.inFile, 'asyncio_wait_timeout.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_wait_timeout.py
 	
@@ -102,7 +102,7 @@ background operations actually completed.
 .. cog.out(run_script(cog.inFile, 'asyncio_gather.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_gather.py
 	
@@ -138,7 +138,7 @@ loop waits for the result of the coroutine using ``await``.
 .. cog.out(run_script(cog.inFile, 'asyncio_as_completed.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_as_completed.py
 	

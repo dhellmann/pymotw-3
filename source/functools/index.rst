@@ -42,28 +42,28 @@ invoked without passing a value for *a*, causing an exception.
 .. cog.out(run_script(cog.inFile, 'functools_partial.py', ignore_error=True, line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 functools_partial.py
 	
 	myfunc:
-	  object: <function myfunc at 0x100757f28>
+	  object: <function myfunc at 0x100756f28>
 	  __name__: myfunc
 	  called myfunc with: ('a', 3)
 	
 	partial with named default:
-	  object: functools.partial(<function myfunc at 0x100757f28>,
+	  object: functools.partial(<function myfunc at 0x100756f28>,
 	b=4)
-	  func: <function myfunc at 0x100757f28>
+	  func: <function myfunc at 0x100756f28>
 	  args: ()
 	  keywords: {'b': 4}
 	  called myfunc with: ('passing a', 4)
 	  called myfunc with: ('override b', 5)
 	
 	partial with defaults:
-	  object: functools.partial(<function myfunc at 0x100757f28>,
+	  object: functools.partial(<function myfunc at 0x100756f28>,
 	'default a', b=99)
-	  func: <function myfunc at 0x100757f28>
+	  func: <function myfunc at 0x100756f28>
 	  args: ('default a',)
 	  keywords: {'b': 99}
 	  called myfunc with: ('default a', 99)
@@ -100,17 +100,17 @@ values to be modified.
 .. cog.out(run_script(cog.inFile, 'functools_update_wrapper.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 functools_update_wrapper.py
 	
 	myfunc:
-	  object: <function myfunc at 0x101957f28>
+	  object: <function myfunc at 0x100756f28>
 	  __name__: myfunc
 	  __doc__ 'Docstring for myfunc().'
 	
 	raw wrapper:
-	  object: functools.partial(<function myfunc at 0x101957f28>,
+	  object: functools.partial(<function myfunc at 0x100756f28>,
 	b=4)
 	  __name__: (no __name__)
 	  __doc__ 'partial(func, *args, **keywords) - new function with
@@ -122,7 +122,7 @@ values to be modified.
 	  update: ('__dict__',)
 	
 	updated wrapper:
-	  object: functools.partial(<function myfunc at 0x101957f28>,
+	  object: functools.partial(<function myfunc at 0x100756f28>,
 	b=4)
 	  __name__: myfunc
 	  __doc__ 'Docstring for myfunc().'
@@ -146,54 +146,54 @@ instance.
 .. cog.out(run_script(cog.inFile, 'functools_method.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 functools_method.py
 	
 	calling method1 directly:
 	  object: <bound method MyClass.method1 of <__main__.MyClass
-	object at 0x1019b1c18>>
+	object at 0x101b51518>>
 	  __name__: method1
 	  __doc__ 'Docstring for method1().'
 	  called method1 with: (<__main__.MyClass object at
-	0x1019b1c18>, 'no default for a', 3)
+	0x101b51518>, 'no default for a', 3)
 	
 	calling method1 wrapped:
 	  object: functools.partial(<bound method MyClass.method1 of
-	<__main__.MyClass object at 0x1019b1c18>>, b=4)
+	<__main__.MyClass object at 0x101b51518>>, b=4)
 	  __name__: method1
 	  __doc__ 'Docstring for method1().'
 	  called method1 with: (<__main__.MyClass object at
-	0x1019b1c18>, 'a goes here', 4)
+	0x101b51518>, 'a goes here', 4)
 	
 	calling method2 directly:
 	  object: <bound method MyClass.method2 of <__main__.MyClass
-	object at 0x1019b1c18>>
+	object at 0x101b51518>>
 	  __name__: method2
 	  __doc__ 'Docstring for method2'
 	  called method2 with: (<__main__.MyClass object at
-	0x1019b1c18>, 'no default for c', 6)
+	0x101b51518>, 'no default for c', 6)
 	
 	calling method2 wrapped:
 	  object: functools.partial(<function MyClass.method2 at
-	0x101ce2048>, 'wrapped c')
+	0x101b3f8c8>, 'wrapped c')
 	  __name__: method2
 	  __doc__ 'Docstring for method2'
 	  called method2 with: ('wrapped c', 'no default for c', 7)
 	
 	instance:
-	  object: <__main__.MyClass object at 0x1019b1c18>
+	  object: <__main__.MyClass object at 0x101b51518>
 	  __name__: (no __name__)
 	  __doc__ 'Demonstration class for functools'
-	  called object with: (<__main__.MyClass object at 0x1019b1c18>,
+	  called object with: (<__main__.MyClass object at 0x101b51518>,
 	'no default for e', 6)
 	
 	instance wrapper:
 	  object: functools.partial(<__main__.MyClass object at
-	0x1019b1c18>, f=8)
+	0x101b51518>, f=8)
 	  __name__: (no __name__)
 	  __doc__ 'Demonstration class for functools'
-	  called object with: (<__main__.MyClass object at 0x1019b1c18>,
+	  called object with: (<__main__.MyClass object at 0x101b51518>,
 	'e goes here', 8)
 
 .. {{{end}}}
@@ -222,7 +222,7 @@ in a :class:`TypeError`.
 .. cog.out(run_script(cog.inFile, 'functools_partialmethod.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 functools_partialmethod.py
 	
@@ -231,7 +231,7 @@ in a :class:`TypeError`.
 	
 	method1 as partialmethod
 	  called standalone with: (<__main__.MyClass object at
-	0x1018b1a20>, 1, 2)
+	0x101ab1b38>, 1, 2)
 	  self.attr = instance attribute
 	
 	method2 as partial
@@ -258,12 +258,12 @@ properties of the original "bare" function.
 .. cog.out(run_script(cog.inFile, 'functools_wraps.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 functools_wraps.py
 	
 	myfunc:
-	  object: <function myfunc at 0x1013cdf28>
+	  object: <function myfunc at 0x10133f7b8>
 	  __name__: myfunc
 	  __doc__ 'myfunc() is not complicated'
 	
@@ -271,7 +271,7 @@ properties of the original "bare" function.
 	  myfunc: ('unwrapped, passing b', 3)
 	
 	wrapped_myfunc:
-	  object: <function myfunc at 0x1013e2048>
+	  object: <function myfunc at 0x1013e50d0>
 	  __name__: myfunc
 	  __doc__ 'myfunc() is not complicated'
 	
@@ -281,7 +281,7 @@ properties of the original "bare" function.
 	     myfunc: ('args to wrapped', 4)
 	
 	decorated_myfunc:
-	  object: <function decorated_myfunc at 0x1013e2158>
+	  object: <function decorated_myfunc at 0x1013e51e0>
 	  __name__: decorated_myfunc
 	  __doc__ None
 	
@@ -328,18 +328,18 @@ rest of the methods that work by using the comparisons provided.
 .. cog.out(run_script(cog.inFile, 'functools_total_ordering.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 functools_total_ordering.py
 	
 	Methods:
 	
-	[('__eq__', <function MyObject.__eq__ at 0x10179fd90>),
-	 ('__ge__', <function _ge_from_gt at 0x1014d9a60>),
-	 ('__gt__', <function MyObject.__gt__ at 0x10179fe18>),
-	 ('__init__', <function MyObject.__init__ at 0x10179fd08>),
-	 ('__le__', <function _le_from_gt at 0x1014d9ae8>),
-	 ('__lt__', <function _lt_from_gt at 0x1014d99d8>)]
+	[('__eq__', <function MyObject.__eq__ at 0x1014a91e0>),
+	 ('__ge__', <function _ge_from_gt at 0x1012e2510>),
+	 ('__gt__', <function MyObject.__gt__ at 0x1014a9268>),
+	 ('__init__', <function MyObject.__init__ at 0x1014a9158>),
+	 ('__le__', <function _le_from_gt at 0x1012e2598>),
+	 ('__lt__', <function _lt_from_gt at 0x1012e2488>)]
 	
 	Comparisons:
 	
@@ -396,20 +396,20 @@ keys are created, the sequence is sorted by comparing the keys.
 .. cog.out(run_script(cog.inFile, 'functools_cmp_to_key.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 functools_cmp_to_key.py
 	
 	key_wrapper(MyObject(5)) -> <functools.KeyWrapper object at
-	0x1010bf450>
+	0x1012c1530>
 	key_wrapper(MyObject(4)) -> <functools.KeyWrapper object at
-	0x1010bf470>
+	0x1012c1510>
 	key_wrapper(MyObject(3)) -> <functools.KeyWrapper object at
-	0x1010bf6b0>
+	0x1012c14f0>
 	key_wrapper(MyObject(2)) -> <functools.KeyWrapper object at
-	0x1010bf670>
+	0x1012c14d0>
 	key_wrapper(MyObject(1)) -> <functools.KeyWrapper object at
-	0x1010bf630>
+	0x1012c1370>
 	comparing MyObject(4) and MyObject(5)
 	comparing MyObject(3) and MyObject(4)
 	comparing MyObject(2) and MyObject(3)
@@ -446,7 +446,7 @@ are run again the values must be recomputed.
 .. cog.out(run_script(cog.inFile, 'functools_lru_cache.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 functools_lru_cache.py
 	
@@ -493,7 +493,7 @@ dropped and replaced with the new result.
 .. cog.out(run_script(cog.inFile, 'functools_lru_cache_expire.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 functools_lru_cache_expire.py
 	
@@ -531,7 +531,7 @@ the function, a :class:`TypeError` is raised.
 .. cog.out(run_script(cog.inFile, 'functools_lru_cache_arguments.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 functools_lru_cache_arguments.py
 	
@@ -559,7 +559,7 @@ This example adds up the numbers in the input sequence.
 .. cog.out(run_script(cog.inFile, 'functools_reduce.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 functools_reduce.py
 	
@@ -586,7 +586,7 @@ value computed by :func:`reduce`.
 .. cog.out(run_script(cog.inFile, 'functools_reduce_initializer.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 functools_reduce_initializer.py
 	
@@ -617,7 +617,7 @@ catch the :class:`TypeError` rather than passing an initializer.
 .. cog.out(run_script(cog.inFile, 'functools_reduce_short_sequences.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 functools_reduce_short_sequences.py
 	
@@ -656,7 +656,7 @@ the :class:`float` case in this example.
 .. cog.out(run_script(cog.inFile, 'functools_singledispatch.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 functools_singledispatch.py
 	
@@ -685,7 +685,7 @@ class hierarchy.
 .. cog.out(run_script(cog.inFile, 'functools_singledispatch_mro.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 functools_singledispatch_mro.py
 	

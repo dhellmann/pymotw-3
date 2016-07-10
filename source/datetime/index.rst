@@ -30,7 +30,7 @@ the default of ``0`` is unlikely to be correct.
 .. cog.out(run_script(cog.inFile, 'datetime_time.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 datetime_time.py
 	
@@ -57,7 +57,7 @@ range of times in a single day.
 .. cog.out(run_script(cog.inFile, 'datetime_time_minmax.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 datetime_time_minmax.py
 	
@@ -79,7 +79,7 @@ Floating point values for microseconds cause a :class:`TypeError`.
 .. cog.out(run_script(cog.inFile, 'datetime_time_resolution.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 datetime_time_resolution.py
 	
@@ -109,25 +109,25 @@ This example prints the current date in several formats:
 .. cog.out(run_script(cog.inFile, 'datetime_date.py', break_lines_at=69))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 datetime_date.py
 	
-	2015-12-24
-	ctime  : Thu Dec 24 00:00:00 2015
-	tuple  : tm_year  = 2015
-	         tm_mon   = 12
-	         tm_mday  = 24
+	2016-07-10
+	ctime  : Sun Jul 10 00:00:00 2016
+	tuple  : tm_year  = 2016
+	         tm_mon   = 7
+	         tm_mday  = 10
 	         tm_hour  = 0
 	         tm_min   = 0
 	         tm_sec   = 0
-	         tm_wday  = 3
-	         tm_yday  = 358
+	         tm_wday  = 6
+	         tm_yday  = 192
 	         tm_isdst = -1
-	ordinal: 735956
-	Year   : 2015
-	Mon    : 12
-	Day    : 24
+	ordinal: 736155
+	Year   : 2016
+	Mon    : 7
+	Day    : 10
 
 .. {{{end}}}
 
@@ -147,14 +147,14 @@ This example illustrates the different value types used by
 .. cog.out(run_script(cog.inFile, 'datetime_date_fromordinal.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 datetime_date_fromordinal.py
 	
 	o               : 733114
 	fromordinal(o)  : 2008-03-13
-	t               : 1450968483.121123
-	fromtimestamp(t): 2015-12-24
+	t               : 1468161894.788508
+	fromtimestamp(t): 2016-07-10
 
 .. {{{end}}}
 
@@ -171,7 +171,7 @@ The resolution for dates is whole days.
 .. cog.out(run_script(cog.inFile, 'datetime_date_minmax.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 datetime_date_minmax.py
 	
@@ -194,7 +194,7 @@ This example changes the year, leaving the day and month unmodified.
 .. cog.out(run_script(cog.inFile, 'datetime_date_replace.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 datetime_date_replace.py
 	
@@ -224,7 +224,7 @@ days, seconds, and microseconds.
 .. cog.out(run_script(cog.inFile, 'datetime_timedelta.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 datetime_timedelta.py
 	
@@ -252,7 +252,7 @@ durations.
 .. cog.out(run_script(cog.inFile, 'datetime_timedelta_total_seconds.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 datetime_timedelta_total_seconds.py
 	
@@ -283,14 +283,14 @@ produce timedeltas (including a negative delta value).
 .. cog.out(run_script(cog.inFile, 'datetime_date_math.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 datetime_date_math.py
 	
-	Today    : 2015-12-24
+	Today    : 2016-07-10
 	One day  : 1 day, 0:00:00
-	Yesterday: 2015-12-23
-	Tomorrow : 2015-12-25
+	Yesterday: 2016-07-09
+	Tomorrow : 2016-07-11
 	
 	tomorrow - yesterday: 2 days, 0:00:00
 	yesterday - tomorrow: -2 days, 0:00:00
@@ -314,7 +314,7 @@ a floating point number.
 .. cog.out(run_script(cog.inFile, 'datetime_timedelta_math.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 datetime_timedelta_math.py
 	
@@ -342,7 +342,7 @@ All comparison operators are supported.
 .. cog.out(run_script(cog.inFile, 'datetime_comparing.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 datetime_comparing.py
 	
@@ -351,8 +351,8 @@ All comparison operators are supported.
 	  t2: 13:05:00
 	  t1 < t2: True
 	Dates:
-	  d1: 2015-12-24
-	  d2: 2015-12-25
+	  d1: 2016-07-10
+	  d2: 2016-07-11
 	  d1 > d2: False
 
 .. {{{end}}}
@@ -376,20 +376,20 @@ attributes of both a :class:`date` and a :class:`time` object.
 .. cog.out(run_script(cog.inFile, 'datetime_datetime.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 datetime_datetime.py
 	
-	Now    : 2015-12-24 09:48:03.539040
-	Today  : 2015-12-24 09:48:03.539080
-	UTC Now: 2015-12-24 14:48:03.539123
-	year           : 2015
-	month          : 12
-	day            : 24
-	hour           : 9
-	minute         : 48
-	second         : 3
-	microsecond    : 542174
+	Now    : 2016-07-10 10:44:55.215677
+	Today  : 2016-07-10 10:44:55.215719
+	UTC Now: 2016-07-10 14:44:55.215732
+	year           : 2016
+	month          : 7
+	day            : 10
+	hour           : 10
+	minute         : 44
+	second         : 55
+	microsecond    : 216198
 
 .. {{{end}}}
 
@@ -408,13 +408,13 @@ class methods for creating new instances. It also includes
 .. cog.out(run_script(cog.inFile, 'datetime_datetime_combine.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 datetime_datetime_combine.py
 	
 	t : 01:02:03
-	d : 2015-12-24
-	dt: 2015-12-24 01:02:03
+	d : 2016-07-10
+	dt: 2016-07-10 01:02:03
 
 .. {{{end}}}
 
@@ -436,13 +436,13 @@ Use :func:`datetime.strptime` to convert formatted strings to
 .. cog.out(run_script(cog.inFile, 'datetime_datetime_strptime.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 datetime_datetime_strptime.py
 	
-	ISO     : 2015-12-24 09:48:03.639545
-	strftime: Thu Dec 24 09:48:03 2015
-	strptime: Thu Dec 24 09:48:03 2015
+	ISO     : 2016-07-10 10:44:55.325247
+	strftime: Sun Jul 10 10:44:55 2016
+	strptime: Sun Jul 10 10:44:55 2016
 
 .. {{{end}}}
 
@@ -462,12 +462,12 @@ output.
 .. cog.out(run_script(cog.inFile, 'datetime_format.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 datetime_format.py
 	
-	ISO     : 2015-12-24 09:48:03.699078
-	format(): Thu Dec 24 09:48:03 2015
+	ISO     : 2016-07-10 10:44:55.389239
+	format(): Sun Jul 10 10:44:55 2016
 
 .. {{{end}}}
 
@@ -576,14 +576,14 @@ line shows the value in the system timezone, acquired by calling
 .. cog.out(run_script(cog.inFile, 'datetime_timezone.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 datetime_timezone.py
 	
-	UTC-06:00 : 2015-12-24 08:48:03.791420-06:00
-	UTC+00:00 : 2015-12-24 14:48:03.791420+00:00
-	UTC+06:00 : 2015-12-24 20:48:03.791420+06:00
-	EST       : 2015-12-24 09:48:03.791420-05:00
+	UTC-06:00 : 2016-07-10 08:44:55.495995-06:00
+	UTC+00:00 : 2016-07-10 14:44:55.495995+00:00
+	UTC+06:00 : 2016-07-10 20:44:55.495995+06:00
+	EDT       : 2016-07-10 10:44:55.495995-04:00
 
 .. {{{end}}}
 

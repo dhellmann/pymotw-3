@@ -42,12 +42,12 @@ an interval of 10 milliseconds.
 .. cog.out(run_script(cog.inFile, 'sys_switchinterval.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_switchinterval.py
 	
 	interval = 0.001
-	T1 T0 T2 T1 T2 T0 T1 T0 T2 T0 T2 T1 T0 T2 T1 
+	T0 T1 T2 T1 T0 T2 T0 T1 T2 T1 T0 T2 T1 T0 T2 
 	
 	interval = 0.100
 	T0 T0 T0 T0 T0 T1 T1 T1 T1 T1 T2 T2 T2 T2 T2 
@@ -86,7 +86,7 @@ cannot because **Thread-2** already has it.
 .. cog.out(run_script(cog.inFile, 'sys_current_frames.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_current_frames.py
 	

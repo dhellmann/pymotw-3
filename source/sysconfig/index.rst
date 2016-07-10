@@ -36,7 +36,7 @@ filename extensions, and version details.
 ..                    line_cleanups=[], line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sysconfig_get_config_vars.py
 	
@@ -54,8 +54,8 @@ filename extensions, and version details.
 	  py_version_nodot=35
 	
 	 Base directories:
-	  base=/Users/dhellmann/Envs/pymotw35
-	  platbase=/Users/dhellmann/Envs/pymotw35
+	  base=/Users/dhellmann/Envs/pymotw35-tmp
+	  platbase=/Users/dhellmann/Envs/pymotw35-tmp
 	  userbase=/Users/dhellmann/Library/Python/3.5
 	  srcdir=/Library/Frameworks/Python.framework/Versions/3.5/lib/p
 	ython3.5/config-3.5m
@@ -84,13 +84,13 @@ where modules can be found on the current system.
 ..                    line_cleanups=[]))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sysconfig_get_config_vars_by_name.py
 	
 	Base directories:
-	   /Users/dhellmann/Envs/pymotw35
-	   /Users/dhellmann/Envs/pymotw35
+	   /Users/dhellmann/Envs/pymotw35-tmp
+	   /Users/dhellmann/Envs/pymotw35-tmp
 	   /Users/dhellmann/Library/Python/3.5
 
 .. {{{end}}}
@@ -109,7 +109,7 @@ instead of raising an exception.
 .. cog.out(run_script(cog.inFile, 'sysconfig_get_config_var.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sysconfig_get_config_var.py
 	
@@ -150,7 +150,7 @@ Otherwise the default is the operating system name, as defined by
 .. cog.out(run_script(cog.inFile, 'sysconfig_get_scheme_names.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sysconfig_get_scheme_names.py
 	
@@ -196,7 +196,7 @@ and their meaning.
 .. cog.out(run_script(cog.inFile, 'sysconfig_get_path_names.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sysconfig_get_path_names.py
 	
@@ -225,13 +225,13 @@ user-specific values for ``posix_user``.
 .. cog.out(run_script(cog.inFile, 'sysconfig_get_paths.py', line_cleanups=[]))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sysconfig_get_paths.py
 	
 	posix_prefix
 	============
-	prefix = /Users/dhellmann/Envs/pymotw35
+	prefix = /Users/dhellmann/Envs/pymotw35-tmp
 	
 	data
 	  .
@@ -287,14 +287,14 @@ because it does not recompute all of the paths each time.
 .. cog.out(run_script(cog.inFile, 'sysconfig_get_path.py', line_cleanups=[]))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sysconfig_get_path.py
 	
 	posix_prefix
 	============
-	purelib = /Users/dhellmann/Envs/pymotw35/lib/python3.5/site-pack
-	ages
+	purelib = /Users/dhellmann/Envs/pymotw35-tmp/lib/python3.5/site-
+	packages
 	
 	posix_user
 	==========
@@ -326,7 +326,7 @@ number included in the platform string.
 .. cog.out(run_script(cog.inFile, 'sysconfig_get_platform.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sysconfig_get_platform.py
 	
@@ -349,7 +349,7 @@ building a version-specific path.
 .. cog.out(run_script(cog.inFile, 'sysconfig_get_python_version.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sysconfig_get_python_version.py
 	

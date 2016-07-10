@@ -32,15 +32,15 @@ numbers.
 .. cog.out(run_script(cog.inFile, 'random_random.py', include_prefix=False))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 random_random.py
 	
-	0.546 0.311 0.568 0.277 0.331 
+	0.859 0.297 0.554 0.985 0.452 
 
 	$ python3 random_random.py
 	
-	0.225 0.234 0.859 0.428 0.278 
+	0.797 0.658 0.170 0.297 0.593 
 
 .. {{{end}}}
 
@@ -59,11 +59,11 @@ min) * random()``.
 .. cog.out(run_script(cog.inFile, 'random_uniform.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 random_uniform.py
 	
-	66.034 32.169 15.767 68.444 22.166 
+	12.428 93.766 95.359 39.649 88.983 
 
 .. {{{end}}}
 
@@ -97,7 +97,7 @@ is available.  Otherwise, the current time is used.
 .. cog.out(run_script(cog.inFile, 'random_seed.py', include_prefix=False))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 random_seed.py
 	
@@ -138,7 +138,7 @@ causes the generator to produce the same values again.
 .. cog.out(run_script(cog.inFile, 'random_state.py', include_prefix=False))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 random_state.py
 	
@@ -178,12 +178,12 @@ first value should be less than the second.
 .. cog.out(run_script(cog.inFile, 'random_randint.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 random_randint.py
 	
-	[1, 100]: 45 2 46 
-	[-5, 5]: -5 0 0 
+	[1, 100]: 98 75 34 
+	[-5, 5]: 4 0 5 
 
 .. {{{end}}}
 
@@ -203,11 +203,11 @@ range is not actually constructed.
 .. cog.out(run_script(cog.inFile, 'random_randrange.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 random_randrange.py
 	
-	30 5 80 
+	15 20 85 
 
 .. {{{end}}}
 
@@ -235,12 +235,12 @@ outcome names as keys.
 .. cog.out(run_script(cog.inFile, 'random_choice.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 random_choice.py
 	
-	Heads: 5004
-	Tails: 4996
+	Heads: 5091
+	Tails: 4909
 
 .. {{{end}}}
 
@@ -267,7 +267,7 @@ cannot be dealt again.
 .. cog.out(run_script(cog.inFile, 'random_shuffle.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 random_shuffle.py
 	
@@ -278,21 +278,21 @@ cannot be dealt again.
 	 J♠  Q♥  Q♦  Q♣  Q♠  K♥  K♦  K♣  K♠  A♥  A♦  A♣  A♠ 
 	
 	Shuffled deck:
-	 A♣  6♣  9♠  9♥  7♣ 10♦  5♣  Q♣  5♥  2♣  J♣  3♥ 10♠ 
-	 8♥  8♣  7♠  5♦  J♦  6♦  3♣  J♥  8♦  A♦  2♠  7♥  9♦ 
-	 5♠  2♥  Q♠  Q♥  4♣  2♦  6♠  7♦ 10♣  4♦  3♠  6♥  3♦ 
-	 4♠  J♠  K♠  8♠  9♣  K♥  K♣  4♥  K♦  A♠ 10♥  Q♦  A♥ 
+	 K♦  5♦  6♦  9♦ 10♦  4♦  4♣  K♠  A♦  Q♠ 10♥  K♥ 10♣ 
+	 A♥  7♥  8♦  9♥  7♦  A♠  6♥  K♣  3♥  2♣  4♠  5♣  J♥ 
+	 J♦  3♠  4♥  7♣  5♥  Q♦  J♠  6♠  2♠  3♣  8♣  7♠  8♥ 
+	 5♠  3♦ 10♠  A♣  Q♣  2♦  Q♥  J♣  8♠  9♠  6♣  9♣  2♥ 
 	
 	Hands:
-	1:  A♥  K♦  9♣  4♠  4♦ 
-	2:  Q♦  4♥  8♠  3♦ 10♣ 
-	3: 10♥  K♣  K♠  6♥  7♦ 
-	4:  A♠  K♥  J♠  3♠  6♠ 
+	1:  2♥  8♠  Q♣  5♠  3♣ 
+	2:  9♣  J♣  A♣  8♥  2♠ 
+	3:  6♣  Q♥ 10♠  7♠  6♠ 
+	4:  9♠  2♦  3♦  8♣  J♠ 
 	
 	Remaining deck:
-	 A♣  6♣  9♠  9♥  7♣ 10♦  5♣  Q♣  5♥  2♣  J♣  3♥ 10♠ 
-	 8♥  8♣  7♠  5♦  J♦  6♦  3♣  J♥  8♦  A♦  2♠  7♥  9♦ 
-	 5♠  2♥  Q♠  Q♥  4♣  2♦ 
+	 K♦  5♦  6♦  9♦ 10♦  4♦  4♣  K♠  A♦  Q♠ 10♥  K♥ 10♣ 
+	 A♥  7♥  8♦  9♥  7♦  A♠  6♥  K♣  3♥  2♣  4♠  5♣  J♥ 
+	 J♦  3♠  4♥  7♣  5♥  Q♦ 
 
 .. {{{end}}}
 
@@ -317,23 +317,23 @@ efficiently as possible.
 .. cog.out(run_script(cog.inFile, 'random_sample.py', include_prefix=False))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 random_sample.py
 	
-	unfulfillment
-	outsharpen
-	roundabout
-	pickee
-	Wisconsinite
+	streamlet
+	impestation
+	violaquercitrin
+	mycetoid
+	plethoretical
 
 	$ python3 random_sample.py
 	
-	precontemporary
-	friend
-	preinterfere
-	Himantopus
-	milliary
+	nonseditious
+	empyemic
+	ultrasonic
+	Kyurinish
+	amphide
 
 .. {{{end}}}
 
@@ -361,21 +361,21 @@ current time, and therefore produce the same values.
 .. cog.out(run_script(cog.inFile, 'random_random_class.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 random_random_class.py
 	
 	Default initializiation:
 	
-	0.872  0.028
-	0.024  0.280
-	0.810  0.233
+	0.862  0.390
+	0.833  0.624
+	0.252  0.080
 	
 	Same seed:
 	
-	0.357  0.357
-	0.811  0.811
-	0.628  0.628
+	0.466  0.466
+	0.682  0.682
+	0.407  0.407
 
 .. {{{end}}}
 
@@ -402,21 +402,21 @@ all).
 .. cog.out(run_script(cog.inFile, 'random_system_random.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 random_system_random.py
 	
 	Default initializiation:
 	
-	0.585  0.307
-	0.467  0.498
-	0.301  0.815
+	0.110  0.481
+	0.624  0.350
+	0.378  0.056
 	
 	Same seed:
 	
-	0.595  0.300
-	0.257  0.657
-	0.643  0.454
+	0.634  0.731
+	0.893  0.843
+	0.065  0.177
 
 .. {{{end}}}
 

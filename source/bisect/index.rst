@@ -30,7 +30,7 @@ list. The remainder of each line is the current sorted list.
 .. cog.out(run_script(cog.inFile, 'bisect_example.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 bisect_example.py
 	
@@ -80,7 +80,7 @@ insert positions are different for the duplicate values.
 .. cog.out(run_script(cog.inFile, 'bisect_example2.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 bisect_example2.py
 	

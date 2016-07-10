@@ -32,7 +32,7 @@ framework version of Python installed on a Mac OS X system.
 
 .. DO NOT COG because virtualenv gives misleading output
 
-::
+.. code-block:: none
 
     $ python3 site_import_path.py
 
@@ -72,7 +72,7 @@ platform-specific suffix values described earlier.
 .. cog.out(run_script(cog.inFile, 'site_user_base.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 site_user_base.py
 	
@@ -90,7 +90,7 @@ non-Windows).
 .. cog.out(run_script(cog.inFile, 'PYTHONUSERBASE=/tmp/$USER python3 site_user_base.py', interpreter=None))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ PYTHONUSERBASE=/tmp/$USER python3 site_user_base.py
 	
@@ -110,12 +110,12 @@ it).  An application can check the setting by examining
    :start-after: #end_pymotw_header
 
 The user directory can also be explicitly disabled on the command line
-with :option:`-s`.
+with ``-s``.
 
 .. CANNOT COG THIS because virtualenv forces the flag off if
 .. no-global-site-packages.txt exists
 
-::
+.. code-block:: none
 
     $ python3 site_enable_user_site.py
     
@@ -172,7 +172,7 @@ issue.
 .. cog.out(run_script(cog.inFile, 'site_addsitedir.py with_modules'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 site_addsitedir.py with_modules
 	
@@ -203,7 +203,7 @@ though the module is not in that directory because both ``with_pth`` and
 .. cog.out(run_script(cog.inFile, 'site_addsitedir.py with_pth'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 site_addsitedir.py with_pth
 	
@@ -226,7 +226,7 @@ processed in alphabetical order.
 .. cog.out(run_script(cog.inFile, 'cat multiple_pth/b.pth', interpreter=None, include_prefix=False))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ ls -F multiple_pth
 	
@@ -252,7 +252,7 @@ because ``a.pth`` is read before ``b.pth``.
 .. cog.out(run_script(cog.inFile, 'site_addsitedir.py multiple_pth'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 site_addsitedir.py multiple_pth
 	
@@ -309,7 +309,7 @@ explicitly to ensure the module is picked up.
 .. cog.out(run_script(cog.inFile, 'PYTHONPATH=with_sitecustomize python3 with_sitecustomize/site_sitecustomize.py', interpreter=None))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ PYTHONPATH=with_sitecustomize python3 with_sitecustomize/sit\
 	e_sitecustomize.py
@@ -360,7 +360,7 @@ explicitly to ensure the module is picked up.
 .. CANNOT COG because virtualenv disables user-site which in turns
 .. disables usercustomize.
 
-::
+.. code-block:: none
 
     $ PYTHONPATH=with_usercustomize python3 with_usercustomize/site\
     _usercustomize.py
@@ -380,7 +380,7 @@ elsewhere.
 .. CANNOT COG because virtualenv disables user-site which in turns
 .. disables usercustomize.
 
-::
+.. code-block:: none
 
 	$ PYTHONPATH=with_usercustomize python3 -s with_usercustomize/s\
 	ite_usercustomize.py
@@ -396,21 +396,21 @@ Disabling the site Module
 
 To maintain backwards-compatibility with versions of Python from
 before the automatic import was added, the interpreter accepts an
-:option:`-S` option.
+``-S`` option.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '-S site_import_path.py', line_cleanups=[]))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -S site_import_path.py
 	
 	Path prefixes:
-	   /Users/dhellmann/Envs/pymotw35/bin/..
-	   /Users/dhellmann/Envs/pymotw35/bin/..
+	   /Users/dhellmann/Envs/pymotw35-tmp/bin/..
+	   /Users/dhellmann/Envs/pymotw35-tmp/bin/..
 	
-	/Users/dhellmann/Envs/pymotw35/bin/..
+	/Users/dhellmann/Envs/pymotw35-tmp/bin/..
 	
 	  lib/python3.5/site-packages
 	   exists : True

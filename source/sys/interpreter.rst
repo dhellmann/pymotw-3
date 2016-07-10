@@ -34,7 +34,7 @@ sample program.
 .. cog.out(run_script(cog.inFile, 'sys_version_values.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_version_values.py
 	
@@ -64,7 +64,7 @@ other operating systems there is a hard-coded table of values.
 .. cog.out(run_script(cog.inFile, 'sys_platform.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_platform.py
 	
@@ -99,7 +99,7 @@ other interpreters.
 .. cog.out(run_script(cog.inFile, 'sys_implementation.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_implementation.py
 	
@@ -155,7 +155,7 @@ map to the flags settings.
 .. cog.out(run_script(cog.inFile, '-S -E -b sys_flags.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 -S -E -b sys_flags.py
 	
@@ -194,7 +194,7 @@ about encodings in the application code is reduced.
 .. cog.out(run_script(cog.inFile, 'sys_unicode.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_unicode.py
 	
@@ -212,7 +212,7 @@ the default input level (:data:`ps1`) and the "continuation" of a
 multi-line statement (:data:`ps2`).  The values are only used by the
 interactive interpreter.
 
-::
+.. code-block:: none
 
     >>> import sys
     >>> sys.ps1
@@ -223,7 +223,7 @@ interactive interpreter.
 
 Either or both prompt can be changed to a different string.
 
-::
+.. code-block:: none
 
     >>> sys.ps1 = '::: '
     ::: sys.ps2 = '~~~ '
@@ -245,7 +245,7 @@ Alternately, any object that can be converted to a string (via
 The :class:`LineCounter` keeps track of how many times it has been
 used, so the number in the prompt increases each time.
 
-::
+.. code-block:: none
 
     $ python
     Python 3.4.2 (v3.4.2:ab2c023a9432, Oct  5 2014, 20:42:22)
@@ -274,7 +274,7 @@ The default value (saved in :data:`sys.__displayhook__`) prints the
 result to stdout and saves it in :data:`_` for easy
 reference later.
 
-::
+.. code-block:: none
 
     $ python3
     Python 3.4.2 (v3.4.2:ab2c023a9432, Oct  5 2014, 20:42:22)
@@ -331,7 +331,7 @@ executables and installed modules, respectively.
 This example output was produced on a Mac running a framework build
 installed from python.org.
 
-::
+.. code-block:: none
 
     $ python3 sys_locations.py
 	

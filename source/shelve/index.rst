@@ -39,7 +39,7 @@ Running both sample scripts produces:
 .. cog.out(run_script(cog.inFile, 'shelve_existing.py', include_prefix=False))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 shelve_create.py
 	$ python3 shelve_existing.py
@@ -66,7 +66,7 @@ database module selected by :mod:`dbm` when the database was created.
 .. cog.out(run_script(cog.inFile, 'shelve_readonly.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 shelve_readonly.py
 	
@@ -95,7 +95,7 @@ shelf is re-opened, the changes have not been preserved.
 .. cog.out(run_script(cog.inFile, 'shelve_withoutwriteback.py', include_prefix=False))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 shelve_create.py
 	$ python3 shelve_withoutwriteback.py
@@ -129,7 +129,7 @@ more than it writes, writeback will impact performance unnecessarily.
 .. cog.out(run_script(cog.inFile, 'shelve_writeback.py', include_prefix=False))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 shelve_create.py
 	$ python3 shelve_writeback.py

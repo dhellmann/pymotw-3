@@ -32,7 +32,7 @@ interpreter, and is not passed to the program being run.
 .. cog.out(run_script(cog.inFile, '-u sys_argv.py', include_prefix=False))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_argv.py
 	
@@ -74,7 +74,7 @@ intended for use with warning or error messages.
 .. cog.out(run_script(cog.inFile, interpreter='cat sys_stdio.py | python3 -u', script_name='sys_stdio.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ cat sys_stdio.py | python3 -u sys_stdio.py
 	
@@ -122,7 +122,7 @@ A nonzero value means the program exited with an error.
 .. cog.out(run_script(cog.inFile, 'sys_exit.py 1 ; echo "Exited $?"', include_prefix=False, ignore_error=True))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 sys_exit.py 0 ; echo "Exited $?"
 	

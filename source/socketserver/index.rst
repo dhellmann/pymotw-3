@@ -127,7 +127,7 @@ Running the program produces the following output.
 .. cog.out(run_script(cog.inFile, 'socketserver_echo.py', break_lines_at=68))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 socketserver_echo.py
 	
@@ -135,30 +135,30 @@ Running the program produces the following output.
 	EchoServer: server_activate
 	EchoServer: waiting for request
 	EchoServer: Handling requests, press <Ctrl-C> to quit
-	client: Server on 127.0.0.1:53917
+	client: Server on 127.0.0.1:55484
 	client: creating socket
 	client: connecting to server
 	client: sending data: b'Hello, world'
-	client: waiting for response
 	EchoServer: verify_request(<socket.socket fd=7, family=AddressFamily
 	.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 
-	53917), raddr=('127.0.0.1', 53918)>, ('127.0.0.1', 53918))
+	55484), raddr=('127.0.0.1', 55485)>, ('127.0.0.1', 55485))
 	EchoServer: process_request(<socket.socket fd=7, family=AddressFamil
 	y.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1',
-	 53917), raddr=('127.0.0.1', 53918)>, ('127.0.0.1', 53918))
+	 55484), raddr=('127.0.0.1', 55485)>, ('127.0.0.1', 55485))
 	EchoServer: finish_request(<socket.socket fd=7, family=AddressFamily
 	.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 
-	53917), raddr=('127.0.0.1', 53918)>, ('127.0.0.1', 53918))
+	55484), raddr=('127.0.0.1', 55485)>, ('127.0.0.1', 55485))
 	EchoRequestHandler: __init__
 	EchoRequestHandler: setup
 	EchoRequestHandler: handle
+	client: waiting for response
 	EchoRequestHandler: recv()->"b'Hello, world'"
 	EchoRequestHandler: finish
 	client: response from server: b'Hello, world'
 	EchoServer: shutdown()
 	EchoServer: close_request(<socket.socket fd=7, family=AddressFamily.
 	AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5
-	3917), raddr=('127.0.0.1', 53918)>)
+	5484), raddr=('127.0.0.1', 55485)>)
 	client: closing socket
 	client: done
 
@@ -186,7 +186,7 @@ In this case, no special server class is required since the
 .. cog.out(run_script(cog.inFile, 'socketserver_echo_simple.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 socketserver_echo_simple.py
 	
@@ -217,7 +217,7 @@ thread where the request is handled.
 .. cog.out(run_script(cog.inFile, 'socketserver_threaded.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 socketserver_threaded.py
 	
@@ -240,13 +240,13 @@ from the server:
 .. cog.out(run_script(cog.inFile, 'socketserver_forking.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 socketserver_forking.py
 	
-	Server loop running in process: 69953
+	Server loop running in process: 22599
 	Sending : b'Hello, world'
-	Received: b'69954: Hello, world'
+	Received: b'22600: Hello, world'
 
 .. {{{end}}}
 

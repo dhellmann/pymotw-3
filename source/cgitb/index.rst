@@ -31,7 +31,7 @@ This sample program has a subtle error in :func:`func2()`.
 .. cog.out(run_script(cog.inFile, 'cgitb_basic_traceback.py', ignore_error=True))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 cgitb_basic_traceback.py
 	
@@ -74,7 +74,7 @@ the line where the actual exception is generated.
 .. cog.out(run_script(cog.inFile, 'cgitb_local_vars.py', ignore_error=True,
 ..                    line_break_mode='fill'))
 
-::
+.. code-block:: none
 
 	$ python3 cgitb_local_vars.py
 	
@@ -220,7 +220,7 @@ error-prone code.
 .. cog.out(run_script(cog.inFile, 'cgitb_with_classes.py',
 ..                    ignore_error=True, line_break_mode='fill'))
 
-::
+.. code-block:: none
 
 	$ python3 cgitb_with_classes.py
 	
@@ -352,7 +352,7 @@ standard *message* and *args* values.
 .. cog.out(run_script(cog.inFile, 'cgitb_exception_properties.py', 
 ..                    ignore_error=True, line_break_mode='fill'))
 
-::
+.. code-block:: none
 
 	$ python3 cgitb_exception_properties.py
 	
@@ -468,7 +468,7 @@ describing where to go to find the error log.
 ..                    ignore_error=True, line_break_mode='fill'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 cgitb_log_exception.py
 	

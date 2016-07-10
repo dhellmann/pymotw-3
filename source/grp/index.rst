@@ -43,11 +43,11 @@ sorted before printing the report.
 .. cog.out(run_script(cog.inFile, 'grp_getgrall.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 grp_getgrall.py
 	
-	39
+	34
 	Name                            GID         Members            
 	------------------------------- ----------- -------------------
 	accessibility                            90                    
@@ -62,12 +62,9 @@ sorted before printing the report.
 	com.apple.access_screensharing          398                    
 	com.apple.access_sessionkey             397                    
 	com.apple.access_ssh                    399                    
-	com.apple.sharepoint.group.1            402 dhellmann          
-	com.apple.sharepoint.group.2            701 dhellmann          
-	com.apple.sharepoint.group.3            702 dhellmann          
+	com.apple.sharepoint.group.1            701 dhellmann          
 	consoleusers                             53                    
 	daemon                                    1 root               
-	dhellmann                               501                    
 	dialer                                   68                    
 	everyone                                 12                    
 	group                                    16                    
@@ -84,8 +81,6 @@ sorted before printing the report.
 	owner                                    10                    
 	procmod                                   9 root               
 	procview                                  8 root               
-	racemi                                  500 dhellmann          
-	smmsp                                   105                    
 	staff                                    20 root               
 	sys                                       3 root               
 	tty                                       4 root               
@@ -110,13 +105,12 @@ The set of unique group names is sorted before they are printed.
 .. cog.out(run_script(cog.inFile, 'grp_groups_for_user.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 grp_groups_for_user.py
 	
-	dhellmann belongs to: _lpadmin, admin, com.apple.access_screensh
-	aring, com.apple.access_ssh, com.apple.sharepoint.group.1, com.a
-	pple.sharepoint.group.2, com.apple.sharepoint.group.3, racemi
+	dhellmann belongs to: _appserveradm, _appserverusr, _lpadmin, ad
+	min, com.apple.sharepoint.group.1
 
 .. {{{end}}}
 
@@ -136,7 +130,7 @@ The ``admin`` group has two members:
 .. cog.out(run_script(cog.inFile, 'grp_getgrnam.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 grp_getgrnam.py
 	
@@ -161,11 +155,11 @@ To identify the group running the current process, combine
 .. cog.out(run_script(cog.inFile, 'grp_getgrgid_process.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 grp_getgrgid_process.py
 	
-	Currently running with GID=501 name=dhellmann
+	Currently running with GID=20 name=staff
 
 .. {{{end}}}
 
@@ -183,11 +177,11 @@ file or directory.
 .. cog.out(run_script(cog.inFile, 'grp_getgrgid_fileowner.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 grp_getgrgid_fileowner.py
 	
-	grp_getgrgid_fileowner.py is owned by dhellmann (501)
+	grp_getgrgid_fileowner.py is owned by staff (20)
 
 .. {{{end}}}
 

@@ -35,7 +35,7 @@ application.
 .. cog.out(run_script(cog.inFile, 'asyncio_debug.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_debug.py
 	
@@ -57,7 +57,7 @@ exits.
 .. cog.out(run_script(cog.inFile, 'asyncio_debug.py -v', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_debug.py -v
 	

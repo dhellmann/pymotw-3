@@ -39,7 +39,7 @@ respectively.
 .. cog.out(run_script(cog.inFile, 'hashlib_algorithms.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 hashlib_algorithms.py
 	
@@ -86,7 +86,7 @@ clearly. If a binary digest value is acceptable, use :func:`digest()`.
 .. cog.out(run_script(cog.inFile, 'hashlib_md5.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 hashlib_md5.py
 	
@@ -110,7 +110,7 @@ changed from MD5 to SHA1.
 .. cog.out(run_script(cog.inFile, 'hashlib_sha1.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 hashlib_sha1.py
 	
@@ -141,7 +141,7 @@ When run with a variety of arguments:
 .. cog.out(run_script(cog.inFile, 'hashlib_new.py md5', include_prefix=False))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 hashlib_new.py sha1
 	
@@ -182,7 +182,7 @@ is read or otherwise produced.
 .. cog.out(run_script(cog.inFile, 'hashlib_update.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 hashlib_update.py
 	

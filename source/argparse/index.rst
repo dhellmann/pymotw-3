@@ -25,7 +25,7 @@ constructor for the parser class (:class:`ArgumentParser`) takes
 several arguments to set up the description used in the help text for
 the program and other global behaviors or settings.
 
-::
+.. code-block:: python3
 
     import argparse
     parser = argparse.ArgumentParser(
@@ -81,7 +81,7 @@ previous example uses two different forms, ``-bval`` and ``-c val``.
 .. cog.out(run_script(cog.inFile, 'argparse_short.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 argparse_short.py
 	
@@ -106,7 +106,7 @@ The results are similar.
 .. cog.out(run_script(cog.inFile, 'argparse_long.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 argparse_long.py
 	
@@ -136,7 +136,7 @@ type, an error is reported.
 ..                    line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 argparse_arguments.py 3 inches
 	
@@ -208,7 +208,7 @@ the same list.
 .. cog.out(run_script(cog.inFile, 'argparse_action.py --version', include_prefix=False))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 argparse_action.py -h
 	
@@ -315,7 +315,7 @@ In the previous example, ``+a`` and ``-a`` are separate arguments, and
 .. cog.out(run_script(cog.inFile, 'argparse_prefix_chars.py --noarg', ignore_error=True, include_prefix=False))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 argparse_prefix_chars.py -h
 	
@@ -378,7 +378,7 @@ configuration file.
 .. cog.out(run_script(cog.inFile, 'argparse_with_shlex.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 argparse_with_shlex.py
 	
@@ -410,7 +410,7 @@ The output produced when processing the file is:
 .. cog.out(run_script(cog.inFile, 'argparse_fromfile_prefix_chars.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 argparse_fromfile_prefix_chars.py
 	
@@ -450,7 +450,7 @@ other purposes.
 ..                    ignore_error=True, include_prefix=False))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 argparse_with_help.py -h
 	
@@ -488,7 +488,7 @@ parser, and :meth:`print_help` prints the full help output.
 .. cog.out(run_script(cog.inFile, 'argparse_custom_help.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 argparse_custom_help.py
 	
@@ -525,7 +525,7 @@ unchanged.
 .. cog.out(run_script(cog.inFile, 'argparse_raw_description_help_formatter.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 argparse_raw_description_help_formatter.py
 	
@@ -557,7 +557,7 @@ The help text for the ``-a`` argument is no longer wrapped neatly.
 .. cog.out(run_script(cog.inFile, 'argparse_raw_text_help_formatter.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 argparse_raw_text_help_formatter.py
 	
@@ -599,7 +599,7 @@ associated with the option is printed.
 .. cog.out(run_script(cog.inFile, 'argparse_metavar_type_help_formatter.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 argparse_metavar_type_help_formatter.py
 	
@@ -654,7 +654,7 @@ And the resulting program takes all three options:
 .. NOT RUNNING
 .. cog.out(run_script(cog.inFile, 'argparse_uses_parent.py -h'))
 
-::
+.. code-block:: none
 
     $ python argparse_uses_parent.py -h
 
@@ -690,7 +690,7 @@ example, the stand-alone option ``-b`` is masked by the alias for
 .. NOT RUNNING
 .. cog.out(run_script(cog.inFile, 'argparse_conflict_handler_resolve.py'))
 
-::
+.. code-block:: none
 
     $ python argparse_conflict_handler_resolve.py
 
@@ -715,7 +715,7 @@ Now both options can be used together.
 .. NOT RUNNING
 .. cog.out(run_script(cog.inFile, 'argparse_conflict_handler_resolve2.py'))
 
-::
+.. code-block:: none
 
     $ python argparse_conflict_handler_resolve2.py
 
@@ -747,7 +747,7 @@ The grouping is reflected in the separate "positional arguments" and
 .. cog.out(run_script(cog.inFile, 'argparse_default_grouping.py -h'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 argparse_default_grouping.py -h
 	
@@ -790,7 +790,7 @@ The help output now shows the authentication options together.
 .. NOT RUNNING
 .. cog.out(run_script(cog.inFile, 'argparse_uses_parent_with_group.py -h'))
 
-::
+.. code-block:: none
 
     $ python argparse_uses_parent_with_group.py -h
 
@@ -829,7 +829,7 @@ the options from the group can be given.
 ..                    line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 argparse_mutually_exclusive.py -h
 	
@@ -881,7 +881,7 @@ specified on the command-line as positional arguments.
 .. cog.out(run_script(cog.inFile, 'argparse_subparsers.py -h'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 argparse_subparsers.py -h
 	
@@ -905,7 +905,7 @@ options for that command.
 .. cog.out(run_script(cog.inFile, 'argparse_subparsers.py create -h'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 argparse_subparsers.py create -h
 	
@@ -929,7 +929,7 @@ command specified.
 .. cog.out(run_script(cog.inFile, 'argparse_subparsers.py delete -r foo'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 argparse_subparsers.py delete -r foo
 	
@@ -984,7 +984,7 @@ accurate syntax diagram as part of the command help text.
 .. cog.out(run_script(cog.inFile, 'argparse_nargs.py --one-or-more with multiple values', include_prefix=False))
 .. cog.out(run_script(cog.inFile, 'argparse_nargs.py --one-or-more', ignore_error=True, include_prefix=False))
 
-::
+.. code-block:: none
 
     $ python argparse_nargs.py -h
 
@@ -1075,7 +1075,7 @@ Any callable that takes a single string argument can be passed as
 ..                    include_prefix=False, line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 argparse_type.py -i 1
 	
@@ -1108,7 +1108,7 @@ where the input file does not exist, must be handled by the caller.
 ..                    line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 argparse_type.py -i a
 	
@@ -1147,7 +1147,7 @@ error is generated and processing stops.
 ..                    line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 argparse_choices.py -h
 	
@@ -1195,7 +1195,7 @@ longer being used.
 ..                    line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 argparse_FileType.py -h
 	
@@ -1258,7 +1258,7 @@ always ``None``.
 .. cog.out(run_script(cog.inFile, 'argparse_custom_action.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 argparse_custom_action.py
 	

@@ -46,11 +46,11 @@ yields control after sending a signal.
 .. cog.out(run_script(cog.inFile, 'asyncio_signal.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 asyncio_signal.py
 	
-	starting send_signals for 97232
+	starting send_signals for 21772
 	sending SIGHUP
 	yielding control
 	signal_handler('SIGHUP')

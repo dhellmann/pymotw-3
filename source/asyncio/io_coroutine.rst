@@ -153,7 +153,7 @@ Output
 Running the server in one window and the client in another produces
 the following output.
 
-::
+.. code-block:: none
 
     $ python3 asyncio_echo_client_coroutine.py
     asyncio: Using selector: KqueueSelector
@@ -195,7 +195,7 @@ echoes that back to the client. These results vary in subsequent runs,
 based on how busy the network is and whether the socket is flushed
 before all of the data is prepared.
 
-::
+.. code-block:: none
 
     $ python asyncio_echo_server_coroutine.py
     asyncio: Using selector: KqueueSelector

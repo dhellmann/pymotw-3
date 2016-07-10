@@ -33,7 +33,7 @@ source file and stop execution on the first statement it finds.  In
 this case, it stops before evaluating the definition of the class
 :class:`MyObj` on line 8.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_script.py 
 
@@ -57,7 +57,7 @@ more iteratively without the save/run/repeat cycle needed when
 creating standalone scripts.  To run the debugger from within an
 interactive interpreter, use :func:`run` or :func:`runeval`.
 
-::
+.. code-block:: none
 
     $ python3
 
@@ -90,7 +90,7 @@ the debugger from inside the program using :func:`set_trace`.
 Line 17 of the sample script triggers the debugger at that point in
 execution, pausing it on line 18.
 
-::
+.. code-block:: none
 
     $ python3 ./pdb_set_trace.py 
 
@@ -118,7 +118,7 @@ Here the incorrect attribute name on line 14 triggers an
 stop. :func:`pm` looks for the active traceback and starts the
 debugger at the point in the call stack where the exception occurred.
 
-::
+.. code-block:: none
 
     $ python3
     Python 3.5.1 (v3.5.1:37a07cee5969, Dec  5 2015, 21:12:44)
@@ -156,7 +156,7 @@ At any point while the debugger is running use :command:`where`
 executed and where on the call stack the program is.  In this case,
 the module ``pdb_set_trace.py`` line 18 in the :func:`go` method.
 
-::
+.. code-block:: none
 
     $ python3 pdb_set_trace.py
     > .../pdb_set_trace.py(18)go()
@@ -171,7 +171,7 @@ the module ``pdb_set_trace.py`` line 18 in the :func:`go` method.
 To add more context around the current location, use :command:`list`
 (:command:`l`).
 
-::
+.. code-block:: none
 
     (Pdb) l
      13          self.count = num_loops
@@ -191,7 +191,7 @@ The default is to list 11 lines around the current line (five before
 and five after).  Using :command:`list` with a single numerical
 argument lists 11 lines around that line instead of the current line.
 
-::
+.. code-block:: none
 
     (Pdb) list 14
       9
@@ -209,7 +209,7 @@ argument lists 11 lines around that line instead of the current line.
 If :command:`list` receives two arguments, it interprets them as the
 first and last lines to include in its output.
 
-::
+.. code-block:: none
 
     (Pdb) list 7, 19
       7  import pdb
@@ -232,7 +232,7 @@ numbers in advance. The command is "longlist" because for long
 functions it may produce considerably more output than the default for
 :command:`list`.
 
-::
+.. code-block:: none
 
     (Pdb) longlist
      15      def go(self):
@@ -244,7 +244,7 @@ functions it may produce considerably more output than the default for
 The :command:`source` command loads and prints the full source for an
 arbitrary class, function, or module.
 
-::
+.. code-block:: none
 
     (Pdb) source MyObj
      10  class MyObj:
@@ -265,7 +265,7 @@ moves towards newer frames. Each time you move up or down the stack,
 the debugger prints the current location in the same format as
 produced by :command:`where`.
 
-::
+.. code-block:: none
 
     (Pdb) up
     > .../pdb_set_trace.py(22)<module>()
@@ -294,7 +294,7 @@ the arguments to the function active in the current frame.  This
 example also uses a recursive function to show what a deeper stack
 looks like when printed by :command:`where`.
 
-::
+.. code-block:: none
 
     $ python3 pdb_function_arguments.py
     > .../pdb_function_arguments.py(15)recursive_function()
@@ -332,7 +332,7 @@ prints the result.  Python's ``print()`` function is also available,
 but it is passed through to the interpreter to be executed rather than
 running as a command in the debugger.
 
-::
+.. code-block:: none
 
     (Pdb) p n
     1
@@ -348,7 +348,7 @@ continue running the program.  The next statement after the call to
 :func:`set_trace` prints the value of *output*, showing the modified
 value.
 
-::
+.. code-block:: none
 
     $ python3 pdb_function_arguments.py 
 
@@ -374,7 +374,7 @@ Printing the variable ``lines`` with :command:`p` results in output
 that is difficult to read because it may wrap awkwardly.  :command:`pp`
 uses :mod:`pprint` to format the value for clean printing.
 
-::
+.. code-block:: none
 
     $ python3 pdb_pp.py
 
@@ -397,7 +397,7 @@ For interactive exploration and experimentation it is possible to drop
 from the debugger into a standard Python interactive prompt with the
 globals and locals from the current frame already populated.
 
-::
+.. code-block:: none
 
     $ python -m pdb pdb_interact.py
     > .../pdb_interact.py(7)<module>()
@@ -434,7 +434,7 @@ Mutable objects such as lists can be changed from the interactive
 debugger.  Immutable objects cannot, and names cannot be rebound to
 new values.
 
-::
+.. code-block:: none
 
     >>> l.append('c')
     >>> m += 7
@@ -452,7 +452,7 @@ new values.
 Use the end-of-file sequence Ctrl-D to exit the interactive prompt and
 return to the debugger.
 
-::
+.. code-block:: none
 
     >>> ^D
 
@@ -481,7 +481,7 @@ Use :command:`step` to execute the current line and then stop at the
 next execution point -- either the first statement inside a function
 being called or the next line of the current function.
 
-::
+.. code-block:: none
 
     $ python3 pdb_step.py 
 
@@ -493,7 +493,7 @@ control to the debugger.  The first :command:`step` causes the
 execution to enter :func:`f`.
 
 
-::
+.. code-block:: none
 
     (Pdb) step
     --Call--
@@ -503,7 +503,7 @@ execution to enter :func:`f`.
 One more :command:`step` moves execution to the first line of
 :func:`f` and starts the loop.
 
-::
+.. code-block:: none
 
     (Pdb) step
     > .../pdb_step.py(11)f()
@@ -512,7 +512,7 @@ One more :command:`step` moves execution to the first line of
 Stepping again moves to the first line inside the loop where ``j`` is
 defined.
 
-::
+.. code-block:: none
 
     (Pdb) step
     > .../pdb_step.py(12)f()
@@ -524,7 +524,7 @@ defined.
 The value of ``i`` is ``0``, so after one more step the value of ``j``
 should also be ``0``.
 
-::
+.. code-block:: none
 
     (Pdb) step
     > .../pdb_step.py(13)f()
@@ -547,7 +547,7 @@ through it each time it is called in the loop in :func:`f` obscures
 the useful output by showing all of the lines of :func:`calc` as they
 are executed.
 
-::
+.. code-block:: none
 
     $ python3 pdb_next.py 
 
@@ -601,7 +601,7 @@ enter functions called from the statement being executed.  In effect,
 it steps all the way through the function call to the next statement
 in the current function in a single operation.
 
-::
+.. code-block:: none
 
     > .../pdb_next.py(16)f()
     -> for i in range(n):
@@ -621,7 +621,7 @@ function with a line number higher than the current value.  That
 means, for example, that :command:`until` can be used to step past the
 end of a loop.
 
-::
+.. code-block:: none
 
     $ python3 pdb_next.py
 
@@ -665,7 +665,7 @@ line number passed to :command:`until` must be higher than the current
 line number, so it is most useful for navigating within a function for
 skipping over long blocks.
 
-::
+.. code-block:: none
 
     $ python3 pdb_next.py
     > .../pdb_next.py(23)<module>()
@@ -720,7 +720,7 @@ of a function.  It continues executing until the function is about to
 execute a ``return`` statement, and then it pauses, providing time
 to look at the return value before the function returns.
 
-::
+.. code-block:: none
 
     $ python3 pdb_next.py 
 
@@ -769,7 +769,7 @@ setting break points, including the line number, file, and function
 where processing should pause.  To set a breakpoint on a specific line
 of the current file, use ``break lineno``:
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_break.py
 
@@ -798,7 +798,7 @@ specifying the function name instead of a line number.  This example
 shows what happens if a breakpoint is added for the :func:`calc`
 function.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_break.py 
 
@@ -831,7 +831,7 @@ argument with a filename.
 Here a breakpoint is set for line 12 of ``pdb_break.py`` after
 starting the main program ``pdb_break_remote.py``.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_break_remote.py
 
@@ -858,7 +858,7 @@ any arguments.  The output includes the file and line number of each
 break point, as well as information about how many times it has been
 encountered.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_break.py
 
@@ -902,7 +902,7 @@ the breakpoints interactively.  Turning off a breakpoint with
 :command:`disable` tells the debugger not to stop when that line is
 reached.  The breakpoint is remembered, but ignored.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_break.py
 
@@ -941,7 +941,7 @@ disables one.  The program is run until the remaining breakpoint is
 encountered, and then the other breakpoint is turned back on with
 :command:`enable` before execution continues.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_break.py
 
@@ -1022,7 +1022,7 @@ where the breakpoints are set in the program (lines 8 and 18).
 
 Use :command:`clear` to delete a breakpoint entirely.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_break.py
 
@@ -1066,7 +1066,7 @@ regular breakpoint, but since it is cleared immediately it does not
 interfere with subsequent progress if that part of the program is run
 repeatedly.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_break.py
 
@@ -1116,7 +1116,7 @@ disabling breakpoints by hand.  Conditional breakpoints can be set in
 two ways.  The first is to specify the condition when the breakpoint
 is set using :command:`break`.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_break.py
 
@@ -1147,7 +1147,7 @@ A condition can also be applied to an existing breakpoint using the
 :command:`condition` command.  The arguments are the breakpoint id and
 the expression.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_break.py
 
@@ -1180,7 +1180,7 @@ without stopping.  Each time processing encounters the breakpoint, it
 decrements the ignore counter.  When the counter is zero, the
 breakpoint is re-activated.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_break.py
 
@@ -1227,7 +1227,7 @@ breakpoint is re-activated.
 Explicitly resetting the ignore count to zero re-enables the
 breakpoint immediately.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_break.py
 
@@ -1262,7 +1262,7 @@ breakpoint number as argument, the debugger prompt changes to
 ``(com)``.  Enter commands one a time, and finish the list with
 ``end`` to save the script and return to the main debugger prompt.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_break.py
 
@@ -1308,7 +1308,7 @@ It is also possible to watch as values change during the course of
 program execution without scripting explicit :command:`print` commands
 by using the :command:`display` command.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_break.py
     > .../pdb_break.py(8)<module>()
@@ -1341,7 +1341,7 @@ and if it changes then the result is printed along with the old
 value. The :command:`display` command with no argument prints a list
 of the displays active for the current frame.
 
-::
+.. code-block:: none
 
     (Pdb) display
     Currently displaying:
@@ -1358,7 +1358,7 @@ of the displays active for the current frame.
 
 Remove a display expression with :command:`undisplay`.
 
-::
+.. code-block:: none
 
     (Pdb) display
     Currently displaying:
@@ -1389,7 +1389,7 @@ numbers divisible by ``5``.
 .. cog.out(run_script(cog.inFile, 'pdb_jump.py'))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ python3 pdb_jump.py
 	
@@ -1405,7 +1405,7 @@ without evaluating any of the statements in between.  By skipping over
 line 13 in the example, the value of ``j`` is not incremented and
 all of the subsequent values that depend on it are a little smaller.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_jump.py  
 
@@ -1457,7 +1457,7 @@ already been executed, to run it again.  Here, the value of ``j`` is
 incremented an extra time, so the numbers in the result sequence are
 all larger than they would otherwise be.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_jump.py 
 
@@ -1506,7 +1506,7 @@ undefined, and therefore, prevented by the debugger.
 :command:`jump` can be used to enter a function, but the arguments are
 not defined and the code is unlikely to work.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_no_jump.py 
 
@@ -1529,7 +1529,7 @@ not defined and the code is unlikely to work.
 :command:`jump` will not enter the middle of a block such as a
 :command:`for` loop or :command:`try:except` statement.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_no_jump.py 
 
@@ -1550,7 +1550,7 @@ not defined and the code is unlikely to work.
 The code in a :command:`finally` block must all be executed, so
 :command:`jump` will not leave the block.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_no_jump.py 
 
@@ -1573,7 +1573,7 @@ And the most basic restriction is that jumping is constrained to the
 bottom frame on the call stack.  After moving up the stack to examine
 variables, the execution flow cannot be changed at that point.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_no_jump.py 
 
@@ -1621,7 +1621,7 @@ Running this program to completion within the debugger prints the name
 of the script file, since no other arguments were given on the command
 line.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_run.py 
 
@@ -1641,7 +1641,7 @@ to :command:`run` are parsed with :mod:`shlex` and passed to the
 program as though they were command line arguments, so the program can
 be restarted with different settings.
 
-::
+.. code-block:: none
 
     (Pdb) run a b c "this is a long value"
     Restarting pdb_run.py with arguments:
@@ -1661,7 +1661,7 @@ be restarted with different settings.
 :command:`run` can also be used at any other point in processing to
 restart the program.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_run.py 
 
@@ -1693,7 +1693,7 @@ is legal to type at the debugger prompt, including other debugger
 commands and pure Python expressions.  Recursion is allowed in alias
 definitions, so one alias can even invoke another.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_function_arguments.py 
 
@@ -1718,7 +1718,7 @@ Running :command:`alias` without any arguments shows the list of
 defined aliases.  A single argument is assumed to be the name of an
 alias, and its definition is printed.
 
-::
+.. code-block:: none
 
     (Pdb) alias
     pl = pp locals().keys()
@@ -1732,7 +1732,7 @@ Arguments to the alias are referenced using ``%n`` where *n* is
 replaced with a number indicating the position of the argument,
 starting with ``1``.  To consume all of the arguments, use ``%*``.
 
-::
+.. code-block:: none
 
     $ python3 -m pdb pdb_function_arguments.py 
 
@@ -1754,7 +1754,7 @@ starting with ``1``.  To consume all of the arguments, use ``%*``.
 
 Clear the definition of an alias with :command:`unalias`.
 
-::
+.. code-block:: none
 
     (Pdb) unalias ph
 
@@ -1780,7 +1780,7 @@ preferences for all debugging sessions.  Then ``./.pdbrc`` is read
 from the current working directory, to set local preferences for a
 particular project.
 
-::
+.. code-block:: none
 
     $ cat ~/.pdbrc
 
@@ -1816,7 +1816,7 @@ can be saved in one of the start-up files. Some commands that control
 the execution (:command:`continue`, :command:`next`, etc.)  can as
 well.
 
-::
+.. code-block:: none
 
     $ cat .pdbrc
     break 11
@@ -1844,7 +1844,7 @@ Especially useful is :command:`run`, which means the command
 line arguments for a debugging session can be set in ``./.pdbrc`` so
 they are consistent across several runs.
 
-::
+.. code-block:: none
 
     $ cat .pdbrc
     run a b c "long argument"
