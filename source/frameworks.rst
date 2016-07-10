@@ -14,6 +14,10 @@ line arguments.  It supports converting arguments from strings to
 integers and other types, running callbacks when an option is
 encountered, setting default values for options not provided by the
 user, and automatically producing usage instructions for a program.
+:mod:`getopt` implements the low level argument
+processing model available to C programs and shell scripts.  It has
+fewer features than other option parsing libraries, but that
+simplicity and familiarity make it a popular choice.
 
 Interactive programs should use :mod:`readline` to give the user a
 command prompt.  It includes tools for managing history,
@@ -71,6 +75,7 @@ be used.
    :maxdepth: 1
 
    argparse/index
+   getopt/index
    getpass/index
    shlex/index
    configparser/index

@@ -1,12 +1,11 @@
-=======================================
- getopt -- Command Line Option Parsing
-=======================================
+========================================
+ getopt --- Command Line Option Parsing
+========================================
 
 .. module:: getopt
     :synopsis: Command line option parsing
 
 :Purpose: Command line option parsing
-:Python Version: 1.4 and later
 
 The :mod:`getopt` module is the original command line option parser
 that supports the conventions established by the Unix function
@@ -25,6 +24,10 @@ Supported option syntax includes short and long form options:
     --witharg=val
     --witharg val
 
+.. note::
+
+   :mod:`getopt` is not deprecated, but :mod:`argparse` is more
+   actively maintained and should be used for new development.
 
 Function Arguments
 ==================
@@ -54,9 +57,9 @@ This example program accepts three options.  The ``-a`` is a simple
 flag, while ``-b`` and ``-c`` require an argument.  The option
 definition string is ``"ab:c:"``.
 
-.. include:: getopt_short.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: getopt_short.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The program passes a list of simulated option values to :func:`getopt`
 to show the way they are processed.
@@ -67,8 +70,8 @@ to show the way they are processed.
 
 ::
 
-	$ python getopt_short.py
-
+	$ python3 getopt_short.py
+	
 	('-a', '')
 	('-b', 'val')
 	('-c', 'val')
@@ -82,9 +85,9 @@ Long Form Options
 For a program that takes two options, ``--noarg`` and ``--witharg``,
 the long-argument sequence should be ``[ 'noarg', 'witharg=' ]``.
 
-.. include:: getopt_long.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: getopt_long.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Since this sample program does not take any short from options, the
 second argument to :func:`getopt` is an empty string.
@@ -95,8 +98,8 @@ second argument to :func:`getopt` is an empty string.
 
 ::
 
-	$ python getopt_long.py
-
+	$ python3 getopt_long.py
+	
 	('--noarg', '')
 	('--witharg', 'val')
 	('--witharg2', 'another')
@@ -112,9 +115,9 @@ This example is a more complete program that takes five options:
 ``-o``, ``--output``, and ``--version`` options each require an
 argument.
 
-.. include:: getopt_example.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: getopt_example.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The program can be called in a variety of ways.  When it is called
 without any arguments at all, the default settings are used.
@@ -125,8 +128,8 @@ without any arguments at all, the default settings are used.
 
 ::
 
-	$ python getopt_example.py
-
+	$ python3 getopt_example.py
+	
 	ARGV      : []
 	OPTIONS   : []
 	VERSION   : 1.0
@@ -136,7 +139,8 @@ without any arguments at all, the default settings are used.
 
 .. {{{end}}}
 
-A single letter option can be a separated from its argument by whitespace.
+A single letter option can be a separated from its argument by
+whitespace.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'getopt_example.py -o foo'))
@@ -144,8 +148,8 @@ A single letter option can be a separated from its argument by whitespace.
 
 ::
 
-	$ python getopt_example.py -o foo
-
+	$ python3 getopt_example.py -o foo
+	
 	ARGV      : ['-o', 'foo']
 	OPTIONS   : [('-o', 'foo')]
 	VERSION   : 1.0
@@ -163,8 +167,8 @@ Or the option and value can be combined into a single argument.
 
 ::
 
-	$ python getopt_example.py -ofoo
-
+	$ python3 getopt_example.py -ofoo
+	
 	ARGV      : ['-ofoo']
 	OPTIONS   : [('-o', 'foo')]
 	VERSION   : 1.0
@@ -182,8 +186,8 @@ A long form option can similarly be separate from the value.
 
 ::
 
-	$ python getopt_example.py --output foo
-
+	$ python3 getopt_example.py --output foo
+	
 	ARGV      : ['--output', 'foo']
 	OPTIONS   : [('--output', 'foo')]
 	VERSION   : 1.0
@@ -202,8 +206,8 @@ value should be separated by a single ``=``.
 
 ::
 
-	$ python getopt_example.py --output=foo
-
+	$ python3 getopt_example.py --output=foo
+	
 	ARGV      : ['--output=foo']
 	OPTIONS   : [('--output', 'foo')]
 	VERSION   : 1.0
@@ -226,8 +230,8 @@ command line, as long as a unique prefix is provided.
 
 ::
 
-	$ python getopt_example.py --o foo
-
+	$ python3 getopt_example.py --o foo
+	
 	ARGV      : ['--o', 'foo']
 	OPTIONS   : [('--output', 'foo')]
 	VERSION   : 1.0
@@ -246,8 +250,8 @@ If a unique prefix is not provided, an exception is raised.
 
 ::
 
-	$ python getopt_example.py --ver 2.0
-
+	$ python3 getopt_example.py --ver 2.0
+	
 	ARGV      : ['--ver', '2.0']
 	ERROR: option --ver not a unique prefix
 
@@ -265,8 +269,8 @@ argument is encountered.
 
 ::
 
-	$ python getopt_example.py -v not_an_option --output foo
-
+	$ python3 getopt_example.py -v not_an_option --output foo
+	
 	ARGV      : ['-v', 'not_an_option', '--output', 'foo']
 	OPTIONS   : [('-v', '')]
 	VERSION   : 1.0
@@ -276,13 +280,12 @@ argument is encountered.
 
 .. {{{end}}}
 
-An additional function :func:`gnu_getopt` was added to the module in
-Python 2.3.  It allows option and non-option arguments to be mixed on
-the command line in any order.
+To mix option and non-option arguments on the command line in any
+order, use :func:`gnu_getopt` instead.
 
-.. include:: getopt_gnu.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: getopt_gnu.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 After changing the call in the previous example, the difference
 becomes clear.
@@ -293,8 +296,8 @@ becomes clear.
 
 ::
 
-	$ python getopt_gnu.py -v not_an_option --output foo
-
+	$ python3 getopt_gnu.py -v not_an_option --output foo
+	
 	ARGV      : ['-v', 'not_an_option', '--output', 'foo']
 	OPTIONS   : [('-v', ''), ('--output', 'foo')]
 	VERSION   : 1.0
@@ -319,8 +322,8 @@ that start with a dash ("``-``").
 
 ::
 
-	$ python getopt_example.py -v -- --output foo
-
+	$ python3 getopt_example.py -v -- --output foo
+	
 	ARGV      : ['-v', '--', '--output', 'foo']
 	OPTIONS   : [('-v', '')]
 	VERSION   : 1.0
@@ -332,12 +335,7 @@ that start with a dash ("``-``").
 
 .. seealso::
 
-    `getopt <http://docs.python.org/library/getopt.html>`_
-        The standard library documentation for this module.
+    * :pydoc:`getopt`
 
-    :mod:`argparse`
-        The ``argparse`` module replaces both :mod:`getopt` and
-        ``optparse``.
-
-    :mod:`optparse`
-        The ``optparse`` module.
+    * :mod:`argparse` -- The ``argparse`` module replaces
+      :mod:`getopt` for newer applications.
