@@ -223,6 +223,19 @@ htmlhelp_basename = 'PyMOTW-3doc'
 # -- Options for LaTeX output ------------------------------------------------
 preamble_parts = [
 
+r'''
+% Enable unicode and use Courier New to ensure the card suit
+% characters that are part of the 'random' module examples
+% appear properly in the PDF output.
+% from http://tex.stackexchange.com/questions/20182/how-to-use-unicode-characters-with-sphinx-rst-documents-and-properly-generate-pd
+\usepackage{fontspec}
+\setmonofont{Courier New}
+''',
+# Other font setting instructions:
+# \setsansfont{Helvetica}
+# \setromanfont{Helvetica}
+# \setmonofont{Menlo Regular}
+
 # '''
 # % Double-spaces the entire document (used for manual edit review)
 # \usepackage{setspace}
@@ -264,22 +277,21 @@ latex_elements = {
 
     'printindex': '',
 
-    # Fix Unicode handling
+    # disable font inclusion
+    # from https://github.com/jterrace/sphinxtr/blob/master/conf.py
+    'fontpkg': '',
+    'fontenc': '',
+
+    # Fix Unicode handling by disabling the defaults for a few items
+    # set by sphinx
     'inputenc': '',
     'utf8extra': '',
-
-#     'fontpkg': '''\\usepackage{times}
-# \\usepackage{courier}
-# ''',
 
     # The paper size ('letterpaper' or 'a4paper').
     #'papersize': 'letterpaper',
 
     # The font size ('10pt', '11pt' or '12pt').
     #'pointsize': '10pt',
-
-    # Additional stuff for the LaTeX preamble.
-    #'preamble': '',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
@@ -405,15 +417,5 @@ def html_page_context(app, pagename, templatename, context, doctree):
     context['last_updated'] = _get_last_updated(app, pagename)
 
 
-def add_latex_unicode_replacements():
-    # see https://groups.google.com/forum/#!topic/sphinx-users/UyfLABXCNoY
-    from sphinx.util import texescape
-    texescape.tex_replacements.append((u'♥', u'H'))
-    texescape.tex_replacements.append((u'♦', u'D'))
-    texescape.tex_replacements.append((u'♣', u'C'))
-    texescape.tex_replacements.append((u'♠', u'S'))
-    texescape.init()
-
 def setup(app):
-    add_latex_unicode_replacements()
     app.connect('html-page-context', html_page_context)

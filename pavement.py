@@ -54,6 +54,7 @@ options(
         docroot='.',
         builddir='build',
         sourcedir='source',
+        pdflatex='xelatex',
     ),
 
     website=Bunch(
