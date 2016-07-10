@@ -261,21 +261,22 @@ r'''
 latex_elements = {
     'preamble': '\n'.join(preamble_parts),
 
-    # Set up the list of figures so it appears in the TOC
-    'listoffigures': r'''
+    'footer': r'''
+% footer set by conf.py
+
+% Set up the list of figures so it appears in the TOC
 \cleardoublepage
 \phantomsection \label{listoffig}
+\addcontentsline{toc}{chapter}{List of Figures}
 \listoffigures
-''',
 
-    # Set up the list of tables so it appears in the TOC
-    'listoftables': r'''
+% Set up the list of tables so it appears in the TOC
 \cleardoublepage
 \phantomsection \label{listoftab}
+\addcontentsline{toc}{chapter}{List of Tables}
 \listoftables
 ''',
 
-    'printindex': '',
 
     # disable font inclusion
     # from https://github.com/jterrace/sphinxtr/blob/master/conf.py
