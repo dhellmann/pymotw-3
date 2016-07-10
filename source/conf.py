@@ -221,8 +221,57 @@ htmlhelp_basename = 'PyMOTW-3doc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
+preamble_parts = [
+
+# '''
+# % Double-spaces the entire document (used for manual edit review)
+# \usepackage{setspace}
+# \doublespacing
+# ''',
+
+'''
+%% Load the crop package
+% This form, with the "letter" option, uses a full letter page size
+% and draws the box around the real page.
+\usepackage[letter,center,dvips]{crop}
+% This form sets the width and height of the page in a way
+% that means there is no margin around the outside, and the PDF
+% shows the real page size.
+%\usepackage[width=7truein,height=9.25truein,center,dvips]{crop}
+% Draws the crop-box around the pages for margin checking
+\crop[frame]
+%%
+''',
+
+]
 
 latex_elements = {
+    'preamble': '\n'.join(preamble_parts),
+
+    # Set up the list of figures so it appears in the TOC
+    'listoffigures': r'''
+\cleardoublepage
+\phantomsection \label{listoffig}
+\listoffigures
+''',
+
+    # Set up the list of tables so it appears in the TOC
+    'listoftables': r'''
+\cleardoublepage
+\phantomsection \label{listoftab}
+\listoftables
+''',
+
+    'printindex': '',
+
+    # Fix Unicode handling
+    'inputenc': '',
+    'utf8extra': '',
+
+#     'fontpkg': '''\\usepackage{times}
+# \\usepackage{courier}
+# ''',
+
     # The paper size ('letterpaper' or 'a4paper').
     #'papersize': 'letterpaper',
 
@@ -237,8 +286,13 @@ latex_elements = {
 # (source start file, target name, title, author,
 #  documentclass [howto/manual]).
 latex_documents = [
-    ('index', 'PyMOTW-3.tex', 'PyMOTW-3 Documentation',
+    ('index', 'py3_stdlib.tex',
+     'The Python 3 Standard Library By Example',
      'Doug Hellmann', 'manual'),
+]
+
+latex_additional_files = [
+    'images/replacement-character.png',
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -252,8 +306,7 @@ latex_documents = [
 # If true, show page references after internal links.
 #latex_show_pagerefs = False
 
-# If true, show URL addresses after external links.
-#latex_show_urls = False
+latex_show_urls = 'footnote'
 
 # Documents to append as an appendix to all manuals.
 #latex_appendices = []
@@ -352,5 +405,15 @@ def html_page_context(app, pagename, templatename, context, doctree):
     context['last_updated'] = _get_last_updated(app, pagename)
 
 
+def add_latex_unicode_replacements():
+    # see https://groups.google.com/forum/#!topic/sphinx-users/UyfLABXCNoY
+    from sphinx.util import texescape
+    texescape.tex_replacements.append((u'♥', u'H'))
+    texescape.tex_replacements.append((u'♦', u'D'))
+    texescape.tex_replacements.append((u'♣', u'C'))
+    texescape.tex_replacements.append((u'♠', u'S'))
+    texescape.init()
+
 def setup(app):
+    add_latex_unicode_replacements()
     app.connect('html-page-context', html_page_context)

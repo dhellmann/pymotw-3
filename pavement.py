@@ -251,13 +251,13 @@ def update(options):
     return
 
 
-# @task
-# def pdf():
-#     """Generate the PDF book.
-#     """
-#     options.order('pdf', 'sphinx', add_rest=True)
-#     paverutils.pdf(options)
-#     return
+@task
+def pdf():
+    """Generate the PDF book.
+    """
+    options.order('pdf', 'sphinx', add_rest=True)
+    paverutils.pdf(options)
+    return
 
 @task
 def rsyncwebsite(options):
