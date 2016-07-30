@@ -76,6 +76,35 @@ iterable object that produces values one at a time.
 
 .. {{{end}}}
 
+:func:`zip` stops when the first input iterator is exhausted. To
+process all of the inputs, even if the iterators produce different
+numbers of values, use :func:`zip_longest`.
+
+.. literalinclude:: itertools_zip_longest.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+By default, :func:`zip_longest` substitutes ``None`` for any missing
+values. Use the ``fillvalue`` argument to use a different substitute
+value.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'itertools_zip_longest.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 itertools_zip_longest.py
+	
+	zip stops early:
+	[(0, 0), (1, 1)]
+	
+	zip_longest processes all of the values:
+	[(0, 0), (1, 1), (2, None)]
+
+.. {{{end}}}
+
+
 The :func:`islice` function returns an iterator which returns selected
 items from the input iterator, by index.
 
