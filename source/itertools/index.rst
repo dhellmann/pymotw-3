@@ -683,6 +683,74 @@ called, it prints the input values passed to it by :func:`accumulate`.
 
 .. {{{end}}}
 
+Nested ``for`` loops that iterate over multiple sequences can often be
+replaced with :func:`product`, which produces a single iterable whose
+values are the Cartesian product of the set of input values.
+
+.. literalinclude:: itertools_product.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The values produced by :func:`product` are tuples, with the members
+taken from each of the iterables passed in as arguments in the order
+they are passed. The first tuple returned includes the first value
+from each iterable. The *last* iterable passed to :func:`product` is
+processed first, followed by the next to last, and so on. The result
+is that the return values are in order based on the first iterable,
+then the next iterable, etc.
+
+In this example, the cards are ordered by value and then by suit.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'itertools_product.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 itertools_product.py
+	
+	 2♥  2♦  2♣  2♠ 
+	 3♥  3♦  3♣  3♠ 
+	 4♥  4♦  4♣  4♠ 
+	 5♥  5♦  5♣  5♠ 
+	 6♥  6♦  6♣  6♠ 
+	 7♥  7♦  7♣  7♠ 
+	 8♥  8♦  8♣  8♠ 
+	 9♥  9♦  9♣  9♠ 
+	10♥ 10♦ 10♣ 10♠ 
+	 J♥  J♦  J♣  J♠ 
+	 Q♥  Q♦  Q♣  Q♠ 
+	 K♥  K♦  K♣  K♠ 
+	 A♥  A♦  A♣  A♠ 
+
+.. {{{end}}}
+
+To change the order of the cards, change the order of the arguments to
+:func:`product`.
+
+.. literalinclude:: itertools_product_ordering.py
+   :caption:
+   :start-after: #end_pymotw_header
+   :emphasize-lines: 10-11,17
+
+The print loop in this example looks for an Ace card, instead of the
+spade suit, and then adds a newline to break up the output.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'itertools_product_ordering.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 itertools_product_ordering.py
+	
+	 2♥  3♥  4♥  5♥  6♥  7♥  8♥  9♥ 10♥  J♥  Q♥  K♥  A♥ 
+	 2♦  3♦  4♦  5♦  6♦  7♦  8♦  9♦ 10♦  J♦  Q♦  K♦  A♦ 
+	 2♣  3♣  4♣  5♣  6♣  7♣  8♣  9♣ 10♣  J♣  Q♣  K♣  A♣ 
+	 2♠  3♠  4♠  5♠  6♠  7♠  8♠  9♠ 10♠  J♠  Q♠  K♠  A♠ 
+
+.. {{{end}}}
+
 
 
 .. seealso::
@@ -704,3 +772,8 @@ called, it prints the input values passed to it by :func:`accumulate`.
    * `tee <http://unixhelp.ed.ac.uk/CGI/man-cgi?tee>`__ -- UNIX
      command line tool for splitting one input into multiple identical
      output streams.
+
+   * `Cartesian product
+     <https://en.wikipedia.org/wiki/Cartesian_product>`__ --
+     Mathematical definition of the Cartesian product of two
+     sequences.
