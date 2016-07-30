@@ -507,7 +507,7 @@ The input sequence needs to be sorted on the key value in order for
 the groupings to work out as expected.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'itertools_groupby_seq.py', break_lines_at=66))
+.. cog.out(run_script(cog.inFile, 'itertools_groupby_seq.py'))
 .. }}}
 
 .. code-block:: none
