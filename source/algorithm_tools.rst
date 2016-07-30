@@ -33,10 +33,11 @@ other resources are closed and released at the right time.
     :maxdepth: 1
 
     functools/index
+    itertools/index
     contextlib/index
 
 ..
     x functools/index
-    itertools/index
+    x itertools/index
     operator/index
     x contextlib/index

@@ -1,18 +1,17 @@
-=================================
- itertools -- Iterator Functions
-=================================
+==================================
+ itertools --- Iterator Functions
+==================================
 
 .. module:: itertools
     :synopsis: Iterator functions for efficient looping
 
 :Purpose:
-    The itertools module includes a set of functions for working with 
-    sequence data sets. 
-:Python Version: 2.3 and later
+    The itertools module includes a set of functions for working with
+    sequence data sets.
 
 The functions provided by :mod:`itertools` are inspired by similar
-features of functional programming languages such as Clojure and
-Haskell. They are intended to be fast and use memory efficiently, and
+features of functional programming languages such as Clojure, Haskell,
+and APL. They are intended to be fast and use memory efficiently, and
 also to be hooked together to express more complicated iteration-based
 algorithms.
 
