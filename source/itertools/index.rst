@@ -52,6 +52,26 @@ constructing one large list.
 
 .. {{{end}}}
 
+If the iterables to be combined are not all known in advance, or need
+to be evaluated lazily, :func:`chain.from_iterable` can be used to
+construct the chain instead.
+
+.. literalinclude:: itertools_chain_from_iterable.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'itertools_chain_from_iterable.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 itertools_chain_from_iterable.py
+	
+	1 2 3 a b c 
+
+.. {{{end}}}
+
 The built-in function :func:`zip` returns an iterator that combines
 the elements of several iterators into tuples.
 
