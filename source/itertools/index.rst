@@ -852,6 +852,35 @@ is required.
 
 .. {{{end}}}
 
+While :func:`combinations` does not repeat individual input elements,
+sometimes it is useful to consider combinations that do include
+repeated elements. For those cases, use
+:func:`combinations_with_replacement`.
+
+.. literalinclude:: itertools_combinations_with_replacement.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+In this output, each input item is paired with itself as well as all
+of the other members of the input sequence.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'itertools_combinations_with_replacement.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 itertools_combinations_with_replacement.py
+	
+	Unique pairs:
+	
+	aa ab ac ad 
+	bb bc bd 
+	cc cd 
+	dd 
+
+.. {{{end}}}
+
 
 
 .. seealso::
