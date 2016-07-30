@@ -625,6 +625,64 @@ the groupings to work out as expected.
 
 .. {{{end}}}
 
+Combining Inputs
+================
+
+The :func:`accumulate` function processes the input iterable, passing
+the nth and n+1st item to a function and producing the return value
+instead of either input. The default function used to combine the two
+values adds them, so :func:`accumulate` can be used to produce the
+cumulative sum of a series of numerical inputs.
+
+.. literalinclude:: itertools_accumulate.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+When used with a sequence of non-integer values, the results depend on
+what it means to "add" two items together. The second example in this
+script shows that when :func:`accumulate` receives a string input each
+response is a progressively longer prefix of that string.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'itertools_accumulate.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 itertools_accumulate.py
+	
+	[0, 1, 3, 6, 10]
+	['a', 'ab', 'abc', 'abcd', 'abcde']
+
+.. {{{end}}}
+
+It is possible to combine :func:`accumulate` with any other function
+that takes two input values to achieve different results.
+
+.. literalinclude:: itertools_accumulate_custom.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+This example combines the string values in a way that makes a series
+of (nonsensical) palindromes. Each step of the way when ``f()`` is
+called, it prints the input values passed to it by :func:`accumulate`.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'itertools_accumulate_custom.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 itertools_accumulate_custom.py
+	
+	a b
+	bab c
+	cbabc d
+	dcbabcd e
+	['a', 'bab', 'cbabc', 'dcbabcd', 'edcbabcde']
+
+.. {{{end}}}
+
 
 
 .. seealso::
