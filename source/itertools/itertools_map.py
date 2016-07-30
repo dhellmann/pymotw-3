@@ -7,8 +7,14 @@ print('Doubles:')
 for i in map(lambda x: 2 * x, range(5)):
     print(i)
 
-print('Multiples:')
+print('\nMultiples:')
 r1 = range(5)
 r2 = range(5, 10)
 for i in map(lambda x, y: (x, y, x * y), r1, r2):
     print('{:d} * {:d} = {:d}'.format(*i))
+
+print('\nStopping:')
+r1 = range(5)
+r2 = range(2)
+for i in map(lambda x, y: (x, y), r1, r2):
+    print(i)

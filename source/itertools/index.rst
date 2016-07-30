@@ -30,8 +30,8 @@ Merging and Splitting Iterators
 ===============================
 
 The :func:`chain` function takes several iterators as arguments and
-returns a single iterator that produces the contents of all of them as
-though they came from a single iterator.
+returns a single iterator that produces the contents of all of the
+inputs as though they came from a single iterator.
 
 .. literalinclude:: itertools_chain.py
    :caption:
@@ -59,8 +59,8 @@ the elements of several iterators into tuples.
    :caption:
    :start-after: #end_pymotw_header
 
-It works like the built-in function :func:`zip`, except that it
-returns an iterator instead of a list.
+As with the other functions in this module, the return value is an
+iterable object that produces values one at a time.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'itertools_zip.py'))
@@ -77,7 +77,7 @@ returns an iterator instead of a list.
 .. {{{end}}}
 
 The :func:`islice` function returns an iterator which returns selected
-items from the input iterator, by index. 
+items from the input iterator, by index.
 
 .. literalinclude:: itertools_islice.py
    :caption:
@@ -114,7 +114,7 @@ to 2) based on a single original input.
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`tee` has semantics similar to the Unix :command:`tee` utility,
+:func:`tee` has semantics similar to the UNIX :command:`tee` utility,
 which repeats the values it reads from its input and writes them to a
 named file and standard output.  The iterators returned by :func:`tee`
 can be used to feed the same set of data into multiple algorithms to
@@ -134,7 +134,7 @@ be processed in parallel.
 .. {{{end}}}
 
 The new iterators created by :func:`tee` share their input, so the
-original iterator should not be used once the new ones are created.
+original iterator should not be used after the new ones are created.
 
 .. literalinclude:: itertools_tee_error.py
    :caption:
@@ -160,11 +160,9 @@ not produce those values:
 Converting Inputs
 =================
 
-The built-in :func:`map` function returns an iterator that calls a function on
-the values in the input iterators, and returns the results. It works
-like the built-in :func:`map`, except that it stops when any input
-iterator is exhausted (instead of inserting ``None`` values to
-completely consume all of the inputs).
+The built-in :func:`map` function returns an iterator that calls a
+function on the values in the input iterators, and returns the
+results. It stops when any input iterator is exhausted.
 
 .. literalinclude:: itertools_map.py
    :caption:
@@ -173,7 +171,8 @@ completely consume all of the inputs).
 In the first example, the lambda function multiplies the input values
 by 2. In a second example, the lambda function multiplies two
 arguments, taken from separate iterators, and returns a tuple with the
-original arguments and the computed value.
+original arguments and the computed value. The third example stops
+after producing two tuples because the second range is exhausted.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'itertools_map.py'))
@@ -189,27 +188,32 @@ original arguments and the computed value.
 	4
 	6
 	8
+	
 	Multiples:
 	0 * 5 = 0
 	1 * 6 = 6
 	2 * 7 = 14
 	3 * 8 = 24
 	4 * 9 = 36
+	
+	Stopping:
+	(0, 0)
+	(1, 1)
 
 .. {{{end}}}
 
 
-The :func:`starmap` function is similar to :func:`imap`, but instead of
-constructing a tuple from multiple iterators, it splits up the items in
-a single iterator as arguments to the mapping function using the ``*``
-syntax. 
+The :func:`starmap` function is similar to :func:`map`, but instead of
+constructing a tuple from multiple iterators, it splits up the items
+in a single iterator as arguments to the mapping function using the
+``*`` syntax.
 
 .. literalinclude:: itertools_starmap.py
    :caption:
    :start-after: #end_pymotw_header
 
-Where the mapping function to :func:`imap` is called ``f(i1, i2)``,
-the mapping function passed to :func:`starmap` is called ``f(*i)``.
+Where the mapping function to :func:`map` is called ``f(i1, i2)``, the
+mapping function passed to :func:`starmap` is called ``f(*i)``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'itertools_starmap.py'))
@@ -233,8 +237,7 @@ Producing New Values
 The :func:`count` function returns an iterator that produces
 consecutive integers, indefinitely. The first number can be passed as
 an argument (the default is zero). There is no upper bound argument
-(see the built-in :func:`xrange` for more control over the result
-set). 
+(see the built-in :func:`range` for more control over the result set).
 
 .. literalinclude:: itertools_count.py
    :caption:
@@ -256,10 +259,10 @@ This example stops because the list argument is consumed.
 
 .. {{{end}}}
 
-The :func:`cycle` function returns an iterator that repeats the contents
-of the arguments it is given indefinitely. Since it has to remember
-the entire contents of the input iterator, it may consume quite a bit
-of memory if the iterator is long. 
+The :func:`cycle` function returns an iterator that repeats the
+contents of the arguments it is given indefinitely. Since it has to
+remember the entire contents of the input iterator, it may consume
+quite a bit of memory if the iterator is long.
 
 .. literalinclude:: itertools_cycle.py
    :caption:
@@ -287,7 +290,7 @@ in this example.
 .. {{{end}}}
 
 The :func:`repeat` function returns an iterator that produces the same
-value each time it is accessed. 
+value each time it is accessed.
 
 .. literalinclude:: itertools_repeat.py
    :caption:
@@ -312,7 +315,7 @@ unless the optional *times* argument is provided to limit it.
 
 .. {{{end}}}
 
-It is useful to combine :func:`repeat` with :func:`izip` or :func:`imap`
+It is useful to combine :func:`repeat` with :func:`zip` or :func:`map`
 when invariant values need to be included with the values from the
 other iterators.
 
@@ -339,7 +342,7 @@ A counter value is combined with the constant returned by
 
 .. {{{end}}}
 
-This example uses :func:`imap` to multiply the numbers in the range 0
+This example uses :func:`map` to multiply the numbers in the range 0
 through 4 by 2.
 
 .. literalinclude:: itertools_repeat_map.py
@@ -347,8 +350,8 @@ through 4 by 2.
    :start-after: #end_pymotw_header
 
 The :func:`repeat` iterator does not need to be explicitly limited,
-since :func:`imap` stops processing when any of its inputs ends, and
-the :func:`xrange` returns only five elements.
+since :func:`map` stops processing when any of its inputs ends, and
+the :func:`range` returns only five elements.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'itertools_repeat_map.py'))
@@ -436,8 +439,8 @@ only items for which the test function returns true.
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`filter` is different from :func:`dropwhile` in that every item
-is tested before it is returned.
+:func:`filter` is different from :func:`dropwhile` and
+:func:`takewhile` in that every item is tested before it is returned.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'itertools_filter.py'))
@@ -494,7 +497,7 @@ Grouping Data
 
 The :func:`groupby` function returns an iterator that produces sets of
 values organized by a common key.  This example illustrates grouping
-related values based on an attribute. 
+related values based on an attribute.
 
 .. literalinclude:: itertools_groupby_seq.py
    :caption:
