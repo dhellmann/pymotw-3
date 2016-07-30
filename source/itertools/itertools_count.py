@@ -5,5 +5,5 @@
 
 from itertools import *
 
-for i in izip(count(1), ['a', 'b', 'c']):
+for i in zip(count(1), ['a', 'b', 'c']):
     print(i)

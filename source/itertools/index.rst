@@ -22,6 +22,10 @@ stored in memory at the same time.  This "lazy" processing model uses
 less memory, which can reduce swapping and other side-effects of large
 data sets, improving performance.
 
+In addition to the functions defined in :mod:`itertools`, the examples
+in this section also rely on some of the built-in functions for
+iteration.
+
 Merging and Splitting Iterators
 ===============================
 
@@ -40,18 +44,18 @@ constructing one large list.
 .. cog.out(run_script(cog.inFile, 'itertools_chain.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python itertools_chain.py
+	$ python3 itertools_chain.py
 	
-	1 2 3 a b c
+	1 2 3 a b c 
 
 .. {{{end}}}
 
-:func:`izip` returns an iterator that combines the elements of several
-iterators into tuples. 
+The built-in function :func:`zip` returns an iterator that combines
+the elements of several iterators into tuples.
 
-.. include:: itertools_izip.py
+.. include:: itertools_zip.py
     :literal:
     :start-after: #end_pymotw_header
 
@@ -59,12 +63,12 @@ It works like the built-in function :func:`zip`, except that it
 returns an iterator instead of a list.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'itertools_izip.py'))
+.. cog.out(run_script(cog.inFile, 'itertools_zip.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python itertools_izip.py
+	$ python3 itertools_zip.py
 	
 	(1, 'a')
 	(2, 'b')
@@ -87,9 +91,9 @@ optional.
 .. cog.out(run_script(cog.inFile, 'itertools_islice.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python itertools_islice.py
+	$ python3 itertools_islice.py
 	
 	Stop at 5:
 	0 1 2 3 4 
@@ -120,9 +124,9 @@ be processed in parallel.
 .. cog.out(run_script(cog.inFile, 'itertools_tee.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python itertools_tee.py
+	$ python3 itertools_tee.py
 	
 	i1: [0, 1, 2, 3, 4]
 	i2: [0, 1, 2, 3, 4]
@@ -143,11 +147,11 @@ not produce those values:
 .. cog.out(run_script(cog.inFile, 'itertools_tee_error.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python itertools_tee_error.py
+	$ python3 itertools_tee_error.py
 	
-	r: 0 1 2
+	r: 0 1 2 
 	i1: [3, 4]
 	i2: [3, 4]
 
@@ -156,13 +160,13 @@ not produce those values:
 Converting Inputs
 =================
 
-The :func:`imap` function returns an iterator that calls a function on
+The built-in :func:`map` function returns an iterator that calls a function on
 the values in the input iterators, and returns the results. It works
 like the built-in :func:`map`, except that it stops when any input
 iterator is exhausted (instead of inserting ``None`` values to
 completely consume all of the inputs).
 
-.. include:: itertools_imap.py
+.. include:: itertools_map.py
     :literal:
     :start-after: #end_pymotw_header
 
@@ -172,12 +176,12 @@ arguments, taken from separate iterators, and returns a tuple with the
 original arguments and the computed value.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'itertools_imap.py'))
+.. cog.out(run_script(cog.inFile, 'itertools_map.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python itertools_imap.py
+	$ python3 itertools_map.py
 	
 	Doubles:
 	0
@@ -211,9 +215,9 @@ the mapping function passed to :func:`starmap` is called ``f(*i)``.
 .. cog.out(run_script(cog.inFile, 'itertools_starmap.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python itertools_starmap.py
+	$ python3 itertools_starmap.py
 	
 	0 * 5 = 0
 	1 * 6 = 6
@@ -242,9 +246,9 @@ This example stops because the list argument is consumed.
 .. cog.out(run_script(cog.inFile, 'itertools_count.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python itertools_count.py
+	$ python3 itertools_count.py
 	
 	(1, 'a')
 	(2, 'b')
@@ -268,9 +272,9 @@ in this example.
 .. cog.out(run_script(cog.inFile, 'itertools_cycle.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python itertools_cycle.py
+	$ python3 itertools_cycle.py
 	
 	(0, 'a')
 	(1, 'b')
@@ -296,9 +300,9 @@ unless the optional *times* argument is provided to limit it.
 .. cog.out(run_script(cog.inFile, 'itertools_repeat.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python itertools_repeat.py
+	$ python3 itertools_repeat.py
 	
 	over-and-over
 	over-and-over
@@ -312,7 +316,7 @@ It is useful to combine :func:`repeat` with :func:`izip` or :func:`imap`
 when invariant values need to be included with the values from the
 other iterators.
 
-.. include:: itertools_repeat_izip.py
+.. include:: itertools_repeat_zip.py
     :literal:
     :start-after: #end_pymotw_header
 
@@ -320,12 +324,12 @@ A counter value is combined with the constant returned by
 :func:`repeat` in this example.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'itertools_repeat_izip.py'))
+.. cog.out(run_script(cog.inFile, 'itertools_repeat_zip.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python itertools_repeat_izip.py
+	$ python3 itertools_repeat_zip.py
 	
 	0 over-and-over
 	1 over-and-over
@@ -338,7 +342,7 @@ A counter value is combined with the constant returned by
 This example uses :func:`imap` to multiply the numbers in the range 0
 through 4 by 2.
 
-.. include:: itertools_repeat_imap.py
+.. include:: itertools_repeat_map.py
     :literal:
     :start-after: #end_pymotw_header
 
@@ -347,12 +351,12 @@ since :func:`imap` stops processing when any of its inputs ends, and
 the :func:`xrange` returns only five elements.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'itertools_repeat_imap.py'))
+.. cog.out(run_script(cog.inFile, 'itertools_repeat_map.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python itertools_repeat_imap.py
+	$ python3 itertools_repeat_map.py
 	
 	2 * 0 = 0
 	2 * 1 = 2
@@ -382,9 +386,9 @@ input are returned.
 .. cog.out(run_script(cog.inFile, 'itertools_dropwhile.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python itertools_dropwhile.py
+	$ python3 itertools_dropwhile.py
 	
 	Testing: -1
 	Testing: 0
@@ -410,9 +414,9 @@ stops processing the input.
 .. cog.out(run_script(cog.inFile, 'itertools_takewhile.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python itertools_takewhile.py
+	$ python3 itertools_takewhile.py
 	
 	Testing: -1
 	Yielding: -1
@@ -425,24 +429,23 @@ stops processing the input.
 .. {{{end}}}
 
 
-:func:`ifilter` returns an iterator that works like the built-in
-:func:`filter` does for lists, including only items for which the test
-function returns true. 
+The built-in function :func:`filter` returns an iterator that includes
+only items for which the test function returns true.
 
-.. include:: itertools_ifilter.py
+.. include:: itertools_filter.py
     :literal:
     :start-after: #end_pymotw_header
 
-:func:`ifilter` is different from :func:`dropwhile` in that every item
+:func:`filter` is different from :func:`dropwhile` in that every item
 is tested before it is returned.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'itertools_ifilter.py'))
+.. cog.out(run_script(cog.inFile, 'itertools_filter.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python itertools_ifilter.py
+	$ python3 itertools_filter.py
 	
 	Testing: -1
 	Yielding: -1
@@ -455,24 +458,24 @@ is tested before it is returned.
 
 .. {{{end}}}
 
-:func:`ifilterfalse` returns an iterator that includes only items
+:func:`filterfalse` returns an iterator that includes only items
 where the test function returns false.
 
-.. include:: itertools_ifilterfalse.py
+.. include:: itertools_filterfalse.py
     :literal:
     :start-after: #end_pymotw_header
 
 The test expression in :func:`check_item` is the same, so the results
-in this example with :func:`ifilterfalse` are the opposite of the
+in this example with :func:`filterfalse` are the opposite of the
 results from the previous example.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'itertools_ifilterfalse.py'))
+.. cog.out(run_script(cog.inFile, 'itertools_filterfalse.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python itertools_ifilterfalse.py
+	$ python3 itertools_filterfalse.py
 	
 	Testing: -1
 	Testing: 0
@@ -504,9 +507,9 @@ the groupings to work out as expected.
 .. cog.out(run_script(cog.inFile, 'itertools_groupby_seq.py', break_lines_at=66))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python itertools_groupby_seq.py
+	$ python3 itertools_groupby_seq.py
 	
 	Data:
 	[(0, 0),
@@ -515,10 +518,7 @@ the groupings to work out as expected.
 	 (0, 3),
 	 (1, 4),
 	 (2, 5),
-	 (0, 6),
-	 (1, 7),
-	 (2, 8),
-	 (0, 9)]
+	 (0, 6)]
 	
 	Grouped, unsorted:
 	0 [(0, 0)]
@@ -528,26 +528,20 @@ the groupings to work out as expected.
 	1 [(1, 4)]
 	2 [(2, 5)]
 	0 [(0, 6)]
-	1 [(1, 7)]
-	2 [(2, 8)]
-	0 [(0, 9)]
 	
 	Sorted:
 	[(0, 0),
 	 (0, 3),
 	 (0, 6),
-	 (0, 9),
 	 (1, 1),
 	 (1, 4),
-	 (1, 7),
 	 (2, 2),
-	 (2, 5),
-	 (2, 8)]
+	 (2, 5)]
 	
 	Grouped, sorted:
-	0 [(0, 0), (0, 3), (0, 6), (0, 9)]
-	1 [(1, 1), (1, 4), (1, 7)]
-	2 [(2, 2), (2, 5), (2, 8)]
+	0 [(0, 0), (0, 3), (0, 6)]
+	1 [(1, 1), (1, 4)]
+	2 [(2, 2), (2, 5)]
 	
 
 .. {{{end}}}

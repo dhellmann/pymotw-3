@@ -3,11 +3,13 @@
 """
 #end_pymotw_header
 
+import functools
 from itertools import *
 import operator
 import pprint
 
 
+@functools.total_ordering
 class Point:
 
     def __init__(self, x, y):
@@ -17,22 +19,23 @@ class Point:
     def __repr__(self):
         return '(%s, %s)' % (self.x, self.y)
 
-    def __cmp__(self, other):
-        return cmp((self.x, self.y), (other.x, other.y))
+    def __eq__(self, other):
+        return (self.x, self.y) == (other.x, other.y)
+
+    def __gt__(self, other):
+        return (self.x, self.y) > (other.x, other.y)
 
 
 # Create a dataset of Point instances
-data = list(imap(Point,
-                 cycle(islice(count(), 3)),
-                 islice(count(), 7),
-                 )
-            )
+data = list(map(Point,
+                cycle(islice(count(), 3)),
+                islice(count(), 7)))
 print('Data:')
-pprint.pprint(data, width=69)
+pprint.pprint(data, width=35)
 print()
 
 # Try to group the unsorted data based on X values
-print 'Grouped, unsorted:'
+print('Grouped, unsorted:')
 for k, g in groupby(data, operator.attrgetter('x')):
     print(k, list(g))
 print()
@@ -40,7 +43,7 @@ print()
 # Sort the data
 data.sort()
 print('Sorted:')
-pprint.pprint(data, width=69)
+pprint.pprint(data, width=35)
 print()
 
 # Group the sorted data based on X values
