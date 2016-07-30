@@ -819,7 +819,7 @@ individual permutations returned.
 	cdab cdba dabc dacb 
 	dbac dbca dcab dcba 
 	
-	Pairs of 2 items:
+	Pairs:
 	
 	ab ac ad 
 	ba bc bd 
@@ -828,6 +828,35 @@ individual permutations returned.
 	
 
 .. {{{end}}}
+
+To limit the values to unique combinations rather than permutations,
+use :func:`combinations`. As long as the members of the input are
+unique, the output will not include any repeated values.
+
+.. literalinclude:: itertools_combinations.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Unlike with permutations, the ``r`` argument to :func:`combinations`
+is required.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'itertools_combinations.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 itertools_combinations.py
+	
+	Unique pairs:
+	
+	ab ac ad 
+	bc bd cd 
+	
+
+.. {{{end}}}
+
+
 
 .. seealso::
 

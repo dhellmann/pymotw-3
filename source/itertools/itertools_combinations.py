@@ -12,8 +12,5 @@ def show(iterable, n):
             print()
     print()
 
-print('All permutations:\n')
-show(permutations('abcd'), 4)
-
-print('Pairs:\n')
-show(permutations('abcd', r=2), 3)
+print('Unique pairs:\n')
+show(combinations('abcd', r=2), 3)
