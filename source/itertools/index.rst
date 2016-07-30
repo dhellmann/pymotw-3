@@ -33,9 +33,9 @@ The :func:`chain` function takes several iterators as arguments and
 returns a single iterator that produces the contents of all of them as
 though they came from a single iterator.
 
-.. include:: itertools_chain.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: itertools_chain.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 :func:`chain` makes it easy to process several sequences without
 constructing one large list.
@@ -55,9 +55,9 @@ constructing one large list.
 The built-in function :func:`zip` returns an iterator that combines
 the elements of several iterators into tuples.
 
-.. include:: itertools_zip.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: itertools_zip.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 It works like the built-in function :func:`zip`, except that it
 returns an iterator instead of a list.
@@ -79,9 +79,9 @@ returns an iterator instead of a list.
 The :func:`islice` function returns an iterator which returns selected
 items from the input iterator, by index. 
 
-.. include:: itertools_islice.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: itertools_islice.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 :func:`islice` takes the same arguments as the slice operator for
 lists: *start*, *stop*, and *step*. The start and step arguments are
@@ -110,9 +110,9 @@ optional.
 The :func:`tee` function returns several independent iterators (defaults
 to 2) based on a single original input. 
 
-.. include:: itertools_tee.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: itertools_tee.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 :func:`tee` has semantics similar to the Unix :command:`tee` utility,
 which repeats the values it reads from its input and writes them to a
@@ -136,9 +136,9 @@ be processed in parallel.
 The new iterators created by :func:`tee` share their input, so the
 original iterator should not be used once the new ones are created.
 
-.. include:: itertools_tee_error.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: itertools_tee_error.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 If values are consumed from the original input, the new iterators will
 not produce those values:
@@ -166,9 +166,9 @@ like the built-in :func:`map`, except that it stops when any input
 iterator is exhausted (instead of inserting ``None`` values to
 completely consume all of the inputs).
 
-.. include:: itertools_map.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: itertools_map.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 In the first example, the lambda function multiplies the input values
 by 2. In a second example, the lambda function multiplies two
@@ -204,9 +204,9 @@ constructing a tuple from multiple iterators, it splits up the items in
 a single iterator as arguments to the mapping function using the ``*``
 syntax. 
 
-.. include:: itertools_starmap.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: itertools_starmap.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Where the mapping function to :func:`imap` is called ``f(i1, i2)``,
 the mapping function passed to :func:`starmap` is called ``f(*i)``.
@@ -236,9 +236,9 @@ an argument (the default is zero). There is no upper bound argument
 (see the built-in :func:`xrange` for more control over the result
 set). 
 
-.. include:: itertools_count.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: itertools_count.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 This example stops because the list argument is consumed.
 
@@ -261,9 +261,9 @@ of the arguments it is given indefinitely. Since it has to remember
 the entire contents of the input iterator, it may consume quite a bit
 of memory if the iterator is long. 
 
-.. include:: itertools_cycle.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: itertools_cycle.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 A counter variable is used to break out of the loop after a few cycles
 in this example.
@@ -289,9 +289,9 @@ in this example.
 The :func:`repeat` function returns an iterator that produces the same
 value each time it is accessed. 
 
-.. include:: itertools_repeat.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: itertools_repeat.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The iterator returned by :func:`repeat` keeps returning data forever,
 unless the optional *times* argument is provided to limit it.
@@ -316,9 +316,9 @@ It is useful to combine :func:`repeat` with :func:`izip` or :func:`imap`
 when invariant values need to be included with the values from the
 other iterators.
 
-.. include:: itertools_repeat_zip.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: itertools_repeat_zip.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 A counter value is combined with the constant returned by
 :func:`repeat` in this example.
@@ -342,9 +342,9 @@ A counter value is combined with the constant returned by
 This example uses :func:`imap` to multiply the numbers in the range 0
 through 4 by 2.
 
-.. include:: itertools_repeat_map.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: itertools_repeat_map.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The :func:`repeat` iterator does not need to be explicitly limited,
 since :func:`imap` stops processing when any of its inputs ends, and
@@ -374,9 +374,9 @@ The :func:`dropwhile` function returns an iterator that produces
 elements of the input iterator after a condition becomes false for the
 first time.
 
-.. include:: itertools_dropwhile.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: itertools_dropwhile.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 :func:`dropwhile` does not filter every item of the input; after the
 condition is false the first time, all of the remaining items in the
@@ -403,9 +403,9 @@ The opposite of :func:`dropwhile` is :func:`takewhile`.  It returns an
 iterator that returns items from the input iterator as long as the
 test function returns true.
 
-.. include:: itertools_takewhile.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: itertools_takewhile.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 As soon as :func:`should_take` returns ``False``, :func:`takewhile`
 stops processing the input.
@@ -432,9 +432,9 @@ stops processing the input.
 The built-in function :func:`filter` returns an iterator that includes
 only items for which the test function returns true.
 
-.. include:: itertools_filter.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: itertools_filter.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 :func:`filter` is different from :func:`dropwhile` in that every item
 is tested before it is returned.
@@ -461,9 +461,9 @@ is tested before it is returned.
 :func:`filterfalse` returns an iterator that includes only items
 where the test function returns false.
 
-.. include:: itertools_filterfalse.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: itertools_filterfalse.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The test expression in :func:`check_item` is the same, so the results
 in this example with :func:`filterfalse` are the opposite of the
@@ -496,9 +496,9 @@ The :func:`groupby` function returns an iterator that produces sets of
 values organized by a common key.  This example illustrates grouping
 related values based on an attribute. 
 
-.. include:: itertools_groupby_seq.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: itertools_groupby_seq.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The input sequence needs to be sorted on the key value in order for
 the groupings to work out as expected.
