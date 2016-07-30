@@ -519,6 +519,33 @@ results from the previous example.
 
 .. {{{end}}}
 
+:func:`compress` offers another way to filter the contents of an
+iterable. Instead of calling a function, it uses the values in another
+iterable to indicate when to accept a value and when to ignore it.
+
+.. literalinclude:: itertools_compress.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The first argument is the data iterable to process and the second is a
+selector iterable producing Boolean values indicating which elements
+to take from the data input (a true value causes the value to be
+produced, a false value causes it to be ignored).
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'itertools_compress.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 itertools_compress.py
+	
+	3 6 9 
+
+.. {{{end}}}
+
+
+
 .. _itertools-groupby:
 
 Grouping Data
