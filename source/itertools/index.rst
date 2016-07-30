@@ -791,7 +791,43 @@ number of items equal to the repeat counter.
 
 .. {{{end}}}
 
+The :func:`permutations` function produces items from the input
+iterable combined in the possible permutations of the given length. It
+defaults to producing the full set of all permutations.
 
+.. literalinclude:: itertools_permutations.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Use the ``r`` argument to limit the length and number of the
+individual permutations returned.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'itertools_permutations.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 itertools_permutations.py
+	
+	All permutations:
+	
+	abcd abdc acbd acdb 
+	adbc adcb bacd badc 
+	bcad bcda bdac bdca 
+	cabd cadb cbad cbda 
+	cdab cdba dabc dacb 
+	dbac dbca dcab dcba 
+	
+	Pairs of 2 items:
+	
+	ab ac ad 
+	ba bc bd 
+	ca cb cd 
+	da db dc 
+	
+
+.. {{{end}}}
 
 .. seealso::
 
