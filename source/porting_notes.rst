@@ -595,6 +595,21 @@ UTF-8. There is support for accepting unicode strings and encoding
 them automatically as outgoing commands are sent or as the username
 and password for logging in to the server.
 
+.. _porting-itertools:
+
+itertools
+---------
+
+.. index::
+   pair: porting; itertools
+
+The functions :func:`imap`, :func:`izip`, and :func:`ifilter` have
+been replaced with versions of the built-in functions that return
+iterables instead of :class:`list` objects (:func:`map`, :func:`zip`,
+and :func:`filter:` respectively).
+
+The function :func:`ifilterfalse` has been renamed
+:func:`filterfalse`.
 
 .. _porting-mailbox:
 

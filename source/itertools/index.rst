@@ -197,8 +197,8 @@ after producing two tuples because the second range is exhausted.
 	4 * 9 = 36
 	
 	Stopping:
-	(0, 0)
-	(1, 1)
+	(0, 0, 0)
+	(1, 1, 1)
 
 .. {{{end}}}
 
@@ -554,6 +554,8 @@ the groupings to work out as expected.
 .. seealso::
 
    * :pydoc:`itertools`
+
+   * :ref:`Porting notes for itertools <porting-itertools>`
 
    * `The Standard ML Basis Library
      <http://www.standardml.org/Basis/>`_) -- The library for SML.
