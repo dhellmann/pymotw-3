@@ -308,6 +308,30 @@ This example stops because the list argument is consumed.
 
 .. {{{end}}}
 
+The start and step arguments to :func:`count` can be any numerical
+values that can be added together.
+
+.. literalinclude:: itertools_count_step.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+In this example, the start point and steps are :class:`Fraction`
+objects from the :mod:`fraction` module.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'itertools_count_step.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 itertools_count_step.py
+	
+	1/3: a
+	2/3: b
+	1: c
+
+.. {{{end}}}
+
 The :func:`cycle` function returns an iterator that repeats the
 contents of the arguments it is given indefinitely. Since it has to
 remember the entire contents of the input iterator, it may consume
