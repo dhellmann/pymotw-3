@@ -11,4 +11,4 @@ print('Multiples:')
 r1 = range(5)
 r2 = range(5, 10)
 for i in map(lambda x, y: (x, y, x * y), r1, r2):
-    print('%d * %d = %d' % i)
+    print('{:d} * {:d} = {:d}'.format(*i))

@@ -7,4 +7,4 @@ from itertools import *
 
 values = [(0, 5), (1, 6), (2, 7), (3, 8), (4, 9)]
 for i in starmap(lambda x, y: (x, y, x * y), values):
-    print('%d * %d = %d' % i)
+    print('{} * {} = {}'.format(*i))

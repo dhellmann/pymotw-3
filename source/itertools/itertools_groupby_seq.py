@@ -17,7 +17,7 @@ class Point:
         self.y = y
 
     def __repr__(self):
-        return '(%s, %s)' % (self.x, self.y)
+        return '({}, {})'.format(self.x, self.y)
 
     def __eq__(self, other):
         return (self.x, self.y) == (other.x, other.y)
