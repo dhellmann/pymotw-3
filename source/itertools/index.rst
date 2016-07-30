@@ -751,6 +751,46 @@ spade suit, and then adds a newline to break up the output.
 
 .. {{{end}}}
 
+To compute the product of a sequence with itself, specify how many
+times the input should be repeated.
+
+.. literalinclude:: itertools_product_repeat.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Since repeating a single iterable is like passing the same iterable
+multiple times, each tuple produced by :func:`product` will contain a
+number of items equal to the repeat counter.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'itertools_product_repeat.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 itertools_product_repeat.py
+	
+	Repeat 2:
+	
+	(0, 0) (0, 1) (0, 2) 
+	(1, 0) (1, 1) (1, 2) 
+	(2, 0) (2, 1) (2, 2) 
+	
+	Repeat 3:
+	
+	(0, 0, 0) (0, 0, 1) (0, 0, 2) 
+	(0, 1, 0) (0, 1, 1) (0, 1, 2) 
+	(0, 2, 0) (0, 2, 1) (0, 2, 2) 
+	(1, 0, 0) (1, 0, 1) (1, 0, 2) 
+	(1, 1, 0) (1, 1, 1) (1, 1, 2) 
+	(1, 2, 0) (1, 2, 1) (1, 2, 2) 
+	(2, 0, 0) (2, 0, 1) (2, 0, 2) 
+	(2, 1, 0) (2, 1, 1) (2, 1, 2) 
+	(2, 2, 0) (2, 2, 1) (2, 2, 2) 
+	
+
+.. {{{end}}}
+
 
 
 .. seealso::
