@@ -812,20 +812,16 @@ individual permutations returned.
 	
 	All permutations:
 	
-	abcd abdc acbd acdb 
-	adbc adcb bacd badc 
-	bcad bcda bdac bdca 
-	cabd cadb cbad cbda 
-	cdab cdba dabc dacb 
-	dbac dbca dcab dcba 
-	
+	abcd abdc acbd acdb adbc adcb 
+	bacd badc bcad bcda bdac bdca 
+	cabd cadb cbad cbda cdab cdba 
+	dabc dacb dbac dbca dcab dcba 
 	Pairs:
 	
 	ab ac ad 
 	ba bc bd 
 	ca cb cd 
 	da db dc 
-	
 
 .. {{{end}}}
 
@@ -851,8 +847,8 @@ is required.
 	Unique pairs:
 	
 	ab ac ad 
-	bc bd cd 
-	
+	bc bd 
+	cd 
 
 .. {{{end}}}
 

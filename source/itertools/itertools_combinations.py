@@ -5,12 +5,15 @@
 from itertools import *
 
 
-def show(iterable, n):
+def show(iterable):
+    first = None
     for i, item in enumerate(iterable, 1):
+        if first != item[0]:
+            if first is not None:
+                print()
+            first = item[0]
         print(''.join(item), end=' ')
-        if (i % n) == 0:
-            print()
     print()
 
 print('Unique pairs:\n')
-show(combinations('abcd', r=2), 3)
+show(combinations('abcd', r=2))
