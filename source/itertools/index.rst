@@ -553,19 +553,18 @@ the groupings to work out as expected.
 
 .. seealso::
 
-    `itertools <http://docs.python.org/library/itertools.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`itertools`
 
-    `The Standard ML Basis Library <http://www.standardml.org/Basis/>`_)
-        The library for SML.
+   * `The Standard ML Basis Library
+     <http://www.standardml.org/Basis/>`_) -- The library for SML.
 
-    `Definition of Haskell and the Standard Libraries <http://www.haskell.org/definition/>`__
-        Standard library specification for the functional language Haskell.
+   * `Definition of Haskell and the Standard Libraries
+     <http://www.haskell.org/definition/>`__ -- Standard library
+     specification for the functional language Haskell.
 
-    `Clojure <http://clojure.org/>`__
-        Clojure is a dynamic functional language that runs on the Java
-        Virtual Machine.
+   * `Clojure <http://clojure.org/>`__ -- Clojure is a dynamic
+     functional language that runs on the Java Virtual Machine.
 
-    `tee <http://unixhelp.ed.ac.uk/CGI/man-cgi?tee>`__
-        Unix command line tool for splitting one input into multiple
-        identical output streams.
+   * `tee <http://unixhelp.ed.ac.uk/CGI/man-cgi?tee>`__ -- UNIX
+     command line tool for splitting one input into multiple identical
+     output streams.
