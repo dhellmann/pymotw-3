@@ -22,3 +22,4 @@ dist/
 /source/zipimport/zipimport_example.zip
 /source/shelve/test_shelf.db.db
 /source/pkgutil/pkgwithdatainzip.zip
+/source/os/os_stat_chmod_example.txt
