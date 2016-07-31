@@ -790,6 +790,23 @@ through an instance attribute. The abstract classes in
 :mod:`collections.abc` are also useful for creating custom containers
 that follow the APIs of the built-in types.
 
+.. _porting-uuid:
+
+uuid
+----
+
+.. index::
+   pair: porting; uuid
+
+:func:`uuid.getnode` now uses the ``PATH`` environment variable to
+find programs that can report the MAC address of the host under UNIX
+(:pyissue:`19855`). It falls back to looking in ``/sbin`` and
+``/usr/sbin`` if no program is found on the search path. This search
+behavior may give different results than with earlier versions of
+Python if alternate versions of programs like ``netstat``,
+``ifconfig``, ``ip``, and ``arp`` are present and produce different
+output.
+
 .. _porting-whichdb:
 
 whichdb
