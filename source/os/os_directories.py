@@ -15,9 +15,6 @@ print('Creating', file_name)
 with open(file_name, 'wt') as f:
     f.write('example file')
 
-print('Listing', dir_name)
-print(os.listdir(dir_name))
-
 print('Cleaning up')
 os.unlink(file_name)
 os.rmdir(dir_name)

@@ -20,8 +20,265 @@ mostly of functions for creating and managing running processes or
 file system content (files and directories), with a few other bits of
 functionality thrown in besides.
 
-Process Owner
-=============
+Examining the File System Contents
+==================================
+
+To prepare a list of the contents of a directory on the file system,
+use :func:`listdir`.
+
+.. literalinclude:: os_listdir.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The return value is a list of all of the named members of the
+directory given. No distinction is made between files, subdirectories,
+or symlinks.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'os_listdir.py .', line_break_mode='wrap'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 os_listdir.py .
+	
+	['index.rst', 'os_access.py', 'os_cwd_example.py',
+	'os_directories.py', 'os_environ_example.py',
+	'os_exec_example.py', 'os_fork_example.py',
+	'os_kill_example.py', 'os_listdir.py', 'os_listdir.py~',
+	'os_process_id_example.py', 'os_process_user_example.py',
+	'os_spawn_example.py', 'os_stat.py', 'os_stat_chmod.py',
+	'os_stat_chmod_example.txt', 'os_symlinks.py',
+	'os_system_background.py', 'os_system_example.py',
+	'os_system_shell.py', 'os_wait_example.py',
+	'os_waitpid_example.py', 'os_walk.py']
+
+.. {{{end}}}
+
+The function :func:`walk` traverses a directory recursively and for
+each subdirectory generates a :class:`tuple` containing the directory
+path, any immediate sub-directories of that path, and a list of the
+names of any files in that directory.
+
+.. literalinclude:: os_walk.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+This example shows a recursive directory listing.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'os_walk.py ../zipimport'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 os_walk.py ../zipimport
+	
+	../zipimport
+		__init__.py
+		__pycache__/
+		example_package/
+		index.rst
+		zipimport_example.zip
+		zipimport_find_module.py
+		zipimport_get_code.py
+		zipimport_get_data.py
+		zipimport_get_data_nozip.py
+		zipimport_get_data_zip.py
+		zipimport_get_source.py
+		zipimport_is_package.py
+		zipimport_load_module.py
+		zipimport_make_example.py
+	
+	../zipimport/__pycache__
+	
+	../zipimport/example_package
+		README.txt
+		__init__.py
+		__pycache__/
+	
+	../zipimport/example_package/__pycache__
+	
+
+.. {{{end}}}
+
+Managing File System Permissions
+================================
+
+Detailed information about a file can be accessed using :func:`stat`
+or :func:`lstat` (for checking the status of something that might be a
+symbolic link).
+
+.. literalinclude:: os_stat.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The output will vary depending on how the example code was
+installed. Try passing different filenames on the command line to
+``os_stat.py``.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'os_stat.py'))
+.. cog.out(run_script(cog.inFile, 'os_stat.py index.rst', include_prefix=False))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 os_stat.py
+	
+	os.stat(os_stat.py):
+		Size: 593
+		Permissions: 0o100644
+		Owner: 501
+		Device: 16777220
+		Created      : Sun Jul 31 14:38:02 2016
+		Last modified: Sun Jul 31 14:38:02 2016
+		Last accessed: Sun Jul 31 14:54:20 2016
+
+	$ python3 os_stat.py index.rst
+	
+	os.stat(index.rst):
+		Size: 23837
+		Permissions: 0o100644
+		Owner: 501
+		Device: 16777220
+		Created      : Sun Jul 31 14:54:14 2016
+		Last modified: Sun Jul 31 14:54:14 2016
+		Last accessed: Sun Jul 31 14:54:20 2016
+
+.. {{{end}}}
+
+
+On UNIX-like systems, file permissions can be changed using
+:func:`chmod`, passing the mode as an integer. Mode values can be
+constructed using constants defined in the :mod:`stat` module.  This
+example toggles the user's execute permission bit:
+
+.. literalinclude:: os_stat_chmod.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The script assumes it has the permissions necessary to modify the mode
+of the file when run.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'os_stat_chmod.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 os_stat_chmod.py
+	
+	Adding execute permission
+
+.. {{{end}}}
+
+The function :func:`access` can be used to test the access rights a
+process has for a file.
+
+.. literalinclude:: os_access.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The results will vary depending on how the example code is installed,
+but the output will be similar to this:
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'os_access.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 os_access.py
+	
+	Testing: os_access.py
+	Exists: True
+	Readable: True
+	Writable: True
+	Executable: False
+
+.. {{{end}}}
+
+The library documentation for :func:`access` includes two special
+warnings. First, there is not much sense in calling :func:`access` to
+test whether a file can be opened before actually calling :func:`open`
+on it. There is a small, but real, window of time between the two
+calls during which the permissions on the file could change. The other
+warning applies mostly to networked file systems that extend the POSIX
+permission semantics. Some file system types may respond to the POSIX
+call that a process has permission to access a file, then report a
+failure when the attempt is made using :func:`open` for some reason
+not tested via the POSIX call. All in all, it is better to call
+:func:`open` with the required mode and catch the :class:`IOError`
+raised if there is a problem.
+
+.. _os-directories:
+
+Creating and Deleting Directories
+=================================
+
+There are several functions for working with directories on the file
+system, including creating, listing contents, and removing them.
+
+.. literalinclude:: os_directories.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+There are two sets of functions for creating and deleting
+directories. When creating a new directory with :func:`mkdir`, all of
+the parent directories must already exist. When removing a directory
+with :func:`rmdir`, only the leaf directory (the last part of the
+path) is actually removed. In contrast, :func:`makedirs` and
+:func:`removedirs` operate on all of the nodes in the path.
+:func:`makedirs` will create any parts of the path that do not exist,
+and :func:`removedirs` will remove all of the parent directories, as
+long as they are empty.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'os_directories.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 os_directories.py
+	
+	Creating os_directories_example
+	Creating os_directories_example/example.txt
+	Cleaning up
+
+.. {{{end}}}
+
+Working with Symbolic Links
+===========================
+
+For platforms and file systems that support them, there are functions
+for working with symlinks.
+
+.. literalinclude:: os_symlinks.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Use :func:`symlink` to create a symbolic link and :func:`readlink` for
+reading it to determine the original file pointed to by the link.  The
+:func:`lstat` function is like :func:`stat`, but operates on symbolic
+links.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'os_symlinks.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 os_symlinks.py
+	
+	Creating link /tmp/os_symlinks.py -> os_symlinks.py
+	Permissions: 0o120755
+	Points to: os_symlinks.py
+
+.. {{{end}}}
+
+Detecting and Changing the Process Owner
+========================================
 
 The first set of functions provided by :mod:`os` are used for
 determining and changing the process owner ids. These are most
@@ -106,8 +363,8 @@ changed, the process is limited to the permissions of that user.
 Because non-root users cannot change their effective group, the
 program needs to change the group before changing the user.
 
-Process Environment
-===================
+Managing the Process Environment
+================================
 
 Another feature of the operating system exposed to a program though
 the :mod:`os` module is the environment. Variables set in the
@@ -147,9 +404,8 @@ exported for child processes.
 
 .. {{{end}}}
 
-
-Process Working Directory
-=========================
+Managing the Process Working Directory
+======================================
 
 Operating systems with hierarchical file systems have a concept of the
 *current working directory* -- the directory on the file system the
@@ -183,227 +439,6 @@ current and parent directories in a portable manner.
 	Starting: .../pymotw-3/source/os
 	Moving up one: ..
 	After move: .../pymotw-3/source
-
-.. {{{end}}}
-
-File System Permissions
-=======================
-
-Detailed information about a file can be accessed using :func:`stat`
-or :func:`lstat` (for checking the status of something that might be a
-symbolic link).
-
-.. literalinclude:: os_stat.py
-   :caption:
-   :start-after: #end_pymotw_header
-
-The output will vary depending on how the example code was
-installed. Try passing different filenames on the command line to
-``os_stat.py``.
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'os_stat.py'))
-.. cog.out(run_script(cog.inFile, 'os_stat.py index.rst', include_prefix=False))
-.. }}}
-
-.. code-block:: none
-
-	$ python3 os_stat.py
-	
-	os.stat(os_stat.py):
-		Size: 593
-		Permissions: 0o100644
-		Owner: 501
-		Device: 16777220
-		Created      : Sun Jul 31 14:38:02 2016
-		Last modified: Sun Jul 31 14:38:02 2016
-		Last accessed: Sun Jul 31 14:39:20 2016
-
-	$ python3 os_stat.py index.rst
-	
-	os.stat(index.rst):
-		Size: 23410
-		Permissions: 0o100644
-		Owner: 501
-		Device: 16777220
-		Created      : Sun Jul 31 14:39:16 2016
-		Last modified: Sun Jul 31 14:39:16 2016
-		Last accessed: Sun Jul 31 14:39:20 2016
-
-.. {{{end}}}
-
-
-On UNIX-like systems, file permissions can be changed using
-:func:`chmod`, passing the mode as an integer. Mode values can be
-constructed using constants defined in the :mod:`stat` module.  This
-example toggles the user's execute permission bit:
-
-.. literalinclude:: os_stat_chmod.py
-   :caption:
-   :start-after: #end_pymotw_header
-
-The script assumes it has the permissions necessary to modify the mode
-of the file when run.
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'os_stat_chmod.py'))
-.. }}}
-
-.. code-block:: none
-
-	$ python3 os_stat_chmod.py
-	
-	Adding execute permission
-
-.. {{{end}}}
-
-.. _os-directories:
-
-Directories
-===========
-
-There are several functions for working with directories on the file
-system, including creating, listing contents, and removing them.
-
-.. literalinclude:: os_directories.py
-   :caption:
-   :start-after: #end_pymotw_header
-
-There are two sets of functions for creating and deleting
-directories. When creating a new directory with :func:`mkdir`, all of
-the parent directories must already exist. When removing a directory
-with :func:`rmdir`, only the leaf directory (the last part of the
-path) is actually removed. In contrast, :func:`makedirs` and
-:func:`removedirs` operate on all of the nodes in the path.
-:func:`makedirs` will create any parts of the path that do not exist,
-and :func:`removedirs` will remove all of the parent directories, as
-long as they are empty.
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'os_directories.py'))
-.. }}}
-
-.. code-block:: none
-
-	$ python3 os_directories.py
-	
-	Creating os_directories_example
-	Creating os_directories_example/example.txt
-	Listing os_directories_example
-	['example.txt']
-	Cleaning up
-
-.. {{{end}}}
-
-Symbolic Links
-==============
-
-For platforms and file systems that support them, there are functions
-for working with symlinks.
-
-.. literalinclude:: os_symlinks.py
-   :caption:
-   :start-after: #end_pymotw_header
-
-Use :func:`symlink` to create a symbolic link and :func:`readlink` for
-reading it to determine the original file pointed to by the link.  The
-:func:`lstat` function is like :func:`stat`, but operates on symbolic
-links.
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'os_symlinks.py'))
-.. }}}
-
-.. code-block:: none
-
-	$ python3 os_symlinks.py
-	
-	Creating link /tmp/os_symlinks.py -> os_symlinks.py
-	Permissions: 0o120755
-	Points to: os_symlinks.py
-
-.. {{{end}}}
-
-
-Examining the File System
-=========================
-
-To prepare a list of the contents of a directory on the file system,
-use :func:`listdir`.
-
-.. literalinclude:: os_listdir.py
-   :caption:
-   :start-after: #end_pymotw_header
-
-The return value is a list of all of the named members of the
-directory given. No distinction is made between files, subdirectories,
-or symlinks.
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'os_listdir.py .', line_break_mode='wrap'))
-.. }}}
-
-.. code-block:: none
-
-	$ python3 os_listdir.py .
-	
-	['index.rst', 'os_access.py', 'os_cwd_example.py',
-	'os_directories.py', 'os_environ_example.py',
-	'os_exec_example.py', 'os_fork_example.py',
-	'os_kill_example.py', 'os_listdir.py', 'os_listdir.py~',
-	'os_process_id_example.py', 'os_process_user_example.py',
-	'os_spawn_example.py', 'os_stat.py', 'os_stat_chmod.py',
-	'os_stat_chmod_example.txt', 'os_symlinks.py',
-	'os_system_background.py', 'os_system_example.py',
-	'os_system_shell.py', 'os_wait_example.py',
-	'os_waitpid_example.py', 'os_walk.py']
-
-.. {{{end}}}
-
-The function :func:`walk` traverses a directory recursively and for
-each subdirectory generates a :class:`tuple` containing the directory
-path, any immediate sub-directories of that path, and a list of the
-names of any files in that directory.
-
-.. literalinclude:: os_walk.py
-   :caption:
-   :start-after: #end_pymotw_header
-
-This example shows a recursive directory listing.
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'os_walk.py ../zipimport'))
-.. }}}
-
-.. code-block:: none
-
-	$ python3 os_walk.py ../zipimport
-	
-	../zipimport
-		__init__.py
-		__pycache__/
-		example_package/
-		index.rst
-		zipimport_example.zip
-		zipimport_find_module.py
-		zipimport_get_code.py
-		zipimport_get_data.py
-		zipimport_get_data_nozip.py
-		zipimport_get_data_zip.py
-		zipimport_get_source.py
-		zipimport_is_package.py
-		zipimport_load_module.py
-		zipimport_make_example.py
-	
-	../zipimport/__pycache__
-	
-	../zipimport/example_package
-		README.txt
-		__init__.py
-		__pycache__/
-	
-	../zipimport/example_package/__pycache__
-	
 
 .. {{{end}}}
 
@@ -495,9 +530,9 @@ accomplish the same thing.
 	$ python3 -u os_system_background.py
 	
 	Calling...
-	Sun Jul 31 14:39:21 EDT 2016
+	Sun Jul 31 14:54:21 EDT 2016
 	Sleeping...
-	Sun Jul 31 14:39:24 EDT 2016
+	Sun Jul 31 14:54:24 EDT 2016
 
 .. {{{end}}}
 
@@ -530,7 +565,7 @@ example is run, but it will look something like:
 
 	$ python3 -u os_fork_example.py
 	
-	Child process id: 1077
+	Child process id: 2758
 	I am the child
 
 .. {{{end}}}
@@ -568,8 +603,8 @@ the parent time to send the signal.
 	PARENT: Pausing before sending signal...
 	CHILD: Setting up signal handler
 	CHILD: Pausing to wait for signal
-	PARENT: Signaling 1080
-	Received USR1 in process 1080
+	PARENT: Signaling 2761
+	Received USR1 in process 2761
 
 .. {{{end}}}
 
@@ -608,8 +643,8 @@ command line arguments or override the process "environment" (see
 :data:`os.environ` and :data:`os.getenv`).  Refer to the library
 documentation for complete details.
 
-Waiting for a Child
-===================
+Waiting for Child Processes
+===========================
 
 Many computationally intensive programs use multiple processes to work
 around the threading limitations of Python and the global interpreter
@@ -638,16 +673,16 @@ status code returned by the process when it exited.
 
 	$ python3 -u os_wait_example.py
 	
-	PARENT 1085: Forking 0
-	PARENT 1085: Forking 1
+	PARENT 2872: Forking 0
+	PARENT 2872: Forking 1
 	PARENT: Waiting for 0
 	WORKER 0: Starting
 	WORKER 1: Starting
 	WORKER 0: Finishing
-	PARENT: Child done: (1086, 0)
+	PARENT: Child done: (2873, 0)
 	PARENT: Waiting for 1
 	WORKER 1: Finishing
-	PARENT: Child done: (1087, 256)
+	PARENT: Child done: (2874, 256)
 
 .. {{{end}}}
 
@@ -668,16 +703,16 @@ until that process exits.
 
 	$ python3 -u os_waitpid_example.py
 	
-	PARENT 1089: Forking 0
-	PARENT 1089: Forking 1
-	PARENT: Waiting for 1090
+	PARENT 2876: Forking 0
+	PARENT 2876: Forking 1
+	PARENT: Waiting for 2877
 	WORKER 0: Starting
 	WORKER 1: Starting
 	WORKER 0: Finishing
-	PARENT: Child done: (1090, 0)
-	PARENT: Waiting for 1091
+	PARENT: Child done: (2877, 0)
+	PARENT: Waiting for 2878
 	WORKER 1: Finishing
-	PARENT: Child done: (1091, 256)
+	PARENT: Child done: (2878, 256)
 
 .. {{{end}}}
 
@@ -685,8 +720,8 @@ until that process exits.
 more detailed information about the child process with the pid, exit
 status, and resource usage.
 
-Spawn
-=====
+Spawning New Processes
+======================
 
 As a convenience, the :func:`spawn` family of functions handles the
 :func:`fork` and :func:`exec` in one statement:
@@ -711,48 +746,6 @@ the current process.
 	.../pymotw-3/source/os
 
 .. {{{end}}}
-
-File System Permissions
-=======================
-
-The function :func:`access` can be used to test the access rights a
-process has for a file.
-
-.. literalinclude:: os_access.py
-   :caption:
-   :start-after: #end_pymotw_header
-
-The results will vary depending on how the example code is installed,
-but the output will be similar to this:
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'os_access.py'))
-.. }}}
-
-.. code-block:: none
-
-	$ python3 os_access.py
-	
-	Testing: os_access.py
-	Exists: True
-	Readable: True
-	Writable: True
-	Executable: False
-
-.. {{{end}}}
-
-The library documentation for :func:`access` includes two special
-warnings. First, there is not much sense in calling :func:`access` to
-test whether a file can be opened before actually calling :func:`open`
-on it. There is a small, but real, window of time between the two
-calls during which the permissions on the file could change. The other
-warning applies mostly to networked file systems that extend the POSIX
-permission semantics. Some file system types may respond to the POSIX
-call that a process has permission to access a file, then report a
-failure when the attempt is made using :func:`open` for some reason
-not tested via the POSIX call. All in all, it is better to call
-:func:`open` with the required mode and catch the :class:`IOError`
-raised if there is a problem.
 
 .. seealso::
 
