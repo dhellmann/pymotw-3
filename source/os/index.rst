@@ -311,11 +311,43 @@ links.
 .. {{{end}}}
 
 
-Walking a Directory Tree
-========================
+Examining the File System
+=========================
+
+To prepare a list of the contents of a directory on the file system,
+use :func:`listdir`.
+
+.. literalinclude:: os_listdir.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The return value is a list of all of the named members of the
+directory given. No distinction is made between files, subdirectories,
+or symlinks.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'os_listdir.py .', line_break_mode='wrap'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 os_listdir.py .
+	
+	['index.rst', 'os_access.py', 'os_cwd_example.py',
+	'os_directories.py', 'os_environ_example.py',
+	'os_exec_example.py', 'os_fork_example.py',
+	'os_kill_example.py', 'os_listdir.py', 'os_listdir.py~',
+	'os_process_id_example.py', 'os_process_user_example.py',
+	'os_spawn_example.py', 'os_stat.py', 'os_stat_chmod.py',
+	'os_stat_chmod_example.txt', 'os_symlinks.py',
+	'os_system_background.py', 'os_system_example.py',
+	'os_system_shell.py', 'os_wait_example.py',
+	'os_waitpid_example.py', 'os_walk.py']
+
+.. {{{end}}}
 
 The function :func:`walk` traverses a directory recursively and for
-each directory generates a :class:`tuple` containing the directory
+each subdirectory generates a :class:`tuple` containing the directory
 path, any immediate sub-directories of that path, and a list of the
 names of any files in that directory.
 
@@ -449,9 +481,9 @@ accomplish the same thing.
 	$ python3 -u os_system_background.py
 	
 	Calling...
-	Sun Jul 31 12:40:08 EDT 2016
+	Sun Jul 31 13:13:55 EDT 2016
 	Sleeping...
-	Sun Jul 31 12:40:11 EDT 2016
+	Sun Jul 31 13:13:58 EDT 2016
 
 .. {{{end}}}
 
@@ -484,7 +516,7 @@ example is run, but it will look something like:
 
 	$ python3 -u os_fork_example.py
 	
-	Child process id: 97164
+	Child process id: 99314
 	I am the child
 
 .. {{{end}}}
@@ -522,8 +554,8 @@ the parent time to send the signal.
 	PARENT: Pausing before sending signal...
 	CHILD: Setting up signal handler
 	CHILD: Pausing to wait for signal
-	PARENT: Signaling 97167
-	Received USR1 in process 97167
+	PARENT: Signaling 99317
+	Received USR1 in process 99317
 
 .. {{{end}}}
 
@@ -592,16 +624,16 @@ status code returned by the process when it exited.
 
 	$ python3 -u os_wait_example.py
 	
-	PARENT 97174: Forking 0
-	PARENT 97174: Forking 1
+	PARENT 99322: Forking 0
+	PARENT 99322: Forking 1
 	PARENT: Waiting for 0
 	WORKER 0: Starting
 	WORKER 1: Starting
 	WORKER 0: Finishing
-	PARENT: Child done: (97175, 0)
+	PARENT: Child done: (99323, 0)
 	PARENT: Waiting for 1
 	WORKER 1: Finishing
-	PARENT: Child done: (97176, 256)
+	PARENT: Child done: (99324, 256)
 
 .. {{{end}}}
 
@@ -622,16 +654,16 @@ until that process exits.
 
 	$ python3 -u os_waitpid_example.py
 	
-	PARENT 97178: Forking 0
-	PARENT 97178: Forking 1
-	PARENT: Waiting for 97179
+	PARENT 99326: Forking 0
+	PARENT 99326: Forking 1
+	PARENT: Waiting for 99327
 	WORKER 0: Starting
 	WORKER 1: Starting
 	WORKER 0: Finishing
-	PARENT: Child done: (97179, 0)
-	PARENT: Waiting for 97180
+	PARENT: Child done: (99327, 0)
+	PARENT: Waiting for 99328
 	WORKER 1: Finishing
-	PARENT: Child done: (97180, 256)
+	PARENT: Child done: (99328, 256)
 
 .. {{{end}}}
 
