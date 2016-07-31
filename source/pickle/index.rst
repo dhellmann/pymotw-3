@@ -1,15 +1,11 @@
-================================
- pickle -- Object Serialization
-================================
+=================================
+ pickle --- Object Serialization
+=================================
 
 .. module:: pickle
     :synopsis: Object serialization
 
-.. module:: cPickle
-    :synopsis: Object serialization
-
 :Purpose: Object serialization
-:Python Version: 1.4 and later for pickle, 1.5 and later for cPickle
 
 The :mod:`pickle` module implements an algorithm for turning an
 arbitrary Python object into a series of bytes.  This process is also
@@ -31,26 +27,6 @@ it is generally used instead of the pure-Python implementation.
     section for an example of a secure way to verify the source of a
     pickled data source.
 
-Importing
-=========
-
-Because :mod:`cPickle` is faster than :mod:`pickle`, it is common to
-first try to import :mod:`cPickle`, giving it an alias of "pickle",
-then fall back on the native Python implementation in :mod:`pickle` if
-the import fails. This means the program will use the faster
-implementation, if it is available, and the portable implementation
-otherwise.
-
-::
-
-    try:
-       import cPickle as pickle
-    except:
-       import pickle
-
-The API for the C and Python versions is the same, and data can be
-exchanged between programs using either version of the library.
-
 Encoding and Decoding Data in Strings
 =====================================
 
@@ -59,9 +35,9 @@ string, then prints the string to the console. It uses a data
 structure made up of entirely built-in types. Instances of any class
 can be pickled, as will be illustrated in a later example.
 
-.. include:: pickle_string.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: pickle_string.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 By default, the pickle will contain only ASCII characters. A more
 efficient binary pickle format is also available, but all of the
@@ -85,9 +61,9 @@ After the data is serialized, it can be written to a file, socket,
 pipe, etc.  Later, the file can be read and the data unpickled to
 construct a new object with the same values.
 
-.. include:: pickle_unpickle.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: pickle_unpickle.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The newly constructed object is equal to, but not the same object as,
 the original.
@@ -117,10 +93,9 @@ possible to write multiple objects to a stream, and then read them
 from the stream without knowing in advance how many objects are
 written, or how big they are.
 
-.. include:: pickle_stream.py
-    :literal:
-    :start-after: #end_pymotw_header
-
+.. literalinclude:: pickle_stream.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The example simulates streams using two :mod:`StringIO` buffers.  The
 first receives the pickled objects, and its value is fed to a second
@@ -165,10 +140,9 @@ the instance is pickled, not the class definition. The class name is
 used to find the constructor to create the new object when
 unpickling. This example writes instances of a class to a file:
 
-.. include:: pickle_dump_to_file_1.py
-    :literal:
-    :start-after: #end_pymotw_header
-
+.. literalinclude:: pickle_dump_to_file_1.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 When run, the script creates a file based on the name given as
 argument on the command line:
@@ -189,9 +163,9 @@ argument on the command line:
 
 A simplistic attempt to load the resulting pickled objects fails:
 
-.. include:: pickle_load_from_file_1.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: pickle_load_from_file_1.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 This version fails because there is no :class:`SimpleObject` class
 available.
@@ -269,9 +243,9 @@ reloaded.
      "b" -> "c";
      "a" -> "a";
 
-.. include:: pickle_cycle.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: pickle_cycle.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The reloaded nodes are not the same object, but the relationship
 between the nodes is maintained and only one copy of the object with
