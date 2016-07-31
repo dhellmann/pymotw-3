@@ -6,16 +6,15 @@
     :synopsis: Universally unique identifiers
 
 :Purpose: The :mod:`uuid` module implements Universally Unique Identifiers as described in RFC 4122.
-:Python Version: 2.5 and later
 
-RFC 4122 defines a system for creating universally unique identifiers
-for resources in a way that does not require a central registrar. UUID
-values are 128 bits long and, as the reference guide says, "can
-guarantee uniqueness across space and time." They are useful for
-generating identifiers for documents, hosts, application clients, and
-other situations where a unique value is necessary. The RFC is
-specifically focused on creating a Uniform Resource Name namespace and
-covers three main algorithms:
+:rfc:`4122` defines a system for creating universally unique
+identifiers for resources in a way that does not require a central
+registrar. UUID values are 128 bits long and, as the reference guide
+says, "can guarantee uniqueness across space and time." They are
+useful for generating identifiers for documents, hosts, application
+clients, and other situations where a unique value is necessary. The
+RFC is specifically focused on creating a Uniform Resource Name
+namespace and covers three main algorithms:
 
 + Using IEEE 802 MAC addresses as a source of uniqueness
 + Using pseudo-random numbers
@@ -29,12 +28,12 @@ UUID 1 - IEEE 802 MAC Address
 =============================
 
 UUID version 1 values are computed using the MAC address of the host.
-The :mod:`uuid` module uses :func:`getnode()` to retrieve the MAC
-value of the current system.
+The :mod:`uuid` module uses :func:`getnode` to retrieve the MAC value
+of the current system.
 
-.. include:: uuid_getnode.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: uuid_getnode.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 If a system has more than one network card, and so more than one MAC,
 any one of the values may be returned.
@@ -52,12 +51,12 @@ any one of the values may be returned.
 .. {{{end}}}
 
 To generate a UUID for a host, identified by its MAC address, use the
-:func:`uuid1()` function. The node identifier argument is optional;
-leave the field blank to use the value returned by :func:`getnode()`.
+:func:`uuid1` function. The node identifier argument is optional;
+leave the field blank to use the value returned by :func:`getnode`.
 
-.. include:: uuid_uuid1.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: uuid_uuid1.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The components of the UUID object returned can be accessed through
 read-only instance attributes. Some attributes, such as *hex*, *int*,
@@ -71,32 +70,32 @@ and *urn*, are different representations of the UUID value.
 
 	$ python3 uuid_uuid1.py
 	
-	eebc55f8-572b-11e6-8c41-c82a14598875
+	eecba340-572c-11e6-8999-c82a14598875
 	<class 'uuid.UUID'>
-	bytes   : b'\xee\xbcU\xf8W+\x11\xe6\x8cA\xc8*\x14Y\x88u'
-	hex     : eebc55f8572b11e68c41c82a14598875
-	int     : 317334158486592403472599947264459901045
-	urn     : urn:uuid:eebc55f8-572b-11e6-8c41-c82a14598875
+	bytes   : b'\xee\xcb\xa3@W,\x11\xe6\x89\x99\xc8*\x14Y\x88u'
+	hex     : eecba340572c11e68999c82a14598875
+	int     : 317413610389438817018311067027923110005
+	urn     : urn:uuid:eecba340-572c-11e6-8999-c82a14598875
 	variant : specified in RFC 4122
 	version : 1
-	fields  : (4005320184, 22315, 4582, 140, 65, 220083055593589)
-		time_low            :  4005320184
-		time_mid            :  22315
+	fields  : (4006323008, 22316, 4582, 137, 153, 220083055593589)
+		time_low            :  4006323008
+		time_mid            :  22316
 		time_hi_version     :  4582
-		clock_seq_hi_variant:  140
-		clock_seq_low       :  65
+		clock_seq_hi_variant:  137
+		clock_seq_low       :  153
 		node                :  220083055593589
-		time                :  136892684881909240
-		clock_seq           :  3137
+		time                :  136892689177879360
+		clock_seq           :  2457
 
 .. {{{end}}}
 
-Because of the time component, each call to :func:`uuid1()` returns a
+Because of the time component, each call to :func:`uuid1` returns a
 new value.
 
-.. include:: uuid_uuid1_repeat.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: uuid_uuid1_repeat.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 In this output, only the time component (at the beginning of the
 string) changes.
@@ -109,9 +108,9 @@ string) changes.
 
 	$ python3 uuid_uuid1_repeat.py
 	
-	eecadbbe-572b-11e6-9f3a-c82a14598875
-	eecd6eba-572b-11e6-a1c2-c82a14598875
-	eecd7010-572b-11e6-8117-c82a14598875
+	eedaeaf8-572c-11e6-9ab2-c82a14598875
+	eedd60da-572c-11e6-9280-c82a14598875
+	eedd621a-572c-11e6-8ae5-c82a14598875
 
 .. {{{end}}}
 
@@ -120,9 +119,9 @@ program on different systems will produce entirely different values.
 This example passes explicit node IDs to simulate running on different
 hosts.
 
-.. include:: uuid_uuid1_othermac.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: uuid_uuid1_othermac.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 In addition to a different time value the node identifier at the end
 of the UUID also changes.
@@ -135,8 +134,8 @@ of the UUID also changes.
 
 	$ python3 uuid_uuid1_othermac.py
 	
-	eed93100-572b-11e6-a885-001ec200d9e0 0x1ec200d9e0
-	eed989d4-572b-11e6-8db8-001e5274040e 0x1e5274040e
+	eee93718-572c-11e6-b165-001ec200d9e0 0x1ec200d9e0
+	eee9bfec-572c-11e6-93f1-001e5274040e 0x1e5274040e
 
 .. {{{end}}}
 
@@ -153,12 +152,12 @@ pre-defined UUID values, for working with DNS, URLs, ISO OIDs, and
 X.500 Distinguished Names. New application-specific namespaces can be
 defined by generating and saving UUID values.
 
-.. include:: uuid_uuid3_uuid5.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: uuid_uuid3_uuid5.py
+   :caption:
+   :start-after: #end_pymotw_header
 
-To create a UUID from a DNS name, pass ``uuid.NAMESPACE_DNS`` as the
-namespace argument to :func:`uuid3()` or :func:`uuid5()`:
+To create a UUID from a DNS name, pass :const:`uuid.NAMESPACE_DNS` as
+the namespace argument to :func:`uuid3` or :func:`uuid5`:
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'uuid_uuid3_uuid5.py'))
@@ -180,11 +179,11 @@ namespace argument to :func:`uuid3()` or :func:`uuid5()`:
 .. {{{end}}}
 
 The UUID value for a given name in a namespace is always the same, no
-matter when or where it is calculated. 
+matter when or where it is calculated.
 
-.. include:: uuid_uuid3_repeat.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: uuid_uuid3_repeat.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Values for the same name in the namespaces are different.
 
@@ -225,11 +224,11 @@ used as a hash key, a more random sequence of values with more
 differentiation is desirable to avoid collisions in the hash
 table. Having values with fewer common digits also makes it easier to
 find them in log files. To add greater differentiation in UUIDs, use
-:func:`uuid4()` to generate them using random input values.
+:func:`uuid4` to generate them using random input values.
 
-.. include:: uuid_uuid4.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: uuid_uuid4.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The source of randomness depends on which C libraries are available
 when :mod:`uuid` is imported.  If ``libuuid`` (or ``uuid.dll``) can be
@@ -245,9 +244,9 @@ used.
 
 	$ python3 uuid_uuid4.py
 	
-	3abdbb4a-0f0a-41e9-8d7b-adaa47aead59
-	4e279879-cb36-49a9-b815-e53a5989ca22
-	33d4d34c-833e-4bb6-b43a-534062e0e47e
+	d62f4162-26d8-411c-a0b5-95d71235af87
+	d27b5299-682e-4469-b458-7a647cb5de5c
+	c356a69c-09c4-4eea-9714-5ec24c7c5e69
 
 .. {{{end}}}
 
@@ -259,9 +258,9 @@ In addition to generating new UUID values, it is possible to parse
 strings in standard formats to create UUID objects, making it easier
 to handle comparisons and sorting operations.
 
-.. include:: uuid_uuid_objects.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: uuid_uuid_objects.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Surrounding curly braces are removed from the input, as are dashes
 (``-``).  If the string has a prefix containing ``urn:`` and/or
@@ -296,8 +295,7 @@ Surrounding curly braces are removed from the input, as are dashes
 
 .. seealso::
 
-    `uuid <http://docs.python.org/lib/module-uuid.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`uuid`
 
-    :rfc:`4122`
-        A Universally Unique Identifier (UUID) URN Namespace
+   * :rfc:`4122` -- A Universally Unique Identifier (UUID) URN
+     Namespace
