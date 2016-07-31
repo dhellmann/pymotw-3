@@ -652,6 +652,9 @@ The functions :func:`os.tmpnam`, :func:`os.tempnam` and
 :func:`os.tmpfile` have been removed. Use the :mod:`tempfile` module
 instead.
 
+The function :func:`os.stat_float_times` is deprecated
+(:pyissue:`14711`).
+
 
 .. _porting-pdb:
 
