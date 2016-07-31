@@ -13,19 +13,14 @@ called *serializing* the object. The byte stream representing the
 object can then be transmitted or stored, and later reconstructed to
 create a new object with the same characteristics.
 
-The :mod:`cPickle` module implements the same algorithm, in C instead
-of Python. It is many times faster than the Python implementation, so
-it is generally used instead of the pure-Python implementation.
-
 .. warning::
 
     The documentation for :mod:`pickle` makes clear that it offers no
     security guarantees. In fact, unpickling data can execute
     arbitrary code.  Be careful using :mod:`pickle` for inter-process
     communication or data storage, and do not trust data that cannot
-    be verified as secure.  See :ref:`hmac-pickle` in the :mod:`hmac`
-    section for an example of a secure way to verify the source of a
-    pickled data source.
+    be verified as secure.  See the :mod:`hmac` module for an example
+    of a secure way to verify the source of a pickled data source.
 
 Encoding and Decoding Data in Strings
 =====================================
@@ -39,21 +34,21 @@ can be pickled, as will be illustrated in a later example.
    :caption:
    :start-after: #end_pymotw_header
 
-By default, the pickle will contain only ASCII characters. A more
-efficient binary pickle format is also available, but all of the
-examples here use the ASCII output because it is easier to understand
-in print.
+By default, the pickle will be written in a binary format most
+compatible when sharing between Python 3 programs.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'pickle_string.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python pickle_string.py
+	$ python3 pickle_string.py
 	
-	DATA:[{'a': 'A', 'b': 2, 'c': 3.0}]
-	PICKLE: "(lp1\n(dp2\nS'a'\nS'A'\nsS'c'\nF3\nsS'b'\nI2\nsa."
+	DATA: [{'a': 'A', 'b': 2, 'c': 3.0}]
+	PICKLE: b'\x80\x03]q\x00}q\x01(X\x01\x00\x00\x00cq\x02G@\x08\x00
+	\x00\x00\x00\x00\x00X\x01\x00\x00\x00bq\x03K\x02X\x01\x00\x00\x0
+	0aq\x04X\x01\x00\x00\x00Aq\x05ua.'
 
 .. {{{end}}}
 
@@ -72,12 +67,12 @@ the original.
 .. cog.out(run_script(cog.inFile, 'pickle_unpickle.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python pickle_unpickle.py
+	$ python3 pickle_unpickle.py
 	
-	BEFORE: [{'a': 'A', 'b': 2, 'c': 3.0}]
-	AFTER : [{'a': 'A', 'b': 2, 'c': 3.0}]
+	BEFORE:  [{'a': 'A', 'b': 2, 'c': 3.0}]
+	AFTER :  [{'a': 'A', 'b': 2, 'c': 3.0}]
 	SAME? : False
 	EQUAL?: True
 
@@ -106,15 +101,15 @@ pickles to store objects, too (see :mod:`shelve`).
 .. cog.out(run_script(cog.inFile, 'pickle_stream.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python pickle_stream.py
+	$ python3 pickle_stream.py
 	
 	WRITING : pickle (elkcip)
-	WRITING : cPickle (elkciPc)
+	WRITING : preserve (evreserp)
 	WRITING : last (tsal)
 	READ    : pickle (elkcip)
-	READ    : cPickle (elkciPc)
+	READ    : preserve (evreserp)
 	READ    : last (tsal)
 
 .. {{{end}}}
@@ -151,12 +146,12 @@ argument on the command line:
 .. cog.out(run_script(cog.inFile, 'pickle_dump_to_file_1.py test.dat'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python pickle_dump_to_file_1.py test.dat
+	$ python3 pickle_dump_to_file_1.py test.dat
 	
 	WRITING: pickle (elkcip)
-	WRITING: cPickle (elkciPc)
+	WRITING: preserve (evreserp)
 	WRITING: last (tsal)
 
 .. {{{end}}}
@@ -174,14 +169,15 @@ available.
 .. cog.out(run_script(cog.inFile, 'pickle_load_from_file_1.py test.dat', ignore_error=True))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python pickle_load_from_file_1.py test.dat
+	$ python3 pickle_load_from_file_1.py test.dat
 	
 	Traceback (most recent call last):
-	  File "pickle_load_from_file_1.py", line 25, in <module>
+	  File "pickle_load_from_file_1.py", line 15, in <module>
 	    o = pickle.load(in_s)
-	AttributeError: 'module' object has no attribute 'SimpleObject'
+	AttributeError: Can't get attribute 'SimpleObject' on <module '_
+	_main__' from 'pickle_load_from_file_1.py'>
 
 .. {{{end}}}
 
@@ -200,12 +196,12 @@ Running the modified script now produces the desired results.
 .. cog.out(run_script(cog.inFile, 'pickle_load_from_file_2.py test.dat'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python pickle_load_from_file_2.py test.dat
+	$ python3 pickle_load_from_file_2.py test.dat
 	
 	READ: pickle (elkcip)
-	READ: cPickle (elkciPc)
+	READ: preserve (evreserp)
 	READ: last (tsal)
 
 .. {{{end}}}
@@ -257,25 +253,25 @@ after being passed through pickle.
 .. cog.out(run_script(cog.inFile, 'pickle_cycle.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python pickle_cycle.py
+	$ python3 pickle_cycle.py
 	
 	ORIGINAL GRAPH:
-	 root ->  a (4309376848)
-	    a ->  b (4309376912)
-	    b ->  a (4309376848)
-	    b ->  c (4309376976)
-	    a ->  a (4309376848)
-	 root ->  b (4309376912)
+	 root ->  a (4332575488)
+	    a ->  b (4332575600)
+	    b ->  a (4332575488)
+	    b ->  c (4332576328)
+	    a ->  a (4332575488)
+	 root ->  b (4332575600)
 	
 	RELOADED GRAPH:
-	 root ->  a (4309418128)
-	    a ->  b (4309418192)
-	    b ->  a (4309418128)
-	    b ->  c (4309418256)
-	    a ->  a (4309418128)
-	 root ->  b (4309418192)
+	 root ->  a (4332677216)
+	    a ->  b (4332677272)
+	    b ->  a (4332677216)
+	    b ->  c (4332677328)
+	    a ->  a (4332677216)
+	 root ->  b (4332677272)
 
 .. {{{end}}}
 
@@ -294,3 +290,5 @@ after being passed through pickle.
     `Why Python Pickle is Insecure <http://nadiana.com/python-pickle-insecure>`__
         A short example by Nadia Alramli demonstrating a security
         exploit using pickle.
+
+    :pep:`3154` -- Pickle protocol version 4

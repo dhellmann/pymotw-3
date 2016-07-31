@@ -67,6 +67,7 @@ to another.
 .. toctree::
    :maxdepth: 1
 
+   pickle/index
    shelve/index
    dbm/index
    csv/index
