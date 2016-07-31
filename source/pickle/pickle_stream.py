@@ -8,7 +8,7 @@ import pickle
 import pprint
 
 
-class SimpleObject(object):
+class SimpleObject:
 
     def __init__(self, name):
         self.name = name

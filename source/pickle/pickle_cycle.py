@@ -10,7 +10,7 @@
 import pickle
 
 
-class Node(object):
+class Node:
     """A simple digraph
     """
     def __init__(self, name):

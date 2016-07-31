@@ -7,7 +7,7 @@ import pickle
 import sys
 
 
-class SimpleObject(object):
+class SimpleObject:
 
     def __init__(self, name):
         self.name = name
