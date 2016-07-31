@@ -15,11 +15,11 @@ else:
 for dir_name, sub_dirs, files in os.walk(root):
     print(dir_name)
     # Make the subdirectory names stand out with /
-    sub_dirs = ['%s/' % n for n in sub_dirs]
+    sub_dirs = [n + '/' for n in sub_dirs]
     # Mix the directory contents together
     contents = sub_dirs + files
     contents.sort()
     # Show the contents
     for c in contents:
-        print('\t%s' % c)
+        print('\t{}'.format(c))
     print()

@@ -210,11 +210,11 @@ installed. Try passing different filenames on the command line to
 	$ python3 os_stat.py
 	
 	os.stat(os_stat.py):
-		Size: 471
+		Size: 477
 		Permissions: 0o100644
 		Owner: 501
 		Device: 16777220
-		Last modified: Sun Jul 31 11:05:01 2016
+		Last modified: Sun Jul 31 12:38:12 2016
 
 .. {{{end}}}
 
@@ -449,9 +449,9 @@ accomplish the same thing.
 	$ python3 -u os_system_background.py
 	
 	Calling...
-	Sun Jul 31 12:33:34 EDT 2016
+	Sun Jul 31 12:40:08 EDT 2016
 	Sleeping...
-	Sun Jul 31 12:33:37 EDT 2016
+	Sun Jul 31 12:40:11 EDT 2016
 
 .. {{{end}}}
 
@@ -484,7 +484,7 @@ example is run, but it will look something like:
 
 	$ python3 -u os_fork_example.py
 	
-	Child process id: 96513
+	Child process id: 97164
 	I am the child
 
 .. {{{end}}}
@@ -522,8 +522,8 @@ the parent time to send the signal.
 	PARENT: Pausing before sending signal...
 	CHILD: Setting up signal handler
 	CHILD: Pausing to wait for signal
-	PARENT: Signaling 96516
-	Received USR1 in process 96516
+	PARENT: Signaling 97167
+	Received USR1 in process 97167
 
 .. {{{end}}}
 
@@ -592,16 +592,16 @@ status code returned by the process when it exited.
 
 	$ python3 -u os_wait_example.py
 	
-	PARENT 96521: Forking 0
-	PARENT 96521: Forking 1
+	PARENT 97174: Forking 0
+	PARENT 97174: Forking 1
 	PARENT: Waiting for 0
 	WORKER 0: Starting
 	WORKER 1: Starting
 	WORKER 0: Finishing
-	PARENT: Child done: (96522, 0)
+	PARENT: Child done: (97175, 0)
 	PARENT: Waiting for 1
 	WORKER 1: Finishing
-	PARENT: Child done: (96523, 256)
+	PARENT: Child done: (97176, 256)
 
 .. {{{end}}}
 
@@ -622,16 +622,16 @@ until that process exits.
 
 	$ python3 -u os_waitpid_example.py
 	
-	PARENT 96525: Forking 0
-	PARENT 96525: Forking 1
-	PARENT: Waiting for 96526
+	PARENT 97178: Forking 0
+	PARENT 97178: Forking 1
+	PARENT: Waiting for 97179
 	WORKER 0: Starting
 	WORKER 1: Starting
 	WORKER 0: Finishing
-	PARENT: Child done: (96526, 0)
-	PARENT: Waiting for 96527
+	PARENT: Child done: (97179, 0)
+	PARENT: Waiting for 97180
 	WORKER 1: Finishing
-	PARENT: Child done: (96527, 256)
+	PARENT: Child done: (97180, 256)
 
 .. {{{end}}}
 

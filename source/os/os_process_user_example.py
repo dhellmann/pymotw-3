@@ -10,10 +10,10 @@ TEST_UID = 502
 
 
 def show_user_info():
-    print('User (actual/effective)  : %d / %d' %
-          (os.getuid(), os.geteuid()))
-    print('Group (actual/effective) : %d / %d' %
-          (os.getgid(), os.getegid()))
+    print('User (actual/effective)  : {} / {}'.format(
+        os.getuid(), os.geteuid()))
+    print('Group (actual/effective) : {} / {}'.format(
+        os.getgid(), os.getegid()))
     print('Actual Groups   :', os.getgroups())
 
 
