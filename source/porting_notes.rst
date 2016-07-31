@@ -642,11 +642,15 @@ os
 .. index::
    pair: porting; os
 
-The functions :func:`popen`, :func:`popen2`, :func:`popen3`, and
-:func:`popen4` are still present but deprecated and emit warnings if
-used. Code using these functions should be rewritten to use
-:mod:`subprocess` instead to be more portable across operating
+The functions :func:`popen2`, :func:`popen3`, and :func:`popen4` have
+been removed.  :func:`popen` is still present but deprecated and emits
+warnings if used.  Code using these functions should be rewritten to
+use :mod:`subprocess` instead to be more portable across operating
 systems.
+
+The functions :func:`os.tmpnam`, :func:`os.tempnam` and
+:func:`os.tmpfile` have been removed. Use the :mod:`tempfile` module
+instead.
 
 
 .. _porting-pdb:
