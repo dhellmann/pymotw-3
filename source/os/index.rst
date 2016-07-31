@@ -48,11 +48,11 @@ or symlinks.
 	'os_kill_example.py', 'os_listdir.py', 'os_listdir.py~',
 	'os_process_id_example.py', 'os_process_user_example.py',
 	'os_rename_replace.py', 'os_rename_replace.py~',
-	'os_spawn_example.py', 'os_stat.py', 'os_stat_chmod.py',
-	'os_stat_chmod_example.txt', 'os_symlinks.py',
-	'os_system_background.py', 'os_system_example.py',
-	'os_system_shell.py', 'os_wait_example.py',
-	'os_waitpid_example.py', 'os_walk.py']
+	'os_scandir.py', 'os_scandir.py~', 'os_spawn_example.py',
+	'os_stat.py', 'os_stat_chmod.py', 'os_stat_chmod_example.txt',
+	'os_symlinks.py', 'os_system_background.py',
+	'os_system_example.py', 'os_system_shell.py',
+	'os_wait_example.py', 'os_waitpid_example.py', 'os_walk.py']
 
 .. {{{end}}}
 
@@ -102,6 +102,59 @@ This example shows a recursive directory listing.
 	
 
 .. {{{end}}}
+
+If more information is needed than the names of the files, it is
+likely to be more efficient to use :func:`scandir` than
+:func:`listdir` because more information is collected in one system
+call when the directory is scanned.
+
+.. literalinclude:: os_scandir.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+:func:`scandir` returns a sequence of :class:`DirEntry` instances for
+the items in the directory. The object has several attributes and
+methods for accessing metadata about the file.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'os_scandir.py .'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 os_scandir.py .
+	
+	index.rst file
+	os_access.py file
+	os_cwd_example.py file
+	os_directories.py file
+	os_environ_example.py file
+	os_exec_example.py file
+	os_fork_example.py file
+	os_kill_example.py file
+	os_listdir.py file
+	os_listdir.py~ file
+	os_process_id_example.py file
+	os_process_user_example.py file
+	os_rename_replace.py file
+	os_rename_replace.py~ file
+	os_scandir.py file
+	os_scandir.py~ file
+	os_spawn_example.py file
+	os_stat.py file
+	os_stat_chmod.py file
+	os_stat_chmod_example.txt file
+	os_symlinks.py file
+	os_system_background.py file
+	os_system_example.py file
+	os_system_shell.py file
+	os_wait_example.py file
+	os_waitpid_example.py file
+	os_walk.py file
+
+.. {{{end}}}
+
+
 
 Managing File System Permissions
 ================================
