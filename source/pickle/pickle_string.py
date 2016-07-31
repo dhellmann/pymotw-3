@@ -11,4 +11,4 @@ print('DATA:', end=' ')
 pprint.pprint(data)
 
 data_string = pickle.dumps(data)
-print('PICKLE: %r' % data_string)
+print('PICKLE: {!r}'.format(data_string))

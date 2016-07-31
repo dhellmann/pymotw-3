@@ -45,8 +45,8 @@ def show_edges(root):
     for parent, child in preorder_traversal(root):
         if not parent:
             continue
-        print('%5s -> %2s (%s)' %
-              (parent.name, child.name, id(child)))
+        print('{:>5} -> {:>2} ({})'.format(
+            parent.name, child.name, id(child)))
 
 
 # Set up the nodes.

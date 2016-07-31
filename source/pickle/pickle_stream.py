@@ -26,7 +26,7 @@ out_s = io.BytesIO()
 
 # Write to the stream
 for o in data:
-    print('WRITING : %s (%s)' % (o.name, o.name_backwards))
+    print('WRITING : {} ({})'.format(o.name, o.name_backwards))
     pickle.dump(o, out_s)
     out_s.flush()
 
@@ -40,4 +40,5 @@ while True:
     except EOFError:
         break
     else:
-        print('READ    : %s (%s)' % (o.name, o.name_backwards))
+        print('READ    : {} ({})'.format(
+            o.name, o.name_backwards))

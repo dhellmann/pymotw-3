@@ -18,4 +18,5 @@ with open(filename, 'rb') as in_s:
         except EOFError:
             break
         else:
-            print('READ: %s (%s)' % (o.name, o.name_backwards))
+            print('READ: {} ({})'.format(
+                o.name, o.name_backwards))
