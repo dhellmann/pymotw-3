@@ -203,6 +203,7 @@ installed. Try passing different filenames on the command line to
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'os_stat.py'))
+.. cog.out(run_script(cog.inFile, 'os_stat.py index.rst', include_prefix=False))
 .. }}}
 
 .. code-block:: none
@@ -210,11 +211,24 @@ installed. Try passing different filenames on the command line to
 	$ python3 os_stat.py
 	
 	os.stat(os_stat.py):
-		Size: 477
+		Size: 593
 		Permissions: 0o100644
 		Owner: 501
 		Device: 16777220
-		Last modified: Sun Jul 31 12:38:12 2016
+		Created      : Sun Jul 31 14:38:02 2016
+		Last modified: Sun Jul 31 14:38:02 2016
+		Last accessed: Sun Jul 31 14:39:20 2016
+
+	$ python3 os_stat.py index.rst
+	
+	os.stat(index.rst):
+		Size: 23410
+		Permissions: 0o100644
+		Owner: 501
+		Device: 16777220
+		Created      : Sun Jul 31 14:39:16 2016
+		Last modified: Sun Jul 31 14:39:16 2016
+		Last accessed: Sun Jul 31 14:39:20 2016
 
 .. {{{end}}}
 
@@ -481,9 +495,9 @@ accomplish the same thing.
 	$ python3 -u os_system_background.py
 	
 	Calling...
-	Sun Jul 31 13:13:55 EDT 2016
+	Sun Jul 31 14:39:21 EDT 2016
 	Sleeping...
-	Sun Jul 31 13:13:58 EDT 2016
+	Sun Jul 31 14:39:24 EDT 2016
 
 .. {{{end}}}
 
@@ -516,7 +530,7 @@ example is run, but it will look something like:
 
 	$ python3 -u os_fork_example.py
 	
-	Child process id: 99314
+	Child process id: 1077
 	I am the child
 
 .. {{{end}}}
@@ -554,8 +568,8 @@ the parent time to send the signal.
 	PARENT: Pausing before sending signal...
 	CHILD: Setting up signal handler
 	CHILD: Pausing to wait for signal
-	PARENT: Signaling 99317
-	Received USR1 in process 99317
+	PARENT: Signaling 1080
+	Received USR1 in process 1080
 
 .. {{{end}}}
 
@@ -624,16 +638,16 @@ status code returned by the process when it exited.
 
 	$ python3 -u os_wait_example.py
 	
-	PARENT 99322: Forking 0
-	PARENT 99322: Forking 1
+	PARENT 1085: Forking 0
+	PARENT 1085: Forking 1
 	PARENT: Waiting for 0
 	WORKER 0: Starting
 	WORKER 1: Starting
 	WORKER 0: Finishing
-	PARENT: Child done: (99323, 0)
+	PARENT: Child done: (1086, 0)
 	PARENT: Waiting for 1
 	WORKER 1: Finishing
-	PARENT: Child done: (99324, 256)
+	PARENT: Child done: (1087, 256)
 
 .. {{{end}}}
 
@@ -654,16 +668,16 @@ until that process exits.
 
 	$ python3 -u os_waitpid_example.py
 	
-	PARENT 99326: Forking 0
-	PARENT 99326: Forking 1
-	PARENT: Waiting for 99327
+	PARENT 1089: Forking 0
+	PARENT 1089: Forking 1
+	PARENT: Waiting for 1090
 	WORKER 0: Starting
 	WORKER 1: Starting
 	WORKER 0: Finishing
-	PARENT: Child done: (99327, 0)
-	PARENT: Waiting for 99328
+	PARENT: Child done: (1090, 0)
+	PARENT: Waiting for 1091
 	WORKER 1: Finishing
-	PARENT: Child done: (99328, 256)
+	PARENT: Child done: (1091, 256)
 
 .. {{{end}}}
 
