@@ -47,6 +47,7 @@ or symlinks.
 	'os_exec_example.py', 'os_fork_example.py',
 	'os_kill_example.py', 'os_listdir.py', 'os_listdir.py~',
 	'os_process_id_example.py', 'os_process_user_example.py',
+	'os_rename_replace.py', 'os_rename_replace.py~',
 	'os_spawn_example.py', 'os_stat.py', 'os_stat_chmod.py',
 	'os_stat_chmod_example.txt', 'os_symlinks.py',
 	'os_system_background.py', 'os_system_example.py',
@@ -276,6 +277,39 @@ links.
 	Points to: os_symlinks.py
 
 .. {{{end}}}
+
+Safely Replacing an Existing File
+=================================
+
+Replacing or renaming an existing file is not idempotent and may
+expose applications to race conditions. The :func:`rename` and
+:func:`replace` functions implement safe algorithms for these actions,
+using atomic operations on POSIX-compliant systems when possible.
+
+.. literalinclude:: os_rename_replace.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The :func:`rename` and :func:`replace` functions work across
+filesystems, most of the time. Renaming a file may fail if it is being
+moved to a new fileystem or if the destination already exists.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'os_rename_replace.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 os_rename_replace.py
+	
+	Starting: ['rename_start.txt']
+	After rename: ['rename_finish.txt']
+	Contents: 'starting as rename_start.txt'
+	After replace: 'ending with contents of rename_new_contents.txt'
+
+.. {{{end}}}
+
+
 
 Detecting and Changing the Process Owner
 ========================================
