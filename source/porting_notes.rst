@@ -711,6 +711,10 @@ possible that data pickled under Python 3.1 can't be read under Python
 3.0. To ensure maximum portability between Python 3 applications, use
 protocol level 3, which does not include this compatibility feature.
 
+The default protocol version has changed from ``0``, the
+human-readable version, to ``3``, the binary format with the best
+interoperability when shared between Python 3 applications.
+
 Byte string data written to a pickle by a Python 2.x application is
 decoded when it is read back to create a Unicode string object. The
 encoding for the transformation defaults to ASCII, and can be changed
