@@ -1,6 +1,6 @@
-========================================
- uuid -- Universally Unique Identifiers
-========================================
+=========================================
+ uuid --- Universally Unique Identifiers
+=========================================
 
 .. module:: uuid
     :synopsis: Universally unique identifiers
@@ -43,11 +43,11 @@ any one of the values may be returned.
 .. cog.out(run_script(cog.inFile, 'uuid_getnode.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python uuid_getnode.py
-
-	0x1e5274040e
+	$ python3 uuid_getnode.py
+	
+	0xc82a14598875
 
 .. {{{end}}}
 
@@ -67,27 +67,27 @@ and *urn*, are different representations of the UUID value.
 .. cog.out(run_script(cog.inFile, 'uuid_uuid1.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python uuid_uuid1.py
-
-	c7887eee-ea6a-11df-a6cf-001e5274040e
+	$ python3 uuid_uuid1.py
+	
+	eebc55f8-572b-11e6-8c41-c82a14598875
 	<class 'uuid.UUID'>
-	bytes   : '\xc7\x88~\xee\xeaj\x11\xdf\xa6\xcf\x00\x1eRt\x04\x0e'
-	hex     : c7887eeeea6a11dfa6cf001e5274040e
-	int     : 265225098046419456611671377169708483598
-	urn     : urn:uuid:c7887eee-ea6a-11df-a6cf-001e5274040e
+	bytes   : b'\xee\xbcU\xf8W+\x11\xe6\x8cA\xc8*\x14Y\x88u'
+	hex     : eebc55f8572b11e68c41c82a14598875
+	int     : 317334158486592403472599947264459901045
+	urn     : urn:uuid:eebc55f8-572b-11e6-8c41-c82a14598875
 	variant : specified in RFC 4122
 	version : 1
-	fields  : (3347611374L, 60010L, 4575L, 166L, 207L, 130232353806L)
-		time_low            :  3347611374
-		time_mid            :  60010
-		time_hi_version     :  4575
-		clock_seq_hi_variant:  166
-		clock_seq_low       :  207
-		node                :  130232353806
-		time                :  135084258179448558
-		clock_seq           :  9935
+	fields  : (4005320184, 22315, 4582, 140, 65, 220083055593589)
+		time_low            :  4005320184
+		time_mid            :  22315
+		time_hi_version     :  4582
+		clock_seq_hi_variant:  140
+		clock_seq_low       :  65
+		node                :  220083055593589
+		time                :  136892684881909240
+		clock_seq           :  3137
 
 .. {{{end}}}
 
@@ -105,13 +105,13 @@ string) changes.
 .. cog.out(run_script(cog.inFile, 'uuid_uuid1_repeat.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python uuid_uuid1_repeat.py
-
-	c794da9c-ea6a-11df-9382-001e5274040e
-	c797121c-ea6a-11df-9e67-001e5274040e
-	c79713a1-ea6a-11df-ac7d-001e5274040e
+	$ python3 uuid_uuid1_repeat.py
+	
+	eecadbbe-572b-11e6-9f3a-c82a14598875
+	eecd6eba-572b-11e6-a1c2-c82a14598875
+	eecd7010-572b-11e6-8117-c82a14598875
 
 .. {{{end}}}
 
@@ -131,12 +131,12 @@ of the UUID also changes.
 .. cog.out(run_script(cog.inFile, 'uuid_uuid1_othermac.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python uuid_uuid1_othermac.py
-
-	c7a313a8-ea6a-11df-a228-001ec200d9e0 0x1ec200d9e0
-	c7a3f751-ea6a-11df-988b-001e5274040e 0x1e5274040e
+	$ python3 uuid_uuid1_othermac.py
+	
+	eed93100-572b-11e6-a885-001ec200d9e0 0x1ec200d9e0
+	eed989d4-572b-11e6-8db8-001e5274040e 0x1e5274040e
 
 .. {{{end}}}
 
@@ -164,10 +164,10 @@ namespace argument to :func:`uuid3()` or :func:`uuid5()`:
 .. cog.out(run_script(cog.inFile, 'uuid_uuid3_uuid5.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python uuid_uuid3_uuid5.py
-
+	$ python3 uuid_uuid3_uuid5.py
+	
 	www.doughellmann.com
 	  MD5   : bcd02e22-68f0-3046-a512-327cca9def8f
 	  SHA-1 : e3329b12-30b7-57c4-8117-c2cd34a87ce9
@@ -192,10 +192,10 @@ Values for the same name in the namespaces are different.
 .. cog.out(run_script(cog.inFile, 'uuid_uuid3_repeat.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python uuid_uuid3_repeat.py
-
+	$ python3 uuid_uuid3_repeat.py
+	
 	NAMESPACE_DNS
 	  bcd02e22-68f0-3046-a512-327cca9def8f
 	  bcd02e22-68f0-3046-a512-327cca9def8f
@@ -241,13 +241,13 @@ used.
 .. cog.out(run_script(cog.inFile, 'uuid_uuid4.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python uuid_uuid4.py
-
-	b2637198-4629-44c2-8b9b-07a6ff601a89
-	d1b850c6-f842-4a25-a993-6d6160dda761
-	50fb5234-abce-40b8-b034-ba3637dad6fc
+	$ python3 uuid_uuid4.py
+	
+	3abdbb4a-0f0a-41e9-8d7b-adaa47aead59
+	4e279879-cb36-49a9-b815-e53a5989ca22
+	33d4d34c-833e-4bb6-b43a-534062e0e47e
 
 .. {{{end}}}
 
@@ -272,10 +272,10 @@ Surrounding curly braces are removed from the input, as are dashes
 .. cog.out(run_script(cog.inFile, 'uuid_uuid_objects.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python uuid_uuid_objects.py
-
+	$ python3 uuid_uuid_objects.py
+	
 	input_values
 	  urn:uuid:f2f84497-b3bf-493a-bba9-7c68e6def80b
 	  {417a5ebb-01f7-4ed5-aeac-3d56cd5037b0}

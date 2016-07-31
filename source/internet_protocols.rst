@@ -54,6 +54,7 @@ Complete XML-RPC client and server libraries are also included in
     webbrowser/index
     xmlrpc.client/index
     xmlrpc.server/index
+    uuid/index
 
 ..
     urlparse/index
