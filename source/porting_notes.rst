@@ -669,6 +669,53 @@ The ``print`` command alias has been removed so that it does not
 shadow the ``print()`` function (:pyissue:`18764`). The ``p`` shortcut
 is retained.
 
+.. _porting-pickle:
+
+pickle
+------
+
+.. index::
+   pair: porting; pickle
+
+The C implementation of the pickle module from Python 2 has been moved
+to a new module that is automatically used to replace the Python
+implementation when possible. The old import idiom of
+
+::
+
+    try:
+       import cPickle as pickle
+    except:
+       import pickle
+
+can be replaced with
+
+::
+
+    import pickle
+
+Interoperability between Python 2.x and 3.x has been improved for
+pickled data using the level 2 protocol or lower to resolve an issue
+introduced when a large number of standard library modules were
+renamed during the transition to Python 3. Because pickled data
+includes references to class and type names, and those names changed,
+it was difficult to exchange pickled data between Python 2 and 3
+programs. Now for data pickled using protocol level 2 or older, the
+old names of the classes are automatically used when writing to and
+reading from a pickle stream.
+
+This behavior is available by default, and can be turned off using the
+``fix_imports`` option. This change improves the situation, but does
+not eliminate incompatibilities entirely. In particular, it is
+possible that data pickled under Python 3.1 can't be read under Python
+3.0. To ensure maximum portability between Python 3 applications, use
+protocol level 3, which does not include this compatibility feature.
+
+Byte string data written to a pickle by a Python 2.x application is
+decoded when it is read back to create a Unicode string object. The
+encoding for the transformation defaults to ASCII, and can be changed
+by passing values to the :class:`Unpickler`.
+
 .. _porting-pipes:
 
 pipes
