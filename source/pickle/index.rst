@@ -278,17 +278,17 @@ after being passed through pickle.
 
 .. seealso::
 
-    `pickle <http://docs.python.org/lib/module-pickle.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`pickle`
 
-    :mod:`shelve`
-        The ``shelve`` module uses ``pickle`` to store data in a DBM database.
+   * :pep:`3154` -- Pickle protocol version 4
 
-    `Pickle: An interesting stack language. <http://peadrop.com/blog/2007/06/18/pickle-an-interesting-stack-language/>`__
-        by Alexandre Vassalotti
+   * :mod:`shelve` -- The ``shelve`` module uses ``pickle`` to store
+     data in a DBM database.
 
-    `Why Python Pickle is Insecure <http://nadiana.com/python-pickle-insecure>`__
-        A short example by Nadia Alramli demonstrating a security
-        exploit using pickle.
+   * `Pickle: An interesting stack
+     language. <http://peadrop.com/blog/2007/06/18/pickle-an-interesting-stack-language/>`__
+     -- by Alexandre Vassalotti
 
-    :pep:`3154` -- Pickle protocol version 4
+   * `Why Python Pickle is Insecure
+     <http://nadiana.com/python-pickle-insecure>`__ -- A short example
+     by Nadia Alramli demonstrating a security exploit using pickle.
