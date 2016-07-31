@@ -634,6 +634,21 @@ mmap
 Values returned from read APIs are byte strings, and need to be
 decoded before being treated as text.
 
+.. _porting-os:
+
+os
+--
+
+.. index::
+   pair: porting; os
+
+The functions :func:`popen`, :func:`popen2`, :func:`popen3`, and
+:func:`popen4` are still present but deprecated and emit warnings if
+used. Code using these functions should be rewritten to use
+:mod:`subprocess` instead to be more portable across operating
+systems.
+
+
 .. _porting-pdb:
 
 pdb
