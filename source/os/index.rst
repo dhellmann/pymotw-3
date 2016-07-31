@@ -50,9 +50,10 @@ or symlinks.
 	'os_rename_replace.py', 'os_rename_replace.py~',
 	'os_scandir.py', 'os_scandir.py~', 'os_spawn_example.py',
 	'os_stat.py', 'os_stat_chmod.py', 'os_stat_chmod_example.txt',
-	'os_symlinks.py', 'os_system_background.py',
-	'os_system_example.py', 'os_system_shell.py',
-	'os_wait_example.py', 'os_waitpid_example.py', 'os_walk.py']
+	'os_strerror.py', 'os_strerror.py~', 'os_symlinks.py',
+	'os_system_background.py', 'os_system_example.py',
+	'os_system_shell.py', 'os_wait_example.py',
+	'os_waitpid_example.py', 'os_walk.py']
 
 .. {{{end}}}
 
@@ -144,6 +145,8 @@ methods for accessing metadata about the file.
 	os_stat.py file
 	os_stat_chmod.py file
 	os_stat_chmod_example.txt file
+	os_strerror.py file
+	os_strerror.py~ file
 	os_symlinks.py file
 	os_system_background.py file
 	os_system_example.py file
@@ -187,18 +190,18 @@ installed. Try passing different filenames on the command line to
 		Device: 16777220
 		Created      : Sun Jul 31 14:38:02 2016
 		Last modified: Sun Jul 31 14:38:02 2016
-		Last accessed: Sun Jul 31 14:54:20 2016
+		Last accessed: Sun Jul 31 15:54:32 2016
 
 	$ python3 os_stat.py index.rst
 	
 	os.stat(index.rst):
-		Size: 23837
+		Size: 31508
 		Permissions: 0o100644
 		Owner: 501
 		Device: 16777220
-		Created      : Sun Jul 31 14:54:14 2016
-		Last modified: Sun Jul 31 14:54:14 2016
-		Last accessed: Sun Jul 31 14:54:20 2016
+		Created      : Sun Jul 31 15:52:09 2016
+		Last modified: Sun Jul 31 15:52:09 2016
+		Last accessed: Sun Jul 31 15:54:31 2016
 
 .. {{{end}}}
 
@@ -617,9 +620,9 @@ accomplish the same thing.
 	$ python3 -u os_system_background.py
 	
 	Calling...
-	Sun Jul 31 14:54:21 EDT 2016
+	Sun Jul 31 15:54:32 EDT 2016
 	Sleeping...
-	Sun Jul 31 14:54:24 EDT 2016
+	Sun Jul 31 15:54:35 EDT 2016
 
 .. {{{end}}}
 
@@ -652,7 +655,7 @@ example is run, but it will look something like:
 
 	$ python3 -u os_fork_example.py
 	
-	Child process id: 2758
+	Child process id: 7527
 	I am the child
 
 .. {{{end}}}
@@ -690,8 +693,8 @@ the parent time to send the signal.
 	PARENT: Pausing before sending signal...
 	CHILD: Setting up signal handler
 	CHILD: Pausing to wait for signal
-	PARENT: Signaling 2761
-	Received USR1 in process 2761
+	PARENT: Signaling 7530
+	Received USR1 in process 7530
 
 .. {{{end}}}
 
@@ -760,16 +763,16 @@ status code returned by the process when it exited.
 
 	$ python3 -u os_wait_example.py
 	
-	PARENT 2872: Forking 0
-	PARENT 2872: Forking 1
+	PARENT 7535: Forking 0
+	PARENT 7535: Forking 1
 	PARENT: Waiting for 0
 	WORKER 0: Starting
 	WORKER 1: Starting
 	WORKER 0: Finishing
-	PARENT: Child done: (2873, 0)
+	PARENT: Child done: (7536, 0)
 	PARENT: Waiting for 1
 	WORKER 1: Finishing
-	PARENT: Child done: (2874, 256)
+	PARENT: Child done: (7537, 256)
 
 .. {{{end}}}
 
@@ -790,16 +793,16 @@ until that process exits.
 
 	$ python3 -u os_waitpid_example.py
 	
-	PARENT 2876: Forking 0
-	PARENT 2876: Forking 1
-	PARENT: Waiting for 2877
+	PARENT 7539: Forking 0
+	PARENT 7539: Forking 1
+	PARENT: Waiting for 7540
 	WORKER 0: Starting
 	WORKER 1: Starting
 	WORKER 0: Finishing
-	PARENT: Child done: (2877, 0)
-	PARENT: Waiting for 2878
+	PARENT: Child done: (7540, 0)
+	PARENT: Waiting for 7541
 	WORKER 1: Finishing
-	PARENT: Child done: (2878, 256)
+	PARENT: Child done: (7541, 256)
 
 .. {{{end}}}
 
@@ -831,6 +834,34 @@ the current process.
 	$ python3 os_spawn_example.py
 	
 	.../pymotw-3/source/os
+
+.. {{{end}}}
+
+Operating System Error Codes
+============================
+
+Error codes defined by the operating system and managed in the
+:mod:`errno` module can be translated to message strings using
+:func:`strerror`.
+
+.. literalinclude:: os_strerror.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+This example shows the messages associated with some error codes that
+come up frequently.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'os_strerror.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 os_strerror.py
+	
+	[ 2] ENOENT: No such file or directory
+	[ 4] EINTR : Interrupted system call
+	[16] EBUSY : Resource busy
 
 .. {{{end}}}
 
