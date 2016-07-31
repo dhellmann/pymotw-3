@@ -655,6 +655,7 @@ instead.
 The function :func:`os.stat_float_times` is deprecated
 (:pyissue:`14711`).
 
+:func:`os.unsetenv` no longer ignores errors (:pyissue:`13415`).
 
 .. _porting-pdb:
 
