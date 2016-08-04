@@ -214,10 +214,44 @@ connections, and other objects with runtime state that depends on the
 operating system or another process may not be able to be saved in a
 meaningful way. Objects that have non-picklable attributes can define
 :func:`__getstate__` and :func:`__setstate__` to return a subset of the
-state of the instance to be pickled. New-style classes can also define
-:func:`__getnewargs__`, which should return arguments to be passed to
-the class memory allocator (:func:`C.__new__`).  Use of these features
-is covered in more detail in the standard library documentation.
+state of the instance to be pickled.
+
+The :func:`__getstate__` method must return an object containing the
+internal state of the object. One convenient way to represent that
+state is with a dictionary, but the value can be any picklable
+object. The state is stored, and passed to :func:`__setstate__` when
+the object is loaded from the pickle.
+
+.. literalinclude:: pickle_state.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+This example uses a separate :class:`State` object to hold the
+internal state of :class:`MyClass`. When an instance of
+:class:`MyClass` is loaded from a pickle, :func:`__setstate__` is
+passed a :class:`State` instance which it uses to initialize the
+object.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'pickle_state.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 pickle_state.py
+	
+	MyClass.__init__(name here)
+	Before: MyClass('name here') (computed='ereh eman')
+	__getstate__ -> State({'name': 'name here'})
+	__setstate__(State({'name': 'name here'}))
+	After: MyClass('name here') (computed='ereh eman')
+
+.. {{{end}}}
+
+.. warning::
+
+   If the return value is false, then :func:`__setstate__` is not
+   called when the object is unpickled.
 
 Circular References
 ===================
