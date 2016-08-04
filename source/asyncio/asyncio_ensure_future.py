@@ -9,11 +9,6 @@
 import asyncio
 
 
-def mark_done(future, result):
-    print('setting future result to {!r}'.format(result))
-    future.set_result(result)
-
-
 async def wrapped():
     print('wrapped')
     return 'result'
