@@ -669,6 +669,9 @@ removed. Use the relevant abstract base classes from
    isinstance(obj, collections.Sequence)
    isinstance(obj, numbers.Number)
 
+The :func:`sequenceIncludes` function has been removed. Use
+:func:`contains` instead.
+
 .. _porting-os:
 
 os
