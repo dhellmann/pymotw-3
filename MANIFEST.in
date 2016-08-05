@@ -1,2 +1,4 @@
-recursive-include source *.py
+recursive-include source *.py *.txt *.pth *.ini
+recursive-include source/csv *.csv *.pipes
+include source/difflib/output.diff
 prune source/_exts
