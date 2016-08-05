@@ -34,10 +34,5 @@ other resources are closed and released at the right time.
 
     functools/index
     itertools/index
-    contextlib/index
-
-..
-    x functools/index
-    x itertools/index
     operator/index
-    x contextlib/index
+    contextlib/index
