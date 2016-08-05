@@ -1,12 +1,10 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2008 Doug Hellmann All rights reserved.
 #
 """
 """
-
-__version__ = "$Id$"
 #end_pymotw_header
 
 import cProfile as profile
@@ -20,8 +18,8 @@ for i in range(1, 5):
 stats.strip_dirs()
 stats.sort_stats('cumulative')
 
-print 'INCOMING CALLERS:'
+print('INCOMING CALLERS:')
 stats.print_callers('\(fib')
 
-print 'OUTGOING CALLEES:'
+print('OUTGOING CALLEES:')
 stats.print_callees('\(fib')

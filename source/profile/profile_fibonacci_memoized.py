@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2008 Doug Hellmann All rights reserved.
@@ -7,9 +7,11 @@
 
 import profile
 
+
 class memoize:
     # from Avinash Vora's memoize decorator
     # http://bit.ly/fGzfR7
+
     def __init__(self, function):
         self.function = function
         self.memoized = {}
@@ -21,6 +23,7 @@ class memoize:
             self.memoized[args] = self.function(*args)
             return self.memoized[args]
 
+
 @memoize
 def fib(n):
     # from literateprograms.org
@@ -30,14 +33,16 @@ def fib(n):
     elif n == 1:
         return 1
     else:
-        return fib(n-1) + fib(n-2)
+        return fib(n - 1) + fib(n - 2)
+
 
 def fib_seq(n):
-    seq = [ ]
+    seq = []
     if n > 0:
-        seq.extend(fib_seq(n-1))
+        seq.extend(fib_seq(n - 1))
     seq.append(fib(n))
     return seq
 
+
 if __name__ == '__main__':
-    profile.run('print fib_seq(20); print')
+    profile.run('print(fib_seq(20)); print()')
