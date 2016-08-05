@@ -57,9 +57,9 @@ maintained as new items are added from a data source.
 .. cog.out(run_script(cog.inFile, 'heapq_heappush.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python heapq_heappush.py
+	$ python3 heapq_heappush.py
 	
 	random : [19, 9, 4, 10, 11]
 	
@@ -112,9 +112,9 @@ same as building it unordered and then calling :func:`heapify`.
 .. cog.out(run_script(cog.inFile, 'heapq_heapify.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python heapq_heapify.py
+	$ python3 heapq_heapify.py
 	
 	random    : [19, 9, 4, 10, 11]
 	heapified :
@@ -146,9 +146,9 @@ numbers.
 .. cog.out(run_script(cog.inFile, 'heapq_heappop.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python heapq_heappop.py
+	$ python3 heapq_heappop.py
 	
 	random    : [19, 9, 4, 10, 11]
 	heapified :
@@ -157,7 +157,6 @@ numbers.
 	        9                 19        
 	    10       11   
 	------------------------------------
-	
 	
 	pop      4:
 	
@@ -190,9 +189,9 @@ heap, such as a queue of jobs ordered by priority.
 .. cog.out(run_script(cog.inFile, 'heapq_heapreplace.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python heapq_heapreplace.py
+	$ python3 heapq_heapreplace.py
 	
 	start:
 	
@@ -236,9 +235,9 @@ cases.
 .. cog.out(run_script(cog.inFile, 'heapq_extremes.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python heapq_extremes.py
+	$ python3 heapq_extremes.py
 	
 	all       : [19, 9, 4, 10, 11]
 	3 largest : [19, 11, 10]

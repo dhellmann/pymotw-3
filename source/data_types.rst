@@ -80,6 +80,7 @@ container type using one of the abstract base classes defined in
     array/index
     bisect/index
     queue/index
+    heapq/index
     pprint/index
     copy/index
 
