@@ -12,7 +12,6 @@ import pstats
 from profile_fibonacci_memoized import fib, fib_seq
 
 # Create 5 set of stats
-filenames = []
 for i in range(5):
     filename = 'profile_stats_{}.stats'.format(i)
     profile.run('print({}, fib_seq(20))'.format(i), filename)
