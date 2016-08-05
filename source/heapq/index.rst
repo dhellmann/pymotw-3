@@ -8,7 +8,6 @@
 :Purpose:
     The heapq implements a min-heap sort algorithm suitable for use with
     Python's lists.
-:Python Version: New in 2.3 with additions in 2.5
 
 A *heap* is a tree-like data structure where the child nodes have a
 sort-order relationship with the parents. *Binary heaps* can be
@@ -28,27 +27,25 @@ Example Data
 
 The examples in this section use the data in ``heapq_heapdata.py``.
 
-.. include:: heapq_heapdata.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: heapq_heapdata.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The heap output is printed using ``heapq_showtree.py``:
 
-.. include:: heapq_showtree.py
-   :literal:
+.. literalinclude:: heapq_showtree.py
+   :caption:
    :start-after: #end_pymotw_header
-
-
 
 Creating a Heap
 ===============
 
-There are two basic ways to create a heap: :func:`heappush` and
+There are two basic ways to create a heap, :func:`heappush` and
 :func:`heapify`.
 
-.. include:: heapq_heappush.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: heapq_heappush.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Using :func:`heappush`, the heap sort order of the elements is
 maintained as new items are added from a data source.
@@ -97,13 +94,12 @@ maintained as new items are added from a data source.
 
 .. {{{end}}}
 
-
 If the data is already in memory, it is more efficient to use
 :func:`heapify` to rearrange the items of the list in place.
 
-.. include:: heapq_heapify.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: heapq_heapify.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The result of building a list in heap order one item at a time is the
 same as building it unordered and then calling :func:`heapify`.
@@ -134,9 +130,9 @@ Accessing Contents of a Heap
 Once the heap is organized correctly, use :func:`heappop` to remove the
 element with the lowest value. 
 
-.. include:: heapq_heappop.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: heapq_heappop.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 In this example, adapted from the stdlib documentation,
 :func:`heapify` and :func:`heappop` are used to sort a list of
@@ -174,13 +170,12 @@ numbers.
 
 .. {{{end}}}
 
-
 To remove existing elements and replace them with new values in a
-single operation, use ``heapreplace()``.
+single operation, use :func:`heapreplace`.
 
-.. include:: heapq_heapreplace.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: heapq_heapreplace.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Replacing elements in place makes it possible to maintain a fixed size
 heap, such as a queue of jobs ordered by priority.
@@ -223,9 +218,9 @@ Data Extremes From a Heap
 :mod:`heapq` also includes two functions to examine an iterable to find
 a range of the largest or smallest values it contains. 
 
-.. include:: heapq_extremes.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: heapq_extremes.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Using :func:`nlargest` and :func:`nsmallest` are only efficient for
 relatively small values of n > 1, but can still come in handy in a few
