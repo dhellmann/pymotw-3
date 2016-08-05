@@ -352,11 +352,11 @@ The output is this small table:
 
 	$ python3 locale_currency_example.py
 	
-	                 USA:   $1234.56   -$1234.56
-	              France: 1234,56 Eu  1234,56 Eu-
-	               Spain: 1234,56 Eu  -1234,56 Eu
-	            Portugal: 1234.56 Eu  -1234.56 Eu
-	              Poland: zł 1234,56  zł 1234,56-
+	       USA:   $1234.56   -$1234.56
+	    France: 1234,56 Eu  1234,56 Eu-
+	     Spain: 1234,56 Eu  -1234,56 Eu
+	  Portugal: 1234.56 Eu  -1234.56 Eu
+	    Poland: zł 1234,56  zł 1234,56-
 
 .. {{{end}}}
 
@@ -382,12 +382,12 @@ instead of :func:`currency`.
 
 	$ python3 locale_grouping.py
 	
-	              Locale         Integer                Float
-	                 USA         123,456           123,456.78
-	              France          123456            123456,78
-	               Spain          123456            123456,78
-	            Portugal          123456            123456,78
-	              Poland         123 456           123 456,78
+	    Locale         Integer                Float
+	       USA         123,456           123,456.78
+	    France          123456            123456,78
+	     Spain          123456            123456,78
+	  Portugal          123456            123456,78
+	    Poland         123 456           123 456,78
 
 .. {{{end}}}
 
@@ -417,11 +417,11 @@ by the parser.
 
 	$ python3 locale_atof_example.py
 	
-	                 USA:  1,234.56 => 1234.560000
-	              France:   1234,56 => 1234.560000
-	               Spain:   1234,56 => 1234.560000
-	            Portugal:   1234.56 => 1234.560000
-	              Poland:  1 234,56 => 1234.560000
+	       USA:  1,234.56 => 1234.560000
+	    France:   1234,56 => 1234.560000
+	     Spain:   1234,56 => 1234.560000
+	  Portugal:   1234.56 => 1234.560000
+	    Poland:  1 234,56 => 1234.560000
 
 .. {{{end}}}
 
@@ -446,11 +446,11 @@ the current date and time.
 
 	$ python3 locale_date_example.py
 	
-	                 USA: Fri Aug  5 16:57:02 2016
-	              France: Ven  5 aoû 16:57:02 2016
-	               Spain: vie  5 ago 16:57:02 2016
-	            Portugal: Sex  5 Ago 16:57:02 2016
-	              Poland: ptk  5 sie 16:57:02 2016
+	       USA: Fri Aug  5 17:04:12 2016
+	    France: Ven  5 aoû 17:04:12 2016
+	     Spain: vie  5 ago 17:04:12 2016
+	  Portugal: Sex  5 Ago 17:04:12 2016
+	    Poland: ptk  5 sie 17:04:12 2016
 
 .. {{{end}}}
 

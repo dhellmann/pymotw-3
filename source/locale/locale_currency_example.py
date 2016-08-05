@@ -18,6 +18,6 @@ sample_locales = [
 
 for name, loc in sample_locales:
     locale.setlocale(locale.LC_ALL, loc)
-    print('%20s: %10s  %10s' % (name,
+    print('%10s: %10s  %10s' % (name,
                                 locale.currency(1234.56),
                                 locale.currency(-1234.56)))

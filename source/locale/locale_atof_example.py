@@ -19,4 +19,4 @@ sample_data = [
 for name, loc, a in sample_data:
     locale.setlocale(locale.LC_ALL, loc)
     f = locale.atof(a)
-    print('%20s: %9s => %f' % (name, a, f))
+    print('%10s: %9s => %f' % (name, a, f))
