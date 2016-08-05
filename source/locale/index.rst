@@ -444,16 +444,18 @@ the current date and time.
 
 	$ python3 locale_date.py
 	
-	       USA: Fri Aug  5 17:20:45 2016
-	    France: Ven  5 aoû 17:20:45 2016
-	     Spain: vie  5 ago 17:20:45 2016
-	  Portugal: Sex  5 Ago 17:20:45 2016
-	    Poland: ptk  5 sie 17:20:45 2016
+	       USA: Fri Aug  5 17:24:10 2016
+	    France: Ven  5 aoû 17:24:10 2016
+	     Spain: vie  5 ago 17:24:10 2016
+	  Portugal: Sex  5 Ago 17:24:10 2016
+	    Poland: ptk  5 sie 17:24:10 2016
 
 .. {{{end}}}
 
 .. seealso::
 
    * :pydoc:`locale`
+
+   * :ref:`Porting notes for locale <porting-locale>`
 
    * :mod:`gettext` -- Message catalogs for translations.

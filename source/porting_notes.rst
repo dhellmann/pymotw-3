@@ -611,6 +611,19 @@ and :func:`filter:` respectively).
 The function :func:`ifilterfalse` has been renamed
 :func:`filterfalse`.
 
+.. _porting-locale:
+
+locale
+------
+
+.. index::
+   pair: porting; locale
+
+The normalized version of the name of the UTF-8 encoding has changed
+from "UTF8" to "UTF-8" because Mac OS X and OpenBSD do not support the
+use of "UTF8" (:pyissue:`10154` and :pyissue:`10090`).
+
+
 .. _porting-mailbox:
 
 mailbox
