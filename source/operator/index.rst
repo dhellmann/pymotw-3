@@ -315,16 +315,17 @@ methods used by each operator.
 
 .. seealso::
 
-    `operator <http://docs.python.org/lib/module-operator.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`operator`
 
-    :mod:`functools`
-        Functional programming tools, including the
-        :func:`total_ordering` decorator for adding rich comparison
-        methods to a class.
+   * :mod:`functools` -- Functional programming tools, including the
+     :func:`total_ordering` decorator for adding rich comparison
+     methods to a class.
 
-    :mod:`itertools`
-        Iterator operations.
+   * :mod:`itertools` -- Iterator operations.
+
+   * :mod:`collections` -- Abstract types for collections.
+
+   * :mod:`numbers` -- Abstract types for numerical values.
 
     ..
        :mod:`abc`
