@@ -18,16 +18,16 @@ class MyObj(object):
         self.val = val
 
     def __str__(self):
-        return 'MyObj(%s)' % self.val
+        return 'MyObj({})'.format(self.val)
 
     def __lt__(self, other):
         """compare for less-than"""
-        print('Testing %s < %s' % (self, other))
+        print('Testing {} < {}'.format(self, other))
         return self.val < other.val
 
     def __add__(self, other):
         """add values"""
-        print('Adding %s + %s' % (self, other))
+        print('Adding {} + {}'.format(self, other))
         return MyObj(self.val + other.val)
 
 
