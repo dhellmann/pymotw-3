@@ -11,7 +11,8 @@ Programming using iterators occasionally requires creating small
 functions for simple expressions. Sometimes, these can be implemented
 as :command:`lambda` functions, but for some operations new functions
 are not needed at all.  The :mod:`operator` module defines functions
-that correspond to built-in operations for arithmetic and comparison.
+that correspond to built-in operations for arithmetic, comparison, and
+other operations corresponding to standard object APIs.
 
 Logical Operations
 ==================
@@ -26,9 +27,10 @@ comparing objects to see if they are identical.
 
 :func:`not_` includes the trailing underscore because :command:`not`
 is a Python keyword.  :func:`truth` applies the same logic used when
-testing an expression in an :command:`if` statement.  :func:`is_`
-implements the same check used by the :command:`is` keyword, and
-:func:`is_not` does the same test and returns the opposite answer.
+testing an expression in an :command:`if` statement or converting an
+expression to a :class:`bool`.  :func:`is_` implements the same check
+used by the :command:`is` keyword, and :func:`is_not` does the same
+test and returns the opposite answer.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'operator_boolean.py'))
@@ -174,13 +176,14 @@ modify the sequence in place and do not return a value.
 	  indexOf(a, 5)   : 0
 	
 	Access Items:
-	  getitem(b, 1)            : b
-	  setitem(b, 1, "d")       : None
-	                   after b = ['a', 'd', 'c']
+	  getitem(b, 1)                  : b
+	  getitem(b, slice(1, 3))        : ['b', 'c']
+	  setitem(b, 1, "d")             : ['a', 'd', 'c']
+	  setitem(a, slice(1, 3), [4, 5]): [1, 4, 5]
 	
 	Destructive:
-	  delitem(b, 1)    : None
-	           after b = ['a', 'c']
+	  delitem(b, 1)          : ['a', 'c']
+	  delitem(a, slice(1, 3)): [1]
 
 .. {{{end}}}
 
