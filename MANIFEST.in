@@ -1,0 +1,2 @@
+recursive-include source *.py
+prune source/_exts
