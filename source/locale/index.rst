@@ -1,12 +1,11 @@
-=====================================
- locale -- Cultural Localization API
-=====================================
+======================================
+ locale --- Cultural Localization API
+======================================
 
 .. module:: locale
     :synopsis: POSIX cultural localization API
 
 :Purpose: Format and parse values that depend on location or language.
-:Python Version: 1.5 and later
 
 The :mod:`locale` module is part of Python's internationalization and
 localization support library. It provides a standard way to handle
@@ -24,7 +23,7 @@ for sorting, and working with dates. It does not cover translation
   section, the locale is changed several times within a short program
   to highlight the differences in the settings of various locales. It
   is far more likely that an application will set the locale once as
-  it starts up and not change it.
+  it starts up or when a web request is received and not change it.
 
 This section covers some of the high-level functions in the
 :mod:`locale` module. There are others which are lower level
@@ -93,7 +92,6 @@ this output:
 	
 
 .. {{{end}}}
-
 
 Running the same script with the :data:`LANG` variable set shows how
 the locale and default encoding change.
@@ -456,8 +454,6 @@ the current date and time.
 
 .. seealso::
 
-    `locale <http://docs.python.org/library/locale.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`locale`
 
-    :mod:`gettext`
-        Message catalogs for translations.
+   * :mod:`gettext` -- Message catalogs for translations.
