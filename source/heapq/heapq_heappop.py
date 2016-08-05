@@ -19,5 +19,5 @@ print
 
 for i in range(2):
     smallest = heapq.heappop(data)
-    print('pop    %3d:' % smallest)
+    print('pop    {:>3}:'.format(smallest))
     show_tree(data)

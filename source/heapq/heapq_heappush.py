@@ -16,6 +16,6 @@ print('random :', data)
 print()
 
 for n in data:
-    print('add %3d:' % n)
+    print('add {:>3}:'.format(n))
     heapq.heappush(heap, n)
     show_tree(heap)
