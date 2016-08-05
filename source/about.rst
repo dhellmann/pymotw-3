@@ -12,9 +12,10 @@ series, which covered Python 2.7.
 
 See the project home page at https://pymotw.com/3/ for updates.
 
-Source code is available from http://bitbucket.org/dhellmann/pymotw-3/.
-
-The examples can be downloaded from `this site <PyMOTW-3-0.0.tar.gz>`__.
+Source code is available via git from
+http://bitbucket.org/dhellmann/pymotw-3/ or
+https://pymotw.com/3/PyMOTW-3-0.0.tar.gz as a single downloadable
+archive.
 
 Complete documentation for the standard library can be found on the
 Python web site at http://docs.python.org/3/library/.
