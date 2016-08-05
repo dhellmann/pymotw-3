@@ -17,12 +17,6 @@ other programs on the system.
    :maxdepth: 1
 
    gettext/index
-
-..
-   .. toctree::
-       :maxdepth: 1
-
-       gettext/index
-       locale/index
+   locale/index
 
 

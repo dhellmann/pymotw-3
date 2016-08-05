@@ -40,7 +40,7 @@ application is through an environment variable (:data:`LC_ALL`,
 platform). The application then calls :func:`setlocale` without a
 hard-coded value, and the environment value is used.
 
-.. include:: locale_env_example.py
+.. include:: locale_env.py
     :literal:
     :start-after: #end_pymotw_header
 
@@ -48,17 +48,17 @@ The :func:`localeconv` method returns a dictionary containing the
 locale's conventions.  The full list of value names and definitions is
 covered in the standard library documentation.
 
-A Mac running OS X 10.6 with all of the variables unset produces this
-output:
+A Mac running OS X 10.11.6 with all of the variables unset produces
+this output:
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'export LANG=; export LC_CTYPE=; python locale_env_example.py', interpreter=None))
+.. cog.out(run_script(cog.inFile, 'export LANG=; export LC_CTYPE=; python3 locale_env.py', interpreter=None))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ export LANG=; export LC_CTYPE=; python locale_env_example.py
-
+	$ export LANG=; export LC_CTYPE=; python3 locale_env.py
+	
 	Environment settings:
 		LC_ALL = 
 		LC_CTYPE = 
@@ -70,25 +70,25 @@ output:
 	Numeric formatting:
 	
 	  Decimal point      : "."
-	  Grouping positions : [3, 3, 0]
-	  Thousands separator: ","
+	  Grouping positions : []
+	  Thousands separator: ""
 	
 	Monetary formatting:
 	
-	  International currency symbol             : "'USD '"
-	  Local currency symbol                     : '$'
-	    Unicode version                           $
-	  Symbol precedes positive value            : 1
-	  Symbol precedes negative value            : 1
-	  Decimal point                             : "."
-	  Digits in fractional values               : 2
-	  Digits in fractional values, international: 2
-	  Grouping positions                        : [3, 3, 0]
-	  Thousands separator                       : ","
-	  Positive sign                             : ""
-	  Positive sign position                    : Before value and symbol
-	  Negative sign                             : "-"
-	  Negative sign position                    : Before value and symbol
+	  International currency symbol   : "''"
+	  Local currency symbol           : ''
+	  Symbol precedes positive value  : 127
+	  Symbol precedes negative value  : 127
+	  Decimal point                   : ""
+	  Digits in fractional values     : 127
+	  Digits in fractional values,
+	                   international  : 127
+	  Grouping positions              : []
+	  Thousands separator             : ""
+	  Positive sign                   : ""
+	  Positive sign position          : Unspecified
+	  Negative sign                   : ""
+	  Negative sign position          : Unspecified
 	
 	
 
@@ -98,16 +98,61 @@ output:
 Running the same script with the :data:`LANG` variable set shows how
 the locale and default encoding change.
 
+The United States (``en_US``):
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'LANG=en_US LC_CTYPE=en_US LC_ALL=en_US python3 locale_env.py', interpreter=None))
+.. }}}
+
+.. code-block:: none
+
+	$ LANG=en_US LC_CTYPE=en_US LC_ALL=en_US python3 locale_env.py
+	
+	Environment settings:
+		LC_ALL = en_US
+		LC_CTYPE = en_US
+		LANG = en_US
+		LANGUAGE = 
+	
+	Locale from environment: ('en_US', 'ISO8859-1')
+	
+	Numeric formatting:
+	
+	  Decimal point      : "."
+	  Grouping positions : [3, 3, 0]
+	  Thousands separator: ","
+	
+	Monetary formatting:
+	
+	  International currency symbol   : "'USD '"
+	  Local currency symbol           : '$'
+	  Symbol precedes positive value  : 1
+	  Symbol precedes negative value  : 1
+	  Decimal point                   : "."
+	  Digits in fractional values     : 2
+	  Digits in fractional values,
+	                   international  : 2
+	  Grouping positions              : [3, 3, 0]
+	  Thousands separator             : ","
+	  Positive sign                   : ""
+	  Positive sign position          : Before value and symbol
+	  Negative sign                   : "-"
+	  Negative sign position          : Before value and symbol
+	
+	
+
+.. {{{end}}}
+
 France (``fr_FR``):
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'LANG=fr_FR LC_CTYPE=fr_FR LC_ALL=fr_FR python locale_env_example.py', interpreter=None))
+.. cog.out(run_script(cog.inFile, 'LANG=fr_FR LC_CTYPE=fr_FR LC_ALL=fr_FR python3 locale_env.py', interpreter=None))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ LANG=fr_FR LC_CTYPE=fr_FR LC_ALL=fr_FR python locale_env_example.py
-
+	$ LANG=fr_FR LC_CTYPE=fr_FR LC_ALL=fr_FR python3 locale_env.py
+	
 	Environment settings:
 		LC_ALL = fr_FR
 		LC_CTYPE = fr_FR
@@ -124,20 +169,20 @@ France (``fr_FR``):
 	
 	Monetary formatting:
 	
-	  International currency symbol             : "'EUR '"
-	  Local currency symbol                     : 'Eu'
-	    Unicode version                           Eu
-	  Symbol precedes positive value            : 0
-	  Symbol precedes negative value            : 0
-	  Decimal point                             : ","
-	  Digits in fractional values               : 2
-	  Digits in fractional values, international: 2
-	  Grouping positions                        : [3, 3, 0]
-	  Thousands separator                       : " "
-	  Positive sign                             : ""
-	  Positive sign position                    : Before value and symbol
-	  Negative sign                             : "-"
-	  Negative sign position                    : After value and symbol
+	  International currency symbol   : "'EUR '"
+	  Local currency symbol           : 'Eu'
+	  Symbol precedes positive value  : 0
+	  Symbol precedes negative value  : 0
+	  Decimal point                   : ","
+	  Digits in fractional values     : 2
+	  Digits in fractional values,
+	                   international  : 2
+	  Grouping positions              : [3, 3, 0]
+	  Thousands separator             : " "
+	  Positive sign                   : ""
+	  Positive sign position          : Before value and symbol
+	  Negative sign                   : "-"
+	  Negative sign position          : After value and symbol
 	
 	
 
@@ -148,13 +193,13 @@ Spain (``es_ES``):
 
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'LANG=es_ES LC_CTYPE=es_ES LC_ALL=es_ES python locale_env_example.py', interpreter=None))
+.. cog.out(run_script(cog.inFile, 'LANG=es_ES LC_CTYPE=es_ES LC_ALL=es_ES python locale_env.py', interpreter=None))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ LANG=es_ES LC_CTYPE=es_ES LC_ALL=es_ES python locale_env_example.py
-
+	$ LANG=es_ES LC_CTYPE=es_ES LC_ALL=es_ES python locale_env.py
+	
 	Environment settings:
 		LC_ALL = es_ES
 		LC_CTYPE = es_ES
@@ -171,20 +216,20 @@ Spain (``es_ES``):
 	
 	Monetary formatting:
 	
-	  International currency symbol             : "'EUR '"
-	  Local currency symbol                     : 'Eu'
-	    Unicode version                           Eu
-	  Symbol precedes positive value            : 1
-	  Symbol precedes negative value            : 1
-	  Decimal point                             : ","
-	  Digits in fractional values               : 2
-	  Digits in fractional values, international: 2
-	  Grouping positions                        : [3, 3, 0]
-	  Thousands separator                       : "."
-	  Positive sign                             : ""
-	  Positive sign position                    : Before value and symbol
-	  Negative sign                             : "-"
-	  Negative sign position                    : Before value and symbol
+	  International currency symbol   : "'EUR '"
+	  Local currency symbol           : 'Eu'
+	  Symbol precedes positive value  : 0
+	  Symbol precedes negative value  : 0
+	  Decimal point                   : ","
+	  Digits in fractional values     : 2
+	  Digits in fractional values,
+	                   international  : 2
+	  Grouping positions              : [3, 3, 0]
+	  Thousands separator             : "."
+	  Positive sign                   : ""
+	  Positive sign position          : Before value and symbol
+	  Negative sign                   : "-"
+	  Negative sign position          : Before value and symbol
 	
 	
 
@@ -194,13 +239,13 @@ Portugal (``pt_PT``):
 
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'LANG=pt_PT LC_CTYPE=pt_PT LC_ALL=pt_PT python locale_env_example.py', interpreter=None))
+.. cog.out(run_script(cog.inFile, 'LANG=pt_PT LC_CTYPE=pt_PT LC_ALL=pt_PT python locale_env.py', interpreter=None))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ LANG=pt_PT LC_CTYPE=pt_PT LC_ALL=pt_PT python locale_env_example.py
-
+	$ LANG=pt_PT LC_CTYPE=pt_PT LC_ALL=pt_PT python locale_env.py
+	
 	Environment settings:
 		LC_ALL = pt_PT
 		LC_CTYPE = pt_PT
@@ -217,20 +262,20 @@ Portugal (``pt_PT``):
 	
 	Monetary formatting:
 	
-	  International currency symbol             : "'EUR '"
-	  Local currency symbol                     : 'Eu'
-	    Unicode version                           Eu
-	  Symbol precedes positive value            : 0
-	  Symbol precedes negative value            : 0
-	  Decimal point                             : "."
-	  Digits in fractional values               : 2
-	  Digits in fractional values, international: 2
-	  Grouping positions                        : [3, 3, 0]
-	  Thousands separator                       : "."
-	  Positive sign                             : ""
-	  Positive sign position                    : Before value and symbol
-	  Negative sign                             : "-"
-	  Negative sign position                    : Before value and symbol
+	  International currency symbol   : "'EUR '"
+	  Local currency symbol           : 'Eu'
+	  Symbol precedes positive value  : 0
+	  Symbol precedes negative value  : 0
+	  Decimal point                   : "."
+	  Digits in fractional values     : 2
+	  Digits in fractional values,
+	                   international  : 2
+	  Grouping positions              : [3, 3, 0]
+	  Thousands separator             : "."
+	  Positive sign                   : ""
+	  Positive sign position          : Before value and symbol
+	  Negative sign                   : "-"
+	  Negative sign position          : Before value and symbol
 	
 	
 
@@ -241,13 +286,13 @@ Poland (``pl_PL``):
 
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'LANG=pl_PL LC_CTYPE=pl_PL LC_ALL=pl_PL python locale_env_example.py', interpreter=None))
+.. cog.out(run_script(cog.inFile, 'LANG=pl_PL LC_CTYPE=pl_PL LC_ALL=pl_PL python locale_env.py', interpreter=None))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ LANG=pl_PL LC_CTYPE=pl_PL LC_ALL=pl_PL python locale_env_example.py
-
+	$ LANG=pl_PL LC_CTYPE=pl_PL LC_ALL=pl_PL python locale_env.py
+	
 	Environment settings:
 		LC_ALL = pl_PL
 		LC_CTYPE = pl_PL
@@ -264,20 +309,20 @@ Poland (``pl_PL``):
 	
 	Monetary formatting:
 	
-	  International currency symbol             : "'PLN '"
-	  Local currency symbol                     : 'z\xc5\x82'
-	    Unicode version                           zł
-	  Symbol precedes positive value            : 1
-	  Symbol precedes negative value            : 1
-	  Decimal point                             : ","
-	  Digits in fractional values               : 2
-	  Digits in fractional values, international: 2
-	  Grouping positions                        : [3, 3, 0]
-	  Thousands separator                       : " "
-	  Positive sign                             : ""
-	  Positive sign position                    : After value
-	  Negative sign                             : "-"
-	  Negative sign position                    : After value
+	  International currency symbol   : "'PLN '"
+	  Local currency symbol           : 'zł'
+	  Symbol precedes positive value  : 1
+	  Symbol precedes negative value  : 1
+	  Decimal point                   : ","
+	  Digits in fractional values     : 2
+	  Digits in fractional values,
+	                   international  : 2
+	  Grouping positions              : [3, 3, 0]
+	  Thousands separator             : " "
+	  Positive sign                   : ""
+	  Positive sign position          : After value
+	  Negative sign                   : "-"
+	  Negative sign position          : After value
 	
 	
 
@@ -303,13 +348,13 @@ The output is this small table:
 .. cog.out(run_script(cog.inFile, 'locale_currency_example.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python locale_currency_example.py
-
+	$ python3 locale_currency_example.py
+	
 	                 USA:   $1234.56   -$1234.56
 	              France: 1234,56 Eu  1234,56 Eu-
-	               Spain: Eu 1234,56  -Eu 1234,56
+	               Spain: 1234,56 Eu  -1234,56 Eu
 	            Portugal: 1234.56 Eu  -1234.56 Eu
 	              Poland: zł 1234,56  zł 1234,56-
 
@@ -333,10 +378,10 @@ instead of :func:`currency`.
 .. cog.out(run_script(cog.inFile, 'locale_grouping.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python locale_grouping.py
-
+	$ python3 locale_grouping.py
+	
 	              Locale         Integer                Float
 	                 USA         123,456           123,456.78
 	              France          123456            123456,78
@@ -368,10 +413,10 @@ by the parser.
 .. cog.out(run_script(cog.inFile, 'locale_atof_example.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python locale_atof_example.py
-
+	$ python3 locale_atof_example.py
+	
 	                 USA:  1,234.56 => 1234.560000
 	              France:   1234,56 => 1234.560000
 	               Spain:   1234,56 => 1234.560000
@@ -397,15 +442,15 @@ the current date and time.
 .. cog.out(run_script(cog.inFile, 'locale_date_example.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python locale_date_example.py
-
-	                 USA: Sun Nov 28 23:53:58 2010
-	              France: Dim 28 nov 23:53:58 2010
-	               Spain: dom 28 nov 23:53:58 2010
-	            Portugal: Dom 28 Nov 23:53:58 2010
-	              Poland: ndz 28 lis 23:53:58 2010
+	$ python3 locale_date_example.py
+	
+	                 USA: Fri Aug  5 16:57:02 2016
+	              France: Ven  5 aoû 16:57:02 2016
+	               Spain: vie  5 ago 16:57:02 2016
+	            Portugal: Sex  5 Ago 16:57:02 2016
+	              Poland: ptk  5 sie 16:57:02 2016
 
 .. {{{end}}}
 
