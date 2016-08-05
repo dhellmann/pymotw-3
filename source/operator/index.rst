@@ -35,9 +35,9 @@ implements the same check used by the :command:`is` keyword, and
 .. cog.out(run_script(cog.inFile, 'operator_boolean.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python operator_boolean.py
+	$ python3 operator_boolean.py
 	
 	a = -1
 	b = 5
@@ -66,9 +66,9 @@ The functions are equivalent to the expression syntax using ``<``,
 .. cog.out(run_script(cog.inFile, 'operator_comparisons.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python operator_comparisons.py
+	$ python3 operator_comparisons.py
 	
 	a = 1
 	b = 5.0
@@ -99,9 +99,9 @@ division as implemented in Python before version 3.0) and
 .. cog.out(run_script(cog.inFile, 'operator_math.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python operator_math.py
+	$ python3 operator_math.py
 	
 	a = -1
 	b = 5.0
@@ -117,8 +117,6 @@ division as implemented in Python before version 3.0) and
 	
 	Arithmetic:
 	add(a, b)     : 4.0
-	div(a, b)     : -0.2
-	div(d, c)     : 3
 	floordiv(a, b): -1.0
 	floordiv(d, c): 3
 	mod(a, b)     : 4.0
@@ -158,16 +156,15 @@ modify the sequence in place and do not return a value.
 .. cog.out(run_script(cog.inFile, 'operator_sequences.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python operator_sequences.py
+	$ python3 operator_sequences.py
 	
 	a = [1, 2, 3]
 	b = ['a', 'b', 'c']
 	
 	Constructive:
 	  concat(a, b): [1, 2, 3, 'a', 'b', 'c']
-	  repeat(a, 3): [1, 2, 3, 1, 2, 3, 1, 2, 3]
 	
 	Searching:
 	  contains(a, 1)  : True
@@ -178,13 +175,12 @@ modify the sequence in place and do not return a value.
 	
 	Access Items:
 	  getitem(b, 1)            : b
-	  getslice(a, 1, 3)        : [2, 3]
-	  setitem(b, 1, "d")       : None , after b = ['a', 'd', 'c']
-	  setslice(a, 1, 3, [4, 5]): None , after a = [1, 4, 5]
+	  setitem(b, 1, "d")       : None
+	                   after b = ['a', 'd', 'c']
 	
 	Destructive:
-	  delitem(b, 1)    : None , after b = ['a', 'c']
-	  delslice(a, 1, 3): None , after a = [1]
+	  delitem(b, 1)    : None
+	           after b = ['a', 'c']
 
 .. {{{end}}}
 
@@ -208,9 +204,9 @@ the standard library documentation for complete details.
 .. cog.out(run_script(cog.inFile, 'operator_inplace.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python operator_inplace.py
+	$ python3 operator_inplace.py
 	
 	a = -1
 	b = 5.0
@@ -244,9 +240,9 @@ Attribute getters work like ``lambda x, n='attrname': getattr(x, n)``:
 .. cog.out(run_script(cog.inFile, 'operator_attrgetter.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python operator_attrgetter.py
+	$ python3 operator_attrgetter.py
 	
 	objects   : [MyObj(0), MyObj(1), MyObj(2), MyObj(3), MyObj(4)]
 	arg values: [0, 1, 2, 3, 4]
@@ -267,17 +263,19 @@ Item getters work with mappings as well as sequences.
 .. cog.out(run_script(cog.inFile, 'operator_itemgetter.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python operator_itemgetter.py
+	$ python3 operator_itemgetter.py
 	
-	Dictionaries: [{'val': 0}, {'val': -1}, {'val': -2}, {'val': -3}]
-	      values: [0, -1, -2, -3]
-	      sorted: [{'val': -3}, {'val': -2}, {'val': -1}, {'val': 0}]
+	Dictionaries:
+	 original: [{'val': 0}, {'val': -1}, {'val': -2}, {'val': -3}]
+	   values: [0, -1, -2, -3]
+	   sorted: [{'val': -3}, {'val': -2}, {'val': -1}, {'val': 0}]
 	
-	Tuples      : [(0, 0), (1, -2), (2, -4), (3, -6)]
-	      values: [0, -2, -4, -6]
-	      sorted: [(3, -6), (2, -4), (1, -2), (0, 0)]
+	Tuples:
+	 original: [(0, 0), (1, -2), (2, -4), (3, -6)]
+	   values: [0, -2, -4, -6]
+	   sorted: [(3, -6), (2, -4), (1, -2), (0, 0)]
 
 .. {{{end}}}
 
@@ -301,9 +299,9 @@ methods used by each operator.
 .. cog.out(run_script(cog.inFile, 'operator_classes.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python operator_classes.py
+	$ python3 operator_classes.py
 	
 	Comparison:
 	Testing MyObj(1) < MyObj(2)
@@ -312,36 +310,6 @@ methods used by each operator.
 	Arithmetic:
 	Adding MyObj(1) + MyObj(2)
 	MyObj(3)
-
-.. {{{end}}}
-
-Type Checking
-=============
-
-The :mod:`operator` module also includes functions for testing API
-compliance for mapping, number, and sequence types. 
-
-.. include:: operator_typechecking.py
-    :literal:
-    :start-after: #end_pymotw_header
-
-The tests are not perfect, since the interfaces are not strictly
-defined, but they do provide some idea of what is supported.
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'operator_typechecking.py'))
-.. }}}
-
-::
-
-	$ python operator_typechecking.py
-	
-	isMappingType(o): False
-	isMappingType(t): True
-	isNumberType(o): False
-	isNumberType(t): True
-	isSequenceType(o): False
-	isSequenceType(t): True
 
 .. {{{end}}}
 
@@ -359,7 +327,8 @@ defined, but they do provide some idea of what is supported.
     :mod:`itertools`
         Iterator operations.
 
-    :mod:`abc`
-      The ``abc`` module includes :ref:`abstract base classes
-      <abc-collection-types>` that define the APIs for collection
-      types.
+    ..
+       :mod:`abc`
+         The ``abc`` module includes :ref:`abstract base classes
+         <abc-collection-types>` that define the APIs for collection
+         types.
