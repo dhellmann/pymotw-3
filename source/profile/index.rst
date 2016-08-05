@@ -40,15 +40,15 @@ shows a summary and then details for each function executed.
 	$ python3 profile_fibonacci_raw.py
 	
 	[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 
-    987, 1597, 2584, 4181, 6765]
+	987, 1597, 2584, 4181, 6765]
 	
 	         57359 function calls (69 primitive calls) in 0.146 \
-    seconds
+	seconds
 	
 	   Ordered by: standard name
 	
 	   ncalls  tottime  percall  cumtime  percall filename:lineno(\
-    function)
+	function)
 	       21    0.000    0.000    0.000    0.000 :0(append)
 	        1    0.000    0.000    0.145    0.145 :0(exec)
 	       20    0.000    0.000    0.000    0.000 :0(extend)
@@ -64,7 +64,6 @@ shows a summary and then details for each function executed.
 	raw.py:11(fib)
 	     21/1    0.000    0.000    0.145    0.145 profile_fibonacci_\
 	raw.py:22(fib_seq)
-	
 
 The raw version takes 57291 separate function calls and 0.146 seconds
 to run.  The fact that there are only 69 *primitive* calls says that
@@ -95,14 +94,14 @@ that it *never* recurses.
 	$ python3 profile_fibonacci_memoized.py
 	
 	[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 
-    987, 1597, 2584, 4181, 6765]
+	987, 1597, 2584, 4181, 6765]
 	
          148 function calls (90 primitive calls) in 0.002 seconds
 	
 	   Ordered by: standard name
 	
 	   ncalls  tottime  percall  cumtime  percall filename:lineno(\
-    function)
+	function)
 	       21    0.000    0.000    0.000    0.000 :0(append)
 	        1    0.000    0.000    0.001    0.001 :0(exec)
 	       20    0.000    0.000    0.000    0.000 :0(extend)
@@ -144,14 +143,14 @@ passed to :func:`runctx`.
 	$ python3 profile_runctx.py
 	
 	[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 
-    987, 1597, 2584, 4181, 6765]
+	987, 1597, 2584, 4181, 6765]
 	
 	        148 function calls (90 primitive calls) in 0.002 seconds
 	
 	   Ordered by: standard name
 	
 	   ncalls  tottime  percall  cumtime  percall filename:lineno(\
-    function)
+	function)
 	       21    0.000    0.000    0.000    0.000 :0(append)
 	        1    0.000    0.000    0.001    0.001 :0(exec)
 	       20    0.000    0.000    0.000    0.000 :0(extend)
@@ -214,14 +213,14 @@ printed filenames to conserve horizontal space on the page.
 	Fri Aug  5 17:56:16 2016    profile_stats_3.stats
 	Fri Aug  5 17:56:16 2016    profile_stats_4.stats
 	
-      494 function calls (356 primitive calls) in 0.001 seconds
+	  494 function calls (356 primitive calls) in 0.001 seconds
 	
 	   Ordered by: cumulative time
 	
 	   ncalls  tottime  percall  cumtime  percall filename:lineno(\
-    function)
+	function)
 	        5    0.000    0.000    0.001    0.000 {built-in method \
-    builtins.exec}
+	builtins.exec}
 	        5    0.000    0.000    0.001    0.000 <string>:1(<module\
 	>)
 	    105/5    0.000    0.000    0.001    0.000 profile_fibonacci_\
@@ -233,9 +232,9 @@ printed filenames to conserve horizontal space on the page.
 	       21    0.000    0.000    0.000    0.000 profile_fibonacci_\
 	memoized.py:27(fib)
 	      100    0.000    0.000    0.000    0.000 {method 'extend' \
-    of 'list' objects}
+	of 'list' objects}
 	      105    0.000    0.000    0.000    0.000 {method 'append' \
-    of 'list' objects}
+	of 'list' objects}
 	        5    0.000    0.000    0.000    0.000 {method 'disable' \
 	of '_lsprof.Profiler' objects}
 
@@ -272,7 +271,7 @@ against the function name portion of the location value.
 	   List reduced from 9 to 2 due to restriction <'\\(fib'>
 	
 	   ncalls  tottime  percall  cumtime  percall filename:lineno(\
-    function)
+	function)
 	    105/5    0.000    0.000    0.001    0.000 profile_fibonacci_\
 	memoized.py:39(fib_seq)
 	       21    0.000    0.000    0.000    0.000 profile_fibonacci_\
@@ -336,18 +335,20 @@ output shows the caller, callee, number of calls, and cumulative time.
 
 .. seealso::
 
-    `profile and cProfile <http://docs.python.org/lib/module-profile.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`profile`
 
-    `pstats <http://docs.python.org/lib/profile-stats.html>`_
-        Standard library documentation for pstats.
+   * :pydoc:`pstats`
 
-    `Gprof2Dot <http://code.google.com/p/jrfonseca/wiki/Gprof2Dot>`_
-        Visualization tool for profile output data.
+   * `Gprof2Dot <http://code.google.com/p/jrfonseca/wiki/Gprof2Dot>`__
+     -- Visualization tool for profile output data.
 
-    `Fibonacci numbers (Python) - LiteratePrograms <http://en.literateprograms.org/Fibonacci_numbers_(Python)>`__
-        An implementation of a Fibonacci sequence generator in Python.
+   * `Fibonacci numbers (Python) - LiteratePrograms
+     <http://en.literateprograms.org/Fibonacci_numbers_(Python)>`__ --
+     An implementation of a Fibonacci sequence generator in Python.
 
-    `Python Decorators: Syntactic Sugar | avinash.vora <http://avinashv.net/2008/04/python-decorators-syntactic-sugar/>`__
-        Another memoized Fibonacci sequence generator in Python.
-        
+   * `Python Decorators: Syntactic Sugar | avinash.vora
+     <http://avinashv.net/2008/04/python-decorators-syntactic-sugar/>`__
+     -- Another memoized Fibonacci sequence generator in Python.
+
+   * `Smiley <https://github.com/dhellmann/smiley>`__ -- Python
+     Application Tracer
