@@ -1,12 +1,11 @@
-========================================================
- operator -- Functional Interface to Built-in Operators
-========================================================
+=========================================================
+ operator --- Functional Interface to Built-in Operators
+=========================================================
 
 .. module:: operator
     :synopsis: Functional interface to built-in operators
 
 :Purpose: Functional interface to built-in operators.
-:Python Version: 1.4 and later
 
 Programming using iterators occasionally requires creating small
 functions for simple expressions. Sometimes, these can be implemented
@@ -21,9 +20,9 @@ There are functions for determining the boolean equivalent for a
 value, negating it to create the opposite boolean value, and
 comparing objects to see if they are identical.
 
-.. include:: operator_boolean.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: operator_boolean.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 :func:`not_` includes the trailing underscore because :command:`not`
 is a Python keyword.  :func:`truth` applies the same logic used when
@@ -55,9 +54,9 @@ Comparison Operators
 
 All of the rich comparison operators are supported.
 
-.. include:: operator_comparisons.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: operator_comparisons.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The functions are equivalent to the expression syntax using ``<``,
 ``<=``, ``==``, ``>=``, and ``>``.
@@ -85,11 +84,12 @@ The functions are equivalent to the expression syntax using ``<``,
 Arithmetic Operators
 ====================
 
-The arithmetic operators for manipulating numerical values are also supported.
+The arithmetic operators for manipulating numerical values are also
+supported.
 
-.. include:: operator_math.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: operator_math.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 There are two separate division operators: :func:`floordiv` (integer
 division as implemented in Python before version 3.0) and
@@ -145,9 +145,9 @@ The operators for working with sequences can be divided into four
 groups: building up sequences, searching for items, accessing
 contents, and removing items from sequences.
 
-.. include:: operator_sequences.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: operator_sequences.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Some of these operations, such as :func:`setitem` and :func:`delitem`,
 modify the sequence in place and do not return a value.
@@ -184,18 +184,17 @@ modify the sequence in place and do not return a value.
 
 .. {{{end}}}
 
-
-
 In-place Operators
 ==================
 
 In addition to the standard operators, many types of objects support
-"in-place" modification through special operators such as ``+=``. There are
-equivalent functions for in-place modifications, too:
+"in-place" modification through special operators such as
+``+=``. There are equivalent functions for in-place modifications,
+too:
 
-.. include:: operator_inplace.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: operator_inplace.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 These examples only demonstrate a few of the functions. Refer to
 the standard library documentation for complete details.
@@ -219,7 +218,6 @@ the standard library documentation for complete details.
 
 .. {{{end}}}
 
-
 Attribute and Item "Getters"
 ============================
 
@@ -230,9 +228,9 @@ sequences. Getters are especially useful when working with iterators
 or generator sequences, where they are intended to incur less overhead
 than a :command:`lambda` or Python function.
 
-.. include:: operator_attrgetter.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: operator_attrgetter.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Attribute getters work like ``lambda x, n='attrname': getattr(x, n)``:
 
@@ -253,9 +251,9 @@ Attribute getters work like ``lambda x, n='attrname': getattr(x, n)``:
 
 Item getters work like ``lambda x, y=5: x[y]``:
 
-.. include:: operator_itemgetter.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: operator_itemgetter.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Item getters work with mappings as well as sequences.
 
@@ -279,8 +277,6 @@ Item getters work with mappings as well as sequences.
 
 .. {{{end}}}
 
-
-
 Combining Operators and Custom Classes
 ======================================
 
@@ -288,9 +284,9 @@ The functions in the :mod:`operator` module work via the standard
 Python interfaces for their operations, so they work with user-defined
 classes as well as the built-in types.
 
-.. include:: operator_classes.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: operator_classes.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Refer to the Python reference guide for a complete list of the special
 methods used by each operator.
