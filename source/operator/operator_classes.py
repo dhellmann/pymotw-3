@@ -10,7 +10,7 @@
 from operator import *
 
 
-class MyObj(object):
+class MyObj:
     """Example for operator overloading"""
 
     def __init__(self, val):
