@@ -244,12 +244,11 @@ cases.
 
 .. seealso::
 
-    `heapq <http://docs.python.org/library/heapq.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`heapq`
 
-    `WikiPedia: Heap (data structure) <http://en.wikipedia.org/wiki/Heap_(data_structure)>`_
-        A general description of heap data structures.
+   * `WikiPedia: Heap (data structure)
+     <http://en.wikipedia.org/wiki/Heap_(data_structure)>`__ -- A
+     general description of heap data structures.
 
-    :ref:`Queue-PriorityQueue`
-        A priority queue implementation from :mod:`Queue` in the
-        standard library.
+   * :ref:`Queue-PriorityQueue` -- A priority queue implementation
+     from :mod:`Queue` in the standard library.
