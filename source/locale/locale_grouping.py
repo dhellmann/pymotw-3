@@ -17,12 +17,12 @@ sample_locales = [
     ('Poland', 'pl_PL'),
 ]
 
-print('{:>10} {:>15} {:>20}'.format(
+print('{:>10} {:>10} {:>15}'.format(
     'Locale', 'Integer', 'Float')
 )
 for name, loc in sample_locales:
     locale.setlocale(locale.LC_ALL, loc)
 
     print('{:>10}'.format(name), end=' ')
-    print(locale.format('%15d', 123456, grouping=True), end=' ')
-    print(locale.format('%20.2f', 123456.78, grouping=True))
+    print(locale.format('%10d', 123456, grouping=True), end=' ')
+    print(locale.format('%15.2f', 123456.78, grouping=True))

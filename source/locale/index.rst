@@ -380,12 +380,38 @@ instead of :func:`currency`.
 
 	$ python3 locale_grouping.py
 	
-	    Locale         Integer                Float
-	       USA         123,456           123,456.78
-	    France          123456            123456,78
-	     Spain          123456            123456,78
-	  Portugal          123456            123456,78
-	    Poland         123 456           123 456,78
+	    Locale    Integer           Float
+	       USA    123,456      123,456.78
+	    France     123456       123456,78
+	     Spain     123456       123456,78
+	  Portugal     123456       123456,78
+	    Poland    123 456      123 456,78
+
+.. {{{end}}}
+
+To convert locale-formatted numbers to a normalized locale-agnostic
+format, use :func:`delocalize`.
+
+.. literalinclude:: locale_delocalize.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Grouping punctuation is removed and the decimal separator is converted
+to always be a ``.``.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'locale_delocalize.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 locale_delocalize.py
+	
+	       USA: 123,456.78   123456.78
+	    France:  123456,78   123456.78
+	     Spain:  123456,78   123456.78
+	  Portugal:  123456,78   123456.78
+	    Poland: 123 456,78   123456.78
 
 .. {{{end}}}
 
@@ -444,11 +470,11 @@ the current date and time.
 
 	$ python3 locale_date.py
 	
-	       USA: Fri Aug  5 17:24:10 2016
-	    France: Ven  5 aoû 17:24:10 2016
-	     Spain: vie  5 ago 17:24:10 2016
-	  Portugal: Sex  5 Ago 17:24:10 2016
-	    Poland: ptk  5 sie 17:24:10 2016
+	       USA: Fri Aug  5 17:33:31 2016
+	    France: Ven  5 aoû 17:33:31 2016
+	     Spain: vie  5 ago 17:33:31 2016
+	  Portugal: Sex  5 Ago 17:33:31 2016
+	    Poland: ptk  5 sie 17:33:31 2016
 
 .. {{{end}}}
 
