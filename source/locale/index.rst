@@ -39,9 +39,9 @@ application is through an environment variable (:data:`LC_ALL`,
 platform). The application then calls :func:`setlocale` without a
 hard-coded value, and the environment value is used.
 
-.. include:: locale_env.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: locale_env.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The :func:`localeconv` method returns a dictionary containing the
 locale's conventions.  The full list of value names and definitions is
@@ -191,12 +191,12 @@ Spain (``es_ES``):
 
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'LANG=es_ES LC_CTYPE=es_ES LC_ALL=es_ES python locale_env.py', interpreter=None))
+.. cog.out(run_script(cog.inFile, 'LANG=es_ES LC_CTYPE=es_ES LC_ALL=es_ES python3 locale_env.py', interpreter=None))
 .. }}}
 
 .. code-block:: none
 
-	$ LANG=es_ES LC_CTYPE=es_ES LC_ALL=es_ES python locale_env.py
+	$ LANG=es_ES LC_CTYPE=es_ES LC_ALL=es_ES python3 locale_env.py
 	
 	Environment settings:
 		LC_ALL = es_ES
@@ -237,12 +237,12 @@ Portugal (``pt_PT``):
 
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'LANG=pt_PT LC_CTYPE=pt_PT LC_ALL=pt_PT python locale_env.py', interpreter=None))
+.. cog.out(run_script(cog.inFile, 'LANG=pt_PT LC_CTYPE=pt_PT LC_ALL=pt_PT python3 locale_env.py', interpreter=None))
 .. }}}
 
 .. code-block:: none
 
-	$ LANG=pt_PT LC_CTYPE=pt_PT LC_ALL=pt_PT python locale_env.py
+	$ LANG=pt_PT LC_CTYPE=pt_PT LC_ALL=pt_PT python3 locale_env.py
 	
 	Environment settings:
 		LC_ALL = pt_PT
@@ -284,12 +284,12 @@ Poland (``pl_PL``):
 
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'LANG=pl_PL LC_CTYPE=pl_PL LC_ALL=pl_PL python locale_env.py', interpreter=None))
+.. cog.out(run_script(cog.inFile, 'LANG=pl_PL LC_CTYPE=pl_PL LC_ALL=pl_PL python3 locale_env.py', interpreter=None))
 .. }}}
 
 .. code-block:: none
 
-	$ LANG=pl_PL LC_CTYPE=pl_PL LC_ALL=pl_PL python locale_env.py
+	$ LANG=pl_PL LC_CTYPE=pl_PL LC_ALL=pl_PL python3 locale_env.py
 	
 	Environment settings:
 		LC_ALL = pl_PL
@@ -336,19 +336,19 @@ from decimal fractions.  This example loops through several different
 locales to print a positive and negative currency value formatted for
 each locale.
 
-.. include:: locale_currency_example.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: locale_currency.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The output is this small table:
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'locale_currency_example.py'))
+.. cog.out(run_script(cog.inFile, 'locale_currency.py'))
 .. }}}
 
 .. code-block:: none
 
-	$ python3 locale_currency_example.py
+	$ python3 locale_currency.py
 	
 	       USA:   $1234.56   -$1234.56
 	    France: 1234,56 Eu  1234,56 Eu-
@@ -365,8 +365,8 @@ Numbers not related to currency are also formatted differently
 depending on the locale.  In particular, the *grouping* character used
 to separate large numbers into readable chunks changes.
 
-.. include:: locale_grouping.py
-   :literal:
+.. literalinclude:: locale_grouping.py
+   :caption:
    :start-after: #end_pymotw_header
 
 To format numbers without the currency symbol, use :func:`format`
@@ -400,20 +400,20 @@ module helps with parsing input. It includes :func:`atoi` and
 floating point values based on the locale's numerical formatting
 conventions.
 
-.. include:: locale_atof_example.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: locale_atof.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The grouping and decimal separator values of the locale are recognized
 by the parser.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'locale_atof_example.py'))
+.. cog.out(run_script(cog.inFile, 'locale_atof.py'))
 .. }}}
 
 .. code-block:: none
 
-	$ python3 locale_atof_example.py
+	$ python3 locale_atof.py
 	
 	       USA:  1,234.56 => 1234.560000
 	    France:   1234,56 => 1234.560000
@@ -429,26 +429,26 @@ Dates and Times
 
 Another important aspect of localization is date and time formatting.
 
-.. include:: locale_date_example.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: locale_date.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 This example uses the date formatting string for the locale to print
 the current date and time.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'locale_date_example.py'))
+.. cog.out(run_script(cog.inFile, 'locale_date.py'))
 .. }}}
 
 .. code-block:: none
 
-	$ python3 locale_date_example.py
+	$ python3 locale_date.py
 	
-	       USA: Fri Aug  5 17:04:12 2016
-	    France: Ven  5 aoû 17:04:12 2016
-	     Spain: vie  5 ago 17:04:12 2016
-	  Portugal: Sex  5 Ago 17:04:12 2016
-	    Poland: ptk  5 sie 17:04:12 2016
+	       USA: Fri Aug  5 17:20:45 2016
+	    France: Ven  5 aoû 17:20:45 2016
+	     Spain: vie  5 ago 17:20:45 2016
+	  Portugal: Sex  5 Ago 17:20:45 2016
+	    Poland: ptk  5 sie 17:20:45 2016
 
 .. {{{end}}}
 

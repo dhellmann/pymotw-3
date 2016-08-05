@@ -20,4 +20,4 @@ sample_locales = [
 for name, loc in sample_locales:
     locale.setlocale(locale.LC_ALL, loc)
     format = locale.nl_langinfo(locale.D_T_FMT)
-    print('%10s: %s' % (name, time.strftime(format)))
+    print('{:>10}: {}'.format(name, time.strftime(format)))

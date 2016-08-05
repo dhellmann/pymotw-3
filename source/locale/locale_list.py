@@ -225,4 +225,4 @@ locales = [
 ]
 
 for code, place in locales:
-    print('%6s : %s' % (code, place))
+    print('{:>6} : {}'.format(code, place))
