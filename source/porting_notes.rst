@@ -634,6 +634,44 @@ mmap
 Values returned from read APIs are byte strings, and need to be
 decoded before being treated as text.
 
+.. _porting-operator:
+
+operator
+--------
+
+.. index::
+   pair: porting; operator
+
+The :func:`div` function has been removed. Use either :func:`floordiv`
+or :func:`truediv`, depending on the desired semantics.
+
+The :func:`repeat` function is removed. Use :func:`mul` instead.
+
+The functions :func:`getslice`, :func:`setslice`, and :func:`delslice`
+are removed. Use :func:`getitem`, :func:`setitem`, and :func:`delitem`
+with slice indexes instead.
+
+The function :func:`isCallable` has been removed. Use the abstract
+base class :class:`collections.Callable` instead.
+
+.. code-block:: python
+
+   isinstance(obj, collections.Callable)
+
+The type checking functions :func:`isMappingType`,
+:func:`isSequenceType`, and :func:`isNumberType` have been
+removed. Use the relevant abstract base classes from
+:mod:`collections` or :mod:`numbers` instead.
+
+.. code-block:: python
+
+   isinstance(obj, collections.Mapping)
+   isinstance(obj, collections.Sequence)
+   isinstance(obj, numbers.Number)
+
+The :func:`sequenceIncludes` function has been removed. Use
+:func:`contains` instead.
+
 .. _porting-os:
 
 os
