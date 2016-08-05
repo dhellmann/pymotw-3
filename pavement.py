@@ -3,7 +3,7 @@ import http.server
 import os
 import subprocess
 
-from paver.easy import options, Bunch, task, consume_args, sh, info, error, cmdopts, dry
+from paver.easy import options, Bunch, task, consume_args, sh, info, error, cmdopts, dry, needs
 from paver.path import path
 from paver.setuputils import setup
 
@@ -301,11 +301,20 @@ def notify_google(options):
 
 
 @task
+@needs('setuptools.command.sdist')
+def sdist(options):
+    for archive in path('dist').glob('*.tar.gz'):
+        archive.copy(options.sphinx.builddir + '/html')
+
+
+@task
 def deploy(options):
     """Rebuild and copy website files to the remote server.
     """
     # Rebuild
     html_clean(options)
+    # Copy the sdist into the html output directory.
+    sdist(options)
     # Rebuild the site-map
     buildsitemap(options)
     # Install

@@ -14,6 +14,8 @@ See the project home page at https://pymotw.com/3/ for updates.
 
 Source code is available from http://bitbucket.org/dhellmann/pymotw-3/.
 
+The examples can be downloaded from `this site <PyMOTW-3-0.0.tar.gz>`__.
+
 Complete documentation for the standard library can be found on the
 Python web site at http://docs.python.org/3/library/.
 
