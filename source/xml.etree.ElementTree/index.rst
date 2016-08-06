@@ -20,16 +20,18 @@ XPath expressions, and creating new or modifying existing documents.
 
 .. seealso::
 
-    `xml.etree.ElementTree <http://docs.python.org/library/xml.etree.elementtree.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`xml.etree.ElementTree` -- The standard library
+     documentation for this module.
 
-    `ElementTree Overview <http://effbot.org/zone/element-index.htm>`_
-        Fredrick Lundh's original documentation and links to the
-        development versions of the ElementTree library.
+   * `ElementTree Overview
+     <http://effbot.org/zone/element-index.htm>`__ -- Fredrick Lundh's
+     original documentation and links to the development versions of
+     the ElementTree library.
 
-    `Process XML in Python with ElementTree <http://www.ibm.com/developerworks/library/x-matters28/>`_
-        IBM DeveloperWorks article by David Mertz.
+   * `Process XML in Python with ElementTree
+     <http://www.ibm.com/developerworks/library/x-matters28/>`_ -- IBM
+     DeveloperWorks article by David Mertz.
 
-    `lxml.etree <http://codespeak.net/lxml/>`_
-        A separate implementation of the ElementTree API based on
-        libxml2 with more complete XPath support.
+   * `lxml.etree <http://codespeak.net/lxml/>`_ -- A separate
+     implementation of the ElementTree API based on libxml2 with more
+     complete XPath support.
