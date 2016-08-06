@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -9,6 +9,7 @@
 
 from xml.etree import ElementTree
 from xml.dom import minidom
+
 
 def prettify(elem):
     """Return a pretty-printed XML string for the Element.

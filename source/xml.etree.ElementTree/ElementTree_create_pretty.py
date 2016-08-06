@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -25,4 +25,4 @@ child_with_tail.tail = 'And "tail" text.'
 child_with_entity_ref = SubElement(top, 'child_with_entity_ref')
 child_with_entity_ref.text = 'This & that'
 
-print prettify(top)
+print(prettify(top))

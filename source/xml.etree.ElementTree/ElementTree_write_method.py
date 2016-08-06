@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -8,7 +8,9 @@
 #end_pymotw_header
 
 import sys
-from xml.etree.ElementTree import Element, SubElement, ElementTree
+from xml.etree.ElementTree import (
+    Element, SubElement, ElementTree,
+)
 
 top = Element('top')
 
@@ -17,8 +19,7 @@ child.text = 'Contains text.'
 
 empty_child = SubElement(top, 'empty_child')
 
-for method in [ 'xml', 'html', 'text' ]:
-    print method
+for method in ['xml', 'html', 'text']:
+    print(method)
     ElementTree(top).write(sys.stdout, method=method)
-    print '\n'
-    
+    print('\n')

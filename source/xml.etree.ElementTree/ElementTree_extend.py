@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -14,9 +14,9 @@ top = Element('top')
 
 children = [
     Element('child', num=str(i))
-    for i in xrange(3)
-    ]
+    for i in range(3)
+]
 
 top.extend(children)
 
-print prettify(top)
+print(prettify(top))

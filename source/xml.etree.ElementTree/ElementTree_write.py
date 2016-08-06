@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -8,11 +8,9 @@
 #end_pymotw_header
 
 import sys
-from xml.etree.ElementTree import ( Element,
-                                    SubElement,
-                                    Comment,
-                                    ElementTree,
-                                    )
+from xml.etree.ElementTree import (
+    Element, SubElement, Comment, ElementTree,
+)
 
 top = Element('top')
 

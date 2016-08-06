@@ -1,6 +1,6 @@
-===============================================
- xml.etree.ElementTree -- XML Manipulation API
-===============================================
+================================================
+ xml.etree.ElementTree --- XML Manipulation API
+================================================
 
 .. module:: xml.etree.ElementTree
     :synopsis: XML Manipulation API
@@ -11,12 +11,6 @@
 The ElementTree library includes tools for parsing XML using
 event-based and document-based APIs, searching parsed documents with
 XPath expressions, and creating new or modifying existing documents.
-
-.. note::
-
-  All of the examples in this section use the Python implementation of
-  ElementTree for simplicity, but there is also a C implementation in
-  :mod:`xml.etree.cElementTree`.
 
 .. toctree::
 

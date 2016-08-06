@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -11,13 +11,13 @@ import csv
 from xml.etree.ElementTree import XMLTreeBuilder
 import sys
 
+
 class PodcastListToCSV(object):
 
     def __init__(self, outputFile):
         self.writer = csv.writer(outputFile,
                                  quoting=csv.QUOTE_NONNUMERIC)
         self.group_name = ''
-        return
 
     def start(self, tag, attrib):
         if tag != 'outline':
@@ -28,21 +28,20 @@ class PodcastListToCSV(object):
             self.group_name = attrib['text']
         else:
             # Output a podcast entry
-            self.writer.writerow( (self.group_name, attrib['text'],
-                                   attrib['xmlUrl'],
-                                   attrib.get('htmlUrl', ''),
-                                   )
-                                  )
+            self.writer.writerow(
+                (self.group_name, attrib['text'],
+                 attrib['xmlUrl'],
+                 attrib.get('htmlUrl', ''))
+            )
 
     def end(self, tag):
-        # Ignore closing tags
-        pass
+        "Ignore closing tags"
+
     def data(self, data):
-        # Ignore data inside nodes
-        pass
+        "Ignore data inside nodes"
+
     def close(self):
-        # Nothing special to do here
-        return
+        "Nothing special to do here"
 
 
 target = PodcastListToCSV(sys.stdout)

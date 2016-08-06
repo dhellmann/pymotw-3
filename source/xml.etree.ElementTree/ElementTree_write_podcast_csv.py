@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -15,7 +15,9 @@ writer = csv.writer(sys.stdout, quoting=csv.QUOTE_NONNUMERIC)
 
 group_name = ''
 
-for (event, node) in iterparse('podcasts.opml', events=['start']):
+parsing = iterparse('podcasts.opml', events=['start'])
+
+for (event, node) in parsing:
     if node.tag != 'outline':
         # Ignore anything not part of the outline
         continue
@@ -24,8 +26,8 @@ for (event, node) in iterparse('podcasts.opml', events=['start']):
         group_name = node.attrib['text']
     else:
         # Output a podcast entry
-        writer.writerow( (group_name, node.attrib['text'],
-                          node.attrib['xmlUrl'],
-                          node.attrib.get('htmlUrl', ''),
-                          )
-                         )
+        writer.writerow(
+            (group_name, node.attrib['text'],
+             node.attrib['xmlUrl'],
+             node.attrib.get('htmlUrl', ''))
+        )

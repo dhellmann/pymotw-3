@@ -70,6 +70,7 @@ to another.
    pickle/index
    shelve/index
    dbm/index
+   xml.etree.ElementTree/index
    csv/index
 
 ..

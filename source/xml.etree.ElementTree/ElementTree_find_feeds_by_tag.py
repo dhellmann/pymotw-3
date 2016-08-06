@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -15,4 +15,4 @@ with open('podcasts.opml', 'rt') as f:
 for node in tree.findall('.//outline'):
     url = node.attrib.get('xmlUrl')
     if url:
-        print url
+        print(url)

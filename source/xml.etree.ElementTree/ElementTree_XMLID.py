@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -22,5 +22,4 @@ tree, id_map = XMLID('''
 ''')
 
 for key, value in sorted(id_map.items()):
-    print '%s = %s' % (key, value)
-    
+    print('%s = %s' % (key, value))
