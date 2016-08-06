@@ -407,9 +407,7 @@ references for the keys instead of the values in the dictionary.
 
 .. seealso::
 
-    `weakref <http://docs.python.org/lib/module-weakref.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`weakref`
 
-    :mod:`gc`
-        The ``gc`` module is the interface to the interpreter's
-        garbage collector.
+   * :mod:`gc` -- The ``gc`` module is the interface to the
+     interpreter's garbage collector.
