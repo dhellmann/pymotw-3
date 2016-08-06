@@ -44,14 +44,15 @@ extensions = [
     'sphinx.ext.graphviz',
     'tableref',
     'figureref',
+    'pydoc',
 ]
 
 python_version = '{}.{}'.format(*(sys.version_info[:2]))
 
 extlinks = {
     'pyissue': ('http://bugs.python.org/issue%s', 'Python issue '),
-    'pydoc': ('http://docs.python.org/' + python_version + '/library/%s.html',
-              'Standard library documentation for '),
+    # 'pydoc': ('http://docs.python.org/' + python_version + '/library/%s.html',
+    #           'Standard library documentation for '),
 }
 
 # Add any paths that contain templates here, relative to this directory.
