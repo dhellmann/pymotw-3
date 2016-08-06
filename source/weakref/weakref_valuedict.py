@@ -14,7 +14,7 @@ import weakref
 gc.set_debug(gc.DEBUG_UNCOLLECTABLE)
 
 
-class ExpensiveObject(object):
+class ExpensiveObject:
 
     def __init__(self, name):
         self.name = name

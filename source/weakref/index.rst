@@ -38,12 +38,12 @@ reference, the :class:`ref` returns ``None``.
 
 	$ python3 weakref_ref.py
 	
-	obj: <__main__.ExpensiveObject object at 0x1007b1a58>
-	ref: <weakref at 0x1007a92c8; to 'ExpensiveObject' at
-	0x1007b1a58>
-	r(): <__main__.ExpensiveObject object at 0x1007b1a58>
+	obj: <__main__.ExpensiveObject object at 0x1018b1a58>
+	ref: <weakref at 0x1018a92c8; to 'ExpensiveObject' at
+	0x1018b1a58>
+	r(): <__main__.ExpensiveObject object at 0x1018b1a58>
 	deleting obj
-	(Deleting <__main__.ExpensiveObject object at 0x1007b1a58>)
+	(Deleting <__main__.ExpensiveObject object at 0x1018b1a58>)
 	r(): None
 
 .. {{{end}}}
@@ -174,24 +174,24 @@ program (written to standard output) and the debug output from
 	Setting up the cycle
 	
 	Set up graph:
-	  one.set_next(<Graph at 0x101304358 name=two>)
-	  two.set_next(<Graph at 0x10131a668 name=three>)
-	  three.set_next(<Graph at 0x1007b1978 name=one>)
+	  one.set_next(<Graph at 0x1013d5358 name=two>)
+	  two.set_next(<Graph at 0x1014019b0 name=three>)
+	  three.set_next(<Graph at 0x1012b1978 name=one>)
 	
 	Graph:
 	  one->two->three->one
 	Collecting...
 	Unreachable objects: 0
 	Tracked Graph objects:
-	  <Graph at 0x1007b1978 name=one>
-	    -> {'other': <Graph at 0x101304358 name=two>, 'name': 'one'}
+	  <Graph at 0x1012b1978 name=one>
+	    -> {'other': <Graph at 0x1013d5358 name=two>, 'name': 'one'}
 	    -> <class 'weakref_graph.Graph'>
-	  <Graph at 0x101304358 name=two>
-	    -> {'other': <Graph at 0x10131a668 name=three>, 'name': 'two
+	  <Graph at 0x1013d5358 name=two>
+	    -> {'other': <Graph at 0x1014019b0 name=three>, 'name': 'two
 	'}
 	    -> <class 'weakref_graph.Graph'>
-	  <Graph at 0x10131a668 name=three>
-	    -> {'other': <Graph at 0x1007b1978 name=one>, 'name': 'three
+	  <Graph at 0x1014019b0 name=three>
+	    -> {'other': <Graph at 0x1012b1978 name=one>, 'name': 'three
 	'}
 	    -> <class 'weakref_graph.Graph'>
 	
@@ -200,26 +200,26 @@ program (written to standard output) and the debug output from
 	Collecting...
 	Unreachable objects: 0
 	Tracked Graph objects:
-	  <Graph at 0x1007b1978 name=one>
-	    -> {'other': <Graph at 0x101304358 name=two>, 'name': 'one'}
+	  <Graph at 0x1012b1978 name=one>
+	    -> {'other': <Graph at 0x1013d5358 name=two>, 'name': 'one'}
 	    -> <class 'weakref_graph.Graph'>
-	  <Graph at 0x101304358 name=two>
-	    -> {'other': <Graph at 0x10131a668 name=three>, 'name': 'two
+	  <Graph at 0x1013d5358 name=two>
+	    -> {'other': <Graph at 0x1014019b0 name=three>, 'name': 'two
 	'}
 	    -> <class 'weakref_graph.Graph'>
-	  <Graph at 0x10131a668 name=three>
-	    -> {'other': <Graph at 0x1007b1978 name=one>, 'name': 'three
+	  <Graph at 0x1014019b0 name=three>
+	    -> {'other': <Graph at 0x1012b1978 name=one>, 'name': 'three
 	'}
 	    -> <class 'weakref_graph.Graph'>
 	
 	Removing last reference:
 	Collecting...
-	gc: collectable <Graph 0x1007b1978>
-	gc: collectable <dict 0x1007940c8>
-	gc: collectable <Graph 0x101304358>
-	gc: collectable <dict 0x100794108>
-	gc: collectable <Graph 0x10131a668>
-	gc: collectable <dict 0x101316c48>
+	gc: collectable <Graph 0x1012b1978>
+	gc: collectable <dict 0x1012940c8>
+	gc: collectable <Graph 0x1013d5358>
+	gc: collectable <dict 0x101294108>
+	gc: collectable <Graph 0x1014019b0>
+	gc: collectable <dict 0x1013e7c48>
 	(Deleting one)
 	  one.set_next(None)
 	(Deleting two)
@@ -258,9 +258,9 @@ collector can delete the objects.
 	$ python3 weakref_weakgraph.py
 	
 	Set up graph:
-	  one.set_next(<WeakGraph at 0x10141a710 name=two>)
-	  two.set_next(<WeakGraph at 0x10141a748 name=three>)
-	  three.set_next(<weakproxy at 0x10140de08 to WeakGraph at 0x10140440
+	  one.set_next(<WeakGraph at 0x101beb710 name=two>)
+	  two.set_next(<WeakGraph at 0x101beb748 name=three>)
+	  three.set_next(<weakproxy at 0x101bdee08 to WeakGraph at 0x101bd540
 	0>)
 	
 	Graph:
@@ -268,36 +268,36 @@ collector can delete the objects.
 	Collecting...
 	Unreachable objects: 0
 	Tracked Graph objects:
-	  <WeakGraph at 0x101404400 name=one>
-	    -> {'other': <WeakGraph at 0x10141a710 name=two>, 'name': 'one'}
+	  <WeakGraph at 0x101bd5400 name=one>
+	    -> {'other': <WeakGraph at 0x101beb710 name=two>, 'name': 'one'}
 	    -> <class '__main__.WeakGraph'>
-	  <WeakGraph at 0x10141a710 name=two>
-	    -> {'other': <WeakGraph at 0x10141a748 name=three>, 'name': 'two'
+	  <WeakGraph at 0x101beb710 name=two>
+	    -> {'other': <WeakGraph at 0x101beb748 name=three>, 'name': 'two'
 	}
 	    -> <class '__main__.WeakGraph'>
-	  <WeakGraph at 0x10141a748 name=three>
-	    -> {'other': <weakproxy at 0x10140de08 to WeakGraph at 0x10140440
+	  <WeakGraph at 0x101beb748 name=three>
+	    -> {'other': <weakproxy at 0x101bdee08 to WeakGraph at 0x101bd540
 	0>, 'name': 'three'}
 	    -> <class '__main__.WeakGraph'>
-	  <weakproxy at 0x10140de08 to WeakGraph at 0x101404400>
+	  <weakproxy at 0x101bdee08 to WeakGraph at 0x101bd5400>
 	
 	After 2 references removed:
 	  one->two->three
 	Collecting...
 	Unreachable objects: 0
 	Tracked Graph objects:
-	  <WeakGraph at 0x101404400 name=one>
-	    -> {'other': <WeakGraph at 0x10141a710 name=two>, 'name': 'one'}
+	  <WeakGraph at 0x101bd5400 name=one>
+	    -> {'other': <WeakGraph at 0x101beb710 name=two>, 'name': 'one'}
 	    -> <class '__main__.WeakGraph'>
-	  <WeakGraph at 0x10141a710 name=two>
-	    -> {'other': <WeakGraph at 0x10141a748 name=three>, 'name': 'two'
+	  <WeakGraph at 0x101beb710 name=two>
+	    -> {'other': <WeakGraph at 0x101beb748 name=three>, 'name': 'two'
 	}
 	    -> <class '__main__.WeakGraph'>
-	  <WeakGraph at 0x10141a748 name=three>
-	    -> {'other': <weakproxy at 0x10140de08 to WeakGraph at 0x10140440
+	  <WeakGraph at 0x101beb748 name=three>
+	    -> {'other': <weakproxy at 0x101bdee08 to WeakGraph at 0x101bd540
 	0>, 'name': 'three'}
 	    -> <class '__main__.WeakGraph'>
-	  <weakproxy at 0x10140de08 to WeakGraph at 0x101404400>
+	  <weakproxy at 0x101bdee08 to WeakGraph at 0x101bd5400>
 	
 	Removing last reference:
 	(Deleting one)
@@ -374,7 +374,7 @@ collected prematurely.
 	 'two': ExpensiveObject(two)}
 	
 	  Before, cache contains: <generator object WeakValueDictionary.
-	keys at 0x1019af8e0>
+	keys at 0x101bcf8e0>
 	    one = ExpensiveObject(one)
 	    three = ExpensiveObject(three)
 	    two = ExpensiveObject(two)

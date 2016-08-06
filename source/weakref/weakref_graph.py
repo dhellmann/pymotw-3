@@ -12,7 +12,7 @@ from pprint import pprint
 import weakref
 
 
-class Graph(object):
+class Graph:
 
     def __init__(self, name):
         self.name = name

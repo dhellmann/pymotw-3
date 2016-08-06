@@ -10,7 +10,7 @@
 import weakref
 
 
-class ExpensiveObject(object):
+class ExpensiveObject:
 
     def __init__(self, name):
         self.name = name
