@@ -6,7 +6,6 @@
     :synopsis: XML Manipulation API
 
 :Purpose: Generate and parse XML documents
-:Python Version: 2.5 and later
 
 The ElementTree library includes tools for parsing XML using
 event-based and document-based APIs, searching parsed documents with
