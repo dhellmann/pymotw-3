@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="1.0">
+<head>
+    <title>My Podcasts</title>
+    <dateCreated>Sun, 07 Mar 2010 15:53:26 GMT</dateCreated>
+    <dateModified>Sun, 07 Mar 2010 15:53:26 GMT</dateModified>
+</head>
+<body>
+  <outline text="Fiction">
+    <outline 
+       text="tor.com / category / tordotstories" type="rss" 
+       xmlUrl="http://www.tor.com/rss/category/TorDotStories" 
+       htmlUrl="http://www.tor.com/" />
+  </outline>
+  <outline text="Python">
+    <outline 
+       text="PyCon Podcast" type="rss" 
+       xmlUrl="http://advocacy.python.org/podcasts/pycon.rss" 
+       htmlUrl="http://advocacy.python.org/podcasts/" />
+    <outline 
+       text="A Little Bit of Python" type="rss" 
+       xmlUrl="http://advocacy.python.org/podcasts/littlebit.rss" 
+       htmlUrl="http://advocacy.python.org/podcasts/" />
+  </outline>
+</body>
+</opml>
