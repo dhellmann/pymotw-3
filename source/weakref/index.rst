@@ -71,14 +71,119 @@ cache.
 
 	$ python3 weakref_ref_callback.py
 	
-	obj: <__main__.ExpensiveObject object at 0x1018b1978>
-	ref: <weakref at 0x1018a92c8; to 'ExpensiveObject' at
-	0x1018b1978>
-	r(): <__main__.ExpensiveObject object at 0x1018b1978>
+	obj: <__main__.ExpensiveObject object at 0x1010b1978>
+	ref: <weakref at 0x1010a92c8; to 'ExpensiveObject' at
+	0x1010b1978>
+	r(): <__main__.ExpensiveObject object at 0x1010b1978>
 	deleting obj
-	(Deleting <__main__.ExpensiveObject object at 0x1018b1978>)
-	callback(<weakref at 0x1018a92c8; dead>)
+	(Deleting <__main__.ExpensiveObject object at 0x1010b1978>)
+	callback(<weakref at 0x1010a92c8; dead>)
 	r(): None
+
+.. {{{end}}}
+
+Finalizing Objects
+==================
+
+For more robust management of resources when weak references are
+cleaned up, use :class:`finalize` to associate callbacks with
+objects. A :class:`finalize` instance is retained until the attached
+object is deleted, even if the application does not retain a reference
+to the finalizer.
+
+.. literalinclude:: weakref_finalize.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The arguments to :class:`finalize` are the object to track, a callable
+to invoke when the object is garbage collected, and any positional or
+named arguments to pass to the callable.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'weakref_finalize.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 weakref_finalize.py
+	
+	(Deleting <__main__.ExpensiveObject object at 0x1019b10f0>)
+	on_finalize(('extra argument',))
+
+.. {{{end}}}
+
+The :class:`finalize` instance has a writable propertly ``atexit`` to
+control whether or not to invoke the callback as a program is exiting,
+if it hasn't already been called.
+
+.. literalinclude:: weakref_finalize_atexit.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The default is to invoke the callback, and setting ``atexit`` to false
+disables that behavior.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'weakref_finalize_atexit.py 1'))
+.. cog.out(run_script(cog.inFile, 'weakref_finalize_atexit.py 0', include_prefix=False))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 weakref_finalize_atexit.py 1
+	
+	on_finalize(('extra argument',))
+	(Deleting <__main__.ExpensiveObject object at 0x1007b10f0>)
+
+	$ python3 weakref_finalize_atexit.py 0
+	
+
+.. {{{end}}}
+
+Giving the :class:`finalize` a reference to the object it tracks
+causes a reference to be retained, so the object is never garbage
+collected.
+
+.. literalinclude:: weakref_finalize_reference.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+This example shows that even though the explicit reference to ``obj``
+is deleted, the object is retained and visible to the garbage
+collector through ``f``.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'weakref_finalize_reference.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 weakref_finalize_reference.py
+	
+	found uncollected object in gc
+
+.. {{{end}}}
+
+Using a bound method of the tracked object as the callable is another
+way to avoid having the object finalized properly.
+
+.. literalinclude:: weakref_finalize_reference_method.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Because the callable given to :class:`finalize` is a bound method of
+the instance ``obj``, the finalize object holds a reference to
+``obj``, which can not be deleted and garbage collected.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'weakref_finalize_reference_method.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 weakref_finalize_reference_method.py
+	
+	found uncollected object in gc
 
 .. {{{end}}}
 
