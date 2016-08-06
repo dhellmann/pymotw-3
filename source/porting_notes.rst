@@ -953,6 +953,16 @@ xml.etree.ElementTree
 :class:`XMLTreeBuilder` has been renamed :class:`TreeBuilder`, and the
 API has undergone several changes.
 
+:func:`ElementTree.getchildren` has been deprecated. Use
+``list(elem)`` to build a list of the children.
+
+:func:`ElementTree.getiterator` has been deprecated. Use :func:`iter`
+to create an iterator using the normal iterator protocol
+instead.
+
+When parsing fails, rather than raising
+:class:`xml.parsers.expat.ExpatError`, :class:`XMLParser` now raises
+:class:`xml.etree.ElementTree.ParseError`.
 
 .. _porting-zipimport:
 
