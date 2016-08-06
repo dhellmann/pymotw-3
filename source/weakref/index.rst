@@ -213,3 +213,5 @@ references for the keys instead of the values in the dictionary.
 
    * :mod:`gc` -- The ``gc`` module is the interface to the
      interpreter's garbage collector.
+
+   * :pep:`205` -- "Weak References" enhancement proposal.
