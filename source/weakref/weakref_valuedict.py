@@ -41,7 +41,7 @@ def demo(cache_factory):
 
     print('  all_refs =', end=' ')
     pprint(all_refs)
-    print('\n  Before, cache contains:', cache.keys())
+    print('\n  Before, cache contains:', list(cache.keys()))
     for name, value in cache.items():
         print('    {} = {}'.format(name, value))
         del value  # decref
@@ -51,7 +51,7 @@ def demo(cache_factory):
     del all_refs
     gc.collect()
 
-    print('\n  After, cache contains:', cache.keys())
+    print('\n  After, cache contains:', list(cache.keys()))
     for name, value in cache.items():
         print('    {} = {}'.format(name, value))
     print('  demo returning')
