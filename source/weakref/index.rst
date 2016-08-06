@@ -77,7 +77,7 @@ cache.
 	r(): <__main__.ExpensiveObject object at 0x1007b1978>
 	deleting obj
 	(Deleting <__main__.ExpensiveObject object at 0x1007b1978>)
-	callback( <weakref at 0x1007a92c8; dead> )
+	callback(<weakref at 0x1007a92c8; dead>)
 	r(): None
 
 .. {{{end}}}
@@ -258,9 +258,9 @@ collector can delete the objects.
 	$ python3 weakref_weakgraph.py
 	
 	Set up graph:
-	  one.set_next(<WeakGraph at 0x10131a710 name=two>)
-	  two.set_next(<WeakGraph at 0x10131a748 name=three>)
-	  three.set_next(<weakproxy at 0x10130de08 to WeakGraph at 0x10130440
+	  one.set_next(<WeakGraph at 0x10141a710 name=two>)
+	  two.set_next(<WeakGraph at 0x10141a748 name=three>)
+	  three.set_next(<weakproxy at 0x10140de08 to WeakGraph at 0x10140440
 	0>)
 	
 	Graph:
@@ -268,36 +268,36 @@ collector can delete the objects.
 	Collecting...
 	Unreachable objects: 0
 	Tracked Graph objects:
-	  <WeakGraph at 0x101304400 name=one>
-	    -> {'other': <WeakGraph at 0x10131a710 name=two>, 'name': 'one'}
+	  <WeakGraph at 0x101404400 name=one>
+	    -> {'other': <WeakGraph at 0x10141a710 name=two>, 'name': 'one'}
 	    -> <class '__main__.WeakGraph'>
-	  <WeakGraph at 0x10131a710 name=two>
-	    -> {'other': <WeakGraph at 0x10131a748 name=three>, 'name': 'two'
+	  <WeakGraph at 0x10141a710 name=two>
+	    -> {'other': <WeakGraph at 0x10141a748 name=three>, 'name': 'two'
 	}
 	    -> <class '__main__.WeakGraph'>
-	  <WeakGraph at 0x10131a748 name=three>
-	    -> {'other': <weakproxy at 0x10130de08 to WeakGraph at 0x10130440
+	  <WeakGraph at 0x10141a748 name=three>
+	    -> {'other': <weakproxy at 0x10140de08 to WeakGraph at 0x10140440
 	0>, 'name': 'three'}
 	    -> <class '__main__.WeakGraph'>
-	  <weakproxy at 0x10130de08 to WeakGraph at 0x101304400>
+	  <weakproxy at 0x10140de08 to WeakGraph at 0x101404400>
 	
 	After 2 references removed:
 	  one->two->three
 	Collecting...
 	Unreachable objects: 0
 	Tracked Graph objects:
-	  <WeakGraph at 0x101304400 name=one>
-	    -> {'other': <WeakGraph at 0x10131a710 name=two>, 'name': 'one'}
+	  <WeakGraph at 0x101404400 name=one>
+	    -> {'other': <WeakGraph at 0x10141a710 name=two>, 'name': 'one'}
 	    -> <class '__main__.WeakGraph'>
-	  <WeakGraph at 0x10131a710 name=two>
-	    -> {'other': <WeakGraph at 0x10131a748 name=three>, 'name': 'two'
+	  <WeakGraph at 0x10141a710 name=two>
+	    -> {'other': <WeakGraph at 0x10141a748 name=three>, 'name': 'two'
 	}
 	    -> <class '__main__.WeakGraph'>
-	  <WeakGraph at 0x10131a748 name=three>
-	    -> {'other': <weakproxy at 0x10130de08 to WeakGraph at 0x10130440
+	  <WeakGraph at 0x10141a748 name=three>
+	    -> {'other': <weakproxy at 0x10140de08 to WeakGraph at 0x10140440
 	0>, 'name': 'three'}
 	    -> <class '__main__.WeakGraph'>
-	  <weakproxy at 0x10130de08 to WeakGraph at 0x101304400>
+	  <weakproxy at 0x10140de08 to WeakGraph at 0x101404400>
 	
 	Removing last reference:
 	(Deleting one)
@@ -374,7 +374,7 @@ collected prematurely.
 	 'two': ExpensiveObject(two)}
 	
 	  Before, cache contains: <generator object WeakValueDictionary.
-	keys at 0x101aaf8e0>
+	keys at 0x1019af8e0>
 	    one = ExpensiveObject(one)
 	    three = ExpensiveObject(three)
 	    two = ExpensiveObject(two)
@@ -385,7 +385,7 @@ collected prematurely.
 	    (Deleting ExpensiveObject(two))
 	
 	  After, cache contains: <generator object WeakValueDictionary.k
-	eys at 0x1019068e0>
+	eys at 0x1018068e0>
 	  demo returning
 
 .. {{{end}}}

@@ -16,7 +16,7 @@ class ExpensiveObject(object):
         self.name = name
 
     def __del__(self):
-        print('(Deleting %s)' % self)
+        print('(Deleting {})'.format(self))
 
 
 obj = ExpensiveObject('My Object')

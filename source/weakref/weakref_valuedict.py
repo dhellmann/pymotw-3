@@ -20,10 +20,10 @@ class ExpensiveObject(object):
         self.name = name
 
     def __repr__(self):
-        return 'ExpensiveObject(%s)' % self.name
+        return 'ExpensiveObject({})'.format(self.name)
 
     def __del__(self):
-        print('    (Deleting %s)' % self)
+        print('    (Deleting {})'.format(self))
 
 
 def demo(cache_factory):
@@ -43,7 +43,7 @@ def demo(cache_factory):
     pprint(all_refs)
     print('\n  Before, cache contains:', cache.keys())
     for name, value in cache.items():
-        print('    %s = %s' % (name, value))
+        print('    {} = {}'.format(name, value))
         del value  # decref
 
     # Remove all references to the objects except the cache
@@ -53,7 +53,7 @@ def demo(cache_factory):
 
     print('\n  After, cache contains:', cache.keys())
     for name, value in cache.items():
-        print('    %s = %s' % (name, value))
+        print('    {} = {}'.format(name, value))
     print('  demo returning')
     return
 

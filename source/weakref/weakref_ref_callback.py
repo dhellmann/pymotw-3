@@ -14,12 +14,12 @@ import weakref
 class ExpensiveObject(object):
 
     def __del__(self):
-        print('(Deleting %s)' % self)
+        print('(Deleting {})'.format(self))
 
 
 def callback(reference):
     """Invoked when referenced object is deleted"""
-    print('callback(', reference, ')')
+    print('callback({!r})'.format(reference))
 
 
 obj = ExpensiveObject()

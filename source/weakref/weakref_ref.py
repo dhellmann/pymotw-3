@@ -13,7 +13,7 @@ import weakref
 class ExpensiveObject(object):
 
     def __del__(self):
-        print('(Deleting %s)' % self)
+        print('(Deleting {})'.format(self))
 
 
 obj = ExpensiveObject()
