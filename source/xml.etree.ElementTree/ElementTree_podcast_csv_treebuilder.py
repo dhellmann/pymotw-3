@@ -8,15 +8,18 @@
 #end_pymotw_header
 
 import csv
-from xml.etree.ElementTree import XMLTreeBuilder
+import io
+from xml.etree.ElementTree import XMLParser
 import sys
 
 
 class PodcastListToCSV(object):
 
     def __init__(self, outputFile):
-        self.writer = csv.writer(outputFile,
-                                 quoting=csv.QUOTE_NONNUMERIC)
+        self.writer = csv.writer(
+            outputFile,
+            quoting=csv.QUOTE_NONNUMERIC,
+        )
         self.group_name = ''
 
     def start(self, tag, attrib):
@@ -29,7 +32,8 @@ class PodcastListToCSV(object):
         else:
             # Output a podcast entry
             self.writer.writerow(
-                (self.group_name, attrib['text'],
+                (self.group_name,
+                 attrib['text'],
                  attrib['xmlUrl'],
                  attrib.get('htmlUrl', ''))
             )
@@ -45,7 +49,7 @@ class PodcastListToCSV(object):
 
 
 target = PodcastListToCSV(sys.stdout)
-parser = XMLTreeBuilder(target=target)
+parser = XMLParser(target=target)
 with open('podcasts.opml', 'rt') as f:
     for line in f:
         parser.feed(line)

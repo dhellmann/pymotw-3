@@ -39,18 +39,21 @@ with open('podcasts.csv', 'rt') as f:
     reader = csv.reader(f)
     for row in reader:
         group_name, podcast_name, xml_url, html_url = row
-        if (current_group is None
-                or group_name != current_group.text):
+        if (current_group is None or
+                group_name != current_group.text):
             # Start a new group
-            current_group = SubElement(body, 'outline',
-                                       {'text': group_name})
+            current_group = SubElement(
+                body, 'outline',
+                {'text': group_name},
+            )
         # Add this podcast to the group,
         # setting all its attributes at
         # once.
-        podcast = SubElement(current_group, 'outline',
-                             {'text': podcast_name,
-                              'xmlUrl': xml_url,
-                              'htmlUrl': html_url,
-                              })
+        podcast = SubElement(
+            current_group, 'outline',
+            {'text': podcast_name,
+             'xmlUrl': xml_url,
+             'htmlUrl': html_url},
+        )
 
 print(prettify(root))

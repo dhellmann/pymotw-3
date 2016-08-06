@@ -7,6 +7,7 @@
 """
 #end_pymotw_header
 
+import io
 import sys
 from xml.etree.ElementTree import (
     Element, SubElement, ElementTree,
@@ -21,5 +22,6 @@ empty_child = SubElement(top, 'empty_child')
 
 for method in ['xml', 'html', 'text']:
     print(method)
-    ElementTree(top).write(sys.stdout, method=method)
+    sys.stdout.flush()
+    ElementTree(top).write(sys.stdout.buffer, method=method)
     print('\n')

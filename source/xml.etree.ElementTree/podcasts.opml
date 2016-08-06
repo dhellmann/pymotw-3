@@ -2,25 +2,25 @@
 <opml version="1.0">
 <head>
     <title>My Podcasts</title>
-    <dateCreated>Sun, 07 Mar 2010 15:53:26 GMT</dateCreated>
-    <dateModified>Sun, 07 Mar 2010 15:53:26 GMT</dateModified>
+    <dateCreated>Sat, 06 Aug 2016 15:53:26 GMT</dateCreated>
+    <dateModified>Sat, 06 Aug 2016 15:53:26 GMT</dateModified>
 </head>
 <body>
-  <outline text="Fiction">
-    <outline 
-       text="tor.com / category / tordotstories" type="rss" 
-       xmlUrl="http://www.tor.com/rss/category/TorDotStories" 
-       htmlUrl="http://www.tor.com/" />
+  <outline text="Non-tech">
+    <outline
+        text="99% Invisible" type="rss"
+        xmlUrl="http://feeds.99percentinvisible.org/99percentinvisible"
+        htmlUrl="http://99percentinvisible.org" />
   </outline>
   <outline text="Python">
-    <outline 
-       text="PyCon Podcast" type="rss" 
-       xmlUrl="http://advocacy.python.org/podcasts/pycon.rss" 
-       htmlUrl="http://advocacy.python.org/podcasts/" />
-    <outline 
-       text="A Little Bit of Python" type="rss" 
-       xmlUrl="http://advocacy.python.org/podcasts/littlebit.rss" 
-       htmlUrl="http://advocacy.python.org/podcasts/" />
+    <outline
+        text="Talk Python to Me" type="rss"
+        xmlUrl="https://talkpython.fm/episodes/rss"
+        htmlUrl="https://talkpython.fm" />
+    <outline
+        text="Podcast.__init__" type="rss"
+        xmlUrl="http://podcastinit.podbean.com/feed/"
+        htmlUrl="http://podcastinit.com" />
   </outline>
 </body>
 </opml>

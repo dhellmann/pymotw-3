@@ -7,7 +7,7 @@ Parsed XML documents are represented in memory by :class:`ElementTree`
 and :class:`Element` objects connected in a tree structure based on
 the way the nodes in the XML document are nested.
 
-Parsing an entire document with :func:`parse()` returns an
+Parsing an entire document with :func:`parse` returns an
 :class:`ElementTree` instance.  The tree knows about all of the data
 in the input document, and the nodes of the tree can be searched or
 manipulated in place.  While this flexibility can make working with
@@ -19,12 +19,13 @@ The memory footprint of small, simple documents such as this list of
 podcasts represented as an OPML outline is not significant:
 
 .. literalinclude:: podcasts.opml
+   :caption:
    :language: xml
 
-To parse the file, pass an open file handle to :func:`parse()`.
+To parse the file, pass an open file handle to :func:`parse`.
 
-.. include:: ElementTree_parse_opml.py
-   :literal:
+.. literalinclude:: ElementTree_parse_opml.py
+   :caption:
    :start-after: #end_pymotw_header
 
 It will read the data, parse the XML, and return an
@@ -34,11 +35,11 @@ It will read the data, parse the XML, and return an
 .. cog.out(run_script(cog.inFile, 'ElementTree_parse_opml.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python ElementTree_parse_opml.py
-    
-    <xml.etree.ElementTree.ElementTree object at 0x100dca350>
+	$ python3 ElementTree_parse_opml.py
+	
+	<xml.etree.ElementTree.ElementTree object at 0x1013e5630>
 
 .. {{{end}}}
 
@@ -48,8 +49,8 @@ Traversing the Parsed Tree
 To visit all of the children in order, use :func:`iter` to create a
 generator that iterates over the :class:`ElementTree` instance.
 
-.. include:: ElementTree_dump_opml.py
-   :literal:
+.. literalinclude:: ElementTree_dump_opml.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example prints the entire tree, one tag at a time.
@@ -58,21 +59,21 @@ This example prints the entire tree, one tag at a time.
 .. cog.out(run_script(cog.inFile, 'ElementTree_dump_opml.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python ElementTree_dump_opml.py
-    
-    opml
-    head
-    title
-    dateCreated
-    dateModified
-    body
-    outline
-    outline
-    outline
-    outline
-    outline
+	$ python3 ElementTree_dump_opml.py
+	
+	opml
+	head
+	title
+	dateCreated
+	dateModified
+	body
+	outline
+	outline
+	outline
+	outline
+	outline
 
 .. {{{end}}}
 
@@ -82,8 +83,8 @@ only the ``outline`` nodes and print the *text* and *xmlUrl*
 attributes by looking up the values in the :attr:`attrib`
 dictionary.
 
-.. include:: ElementTree_show_feed_urls.py
-   :literal:
+.. literalinclude:: ElementTree_show_feed_urls.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The ``'outline'`` argument to :func:`iter` means processing is limited
@@ -93,18 +94,18 @@ to only nodes with the tag ``'outline'``.
 .. cog.out(run_script(cog.inFile, 'ElementTree_show_feed_urls.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python ElementTree_show_feed_urls.py
-    
-    Fiction
-      tor.com / category / tordotstories
-        http://www.tor.com/rss/category/TorDotStories
-    Python
-      PyCon Podcast
-        http://advocacy.python.org/podcasts/pycon.rss
-      A Little Bit of Python
-        http://advocacy.python.org/podcasts/littlebit.rss
+	$ python3 ElementTree_show_feed_urls.py
+	
+	Non-tech
+	  99% Invisible
+	    http://feeds.99percentinvisible.org/99percentinvisible
+	Python
+	  Talk Python to Me
+	    https://talkpython.fm/episodes/rss
+	  Podcast.__init__
+	    http://podcastinit.podbean.com/feed/
 
 .. {{{end}}}
 
@@ -116,18 +117,18 @@ be error prone.  The previous example had to look at each outline node
 to determine if it was a group (nodes with only a :attr:`text`
 attribute) or podcast (with both :attr:`text` and :attr:`xmlUrl`).  To
 produce a simple list of the podcast feed URLs, without names or
-groups, the logic could be simplified using :func:`findall()` to look
+groups, the logic could be simplified using :func:`findall` to look
 for nodes with more descriptive search characteristics.
 
 As a first pass at converting the first version, an XPath argument
 can be used to look for all outline nodes.
 
-.. include:: ElementTree_find_feeds_by_tag.py
-   :literal:
+.. literalinclude:: ElementTree_find_feeds_by_tag.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The logic in this version is not substantially different than the
-version using :func:`getiterator()`.  It still has to check for the
+version using :func:`getiterator`.  It still has to check for the
 presence of the URL, except that it does not print the group name when
 the URL is not found.
 
@@ -135,13 +136,13 @@ the URL is not found.
 .. cog.out(run_script(cog.inFile, 'ElementTree_find_feeds_by_tag.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python ElementTree_find_feeds_by_tag.py
-    
-    http://www.tor.com/rss/category/TorDotStories
-    http://advocacy.python.org/podcasts/pycon.rss
-    http://advocacy.python.org/podcasts/littlebit.rss
+	$ python3 ElementTree_find_feeds_by_tag.py
+	
+	http://feeds.99percentinvisible.org/99percentinvisible
+	https://talkpython.fm/episodes/rss
+	http://podcastinit.podbean.com/feed/
 
 .. {{{end}}}
 
@@ -150,8 +151,8 @@ are only nested two levels deep.  Changing the search path to
 ``.//outline/outline`` means the loop will process only the second
 level of outline nodes.
 
-.. include:: ElementTree_find_feeds_by_structure.py
-   :literal:
+.. literalinclude:: ElementTree_find_feeds_by_structure.py
+   :caption:
    :start-after: #end_pymotw_header
 
 All of the outline nodes nested two levels deep in the input are
@@ -162,13 +163,13 @@ so the loop can skip checking for the attribute before using it.
 .. cog.out(run_script(cog.inFile, 'ElementTree_find_feeds_by_structure.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python ElementTree_find_feeds_by_structure.py
-    
-    http://www.tor.com/rss/category/TorDotStories
-    http://advocacy.python.org/podcasts/pycon.rss
-    http://advocacy.python.org/podcasts/littlebit.rss
+	$ python3 ElementTree_find_feeds_by_structure.py
+	
+	http://feeds.99percentinvisible.org/99percentinvisible
+	https://talkpython.fm/episodes/rss
+	http://podcastinit.podbean.com/feed/
 
 .. {{{end}}}
 
@@ -179,21 +180,22 @@ working.
 Parsed Node Attributes
 ======================
 
-The items returned by :func:`findall()` and :func:`iter()` are
+The items returned by :func:`findall` and :func:`iter` are
 :class:`Element` objects, each representing a node in the XML parse
 tree.  Each :class:`Element` has attributes for accessing data pulled
 out of the XML.  This can be illustrated with a somewhat more
 contrived example input file, ``data.xml``.
 
 .. literalinclude:: data.xml
+   :caption:
    :language: xml
    :linenos:
 
 The *attributes* of a node are available in the :attr:`attrib`
 property, which acts like a dictionary.
 
-.. include:: ElementTree_node_attributes.py
-   :literal:
+.. literalinclude:: ElementTree_node_attributes.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The node on line five of the input file has two attributes,
@@ -203,21 +205,21 @@ The node on line five of the input file has two attributes,
 .. cog.out(run_script(cog.inFile, 'ElementTree_node_attributes.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python ElementTree_node_attributes.py
-    
-    with_attributes
-      foo  = "bar"
-      name = "value"
+	$ python3 ElementTree_node_attributes.py
+	
+	with_attributes
+	  foo  = "bar"
+	  name = "value"
 
 .. {{{end}}}
 
 The text content of the nodes is available, along with the *tail* text
 that comes after the end of a close tag.
 
-.. include:: ElementTree_node_text.py
-   :literal:
+.. literalinclude:: ElementTree_node_text.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The ``child`` node on line three contains embedded text, and the node
@@ -227,26 +229,26 @@ on line four has text with a tail (including whitespace).
 .. cog.out(run_script(cog.inFile, 'ElementTree_node_text.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python ElementTree_node_text.py
-    
-    child
-      child node text: Regular text.
-      and tail text  : 
-      
-    child_with_tail
-      child node text: Regular text.
-      and tail text  : "Tail" text.
-      
+	$ python3 ElementTree_node_text.py
+	
+	child
+	  child node text: Regular text.
+	  and tail text  : 
+	  
+	child_with_tail
+	  child node text: Regular text.
+	  and tail text  : "Tail" text.
+	  
 
 .. {{{end}}}
 
 XML entity references embedded in the document are converted to the
 appropriate characters before values are returned.
 
-.. include:: ElementTree_entity_references.py
-   :literal:
+.. literalinclude:: ElementTree_entity_references.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The automatic conversion means the implementation detail of
@@ -256,13 +258,13 @@ representing certain characters in an XML document can be ignored.
 .. cog.out(run_script(cog.inFile, 'ElementTree_entity_references.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python ElementTree_entity_references.py
-    
-    entity_expansion
-      in attribute: This & That
-      in text     : That & This
+	$ python3 ElementTree_entity_references.py
+	
+	entity_expansion
+	  in attribute: This & That
+	  in text     : That & This
 
 .. {{{end}}}
 
@@ -290,47 +292,47 @@ Events can be one of:
 ``end-ns``
   End a namespace declaration.
 
-:func:`iterparse()` returns an iterable that produces tuples
+:func:`iterparse` returns an iterable that produces tuples
 containing the name of the event and the node triggering the event.
 
-.. include:: ElementTree_show_all_events.py
-   :literal:
+.. literalinclude:: ElementTree_show_all_events.py
+   :caption:
    :start-after: #end_pymotw_header
 
 By default, only ``end`` events are generated.  To see other events,
-pass the list of desired event names to :func:`iterparse()`, as in
+pass the list of desired event names to :func:`iterparse`, as in
 this example.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'ElementTree_show_all_events.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python ElementTree_show_all_events.py
-    
-    start            opml         4309429072
-    ..start          head         4309429136
-    ....start        title        4309429200
-    ....end          title        4309429200
-    ....start        dateCreated  4309429392
-    ....end          dateCreated  4309429392
-    ....start        dateModified 4309429584
-    ....end          dateModified 4309429584
-    ..end            head         4309429136
-    ..start          body         4309429968
-    ....start        outline      4309430032
-    ......start      outline      4309430096
-    ......end        outline      4309430096
-    ....end          outline      4309430032
-    ....start        outline      4309430160
-    ......start      outline      4309430224
-    ......end        outline      4309430224
-    ......start      outline      4309459024
-    ......end        outline      4309459024
-    ....end          outline      4309430160
-    ..end            body         4309429968
-    end              opml         4309429072
+	$ python3 ElementTree_show_all_events.py
+	
+	start            opml         4312612200
+	..start          head         4316174520
+	....start        title        4316254440
+	....end          title        4316254440
+	....start        dateCreated  4316254520
+	....end          dateCreated  4316254520
+	....start        dateModified 4316254680
+	....end          dateModified 4316254680
+	..end            head         4316174520
+	..start          body         4316254840
+	....start        outline      4316254920
+	......start      outline      4316255080
+	......end        outline      4316255080
+	....end          outline      4316254920
+	....start        outline      4316255160
+	......start      outline      4316255240
+	......end        outline      4316255240
+	......start      outline      4316255320
+	......end        outline      4316255320
+	....end          outline      4316255160
+	..end            body         4316254840
+	end              opml         4312612200
 
 .. {{{end}}}
 
@@ -340,8 +342,8 @@ be used to convert list of podcasts from the earlier examples from an
 XML file to a CSV file, so they can be loaded into a spreadsheet or
 database application.
 
-.. include:: ElementTree_write_podcast_csv.py
-   :literal:
+.. literalinclude:: ElementTree_write_podcast_csv.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This conversion program does not need to hold the entire parsed input
@@ -350,19 +352,19 @@ input is more efficient.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'ElementTree_write_podcast_csv.py', 
-..         break_lines_at=68, line_break_mode='continue'))
+..         line_break_mode='continue'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python ElementTree_write_podcast_csv.py
-    
-    "Fiction","tor.com / category / tordotstories","http://www.tor.com/r\
-    ss/category/TorDotStories","http://www.tor.com/"
-    "Python","PyCon Podcast","http://advocacy.python.org/podcasts/pycon.\
-    rss","http://advocacy.python.org/podcasts/"
-    "Python","A Little Bit of Python","http://advocacy.python.org/podcas\
-    ts/littlebit.rss","http://advocacy.python.org/podcasts/"
+	$ python3 ElementTree_write_podcast_csv.py
+	
+	"Non-tech","99% Invisible","http://feeds.99percentinvisible.org/\
+	99percentinvisible","http://99percentinvisible.org"
+	"Python","Talk Python to Me","https://talkpython.fm/episodes/rss\
+	","https://talkpython.fm"
+	"Python","Podcast.__init__","http://podcastinit.podbean.com/feed\
+	/","http://podcastinit.com"
 
 .. {{{end}}}
 
@@ -377,7 +379,7 @@ Creating a Custom Tree Builder
 
 A potentially more efficient means of handling parse events is to
 replace the standard tree builder behavior with a custom version.  The
-:class:`ElementTree` parser uses an :class:`XMLTreeBuilder` to process
+:class:`XMLParser` parser uses a :class:`TreeBuilder` to process
 the XML and call methods on a target class to save the results.  The
 usual output is an :class:`ElementTree` instance created by the
 default :class:`TreeBuilder` class.  Replacing :class:`TreeBuilder`
@@ -388,34 +390,34 @@ overhead.
 The XML-to-CSV converter from the previous section can be
 re-implemented as a tree builder.
 
-.. include:: ElementTree_podcast_csv_treebuilder.py
-   :literal:
+.. literalinclude:: ElementTree_podcast_csv_treebuilder.py
+   :caption:
    :start-after: #end_pymotw_header
 
 :class:`PodcastListToCSV` implements the :class:`TreeBuilder`
-protocol.  Each time a new XML tag is encountered, :func:`start()` is
-called with the tag name and attributes.  When a closing tag is seen
-:func:`end()` is called with the name.  In between, :func:`data()` is
+protocol.  Each time a new XML tag is encountered, :func:`start` is
+called with the tag name and attributes.  When a closing tag is seen,
+:func:`end` is called with the name.  In between, :func:`data` is
 called when a node has content (the tree builder is expected to keep
 up with the "current" node).  When all of the input is processed,
-:func:`close()` is called.  It can return a value, which will be
-returned to the user of the :class:`XMLTreeBuilder`.
+:func:`close` is called.  It can return a value, which will be
+returned to the user of the :class:`TreeBuilder`.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'ElementTree_podcast_csv_treebuilder.py', 
-..                    break_lines_at=68, line_break_mode='continue'))
+..                    line_break_mode='continue'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python ElementTree_podcast_csv_treebuilder.py
-    
-    "Fiction","tor.com / category / tordotstories","http://www.tor.com/r\
-    ss/category/TorDotStories","http://www.tor.com/"
-    "Python","PyCon Podcast","http://advocacy.python.org/podcasts/pycon.\
-    rss","http://advocacy.python.org/podcasts/"
-    "Python","A Little Bit of Python","http://advocacy.python.org/podcas\
-    ts/littlebit.rss","http://advocacy.python.org/podcasts/"
+	$ python3 ElementTree_podcast_csv_treebuilder.py
+	
+	"Non-tech","99% Invisible","http://feeds.99percentinvisible.org/\
+	99percentinvisible","http://99percentinvisible.org"
+	"Python","Talk Python to Me","https://talkpython.fm/episodes/rss\
+	","https://talkpython.fm"
+	"Python","Podcast.__init__","http://podcastinit.podbean.com/feed\
+	/","http://podcastinit.com"
 
 .. {{{end}}}
 
@@ -431,14 +433,14 @@ Parsing Strings
 ===============
 
 To work with smaller bits of XML text, especially string literals that
-might be embedded in the source of a program, use :func:`XML()` and
+might be embedded in the source of a program, use :func:`XML` and
 the string containing the XML to be parsed as the only argument.
 
-.. include:: ElementTree_XML.py
-   :literal:
+.. literalinclude:: ElementTree_XML.py
+   :caption:
    :start-after: #end_pymotw_header
 
-Unlike with :func:`parse()`, the return value is an
+Unlike with :func:`parse`, the return value is an
 :class:`Element` instance instead of an :class:`ElementTree`.  An
 :class:`Element` supports the iterator protocol directly, so there is
 no need to call :func:`getiterator`.
@@ -447,34 +449,34 @@ no need to call :func:`getiterator`.
 .. cog.out(run_script(cog.inFile, 'ElementTree_XML.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python ElementTree_XML.py
-    
-    parsed = <Element 'root' at 0x100dcba50>
-    group
-    child
-      text: "This is child "a"."
-      id   = "a"
-    child
-      text: "This is child "b"."
-      id   = "b"
-    group
-    child
-      text: "This is child "c"."
-      id   = "c"
+	$ python3 ElementTree_XML.py
+	
+	parsed = <Element 'root' at 0x10079eef8>
+	group
+	child
+	  text: "This is child "a"."
+	  id   = "a"
+	child
+	  text: "This is child "b"."
+	  id   = "b"
+	group
+	child
+	  text: "This is child "c"."
+	  id   = "c"
 
 .. {{{end}}}
 
 For structured XML that uses the :attr:`id` attribute to identify
-unique nodes of interest, :func:`XMLID()` is a convenient way to
+unique nodes of interest, :func:`XMLID` is a convenient way to
 access the parse results.
 
-.. include:: ElementTree_XMLID.py
-   :literal:
+.. literalinclude:: ElementTree_XMLID.py
+   :caption:
    :start-after: #end_pymotw_header
 
-:func:`XMLID()` returns the parsed tree as an :class:`Element` object,
+:func:`XMLID` returns the parsed tree as an :class:`Element` object,
 along with a dictionary mapping the :attr:`id` attribute strings to
 the individual nodes in the tree.
 
@@ -482,30 +484,31 @@ the individual nodes in the tree.
 .. cog.out(run_script(cog.inFile, 'ElementTree_XMLID.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python ElementTree_XMLID.py
-    
-    a = <Element 'child' at 0x100dcab90>
-    b = <Element 'child' at 0x100dcac50>
-    c = <Element 'child' at 0x100dcae90>
+	$ python3 ElementTree_XMLID.py
+	
+	a = <Element 'child' at 0x10133aea8>
+	b = <Element 'child' at 0x10133aef8>
+	c = <Element 'child' at 0x10133af98>
 
 .. {{{end}}}
 
 
 .. seealso::
 
-   Outline Processor Markup Language, OPML_
-       Dave Winer's OPML specification and documentation.
+   * `Outline Processor Markup Language (OPML)
+     <http://www.opml.org/>`__ -- Dave Winer's OPML specification and
+     documentation.
 
-   XML Path Language, XPath_
-       A syntax for identifying parts of an XML document.
+   * `XML Path Language (XPath) <http://www.w3.org/TR/xpath/>`__ -- A
+     syntax for identifying parts of an XML document.
 
-   `XPath Support in ElementTree <http://effbot.org/zone/element-xpath.htm>`_
-       Part of Fredrick Lundh's original documentation for ElementTree.
+   * `XPath Support in ElementTree
+     <http://effbot.org/zone/element-xpath.htm>`__ -- Part of Fredrick
+     Lundh's original documentation for ElementTree.
 
-   :mod:`csv`
-       Read and write comma-separated-value files
+   * :mod:`csv` -- Read and write comma-separated-value files
 
 .. _OPML: http://www.opml.org/
 

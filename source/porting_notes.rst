@@ -942,6 +942,18 @@ whichdb
 
 The functionality of ``whichdb`` has moved to the :mod:`dbm` module.
 
+.. _porting-xml.etree.ElementTree:
+
+xml.etree.ElementTree
+---------------------
+
+.. index::
+   pair: porting; xml.etree.ElementTree
+
+:class:`XMLTreeBuilder` has been renamed :class:`TreeBuilder`, and the
+API has undergone several changes.
+
+
 .. _porting-zipimport:
 
 zipimport

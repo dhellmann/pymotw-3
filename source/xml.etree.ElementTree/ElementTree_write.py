@@ -7,6 +7,7 @@
 """
 #end_pymotw_header
 
+import io
 import sys
 from xml.etree.ElementTree import (
     Element, SubElement, Comment, ElementTree,
@@ -29,4 +30,4 @@ child_with_entity_ref.text = 'This & that'
 
 empty_child = SubElement(top, 'empty_child')
 
-ElementTree(top).write(sys.stdout)
+ElementTree(top).write(sys.stdout.buffer)
