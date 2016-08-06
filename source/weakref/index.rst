@@ -71,13 +71,13 @@ cache.
 
 	$ python3 weakref_ref_callback.py
 	
-	obj: <__main__.ExpensiveObject object at 0x1007b1978>
-	ref: <weakref at 0x1007a92c8; to 'ExpensiveObject' at
-	0x1007b1978>
-	r(): <__main__.ExpensiveObject object at 0x1007b1978>
+	obj: <__main__.ExpensiveObject object at 0x1019b1978>
+	ref: <weakref at 0x1019a92c8; to 'ExpensiveObject' at
+	0x1019b1978>
+	r(): <__main__.ExpensiveObject object at 0x1019b1978>
 	deleting obj
-	(Deleting <__main__.ExpensiveObject object at 0x1007b1978>)
-	callback(<weakref at 0x1007a92c8; dead>)
+	(Deleting <__main__.ExpensiveObject object at 0x1019b1978>)
+	callback(<weakref at 0x1019a92c8; dead>)
 	r(): None
 
 .. {{{end}}}
@@ -109,7 +109,7 @@ If the proxy is accessed after the referent object is removed, a
 	via obj: My Object
 	via ref: My Object
 	via proxy: My Object
-	(Deleting <__main__.ExpensiveObject object at 0x1007aa7b8>)
+	(Deleting <__main__.ExpensiveObject object at 0x1019aa7b8>)
 	Traceback (most recent call last):
 	  File "weakref_proxy.py", line 30, in <module>
 	    print('via proxy:', p.name)
@@ -175,7 +175,7 @@ program (written to standard output) and the debug output from
 	
 	Set up graph:
 	  one.set_next(<Graph at 0x1013d5358 name=two>)
-	  two.set_next(<Graph at 0x1014019b0 name=three>)
+	  two.set_next(<Graph at 0x1013eb668 name=three>)
 	  three.set_next(<Graph at 0x1012b1978 name=one>)
 	
 	Graph:
@@ -187,10 +187,10 @@ program (written to standard output) and the debug output from
 	    -> {'other': <Graph at 0x1013d5358 name=two>, 'name': 'one'}
 	    -> <class 'weakref_graph.Graph'>
 	  <Graph at 0x1013d5358 name=two>
-	    -> {'other': <Graph at 0x1014019b0 name=three>, 'name': 'two
+	    -> {'other': <Graph at 0x1013eb668 name=three>, 'name': 'two
 	'}
 	    -> <class 'weakref_graph.Graph'>
-	  <Graph at 0x1014019b0 name=three>
+	  <Graph at 0x1013eb668 name=three>
 	    -> {'other': <Graph at 0x1012b1978 name=one>, 'name': 'three
 	'}
 	    -> <class 'weakref_graph.Graph'>
@@ -204,10 +204,10 @@ program (written to standard output) and the debug output from
 	    -> {'other': <Graph at 0x1013d5358 name=two>, 'name': 'one'}
 	    -> <class 'weakref_graph.Graph'>
 	  <Graph at 0x1013d5358 name=two>
-	    -> {'other': <Graph at 0x1014019b0 name=three>, 'name': 'two
+	    -> {'other': <Graph at 0x1013eb668 name=three>, 'name': 'two
 	'}
 	    -> <class 'weakref_graph.Graph'>
-	  <Graph at 0x1014019b0 name=three>
+	  <Graph at 0x1013eb668 name=three>
 	    -> {'other': <Graph at 0x1012b1978 name=one>, 'name': 'three
 	'}
 	    -> <class 'weakref_graph.Graph'>
@@ -218,7 +218,7 @@ program (written to standard output) and the debug output from
 	gc: collectable <dict 0x1012940c8>
 	gc: collectable <Graph 0x1013d5358>
 	gc: collectable <dict 0x101294108>
-	gc: collectable <Graph 0x1014019b0>
+	gc: collectable <Graph 0x1013eb668>
 	gc: collectable <dict 0x1013e7c48>
 	(Deleting one)
 	  one.set_next(None)
@@ -240,8 +240,8 @@ The next step is to create a more intelligent :class:`WeakGraph` class
 that knows to avoid creating cycles with regular references by using
 weak references when a cycle is detected.
 
-.. include:: weakref_weakgraph.py
-   :literal:
+.. literalinclude:: weakref_weakgraph.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Since the :class:`WeakGraph` instances use proxies to refer to objects
@@ -258,9 +258,9 @@ collector can delete the objects.
 	$ python3 weakref_weakgraph.py
 	
 	Set up graph:
-	  one.set_next(<WeakGraph at 0x101beb710 name=two>)
-	  two.set_next(<WeakGraph at 0x101beb748 name=three>)
-	  three.set_next(<weakproxy at 0x101bdee08 to WeakGraph at 0x101bd540
+	  one.set_next(<WeakGraph at 0x1013eb710 name=two>)
+	  two.set_next(<WeakGraph at 0x1013eb748 name=three>)
+	  three.set_next(<weakproxy at 0x1013dee08 to WeakGraph at 0x1013d540
 	0>)
 	
 	Graph:
@@ -268,36 +268,36 @@ collector can delete the objects.
 	Collecting...
 	Unreachable objects: 0
 	Tracked Graph objects:
-	  <WeakGraph at 0x101bd5400 name=one>
-	    -> {'other': <WeakGraph at 0x101beb710 name=two>, 'name': 'one'}
+	  <WeakGraph at 0x1013d5400 name=one>
+	    -> {'other': <WeakGraph at 0x1013eb710 name=two>, 'name': 'one'}
 	    -> <class '__main__.WeakGraph'>
-	  <WeakGraph at 0x101beb710 name=two>
-	    -> {'other': <WeakGraph at 0x101beb748 name=three>, 'name': 'two'
+	  <WeakGraph at 0x1013eb710 name=two>
+	    -> {'other': <WeakGraph at 0x1013eb748 name=three>, 'name': 'two'
 	}
 	    -> <class '__main__.WeakGraph'>
-	  <WeakGraph at 0x101beb748 name=three>
-	    -> {'other': <weakproxy at 0x101bdee08 to WeakGraph at 0x101bd540
+	  <WeakGraph at 0x1013eb748 name=three>
+	    -> {'other': <weakproxy at 0x1013dee08 to WeakGraph at 0x1013d540
 	0>, 'name': 'three'}
 	    -> <class '__main__.WeakGraph'>
-	  <weakproxy at 0x101bdee08 to WeakGraph at 0x101bd5400>
+	  <weakproxy at 0x1013dee08 to WeakGraph at 0x1013d5400>
 	
 	After 2 references removed:
 	  one->two->three
 	Collecting...
 	Unreachable objects: 0
 	Tracked Graph objects:
-	  <WeakGraph at 0x101bd5400 name=one>
-	    -> {'other': <WeakGraph at 0x101beb710 name=two>, 'name': 'one'}
+	  <WeakGraph at 0x1013d5400 name=one>
+	    -> {'other': <WeakGraph at 0x1013eb710 name=two>, 'name': 'one'}
 	    -> <class '__main__.WeakGraph'>
-	  <WeakGraph at 0x101beb710 name=two>
-	    -> {'other': <WeakGraph at 0x101beb748 name=three>, 'name': 'two'
+	  <WeakGraph at 0x1013eb710 name=two>
+	    -> {'other': <WeakGraph at 0x1013eb748 name=three>, 'name': 'two'
 	}
 	    -> <class '__main__.WeakGraph'>
-	  <WeakGraph at 0x101beb748 name=three>
-	    -> {'other': <weakproxy at 0x101bdee08 to WeakGraph at 0x101bd540
+	  <WeakGraph at 0x1013eb748 name=three>
+	    -> {'other': <weakproxy at 0x1013dee08 to WeakGraph at 0x1013d540
 	0>, 'name': 'three'}
 	    -> <class '__main__.WeakGraph'>
-	  <weakproxy at 0x101bdee08 to WeakGraph at 0x101bd5400>
+	  <weakproxy at 0x1013dee08 to WeakGraph at 0x1013d5400>
 	
 	Removing last reference:
 	(Deleting one)
@@ -328,9 +328,9 @@ actually using them.  Using explicit calls to the garbage collector
 illustrates the difference between memory handling with a regular
 dictionary and :class:`WeakValueDictionary`:
 
-.. include:: weakref_valuedict.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: weakref_valuedict.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 Any loop variables that refer to the values being cached must be
 cleared explicitly so the reference count of the object is
@@ -374,7 +374,7 @@ collected prematurely.
 	 'two': ExpensiveObject(two)}
 	
 	  Before, cache contains: <generator object WeakValueDictionary.
-	keys at 0x101bcf8e0>
+	keys at 0x101baf8e0>
 	    one = ExpensiveObject(one)
 	    three = ExpensiveObject(three)
 	    two = ExpensiveObject(two)
@@ -385,7 +385,7 @@ collected prematurely.
 	    (Deleting ExpensiveObject(two))
 	
 	  After, cache contains: <generator object WeakValueDictionary.k
-	eys at 0x1018068e0>
+	eys at 0x101a068e0>
 	  demo returning
 
 .. {{{end}}}
