@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 #
 # Copyright (c) 2008 Doug Hellmann All rights reserved.
@@ -9,17 +9,20 @@
 
 import weakref
 
+
 class ExpensiveObject(object):
+
     def __del__(self):
-        print '(Deleting %s)' % self
+        print('(Deleting %s)' % self)
+
 
 obj = ExpensiveObject()
 r = weakref.ref(obj)
 
-print 'obj:', obj
-print 'ref:', r
-print 'r():', r()
+print('obj:', obj)
+print('ref:', r)
+print('r():', r())
 
-print 'deleting obj'
+print('deleting obj')
 del obj
-print 'r():', r()
+print('r():', r())

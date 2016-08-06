@@ -1,12 +1,13 @@
-==============================================
- weakref -- Impermanent References to Objects
-==============================================
+===============================================
+ weakref --- Impermanent References to Objects
+===============================================
 
 .. module:: weakref
     :synopsis: Impermanent references to objects
 
-:Purpose: Refer to an "expensive" object, but allow its memory to be reclaimed by the garbage collector if there are no other non-weak references.
-:Python Version: 2.1 and later
+:Purpose: Refer to an "expensive" object, but allow its memory to be
+          reclaimed by the garbage collector if there are no other
+          non-weak references.
 
 The :mod:`weakref` module supports weak references to objects. A
 normal reference increments the reference count on the object and
@@ -22,26 +23,27 @@ References
 Weak references to objects are managed through the :class:`ref`
 class. To retrieve the original object, call the reference object.
 
-.. include:: weakref_ref.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: weakref_ref.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 In this case, since ``obj`` is deleted before the second call to the
 reference, the :class:`ref` returns ``None``.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'weakref_ref.py'))
+.. cog.out(run_script(cog.inFile, 'weakref_ref.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python weakref_ref.py
+	$ python3 weakref_ref.py
 	
-	obj: <__main__.ExpensiveObject object at 0x100da5750>
-	ref: <weakref at 0x100d99b50; to 'ExpensiveObject' at 0x100da5750>
-	r(): <__main__.ExpensiveObject object at 0x100da5750>
+	obj: <__main__.ExpensiveObject object at 0x1007b1a58>
+	ref: <weakref at 0x1007a92c8; to 'ExpensiveObject' at
+	0x1007b1a58>
+	r(): <__main__.ExpensiveObject object at 0x1007b1a58>
 	deleting obj
-	(Deleting <__main__.ExpensiveObject object at 0x100da5750>)
+	(Deleting <__main__.ExpensiveObject object at 0x1007b1a58>)
 	r(): None
 
 .. {{{end}}}
@@ -52,9 +54,9 @@ Reference Callbacks
 The :class:`ref` constructor accepts an optional callback function to
 invoke when the referenced object is deleted.
 
-.. include:: weakref_ref_callback.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: weakref_ref_callback.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The callback receives the reference object as an argument after the
 reference is "dead" and no longer refers to the original object. One
@@ -62,19 +64,20 @@ use for this feature is to remove the weak reference object from a
 cache.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'weakref_ref_callback.py'))
+.. cog.out(run_script(cog.inFile, 'weakref_ref_callback.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python weakref_ref_callback.py
+	$ python3 weakref_ref_callback.py
 	
-	obj: <__main__.ExpensiveObject object at 0x100da1950>
-	ref: <weakref at 0x100d99ba8; to 'ExpensiveObject' at 0x100da1950>
-	r(): <__main__.ExpensiveObject object at 0x100da1950>
+	obj: <__main__.ExpensiveObject object at 0x1007b1978>
+	ref: <weakref at 0x1007a92c8; to 'ExpensiveObject' at
+	0x1007b1978>
+	r(): <__main__.ExpensiveObject object at 0x1007b1978>
 	deleting obj
-	callback( <weakref at 0x100d99ba8; dead> )
-	(Deleting <__main__.ExpensiveObject object at 0x100da1950>)
+	(Deleting <__main__.ExpensiveObject object at 0x1007b1978>)
+	callback( <weakref at 0x1007a92c8; dead> )
 	r(): None
 
 .. {{{end}}}
@@ -88,9 +91,9 @@ object, and do not need to be called before the object is accessible.
 That means they can be passed to a library that does not know it is
 receiving a reference instead of the real object.
 
-.. include:: weakref_proxy.py
-    :literal:
-    :start-after: #end_pymotw_header
+.. literalinclude:: weakref_proxy.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 If the proxy is accessed after the referent object is removed, a
 :class:`ReferenceError` exception is raised.
@@ -99,18 +102,17 @@ If the proxy is accessed after the referent object is removed, a
 .. cog.out(run_script(cog.inFile, 'weakref_proxy.py', ignore_error=True))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python weakref_proxy.py
+	$ python3 weakref_proxy.py
 	
 	via obj: My Object
 	via ref: My Object
 	via proxy: My Object
-	(Deleting <__main__.ExpensiveObject object at 0x100da27d0>)
-	via proxy:
+	(Deleting <__main__.ExpensiveObject object at 0x1007aa7b8>)
 	Traceback (most recent call last):
-	  File "weakref_proxy.py", line 26, in <module>
-	    print 'via proxy:', p.name
+	  File "weakref_proxy.py", line 30, in <module>
+	    print('via proxy:', p.name)
 	ReferenceError: weakly-referenced object no longer exists
 
 .. {{{end}}}
@@ -118,99 +120,118 @@ If the proxy is accessed after the referent object is removed, a
 Cyclic References
 =================
 
-One use for weak references is to allow cyclic references without preventing
-garbage collection. This example illustrates the difference between using
-regular objects and proxies when a graph includes a cycle.
+One use for weak references is to allow cyclic references without
+preventing garbage collection. This example illustrates the difference
+between using regular objects and proxies when a graph includes a
+cycle.
 
 The :class:`Graph` class in ``weakref_graph.py`` accepts any object
 given to it as the "next" node in the sequence. For the sake of
 brevity, this implementation supports a single outgoing reference from
 each node, which is of limited use generally, but makes it easy to
-create cycles for these examples. The function :func:`demo` is a utility
-function to exercise the graph class by creating a cycle and then
-removing various references.
+create cycles for these examples. The function :func:`demo` is a
+utility function to exercise the graph class by creating a cycle and
+then removing various references.
 
-.. include:: weakref_graph.py
-   :literal:
+.. literalinclude:: weakref_graph.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example uses the :mod:`gc` module to help debug the leak. The
-``DEBUG_LEAK`` flag causes :mod:`gc` to print information about
-objects that cannot be seen other than through the reference the
-garbage collector has to them.
+``DEBUG_LEAK`` flag is a combination of several other debugging
+flags. ``DEBUG_UNCOLLECTABLE`` causes :mod:`gc` to print information
+about objects that cannot be seen other than through the reference the
+garbage collector has to them. Using ``DEBUG_COLLECTABLE`` causes
+:mod:`gc` to report on the objects it is deleting when it detects an
+object that is safe to collect.
 
-.. include:: weakref_cycle.py
-   :literal:
+The :func:`get_objects` function returns a list of all of the objects
+being tracked by the garbage collector, and can be used to find
+objects that have references outside of the current scope. In
+``collect_and_show_garbage()``, the loop looks for :class:`Graph`
+instances known to the garbage collector and then shows the objects
+they refer to, including their attribute dictionary and their class.
+
+.. literalinclude:: weakref_cycle.py
+   :caption:
    :start-after: #end_pymotw_header
 
-Even after deleting the local references to the :class:`Graph`
-instances in :func:`demo()`, the graphs all show up in the garbage
-list and cannot be collected.  Several dictionaries are also found in
-the garbage list.  They are the :attr:`__dict__` values from the
-:class:`Graph` instances, and contain the attributes for those
-objects.  The graphs can be forcibly deleted, since the program knows
-what they are.  Enabling unbuffered I/O by passing the ``-u`` option
-to the interpreter ensures that the output from the :command:`print`
-statements in this example program (written to standard output) and
-the debug output from :mod:`gc` (written to standard error) are
-interleaved correctly.
+After deleting the local references to the :class:`Graph` instances in
+:func:`demo()`, the graphs are all deleted automatically. Enabling
+unbuffered I/O by passing the ``-u`` option to the interpreter ensures
+that the output from the :command:`print` statements in this example
+program (written to standard output) and the debug output from
+:mod:`gc` (written to standard error) are interleaved correctly.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '-u weakref_cycle.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python -u weakref_cycle.py
+	$ python3 -u weakref_cycle.py
 	
 	Setting up the cycle
 	
 	Set up graph:
-	one.set_next(<Graph at 0x100db7590 name=two>)
-	two.set_next(<Graph at 0x100db75d0 name=three>)
-	three.set_next(<Graph at 0x100db7550 name=one>)
+	  one.set_next(<Graph at 0x101304358 name=two>)
+	  two.set_next(<Graph at 0x10131a668 name=three>)
+	  three.set_next(<Graph at 0x1007b1978 name=one>)
 	
 	Graph:
-	one->two->three->one
+	  one->two->three->one
 	Collecting...
 	Unreachable objects: 0
-	Garbage:[]
+	Tracked Graph objects:
+	  <Graph at 0x1007b1978 name=one>
+	    -> {'other': <Graph at 0x101304358 name=two>, 'name': 'one'}
+	    -> <class 'weakref_graph.Graph'>
+	  <Graph at 0x101304358 name=two>
+	    -> {'other': <Graph at 0x10131a668 name=three>, 'name': 'two
+	'}
+	    -> <class 'weakref_graph.Graph'>
+	  <Graph at 0x10131a668 name=three>
+	    -> {'other': <Graph at 0x1007b1978 name=one>, 'name': 'three
+	'}
+	    -> <class 'weakref_graph.Graph'>
 	
 	After 2 references removed:
-	one->two->three->one
+	  one->two->three->one
 	Collecting...
 	Unreachable objects: 0
-	Garbage:[]
+	Tracked Graph objects:
+	  <Graph at 0x1007b1978 name=one>
+	    -> {'other': <Graph at 0x101304358 name=two>, 'name': 'one'}
+	    -> <class 'weakref_graph.Graph'>
+	  <Graph at 0x101304358 name=two>
+	    -> {'other': <Graph at 0x10131a668 name=three>, 'name': 'two
+	'}
+	    -> <class 'weakref_graph.Graph'>
+	  <Graph at 0x10131a668 name=three>
+	    -> {'other': <Graph at 0x1007b1978 name=one>, 'name': 'three
+	'}
+	    -> <class 'weakref_graph.Graph'>
 	
 	Removing last reference:
 	Collecting...
-	gc: uncollectable <Graph 0x100db7550>
-	gc: uncollectable <Graph 0x100db7590>
-	gc: uncollectable <Graph 0x100db75d0>
-	gc: uncollectable <dict 0x100c63c30>
-	gc: uncollectable <dict 0x100c5e150>
-	gc: uncollectable <dict 0x100c63810>
-	Unreachable objects: 6
-	Garbage:[<Graph at 0x100db7550 name=one>,
-	 <Graph at 0x100db7590 name=two>,
-	 <Graph at 0x100db75d0 name=three>,
-	 {'name': 'one', 'other': <Graph at 0x100db7590 name=two>},
-	 {'name': 'two', 'other': <Graph at 0x100db75d0 name=three>},
-	 {'name': 'three', 'other': <Graph at 0x100db7550 name=one>}]
-	
-	Breaking the cycle and cleaning up garbage
-	
-	one.set_next(None)
-	(Deleting two)
-	two.set_next(None)
-	(Deleting three)
-	three.set_next(None)
+	gc: collectable <Graph 0x1007b1978>
+	gc: collectable <dict 0x1007940c8>
+	gc: collectable <Graph 0x101304358>
+	gc: collectable <dict 0x100794108>
+	gc: collectable <Graph 0x10131a668>
+	gc: collectable <dict 0x101316c48>
 	(Deleting one)
-	one.set_next(None)
+	  one.set_next(None)
+	(Deleting two)
+	  two.set_next(None)
+	(Deleting three)
+	  three.set_next(None)
+	Unreachable objects: 6
+	Tracked Graph objects:
 	
 	Collecting...
-	Unreachable objects: 0
-	Garbage:[]
+	Unreachable objects: 2
+	Tracked Graph objects:
 
 .. {{{end}}}
 
@@ -232,38 +253,62 @@ collector can delete the objects.
 .. cog.out(run_script(cog.inFile, 'weakref_weakgraph.py', break_lines_at=69))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python weakref_weakgraph.py
+	$ python3 weakref_weakgraph.py
 	
 	Set up graph:
-	one.set_next(<WeakGraph at 0x100db4790 name=two>)
-	two.set_next(<WeakGraph at 0x100db47d0 name=three>)
-	three.set_next(<weakproxy at 0x100dac6d8 to WeakGraph at 0x100db4750>
-	)
+	  one.set_next(<WeakGraph at 0x10131a710 name=two>)
+	  two.set_next(<WeakGraph at 0x10131a748 name=three>)
+	  three.set_next(<weakproxy at 0x10130de08 to WeakGraph at 0x10130440
+	0>)
 	
 	Graph:
-	one->two->three
+	  one->two->three
 	Collecting...
 	Unreachable objects: 0
-	Garbage:[]
+	Tracked Graph objects:
+	  <WeakGraph at 0x101304400 name=one>
+	    -> {'other': <WeakGraph at 0x10131a710 name=two>, 'name': 'one'}
+	    -> <class '__main__.WeakGraph'>
+	  <WeakGraph at 0x10131a710 name=two>
+	    -> {'other': <WeakGraph at 0x10131a748 name=three>, 'name': 'two'
+	}
+	    -> <class '__main__.WeakGraph'>
+	  <WeakGraph at 0x10131a748 name=three>
+	    -> {'other': <weakproxy at 0x10130de08 to WeakGraph at 0x10130440
+	0>, 'name': 'three'}
+	    -> <class '__main__.WeakGraph'>
+	  <weakproxy at 0x10130de08 to WeakGraph at 0x101304400>
 	
 	After 2 references removed:
-	one->two->three
+	  one->two->three
 	Collecting...
 	Unreachable objects: 0
-	Garbage:[]
+	Tracked Graph objects:
+	  <WeakGraph at 0x101304400 name=one>
+	    -> {'other': <WeakGraph at 0x10131a710 name=two>, 'name': 'one'}
+	    -> <class '__main__.WeakGraph'>
+	  <WeakGraph at 0x10131a710 name=two>
+	    -> {'other': <WeakGraph at 0x10131a748 name=three>, 'name': 'two'
+	}
+	    -> <class '__main__.WeakGraph'>
+	  <WeakGraph at 0x10131a748 name=three>
+	    -> {'other': <weakproxy at 0x10130de08 to WeakGraph at 0x10130440
+	0>, 'name': 'three'}
+	    -> <class '__main__.WeakGraph'>
+	  <weakproxy at 0x10130de08 to WeakGraph at 0x101304400>
 	
 	Removing last reference:
 	(Deleting one)
-	one.set_next(None)
+	  one.set_next(None)
 	(Deleting two)
-	two.set_next(None)
+	  two.set_next(None)
 	(Deleting three)
-	three.set_next(None)
+	  three.set_next(None)
 	Collecting...
 	Unreachable objects: 0
-	Garbage:[]
+	Tracked Graph objects:
 
 .. {{{end}}}
 
@@ -298,47 +343,49 @@ collected prematurely.
 .. cog.out(run_script(cog.inFile, 'weakref_valuedict.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python weakref_valuedict.py
+	$ python3 weakref_valuedict.py
 	
-	CACHE TYPE: <type 'dict'>
-	  all_refs ={'one': ExpensiveObject(one),
+	CACHE TYPE: <class 'dict'>
+	  all_refs = {'one': ExpensiveObject(one),
 	 'three': ExpensiveObject(three),
 	 'two': ExpensiveObject(two)}
 	
-	  Before, cache contains: ['three', 'two', 'one']
+	  Before, cache contains: dict_keys(['one', 'three', 'two'])
+	    one = ExpensiveObject(one)
 	    three = ExpensiveObject(three)
 	    two = ExpensiveObject(two)
-	    one = ExpensiveObject(one)
 	
 	  Cleanup:
 	
-	  After, cache contains: ['three', 'two', 'one']
+	  After, cache contains: dict_keys(['one', 'three', 'two'])
+	    one = ExpensiveObject(one)
 	    three = ExpensiveObject(three)
 	    two = ExpensiveObject(two)
-	    one = ExpensiveObject(one)
 	  demo returning
+	    (Deleting ExpensiveObject(one))
 	    (Deleting ExpensiveObject(three))
 	    (Deleting ExpensiveObject(two))
-	    (Deleting ExpensiveObject(one))
 	
-	CACHE TYPE: weakref.WeakValueDictionary
-	  all_refs ={'one': ExpensiveObject(one),
+	CACHE TYPE: <class 'weakref.WeakValueDictionary'>
+	  all_refs = {'one': ExpensiveObject(one),
 	 'three': ExpensiveObject(three),
 	 'two': ExpensiveObject(two)}
 	
-	  Before, cache contains: ['three', 'two', 'one']
+	  Before, cache contains: <generator object WeakValueDictionary.
+	keys at 0x101aaf8e0>
+	    one = ExpensiveObject(one)
 	    three = ExpensiveObject(three)
 	    two = ExpensiveObject(two)
-	    one = ExpensiveObject(one)
 	
 	  Cleanup:
+	    (Deleting ExpensiveObject(one))
 	    (Deleting ExpensiveObject(three))
 	    (Deleting ExpensiveObject(two))
-	    (Deleting ExpensiveObject(one))
 	
-	  After, cache contains: []
+	  After, cache contains: <generator object WeakValueDictionary.k
+	eys at 0x1019068e0>
 	  demo returning
 
 .. {{{end}}}

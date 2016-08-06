@@ -83,6 +83,7 @@ container type using one of the abstract base classes defined in
     heapq/index
     pprint/index
     copy/index
+    weakref/index
 
 ..
     heapq/index
