@@ -1774,7 +1774,7 @@ keeps the pattern simpler.
    :start-after: #end_pymotw_header
 
 The pattern argument to :func:`split` expresses the markup
-specification more precisely: Two or more newline characters mark a
+specification more precisely. Two or more newline characters mark a
 separator point between paragraphs in the input string.
 
 .. {{{cog
