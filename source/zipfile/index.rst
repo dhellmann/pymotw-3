@@ -13,7 +13,7 @@ the format popularized by the PC program PKZIP.
 Testing ZIP Files
 =================
 
-The :func:`is_zipfile()` function returns a boolean indicating whether
+The :func:`is_zipfile` function returns a boolean indicating whether
 or not the filename passed as an argument refers to a valid ZIP
 archive.
 
@@ -21,7 +21,7 @@ archive.
     :caption:
     :start-after: #end_pymotw_header
 
-If the file does not exist at all, :func:`is_zipfile()` returns
+If the file does not exist at all, :func:`is_zipfile` returns
 :const:`False`.
 
 .. {{{cog
@@ -67,7 +67,7 @@ existing archive.
 
 The list of names is only part of the information available from the
 archive, though. To access all of the metadata about the ZIP
-contents, use the :func:`infolist()` or :func:`getinfo()` methods.
+contents, use the :func:`infolist` or :func:`getinfo` methods.
 
 .. literalinclude:: zipfile_infolist.py
     :caption:
@@ -98,13 +98,13 @@ of the *PKZIP Application Note* with the ZIP file specification.
 
 If the name of the archive member is known in advance, its
 :class:`ZipInfo` object can be retrieved directly with
-:func:`getinfo()`.
+:func:`getinfo`.
 
 .. literalinclude:: zipfile_getinfo.py
     :caption:
     :start-after: #end_pymotw_header
 
-If the archive member is not present, :func:`getinfo()` raises a
+If the archive member is not present, :func:`getinfo` raises a
 :class:`KeyError`.
 
 .. {{{cog
@@ -123,7 +123,7 @@ If the archive member is not present, :func:`getinfo()` raises a
 Extracting Archived Files From an Archive
 =========================================
 
-To access the data from an archive member, use the :func:`read()`
+To access the data from an archive member, use the :func:`read`
 method, passing the member's name.
 
 .. literalinclude:: zipfile_read.py
@@ -154,7 +154,7 @@ Creating New Archives
 
 To create a new archive, instantiate the :class:`ZipFile` with
 a mode of ``'w'``.  Any existing file is truncated and a new archive
-is started. To add files, use the :func:`write()` method.
+is started. To add files, use the :func:`write` method.
 
 .. literalinclude:: zipfile_write.py
     :caption:
@@ -225,7 +225,7 @@ This time, the archive member is compressed.
 Using Alternate Archive Member Names
 ====================================
 
-Pass an *arcname* value to :func:`write()` to add a file to an archive
+Pass an *arcname* value to :func:`write` to add a file to an archive
 using a name other than the original filename.
 
 .. literalinclude:: zipfile_write_arcname.py
@@ -261,7 +261,7 @@ Writing Data from Sources Other Than Files
 Sometimes it is necessary to write to a ZIP archive using data that
 did not come from an existing file. Rather than writing the data to a
 file, then adding that file to the ZIP archive, use the
-:func:`writestr()` method to add a string of bytes to the archive
+:func:`writestr` method to add a string of bytes to the archive
 directly.
 
 .. literalinclude:: zipfile_writestr.py
@@ -270,7 +270,7 @@ directly.
 
 
 In this case, the *compress_type* argument to :class:`ZipFile` was
-used to compress the data, since :func:`writestr()` does not take
+used to compress the data, since :func:`writestr` does not take
 an argument to specify the compression.
 
 .. {{{cog
@@ -389,7 +389,7 @@ Python ZIP Archives
 Python can import modules from inside ZIP archives using
 :mod:`zipimport`, if those archives appear in :data:`sys.path`. The
 :class:`PyZipFile` class can be used to construct a module suitable
-for use in this way. The extra method :func:`writepy()` tells
+for use in this way. The extra method :func:`writepy` tells
 :class:`PyZipFile` to scan a directory for ``.py`` files and add the
 corresponding ``.pyo`` or ``.pyc`` file to the archive. If neither
 compiled form exists, a ``.pyc`` file is created and added.
