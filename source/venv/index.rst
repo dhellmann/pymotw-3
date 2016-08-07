@@ -119,6 +119,13 @@ environment.
 
 .. literalinclude:: pyvenv.cfg
    :caption:
+   :language: none
+
+A virtual environment is more useful with tools like :command:`pip`
+and :mod:`setuptools` available to install other packages, so
+:command:`pyvenv` installs them by default. To create a bare
+environment without these tools, pass ``--without-pip`` on the command
+line.
 
 .. seealso::
 
