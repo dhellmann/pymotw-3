@@ -33,19 +33,14 @@ interface
 
 .. {{{end}}}
 
-If :command:`pyvenv` is not installed, it is possible to run the
-:mod:`venv` module using the interpreter's ``-m`` option.
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, '-m venv /tmp/testenv'))
-.. }}}
+If :command:`pyvenv` is not installed or not on the shell search path,
+it is possible to run the :mod:`venv` module using the interpreter's
+``-m`` option. The following command has the same effect as the
+previous example.
 
 .. code-block:: none
 
 	$ python3 -m venv /tmp/testenv
-	
-
-.. {{{end}}}
 
 Contents of a Virtual Environment
 =================================
