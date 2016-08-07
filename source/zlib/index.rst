@@ -215,7 +215,7 @@ processing loop.
 
 	$ python3 zlib_server.py
 	
-	Client: Contacting server on 127.0.0.1:53290
+	Client: Contacting server on 127.0.0.1:53589
 	Client: sending filename: 'lorem.txt'
 	Server: client asked for: 'lorem.txt'
 	Server: RAW b'Lorem ipsum dolor sit amet, consectetuer adipiscin
@@ -233,8 +233,8 @@ processing loop.
 	Server: RAW b'l arcu. Vivamus\npurus orci, iaculis ac, suscipit 
 	sit amet, pulvi'
 	Client: READ b'7801'
-	Client: BUFFERING
 	Server: BUFFERING
+	Client: BUFFERING
 	Server: RAW b'nar eu,\nlacus.\n'
 	Server: BUFFERING
 	Server: FLUSHING b'55904b6ac4400c44f73e451da0f129b20c2110c85e696
