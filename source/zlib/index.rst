@@ -70,7 +70,10 @@ takes up more memory than the uncompressed version.
 
 :mod:`zlib` supports several different compression levels, allowing a
 balance between computational cost and the amount of space
-reduction.
+reduction. The default compression level,
+:data:`zlib.Z_DEFAULT_COMPRESSION` is ``-1`` and corresponds to a
+hard-coded value that compromises between performance and compression
+outcome. This currently corresponds to level ``6``.
 
 .. literalinclude:: zlib_compresslevel.py
    :caption:
