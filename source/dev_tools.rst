@@ -65,6 +65,12 @@ browser that can be used by a text editor or other program to scan
 Python source for interesting symbols such as functions and classes,
 without importing the code and potentially triggering side-effects.
 
+Python virtual environments, managed by :mod:`venv`, define isolated
+environments for installing packages and running programs. They make
+it easy to test the same program with different versions of
+dependencies, and to install different programs with conflicting
+dependencies on the same computer.
+
 .. toctree::
     :maxdepth: 1
 
@@ -74,6 +80,7 @@ without importing the code and potentially triggering side-effects.
     pdb/index
     profile/index
     tabnanny/index
+    venv/index
 
 ..
     pydoc/index
