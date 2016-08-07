@@ -404,6 +404,8 @@ each ``.py`` file it finds.
 
 .. {{{cog
 .. run_script(cog.inFile, 'rm -f zipfile_pyzipfile.zip', interpreter='')
+.. run_script(cog.inFile, 'rm -f *.pyc', interpreter='')
+.. run_script(cog.inFile, 'rm -rf __pycache__', interpreter='')
 .. cog.out(run_script(cog.inFile, 'zipfile_pyzipfile.py'))
 .. }}}
 
