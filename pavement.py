@@ -367,6 +367,8 @@ def migrate(options):
         for srcfile in dest.glob(source + '_*.py'):
             newname = srcfile.name.replace(source + '_', module + '_')
             srcfile.rename(dest + '/' + newname)
+    sh('git add ' + dest)
+    sh('git commit -m "%s: initial import"' % module)
 
 
 def get_post_title(filename):
