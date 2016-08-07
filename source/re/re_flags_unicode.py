@@ -8,18 +8,13 @@
 #end_pymotw_header
 
 import re
-import codecs
-import sys
-
-# Set standard output encoding to UTF-8.
-sys.stdout = codecs.getwriter('UTF-8')(sys.stdout)
 
 text = u'Français złoty Österreich'
-pattern = ur'\w+'
+pattern = r'\w+'
 ascii_pattern = re.compile(pattern)
 unicode_pattern = re.compile(pattern, re.UNICODE)
 
 print('Text    :', text)
 print('Pattern :', pattern)
-print('ASCII   :', u', '.join(ascii_pattern.findall(text)))
-print('Unicode :', u', '.join(unicode_pattern.findall(text)))
+print('ASCII   :', list(ascii_pattern.findall(text)))
+print('Unicode :', list(unicode_pattern.findall(text)))

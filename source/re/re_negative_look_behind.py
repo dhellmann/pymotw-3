@@ -31,7 +31,7 @@ address = re.compile(
 candidates = [
     u'first.last@example.com',
     u'noreply@example.com',
-    ]
+]
 
 for candidate in candidates:
     print('Candidate:', candidate)

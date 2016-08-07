@@ -16,4 +16,3 @@ regex = re.compile(pattern)
 print('Text      :', text)
 print('Pattern   :', pattern)
 print('Matches   :', regex.findall(text))
-

@@ -57,7 +57,7 @@ candidates = [
     u'Open Bracket <first.last@example.com',
     u'Close Bracket first.last@example.com>',
     u'no.brackets@example.com',
-    ]
+]
 
 for candidate in candidates:
     print('Candidate:', candidate)

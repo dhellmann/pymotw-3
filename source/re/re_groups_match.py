@@ -19,7 +19,7 @@ patterns = [
     (r'(\w+)\S*$', 'word at end, with optional punctuation'),
     (r'(\bt\w+)\W+(\w+)', 'word starting with t, another word'),
     (r'(\w+t)\b', 'word ending with t'),
-    ]
+]
 
 for pattern, desc in patterns:
     regex = re.compile(pattern)
@@ -27,4 +27,3 @@ for pattern, desc in patterns:
     print('Pattern %r (%s)\n' % (pattern, desc))
     print('  ', match.groups())
     print()
-

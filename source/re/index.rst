@@ -66,9 +66,9 @@ string showing where the text matched by the pattern occurs.
 .. cog.out(run_script(cog.inFile, 're_simple_match.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_simple_match.py
+	$ python3 re_simple_match.py
 	
 	Found "this"
 	in "Does this text match the pattern?"
@@ -100,9 +100,9 @@ responding to a user action.
 .. cog.out(run_script(cog.inFile, 're_simple_compiled.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_simple_compiled.py
+	$ python3 re_simple_compiled.py
 	
 	Text: 'Does this text match the pattern?'
 	
@@ -129,9 +129,9 @@ There are two instances of ``ab`` in the input string.
 .. cog.out(run_script(cog.inFile, 're_findall.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_findall.py
+	$ python3 re_findall.py
 	
 	Found "ab"
 	Found "ab"
@@ -152,9 +152,9 @@ This example finds the same two occurrences of ``ab``, and the
 .. cog.out(run_script(cog.inFile, 're_finditer.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_finditer.py
+	$ python3 re_finditer.py
 	
 	Found "ab" at 0:2
 	Found "ab" at 5:7
@@ -185,9 +185,9 @@ portion of the input that matches the pattern.
 .. cog.out(run_script(cog.inFile, 're_test_patterns.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_test_patterns.py
+	$ python3 re_test_patterns.py
 	
 	Pattern 'ab' ('a' followed by 'b')
 	
@@ -223,9 +223,9 @@ There are more matches are for ``ab*`` and ``ab?`` than ``ab+``.
 .. cog.out(run_script(cog.inFile, 're_repetition.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_repetition.py
+	$ python3 re_repetition.py
 	
 	Pattern 'ab*' (a followed by zero or more b)
 	
@@ -282,9 +282,9 @@ does not include any ``b`` characters.
 .. cog.out(run_script(cog.inFile, 're_repetition_non_greedy.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_repetition_non_greedy.py
+	$ python3 re_repetition_non_greedy.py
 	
 	Pattern 'ab*?' (a followed by zero or more b)
 	
@@ -341,9 +341,9 @@ character is either ``a`` or ``b``.
 .. cog.out(run_script(cog.inFile, 're_charset.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_charset.py
+	$ python3 re_charset.py
 	
 	Pattern '[ab]' (either a or b)
 	
@@ -387,9 +387,9 @@ characters ``-``, ``.``, or a space.
 .. cog.out(run_script(cog.inFile, 're_charset_exclude.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_charset_exclude.py
+	$ python3 re_charset_exclude.py
 	
 	Pattern '[^-. ]+' (sequences without -, ., or space)
 	
@@ -421,9 +421,9 @@ also be combined into a single character set.
 .. cog.out(run_script(cog.inFile, 're_charset_ranges.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_charset_ranges.py
+	$ python3 re_charset_ranges.py
 	
 	Pattern '[a-z]+' (sequences of lowercase letters)
 	
@@ -440,7 +440,7 @@ also be combined into a single character set.
 	  'This is some text -- with punctuation.'
 	  'T'
 	
-	Pattern '[a-zA-Z]+' (sequences of lowercase or uppercase letters)
+	Pattern '[a-zA-Z]+' (sequences of lower- or uppercase letters)
 	
 	  'This is some text -- with punctuation.'
 	  'This'
@@ -473,9 +473,9 @@ the non-greedy form is used.
 .. cog.out(run_script(cog.inFile, 're_charset_dot.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_charset_dot.py
+	$ python3 re_charset_dot.py
 	
 	Pattern 'a.' (a followed by any one character)
 	
@@ -545,9 +545,9 @@ sequences of like characters in the input string.
 .. cog.out(run_script(cog.inFile, 're_escape_codes.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_escape_codes.py
+	$ python3 re_escape_codes.py
 	
 	Pattern '\\d+' (sequence of digits)
 	
@@ -609,9 +609,9 @@ expression.
 .. cog.out(run_script(cog.inFile, 're_escape_escapes.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_escape_escapes.py
+	$ python3 re_escape_escapes.py
 	
 	Pattern '\\\\.\\+' (escape code)
 	
@@ -659,9 +659,9 @@ alphanumeric character.
 .. cog.out(run_script(cog.inFile, 're_anchoring.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_anchoring.py
+	$ python3 re_anchoring.py
 	
 	Pattern '^\\w+' (word at start of string)
 	
@@ -678,7 +678,8 @@ alphanumeric character.
 	  'This is some text -- with punctuation.'
 	  ..........................'punctuation.'
 	
-	Pattern '\\w+\\S*\\Z' (word near end of string, skip punctuation)
+	Pattern '\\w+\\S*\\Z' (word near end of string, skip punctuation
+	)
 	
 	  'This is some text -- with punctuation.'
 	  ..........................'punctuation.'
@@ -733,14 +734,14 @@ two other times in the text, though, so :func:`search` finds it.
 .. cog.out(run_script(cog.inFile, 're_match.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_match.py
+	$ python3 re_match.py
 	
 	Text   : This is some text -- with punctuation.
 	Pattern: is
 	Match  : None
-	Search : <_sre.SRE_Match object at 0x100448238>
+	Search : <_sre.SRE_Match object; span=(2, 4), match='is'>
 
 .. {{{end}}}
 
@@ -760,9 +761,9 @@ the next search.
 .. cog.out(run_script(cog.inFile, 're_search_substring.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_search_substring.py
+	$ python3 re_search_substring.py
 	
 	Text: This is some text -- with punctuation.
 	
@@ -794,9 +795,9 @@ repeat.
 .. cog.out(run_script(cog.inFile, 're_groups.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_groups.py
+	$ python3 re_groups.py
 	
 	Pattern 'a(ab)' (a followed by literal ab)
 	
@@ -844,9 +845,9 @@ groups within the expression that matches the string.
 .. cog.out(run_script(cog.inFile, 're_groups_match.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_groups_match.py
+	$ python3 re_groups_match.py
 	
 	This is some text -- with punctuation.
 	
@@ -858,7 +859,8 @@ groups within the expression that matches the string.
 	
 	   ('punctuation',)
 	
-	Pattern '(\\bt\\w+)\\W+(\\w+)' (word starting with t, another word)
+	Pattern '(\\bt\\w+)\\W+(\\w+)' (word starting with t, another wo
+	rd)
 	
 	   ('text', 'with')
 	
@@ -885,9 +887,9 @@ left parenthesis appears in the expression.
 .. cog.out(run_script(cog.inFile, 're_groups_individual.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_groups_individual.py
+	$ python3 re_groups_individual.py
 	
 	Input text            : This is some text -- with punctuation.
 	Pattern               : (\bt\w+)\W+(\w+)
@@ -914,9 +916,9 @@ ordered sequence returned by :func:`groups`, as well.
 .. cog.out(run_script(cog.inFile, 're_groups_named.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_groups_named.py
+	$ python3 re_groups_named.py
 	
 	This is some text -- with punctuation.
 	
@@ -930,7 +932,7 @@ ordered sequence returned by :func:`groups`, as well.
 	
 	Matching "(?P<t_word>\bt\w+)\W+(?P<other_word>\w+)"
 	   ('text', 'with')
-	   {'other_word': 'with', 't_word': 'text'}
+	   {'t_word': 'text', 'other_word': 'with'}
 	
 	Matching "(?P<ends_with_t>\w+t)\b"
 	   ('text',)
@@ -962,9 +964,9 @@ matched value.
 .. cog.out(run_script(cog.inFile, 're_groups_nested.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_groups_nested.py
+	$ python3 re_groups_nested.py
 	
 	Pattern 'a((a*)(b*))' (a followed by 0-n a and 0-n b)
 	
@@ -997,9 +999,9 @@ the point in the sequence where the alternative group should appear.
 .. cog.out(run_script(cog.inFile, 're_groups_alternative.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_groups_alternative.py
+	$ python3 re_groups_alternative.py
 	
 	Pattern 'a((a+)|(b+))' (a then seq. of a or seq. of b)
 	
@@ -1034,9 +1036,9 @@ of a pattern that matches the same results.
 .. cog.out(run_script(cog.inFile, 're_groups_noncapturing.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_groups_noncapturing.py
+	$ python3 re_groups_noncapturing.py
 	
 	Pattern 'a((a+)|(b+))' (capturing form)
 	
@@ -1081,9 +1083,9 @@ ignored, ``text`` also matches.
 .. cog.out(run_script(cog.inFile, 're_flags_ignorecase.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_flags_ignorecase.py
+	$ python3 re_flags_ignorecase.py
 	
 	Text:
 	  'This is some text -- with punctuation.'
@@ -1119,9 +1121,9 @@ there is no newline.
 .. cog.out(run_script(cog.inFile, 're_flags_multiline.py', break_lines_at=65))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_flags_multiline.py
+	$ python3 re_flags_multiline.py
 	
 	Text:
 	  'This is some text -- with punctuation.\nA second line.'
@@ -1153,9 +1155,9 @@ separately.  Adding the flag causes the entire string to be consumed.
 .. cog.out(run_script(cog.inFile, 're_flags_dotall.py', break_lines_at=67))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_flags_dotall.py
+	$ python3 re_flags_dotall.py
 	
 	Text:
 	  'This is some text -- with punctuation.\nA second line.'
@@ -1196,14 +1198,14 @@ database to find the properties of each character.
 .. cog.out(run_script(cog.inFile, 're_flags_unicode.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_flags_unicode.py
+	$ python3 re_flags_unicode.py
 	
 	Text    : Français złoty Österreich
 	Pattern : \w+
-	ASCII   : Fran, ais, z, oty, sterreich
-	Unicode : Français, złoty, Österreich
+	ASCII   : ['Français', 'złoty', 'Österreich']
+	Unicode : ['Français', 'złoty', 'Österreich']
 
 .. {{{end}}}
 
@@ -1240,9 +1242,9 @@ classes, groups, and repetition expressions.
 .. cog.out(run_script(cog.inFile, 're_email_compact.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_email_compact.py
+	$ python3 re_email_compact.py
 	
 	first.last@example.com          Matches
 	first.last+category@gmail.com   Matches
@@ -1266,9 +1268,9 @@ the pattern so that it can be expanded to match more inputs.
 .. cog.out(run_script(cog.inFile, 're_email_verbose.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_email_verbose.py
+	$ python3 re_email_verbose.py
 	
 	first.last@example.com          Matches
 	first.last+category@gmail.com   Matches
@@ -1296,9 +1298,9 @@ their nesting level.
 .. cog.out(run_script(cog.inFile, 're_email_with_name.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_email_with_name.py
+	$ python3 re_email_with_name.py
 	
 	Candidate: first.last@example.com
 	  Name : None
@@ -1352,9 +1354,9 @@ or parsed, they should always come at the beginning of the expression.
 .. cog.out(run_script(cog.inFile, 're_flags_embedded.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_flags_embedded.py
+	$ python3 re_flags_embedded.py
 	
 	Text      : This is some text -- with punctuation.
 	Pattern   : (?i)\bT\w+
@@ -1411,9 +1413,9 @@ pattern picks up from the same spot after the look ahead matches.
 .. cog.out(run_script(cog.inFile, 're_look_ahead.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_look_ahead.py
+	$ python3 re_look_ahead.py
 	
 	Candidate: First Last <first.last@example.com>
 	  Name : First Last
@@ -1444,9 +1446,9 @@ since the look ahead assertion fails.
 .. cog.out(run_script(cog.inFile, 're_negative_look_ahead.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_negative_look_ahead.py
+	$ python3 re_negative_look_ahead.py
 	
 	Candidate: first.last@example.com
 	  Match: first.last@example.com
@@ -1472,9 +1474,9 @@ allowed, as long as there is a fixed number (no wildcards or ranges).
 .. cog.out(run_script(cog.inFile, 're_negative_look_behind.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_negative_look_behind.py
+	$ python3 re_negative_look_behind.py
 	
 	Candidate: first.last@example.com
 	  Match: first.last@example.com
@@ -1498,9 +1500,9 @@ handle, as long as they are preceded by an ``@``.
 .. cog.out(run_script(cog.inFile, 're_look_behind.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_look_behind.py
+	$ python3 re_look_behind.py
 	
 	This text includes two Twitter handles.
 	One for @ThePSF, and one for the author, @doughellmann.
@@ -1539,9 +1541,9 @@ expression.
 .. cog.out(run_script(cog.inFile, 're_refer_to_group.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_refer_to_group.py
+	$ python3 re_refer_to_group.py
 	
 	Candidate: First Last <first.last@example.com>
 	  Match name : First Last
@@ -1573,9 +1575,9 @@ are not.
 .. cog.out(run_script(cog.inFile, 're_refer_to_named_group.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_refer_to_named_group.py
+	$ python3 re_refer_to_named_group.py
 	
 	Candidate: First Last <first.last@example.com>
 	  Match name : First Last
@@ -1616,9 +1618,9 @@ literal patterns, otherwise it consumes any blank space.
 .. cog.out(run_script(cog.inFile, 're_id.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_id.py
+	$ python3 re_id.py
 	
 	Candidate: First Last <first.last@example.com>
 	  Match name : First Last
@@ -1656,9 +1658,9 @@ the ``\num`` syntax used for back-references.
 .. cog.out(run_script(cog.inFile, 're_sub.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_sub.py
+	$ python3 re_sub.py
 	
 	Text: Make this **bold**.  This **too**.
 	Bold: Make this <b>bold</b>.  This <b>too</b>.
@@ -1679,9 +1681,9 @@ literal digits.
 .. cog.out(run_script(cog.inFile, 're_sub_named_groups.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_sub_named_groups.py
+	$ python3 re_sub_named_groups.py
 	
 	Text: Make this **bold**.  This **too**.
 	Bold: Make this <b>bold</b>.  This <b>too</b>.
@@ -1701,9 +1703,9 @@ Only the first substitution is made because *count* is ``1``.
 .. cog.out(run_script(cog.inFile, 're_sub_count.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_sub_count.py
+	$ python3 re_sub_count.py
 	
 	Text: Make this **bold**.  This **too**.
 	Bold: Make this <b>bold</b>.  This **too**.
@@ -1723,9 +1725,9 @@ The search pattern matches twice in the example.
 .. cog.out(run_script(cog.inFile, 're_subn.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_subn.py
+	$ python3 re_subn.py
 	
 	Text: Make this **bold**.  This **too**.
 	Bold: ('Make this <b>bold</b>.  This <b>too</b>.', 2)
@@ -1758,9 +1760,9 @@ output.
 .. cog.out(run_script(cog.inFile, 're_paragraphs_findall.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_paragraphs_findall.py
+	$ python3 re_paragraphs_findall.py
 	
 	0 'Paragraph one\non two lines.'
 	
@@ -1787,9 +1789,9 @@ separator point between paragraphs in the input string.
 .. cog.out(run_script(cog.inFile, 're_split.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_split.py
+	$ python3 re_split.py
 	
 	With findall:
 	0 ('Paragraph one\non two lines.', '\n\n')
@@ -1824,9 +1826,9 @@ newlines separating them.
 .. cog.out(run_script(cog.inFile, 're_split_groups.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python re_split_groups.py
+	$ python3 re_split_groups.py
 	
 	With split:
 	0 'Paragraph one\non two lines.'

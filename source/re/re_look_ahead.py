@@ -20,7 +20,7 @@ address = re.compile(
     ) # name is no longer optional
 
     # LOOKAHEAD
-    # Email addresses are wrapped in angle brackets, but only 
+    # Email addresses are wrapped in angle brackets, but only
     # if they are both present or neither is.
     (?= (<.*>$)       # remainder wrapped in angle brackets
         |
@@ -46,7 +46,7 @@ candidates = [
     u'No Brackets first.last@example.com',
     u'Open Bracket <first.last@example.com',
     u'Close Bracket first.last@example.com>',
-    ]
+]
 
 for candidate in candidates:
     print('Candidate:', candidate)

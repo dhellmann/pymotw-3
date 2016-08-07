@@ -9,15 +9,15 @@
 
 import re
 
-patterns = [ 'this', 'that' ]
+patterns = ['this', 'that']
 text = 'Does this text match the pattern?'
 
 print('Text: %r\n' % text)
 
 for pattern in patterns:
-    print('Seeking "%s" ->' % pattern, )
+    print('Seeking "%s" ->' % pattern, end=' ')
 
-    if re.search(pattern,  text) is None:
+    if re.search(pattern, text) is None:
         print('no match')
     else:
         print('match!')

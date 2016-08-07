@@ -23,9 +23,10 @@ candidates = [
     u'first.last+category@gmail.com',
     u'valid-address@mail.example.com',
     u'not-valid@example.foo',
-    ]
+]
 
 for candidate in candidates:
     match = address.search(candidate)
-    print('%-30s  %s' % (candidate, 'Matches' if match else 'No match'))
-    
+    print('{:<30}  {}'.format(
+        candidate, 'Matches' if match else 'No match'),
+    )

@@ -9,6 +9,7 @@
 
 import re
 
+
 def test_patterns(text, patterns=[]):
     """Given source text and a list of patterns, look for
     matches for each pattern within the text and print
@@ -22,9 +23,17 @@ def test_patterns(text, patterns=[]):
             s = match.start()
             e = match.end()
             prefix = ' ' * (s)
-            print('  %s%r%s ' % (prefix, text[s:e], ' '*(len(text)-e)),)
+            print(
+                '  {}{!r}{} '.format(prefix,
+                                     text[s:e],
+                                     ' ' * (len(text) - e)),
+                end=' ',
+            )
             print(match.groups())
             if match.groupdict():
-                print('%s%s' % (' ' * (len(text)-s), match.groupdict()))
+                print('{}{}'.format(
+                    ' ' * (len(text) - s),
+                    match.groupdict()),
+                )
         print()
     return

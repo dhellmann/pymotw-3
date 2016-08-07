@@ -22,4 +22,3 @@ for match in no_newlines.findall(text):
 print('Dotall      :')
 for match in dotall.findall(text):
     print('  %r' % match)
-

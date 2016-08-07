@@ -41,13 +41,14 @@ candidates = [
     u'Different Name <first.last@example.com>',
     u'First Middle Last <first.last@example.com>',
     u'First M. Last <first.last@example.com>',
-    ]
+]
 
 for candidate in candidates:
     print('Candidate:', candidate)
     match = address.search(candidate)
     if match:
-        print('  Match name :', match.groupdict()['first_name'],)
+        print('  Match name :', match.groupdict()['first_name'],
+              end=' ')
         print(match.groupdict()['last_name'])
         print('  Match email:', match.groupdict()['email'])
     else:

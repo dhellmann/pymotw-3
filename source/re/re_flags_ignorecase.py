@@ -22,4 +22,3 @@ for match in with_case.findall(text):
 print('Case-insensitive:')
 for match in without_case.findall(text):
     print('  %r' % match)
-

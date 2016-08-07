@@ -41,7 +41,7 @@ candidates = [
     u'Different Name <first.last@example.com>',
     u'First Middle Last <first.last@example.com>',
     u'First M. Last <first.last@example.com>',
-    ]
+]
 
 for candidate in candidates:
     print('Candidate:', candidate)
