@@ -23,7 +23,7 @@ print('Level  Size        Checksum')
 print('-----  ----------  ---------------------------------')
 print('data   %10d  %s' % (len(data), cksum))
 
-for i in range(1, 10):
+for i in range(0, 10):
     filename = 'compress-level-%s.gz' % i
     with gzip.open(filename, 'wb', compresslevel=i) as output:
         output.write(data)
