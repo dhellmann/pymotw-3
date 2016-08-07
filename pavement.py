@@ -338,6 +338,13 @@ def publish(options):
 
 
 @task
+def common_cleanups(options):
+    module = _get_module(options)
+    sh('sed -i "" -e "s/.. include::/.. literalinclude::/g" source/%s/*.rst' % module)
+    sh('sed -i "" -e "s/:literal:/:caption:/g" source/%s/*.rst' % module)
+
+
+@task
 @consume_args
 def migrate(options):
     "Copy old content into place to prepare for updating"
@@ -369,7 +376,9 @@ def migrate(options):
             srcfile.rename(dest + '/' + newname)
     sh('git add ' + dest)
     sh('git commit -m "%s: initial import"' % module)
-
+    common_cleanups(options)
+    sh('git add ' + dest)
+    sh('git commit -m "%s: common cleanups"' % module)
 
 def get_post_title(filename):
     with open(filename, 'r') as f:
