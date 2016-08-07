@@ -1,12 +1,11 @@
-==============================
- zlib -- GNU zlib Compression
-==============================
+===============================
+ zlib --- GNU zlib Compression
+===============================
 
 .. module:: zlib
     :synopsis: GNU zlib compression library
 
 :Purpose: Low-level access to GNU zlib compression library
-:Python Version: 2.5 and later
 
 The :mod:`zlib` module provides a lower-level interface to many of the
 functions in the :mod:`zlib` compression library from the GNU project.
@@ -17,15 +16,15 @@ Working with Data in Memory
 The simplest way to work with :mod:`zlib` requires holding all of the
 data to be compressed or decompressed in memory:
 
-.. include:: zlib_memory.py
-    :literal:
+.. literalinclude:: zlib_memory.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The :func:`compress()` and :func:`decompress()` functions both take a
 string argument and return a string.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'zlib_memory.py', break_lines_at=65))
+.. cog.out(run_script(cog.inFile, 'zlib_memory.py'))
 .. }}}
 
 ::
@@ -44,8 +43,8 @@ version of a string can be bigger than the uncompressed version.
 While the actual results depend on the input data, for short bits of
 text it is interesting to observe the compression overhead.
 
-.. include:: zlib_lengths.py
-    :literal:
+.. literalinclude:: zlib_lengths.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The ``*`` in the output highlight the lines where the compressed data
@@ -79,8 +78,8 @@ at the same time.  The alternative is to use :class:`Compress` and
 :class:`Decompress` objects to manipulate data incrementally, so that
 the entire data set does not have to fit into memory.
 
-.. include:: zlib_incremental.py
-   :literal:
+.. literalinclude:: zlib_incremental.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example reads small blocks of data from a plain text file and
@@ -93,7 +92,7 @@ of the data is fed in, the :func:`flush` method forces the compressor
 to close the final block and return the rest of the compressed data.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'zlib_incremental.py', break_lines_at=70))
+.. cog.out(run_script(cog.inFile, 'zlib_incremental.py'))
 .. }}}
 
 ::
@@ -124,8 +123,8 @@ The :class:`Decompress` class returned by :func:`decompressobj()` can
 also be used in situations where compressed and uncompressed data is
 mixed together.  
 
-.. include:: zlib_mixed.py
-    :literal:
+.. literalinclude:: zlib_mixed.py
+    :caption:
     :start-after: #end_pymotw_header
 
 After decompressing all of the data, the *unused_data* attribute
@@ -154,8 +153,8 @@ includes two functions for computing checksums of data,
 cryptographically secure, and they are only intended for use for data
 integrity verification.
 
-.. include:: zlib_checksums.py
-    :literal:
+.. literalinclude:: zlib_checksums.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Both functions take the same arguments, a string of data and an
@@ -216,7 +215,7 @@ processing loop.
     might be an issue.
  
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'zlib_server.py', break_lines_at=69))
+.. cog.out(run_script(cog.inFile, 'zlib_server.py'))
 .. }}}
 
 ::
@@ -285,19 +284,14 @@ processing loop.
 
 .. seealso::
 
-    `zlib <http://docs.python.org/library/zlib.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`zlib`
 
-    :mod:`gzip`
-        The ``gzip`` module includes a higher level (file-based)
-        interface to the zlib library.
+   * :mod:`gzip` -- The ``gzip`` module includes a higher level
+     (file-based) interface to the zlib library.
 
-    http://www.zlib.net/
-        Home page for zlib library.
+   * http://www.zlib.net/ -- Home page for zlib library.
 
-    http://www.zlib.net/manual.html
-        Complete zlib documentation.
+   * http://www.zlib.net/manual.html -- Complete zlib documentation.
 
-    :mod:`bz2`
-        The ``bz2`` module provides a similar interface to the bzip2
-        compression library.
+   * :mod:`bz2` -- The ``bz2`` module provides a similar interface to
+     the bzip2 compression library.
