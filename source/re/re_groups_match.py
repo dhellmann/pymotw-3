@@ -24,6 +24,6 @@ patterns = [
 for pattern, desc in patterns:
     regex = re.compile(pattern)
     match = regex.search(text)
-    print('{!r} ({})\n'.format(pattern, desc))
+    print("'{}' ({})\n".format(pattern, desc))
     print('  ', match.groups())
     print()

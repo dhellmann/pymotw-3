@@ -549,25 +549,25 @@ sequences of like characters in the input string.
 
 	$ python3 re_escape_codes.py
 	
-	'\\d+' (sequence of digits)
+	'\d+' (sequence of digits)
 	
 	  'A prime #1 example!'
 	  .........'1'
 	
-	'\\D+' (sequence of nondigits)
+	'\D+' (sequence of nondigits)
 	
 	  'A prime #1 example!'
 	  'A prime #'
 	  ..........' example!'
 	
-	'\\s+' (sequence of whitespace)
+	'\s+' (sequence of whitespace)
 	
 	  'A prime #1 example!'
 	  .' '
 	  .......' '
 	  ..........' '
 	
-	'\\S+' (sequence of nonwhitespace)
+	'\S+' (sequence of nonwhitespace)
 	
 	  'A prime #1 example!'
 	  'A'
@@ -575,7 +575,7 @@ sequences of like characters in the input string.
 	  ........'#1'
 	  ...........'example!'
 	
-	'\\w+' (alphanumeric characters)
+	'\w+' (alphanumeric characters)
 	
 	  'A prime #1 example!'
 	  'A'
@@ -583,7 +583,7 @@ sequences of like characters in the input string.
 	  .........'1'
 	  ...........'example'
 	
-	'\\W+' (nonalphanumeric)
+	'\W+' (nonalphanumeric)
 	
 	  'A prime #1 example!'
 	  .' '
@@ -613,12 +613,12 @@ expression.
 
 	$ python3 re_escape_escapes.py
 	
-	'\\\\.\\+' (escape code)
+	'\\.\+' (escape code)
 	
-	  '\\d+ \\D+ \\s+'
-	  '\\d+'
-	  .....'\\D+'
-	  ..........'\\s+'
+	  '\d+ \D+ \s+'
+	  '\d+'
+	  .....'\D+'
+	  ..........'\s+'
 	
 
 .. {{{end}}}
@@ -663,44 +663,44 @@ alphanumeric character.
 
 	$ python3 re_anchoring.py
 	
-	'^\\w+' (word at start of string)
+	'^\w+' (word at start of string)
 	
 	  'This is some text -- with punctuation.'
 	  'This'
 	
-	'\\A\\w+' (word at start of string)
+	'\A\w+' (word at start of string)
 	
 	  'This is some text -- with punctuation.'
 	  'This'
 	
-	'\\w+\\S*$' (word near end of string, no punctuation)
+	'\w+\S*$' (word near end of string, no punctuation)
 	
 	  'This is some text -- with punctuation.'
 	  ..........................'punctuation.'
 	
-	'\\w+\\S*\\Z' (word near end of string, no punctuation)
+	'\w+\S*\Z' (word near end of string, no punctuation)
 	
 	  'This is some text -- with punctuation.'
 	  ..........................'punctuation.'
 	
-	'\\w*t\\w*' (word containing t)
+	'\w*t\w*' (word containing t)
 	
 	  'This is some text -- with punctuation.'
 	  .............'text'
 	  .....................'with'
 	  ..........................'punctuation'
 	
-	'\\bt\\w+' (t at start of word)
+	'\bt\w+' (t at start of word)
 	
 	  'This is some text -- with punctuation.'
 	  .............'text'
 	
-	'\\w+t\\b' (t at end of word)
+	'\w+t\b' (t at end of word)
 	
 	  'This is some text -- with punctuation.'
 	  .............'text'
 	
-	'\\Bt\\B' (t, not start or end of word)
+	'\Bt\B' (t, not start or end of word)
 	
 	  'This is some text -- with punctuation.'
 	  .......................'t'
@@ -850,19 +850,19 @@ groups within the expression that matches the string.
 	
 	This is some text -- with punctuation.
 	
-	'^(\\w+)' (word at start of string)
+	'^(\w+)' (word at start of string)
 	
 	   ('This',)
 	
-	'(\\w+)\\S*$' (word at end, with optional punctuation)
+	'(\w+)\S*$' (word at end, with optional punctuation)
 	
 	   ('punctuation',)
 	
-	'(\\bt\\w+)\\W+(\\w+)' (word starting with t, another word)
+	'(\bt\w+)\W+(\w+)' (word starting with t, another word)
 	
 	   ('text', 'with')
 	
-	'(\\w+t)\\b' (word ending with t)
+	'(\w+t)\b' (word ending with t)
 	
 	   ('text',)
 	
@@ -920,19 +920,19 @@ ordered sequence returned by :func:`groups`, as well.
 	
 	This is some text -- with punctuation.
 	
-	'^(?P<first_word>\\w+)'
+	'^(?P<first_word>\w+)'
 	   ('This',)
 	   {'first_word': 'This'}
 	
-	'(?P<last_word>\\w+)\\S*$'
+	'(?P<last_word>\w+)\S*$'
 	   ('punctuation',)
 	   {'last_word': 'punctuation'}
 	
-	'(?P<t_word>\\bt\\w+)\\W+(?P<other_word>\\w+)'
+	'(?P<t_word>\bt\w+)\W+(?P<other_word>\w+)'
 	   ('text', 'with')
 	   {'t_word': 'text', 'other_word': 'with'}
 	
-	'(?P<ends_with_t>\\w+t)\\b'
+	'(?P<ends_with_t>\w+t)\b'
 	   ('text',)
 	   {'ends_with_t': 'text'}
 	
