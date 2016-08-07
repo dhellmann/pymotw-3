@@ -7,10 +7,11 @@
 
 :Purpose: Create isolated installation and execution contexts.
 
-Python virtual environments, managed by :mod:`venv`, define isolated
-environments for installing packages and running programs. Because
-each environment has its own interpreter executable and directory for
-installing packages it is easy to create environments configured with
+Python virtual environments, managed by :mod:`venv`, are set up for
+installing packages and running programs in a way that isolates them
+from other packages installed on the rest of the system. Because each
+environment has its own interpreter executable and directory for
+installing packages, it is easy to create environments configured with
 various combinations of Python and package versions all on the same
 computer.
 
