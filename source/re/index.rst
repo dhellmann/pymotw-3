@@ -1,12 +1,11 @@
-===========================
- re -- Regular Expressions
-===========================
+============================
+ re --- Regular Expressions
+============================
 
 .. module:: re
     :synopsis: Searching within and changing text using formal patterns.
 
 :Purpose: Searching within and changing text using formal patterns.
-:Python Version: 1.5 and later
 
 *Regular expressions* are text matching patterns described with a
 formal syntax.  The patterns are interpreted as a set of instructions,
@@ -56,8 +55,8 @@ match, including the original input string, the regular expression
 used, and the location within the original string where the pattern
 occurs.
 
-.. include:: re_simple_match.py
-   :literal:
+.. literalinclude:: re_simple_match.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The :func:`start` and :func:`end` methods give the indexes into the
@@ -85,8 +84,8 @@ expressions as text strings, but it is more efficient to *compile* the
 expressions a program uses frequently.  The :func:`compile` function
 converts an expression string into a :class:`RegexObject`.
 
-.. include:: re_simple_compiled.py
-   :literal:
+.. literalinclude:: re_simple_compiled.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The module-level functions maintain a cache of compiled expressions,
@@ -120,8 +119,8 @@ single instances of literal text strings.  The :func:`findall`
 function returns all of the substrings of the input that match the
 pattern without overlapping.
 
-.. include:: re_findall.py
-   :literal:
+.. literalinclude:: re_findall.py
+   :caption:
    :start-after: #end_pymotw_header
 
 There are two instances of ``ab`` in the input string.
@@ -142,8 +141,8 @@ There are two instances of ``ab`` in the input string.
 :func:`finditer` returns an iterator that produces :class:`Match`
 instances instead of the strings returned by :func:`findall`.
 
-.. include:: re_finditer.py
-   :literal:
+.. literalinclude:: re_finditer.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example finds the same two occurrences of ``ab``, and the
@@ -173,8 +172,8 @@ pattern.  All of these features are used by combining literal text
 values with *meta-characters* that are part of the regular expression
 pattern syntax implemented by :mod:`re`.  
 
-.. include:: re_test_patterns.py
-   :literal:
+.. literalinclude:: re_test_patterns.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The following examples will use :func:`test_patterns` to explore how
@@ -214,8 +213,8 @@ repetitions, use ``{m,n}`` where *m* is the minimum number of
 repetitions and *n* is the maximum.  Leaving out *n* (``{m,}``) means
 the value appears at least *m* times, with no maximum.
 
-.. include:: re_repetition.py
-   :literal:
+.. literalinclude:: re_repetition.py
+   :caption:
    :start-after: #end_pymotw_header
 
 There are more matches are for ``ab*`` and ``ab?`` than ``ab+``.
@@ -271,8 +270,8 @@ matches, or the matches may include more of the input text than
 intended.  Greediness can be turned off by following the repetition
 instruction with ``?``.
 
-.. include:: re_repetition_non_greedy.py
-   :literal:
+.. literalinclude:: re_repetition_non_greedy.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Disabling greedy consumption of the input for any of the patterns
@@ -330,8 +329,8 @@ A *character set* is a group of characters, any one of which can match
 at that point in the pattern.  For example, ``[ab]`` would match
 either ``a`` or ``b``.
 
-.. include:: re_charset.py
-   :literal:
+.. literalinclude:: re_charset.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The greedy form of the expression (``a[ab]+``) consumes the entire
@@ -377,8 +376,8 @@ A character set can also be used to exclude specific characters.  The
 carat (``^``) means to look for characters not in the set
 following.
 
-.. include:: re_charset_exclude.py
-   :literal:
+.. literalinclude:: re_charset_exclude.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This pattern finds all of the substrings that do not contain the
@@ -410,8 +409,8 @@ should not) match becomes tedious.  A more compact format using
 *character ranges* can be used to define a character set to include
 all of the contiguous characters between a start and stop point.
 
-.. include:: re_charset_ranges.py
-   :literal:
+.. literalinclude:: re_charset_ranges.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Here the range ``a-z`` includes the lower case ASCII letters, and the
@@ -463,8 +462,8 @@ As a special case of a character set the meta-character dot, or period
 (``.``), indicates that the pattern should match any single character
 in that position.
 
-.. include:: re_charset_dot.py
-   :literal:
+.. literalinclude:: re_charset_dot.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Combining dot with repetition can result in very long matches, unless
@@ -535,8 +534,8 @@ are listed in :table:`Regular Expression Escape Codes`.
   to read.  Using *raw* strings, created by prefixing the literal
   value with ``r``, eliminates this problem and maintains readability.
 
-.. include:: re_escape_codes.py
-   :literal:
+.. literalinclude:: re_escape_codes.py
+   :caption:
    :start-after: #end_pymotw_header
 
 These sample expressions combine escape codes with repetition to find
@@ -598,8 +597,8 @@ sequences of like characters in the input string.
 To match the characters that are part of the regular expression
 syntax, escape the characters in the search pattern.
 
-.. include:: re_escape_escapes.py
-   :literal:
+.. literalinclude:: re_escape_escapes.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The pattern in this example escapes the backslash and plus characters,
@@ -646,8 +645,8 @@ Expression Anchoring Codes` lists valid anchoring codes.
    ``\B``  empty string not at the beginning or end of a word
    ======  =======
 
-.. include:: re_anchoring.py
-   :literal:
+.. literalinclude:: re_anchoring.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The patterns in the example for matching words at the beginning and
@@ -722,8 +721,8 @@ then using :func:`match` instead of :func:`search` will anchor the
 search without having to explicitly include an anchor in the search
 pattern.
 
-.. include:: re_match.py
-   :literal:
+.. literalinclude:: re_match.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Since the literal text ``is`` does not appear at the start of the
@@ -749,8 +748,8 @@ The :func:`search` method of a compiled regular expression accepts
 optional *start* and *end* position parameters to limit the search to
 a substring of the input.
 
-.. include:: re_search_substring.py
-   :literal:
+.. literalinclude:: re_search_substring.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example implements a less efficient form of :func:`iterall`.
@@ -782,8 +781,8 @@ pattern isolates parts of the matching text, expanding those
 capabilities to create a parser.  Groups are defined by enclosing
 patterns in parentheses (``(`` and ``)``).
 
-.. include:: re_groups.py
-   :literal:
+.. literalinclude:: re_groups.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Any complete regular expression can be converted to a group and nested
@@ -834,8 +833,8 @@ repeat.
 To access the substrings matched by the individual groups within a
 pattern, use the :func:`groups` method of the :class:`Match` object.
 
-.. include:: re_groups_match.py
-   :literal:
+.. literalinclude:: re_groups_match.py
+   :caption:
    :start-after: #end_pymotw_header
 
 :func:`Match.groups` returns a sequence of strings in the order of the
@@ -874,8 +873,8 @@ Ask for the match of a single group with :func:`group`.  This is
 useful when grouping is being used to find parts of the string, but
 some of the parts matched by groups are not needed in the results.
 
-.. include:: re_groups_individual.py
-   :literal:
+.. literalinclude:: re_groups_individual.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Group ``0`` represents the string matched by the entire expression,
@@ -903,8 +902,8 @@ names to refer to groups makes it easier to modify the pattern over
 time, without having to also modify the code using the match results.
 To set the name of a group, use the syntax ``(?P<name>pattern)``.
 
-.. include:: re_groups_named.py
-   :literal:
+.. literalinclude:: re_groups_named.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Use :func:`groupdict` to retrieve the dictionary mapping group names
@@ -944,15 +943,15 @@ An updated version of :func:`test_patterns` that shows the numbered
 and named groups matched by a pattern will make the following examples
 easier to follow.
 
-.. include:: re_test_patterns_groups.py
-   :literal:
+.. literalinclude:: re_test_patterns_groups.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Since a group is itself a complete regular expression, groups can be
 nested within other groups to build even more complicated expressions.
 
-.. include:: re_groups_nested.py
-   :literal:
+.. literalinclude:: re_groups_nested.py
+   :caption:
    :start-after: #end_pymotw_header
 
 In this case, the group ``(a*)`` matches an empty string, so the
@@ -986,8 +985,8 @@ The second pattern matches ``a`` followed by a sequence that may
 include *either* ``a`` or ``b``.  The patterns are similar, but the
 resulting matches are completely different.
 
-.. include:: re_groups_alternative.py
-   :literal:
+.. literalinclude:: re_groups_alternative.py
+   :caption:
    :start-after: #end_pymotw_header
 
 When an alternative group is not matched, but the entire pattern does
@@ -1024,8 +1023,8 @@ repetition patterns or alternatives, without isolating the matching
 portion of the string in the value returned.  To create a
 non-capturing group, use the syntax ``(?:pattern)``.
 
-.. include:: re_groups_noncapturing.py
-   :literal:
+.. literalinclude:: re_groups_noncapturing.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Compare the groups returned for the capturing and non-capturing forms
@@ -1070,8 +1069,8 @@ Case-insensitive Matching
 :const:`IGNORECASE` causes literal characters and character ranges in
 the pattern to match both upper and lower case characters.
 
-.. include:: re_flags_ignorecase.py
-   :literal:
+.. literalinclude:: re_flags_ignorecase.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Since the pattern includes the literal ``T``, without setting
@@ -1108,8 +1107,8 @@ instructions for text containing newline characters.  When multiline
 mode is turned on, the anchor rules for ``^`` and ``$`` apply at the
 beginning and end of each line, in addition to the entire string.
 
-.. include:: re_flags_multiline.py
-   :literal:
+.. literalinclude:: re_flags_multiline.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The pattern in the example matches the first or last word of the
@@ -1143,8 +1142,8 @@ there is no newline.
 the dot character (``.``) matches everything in the input text except a
 newline character.  The flag allows dot to match newlines as well.
 
-.. include:: re_flags_dotall.py
-   :literal:
+.. literalinclude:: re_flags_dotall.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Without the flag, each line of the input text matches the pattern
@@ -1183,8 +1182,8 @@ matching in Python 2, add the :const:`UNICODE` flag when compiling the
 pattern or when calling the module-level functions :func:`search` and
 :func:`match`.
 
-.. include:: re_flags_unicode.py
-   :literal:
+.. literalinclude:: re_flags_unicode.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The other escape sequences (``\W``, ``\b``, ``\B``, ``\d``, ``\D``,
@@ -1230,8 +1229,8 @@ makes working with regular expressions easier.  The first version
 recognizes addresses that end in one of three top-level domains,
 ``.com``, ``.org``, and ``.edu``.
 
-.. include:: re_email_compact.py
-   :literal:
+.. literalinclude:: re_email_compact.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This expression is already complex.  There are several character
@@ -1255,8 +1254,8 @@ classes, groups, and repetition expressions.
 Converting the expression to a more verbose format will make it easier
 to extend.
 
-.. include:: re_email_verbose.py
-   :literal:
+.. literalinclude:: re_email_verbose.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The expression matches the same inputs, but in this extended format it
@@ -1283,8 +1282,8 @@ email address, as might appear in an email header.  The name comes
 first and stands on its own, and the email address follows surrounded
 by angle brackets (``<`` and ``>``).
 
-.. include:: re_email_with_name.py
-   :literal:
+.. literalinclude:: re_email_with_name.py
+   :caption:
    :start-after: #end_pymotw_header
 
 As with other programming languages, the ability to insert comments
@@ -1342,8 +1341,8 @@ inside the expression string itself.  For example, to turn
 case-insensitive matching on, add ``(?i)`` to the beginning of the
 expression.
 
-.. include:: re_flags_embedded.py
-   :literal:
+.. literalinclude:: re_flags_embedded.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Because the options control the way the entire expression is evaluated
@@ -1393,8 +1392,8 @@ should only match if both are present, or neither are.  This modified
 version of the expression uses a *positive look ahead* assertion to
 match the pair.  The look ahead assertion syntax is ``(?=pattern)``.
 
-.. include:: re_look_ahead.py
-   :literal:
+.. literalinclude:: re_look_ahead.py
+   :caption:
    :start-after: #end_pymotw_header
 
 There are several important changes in this version of the expression.
@@ -1434,8 +1433,8 @@ pattern does not match the text following the current point.  For
 example, the email recognition pattern could be modified to ignore
 ``noreply`` mailing addresses commonly used by automated systems.
 
-.. include:: re_negative_look_ahead.py
-   :literal:
+.. literalinclude:: re_negative_look_ahead.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The address starting with ``noreply`` does not match the pattern,
@@ -1461,8 +1460,8 @@ the email address, the pattern can also be written using a *negative
 look behind* assertion after the username is matched using the syntax
 ``(?<!pattern)``.
 
-.. include:: re_negative_look_behind.py
-   :literal:
+.. literalinclude:: re_negative_look_behind.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Looking backwards works a little differently than looking ahead, in
@@ -1488,8 +1487,8 @@ A *positive look behind* assertion can be used to find text following
 a pattern using the syntax ``(?<=pattern)``.  For example, this
 expression finds Twitter handles.
 
-.. include:: re_look_behind.py
-   :literal:
+.. literalinclude:: re_look_behind.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The pattern matches sequences of characters that can make up a Twitter
@@ -1521,8 +1520,8 @@ back-references to those groups.  The easiest way to achieve this is
 by referring to the previously matched group by id number, using
 ``\num``.
 
-.. include:: re_refer_to_group.py
-   :literal:
+.. literalinclude:: re_refer_to_group.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Although the syntax is simple, creating back-references by numerical
@@ -1562,8 +1561,8 @@ Python's expression parser includes an extension that uses
 ``(?P=name)`` to refer to the value of a named group matched earlier
 in the expression.
 
-.. include:: re_refer_to_named_group.py
-   :literal:
+.. literalinclude:: re_refer_to_named_group.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The address expression is compiled with the :const:`IGNORECASE` flag
@@ -1601,8 +1600,8 @@ itself.  The syntax for testing to see if a group has matched is
 or number, *yes-expression* is the pattern to use if the group has a
 value and *no-expression* is the pattern to use otherwise.
 
-.. include:: re_id.py
-   :literal:
+.. literalinclude:: re_id.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This version of the email address parser uses two tests.  If the
@@ -1646,8 +1645,8 @@ the replacements can reference groups matched in the regex as part of
 the substitution text.  Use :func:`sub` to replace all occurrences of a
 pattern with another string.
 
-.. include:: re_sub.py
-   :literal:
+.. literalinclude:: re_sub.py
+   :caption:
    :start-after: #end_pymotw_header
 
 References to the text matched by the pattern can be inserted using
@@ -1668,8 +1667,8 @@ the ``\num`` syntax used for back-references.
 
 To use named groups in the substitution, use the syntax ``\g<name>``.
 
-.. include:: re_sub_named_groups.py
-   :literal:
+.. literalinclude:: re_sub_named_groups.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The ``\g<name>`` syntax also works with numbered references, and using
@@ -1692,8 +1691,8 @@ literal digits.
 Pass a value to *count* to limit the number of substitutions
 performed.
 
-.. include:: re_sub_count.py
-   :literal:
+.. literalinclude:: re_sub_count.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Only the first substitution is made because *count* is ``1``.
@@ -1714,8 +1713,8 @@ Only the first substitution is made because *count* is ``1``.
 :func:`subn` works just like :func:`sub` except that it returns both
 the modified string and the count of substitutions made.
 
-.. include:: re_subn.py
-   :literal:
+.. literalinclude:: re_subn.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The search pattern matches twice in the example.
@@ -1747,8 +1746,8 @@ cannot be used because of the "or more" part of the definition.
 A strategy for identifying paragraphs using :func:`findall` would use
 a pattern like ``(.+?)\n{2,}``.
 
-.. include:: re_paragraphs_findall.py
-   :literal:
+.. literalinclude:: re_paragraphs_findall.py
+   :caption:
    :start-after: #end_pymotw_header
 
 That pattern fails for paragraphs at the end of the input text, as
@@ -1776,8 +1775,8 @@ more complicated.  Converting to :func:`re.split` instead of
 :func:`re.findall` handles the boundary condition automatically and
 keeps the pattern simpler.
 
-.. include:: re_split.py
-   :literal:
+.. literalinclude:: re_split.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The pattern argument to :func:`split` expresses the markup
@@ -1814,8 +1813,8 @@ Enclosing the expression in parentheses to define a group causes
 :func:`split` to work more like :func:`str.partition`, so it returns
 the separator values as well as the other parts of the string.
 
-.. include:: re_split_groups.py
-   :literal:
+.. literalinclude:: re_split_groups.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The output now includes each paragraph, as well as the sequence of
