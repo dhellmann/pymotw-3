@@ -30,6 +30,7 @@ simplicity of its API and portability of the format.
     zlib/index
     gzip/index
     bz2/index
+    zipfile/index
 
 ..
     zlib/index

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Writing data to a new archive.
 """
 #end_pymotw_header
@@ -11,15 +11,16 @@ try:
 except:
     compression = zipfile.ZIP_STORED
 
-modes = { zipfile.ZIP_DEFLATED: 'deflated',
-          zipfile.ZIP_STORED:   'stored',
-          }
+modes = {
+    zipfile.ZIP_DEFLATED: 'deflated',
+    zipfile.ZIP_STORED: 'stored',
+}
 
-print 'creating archive'
+print('creating archive')
 with zipfile.ZipFile('write_compression.zip', mode='w') as zf:
     mode_name = modes[compression]
-    print 'adding README.txt with compression mode', mode_name
+    print('adding README.txt with compression mode', mode_name)
     zf.write('README.txt', compress_type=compression)
 
-print
+print()
 print_info('write_compression.zip')

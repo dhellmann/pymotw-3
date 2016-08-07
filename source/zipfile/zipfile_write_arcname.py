@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Writing data to a new archive using an alternate name.
 """
 #end_pymotw_header

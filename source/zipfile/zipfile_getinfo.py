@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Retrieve all of the metadata for one member of an archive.
 """
 #end_pymotw_header
@@ -6,10 +6,12 @@
 import zipfile
 
 with zipfile.ZipFile('example.zip') as zf:
-    for filename in [ 'README.txt', 'notthere.txt' ]:
+    for filename in ['README.txt', 'notthere.txt']:
         try:
             info = zf.getinfo(filename)
         except KeyError:
-            print 'ERROR: Did not find %s in zip file' % filename
+            print('ERROR: Did not find {} in zip file'.format(
+                filename))
         else:
-            print '%s is %d bytes' % (info.filename, info.file_size)
+            print('{} is {} bytes'.format(
+                info.filename, info.file_size))
