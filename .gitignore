@@ -25,3 +25,4 @@ dist/
 /source/os/os_stat_chmod_example.txt
 /source/pickle/test.dat
 /source/venv/pyvenv.cfg
+/source/gzip/*.gz

@@ -27,10 +27,10 @@ To write data into a compressed file, open the file with mode ``'w'``.
 .. cog.out(run_script(cog.inFile, 'gzip_write.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python gzip_write.py
-
+	$ python3 gzip_write.py
+	
 	application/x-gzip; charset=binary
 	example.txt.gz contains 68 bytes
 
@@ -54,22 +54,22 @@ storage space.  Results will vary, depending on the input data.
 .. cog.out(run_script(cog.inFile, 'gzip_compresslevel.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python gzip_compresslevel.py
-
+	$ python3 gzip_compresslevel.py
+	
 	Level  Size        Checksum
 	-----  ----------  ---------------------------------
 	data       754688  e4c0f9433723971563f08a458715119c
-	    1        9839  3fbd996cd4d63acc70047fb62646f2ba
-	    2        8260  427bf6183d4518bcd05611d4f114a07c
-	    3        8221  078331b777a11572583e3fdaa120b845
-	    4        4160  f73c478ffcba30bfe0b1d08d0f597394
-	    5        4160  022d920880e24c1895219a31105a89c8
-	    6        4160  45ba520d6af45e279a56bb9c67294b82
-	    7        4160  9a834b8a2c649d4b8d509cb12cc580e2
-	    8        4160  c1aafc7d7d58cba4ef21dfce6fd1f443
-	    9        4160  78039211f5777f9f34cf770c2eaafc6d
+	    1        9839  ccebd908ef9e591d69ba0a003aacfbf5
+	    2        8260  36d3690d607ca1cddc4e2660058fae98
+	    3        8221  b2f10e16040bc7d69a9fdf32418cb0d3
+	    4        4160  5403da4b540cf7eb62c40ff93a2679d4
+	    5        4160  4cf284173294f8940a1bec7dd0d7d9de
+	    6        4160  23c6b87ba0dc582b994a27229a77dadf
+	    7        4160  c72ed44deec7a91c7d35fd04d73a2977
+	    8        4160  de2087bf3404df17b3fced96e91b76ea
+	    9        4160  fad9eaf667f8ea63f1cd068706a17f87
 
 .. {{{end}}}
 
@@ -87,10 +87,10 @@ character.
 .. cog.out(run_script(cog.inFile, 'gzip_writelines.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python gzip_writelines.py
-
+	$ python3 gzip_writelines.py
+	
 	The same line, over and over.
 	The same line, over and over.
 	The same line, over and over.
@@ -123,12 +123,11 @@ previous section.
 .. cog.out(run_script(cog.inFile, 'gzip_read.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python gzip_read.py
-
-	Contents of the example file go here.
+	$ python3 gzip_read.py
 	
+	b'Contents of the example file go here.\n'
 
 .. {{{end}}}
     
@@ -146,15 +145,14 @@ the caller does not need to know that the data file is compressed.
 .. cog.out(run_script(cog.inFile, 'gzip_seek.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python gzip_seek.py
-
-	Entire file:
-	Contents of the example file go here.
+	$ python3 gzip_seek.py
 	
+	Entire file:
+	b'Contents of the example file go here.\n'
 	Starting at position 5 for 10 bytes:
-	nts of the
+	b'nts of the'
 	
 	True
 
@@ -187,38 +185,26 @@ the incremental decompression API in :mod:`zlib`.
 .. cog.out(run_script(cog.inFile, 'gzip_StringIO.py', break_lines_at=65))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python gzip_StringIO.py
-
+	$ python3 gzip_StringIO.py
+	
 	UNCOMPRESSED: 300
-	The same line, over and over.
-	The same line, over and over.
-	The same line, over and over.
-	The same line, over and over.
-	The same line, over and over.
-	The same line, over and over.
-	The same line, over and over.
-	The same line, over and over.
-	The same line, over and over.
-	The same line, over and over.
-	
+	b'The same line, over and over.\nThe same line, over and over.\nT
+	he same line, over and over.\nThe same line, over and over.\nThe 
+	same line, over and over.\nThe same line, over and over.\nThe sam
+	e line, over and over.\nThe same line, over and over.\nThe same l
+	ine, over and over.\nThe same line, over and over.\n'
 	COMPRESSED: 51
-	1f8b08001f96f24c02ff0bc94855284ecc4d55c8c9cc4bd551c82f4b2d5248cc4
-	b0133f4b8424665916401d3e717802c010000
+	b'1f8b0800d366a75702ff0bc94855284ecc4d55c8c9cc4bd551c82f4b2d5248c
+	c4b0133f4b8424665916401d3e717802c010000'
 	
-	RE-READ: 300
-	The same line, over and over.
-	The same line, over and over.
-	The same line, over and over.
-	The same line, over and over.
-	The same line, over and over.
-	The same line, over and over.
-	The same line, over and over.
-	The same line, over and over.
-	The same line, over and over.
-	The same line, over and over.
-	
+	REREAD: 300
+	b'The same line, over and over.\nThe same line, over and over.\nT
+	he same line, over and over.\nThe same line, over and over.\nThe 
+	same line, over and over.\nThe same line, over and over.\nThe sam
+	e line, over and over.\nThe same line, over and over.\nThe same l
+	ine, over and over.\nThe same line, over and over.\n'
 
 .. {{{end}}}
 
