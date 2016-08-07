@@ -28,6 +28,7 @@ simplicity of its API and portability of the format.
     :maxdepth: 1
 
     zlib/index
+    gzip/index
     bz2/index
 
 ..

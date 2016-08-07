@@ -1,12 +1,11 @@
-======================================
- gzip -- Read and Write GNU zip Files
-======================================
+=======================================
+ gzip --- Read and Write GNU zip Files
+=======================================
 
 .. module:: gzip
     :synopsis: Read and write gzip files
 
 :Purpose: Read and write gzip files.
-:Python Version: 1.5.2 and later
 
 The :mod:`gzip` module provides a file-like interface to GNU zip
 files, using :mod:`zlib` to compress and uncompress the data.
@@ -16,10 +15,10 @@ Writing Compressed Files
 
 The module-level function :func:`open` creates an instance of the
 file-like class :class:`GzipFile`.  The usual methods for writing and
-reading data are provided.  
+reading data are provided.
 
-.. include:: gzip_write.py
-    :literal:
+.. literalinclude:: gzip_write.py
+    :caption:
     :start-after: #end_pymotw_header
 
 To write data into a compressed file, open the file with mode ``'w'``.
@@ -42,8 +41,8 @@ Different amounts of compression can be used by passing a
 Lower values are faster and result in less compression.  Higher values
 are slower and compress more, up to a point.
 
-.. include:: gzip_compresslevel.py
-    :literal:
+.. literalinclude:: gzip_compresslevel.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The center column of numbers in the output shows the size in bytes of
@@ -74,12 +73,11 @@ storage space.  Results will vary, depending on the input data.
 
 .. {{{end}}}
 
-
 A :class:`GzipFile` instance also includes a :func:`writelines` method
 that can be used to write a sequence of strings.
 
-.. include:: gzip_writelines.py
-    :literal:
+.. literalinclude:: gzip_writelines.py
+    :caption:
     :start-after: #end_pymotw_header
 
 As with a regular file, the input lines need to include a newline
@@ -114,8 +112,8 @@ To read data back from previously compressed files, open the file with
 binary read mode (``'rb'``) so no text-based translation of line
 endings is performed.
 
-.. include:: gzip_read.py
-    :literal:
+.. literalinclude:: gzip_read.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example reads the file written by ``gzip_write.py`` from the
@@ -137,8 +135,8 @@ previous section.
 While reading a file, it is also possible to seek and read only part
 of the data.
 
-.. include:: gzip_seek.py
-    :literal:
+.. literalinclude:: gzip_seek.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The :func:`seek` position is relative to the *uncompressed* data, so
@@ -172,8 +170,8 @@ data is being transmitted over a socket or an existing
 (already open) file handle.  A :mod:`StringIO` buffer can also be
 used.
 
-.. include:: gzip_StringIO.py
-    :literal:
+.. literalinclude:: gzip_StringIO.py
+    :caption:
     :start-after: #end_pymotw_header
 
 One benefit of using :class:`GzipFile` over :mod:`zlib` is that it
@@ -227,17 +225,16 @@ the incremental decompression API in :mod:`zlib`.
 
 .. seealso::
 
-    `gzip <http://docs.python.org/library/gzip.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`gzip`
 
-    :mod:`zlib`
-        The ``zlib`` module is a lower-level interface to gzip compression.
+   * :mod:`zlib` -- The ``zlib`` module is a lower-level interface to
+     gzip compression.
 
-    :mod:`zipfile`
-        The ``zipfile`` module gives access to ZIP archives.
+   * :mod:`zipfile` -- The ``zipfile`` module gives access to ZIP
+     archives.
 
-    :mod:`bz2`
-        The ``bz2`` module uses the bzip2 compression format.
+   * :mod:`bz2` -- The ``bz2`` module uses the bzip2 compression
+     format.
 
-    :mod:`tarfile`
-        The ``tarfile`` module includes built-in support for reading compressed tar archives.
+   * :mod:`tarfile` -- The ``tarfile`` module includes built-in
+     support for reading compressed tar archives.
