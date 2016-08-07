@@ -50,15 +50,17 @@ identified by prefixing the name with ``$`` (e.g., ``$var``) or, if
 necessary to set them off from surrounding text, they can also be
 wrapped with curly braces (e.g., ``${var}``).
 
-This example compares a simple template with a similar string
-interpolation using the ``%`` operator.
+This example compares a simple template with similar string
+interpolation using the ``%`` operator and the new format string
+syntax using :func:`str.format`.
 
 .. literalinclude:: string_template.py
     :caption:
     :start-after: #end_pymotw_header
 
-In both cases, the trigger character (``$`` or ``%``) is escaped by
-repeating it twice.
+In the first two cases, the trigger character (``$`` or ``%``) is
+escaped by repeating it twice. For the format syntax, both ``{`` and
+``}`` need to be escaped by repeating them.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'string_template.py'))
@@ -86,12 +88,12 @@ repeating it twice.
 
 .. {{{end}}}
 
-One key difference between templates and standard string interpolation
-is that the type of the arguments is not taken into account. The
-values are converted to strings, and the strings are inserted into the
-result. No formatting options are available. For example, there is no
-way to control the number of digits used to represent a floating point
-value.
+One key difference between templates and string interpolation or
+formatting is that the type of the arguments is not taken into
+account. The values are converted to strings, and the strings are
+inserted into the result. No formatting options are available. For
+example, there is no way to control the number of digits used to
+represent a floating point value.
 
 A benefit, though, is that by using the :func:`safe_substitute`
 method, it is possible to avoid exceptions if not all of the values
