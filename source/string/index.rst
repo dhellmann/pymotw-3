@@ -219,6 +219,53 @@ convenient interface to these features, but :class:`Formatter` is
 provided as a way to build subclasses, for cases where variations are
 needed.
 
+Constants
+=========
+
+The :mod:`string` module includes a number of constants related to
+ASCII and numerical character sets.
+
+.. literalinclude:: string_constants.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+These constants are useful when working with ASCII data, but since it
+is increasingly common to encounter non-ASCII text in some form of
+Unicode, their application is limited.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'string_constants.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 string_constants.py
+	
+	ascii_letters='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVW
+	XYZ'
+	
+	ascii_lowercase='abcdefghijklmnopqrstuvwxyz'
+	
+	ascii_uppercase='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+	
+	digits='0123456789'
+	
+	hexdigits='0123456789abcdefABCDEF'
+	
+	octdigits='01234567'
+	
+	printable='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQ
+	RSTUVWXYZ!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~ \t\n\r\x0b\x0c'
+	
+	punctuation='!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
+	
+	whitespace=' \t\n\r\x0b\x0c'
+	
+
+.. {{{end}}}
+
+
+
 .. seealso::
 
    * :pydoc:`string`

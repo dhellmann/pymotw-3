@@ -289,6 +289,9 @@ string
 All functions from the :mod:`string` module that are also methods of
 :class:`str` objects have been removed.
 
+The constants :data:`letters`, :data:`lowercase`, and
+:data:`uppercase` have been removed. The new constants with similar
+names are limited to the ASCII character set.
 
 thread
 ------
