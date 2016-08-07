@@ -2,23 +2,17 @@
  Text
 ======
 
-The :class:`string` class is the most obvious text processing tool
+The :class:`str` class is the most obvious text processing tool
 available to Python programmers, but there are plenty of other tools
-in the standard library to make advanced text manipulation simple.  
+in the standard library to make advanced text manipulation simple.
 
-Older code, written before Python 2.0, uses functions from the
-:mod:`string` module, instead of methods of :class:`string` objects.
-There is an equivalent method for each function from the module, and
-use of the functions is deprecated for new code.
-
-Programs using Python 2.4 or later may use :class:`string.Template`
-as a simple way to parameterize strings beyond the features of the
-:class:`string` or :class:`unicode` classes.  While not as
-feature-rich as templates defined by many of the web frameworks or
-extension modules available from the Python Package Index,
-:class:`string.Template` is a good middle ground for user-modifiable
-templates where dynamic values need to be inserted into otherwise
-static text.
+Programs may use :class:`string.Template` as a simple way to
+parameterize strings beyond the features of :class:`str` objects.
+While not as feature-rich as templates defined by many of the web
+frameworks or extension modules available from the Python Package
+Index, :class:`string.Template` is a good middle ground for
+user-modifiable templates where dynamic values need to be inserted
+into otherwise static text.
 
 The :mod:`textwrap` module includes tools for formatting text from
 paragraphs by limiting the width of output, adding indentation, and
@@ -41,10 +35,10 @@ occur in two inputs, how a document has changed over time, etc.
 .. toctree::
    :maxdepth: 1
 
+   string/index
    textwrap/index
    difflib/index
 
 ..
-   string/index
    re/index
    difflib/index
