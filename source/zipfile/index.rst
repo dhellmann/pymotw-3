@@ -284,7 +284,7 @@ an argument to specify the compression.
 	
 	from_string.txt
 		Comment     : b''
-		Modified    : 2016-08-07 13:26:16
+		Modified    : 2016-08-07 13:27:24
 		System      : Unix
 		ZIP version : 20
 		Compressed  : 36 bytes
@@ -320,7 +320,7 @@ simple comment is also associated with the new file.
 	
 	from_string.txt
 		Comment     : b'Remarks go here'
-		Modified    : 2016-08-07 13:26:16
+		Modified    : 2016-08-07 13:27:24
 		System      : Windows
 		ZIP version : 20
 		Compressed  : 36 bytes
