@@ -81,6 +81,7 @@ dependencies on the same computer.
     profile/index
     tabnanny/index
     venv/index
+    ensurepip/index
 
 ..
     pydoc/index
