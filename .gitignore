@@ -26,3 +26,10 @@ dist/
 /source/pickle/test.dat
 /source/venv/pyvenv.cfg
 /source/gzip/*.gz
+/source/zipfile/append.zip
+/source/zipfile/pyzipfile.zip
+/source/zipfile/write.zip
+/source/zipfile/write_arcname.zip
+/source/zipfile/write_compression.zip
+/source/zipfile/writestr.zip
+/source/zipfile/writestr_zipinfo.zip

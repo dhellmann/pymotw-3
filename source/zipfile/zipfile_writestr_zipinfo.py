@@ -7,7 +7,7 @@ import time
 import zipfile
 from zipfile_infolist import print_info
 
-msg = 'This data did not exist in a file.'
+msg = b'This data did not exist in a file.'
 
 with zipfile.ZipFile('writestr_zipinfo.zip',
                      mode='w',
@@ -16,7 +16,7 @@ with zipfile.ZipFile('writestr_zipinfo.zip',
                            date_time=time.localtime(time.time()),
                            )
     info.compress_type = zipfile.ZIP_DEFLATED
-    info.comment = 'Remarks go here'
+    info.comment = b'Remarks go here'
     info.create_system = 0
     zf.writestr(info, msg)
 

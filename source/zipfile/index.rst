@@ -28,10 +28,10 @@ If the file does not exist at all, :func:`is_zipfile()` returns
 .. cog.out(run_script(cog.inFile, 'zipfile_is_zipfile.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python zipfile_is_zipfile.py
-
+	$ python3 zipfile_is_zipfile.py
+	
 	     README.txt  False
 	    example.zip  True
 	bad_example.zip  False
@@ -44,7 +44,7 @@ Reading Metadata from an Archive
 
 Use the :class:`ZipFile` class to work directly with a ZIP archive. It
 supports methods for reading data about existing archives as well as
-modifying the archives by adding additional files.  
+modifying the archives by adding additional files.
 
 .. literalinclude:: zipfile_namelist.py
     :caption:
@@ -57,10 +57,10 @@ existing archive.
 .. cog.out(run_script(cog.inFile, 'zipfile_namelist.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python zipfile_namelist.py
-
+	$ python3 zipfile_namelist.py
+	
 	['README.txt']
 
 .. {{{end}}}
@@ -81,12 +81,12 @@ of the *PKZIP Application Note* with the ZIP file specification.
 .. cog.out(run_script(cog.inFile, 'zipfile_infolist.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python zipfile_infolist.py
-
+	$ python3 zipfile_infolist.py
+	
 	README.txt
-		Comment     : 
+		Comment     : b''
 		Modified    : 2010-11-15 06:48:02
 		System      : Unix
 		ZIP version : 30
@@ -111,10 +111,10 @@ If the archive member is not present, :func:`getinfo()` raises a
 .. cog.out(run_script(cog.inFile, 'zipfile_getinfo.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python zipfile_getinfo.py
-
+	$ python3 zipfile_getinfo.py
+	
 	README.txt is 76 bytes
 	ERROR: Did not find notthere.txt in zip file
 
@@ -136,14 +136,13 @@ The data is automatically decompressed, if necessary.
 .. cog.out(run_script(cog.inFile, 'zipfile_read.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python zipfile_read.py
-
-	README.txt :
-	The examples for the zipfile module use 
-	this file and example.zip as data.
+	$ python3 zipfile_read.py
 	
+	README.txt :
+	b'The examples for the zipfile module use \nthis file and exampl
+	e.zip as data.\n'
 	
 	ERROR: Did not find notthere.txt in zip file
 	
@@ -164,20 +163,20 @@ is started. To add files, use the :func:`write()` method.
 By default, the contents of the archive are not compressed.
 
 .. {{{cog
-.. (path(cog.inFile).dirname() / 'zipfile_write.zip').unlink()
+.. run_script(cog.inFile, 'rm -f zipfile_write.zip', interpreter='')
 .. cog.out(run_script(cog.inFile, 'zipfile_write.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python zipfile_write.py
-
+	$ python3 zipfile_write.py
+	
 	creating archive
 	adding README.txt
 	
 	README.txt
-		Comment     : 
-		Modified    : 2010-11-15 06:48:00
+		Comment     : b''
+		Modified    : 2012-05-13 20:09:26
 		System      : Unix
 		ZIP version : 20
 		Compressed  : 76 bytes
@@ -200,20 +199,20 @@ the input data to the archive without compressing it.
 This time, the archive member is compressed.
 
 .. {{{cog
-.. (path(cog.inFile).dirname() / 'zipfile_write_compression.zip').unlink()
+.. run_script(cog.inFile, 'rm -f zipfile_write_compression.zip', interpreter='')
 .. cog.out(run_script(cog.inFile, 'zipfile_write_compression.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python zipfile_write_compression.py
-
+	$ python3 zipfile_write_compression.py
+	
 	creating archive
 	adding README.txt with compression mode deflated
 	
 	README.txt
-		Comment     : 
-		Modified    : 2010-11-15 06:48:00
+		Comment     : b''
+		Modified    : 2012-05-13 20:09:26
 		System      : Unix
 		ZIP version : 20
 		Compressed  : 65 bytes
@@ -236,17 +235,17 @@ using a name other than the original filename.
 There is no sign of the original filename in the archive.
 
 .. {{{cog
-.. (path(cog.inFile).dirname() / 'zipfile_write_arcname.zip').unlink()
+.. run_script(cog.inFile, 'rm -f zipfile_write_arcname.zip', interpreter='')
 .. cog.out(run_script(cog.inFile, 'zipfile_write_arcname.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python zipfile_write_arcname.py
-
+	$ python3 zipfile_write_arcname.py
+	
 	NOT_README.txt
-		Comment     : 
-		Modified    : 2010-11-15 06:48:00
+		Comment     : b''
+		Modified    : 2012-05-13 20:09:26
 		System      : Unix
 		ZIP version : 20
 		Compressed  : 76 bytes
@@ -275,23 +274,23 @@ used to compress the data, since :func:`writestr()` does not take
 an argument to specify the compression.
 
 .. {{{cog
-.. (path(cog.inFile).dirname() / 'zipfile_writestr.zip').unlink()
+.. run_script(cog.inFile, 'rm -f zipfile_writestr.zip', interpreter='')
 .. cog.out(run_script(cog.inFile, 'zipfile_writestr.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python zipfile_writestr.py
-
+	$ python3 zipfile_writestr.py
+	
 	from_string.txt
-		Comment     : 
-		Modified    : 2010-11-28 13:48:46
+		Comment     : b''
+		Modified    : 2016-08-07 13:21:06
 		System      : Unix
 		ZIP version : 20
 		Compressed  : 36 bytes
 		Uncompressed: 34 bytes
 	
-	This data did not exist in a file.
+	b'This data did not exist in a file.'
 
 .. {{{end}}}
 
@@ -311,17 +310,17 @@ data is compressed, and false value for *create_system* is used.  A
 simple comment is also associated with the new file.
 
 .. {{{cog
-.. (path(cog.inFile).dirname() / 'zipfile_writestr_zipinfo.zip').unlink()
+.. run_script(cog.inFile, 'rm -f zipfile_writestr_zipinfo.zip', interpreter='')
 .. cog.out(run_script(cog.inFile, 'zipfile_writestr_zipinfo.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python zipfile_writestr_zipinfo.py
-
+	$ python3 zipfile_writestr_zipinfo.py
+	
 	from_string.txt
-		Comment     : Remarks go here
-		Modified    : 2010-11-28 13:48:46
+		Comment     : b'Remarks go here'
+		Modified    : 2016-08-07 13:21:06
 		System      : Windows
 		ZIP version : 20
 		Compressed  : 36 bytes
@@ -345,19 +344,19 @@ file to append to it, use mode ``'a'``.
 The resulting archive contains two members:
 
 .. {{{cog
-.. (path(cog.inFile).dirname() / 'zipfile_append.zip').unlink()
+.. run_script(cog.inFile, 'rm -f zipfile_append.zip', interpreter='')
 .. cog.out(run_script(cog.inFile, 'zipfile_append.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python zipfile_append.py
-
+	$ python3 zipfile_append.py
+	
 	creating archive
 	
 	README.txt
-		Comment     : 
-		Modified    : 2010-11-15 06:48:00
+		Comment     : b''
+		Modified    : 2012-05-13 20:09:26
 		System      : Unix
 		ZIP version : 20
 		Compressed  : 76 bytes
@@ -366,16 +365,16 @@ The resulting archive contains two members:
 	appending to the archive
 	
 	README.txt
-		Comment     : 
-		Modified    : 2010-11-15 06:48:00
+		Comment     : b''
+		Modified    : 2012-05-13 20:09:26
 		System      : Unix
 		ZIP version : 20
 		Compressed  : 76 bytes
 		Uncompressed: 76 bytes
 	
 	README2.txt
-		Comment     : 
-		Modified    : 2010-11-15 06:48:00
+		Comment     : b''
+		Modified    : 2012-05-13 20:09:26
 		System      : Unix
 		ZIP version : 20
 		Compressed  : 76 bytes
@@ -404,32 +403,41 @@ verbose debugging is enabled and output is produced as it compiles
 each ``.py`` file it finds.
 
 .. {{{cog
-.. (path(cog.inFile).dirname() / 'zipfile_pyzipfile.zip').unlink()
+.. run_script(cog.inFile, 'rm -f zipfile_pyzipfile.zip', interpreter='')
 .. cog.out(run_script(cog.inFile, 'zipfile_pyzipfile.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python zipfile_pyzipfile.py
-
+	$ python3 zipfile_pyzipfile.py
+	
 	Adding python files
-	Adding package in . as .
-	Adding ./__init__.pyc
-	Adding ./zipfile_append.pyc
-	Adding ./zipfile_getinfo.pyc
-	Adding ./zipfile_infolist.pyc
+	Adding files from directory .
+	Compiling ./zipfile_append.py
+	Adding zipfile_append.pyc
+	Compiling ./zipfile_getinfo.py
+	Adding zipfile_getinfo.pyc
+	Adding zipfile_infolist.pyc
 	Compiling ./zipfile_is_zipfile.py
-	Adding ./zipfile_is_zipfile.pyc
-	Adding ./zipfile_namelist.pyc
-	Adding ./zipfile_printdir.pyc
-	Adding ./zipfile_pyzipfile.pyc
-	Adding ./zipfile_read.pyc
-	Adding ./zipfile_write.pyc
-	Adding ./zipfile_write_arcname.pyc
-	Adding ./zipfile_write_compression.pyc
-	Adding ./zipfile_writestr.pyc
-	Adding ./zipfile_writestr_zipinfo.pyc
-	__init__.pyc
+	Adding zipfile_is_zipfile.pyc
+	Compiling ./zipfile_namelist.py
+	Adding zipfile_namelist.pyc
+	Compiling ./zipfile_printdir.py
+	Adding zipfile_printdir.pyc
+	Compiling ./zipfile_pyzipfile.py
+	Adding zipfile_pyzipfile.pyc
+	Compiling ./zipfile_read.py
+	Adding zipfile_read.pyc
+	Compiling ./zipfile_write.py
+	Adding zipfile_write.pyc
+	Compiling ./zipfile_write_arcname.py
+	Adding zipfile_write_arcname.pyc
+	Compiling ./zipfile_write_compression.py
+	Adding zipfile_write_compression.pyc
+	Compiling ./zipfile_writestr.py
+	Adding zipfile_writestr.pyc
+	Compiling ./zipfile_writestr_zipinfo.py
+	Adding zipfile_writestr_zipinfo.pyc
 	zipfile_append.pyc
 	zipfile_getinfo.pyc
 	zipfile_infolist.pyc
