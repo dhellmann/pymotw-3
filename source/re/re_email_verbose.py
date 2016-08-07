@@ -16,7 +16,7 @@ address = re.compile(
     ([\w\d.]+\.)+    # domain name prefix
     (com|org|edu)    # TODO: support more top-level domains
     ''',
-    re.UNICODE | re.VERBOSE)
+    re.VERBOSE)
 
 candidates = [
     u'first.last@example.com',

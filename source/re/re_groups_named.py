@@ -24,7 +24,7 @@ patterns = [
 for pattern in patterns:
     regex = re.compile(pattern)
     match = regex.search(text)
-    print('Matching "%s"' % pattern)
+    print('%r' % pattern)
     print('  ', match.groups())
     print('  ', match.groupdict())
     print()

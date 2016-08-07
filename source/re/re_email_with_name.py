@@ -34,7 +34,7 @@ address = re.compile(
 
     >? # optional closing angle bracket
     ''',
-    re.UNICODE | re.VERBOSE)
+    re.VERBOSE)
 
 candidates = [
     u'first.last@example.com',

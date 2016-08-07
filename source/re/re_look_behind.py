@@ -15,7 +15,7 @@ twitter = re.compile(
     (?<=@)
     ([\w\d_]+)       # username
     ''',
-    re.UNICODE | re.VERBOSE)
+    re.VERBOSE)
 
 text = '''This text includes two Twitter handles.
 One for @ThePSF, and one for the author, @doughellmann.

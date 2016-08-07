@@ -17,7 +17,7 @@ def test_patterns(text, patterns=[]):
     """
     # Look for each pattern in the text and print the results
     for pattern, desc in patterns:
-        print('Pattern %r (%s)\n' % (pattern, desc))
+        print('%r (%s)\n' % (pattern, desc))
         print('  %r' % text)
         for match in re.finditer(pattern, text):
             s = match.start()

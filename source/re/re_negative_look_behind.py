@@ -26,7 +26,7 @@ address = re.compile(
 
     $
     ''',
-    re.UNICODE | re.VERBOSE)
+    re.VERBOSE)
 
 candidates = [
     u'first.last@example.com',

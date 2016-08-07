@@ -9,8 +9,7 @@
 
 import re
 
-address = re.compile('[\w\d.+-]+@([\w\d.]+\.)+(com|org|edu)',
-                     re.UNICODE)
+address = re.compile('[\w\d.+-]+@([\w\d.]+\.)+(com|org|edu)')
 
 candidates = [
     u'first.last@example.com',

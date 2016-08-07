@@ -170,7 +170,7 @@ logical locations within the input, and can be expressed in compact
 forms that do not require every literal character be present in the
 pattern.  All of these features are used by combining literal text
 values with *meta-characters* that are part of the regular expression
-pattern syntax implemented by :mod:`re`.  
+pattern syntax implemented by :mod:`re`.
 
 .. literalinclude:: re_test_patterns.py
    :caption:
@@ -189,7 +189,7 @@ portion of the input that matches the pattern.
 
 	$ python3 re_test_patterns.py
 	
-	Pattern 'ab' ('a' followed by 'b')
+	'ab' ('a' followed by 'b')
 	
 	  'abbaaabbbbaaaaa'
 	  'ab'
@@ -227,7 +227,7 @@ There are more matches are for ``ab*`` and ``ab?`` than ``ab+``.
 
 	$ python3 re_repetition.py
 	
-	Pattern 'ab*' (a followed by zero or more b)
+	'ab*' (a followed by zero or more b)
 	
 	  'abbaabbba'
 	  'abb'
@@ -235,13 +235,13 @@ There are more matches are for ``ab*`` and ``ab?`` than ``ab+``.
 	  ....'abbb'
 	  ........'a'
 	
-	Pattern 'ab+' (a followed by one or more b)
+	'ab+' (a followed by one or more b)
 	
 	  'abbaabbba'
 	  'abb'
 	  ....'abbb'
 	
-	Pattern 'ab?' (a followed by zero or one b)
+	'ab?' (a followed by zero or one b)
 	
 	  'abbaabbba'
 	  'ab'
@@ -249,12 +249,12 @@ There are more matches are for ``ab*`` and ``ab?`` than ``ab+``.
 	  ....'ab'
 	  ........'a'
 	
-	Pattern 'ab{3}' (a followed by three b)
+	'ab{3}' (a followed by three b)
 	
 	  'abbaabbba'
 	  ....'abbb'
 	
-	Pattern 'ab{2,3}' (a followed by two to three b)
+	'ab{2,3}' (a followed by two to three b)
 	
 	  'abbaabbba'
 	  'abb'
@@ -286,7 +286,7 @@ does not include any ``b`` characters.
 
 	$ python3 re_repetition_non_greedy.py
 	
-	Pattern 'ab*?' (a followed by zero or more b)
+	'ab*?' (a followed by zero or more b)
 	
 	  'abbaabbba'
 	  'a'
@@ -294,13 +294,13 @@ does not include any ``b`` characters.
 	  ....'a'
 	  ........'a'
 	
-	Pattern 'ab+?' (a followed by one or more b)
+	'ab+?' (a followed by one or more b)
 	
 	  'abbaabbba'
 	  'ab'
 	  ....'ab'
 	
-	Pattern 'ab??' (a followed by zero or one b)
+	'ab??' (a followed by zero or one b)
 	
 	  'abbaabbba'
 	  'a'
@@ -308,12 +308,12 @@ does not include any ``b`` characters.
 	  ....'a'
 	  ........'a'
 	
-	Pattern 'ab{3}?' (a followed by three b)
+	'ab{3}?' (a followed by three b)
 	
 	  'abbaabbba'
 	  ....'abbb'
 	
-	Pattern 'ab{2,3}?' (a followed by two to three b)
+	'ab{2,3}?' (a followed by two to three b)
 	
 	  'abbaabbba'
 	  'abb'
@@ -345,7 +345,7 @@ character is either ``a`` or ``b``.
 
 	$ python3 re_charset.py
 	
-	Pattern '[ab]' (either a or b)
+	'[ab]' (either a or b)
 	
 	  'abbaabbba'
 	  'a'
@@ -358,12 +358,12 @@ character is either ``a`` or ``b``.
 	  .......'b'
 	  ........'a'
 	
-	Pattern 'a[ab]+' (a followed by 1 or more a or b)
+	'a[ab]+' (a followed by 1 or more a or b)
 	
 	  'abbaabbba'
 	  'abbaabbba'
 	
-	Pattern 'a[ab]+?' (a followed by 1 or more a or b, not greedy)
+	'a[ab]+?' (a followed by 1 or more a or b, not greedy)
 	
 	  'abbaabbba'
 	  'ab'
@@ -391,7 +391,7 @@ characters ``-``, ``.``, or a space.
 
 	$ python3 re_charset_exclude.py
 	
-	Pattern '[^-. ]+' (sequences without -, ., or space)
+	'[^-. ]+' (sequences without -, ., or space)
 	
 	  'This is some text -- with punctuation.'
 	  'This'
@@ -425,7 +425,7 @@ also be combined into a single character set.
 
 	$ python3 re_charset_ranges.py
 	
-	Pattern '[a-z]+' (sequences of lowercase letters)
+	'[a-z]+' (sequences of lowercase letters)
 	
 	  'This is some text -- with punctuation.'
 	  .'his'
@@ -435,12 +435,12 @@ also be combined into a single character set.
 	  .....................'with'
 	  ..........................'punctuation'
 	
-	Pattern '[A-Z]+' (sequences of uppercase letters)
+	'[A-Z]+' (sequences of uppercase letters)
 	
 	  'This is some text -- with punctuation.'
 	  'T'
 	
-	Pattern '[a-zA-Z]+' (sequences of lower- or uppercase letters)
+	'[a-zA-Z]+' (sequences of lower- or uppercase letters)
 	
 	  'This is some text -- with punctuation.'
 	  'This'
@@ -450,7 +450,7 @@ also be combined into a single character set.
 	  .....................'with'
 	  ..........................'punctuation'
 	
-	Pattern '[A-Z][a-z]+' (one uppercase followed by lowercase)
+	'[A-Z][a-z]+' (one uppercase followed by lowercase)
 	
 	  'This is some text -- with punctuation.'
 	  'This'
@@ -477,25 +477,25 @@ the non-greedy form is used.
 
 	$ python3 re_charset_dot.py
 	
-	Pattern 'a.' (a followed by any one character)
+	'a.' (a followed by any one character)
 	
 	  'abbaabbba'
 	  'ab'
 	  ...'aa'
 	
-	Pattern 'b.' (b followed by any one character)
+	'b.' (b followed by any one character)
 	
 	  'abbaabbba'
 	  .'bb'
 	  .....'bb'
 	  .......'ba'
 	
-	Pattern 'a.*b' (a followed by anything, ending in b)
+	'a.*b' (a followed by anything, ending in b)
 	
 	  'abbaabbba'
 	  'abbaabbb'
 	
-	Pattern 'a.*?b' (a followed by anything, ending in b)
+	'a.*?b' (a followed by anything, ending in b)
 	
 	  'abbaabbba'
 	  'ab'
@@ -549,25 +549,25 @@ sequences of like characters in the input string.
 
 	$ python3 re_escape_codes.py
 	
-	Pattern '\\d+' (sequence of digits)
+	'\\d+' (sequence of digits)
 	
 	  'A prime #1 example!'
 	  .........'1'
 	
-	Pattern '\\D+' (sequence of nondigits)
+	'\\D+' (sequence of nondigits)
 	
 	  'A prime #1 example!'
 	  'A prime #'
 	  ..........' example!'
 	
-	Pattern '\\s+' (sequence of whitespace)
+	'\\s+' (sequence of whitespace)
 	
 	  'A prime #1 example!'
 	  .' '
 	  .......' '
 	  ..........' '
 	
-	Pattern '\\S+' (sequence of nonwhitespace)
+	'\\S+' (sequence of nonwhitespace)
 	
 	  'A prime #1 example!'
 	  'A'
@@ -575,7 +575,7 @@ sequences of like characters in the input string.
 	  ........'#1'
 	  ...........'example!'
 	
-	Pattern '\\w+' (alphanumeric characters)
+	'\\w+' (alphanumeric characters)
 	
 	  'A prime #1 example!'
 	  'A'
@@ -583,7 +583,7 @@ sequences of like characters in the input string.
 	  .........'1'
 	  ...........'example'
 	
-	Pattern '\\W+' (nonalphanumeric)
+	'\\W+' (nonalphanumeric)
 	
 	  'A prime #1 example!'
 	  .' '
@@ -613,7 +613,7 @@ expression.
 
 	$ python3 re_escape_escapes.py
 	
-	Pattern '\\\\.\\+' (escape code)
+	'\\\\.\\+' (escape code)
 	
 	  '\\d+ \\D+ \\s+'
 	  '\\d+'
@@ -663,45 +663,44 @@ alphanumeric character.
 
 	$ python3 re_anchoring.py
 	
-	Pattern '^\\w+' (word at start of string)
+	'^\\w+' (word at start of string)
 	
 	  'This is some text -- with punctuation.'
 	  'This'
 	
-	Pattern '\\A\\w+' (word at start of string)
+	'\\A\\w+' (word at start of string)
 	
 	  'This is some text -- with punctuation.'
 	  'This'
 	
-	Pattern '\\w+\\S*$' (word near end of string, skip punctuation)
+	'\\w+\\S*$' (word near end of string, no punctuation)
 	
 	  'This is some text -- with punctuation.'
 	  ..........................'punctuation.'
 	
-	Pattern '\\w+\\S*\\Z' (word near end of string, skip punctuation
-	)
+	'\\w+\\S*\\Z' (word near end of string, no punctuation)
 	
 	  'This is some text -- with punctuation.'
 	  ..........................'punctuation.'
 	
-	Pattern '\\w*t\\w*' (word containing t)
+	'\\w*t\\w*' (word containing t)
 	
 	  'This is some text -- with punctuation.'
 	  .............'text'
 	  .....................'with'
 	  ..........................'punctuation'
 	
-	Pattern '\\bt\\w+' (t at start of word)
+	'\\bt\\w+' (t at start of word)
 	
 	  'This is some text -- with punctuation.'
 	  .............'text'
 	
-	Pattern '\\w+t\\b' (t at end of word)
+	'\\w+t\\b' (t at end of word)
 	
 	  'This is some text -- with punctuation.'
 	  .............'text'
 	
-	Pattern '\\Bt\\B' (t, not start or end of word)
+	'\\Bt\\B' (t, not start or end of word)
 	
 	  'This is some text -- with punctuation.'
 	  .......................'t'
@@ -799,19 +798,19 @@ repeat.
 
 	$ python3 re_groups.py
 	
-	Pattern 'a(ab)' (a followed by literal ab)
+	'a(ab)' (a followed by literal ab)
 	
 	  'abbaaabbbbaaaaa'
 	  ....'aab'
 	
-	Pattern 'a(a*b*)' (a followed by 0-n a and 0-n b)
+	'a(a*b*)' (a followed by 0-n a and 0-n b)
 	
 	  'abbaaabbbbaaaaa'
 	  'abb'
 	  ...'aaabbbb'
 	  ..........'aaaaa'
 	
-	Pattern 'a(ab)*' (a followed by 0-n ab)
+	'a(ab)*' (a followed by 0-n ab)
 	
 	  'abbaaabbbbaaaaa'
 	  'a'
@@ -823,7 +822,7 @@ repeat.
 	  .............'a'
 	  ..............'a'
 	
-	Pattern 'a(ab)+' (a followed by 1-n ab)
+	'a(ab)+' (a followed by 1-n ab)
 	
 	  'abbaaabbbbaaaaa'
 	  ....'aab'
@@ -851,20 +850,19 @@ groups within the expression that matches the string.
 	
 	This is some text -- with punctuation.
 	
-	Pattern '^(\\w+)' (word at start of string)
+	'^(\\w+)' (word at start of string)
 	
 	   ('This',)
 	
-	Pattern '(\\w+)\\S*$' (word at end, with optional punctuation)
+	'(\\w+)\\S*$' (word at end, with optional punctuation)
 	
 	   ('punctuation',)
 	
-	Pattern '(\\bt\\w+)\\W+(\\w+)' (word starting with t, another wo
-	rd)
+	'(\\bt\\w+)\\W+(\\w+)' (word starting with t, another word)
 	
 	   ('text', 'with')
 	
-	Pattern '(\\w+t)\\b' (word ending with t)
+	'(\\w+t)\\b' (word ending with t)
 	
 	   ('text',)
 	
@@ -922,19 +920,19 @@ ordered sequence returned by :func:`groups`, as well.
 	
 	This is some text -- with punctuation.
 	
-	Matching "^(?P<first_word>\w+)"
+	'^(?P<first_word>\\w+)'
 	   ('This',)
 	   {'first_word': 'This'}
 	
-	Matching "(?P<last_word>\w+)\S*$"
+	'(?P<last_word>\\w+)\\S*$'
 	   ('punctuation',)
 	   {'last_word': 'punctuation'}
 	
-	Matching "(?P<t_word>\bt\w+)\W+(?P<other_word>\w+)"
+	'(?P<t_word>\\bt\\w+)\\W+(?P<other_word>\\w+)'
 	   ('text', 'with')
 	   {'t_word': 'text', 'other_word': 'with'}
 	
-	Matching "(?P<ends_with_t>\w+t)\b"
+	'(?P<ends_with_t>\\w+t)\\b'
 	   ('text',)
 	   {'ends_with_t': 'text'}
 	
@@ -968,7 +966,7 @@ matched value.
 
 	$ python3 re_groups_nested.py
 	
-	Pattern 'a((a*)(b*))' (a followed by 0-n a and 0-n b)
+	'a((a*)(b*))' (a followed by 0-n a and 0-n b)
 	
 	  'abbaabbba'
 	  'abb'        ('bb', '', 'bb')
@@ -1003,13 +1001,13 @@ the point in the sequence where the alternative group should appear.
 
 	$ python3 re_groups_alternative.py
 	
-	Pattern 'a((a+)|(b+))' (a then seq. of a or seq. of b)
+	'a((a+)|(b+))' (a then seq. of a or seq. of b)
 	
 	  'abbaabbba'
 	  'abb'        ('bb', None, 'bb')
 	     'aa'      ('a', 'a', None)
 	
-	Pattern 'a((a|b)+)' (a then seq. of [ab])
+	'a((a|b)+)' (a then seq. of [ab])
 	
 	  'abbaabbba'
 	  'abbaabbba'  ('bbaabbba', 'a')
@@ -1040,13 +1038,13 @@ of a pattern that matches the same results.
 
 	$ python3 re_groups_noncapturing.py
 	
-	Pattern 'a((a+)|(b+))' (capturing form)
+	'a((a+)|(b+))' (capturing form)
 	
 	  'abbaabbba'
 	  'abb'        ('bb', None, 'bb')
 	     'aa'      ('a', 'a', None)
 	
-	Pattern 'a((?:a+)|(?:b+))' (noncapturing)
+	'a((?:a+)|(?:b+))' (noncapturing)
 	
 	  'abbaabbba'
 	  'abb'        ('bb',)
@@ -1118,7 +1116,7 @@ input.  It matches ``line.`` at the end of the string, even though
 there is no newline.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 're_flags_multiline.py', break_lines_at=65))
+.. cog.out(run_script(cog.inFile, 're_flags_multiline.py'))
 .. }}}
 
 .. code-block:: none
@@ -1152,7 +1150,7 @@ Without the flag, each line of the input text matches the pattern
 separately.  Adding the flag causes the entire string to be consumed.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 're_flags_dotall.py', break_lines_at=67))
+.. cog.out(run_script(cog.inFile, 're_flags_dotall.py'))
 .. }}}
 
 .. code-block:: none
@@ -1174,46 +1172,40 @@ separately.  Adding the flag causes the entire string to be consumed.
 Unicode
 -------
 
-Under Python 2, :class:`str` objects use the ASCII character set, and
-regular expression processing assumes that the pattern and input text
-are both ASCII.  The escape codes described earlier are defined in
-terms of ASCII by default.  Those assumptions mean that the pattern
-``\w+`` will match the word "French" but not "Français", since the
-``ç`` is not part of the ASCII character set.  To enable Unicode
-matching in Python 2, add the :const:`UNICODE` flag when compiling the
-pattern or when calling the module-level functions :func:`search` and
-:func:`match`.
+Under Python 3, :class:`str` objects use the full Unicode character
+set, regular expression processing on a :class:`str` assumes that the
+pattern and input text are both Unicode.  The escape codes described
+earlier are defined in terms of Unicode by default.  Those assumptions
+mean that the pattern ``\w+`` will match the word "French" and
+"Français". To restrict escape codes to the ASCII character set, as
+was the default in Python 2, use the :const:`ASCII` flag when
+compiling the pattern or when calling the module-level functions
+:func:`search` and :func:`match`.
 
-.. literalinclude:: re_flags_unicode.py
+.. literalinclude:: re_flags_ascii.py
    :caption:
    :start-after: #end_pymotw_header
 
 The other escape sequences (``\W``, ``\b``, ``\B``, ``\d``, ``\D``,
-``\s``, and ``\S``) are also processed differently for Unicode text.
-Instead of assuming the members of the character set identified by the
-escape sequence, the regular expression engine consults the Unicode
-database to find the properties of each character.
+``\s``, and ``\S``) are also processed differently for ASCII text.
+Instead of consulting the Unicode database to find the properties of
+each character, :mod:`re` assumes the members of the character set
+identified by the escape sequence based on their ASCII definition.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 're_flags_unicode.py'))
+.. cog.out(run_script(cog.inFile, 're_flags_ascii.py'))
 .. }}}
 
 .. code-block:: none
 
-	$ python3 re_flags_unicode.py
+	$ python3 re_flags_ascii.py
 	
 	Text    : Français złoty Österreich
 	Pattern : \w+
-	ASCII   : ['Français', 'złoty', 'Österreich']
+	ASCII   : ['Fran', 'ais', 'z', 'oty', 'sterreich']
 	Unicode : ['Français', 'złoty', 'Österreich']
 
 .. {{{end}}}
-
-.. note:: 
-
-  Python 3 uses Unicode for all strings by default, so the flag is not
-  necessary.
-
 
 Verbose Expression Syntax
 -------------------------
@@ -1368,20 +1360,20 @@ The abbreviations for all of the flags are listed in :table:`Regular
 Expression Flag Abbreviations`.
 
 .. table:: Regular Expression Flag Abbreviations
-   
+
    ====================  ============
    Flag                  Abbreviation
    ====================  ============
-   :const:`IGNORECASE`   ``i``       
-   :const:`MULTILINE`    ``m``       
-   :const:`DOTALL`       ``s``       
-   :const:`UNICODE`      ``u``       
-   :const:`VERBOSE`      ``x``       
+   :const:`ASCII`        ``a``
+   :const:`IGNORECASE`   ``i``
+   :const:`MULTILINE`    ``m``
+   :const:`DOTALL`       ``s``
+   :const:`VERBOSE`      ``x``
    ====================  ============
 
 Embedded flags can be combined by placing them within the same group.
-For example, ``(?imu)`` turns on case-insensitive matching for
-multiline Unicode strings.
+For example, ``(?im)`` turns on case-insensitive matching for
+multiline strings.
 
 Looking Ahead, or Behind
 ========================
@@ -1530,12 +1522,16 @@ Although the syntax is simple, creating back-references by numerical
 id has a couple of disadvantages.  From a practical standpoint, as the
 expression changes, the groups must be counted again and every
 reference may need to be updated.  The other disadvantage is that only
-99 references can be made this way, because if the id number is three
-digits long it will be interpreted as an octal character value instead
-of a group reference.  On the other hand, if there are more than 99
-groups in an expression, there will be more serious maintenance
-challenges than not being able to refer to some of the groups in the
-expression.
+99 references can be made using the standard back-reference syntax
+``\n``, because if the id number is three digits long it will be
+interpreted as an octal character value instead of a group
+reference. An alternate back-reference syntax for numbered groups,
+``\g<num>``, disambiguates ``\g<x>y`` from ``\xy`` and works for more
+references, but only when passed in the replacement argument to
+:func:`sub`, and cannot be used to create a back-reference within an
+expression.  Of course, if there are more than 99 groups in an
+expression, there will be more serious maintenance challenges than not
+being able to refer to all of them.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 're_refer_to_group.py'))
@@ -1846,25 +1842,27 @@ newlines separating them.
 
 .. seealso::
 
-    `re <http://docs.python.org/library/re.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`re`
 
-    `Regular Expression HOWTO <http://docs.python.org/howto/regex.html>`__
-        Andrew Kuchling's introduction to regular expressions for Python developers.
+   * `Regular Expression HOWTO
+     <https://docs.python.org/3.5/howto/regex.html>`__ -- Andrew
+     Kuchling's introduction to regular expressions for Python
+     developers.
 
-    `Kodos <http://kodos.sourceforge.net/>`_
-        An interactive regular expression testing tool by Phil Schwartz.
+   * `Kodos <http://kodos.sourceforge.net/>`_ -- An interactive
+     regular expression testing tool by Phil Schwartz.
 
-    `Python Regular Expression Testing Tool <http://www.pythonregex.com/>`_
-        A web-based tool for testing regular expressions created by
-        David Naffziger at BrandVerity.com.  Inspired by Kodos.
+   * `Python Regular Expression Testing Tool
+     <http://www.pythonregex.com/>`_ -- A web-based tool for testing
+     regular expressions created by David Naffziger at
+     BrandVerity.com.  Inspired by Kodos.
 
-    `Wikipedia: Regular expression <http://en.wikipedia.org/wiki/Regular_expressions>`__
-        General introduction to regular expression concepts and techniques.
+   * `Wikipedia: Regular expression
+     <http://en.wikipedia.org/wiki/Regular_expressions>`__ -- General
+     introduction to regular expression concepts and techniques.
 
-    :mod:`locale`
-        Use the ``locale`` module to set the language
-        configuration when working with Unicode text.
+   * :mod:`locale` -- Use the ``locale`` module to set the language
+     configuration when working with Unicode text.
 
-    :mod:`unicodedata`
-        Programmatic access to the Unicode character property database.
+   * :mod:`unicodedata` -- Programmatic access to the Unicode
+     character property database.

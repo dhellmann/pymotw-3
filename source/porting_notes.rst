@@ -243,6 +243,19 @@ posixfile
 
 The :mod:`posixfile` module has been removed. See :mod:`io` instead.
 
+.. _porting-re:
+
+re
+--
+
+.. index::
+   pair: porting; re
+
+The :const:`UNICODE` flag represents the default behavior. To restore
+the ASCII-specific behavior from Python 2, use the :const:`ASCII`
+flag.
+
+
 sets
 ----
 

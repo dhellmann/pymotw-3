@@ -3,7 +3,7 @@
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
 #
-"""Unicode character definitions
+"""Revert to ASCII character definitions
 """
 #end_pymotw_header
 
@@ -11,8 +11,8 @@ import re
 
 text = u'Français złoty Österreich'
 pattern = r'\w+'
-ascii_pattern = re.compile(pattern)
-unicode_pattern = re.compile(pattern, re.UNICODE)
+ascii_pattern = re.compile(pattern, re.ASCII)
+unicode_pattern = re.compile(pattern)
 
 print('Text    :', text)
 print('Pattern :', pattern)
