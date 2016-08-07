@@ -37,8 +37,5 @@ occur in two inputs, how a document has changed over time, etc.
 
    string/index
    textwrap/index
-   difflib/index
-
-..
    re/index
    difflib/index
