@@ -133,8 +133,8 @@ There are two instances of ``ab`` in the input string.
 
 	$ python3 re_findall.py
 	
-	Found "ab"
-	Found "ab"
+	Found 'ab'
+	Found 'ab'
 
 .. {{{end}}}
 
@@ -156,8 +156,8 @@ This example finds the same two occurrences of ``ab``, and the
 
 	$ python3 re_finditer.py
 	
-	Found "ab" at 0:2
-	Found "ab" at 5:7
+	Found 'ab' at 0:2
+	Found 'ab' at 5:7
 
 .. {{{end}}}
 

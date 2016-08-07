@@ -22,7 +22,7 @@ while True:
         break
     s = match.start()
     e = match.end()
-    print('  %2d : %2d = "%s"' %
-          (s, e - 1, text[s:e]))
+    print('  {:>2d} : {:>2d} = "{}"'.format(
+        s, e - 1, text[s:e]))
     # Move forward in text for the next search
     pos = e

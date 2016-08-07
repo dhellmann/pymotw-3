@@ -14,11 +14,11 @@ pattern = r'\bT\w+'
 with_case = re.compile(pattern)
 without_case = re.compile(pattern, re.IGNORECASE)
 
-print('Text:\n  %r' % text)
-print('Pattern:\n  %s' % pattern)
+print('Text:\n  {!r}'.format(text))
+print('Pattern:\n  {}'.format(pattern))
 print('Case-sensitive:')
 for match in with_case.findall(text):
-    print('  %r' % match)
+    print('  {!r}'.format(match))
 print('Case-insensitive:')
 for match in without_case.findall(text):
-    print('  %r' % match)
+    print('  {!r}'.format(match))

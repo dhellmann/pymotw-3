@@ -16,10 +16,11 @@ regexes = [
 ]
 text = 'Does this text match the pattern?'
 
-print('Text: %r\n' % text)
+print('Text: {!r}\n'.format(text))
 
 for regex in regexes:
-    print('Seeking "%s" ->' % regex.pattern, end=' ')
+    print('Seeking "{}" ->'.format(regex.pattern),
+          end=' ')
 
     if regex.search(text):
         print('match!')
