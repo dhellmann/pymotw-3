@@ -38,10 +38,10 @@ byte sequence argument and return a byte sequence.
 
 .. {{{end}}}
 
-The previous example demonstrates that for short text, the compressed
-version of a string can be larger than the uncompressed version.
-While the actual results depend on the input data, for short bits of
-text it is interesting to observe the compression overhead.
+The previous example demonstrates that the compressed version of small
+amounts of data can be larger than the uncompressed version.  While
+the actual results depend on the input data, it is interesting to
+observe the compression overhead for small data sets
 
 .. literalinclude:: zlib_lengths.py
     :caption:
@@ -148,7 +148,7 @@ Checksums
 
 In addition to compression and decompression functions, :mod:`zlib`
 includes two functions for computing checksums of data,
-:func:`adler32` and :func:`crc32`.  Neither checksum is billed as
+:func:`adler32` and :func:`crc32`.  Neither checksum is
 cryptographically secure, and they are only intended for use for data
 integrity verification.
 
@@ -185,15 +185,13 @@ to requests consisting of filenames by writing a compressed version of
 the file to the socket used to communicate with the client.
 
 .. literalinclude:: zlib_server.py
-   :lines: 11-72
+   :caption:
+   :start-after: #end_pymotw_header
 
 It has some artificial chunking in place to illustrate the buffering
 behavior that happens when the data passed to :func:`compress` or
 :func:`decompress` does not result in a complete block of compressed
 or uncompressed output.
-
-.. literalinclude:: zlib_server.py
-   :lines: 74-
 
 The client connects to the socket and requests a file.  Then it loops,
 receiving blocks of compressed data.  Since a block may not contain
@@ -208,7 +206,7 @@ processing loop.
     This server has obvious security implications.  Do not run it on a
     system on the open Internet or in any environment where security
     might be an issue.
- 
+
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'zlib_server.py'))
 .. }}}
@@ -217,7 +215,7 @@ processing loop.
 
 	$ python3 zlib_server.py
 	
-	Client: Contacting server on 127.0.0.1:53188
+	Client: Contacting server on 127.0.0.1:53290
 	Client: sending filename: 'lorem.txt'
 	Server: client asked for: 'lorem.txt'
 	Server: RAW b'Lorem ipsum dolor sit amet, consectetuer adipiscin
@@ -235,10 +233,10 @@ processing loop.
 	Server: RAW b'l arcu. Vivamus\npurus orci, iaculis ac, suscipit 
 	sit amet, pulvi'
 	Client: READ b'7801'
+	Client: BUFFERING
 	Server: BUFFERING
 	Server: RAW b'nar eu,\nlacus.\n'
 	Server: BUFFERING
-	Client: BUFFERING
 	Server: FLUSHING b'55904b6ac4400c44f73e451da0f129b20c2110c85e696
 	b8c40ddedd167ce1f7915025a087daa9ef4be8c07e4f21c38962e834b8006474
 	35fd3b90747b2810eb9'
