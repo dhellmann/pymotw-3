@@ -293,6 +293,10 @@ The constants :data:`letters`, :data:`lowercase`, and
 :data:`uppercase` have been removed. The new constants with similar
 names are limited to the ASCII character set.
 
+The :func:`maketrans` function has been replaced by methods on
+:class:`str`, :class:`bytes`, and :class:`bytearray` to clarify which
+input types are supported by each translation table.
+
 thread
 ------
 
