@@ -15,7 +15,7 @@ Writing Compressed Files
 
 The module-level function :func:`open` creates an instance of the
 file-like class :class:`GzipFile`.  The usual methods for writing and
-reading data are provided.
+reading bytes are provided.
 
 .. literalinclude:: gzip_write.py
     :caption:
@@ -111,7 +111,7 @@ Reading Compressed Data
 
 To read data back from previously compressed files, open the file with
 binary read mode (``'rb'``) so no text-based translation of line
-endings is performed.
+endings or Unicode decoding is performed.
 
 .. literalinclude:: gzip_read.py
     :caption:
@@ -131,7 +131,7 @@ previous section.
 	b'Contents of the example file go here.\n'
 
 .. {{{end}}}
-    
+
 While reading a file, it is also possible to seek and read only part
 of the data.
 
