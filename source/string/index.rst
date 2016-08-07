@@ -205,6 +205,18 @@ generates:
 
 .. {{{end}}}
 
+Formatter
+=========
+
+The :class:`Formatter` class implements the same layout specification
+language as the :func:`format` method of :class:`str`. Features
+include type coersion, alignment, attribute and field references,
+named and positional template arguments, and type-specific formatting
+options. Most of the time the :func:`format` method is a more
+convenient interface to these features, but :class:`Formatter` is
+provided as a way to build subclasses, for cases where variations are
+needed.
+
 .. seealso::
 
    * :pydoc:`string`
@@ -215,3 +227,8 @@ generates:
      functions in :mod:`string`.
 
    * :pep:`292` -- Simpler String Substitutions
+
+   * `Format String Syntax
+     <https://docs.python.org/3.5/library/string.html#format-string-syntax>`__
+     -- The formal definition of the layout specification language
+     used by :class:`Formatter` and :func:`str.format`.
