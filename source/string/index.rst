@@ -31,10 +31,10 @@ results.
 .. cog.out(run_script(cog.inFile, 'string_capwords.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python string_capwords.py
-
+	$ python3 string_capwords.py
+	
 	The quick brown fox jumped over the lazy dog.
 	The Quick Brown Fox Jumped Over The Lazy Dog.
 
@@ -64,18 +64,23 @@ repeating it twice.
 .. cog.out(run_script(cog.inFile, 'string_template.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python string_template.py
-
+	$ python3 string_template.py
+	
 	TEMPLATE: 
 	Variable        : foo
 	Escape          : $
 	Variable in text: fooiable
 	
-	INTERPLOATION: 
+	INTERPOLATION: 
 	Variable        : foo
 	Escape          : %
+	Variable in text: fooiable
+	
+	FORMAT: 
+	Variable        : foo
+	Escape          : {}
 	Variable in text: fooiable
 	
 
@@ -105,11 +110,11 @@ variable expression alone in the text.
 .. cog.out(run_script(cog.inFile, 'string_template_missing.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python string_template_missing.py
-
-	substitute()     : ERROR: 'missing'
+	$ python3 string_template_missing.py
+	
+	ERROR: 'missing'
 	safe_substitute(): foo is here but $missing is not provided
 
 .. {{{end}}}
@@ -136,10 +141,10 @@ character.
 .. cog.out(run_script(cog.inFile, 'string_template_advanced.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python string_template_advanced.py
-
+	$ python3 string_template_advanced.py
+	
 	Modified ID pattern:
 	
 	  Delimiter : %
@@ -188,10 +193,10 @@ generates:
 .. cog.out(run_script(cog.inFile, 'string_template_newsyntax.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python string_template_newsyntax.py
-
+	$ python3 string_template_newsyntax.py
+	
 	MATCHES: [('{{', '', '', ''), ('', 'var', '', '')]
 	SUBSTITUTED: 
 	{{
