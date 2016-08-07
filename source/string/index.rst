@@ -171,7 +171,7 @@ original string is available via its :attr:`pattern` attribute.
 
 .. this output was edited for clarity and to make it fit on the page
 
-::
+.. code-block:: none
 
 	\$(?:
 	  (?P<escaped>\$) |                # two delimiters
