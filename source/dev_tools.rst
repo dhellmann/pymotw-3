@@ -71,6 +71,14 @@ it easy to test the same program with different versions of
 dependencies, and to install different programs with conflicting
 dependencies on the same computer.
 
+Taking advantage of the large ecosystem of extension modules,
+frameworks, and tools available through the Python Package Index
+requires a package installer. Python's package installer, pip, is not
+distributed with the interpreter, because of the long release cycle
+for the language compared to desired updates to the tool. The
+:mod:`ensurepip` module can be used to install the latest version of
+pip.
+
 .. toctree::
     :maxdepth: 1
 
