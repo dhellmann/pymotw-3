@@ -16,4 +16,4 @@ with gzip.open(outfilename, 'wb') as output:
 
 print(outfilename, 'contains', os.stat(outfilename).st_size,
       'bytes')
-os.system('file -b --mime %s' % outfilename)
+os.system('file -b --mime {}'.format(outfilename))

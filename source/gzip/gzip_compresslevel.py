@@ -21,12 +21,12 @@ cksum = get_hash(data)
 
 print('Level  Size        Checksum')
 print('-----  ----------  ---------------------------------')
-print('data   %10d  %s' % (len(data), cksum))
+print('data   {:>10}  {}'.format(len(data), cksum))
 
 for i in range(0, 10):
-    filename = 'compress-level-%s.gz' % i
+    filename = 'compress-level-{}.gz'.format(i)
     with gzip.open(filename, 'wb', compresslevel=i) as output:
         output.write(data)
     size = os.stat(filename).st_size
     cksum = get_hash(open(filename, 'rb').read())
-    print('%5d  %10d  %s' % (i, size, cksum))
+    print('{:>5d}  {:>10d}  {}'.format(i, size, cksum))
