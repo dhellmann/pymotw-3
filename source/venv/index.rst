@@ -22,13 +22,13 @@ compiled and installed. The :command:`pyvenv` command is the simplest
 interface
 
 .. {{{cog
-.. run_script(cog.inFile, 'rm -rf /tmp/testenv', interpreter='')
-.. cog.out(run_script(cog.inFile, 'pyvenv /tmp/testenv', interpreter=''))
+.. run_script(cog.inFile, 'rm -rf /tmp/demoenv', interpreter='')
+.. cog.out(run_script(cog.inFile, 'pyvenv /tmp/demoenv', interpreter=''))
 .. }}}
 
 .. code-block:: none
 
-	$ pyvenv /tmp/testenv
+	$ pyvenv /tmp/demoenv
 	
 
 .. {{{end}}}
@@ -40,7 +40,7 @@ previous example.
 
 .. code-block:: none
 
-	$ python3 -m venv /tmp/testenv
+	$ python3 -m venv /tmp/demoenv
 
 Contents of a Virtual Environment
 =================================
@@ -52,12 +52,12 @@ directory, with a separate ``site-packages`` location for installing
 packages.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'ls -F /tmp/testenv', interpreter=''))
+.. cog.out(run_script(cog.inFile, 'ls -F /tmp/demoenv', interpreter=''))
 .. }}}
 
 .. code-block:: none
 
-	$ ls -F /tmp/testenv
+	$ ls -F /tmp/demoenv
 	
 	bin/
 	include/
@@ -74,12 +74,12 @@ an environment to use programs installed into it, but it can be more
 convenient.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'ls -F /tmp/testenv/bin', interpreter=''))
+.. cog.out(run_script(cog.inFile, 'ls -F /tmp/demoenv/bin', interpreter=''))
 .. }}}
 
 .. code-block:: none
 
-	$ ls -F /tmp/testenv/bin
+	$ ls -F /tmp/demoenv/bin
 	
 	activate
 	activate.csh
@@ -113,7 +113,7 @@ environment.
 .. Copy the environment config file into a place that works with
 .. the sphinx include directive.
 .. {{{cog
-.. run_script(cog.inFile, 'cp /tmp/testenv/pyvenv.cfg .', interpreter='')
+.. run_script(cog.inFile, 'cp /tmp/demoenv/pyvenv.cfg .', interpreter='')
 .. }}}
 .. {{{end}}}
 
