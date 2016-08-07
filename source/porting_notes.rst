@@ -278,6 +278,18 @@ The :mod:`statvfs` module was deprecated in Python 2.6 and removed
 in Python 3.0. See :func:`os.statvfs` in the :mod:`os` module
 instead.
 
+.. _porting-string:
+
+string
+------
+
+.. index::
+   pair: porting; string
+
+All functions from the :mod:`string` module that are also methods of
+:class:`str` objects have been removed.
+
+
 thread
 ------
 
