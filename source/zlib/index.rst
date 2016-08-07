@@ -68,6 +68,43 @@ takes up more memory than the uncompressed version.
 
 .. {{{end}}}
 
+:mod:`zlib` supports several different compression levels, allowing a
+balance between computational cost and the amount of space
+reduction.
+
+.. literalinclude:: zlib_compresslevel.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+A level of 0 means no compression at all. A level of 9 requires the
+most computation and produces the smallest output. As this example
+shows, the same size reduction may be achieved with multiple
+compression levels for a given input.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'zlib_compresslevel.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 zlib_compresslevel.py
+	
+	Level   Size
+	-----   ----
+	    0  20491
+	    1    172
+	    2    172
+	    3    172
+	    4     98
+	    5     98
+	    6     98
+	    7     98
+	    8     98
+	    9     98
+
+.. {{{end}}}
+
+
 Incremental Compression and Decompression
 =========================================
 
@@ -215,7 +252,7 @@ processing loop.
 
 	$ python3 zlib_server.py
 	
-	Client: Contacting server on 127.0.0.1:53589
+	Client: Contacting server on 127.0.0.1:53658
 	Client: sending filename: 'lorem.txt'
 	Server: client asked for: 'lorem.txt'
 	Server: RAW b'Lorem ipsum dolor sit amet, consectetuer adipiscin
@@ -233,8 +270,8 @@ processing loop.
 	Server: RAW b'l arcu. Vivamus\npurus orci, iaculis ac, suscipit 
 	sit amet, pulvi'
 	Client: READ b'7801'
-	Server: BUFFERING
 	Client: BUFFERING
+	Server: BUFFERING
 	Server: RAW b'nar eu,\nlacus.\n'
 	Server: BUFFERING
 	Server: FLUSHING b'55904b6ac4400c44f73e451da0f129b20c2110c85e696
@@ -251,8 +288,6 @@ processing loop.
 	12eebd220d4b32441bd'
 	Client: DECOMPRESSED b'Lorem ipsum dolor sit amet, consectetuer 
 	adi'
-	Server: FLUSHING b'c1b36ebf0aedef3d57ea4b26dd986dd39af57dfb05d32
-	279de'
 	Client: READ b'c4bbcc13ac123bded6e4bef1c91ee40d3c6580e3ff52aad2e
 	8cb2eb6062dad74a89ca904cbb0f2545e0db4b1f2e01955b8c511cb2ac08967d
 	228af1447c8ec72'
@@ -265,6 +300,8 @@ processing loop.
 	Client: DECOMPRESSED b'dunt nisi ut ante. Nulla\nfacilisi. Sed t
 	ristique eros eu libero. Pellentesque vel arcu. Vivamus\npurus o
 	rci, iaculis ac'
+	Server: FLUSHING b'c1b36ebf0aedef3d57ea4b26dd986dd39af57dfb05d32
+	279de'
 	Client: READ b'c1b36ebf0aedef3d57ea4b26dd986dd39af57dfb05d32279d
 	e'
 	Client: DECOMPRESSED b', suscipit sit amet, pulvinar eu,\nlacus.

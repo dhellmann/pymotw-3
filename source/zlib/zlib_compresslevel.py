@@ -9,11 +9,12 @@
 
 import zlib
 
-input_data = 'Some repeated text.\n' * 1024
+input_data = b'Some repeated text.\n' * 1024
+template = '{:>5}  {:>5}'
 
-results = set()
-for i in range(1, 10):
+print(template.format('Level', 'Size'))
+print(template.format('-----', '----'))
+
+for i in range(0, 10):
     data = zlib.compress(input_data, i)
-    results.add(data)
-
-print(len(results))
+    print(template.format(i, len(data)))
