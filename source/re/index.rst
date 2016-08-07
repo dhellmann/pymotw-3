@@ -744,6 +744,32 @@ two other times in the text, though, so :func:`search` finds it.
 
 .. {{{end}}}
 
+The :func:`fullmatch` method requires that the entire input string
+match the pattern.
+
+.. literalinclude:: re_fullmatch.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Here :func:`search` shows that the pattern does appear in the input,
+but it does not consume all of the input so :func:`fullmatch` does not
+report a match.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 're_fullmatch.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 re_fullmatch.py
+	
+	Text       : This is some text -- with punctuation.
+	Pattern    : is
+	Search     : <_sre.SRE_Match object; span=(2, 4), match='is'>
+	Full match : None
+
+.. {{{end}}}
+
 The :func:`search` method of a compiled regular expression accepts
 optional *start* and *end* position parameters to limit the search to
 a substring of the input.
