@@ -21,7 +21,7 @@ parser.
 Regular expressions are typically used in applications that involve a
 lot of text processing.  For example, they are commonly used as search
 patterns in text editing programs used by developers, including vi,
-emacs, and modern IDEs.  They are also an integral part of Unix
+emacs, and modern IDEs.  They are also an integral part of UNIX
 command line utilities such as sed, grep, and awk.  Many programming
 languages include support for regular expressions in the language
 syntax (Perl, Ruby, Awk, and Tcl).  Other languages, such as C, C++,
@@ -48,7 +48,7 @@ Finding Patterns in Text
 The most common use for :mod:`re` is to search for patterns in text.
 The :func:`search` function takes the pattern and text to scan, and
 returns a :class:`Match` object when the pattern is found.  If the
-pattern is not found, :func:`search` returns ``None``.  
+pattern is not found, :func:`search` returns ``None``.
 
 Each :class:`Match` object holds information about the nature of the
 match, including the original input string, the regular expression

@@ -60,10 +60,10 @@ candidates = [
     ]
 
 for candidate in candidates:
-    print 'Candidate:', candidate
+    print('Candidate:', candidate)
     match = address.search(candidate)
     if match:
-        print '  Match name :', match.groupdict()['name']
-        print '  Match email:', match.groupdict()['email']
+        print('  Match name :', match.groupdict()['name'])
+        print('  Match email:', match.groupdict()['email'])
     else:
-        print '  No match'
+        print('  No match')

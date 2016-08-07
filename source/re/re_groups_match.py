@@ -11,8 +11,8 @@ import re
 
 text = 'This is some text -- with punctuation.'
 
-print text
-print
+print(text)
+print()
 
 patterns = [
     (r'^(\w+)', 'word at start of string'),
@@ -24,7 +24,7 @@ patterns = [
 for pattern, desc in patterns:
     regex = re.compile(pattern)
     match = regex.search(text)
-    print 'Pattern %r (%s)\n' % (pattern, desc)
-    print '  ', match.groups()
-    print
+    print('Pattern %r (%s)\n' % (pattern, desc))
+    print('  ', match.groups())
+    print()
 

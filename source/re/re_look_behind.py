@@ -21,6 +21,6 @@ text = '''This text includes two Twitter handles.
 One for @ThePSF, and one for the author, @doughellmann.
 '''
 
-print text
+print(text)
 for match in twitter.findall(text):
-    print 'Handle:', match
+    print('Handle:', match)

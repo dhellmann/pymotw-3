@@ -21,5 +21,5 @@ for num, para in enumerate(re.findall(r'(.+?)\n{2,}',
                                       text,
                                       flags=re.DOTALL)
                            ):
-    print num, repr(para)
-    print
+    print(num, repr(para))
+    print()

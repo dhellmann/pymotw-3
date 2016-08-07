@@ -33,9 +33,9 @@ candidates = [
     ]
 
 for candidate in candidates:
-    print 'Candidate:', candidate
+    print('Candidate:', candidate)
     match = address.search(candidate)
     if match:
-        print '  Match:', candidate[match.start():match.end()]
+        print('  Match:', candidate[match.start():match.end()])
     else:
-        print '  No match'
+        print('  No match')

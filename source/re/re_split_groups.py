@@ -17,7 +17,7 @@ Paragraph two.
 
 Paragraph three.'''
 
-print 'With split:'
+print('With split:')
 for num, para in enumerate(re.split(r'(\n{2,})', text)):
-    print num, repr(para)
-    print
+    print(num, repr(para))
+    print()

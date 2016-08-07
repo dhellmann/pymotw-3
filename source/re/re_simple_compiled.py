@@ -15,12 +15,12 @@ regexes = [ re.compile(p)
             ]
 text = 'Does this text match the pattern?'
 
-print 'Text: %r\n' % text
+print('Text: %r\n' % text)
 
 for regex in regexes:
-    print 'Seeking "%s" ->' % regex.pattern,
+    print('Seeking "%s" ->' % regex.pattern,)
 
     if regex.search(text):
-        print 'match!'
+        print('match!')
     else:
-        print 'no match'
+        print('no match')

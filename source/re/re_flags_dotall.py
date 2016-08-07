@@ -14,12 +14,12 @@ pattern = r'.+'
 no_newlines = re.compile(pattern)
 dotall = re.compile(pattern, re.DOTALL)
 
-print 'Text:\n  %r' % text
-print 'Pattern:\n  %s' % pattern
-print 'No newlines :'
+print('Text:\n  %r' % text)
+print('Pattern:\n  %s' % pattern)
+print('No newlines :')
 for match in no_newlines.findall(text):
-    print '  %r' % match
-print 'Dotall      :'
+    print('  %r' % match)
+print('Dotall      :')
 for match in dotall.findall(text):
-    print '  %r' % match
+    print('  %r' % match)
 

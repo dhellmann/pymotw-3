@@ -17,15 +17,15 @@ Paragraph two.
 
 Paragraph three.'''
 
-print 'With findall:'
+print('With findall:')
 for num, para in enumerate(re.findall(r'(.+?)(\n{2,}|$)',
                                       text,
                                       flags=re.DOTALL)):
-    print num, repr(para)
-    print
+    print(num, repr(para))
+    print()
 
-print
-print 'With split:'
+print()
+print('With split:')
 for num, para in enumerate(re.split(r'\n{2,}', text)):
-    print num, repr(para)
-    print
+    print(num, repr(para))
+    print()
