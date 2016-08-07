@@ -14,32 +14,32 @@ Working with Data in Memory
 ===========================
 
 The simplest way to work with :mod:`zlib` requires holding all of the
-data to be compressed or decompressed in memory:
+data to be compressed or decompressed in memory.
 
 .. literalinclude:: zlib_memory.py
     :caption:
     :start-after: #end_pymotw_header
 
-The :func:`compress()` and :func:`decompress()` functions both take a
-string argument and return a string.
+The :func:`compress` and :func:`decompress` functions both take a
+byte sequence argument and return a byte sequence.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'zlib_memory.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python zlib_memory.py
+	$ python3 zlib_memory.py
 	
-	Original     : 26 This is the original text.
-	Compressed   : 32 789c0bc9c82c5600a2928c5485fca2ccf4ccbcc41c8592d
-	48a123d007f2f097e
-	Decompressed : 26 This is the original text.
+	Original     : 26 b'This is the original text.'
+	Compressed   : 32 b'789c0bc9c82c5600a2928c5485fca2ccf4ccbcc41c85
+	92d48a123d007f2f097e'
+	Decompressed : 26 b'This is the original text.'
 
 .. {{{end}}}
 
 The previous example demonstrates that for short text, the compressed
-version of a string can be bigger than the uncompressed version.
+version of a string can be larger than the uncompressed version.
 While the actual results depend on the input data, for short bits of
 text it is interesting to observe the compression overhead.
 
@@ -54,9 +54,9 @@ takes up more memory than the uncompressed version.
 .. cog.out(run_script(cog.inFile, 'zlib_lengths.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python zlib_lengths.py
+	$ python3 zlib_lengths.py
 	
 	      len(data)  len(compressed)
 	---------------  ---------------
@@ -87,41 +87,41 @@ passes it to :func:`compress`.  The compressor maintains an internal
 buffer of compressed data.  Since the compression algorithm depends on
 checksums and minimum block sizes, the compressor may not be ready to
 return data each time it receives more input.  If it does not have an
-entire compressed block ready, it returns an empty string.  When all
-of the data is fed in, the :func:`flush` method forces the compressor
-to close the final block and return the rest of the compressed data.
+entire compressed block ready, it returns an empty byte string.  When
+all of the data is fed in, the :func:`flush` method forces the
+compressor to close the final block and return the rest of the
+compressed data.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'zlib_incremental.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python zlib_incremental.py
+	$ python3 zlib_incremental.py
 	
-	Compressed: 7801
+	Compressed: b'7801'
 	buffering...
 	buffering...
 	buffering...
 	buffering...
 	buffering...
-	Flushed: 55904b6ac4400c44f73e451da0f129b20c2110c85e696b8c40ddedd167ce1
-	f7915025a087daa9ef4be8c07e4f21c38962e834b800647435fd3b90747b2810eb9c4b
-	bcc13ac123bded6e4bef1c91ee40d3c6580e3ff52aad2e8cb2eb6062dad74a89ca904c
-	bb0f2545e0db4b1f2e01955b8c511cb2ac08967d228af1447c8ec72e40c4c714116e60
-	cdef171bb6c0feaa255dff1c507c2c4439ec9605b7e0ba9fc54bae39355cb89fd6ebe5
-	841d673c7b7bc68a46f575a312eebd220d4b32441bdc1b36ebf0aedef3d57ea4b26dd9
-	86dd39af57dfb05d32279de
+	Flushed: b'55904b6ac4400c44f73e451da0f129b20c2110c85e696b8c40dde
+	dd167ce1f7915025a087daa9ef4be8c07e4f21c38962e834b800647435fd3b90
+	747b2810eb9c4bbcc13ac123bded6e4bef1c91ee40d3c6580e3ff52aad2e8cb2
+	eb6062dad74a89ca904cbb0f2545e0db4b1f2e01955b8c511cb2ac08967d228a
+	f1447c8ec72e40c4c714116e60cdef171bb6c0feaa255dff1c507c2c4439ec96
+	05b7e0ba9fc54bae39355cb89fd6ebe5841d673c7b7bc68a46f575a312eebd22
+	0d4b32441bdc1b36ebf0aedef3d57ea4b26dd986dd39af57dfb05d32279de'
 
 .. {{{end}}}
-
 
 Mixed Content Streams
 =====================
 
-The :class:`Decompress` class returned by :func:`decompressobj()` can
+The :class:`Decompress` class returned by :func:`decompressobj` can
 also be used in situations where compressed and uncompressed data is
-mixed together.  
+mixed together.
 
 .. literalinclude:: zlib_mixed.py
     :caption:
@@ -134,22 +134,21 @@ contains any data not used.
 .. cog.out(run_script(cog.inFile, 'zlib_mixed.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python zlib_mixed.py
+	$ python3 zlib_mixed.py
 	
 	Decompressed matches lorem: True
 	Unused data matches lorem : True
 
 .. {{{end}}}
 
-
 Checksums
 =========
 
 In addition to compression and decompression functions, :mod:`zlib`
 includes two functions for computing checksums of data,
-:func:`adler32()` and :func:`crc32()`.  Neither checksum is billed as
+:func:`adler32` and :func:`crc32`.  Neither checksum is billed as
 cryptographically secure, and they are only intended for use for data
 integrity verification.
 
@@ -157,44 +156,40 @@ integrity verification.
     :caption:
     :start-after: #end_pymotw_header
 
-Both functions take the same arguments, a string of data and an
-optional value to be used as a starting point for the checksum.  They
-return a 32-bit signed integer value which can also be passed back on
-subsequent calls as a new starting point argument to produce a
-*running* checksum.
+Both functions take the same arguments, a byte string containing the
+data and an optional value to be used as a starting point for the
+checksum.  They return a 32-bit signed integer value which can also be
+passed back on subsequent calls as a new starting point argument to
+produce a *running* checksum.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'zlib_checksums.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python zlib_checksums.py
+	$ python3 zlib_checksums.py
 	
-	Adler32:   -752715298
+	Adler32:   3542251998
 	       :    669447099
-	CRC-32 :  -1256596780
-	       :  -1424888665
+	CRC-32 :   3038370516
+	       :   2870078631
 
 .. {{{end}}}
 
 Compressing Network Data
 ========================
- 
+
 The server in the next listing uses the stream compressor to respond
 to requests consisting of filenames by writing a compressed version of
-the file to the socket used to communicate with the client.  It has
-some artificial chunking in place to illustrate the buffering that
-occurs when the data passed to :func:`compress()` or
-:func:`decompress()` does not result in a complete block of compressed
-or uncompressed output.
+the file to the socket used to communicate with the client.
 
 .. literalinclude:: zlib_server.py
    :lines: 11-72
- 
+
 It has some artificial chunking in place to illustrate the buffering
-behavior that happens when the data passed to :func:`compress()` or
-:func:`decompress()` does not result in a complete block of compressed
+behavior that happens when the data passed to :func:`compress` or
+:func:`decompress` does not result in a complete block of compressed
 or uncompressed output.
 
 .. literalinclude:: zlib_server.py
@@ -218,66 +213,65 @@ processing loop.
 .. cog.out(run_script(cog.inFile, 'zlib_server.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python zlib_server.py
-    
-    Client: Contacting server on 127.0.0.1:55085
-    Client: sending filename: "lorem.txt"
-    Server: client asked for: "lorem.txt"
-    Server: RAW "Lorem ipsum dolor sit amet, consectetuer adipiscing elit
-    . Donec
-    "
-    Server: SENDING "7801"
-    Server: RAW "egestas, enim et consectetuer ullamcorper, lectus ligula
-     rutrum "
-    Server: BUFFERING
-    Server: RAW "leo, a
-    elementum elit tortor eu quam. Duis tincidunt nisi ut ant"
-    Server: BUFFERING
-    Server: RAW "e. Nulla
-    facilisi. Sed tristique eros eu libero. Pellentesque ve"
-    Server: BUFFERING
-    Server: RAW "l arcu. Vivamus
-    purus orci, iaculis ac, suscipit sit amet, pulvi"
-    Server: BUFFERING
-    Server: RAW "nar eu,
-    lacus.
-    "
-    Server: BUFFERING
-    Server: FLUSHING "55904b6ac4400c44f73e451da0f129b20c2110c85e696b8c40d
-    dedd167ce1f7915025a087daa9ef4be8c07e4f21c38962e834b800647435fd3b90747
-    b2810eb9"
-    Server: FLUSHING "c4bbcc13ac123bded6e4bef1c91ee40d3c6580e3ff52aad2e8c
-    b2eb6062dad74a89ca904cbb0f2545e0db4b1f2e01955b8c511cb2ac08967d228af14
-    47c8ec72"
-    Server: FLUSHING "e40c4c714116e60cdef171bb6c0feaa255dff1c507c2c4439ec
-    9605b7e0ba9fc54bae39355cb89fd6ebe5841d673c7b7bc68a46f575a312eebd220d4
-    b32441bd"
-    Server: FLUSHING "c1b36ebf0aedef3d57ea4b26dd986dd39af57dfb05d32279de"
-    Client: READ "780155904b6ac4400c44f73e451da0f129b20c2110c85e696b8c40d
-    dedd167ce1f7915025a087daa9ef4be8c07e4f21c38962e834b800647435fd3b90747
-    b281"
-    Client: DECOMPRESSED "Lorem ipsum dolor sit amet, consectetuer "
-    Client: READ "0eb9c4bbcc13ac123bded6e4bef1c91ee40d3c6580e3ff52aad2e8c
-    b2eb6062dad74a89ca904cbb0f2545e0db4b1f2e01955b8c511cb2ac08967d228af14
-    47c8"
-    Client: DECOMPRESSED "adipiscing elit. Donec
-    egestas, enim et consectetuer ullamcorper, lectus ligula rutrum leo, 
-    a
-    elementum elit tortor eu quam. Duis ti"
-    Client: READ "ec72e40c4c714116e60cdef171bb6c0feaa255dff1c507c2c4439ec
-    9605b7e0ba9fc54bae39355cb89fd6ebe5841d673c7b7bc68a46f575a312eebd220d4
-    b324"
-    Client: DECOMPRESSED "ncidunt nisi ut ante. Nulla
-    facilisi. Sed tristique eros eu libero. Pellentesque vel arcu. Vivamu
-    s
-    purus orci, iacu"
-    Client: READ "41bdc1b36ebf0aedef3d57ea4b26dd986dd39af57dfb05d32279de"
-    Client: DECOMPRESSED "lis ac, suscipit sit amet, pulvinar eu,
-    lacus.
-    "
-    Client: response matches file contents: True
+	$ python3 zlib_server.py
+	
+	Client: Contacting server on 127.0.0.1:53188
+	Client: sending filename: 'lorem.txt'
+	Server: client asked for: 'lorem.txt'
+	Server: RAW b'Lorem ipsum dolor sit amet, consectetuer adipiscin
+	g elit. Donec\n'
+	Server: SENDING b'7801'
+	Server: RAW b'egestas, enim et consectetuer ullamcorper, lectus 
+	ligula rutrum '
+	Server: BUFFERING
+	Server: RAW b'leo, a\nelementum elit tortor eu quam. Duis tincid
+	unt nisi ut ant'
+	Server: BUFFERING
+	Server: RAW b'e. Nulla\nfacilisi. Sed tristique eros eu libero. 
+	Pellentesque ve'
+	Server: BUFFERING
+	Server: RAW b'l arcu. Vivamus\npurus orci, iaculis ac, suscipit 
+	sit amet, pulvi'
+	Client: READ b'7801'
+	Server: BUFFERING
+	Server: RAW b'nar eu,\nlacus.\n'
+	Server: BUFFERING
+	Client: BUFFERING
+	Server: FLUSHING b'55904b6ac4400c44f73e451da0f129b20c2110c85e696
+	b8c40ddedd167ce1f7915025a087daa9ef4be8c07e4f21c38962e834b8006474
+	35fd3b90747b2810eb9'
+	Server: FLUSHING b'c4bbcc13ac123bded6e4bef1c91ee40d3c6580e3ff52a
+	ad2e8cb2eb6062dad74a89ca904cbb0f2545e0db4b1f2e01955b8c511cb2ac08
+	967d228af1447c8ec72'
+	Client: READ b'55904b6ac4400c44f73e451da0f129b20c2110c85e696b8c4
+	0ddedd167ce1f7915025a087daa9ef4be8c07e4f21c38962e834b800647435fd
+	3b90747b2810eb9'
+	Server: FLUSHING b'e40c4c714116e60cdef171bb6c0feaa255dff1c507c2c
+	4439ec9605b7e0ba9fc54bae39355cb89fd6ebe5841d673c7b7bc68a46f575a3
+	12eebd220d4b32441bd'
+	Client: DECOMPRESSED b'Lorem ipsum dolor sit amet, consectetuer 
+	adi'
+	Server: FLUSHING b'c1b36ebf0aedef3d57ea4b26dd986dd39af57dfb05d32
+	279de'
+	Client: READ b'c4bbcc13ac123bded6e4bef1c91ee40d3c6580e3ff52aad2e
+	8cb2eb6062dad74a89ca904cbb0f2545e0db4b1f2e01955b8c511cb2ac08967d
+	228af1447c8ec72'
+	Client: DECOMPRESSED b'piscing elit. Donec\negestas, enim et con
+	sectetuer ullamcorper, lectus ligula rutrum leo, a\nelementum el
+	it tortor eu quam. Duis tinci'
+	Client: READ b'e40c4c714116e60cdef171bb6c0feaa255dff1c507c2c4439
+	ec9605b7e0ba9fc54bae39355cb89fd6ebe5841d673c7b7bc68a46f575a312ee
+	bd220d4b32441bd'
+	Client: DECOMPRESSED b'dunt nisi ut ante. Nulla\nfacilisi. Sed t
+	ristique eros eu libero. Pellentesque vel arcu. Vivamus\npurus o
+	rci, iaculis ac'
+	Client: READ b'c1b36ebf0aedef3d57ea4b26dd986dd39af57dfb05d32279d
+	e'
+	Client: DECOMPRESSED b', suscipit sit amet, pulvinar eu,\nlacus.
+	\n'
+	Client: response matches file contents: True
 
 .. {{{end}}}
 

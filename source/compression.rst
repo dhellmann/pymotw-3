@@ -27,6 +27,7 @@ simplicity of its API and portability of the format.
 .. toctree::
     :maxdepth: 1
 
+    zlib/index
     bz2/index
 
 ..
