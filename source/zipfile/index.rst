@@ -284,7 +284,7 @@ an argument to specify the compression.
 	
 	from_string.txt
 		Comment     : b''
-		Modified    : 2016-08-07 13:21:06
+		Modified    : 2016-08-07 13:26:16
 		System      : Unix
 		ZIP version : 20
 		Compressed  : 36 bytes
@@ -320,7 +320,7 @@ simple comment is also associated with the new file.
 	
 	from_string.txt
 		Comment     : b'Remarks go here'
-		Modified    : 2016-08-07 13:21:06
+		Modified    : 2016-08-07 13:26:16
 		System      : Windows
 		ZIP version : 20
 		Compressed  : 36 bytes
@@ -419,6 +419,7 @@ each ``.py`` file it finds.
 	Adding zipfile_append.pyc
 	Compiling ./zipfile_getinfo.py
 	Adding zipfile_getinfo.pyc
+	Compiling ./zipfile_infolist.py
 	Adding zipfile_infolist.pyc
 	Compiling ./zipfile_is_zipfile.py
 	Adding zipfile_is_zipfile.pyc
