@@ -1525,11 +1525,7 @@ reference may need to be updated.  The other disadvantage is that only
 99 references can be made using the standard back-reference syntax
 ``\n``, because if the id number is three digits long it will be
 interpreted as an octal character value instead of a group
-reference. An alternate back-reference syntax for numbered groups,
-``\g<num>``, disambiguates ``\g<x>y`` from ``\xy`` and works for more
-references, but only when passed in the replacement argument to
-:func:`sub`, and cannot be used to create a back-reference within an
-expression.  Of course, if there are more than 99 groups in an
+reference.  Of course, if there are more than 99 groups in an
 expression, there will be more serious maintenance challenges than not
 being able to refer to all of them.
 
@@ -1639,7 +1635,7 @@ Modifying Strings with Patterns
 
 In addition to searching through text, :mod:`re` also supports
 modifying text using regular expressions as the search mechanism, and
-the replacements can reference groups matched in the regex as part of
+the replacements can reference groups matched in the pattern as part of
 the substitution text.  Use :func:`sub` to replace all occurrences of a
 pattern with another string.
 
