@@ -9,6 +9,7 @@
 
 import time
 
+
 def show_struct(s):
     print('  tm_year :', s.tm_year)
     print('  tm_mon  :', s.tm_mon)
@@ -27,4 +28,5 @@ parsed = time.strptime(now)
 print('\nParsed:')
 show_struct(parsed)
 
-print('\nFormatted:', time.strftime("%a %b %d %H:%M:%S %Y", parsed))
+print('\nFormatted:',
+      time.strftime("%a %b %d %H:%M:%S %Y", parsed))

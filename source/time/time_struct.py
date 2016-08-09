@@ -9,6 +9,7 @@
 
 import time
 
+
 def show_struct(s):
     print('  tm_year :', s.tm_year)
     print('  tm_mon  :', s.tm_mon)
