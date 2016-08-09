@@ -35,7 +35,7 @@ platform-dependent.
 
 	$ python3 time_time.py
 	
-	The time is: 1470780723.235209
+	The time is: 1470780871.120458
 
 .. {{{end}}}
 
@@ -58,8 +58,8 @@ The second :func:`print` call in this example shows how to use
 
 	$ python3 time_ctime.py
 	
-	The time is      : Tue Aug  9 18:12:03 2016
-	15 secs from now : Tue Aug  9 18:12:18 2016
+	The time is      : Tue Aug  9 18:14:31 2016
+	15 secs from now : Tue Aug  9 18:14:46 2016
 
 .. {{{end}}}
 
@@ -94,11 +94,11 @@ each iteration through the loop.
 
 	$ python3 time_clock.py
 	
-	Tue Aug  9 18:12:03 2016 : 1470780723.353 0.043
-	Tue Aug  9 18:12:03 2016 : 1470780723.891 0.573
-	Tue Aug  9 18:12:04 2016 : 1470780724.447 1.125
-	Tue Aug  9 18:12:04 2016 : 1470780724.933 1.609
-	Tue Aug  9 18:12:05 2016 : 1470780725.445 2.119
+	Tue Aug  9 18:14:31 2016 : 1470780871.206 0.029
+	Tue Aug  9 18:14:31 2016 : 1470780871.733 0.555
+	Tue Aug  9 18:14:32 2016 : 1470780872.312 1.103
+	Tue Aug  9 18:14:32 2016 : 1470780872.903 1.669
+	Tue Aug  9 18:14:33 2016 : 1470780873.500 2.263
 
 .. {{{end}}}
 
@@ -121,13 +121,13 @@ the application is asleep, but the :func:`clock` value does not.
 
 	$ python3 -u time_clock_sleep.py
 	
-	Tue Aug  9 18:12:05 2016 - 1470780725.98 - 0.03
+	Tue Aug  9 18:14:34 2016 - 1470780874.18 - 0.05
 	Sleeping 3
-	Tue Aug  9 18:12:08 2016 - 1470780728.98 - 0.03
+	Tue Aug  9 18:14:37 2016 - 1470780877.19 - 0.05
 	Sleeping 2
-	Tue Aug  9 18:12:10 2016 - 1470780730.99 - 0.03
+	Tue Aug  9 18:14:39 2016 - 1470780879.19 - 0.05
 	Sleeping 1
-	Tue Aug  9 18:12:11 2016 - 1470780731.99 - 0.03
+	Tue Aug  9 18:14:40 2016 - 1470780880.19 - 0.05
 
 .. {{{end}}}
 
@@ -168,8 +168,8 @@ converts it to the floating point representation.
 	  tm_mon  : 8
 	  tm_mday : 9
 	  tm_hour : 22
-	  tm_min  : 12
-	  tm_sec  : 12
+	  tm_min  : 14
+	  tm_sec  : 40
 	  tm_wday : 1
 	  tm_yday : 222
 	  tm_isdst: 0
@@ -179,13 +179,13 @@ converts it to the floating point representation.
 	  tm_mon  : 8
 	  tm_mday : 9
 	  tm_hour : 18
-	  tm_min  : 12
-	  tm_sec  : 12
+	  tm_min  : 14
+	  tm_sec  : 40
 	  tm_wday : 1
 	  tm_yday : 222
 	  tm_isdst: 1
 	
-	mktime: 1470780732.0
+	mktime: 1470780880.0
 
 .. {{{end}}}
 
@@ -227,23 +227,23 @@ flag, and timezone offset value.
 	Default :
 	  TZ    : (not set)
 	  tzname: ('EST', 'EDT')
-	  Zone  : 18000 (5)
+	  Zone  : 18000 (5.0)
 	  DST   : 1
-	  Time  : Tue Aug  9 18:12:12 2016
+	  Time  : Tue Aug  9 18:14:40 2016
 	
 	GMT :
 	  TZ    : GMT
 	  tzname: ('GMT', 'GMT')
-	  Zone  : 0 (0)
+	  Zone  : 0 (0.0)
 	  DST   : 0
-	  Time  : Tue Aug  9 22:12:12 2016
+	  Time  : Tue Aug  9 22:14:40 2016
 	
 	Europe/Amsterdam :
 	  TZ    : Europe/Amsterdam
 	  tzname: ('CET', 'CEST')
-	  Zone  : -3600 (-1)
+	  Zone  : -3600 (-1.0)
 	  DST   : 1
-	  Time  : Wed Aug 10 00:12:12 2016
+	  Time  : Wed Aug 10 00:14:40 2016
 	
 
 .. {{{end}}}
@@ -275,20 +275,20 @@ month is prefixed with a zero.
 
 	$ python3 time_strptime.py
 	
-	Now: Tue Aug  9 18:12:12 2016
+	Now: Tue Aug  9 18:14:40 2016
 	
 	Parsed:
 	  tm_year : 2016
 	  tm_mon  : 8
 	  tm_mday : 9
 	  tm_hour : 18
-	  tm_min  : 12
-	  tm_sec  : 12
+	  tm_min  : 14
+	  tm_sec  : 40
 	  tm_wday : 1
 	  tm_yday : 222
 	  tm_isdst: -1
 	
-	Formatted: Tue Aug 09 18:12:12 2016
+	Formatted: Tue Aug 09 18:14:40 2016
 
 .. {{{end}}}
 

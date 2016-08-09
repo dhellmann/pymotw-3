@@ -14,8 +14,8 @@ import os
 def show_zone_info():
     print('  TZ    :', os.environ.get('TZ', '(not set)'))
     print('  tzname:', time.tzname)
-    print('  Zone  : %d (%d)' % (time.timezone,
-                                 (time.timezone / 3600)))
+    print('  Zone  : {} ({})'.format(
+        time.timezone, (time.timezone / 3600)))
     print('  DST   :', time.daylight)
     print('  Time  :', time.ctime())
     print()
