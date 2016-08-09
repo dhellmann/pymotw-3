@@ -6,7 +6,6 @@
     :synopsis: Clock time
 
 :Purpose: Functions for manipulating clock time.
-:Python Version: 1.4 and later
 
 The :mod:`time` module exposes C library functions for manipulating
 dates and times.  Since it is tied to the underlying C implementation,

@@ -1,7 +1,7 @@
 Parsing and Formatting Times
 ============================
 
-The two functions :func:`strptime()` and :func:`strftime()` convert
+The two functions :func:`strptime` and :func:`strftime` convert
 between :class:`struct_time` and string representations of time
 values. There is a long list of formatting instructions available to
 support input and output in different styles. The complete list is
@@ -10,8 +10,8 @@ documented in the library documentation for the :mod:`time` module.
 This example converts the current time from a string to a
 :class:`struct_time` instance and back to a string.
 
-.. include:: time_strptime.py
-    :literal:
+.. literalinclude:: time_strptime.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The output string is not exactly like the input, since the day of the
