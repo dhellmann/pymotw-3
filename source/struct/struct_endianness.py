@@ -20,7 +20,7 @@ endianness = [
     ('<', 'little-endian'),
     ('>', 'big-endian'),
     ('!', 'network'),
-    ]
+]
 
 for code, name in endianness:
     s = struct.Struct(code + ' I 2s f')
