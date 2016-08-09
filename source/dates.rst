@@ -24,9 +24,6 @@ representations.
 .. toctree::
    :maxdepth: 1
 
-   calendar/index
-   datetime/index
-
-..
    time/index
    calendar/index
+   datetime/index
