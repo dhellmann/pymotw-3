@@ -32,7 +32,7 @@ To write data into a compressed file, open the file with mode ``'w'``.
 	$ python3 gzip_write.py
 	
 	application/x-gzip; charset=binary
-	example.txt.gz contains 68 bytes
+	example.txt.gz contains 75 bytes
 
 .. {{{end}}}
 
@@ -61,16 +61,16 @@ storage space.  Results will vary, depending on the input data.
 	Level  Size        Checksum
 	-----  ----------  ---------------------------------
 	data       754688  e4c0f9433723971563f08a458715119c
-	    0      754838  12772efbdd6e9a0819a7eb460b031d3d
-	    1        9839  80673fd7184114b68f4fabcbde4830ea
-	    2        8260  64f87f51eef1726664aa1516df520565
-	    3        8221  7d44cfc93028b114667dab39e6f829f8
-	    4        4160  b27d61a51f90c63a85e35eb89aba905a
-	    5        4160  9989b25c78fd02fefb79aba08e69cc30
-	    6        4160  4e43a94ffabdb315cc027a00b8cde19d
-	    7        4160  aa4b6aebbc8426b5b2043de3debdf068
-	    8        4160  13d96dcd4147a76e1a02462ab1f9211f
-	    9        4160  70254b1cc49da217dfe137309ed0cc71
+	    0      754848  7f050dafb281c7b9d30e5fccf4e0cf19
+	    1        9846  3b1708684b3655d136b8dca292f5bbba
+	    2        8267  48ceb436bf10bc6bbd60489eb285de27
+	    3        8227  4217663bf275f4241a8b73b1a1cfd734
+	    4        4167  1a5d9b968520d64ed10a4c125735d8b4
+	    5        4167  90d85bf6457c2eaf20307deb90d071c6
+	    6        4167  1798ac0cbd77d79973efd8e222bf85d8
+	    7        4167  7fe834b01c164a14c2d2d8e5560402e6
+	    8        4167  03795b47b899384cdb95f99c1b7f9f71
+	    9        4167  a33be56e455f8c787860f23c3b47b6f1
 
 .. {{{end}}}
 
@@ -128,7 +128,8 @@ previous section.
 
 	$ python3 gzip_read.py
 	
-	b'Contents of the example file go here.\n'
+	Contents of the example file go here.
+	
 
 .. {{{end}}}
 
@@ -197,7 +198,7 @@ the incremental decompression API in :mod:`zlib`.
 	e line, over and over.\nThe same line, over and over.\nThe same l
 	ine, over and over.\nThe same line, over and over.\n'
 	COMPRESSED: 51
-	b'1f8b0800d869a75702ff0bc94855284ecc4d55c8c9cc4bd551c82f4b2d5248c
+	b'1f8b08006149aa5702ff0bc94855284ecc4d55c8c9cc4bd551c82f4b2d5248c
 	c4b0133f4b8424665916401d3e717802c010000'
 	
 	REREAD: 300
