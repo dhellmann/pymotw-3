@@ -78,16 +78,13 @@ container type using one of the abstract base classes defined in
     enum/index
     collections/index
     array/index
+    heapq/index
     bisect/index
     queue/index
-    heapq/index
-    pprint/index
-    copy/index
-    weakref/index
-
-..
-    heapq/index
     struct/index
     weakref/index
+    pprint/index
     copy/index
+
+..
     types/index
