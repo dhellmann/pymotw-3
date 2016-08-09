@@ -310,6 +310,19 @@ The :func:`maketrans` function has been replaced by methods on
 :class:`str`, :class:`bytes`, and :class:`bytearray` to clarify which
 input types are supported by each translation table.
 
+.. _porting-struct:
+
+struct
+------
+
+.. index::
+   pair: porting; struct
+
+:func:`struct.pack` now only supports byte strings when using the
+``s`` string pack code, and no longer implicitly encodes string
+objects to UTF-8 (:pyissue:`10783`).
+
+
 thread
 ------
 

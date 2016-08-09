@@ -189,6 +189,8 @@ buffer needs to be.
 
    * :pydoc:`struct`
 
+   * :ref:`Porting notes for struct <porting-struct>`
+
    * :mod:`array` -- The ``array`` module, for working with sequences
      of fixed-type values.
 
