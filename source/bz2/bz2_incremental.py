@@ -9,12 +9,13 @@
 
 import bz2
 import binascii
+import io
 
 compressor = bz2.BZ2Compressor()
 
-with open('lorem.txt', 'r') as input:
+with open('lorem.txt', 'rb') as input:
     while True:
-        block = input.read(64).encode('utf-8')
+        block = input.read(64)
         if not block:
             break
         compressed = compressor.compress(block)

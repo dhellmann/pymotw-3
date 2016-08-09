@@ -270,7 +270,8 @@ previous section.
 
 	$ python3 bz2_file_read.py
 	
-	b'Contents of the example file go here.\n'
+	Contents of the example file go here.
+	
 
 .. {{{end}}}
     
@@ -307,10 +308,11 @@ Reading and Writing Unicode Data
 ================================
 
 The previous examples used :class:`BZ2File` directly and managed the
-encoding and decoding of Unicode text strings explicitly, where
-necessary. These extra steps can be avoided by using :func:`bz2.open`,
-which sets up an :class:`io.TextIOWrapper` to handle the encoding or
-decoding automatically.
+encoding and decoding of Unicode text strings inline with an
+:class:`io.TextIOWrapper`, where necessary. These extra steps can be
+avoided by using :func:`bz2.open`, which sets up an
+:class:`io.TextIOWrapper` to handle the encoding or decoding
+automatically.
 
 .. literalinclude:: bz2_unicode.py
    :caption:
@@ -377,7 +379,7 @@ Running ``bz2_server.py`` produces:
 
 	$ python3 bz2_server.py
 	
-	Client: Contacting server on 127.0.0.1:55479
+	Client: Contacting server on 127.0.0.1:57364
 	Client: sending filename: "lorem.txt"
 	Server: client asked for: "lorem.txt"
 	Server: RAW b'Lorem ipsum dolor sit amet, cons'
