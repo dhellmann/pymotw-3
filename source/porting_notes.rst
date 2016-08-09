@@ -332,6 +332,21 @@ thread
 The :mod:`thread` module has been removed.  Use the higher-level API
 in :mod:`threading` instead.
 
+.. _porting-time:
+
+time
+----
+
+.. index::
+   pair: porting; time
+
+:func:`time.asctime` and :func:`time.ctime` have been reimplemented to
+not use the system functions of the same time to allow larger years to
+be used. :func:`time.ctime` now supports years from 1900 through
+:data:`maxint`, although for values higher than ``9999`` the output
+string is longer than the standard 24 characters to allow for the
+extra year digits (:pyissue:`8013`).
+
 user
 ----
 

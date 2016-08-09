@@ -296,6 +296,8 @@ month is prefixed with a zero.
 
    * :pydoc:`time`
 
+   * :ref:`Porting notes for time <porting-time>`
+
    * :mod:`datetime` -- The ``datetime`` module includes other classes
      for doing calculations with dates and times.
 
