@@ -1,12 +1,11 @@
-==================================
- struct -- Binary Data Structures
-==================================
+===================================
+ struct --- Binary Data Structures
+===================================
 
 .. module:: struct
     :synopsis: Convert between strings and binary data.
 
 :Purpose: Convert between strings and binary data.
-:Python Version: 1.4 and later
 
 The :mod:`struct` module includes functions for converting between
 strings of bytes and native Python data types such as numbers and
