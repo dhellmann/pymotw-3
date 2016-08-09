@@ -38,8 +38,8 @@ two character string, and a floating point number.  The spaces in the
 format specifier are included to separate the type indicators, and are
 ignored when the format is compiled.
 
-.. include:: struct_pack.py
-    :literal:
+.. literalinclude:: struct_pack.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The example converts the packed value to a sequence of hex bytes for
@@ -63,8 +63,8 @@ nulls.
 
 Use :func:`unpack` to extract data from its packed representation.
 
-.. include:: struct_unpack.py
-    :literal:
+.. literalinclude:: struct_unpack.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Passing the packed value to :func:`unpack`, gives basically the same
@@ -90,8 +90,8 @@ By default, values are encoded using the native C library notion of
 *endianness*.  It is easy to override that choice by providing an
 explicit endianness directive in the format string.
 
-.. include:: struct_endianness.py
-    :literal:
+.. literalinclude:: struct_endianness.py
+    :caption:
     :start-after: #end_pymotw_header
 
 :table:`Byte Order Specifiers for struct` lists the byte order
@@ -156,8 +156,8 @@ overhead of allocating a new buffer for each packed structure.  The
 :meth:`pack_into` and :meth:`unpack_from` methods support writing to
 pre-allocated buffers directly.
 
-.. include:: struct_buffers.py
-    :literal:
+.. literalinclude:: struct_buffers.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The *size* attribute of the :class:`Struct` tells us how big the
