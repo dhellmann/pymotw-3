@@ -33,7 +33,7 @@ to the standard library documentation for a complete list of the
 supported format specifiers.
 
 In this example, the specifier calls for an integer or long value, a
-two character string, and a floating point number.  The spaces in the
+two byte string, and a floating point number.  The spaces in the
 format specifier are included to separate the type indicators, and are
 ignored when the format is compiled.
 
@@ -187,14 +187,14 @@ buffer needs to be.
 
 .. seealso::
 
-    `struct <http://docs.python.org/library/struct.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`struct`
 
-    :mod:`array`
-        The ``array`` module, for working with sequences of fixed-type values.
+   * :mod:`array` -- The ``array`` module, for working with sequences
+     of fixed-type values.
 
-    :mod:`binascii`
-        The ``binascii`` module, for producing ASCII representations of binary data.
+   * :mod:`binascii` -- The ``binascii`` module, for producing ASCII
+     representations of binary data.
 
-    `WikiPedia: Endianness <http://en.wikipedia.org/wiki/Endianness>`_
-        Explanation of byte order and endianness in encoding.
+   * `WikiPedia: Endianness
+     <http://en.wikipedia.org/wiki/Endianness>`_ -- Explanation of
+     byte order and endianness in encoding.
