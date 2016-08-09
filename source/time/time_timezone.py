@@ -11,15 +11,15 @@ import time
 import os
 
 def show_zone_info():
-    print '  TZ    :', os.environ.get('TZ', '(not set)')
-    print '  tzname:', time.tzname
-    print '  Zone  : %d (%d)' % (time.timezone,
+    print('  TZ    :', os.environ.get('TZ', '(not set)'))
+    print('  tzname:', time.tzname)
+    print('  Zone  : %d (%d)' % (time.timezone,)
                                  (time.timezone / 3600))
-    print '  DST   :', time.daylight
-    print '  Time  :', time.ctime()
-    print
+    print('  DST   :', time.daylight)
+    print('  Time  :', time.ctime())
+    print()
 
-print 'Default :'
+print('Default :')
 show_zone_info()
 
 ZONES = [ 'GMT',
@@ -29,5 +29,5 @@ ZONES = [ 'GMT',
 for zone in ZONES:
     os.environ['TZ'] = zone
     time.tzset()
-    print zone, ':'
+    print(zone, ':')
     show_zone_info()

@@ -9,4 +9,4 @@
 
 import time
 
-print 'The time is:', time.time()
+print('The time is:', time.time())
