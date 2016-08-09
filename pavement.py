@@ -343,7 +343,7 @@ def common_cleanups(options):
     sh('sed -i "" -e "s/.. include::/.. literalinclude::/g" source/%s/*.rst' % module)
     sh('sed -i "" -e "s/:literal:/:caption:/g" source/%s/*.rst' % module)
     sh("sed -i '' -e 's|#!/usr/bin/env python$|#!/usr/bin/env python3|' source/%s/*.py" % module)
-
+    sh("sed -i '' -e '/__version__ = \"$Id$\"/d' source/%s/*.py" % module)
 
 @task
 def print_cleanups(options):
