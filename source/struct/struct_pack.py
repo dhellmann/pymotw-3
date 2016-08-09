@@ -11,7 +11,7 @@
 import struct
 import binascii
 
-values = (1, 'ab', 2.7)
+values = (1, 'ab'.encode('utf-8'), 2.7)
 s = struct.Struct('I 2s f')
 packed_data = s.pack(*values)
 

@@ -13,7 +13,7 @@ import ctypes
 import struct
 
 s = struct.Struct('I 2s f')
-values = (1, 'ab', 2.7)
+values = (1, 'ab'.encode('utf-8'), 2.7)
 print('Original:', values)
 
 print()
@@ -28,7 +28,7 @@ print('Unpacked:', s.unpack_from(b, 0))
 print()
 print('array')
 
-a = array.array('c', '\0' * s.size)
+a = array.array('b', b'\0' * s.size)
 print('Before  :', binascii.hexlify(a))
 s.pack_into(a, 0, *values)
 print('After   :', binascii.hexlify(a))
