@@ -31,14 +31,13 @@ platform-dependent.
 .. cog.out(run_script(cog.inFile, 'time_time.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python time_time.py
+	$ python3 time_time.py
 	
-	The time is: 1291499267.33
+	The time is: 1470780723.235209
 
 .. {{{end}}}
-
 
 The float representation is useful when storing or comparing dates,
 but not as useful for producing human readable representations. For
@@ -48,19 +47,19 @@ logging or printing time :func:`ctime` can be more useful.
     :caption:
     :start-after: #end_pymotw_header
 
-The second :command:`print` statement in this example shows how to use
+The second :func:`print` call in this example shows how to use
 :func:`ctime` to format a time value other than the current time.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'time_ctime.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python time_ctime.py
+	$ python3 time_ctime.py
 	
-	The time is      : Sat Dec  4 16:47:47 2010
-	15 secs from now : Sat Dec  4 16:48:02 2010
+	The time is      : Tue Aug  9 18:12:03 2016
+	15 secs from now : Tue Aug  9 18:12:18 2016
 
 .. {{{end}}}
 
@@ -91,15 +90,15 @@ each iteration through the loop.
 .. cog.out(run_script(cog.inFile, 'time_clock.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python time_clock.py
+	$ python3 time_clock.py
 	
-	Sat Dec  4 16:47:47 2010 : 1291499267.446 0.028
-	Sat Dec  4 16:47:48 2010 : 1291499268.844 1.413
-	Sat Dec  4 16:47:50 2010 : 1291499270.247 2.794
-	Sat Dec  4 16:47:51 2010 : 1291499271.658 4.171
-	Sat Dec  4 16:47:53 2010 : 1291499273.128 5.549
+	Tue Aug  9 18:12:03 2016 : 1470780723.353 0.043
+	Tue Aug  9 18:12:03 2016 : 1470780723.891 0.573
+	Tue Aug  9 18:12:04 2016 : 1470780724.447 1.125
+	Tue Aug  9 18:12:04 2016 : 1470780724.933 1.609
+	Tue Aug  9 18:12:05 2016 : 1470780725.445 2.119
 
 .. {{{end}}}
 
@@ -115,23 +114,20 @@ after each iteration. The :func:`time` value increases even while
 the application is asleep, but the :func:`clock` value does not.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'time_clock_sleep.py'))
+.. cog.out(run_script(cog.inFile, '-u time_clock_sleep.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python time_clock_sleep.py
+	$ python3 -u time_clock_sleep.py
 	
-	Sat Dec  4 16:47:54 2010 1291499274.65 0.03
-	Sleeping 6
-	Sat Dec  4 16:48:00 2010 1291499280.65 0.03
-	Sleeping 5
-	Sat Dec  4 16:48:05 2010 1291499285.65 0.03
-	Sleeping 4
-	Sat Dec  4 16:48:09 2010 1291499289.66 0.03
+	Tue Aug  9 18:12:05 2016 - 1470780725.98 - 0.03
 	Sleeping 3
-	Sat Dec  4 16:48:12 2010 1291499292.66 0.03
+	Tue Aug  9 18:12:08 2016 - 1470780728.98 - 0.03
 	Sleeping 2
+	Tue Aug  9 18:12:10 2016 - 1470780730.99 - 0.03
+	Sleeping 1
+	Tue Aug  9 18:12:11 2016 - 1470780731.99 - 0.03
 
 .. {{{end}}}
 
@@ -163,34 +159,33 @@ converts it to the floating point representation.
 .. cog.out(run_script(cog.inFile, 'time_struct.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python time_struct.py
+	$ python3 time_struct.py
 	
 	gmtime:
-	  tm_year : 2010
-	  tm_mon  : 12
-	  tm_mday : 4
-	  tm_hour : 21
-	  tm_min  : 48
-	  tm_sec  : 14
-	  tm_wday : 5
-	  tm_yday : 338
+	  tm_year : 2016
+	  tm_mon  : 8
+	  tm_mday : 9
+	  tm_hour : 22
+	  tm_min  : 12
+	  tm_sec  : 12
+	  tm_wday : 1
+	  tm_yday : 222
 	  tm_isdst: 0
 	
 	localtime:
-	  tm_year : 2010
-	  tm_mon  : 12
-	  tm_mday : 4
-	  tm_hour : 16
-	  tm_min  : 48
-	  tm_sec  : 14
-	  tm_wday : 5
-	  tm_yday : 338
-	  tm_isdst: 0
+	  tm_year : 2016
+	  tm_mon  : 8
+	  tm_mday : 9
+	  tm_hour : 18
+	  tm_min  : 12
+	  tm_sec  : 12
+	  tm_wday : 1
+	  tm_yday : 222
+	  tm_isdst: 1
 	
-	mktime: 1291499294.0
-	
+	mktime: 1470780732.0
 
 .. {{{end}}}
 
@@ -225,30 +220,30 @@ flag, and timezone offset value.
 .. cog.out(run_script(cog.inFile, 'time_timezone.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python time_timezone.py
+	$ python3 time_timezone.py
 	
 	Default :
 	  TZ    : (not set)
 	  tzname: ('EST', 'EDT')
 	  Zone  : 18000 (5)
 	  DST   : 1
-	  Time  : Sat Dec  4 16:48:14 2010
+	  Time  : Tue Aug  9 18:12:12 2016
 	
 	GMT :
 	  TZ    : GMT
 	  tzname: ('GMT', 'GMT')
 	  Zone  : 0 (0)
 	  DST   : 0
-	  Time  : Sat Dec  4 21:48:14 2010
+	  Time  : Tue Aug  9 22:12:12 2016
 	
 	Europe/Amsterdam :
 	  TZ    : Europe/Amsterdam
 	  tzname: ('CET', 'CEST')
 	  Zone  : -3600 (-1)
 	  DST   : 1
-	  Time  : Sat Dec  4 22:48:15 2010
+	  Time  : Wed Aug 10 00:12:12 2016
 	
 
 .. {{{end}}}
@@ -276,24 +271,24 @@ month is prefixed with a zero.
 .. cog.out(run_script(cog.inFile, 'time_strptime.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python time_strptime.py
+	$ python3 time_strptime.py
 	
-	Now: Sat Dec  4 16:48:14 2010
+	Now: Tue Aug  9 18:12:12 2016
 	
 	Parsed:
-	  tm_year : 2010
-	  tm_mon  : 12
-	  tm_mday : 4
-	  tm_hour : 16
-	  tm_min  : 48
-	  tm_sec  : 14
-	  tm_wday : 5
-	  tm_yday : 338
+	  tm_year : 2016
+	  tm_mon  : 8
+	  tm_mday : 9
+	  tm_hour : 18
+	  tm_min  : 12
+	  tm_sec  : 12
+	  tm_wday : 1
+	  tm_yday : 222
 	  tm_isdst: -1
 	
-	Formatted: Sat Dec 04 16:48:14 2010
+	Formatted: Tue Aug 09 18:12:12 2016
 
 .. {{{end}}}
 

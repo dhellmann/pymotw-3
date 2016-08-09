@@ -11,7 +11,7 @@ import hashlib
 import time
 
 # Data to use to calculate md5 checksums
-data = open(__file__, 'rt').read()
+data = open(__file__, 'rb').read()
 
 for i in range(5):
     h = hashlib.sha1()

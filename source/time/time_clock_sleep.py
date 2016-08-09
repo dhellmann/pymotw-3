@@ -9,9 +9,15 @@
 
 import time
 
-for i in range(6, 1, -1):
-    print('{} {:0.2f} {:0.2f}'.format(
-        time.ctime(), time.time(), time.clock())
-    )
+template = '{} - {:0.2f} - {:0.2f}'
+
+print(template.format(
+    time.ctime(), time.time(), time.clock())
+)
+
+for i in range(3, 0, -1):
     print('Sleeping', i)
     time.sleep(i)
+    print(template.format(
+        time.ctime(), time.time(), time.clock())
+    )
