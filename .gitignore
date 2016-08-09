@@ -33,3 +33,4 @@ dist/
 /source/zipfile/write_compression.zip
 /source/zipfile/writestr.zip
 /source/zipfile/writestr_zipinfo.zip
+/source/bz2/compress-level-*.bz2
