@@ -45,8 +45,8 @@ is an alternative to repeatedly sorting a list that changes
 frequently.
 
 Although the built-in :class:`list` can simulate a queue using the
-:func:`insert()` and :func:`pop()` methods, it is not thread-safe.  For
-true ordered communication between threads use the :mod:`Queue`
+:func:`insert` and :func:`pop` methods, it is not thread-safe.  For
+true ordered communication between threads use the :mod:`queue`
 module.  :mod:`multiprocessing` includes a version of a :class:`Queue`
 that works between processes, making it easier to convert a
 multi-threaded program to use processes instead.
