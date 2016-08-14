@@ -1,6 +1,6 @@
-==========================================
- decimal -- Fixed and Floating Point Math
-==========================================
+===========================================
+ decimal --- Fixed and Floating Point Math
+===========================================
 
 .. module:: decimal
     :synopsis: Fixed and floating point math
@@ -233,7 +233,8 @@ maintained as described.
     :caption:
     :start-after: #end_pymotw_header
 
-To change the precision, assign a new value directly to the attribute.
+To change the precision, assign a new value between ``1`` and
+:data:`decimal.MAX_PREC` directly to the attribute.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'decimal_precision.py'))
@@ -257,7 +258,7 @@ Rounding
 There are several options for rounding to keep values within the
 desired precision.
 
-:const:`ROUND_CEILING`  
+:const:`ROUND_CEILING`
   Always round upwards towards infinity.
 
 :const:`ROUND_DOWN`
@@ -324,8 +325,8 @@ levels of precision using the different algorithms.
 Local Context
 -------------
 
-Using Python 2.5 or later, the context can be applied to a block of
-code using the :command:`with` statement.
+The context can be applied to a block of code using the
+:command:`with` statement.
 
 .. literalinclude:: decimal_context_manager.py
     :caption:
@@ -410,11 +411,13 @@ it within each thread.
 
 .. seealso::
 
-    `decimal <http://docs.python.org/library/decimal.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`decimal`
 
-    `Wikipedia: Floating Point <http://en.wikipedia.org/wiki/Floating_point>`_
-        Article on floating point representations and arithmetic.
+   * `Wikipedia: Floating Point
+     <http://en.wikipedia.org/wiki/Floating_point>`_ -- Article on
+     floating point representations and arithmetic.
 
-    `Floating Point Arithmetic: Issues and Limitations <http://docs.python.org/tutorial/floatingpoint.html>`__
-        Article from the Python tutorial describing floating point math representation issues.
+   * `Floating Point Arithmetic: Issues and Limitations
+     <http://docs.python.org/tutorial/floatingpoint.html>`__ --
+     Article from the Python tutorial describing floating point math
+     representation issues.
