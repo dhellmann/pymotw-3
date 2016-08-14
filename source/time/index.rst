@@ -54,35 +54,35 @@ clocks are implemented using the same underlying system call.
 	    implementation: clock()
 	    monotonic     : True
 	    resolution    : 1e-06
-	    current       : 0.026674
+	    current       : 0.028399
 	
 	monotonic:
 	    adjustable    : False
 	    implementation: mach_absolute_time()
 	    monotonic     : True
 	    resolution    : 1e-09
-	    current       : 167656.825832371
+	    current       : 172336.002232467
 	
 	perf_counter:
 	    adjustable    : False
 	    implementation: mach_absolute_time()
 	    monotonic     : True
 	    resolution    : 1e-09
-	    current       : 167656.825862455
+	    current       : 172336.002280763
 	
 	process_time:
 	    adjustable    : False
 	    implementation: getrusage(RUSAGE_SELF)
 	    monotonic     : True
 	    resolution    : 1e-06
-	    current       : 0.026795999999999997
+	    current       : 0.028593
 	
 	time:
 	    adjustable    : True
 	    implementation: gettimeofday()
 	    monotonic     : False
 	    resolution    : 1e-06
-	    current       : 1471193552.6436
+	    current       : 1471198232.045526
 	
 
 .. {{{end}}}
@@ -110,7 +110,7 @@ actual precision is platform-dependent.
 
 	$ python3 time_time.py
 	
-	The time is: 1471193552.688165
+	The time is: 1471198232.091589
 
 .. {{{end}}}
 
@@ -133,8 +133,8 @@ The second :func:`print` call in this example shows how to use
 
 	$ python3 time_ctime.py
 	
-	The time is      : Sun Aug 14 12:52:32 2016
-	15 secs from now : Sun Aug 14 12:52:47 2016
+	The time is      : Sun Aug 14 14:10:32 2016
+	15 secs from now : Sun Aug 14 14:10:47 2016
 
 .. {{{end}}}
 
@@ -166,8 +166,8 @@ values. In this example the duration of the sleep is measured using
 
 	$ python3 time_monotonic.py
 	
-	start : 167656.96
-	end   : 167657.06
+	start : 172336.14
+	end   : 172336.24
 	span  :      0.10
 
 .. {{{end}}}
@@ -201,11 +201,11 @@ each iteration through the loop.
 
 	$ python3 time_clock.py
 	
-	Sun Aug 14 12:52:32 2016 : 1471193552.916 0.027
-	Sun Aug 14 12:52:33 2016 : 1471193553.287 0.397
-	Sun Aug 14 12:52:33 2016 : 1471193553.653 0.761
-	Sun Aug 14 12:52:34 2016 : 1471193554.040 1.144
-	Sun Aug 14 12:52:34 2016 : 1471193554.432 1.531
+	Sun Aug 14 14:10:32 2016 : 1471198232.327 0.033
+	Sun Aug 14 14:10:32 2016 : 1471198232.705 0.409
+	Sun Aug 14 14:10:33 2016 : 1471198233.086 0.787
+	Sun Aug 14 14:10:33 2016 : 1471198233.466 1.166
+	Sun Aug 14 14:10:33 2016 : 1471198233.842 1.540
 
 .. {{{end}}}
 
@@ -228,19 +228,51 @@ the application is asleep, but the :func:`clock` value does not.
 
 	$ python3 -u time_clock_sleep.py
 	
-	Sun Aug 14 12:52:34 2016 - 1471193554.87 - 0.03
+	Sun Aug 14 14:10:34 2016 - 1471198234.28 - 0.03
 	Sleeping 3
-	Sun Aug 14 12:52:37 2016 - 1471193557.87 - 0.03
+	Sun Aug 14 14:10:37 2016 - 1471198237.28 - 0.03
 	Sleeping 2
-	Sun Aug 14 12:52:39 2016 - 1471193559.87 - 0.03
+	Sun Aug 14 14:10:39 2016 - 1471198239.29 - 0.03
 	Sleeping 1
-	Sun Aug 14 12:52:40 2016 - 1471193560.87 - 0.03
+	Sun Aug 14 14:10:40 2016 - 1471198240.29 - 0.03
 
 .. {{{end}}}
 
 Calling :func:`sleep` yields control from the current thread and
 asks it to wait for the system to wake it back up. If a program has
 only one thread, this effectively blocks the app and it does no work.
+
+Performance Counter
+===================
+
+It is important to have a high-resolution monotonic clock for
+measuring performance. Determining the best clock data source requires
+platform-specific knowledge, which Python provides in
+:func:`perf_counter`.
+
+.. literalinclude:: time_perf_counter.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+As with :func:`monotonic`, the epoch for :func:`perf_counter` is
+undefined, and the values are meant to be used for comparing and
+computing values, not as absolute times.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'time_perf_counter.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 time_perf_counter.py
+	
+	Sun Aug 14 14:10:40 2016 : 0.487 0.487
+	Sun Aug 14 14:10:41 2016 : 0.485 0.973
+	Sun Aug 14 14:10:41 2016 : 0.494 1.466
+	Sun Aug 14 14:10:42 2016 : 0.487 1.953
+	Sun Aug 14 14:10:42 2016 : 0.480 2.434
+
+.. {{{end}}}
 
 Time Components
 ===============
@@ -273,9 +305,9 @@ converts it to the floating point representation.
 	  tm_year : 2016
 	  tm_mon  : 8
 	  tm_mday : 14
-	  tm_hour : 16
-	  tm_min  : 52
-	  tm_sec  : 40
+	  tm_hour : 18
+	  tm_min  : 10
+	  tm_sec  : 42
 	  tm_wday : 6
 	  tm_yday : 227
 	  tm_isdst: 0
@@ -284,14 +316,14 @@ converts it to the floating point representation.
 	  tm_year : 2016
 	  tm_mon  : 8
 	  tm_mday : 14
-	  tm_hour : 12
-	  tm_min  : 52
-	  tm_sec  : 40
+	  tm_hour : 14
+	  tm_min  : 10
+	  tm_sec  : 42
 	  tm_wday : 6
 	  tm_yday : 227
 	  tm_isdst: 1
 	
-	mktime: 1471193560.0
+	mktime: 1471198242.0
 
 .. {{{end}}}
 
@@ -335,21 +367,21 @@ flag, and timezone offset value.
 	  tzname: ('EST', 'EDT')
 	  Zone  : 18000 (5.0)
 	  DST   : 1
-	  Time  : Sun Aug 14 12:52:40 2016
+	  Time  : Sun Aug 14 14:10:42 2016
 	
 	GMT :
 	  TZ    : GMT
 	  tzname: ('GMT', 'GMT')
 	  Zone  : 0 (0.0)
 	  DST   : 0
-	  Time  : Sun Aug 14 16:52:40 2016
+	  Time  : Sun Aug 14 18:10:42 2016
 	
 	Europe/Amsterdam :
 	  TZ    : Europe/Amsterdam
 	  tzname: ('CET', 'CEST')
 	  Zone  : -3600 (-1.0)
 	  DST   : 1
-	  Time  : Sun Aug 14 18:52:40 2016
+	  Time  : Sun Aug 14 20:10:42 2016
 	
 
 .. {{{end}}}
@@ -381,20 +413,20 @@ month is prefixed with a zero.
 
 	$ python3 time_strptime.py
 	
-	Now: Sun Aug 14 12:52:40 2016
+	Now: Sun Aug 14 14:10:42 2016
 	
 	Parsed:
 	  tm_year : 2016
 	  tm_mon  : 8
 	  tm_mday : 14
-	  tm_hour : 12
-	  tm_min  : 52
-	  tm_sec  : 40
+	  tm_hour : 14
+	  tm_min  : 10
+	  tm_sec  : 42
 	  tm_wday : 6
 	  tm_yday : 227
 	  tm_isdst: -1
 	
-	Formatted: Sun Aug 14 12:52:40 2016
+	Formatted: Sun Aug 14 14:10:42 2016
 
 .. {{{end}}}
 
