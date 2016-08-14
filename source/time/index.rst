@@ -89,15 +89,16 @@ Wall Clock Time
 ===============
 
 One of the core functions of the :mod:`time` module is :func:`time`,
-which returns the number of seconds since the start of the epoch as a
-floating point value.
+which returns the number of seconds since the start of the "epoch" as
+a floating point value.
 
 .. literalinclude:: time_time.py
     :caption:
     :start-after: #end_pymotw_header
 
-Although the value is always a float, actual precision is
-platform-dependent.
+The epoch is the start of measurement for time, which for UNIX systems
+is 0:00 on January 1, 1970. Although the value is always a float,
+actual precision is platform-dependent.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'time_time.py'))
@@ -107,7 +108,7 @@ platform-dependent.
 
 	$ python3 time_time.py
 	
-	The time is: 1470780871.120458
+	The time is: 1471192650.206087
 
 .. {{{end}}}
 
@@ -130,19 +131,18 @@ The second :func:`print` call in this example shows how to use
 
 	$ python3 time_ctime.py
 	
-	The time is      : Tue Aug  9 18:14:31 2016
-	15 secs from now : Tue Aug  9 18:14:46 2016
+	The time is      : Sun Aug 14 12:37:30 2016
+	15 secs from now : Sun Aug 14 12:37:45 2016
 
 .. {{{end}}}
 
 Processor Clock Time
 ====================
 
-While :func:`time` returns a wall clock time, :func:`clock`
-returns processor clock time.  The values returned from
-:func:`clock` should be used for performance testing, benchmarking,
-etc. since they reflect the actual time used by the program, and can
-be more precise than the values from :func:`time`.
+While :func:`time` returns a wall clock time, :func:`clock` returns
+processor clock time.  The values returned from :func:`clock` reflect
+the actual time used by the program, and can be more precise than the
+values from :func:`time`.
 
 .. literalinclude:: time_clock.py
     :caption:
@@ -166,11 +166,11 @@ each iteration through the loop.
 
 	$ python3 time_clock.py
 	
-	Tue Aug  9 18:14:31 2016 : 1470780871.206 0.029
-	Tue Aug  9 18:14:31 2016 : 1470780871.733 0.555
-	Tue Aug  9 18:14:32 2016 : 1470780872.312 1.103
-	Tue Aug  9 18:14:32 2016 : 1470780872.903 1.669
-	Tue Aug  9 18:14:33 2016 : 1470780873.500 2.263
+	Sun Aug 14 12:37:30 2016 : 1471192650.310 0.032
+	Sun Aug 14 12:37:30 2016 : 1471192650.796 0.496
+	Sun Aug 14 12:37:31 2016 : 1471192651.336 0.989
+	Sun Aug 14 12:37:31 2016 : 1471192651.737 1.378
+	Sun Aug 14 12:37:32 2016 : 1471192652.232 1.833
 
 .. {{{end}}}
 
@@ -193,16 +193,15 @@ the application is asleep, but the :func:`clock` value does not.
 
 	$ python3 -u time_clock_sleep.py
 	
-	Tue Aug  9 18:14:34 2016 - 1470780874.18 - 0.05
+	Sun Aug 14 12:37:32 2016 - 1471192652.74 - 0.05
 	Sleeping 3
-	Tue Aug  9 18:14:37 2016 - 1470780877.19 - 0.05
+	Sun Aug 14 12:37:35 2016 - 1471192655.74 - 0.05
 	Sleeping 2
-	Tue Aug  9 18:14:39 2016 - 1470780879.19 - 0.05
+	Sun Aug 14 12:37:37 2016 - 1471192657.74 - 0.05
 	Sleeping 1
-	Tue Aug  9 18:14:40 2016 - 1470780880.19 - 0.05
+	Sun Aug 14 12:37:38 2016 - 1471192658.74 - 0.05
 
 .. {{{end}}}
-
 
 Calling :func:`sleep` yields control from the current thread and
 asks it to wait for the system to wake it back up. If a program has
@@ -238,26 +237,26 @@ converts it to the floating point representation.
 	gmtime:
 	  tm_year : 2016
 	  tm_mon  : 8
-	  tm_mday : 9
-	  tm_hour : 22
-	  tm_min  : 14
-	  tm_sec  : 40
-	  tm_wday : 1
-	  tm_yday : 222
+	  tm_mday : 14
+	  tm_hour : 16
+	  tm_min  : 37
+	  tm_sec  : 38
+	  tm_wday : 6
+	  tm_yday : 227
 	  tm_isdst: 0
 	
 	localtime:
 	  tm_year : 2016
 	  tm_mon  : 8
-	  tm_mday : 9
-	  tm_hour : 18
-	  tm_min  : 14
-	  tm_sec  : 40
-	  tm_wday : 1
-	  tm_yday : 222
+	  tm_mday : 14
+	  tm_hour : 12
+	  tm_min  : 37
+	  tm_sec  : 38
+	  tm_wday : 6
+	  tm_yday : 227
 	  tm_isdst: 1
 	
-	mktime: 1470780880.0
+	mktime: 1471192658.0
 
 .. {{{end}}}
 
@@ -301,21 +300,21 @@ flag, and timezone offset value.
 	  tzname: ('EST', 'EDT')
 	  Zone  : 18000 (5.0)
 	  DST   : 1
-	  Time  : Tue Aug  9 18:14:40 2016
+	  Time  : Sun Aug 14 12:37:38 2016
 	
 	GMT :
 	  TZ    : GMT
 	  tzname: ('GMT', 'GMT')
 	  Zone  : 0 (0.0)
 	  DST   : 0
-	  Time  : Tue Aug  9 22:14:40 2016
+	  Time  : Sun Aug 14 16:37:38 2016
 	
 	Europe/Amsterdam :
 	  TZ    : Europe/Amsterdam
 	  tzname: ('CET', 'CEST')
 	  Zone  : -3600 (-1.0)
 	  DST   : 1
-	  Time  : Wed Aug 10 00:14:40 2016
+	  Time  : Sun Aug 14 18:37:38 2016
 	
 
 .. {{{end}}}
@@ -347,20 +346,20 @@ month is prefixed with a zero.
 
 	$ python3 time_strptime.py
 	
-	Now: Tue Aug  9 18:14:40 2016
+	Now: Sun Aug 14 12:37:38 2016
 	
 	Parsed:
 	  tm_year : 2016
 	  tm_mon  : 8
-	  tm_mday : 9
-	  tm_hour : 18
-	  tm_min  : 14
-	  tm_sec  : 40
-	  tm_wday : 1
-	  tm_yday : 222
+	  tm_mday : 14
+	  tm_hour : 12
+	  tm_min  : 37
+	  tm_sec  : 38
+	  tm_wday : 6
+	  tm_yday : 227
 	  tm_isdst: -1
 	
-	Formatted: Tue Aug 09 18:14:40 2016
+	Formatted: Sun Aug 14 12:37:38 2016
 
 .. {{{end}}}
 
