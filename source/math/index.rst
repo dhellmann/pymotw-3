@@ -129,6 +129,35 @@ check for ``NaN`` use :func:`isnan`.
 
 .. {{{end}}}
 
+Use :func:`isfinite` to check for regular numbers or either of the
+special values ``INF`` or ``NaN``.
+
+.. literalinclude:: math_isfinite.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+:func:`isfinite` returns false for either of the exceptional cases,
+and true otherwise.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'math_isfinite.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 math_isfinite.py
+	
+	 0.00 True
+	 1.00 True
+	 3.14 True
+	 2.72 True
+	  inf False
+	  nan False
+
+.. {{{end}}}
+
+
+
 Converting to Integers
 ======================
 
