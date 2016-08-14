@@ -52,35 +52,35 @@ clocks are implemented using the same underlying system call.
 	    implementation: clock()
 	    monotonic     : True
 	    resolution    : 1e-06
-	    current       : 0.05215
+	    current       : 0.026674
 	
 	monotonic:
 	    adjustable    : False
 	    implementation: mach_absolute_time()
 	    monotonic     : True
 	    resolution    : 1e-09
-	    current       : 166754.365673198
+	    current       : 167656.825832371
 	
 	perf_counter:
 	    adjustable    : False
 	    implementation: mach_absolute_time()
 	    monotonic     : True
 	    resolution    : 1e-09
-	    current       : 166754.365742242
+	    current       : 167656.825862455
 	
 	process_time:
 	    adjustable    : False
 	    implementation: getrusage(RUSAGE_SELF)
 	    monotonic     : True
 	    resolution    : 1e-06
-	    current       : 0.052395
+	    current       : 0.026795999999999997
 	
 	time:
 	    adjustable    : True
 	    implementation: gettimeofday()
 	    monotonic     : False
 	    resolution    : 1e-06
-	    current       : 1471192650.140421
+	    current       : 1471193552.6436
 	
 
 .. {{{end}}}
@@ -108,7 +108,7 @@ actual precision is platform-dependent.
 
 	$ python3 time_time.py
 	
-	The time is: 1471192650.206087
+	The time is: 1471193552.688165
 
 .. {{{end}}}
 
@@ -131,8 +131,42 @@ The second :func:`print` call in this example shows how to use
 
 	$ python3 time_ctime.py
 	
-	The time is      : Sun Aug 14 12:37:30 2016
-	15 secs from now : Sun Aug 14 12:37:45 2016
+	The time is      : Sun Aug 14 12:52:32 2016
+	15 secs from now : Sun Aug 14 12:52:47 2016
+
+.. {{{end}}}
+
+Monotonic Clocks
+================
+
+Because :func:`time` looks at the system clock, and the system clock
+can be changed by the user or system services for synchronizing clocks
+across multiple computers, calling :func:`time` repeatedly may produce
+values that go forwards and backwards. This can produce unexpected
+results when trying to measure the duration of a program run. Avoid
+those situations by using :func:`monotonic`, which always returns
+values that go forward.
+
+.. literalinclude:: time_monotonic.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The start point for the monotonic clock is not defined, so return
+values are only useful for doing calculations with other clock
+values. In this example the duration of the sleep is measured using
+:func:`monotonic`.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'time_monotonic.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 time_monotonic.py
+	
+	start : 167656.96
+	end   : 167657.06
+	span  :      0.10
 
 .. {{{end}}}
 
@@ -166,11 +200,11 @@ each iteration through the loop.
 
 	$ python3 time_clock.py
 	
-	Sun Aug 14 12:37:30 2016 : 1471192650.310 0.032
-	Sun Aug 14 12:37:30 2016 : 1471192650.796 0.496
-	Sun Aug 14 12:37:31 2016 : 1471192651.336 0.989
-	Sun Aug 14 12:37:31 2016 : 1471192651.737 1.378
-	Sun Aug 14 12:37:32 2016 : 1471192652.232 1.833
+	Sun Aug 14 12:52:32 2016 : 1471193552.916 0.027
+	Sun Aug 14 12:52:33 2016 : 1471193553.287 0.397
+	Sun Aug 14 12:52:33 2016 : 1471193553.653 0.761
+	Sun Aug 14 12:52:34 2016 : 1471193554.040 1.144
+	Sun Aug 14 12:52:34 2016 : 1471193554.432 1.531
 
 .. {{{end}}}
 
@@ -193,13 +227,13 @@ the application is asleep, but the :func:`clock` value does not.
 
 	$ python3 -u time_clock_sleep.py
 	
-	Sun Aug 14 12:37:32 2016 - 1471192652.74 - 0.05
+	Sun Aug 14 12:52:34 2016 - 1471193554.87 - 0.03
 	Sleeping 3
-	Sun Aug 14 12:37:35 2016 - 1471192655.74 - 0.05
+	Sun Aug 14 12:52:37 2016 - 1471193557.87 - 0.03
 	Sleeping 2
-	Sun Aug 14 12:37:37 2016 - 1471192657.74 - 0.05
+	Sun Aug 14 12:52:39 2016 - 1471193559.87 - 0.03
 	Sleeping 1
-	Sun Aug 14 12:37:38 2016 - 1471192658.74 - 0.05
+	Sun Aug 14 12:52:40 2016 - 1471193560.87 - 0.03
 
 .. {{{end}}}
 
@@ -239,8 +273,8 @@ converts it to the floating point representation.
 	  tm_mon  : 8
 	  tm_mday : 14
 	  tm_hour : 16
-	  tm_min  : 37
-	  tm_sec  : 38
+	  tm_min  : 52
+	  tm_sec  : 40
 	  tm_wday : 6
 	  tm_yday : 227
 	  tm_isdst: 0
@@ -250,13 +284,13 @@ converts it to the floating point representation.
 	  tm_mon  : 8
 	  tm_mday : 14
 	  tm_hour : 12
-	  tm_min  : 37
-	  tm_sec  : 38
+	  tm_min  : 52
+	  tm_sec  : 40
 	  tm_wday : 6
 	  tm_yday : 227
 	  tm_isdst: 1
 	
-	mktime: 1471192658.0
+	mktime: 1471193560.0
 
 .. {{{end}}}
 
@@ -300,21 +334,21 @@ flag, and timezone offset value.
 	  tzname: ('EST', 'EDT')
 	  Zone  : 18000 (5.0)
 	  DST   : 1
-	  Time  : Sun Aug 14 12:37:38 2016
+	  Time  : Sun Aug 14 12:52:40 2016
 	
 	GMT :
 	  TZ    : GMT
 	  tzname: ('GMT', 'GMT')
 	  Zone  : 0 (0.0)
 	  DST   : 0
-	  Time  : Sun Aug 14 16:37:38 2016
+	  Time  : Sun Aug 14 16:52:40 2016
 	
 	Europe/Amsterdam :
 	  TZ    : Europe/Amsterdam
 	  tzname: ('CET', 'CEST')
 	  Zone  : -3600 (-1.0)
 	  DST   : 1
-	  Time  : Sun Aug 14 18:37:38 2016
+	  Time  : Sun Aug 14 18:52:40 2016
 	
 
 .. {{{end}}}
@@ -346,20 +380,20 @@ month is prefixed with a zero.
 
 	$ python3 time_strptime.py
 	
-	Now: Sun Aug 14 12:37:38 2016
+	Now: Sun Aug 14 12:52:40 2016
 	
 	Parsed:
 	  tm_year : 2016
 	  tm_mon  : 8
 	  tm_mday : 14
 	  tm_hour : 12
-	  tm_min  : 37
-	  tm_sec  : 38
+	  tm_min  : 52
+	  tm_sec  : 40
 	  tm_wday : 6
 	  tm_yday : 227
 	  tm_isdst: -1
 	
-	Formatted: Sun Aug 14 12:37:38 2016
+	Formatted: Sun Aug 14 12:52:40 2016
 
 .. {{{end}}}
 
