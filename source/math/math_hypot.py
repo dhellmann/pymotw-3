@@ -9,8 +9,8 @@
 
 import math
 
-print('{:^7}  {:^7}  {:^10}'.format('X', 'Y', 'Hypotenuse'))
-print('{:-^7}  {:-^7}  {:-^10}'.format('', '', ''))
+print('{:^7} {:^7} {:^10}'.format('X', 'Y', 'Hypotenuse'))
+print('{:-^7} {:-^7} {:-^10}'.format('', '', ''))
 
 POINTS = [
     # simple points
@@ -25,4 +25,4 @@ POINTS = [
 
 for x, y in POINTS:
     h = math.hypot(x, y)
-    print('{:7.2f}  {:7.2f}  {:7.2f}'.format(x, y, h))
+    print('{:7.2f} {:7.2f} {:7.2f}'.format(x, y, h))

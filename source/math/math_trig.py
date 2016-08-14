@@ -9,10 +9,10 @@
 
 import math
 
-print('Degrees  Radians  Sine     Cosine    Tangent')
-print('-------  -------  -------  --------  -------')
+print('Degrees Radians Sine    Cosine   Tangent')
+print('------- ------- ------- -------- -------')
 
-fmt = '  '.join(['{:7.2f}'] * 5)
+fmt = '{:7.2f} {:7.2f} {:7.2f} {:7.2f} {:7.2f}'
 
 for deg in range(0, 361, 30):
     rad = math.radians(deg)

@@ -9,8 +9,8 @@
 
 import math
 
-print('{:^4}  {:^4}  {:^5}  {:^5}'.format('x', 'y', '%', 'fmod'))
-print('----  ----  -----  -----')
+print('{:^4} {:^4} {:^5} {:^5}'.format('x', 'y', '%', 'fmod'))
+print('---- ---- ----- -----')
 
 INPUTS = [
     (5, 2),
@@ -19,7 +19,7 @@ INPUTS = [
 ]
 
 for x, y in INPUTS:
-    print('{:4.1f}  {:4.1f}  {:5.2f}  {:5.2f}'.format(
+    print('{:4.1f} {:4.1f} {:5.2f} {:5.2f}'.format(
         x,
         y,
         x % y,

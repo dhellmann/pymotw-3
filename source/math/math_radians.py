@@ -9,9 +9,9 @@
 
 import math
 
-print('{:^7}  {:^7}  {:^7}'.format(
+print('{:^7} {:^7} {:^7}'.format(
     'Degrees', 'Radians', 'Expected'))
-print('{:-^7}  {:-^7}  {:-^7}'.format(
+print('{:-^7} {:-^7} {:-^7}'.format(
     '', '', ''))
 
 INPUTS = [
@@ -26,7 +26,7 @@ INPUTS = [
 ]
 
 for deg, expected in INPUTS:
-    print('{:7d}  {:7.2f}  {:7.2f}'.format(
+    print('{:7d} {:7.2f} {:7.2f}'.format(
         deg,
         math.radians(deg),
         expected,

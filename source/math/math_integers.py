@@ -10,12 +10,12 @@
 import math
 
 HEADINGS = ('i', 'int', 'trunk', 'floor', 'ceil')
-print('{:^5}  {:^5}  {:^5}  {:^5}  {:^5}'.format(*HEADINGS))
-print('{:-^5}  {:-^5}  {:-^5}  {:-^5}  {:-^5}'.format(
+print('{:^5} {:^5} {:^5} {:^5} {:^5}'.format(*HEADINGS))
+print('{:-^5} {:-^5} {:-^5} {:-^5} {:-^5}'.format(
     '', '', '', '', '',
 ))
 
-fmt = '  '.join(['{:5.1f}'] * 5)
+fmt = '{:5.1f} {:5.1f} {:5.1f} {:5.1f} {:5.1f}'
 
 TEST_VALUES = [
     -1.5,
