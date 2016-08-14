@@ -159,7 +159,100 @@ and true otherwise.
 
 .. {{{end}}}
 
+Comparing
+=========
 
+Comparisons for floating point values can be error prone, with each
+step of the computation potentially introducing errors due to the
+numerical representation. The :func:`isclose` function uses a stable
+algorithm to minimize these errors and provide a way for relative as
+well as absolute comparisons. The formula used is equivalent to
+
+.. code-block:: none
+
+  abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
+
+By default, :func:`isclose` uses relative comparison with the
+tolerance set to ``1e-09``, meaning that the difference between the
+values must be less than or equal to ``1e-09`` times the larger
+absolute value between ``a`` and ``b``. Passing a keyword argument
+``rel_tol`` to :func:`isclose` changes the tolerance. In this example,
+the values must be within 10% of each other.
+
+.. literalinclude:: math_isclose.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The comparison between ``0.1`` and ``0.09`` fails because of the error
+representing ``0.1``.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'math_isclose.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 math_isclose.py
+	
+	   a        b     rel_tol  abs(a-b) tolerance  close  
+	-------- -------- -------- -------- -------- --------
+	 1000.00   900.00     0.10   100.00   100.00     True
+	  100.00    90.00     0.10    10.00    10.00     True
+	   10.00     9.00     0.10     1.00     1.00     True
+	    1.00     0.90     0.10     0.10     0.10     True
+	    0.10     0.09     0.10     0.01     0.01    False
+
+.. {{{end}}}
+
+To use a fixed or "absolute" tolerance, pass ``abs_tol`` instead of
+``rel_tol``.
+
+.. literalinclude:: math_isclose_abs_tol.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+For an absolute tolerance, the difference between the input values
+must be less than the tolerance given.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'math_isclose_abs_tol.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 math_isclose_abs_tol.py
+	
+	   a          b      abs_tol   abs(a-b)   close  
+	-------- ----------- -------- ---------- --------
+	    1.00   1.0000001    1e-08 0.000000100    False
+	    1.00  1.00000001    1e-08 0.000000010     True
+	    1.00 1.000000001    1e-08 0.000000001     True
+
+.. {{{end}}}
+
+``NaN`` and ``INF`` are special cases.
+
+.. literalinclude:: math_isclose_inf.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+``NaN`` is never close to another value, including itself. ``INF`` is
+only close to itself.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'math_isclose_inf.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 math_isclose_inf.py
+	
+	NaN, NaN: False
+	NaN, 1.0: False
+	Inf, Inf: True
+	Inf, 1.0: False
+
+.. {{{end}}}
 
 Converting to Integers
 ======================
@@ -1057,3 +1150,5 @@ values of *x* when subtracting from 1.
 
    * `SciPy <http://scipy.org/>`_ -- Open source libraryes for
      scientific and mathematical calculations in Python.
+
+   * :pep:`485` -- "A function for testing approximate equality"
