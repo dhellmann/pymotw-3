@@ -28,6 +28,7 @@ the native platform C libraries is available through the module.
 .. toctree::
    :maxdepth: 1
 
+   decimal/index
    fractions/index
    random/index
 
@@ -39,3 +40,5 @@ the native platform C libraries is available through the module.
        fractions/index
        random/index
        math/index
+
+       statistics
