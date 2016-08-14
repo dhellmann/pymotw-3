@@ -52,30 +52,35 @@ clocks are implemented using the same underlying system call.
 	    implementation: clock()
 	    monotonic     : True
 	    resolution    : 1e-06
+	    current       : 0.05215
 	
 	monotonic:
 	    adjustable    : False
 	    implementation: mach_absolute_time()
 	    monotonic     : True
 	    resolution    : 1e-09
+	    current       : 166754.365673198
 	
 	perf_counter:
 	    adjustable    : False
 	    implementation: mach_absolute_time()
 	    monotonic     : True
 	    resolution    : 1e-09
+	    current       : 166754.365742242
 	
 	process_time:
 	    adjustable    : False
 	    implementation: getrusage(RUSAGE_SELF)
 	    monotonic     : True
 	    resolution    : 1e-06
+	    current       : 0.052395
 	
 	time:
 	    adjustable    : True
 	    implementation: gettimeofday()
 	    monotonic     : False
 	    resolution    : 1e-06
+	    current       : 1471192650.140421
 	
 
 .. {{{end}}}
