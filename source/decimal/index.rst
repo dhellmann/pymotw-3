@@ -6,7 +6,6 @@
     :synopsis: Fixed and floating point math
 
 :Purpose: Decimal arithmetic using fixed and floating point numbers
-:Python Version: 2.4 and later
 
 The :mod:`decimal` module implements fixed and floating point
 arithmetic using the model familiar to most people, rather than the
@@ -27,8 +26,8 @@ hardware floating point representations.  Alternately, the class
 method :func:`from_float` converts to the exact decimal
 representation.
 
-.. include:: decimal_create.py
-    :literal:
+.. literalinclude:: decimal_create.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The floating point value of ``0.1`` is not represented as an exact
@@ -57,8 +56,8 @@ characters in this output.
 containing a sign flag (``0`` for positive, ``1`` for negative), a
 :class:`tuple` of digits, and an integer exponent.
 
-.. include:: decimal_tuple.py
-    :literal:
+.. literalinclude:: decimal_tuple.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The tuple-based representation is less convenient to create, but does
@@ -88,8 +87,8 @@ Arithmetic
 instances can be manipulated in much the same way as the built-in
 numeric types.
 
-.. include:: decimal_operators.py
-    :literal:
+.. literalinclude:: decimal_operators.py
+    :caption:
     :start-after: #end_pymotw_header
 
 :class:`Decimal` operators also accept integer arguments, but floating
@@ -135,8 +134,8 @@ In addition to the expected numerical values, :class:`Decimal` can
 represent several special values, including positive and negative
 values for infinity, "not a number", and zero.
 
-.. include:: decimal_special.py
-    :literal:
+.. literalinclude:: decimal_special.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Adding to infinite values returns another infinite value.  Comparing
@@ -177,10 +176,10 @@ region.
 Current Context
 ---------------
 
-To retrieve the current global context, use ``getcontext()``.
+To retrieve the current global context, use ``getcontext``.
 
-.. include:: decimal_getcontext.py
-    :literal:
+.. literalinclude:: decimal_getcontext.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example script shows the public properties of a :class:`Context`.
@@ -227,8 +226,8 @@ The :attr:`prec` attribute of the context controls the precision maintained
 for new values created as a result of arithmetic.  Literal values are
 maintained as described.
 
-.. include:: decimal_precision.py
-    :literal:
+.. literalinclude:: decimal_precision.py
+    :caption:
     :start-after: #end_pymotw_header
 
 To change the precision, assign a new value directly to the attribute.
@@ -284,8 +283,8 @@ desired precision.
   Round away from zero if the last digit is ``0`` or ``5``, otherwise
   towards zero.
 
-.. include:: decimal_rounding.py
-    :literal:
+.. literalinclude:: decimal_rounding.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This program shows the effect of rounding the same value to different
@@ -317,8 +316,8 @@ Local Context
 Using Python 2.5 or later, the context can be applied to a block of
 code using the :command:`with` statement.
 
-.. include:: decimal_context_manager.py
-    :literal:
+.. literalinclude:: decimal_context_manager.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The :class:`Context` supports the context manager API used by
@@ -347,8 +346,8 @@ Contexts also can be used to construct :class:`Decimal` instances, which
 then inherit the precision and rounding arguments to the conversion
 from the context.
 
-.. include:: decimal_instance_context.py
-    :literal:
+.. literalinclude:: decimal_instance_context.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This lets an application select the precision of constant values
@@ -374,8 +373,8 @@ Threads
 The "global" context is actually thread-local, so each thread can
 potentially be configured using different values.
 
-.. include:: decimal_thread_context.py
-    :literal:
+.. literalinclude:: decimal_thread_context.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example creates a new context using the specified, then installs
