@@ -13,6 +13,73 @@ some details (such as the start of the epoch and maximum date value
 supported) are platform-specific.  Refer to the library documentation
 for complete details.
 
+Choosing a Clock
+================
+
+The :mod:`time` module provides access to several different types of
+clocks, each useful for different purposes. The standard system calls
+like :func:`time` report the system "wall clock" time. The
+:func:`monotonic` clock can be used to measure elapsed time in a
+long-running process because it is guaranteed never to move backwards,
+even if the system time is changed. For performance testing,
+:func:`perf_counter` provides access to the clock with the highest
+available resolution to make short time measurements more
+accurate. The CPU time is available through :func:`time`, and
+:func:`process_time` returns the combined processor time and system
+time.
+
+Implementation details for the clocks varies by platform. Use
+:func:`get_clock_info` to access basic information about the current
+implementation, including the clock's resolution.
+
+.. literalinclude:: time_get_clock_info.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+This output for Mac OS X shows that the monotonic and perf_counter
+clocks are implemented using the same underlying system call.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'time_get_clock_info.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 time_get_clock_info.py
+	
+	clock:
+	    adjustable    : False
+	    implementation: clock()
+	    monotonic     : True
+	    resolution    : 1e-06
+	
+	monotonic:
+	    adjustable    : False
+	    implementation: mach_absolute_time()
+	    monotonic     : True
+	    resolution    : 1e-09
+	
+	perf_counter:
+	    adjustable    : False
+	    implementation: mach_absolute_time()
+	    monotonic     : True
+	    resolution    : 1e-09
+	
+	process_time:
+	    adjustable    : False
+	    implementation: getrusage(RUSAGE_SELF)
+	    monotonic     : True
+	    resolution    : 1e-06
+	
+	time:
+	    adjustable    : True
+	    implementation: gettimeofday()
+	    monotonic     : False
+	    resolution    : 1e-06
+	
+
+.. {{{end}}}
+
 Wall Clock Time
 ===============
 
