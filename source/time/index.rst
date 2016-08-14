@@ -144,10 +144,10 @@ Monotonic Clocks
 Because :func:`time` looks at the system clock, and the system clock
 can be changed by the user or system services for synchronizing clocks
 across multiple computers, calling :func:`time` repeatedly may produce
-values that go forwards and backwards. This can produce unexpected
-results when trying to measure the duration of a program run. Avoid
-those situations by using :func:`monotonic`, which always returns
-values that go forward.
+values that go forwards and backwards. This can result in unexpected
+behavior when trying to measure durations or otherwise use those times
+for computation. Avoid those situations by using :func:`monotonic`,
+which always returns values that go forward.
 
 .. literalinclude:: time_monotonic.py
    :caption:
@@ -177,7 +177,7 @@ Processor Clock Time
 
 While :func:`time` returns a wall clock time, :func:`clock` returns
 processor clock time.  The values returned from :func:`clock` reflect
-the actual time used by the program.
+the actual time used by the program as it runs.
 
 .. literalinclude:: time_clock.py
     :caption:
