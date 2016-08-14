@@ -16,7 +16,7 @@ Special Constants
 =================
 
 Many math operations depend on special constants.  :mod:`math`
-includes values for π (pi), e, NaN (not a number), and infinity.
+includes values for π (pi), e, nan (not a number), and infinity.
 
 .. literalinclude:: math_constants.py
    :caption:
@@ -44,7 +44,7 @@ Testing for Exceptional Values
 ==============================
 
 Floating point calculations can result in two types of exceptional
-values.  The first of these, ``INF`` (infinity), appears when the
+values.  The first of these, ``inf`` (infinity), appears when the
 *double* used to hold a floating point value overflows from a value
 with a large absolute value.
 
@@ -80,9 +80,9 @@ infinite.
 
 .. {{{end}}}
 
-Not all floating point overflows result in ``INF`` values, however.
+Not all floating point overflows result in ``inf`` values, however.
 Calculating an exponent with floating point values, in particular,
-raises :class:`OverflowError` instead of preserving the ``INF``
+raises :class:`OverflowError` instead of preserving the ``inf``
 result.
 
 .. literalinclude:: math_overflow.py
@@ -107,14 +107,14 @@ library used by C Python.
 .. {{{end}}}
 
 Division operations using infinite values are undefined.  The result
-of dividing a number by infinity is ``NaN`` (not a number).
+of dividing a number by infinity is ``nan`` (not a number).
 
 .. literalinclude:: math_isnan.py
    :caption:
    :start-after: #end_pymotw_header
 
-``NaN`` does not compare as equal to any value, even itself, so to
-check for ``NaN`` use :func:`isnan`.
+``nan`` does not compare as equal to any value, even itself, so to
+check for ``nan`` use :func:`isnan`.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'math_isnan.py'))
@@ -133,7 +133,7 @@ check for ``NaN`` use :func:`isnan`.
 .. {{{end}}}
 
 Use :func:`isfinite` to check for regular numbers or either of the
-special values ``INF`` or ``NaN``.
+special values ``inf`` or ``nan``.
 
 .. literalinclude:: math_isfinite.py
    :caption:
@@ -230,13 +230,13 @@ must be less than the tolerance given.
 
 .. {{{end}}}
 
-``NaN`` and ``INF`` are special cases.
+``nan`` and ``inf`` are special cases.
 
 .. literalinclude:: math_isclose_inf.py
    :caption:
    :start-after: #end_pymotw_header
 
-``NaN`` is never close to another value, including itself. ``INF`` is
+``nan`` is never close to another value, including itself. ``inf`` is
 only close to itself.
 
 .. {{{cog
@@ -247,10 +247,10 @@ only close to itself.
 
 	$ python3 math_isclose_inf.py
 	
-	NaN, NaN: False
-	NaN, 1.0: False
-	Inf, Inf: True
-	Inf, 1.0: False
+	nan, nan: False
+	nan, 1.0: False
+	inf, inf: True
+	inf, 1.0: False
 
 .. {{{end}}}
 
@@ -416,7 +416,7 @@ sign of a known good value.
    :start-after: #end_pymotw_header
 
 An extra function like :func:`copysign` is needed because comparing
-NaN and -NaN directly with other values does not work.
+nan and -nan directly with other values does not work.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'math_copysign.py'))
