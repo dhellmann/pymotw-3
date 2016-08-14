@@ -1,14 +1,14 @@
-================================
- math -- Mathematical Functions
-================================
+=================================
+ math --- Mathematical Functions
+=================================
 
 .. module:: math
     :synopsis: Mathematical functions
 
 :Purpose: Provides functions for specialized mathematical operations.
 
-The :mod:`math` module implements many of the IEEE functions that would
-normally be found in the native platform C libraries for complex
+The :mod:`math` module implements many of the IEEE functions that
+would normally be found in the native platform C libraries for complex
 mathematical operations using floating point values, including
 logarithms and trigonometric operations.
 
@@ -321,7 +321,7 @@ challenging.  Some values cannot be represented exactly, and the more
 often a value is manipulated through repeated calculations, the more
 likely a representation error will be introduced.  :mod:`math`
 includes a function for computing the sum of a series of floating
-point numbers using an efficient algorithm that minimize such errors.
+point numbers using an efficient algorithm that minimizes such errors.
 
 .. literalinclude:: math_fsum.py
    :caption:
@@ -668,7 +668,7 @@ Although degrees are more commonly used in everyday discussions of
 angles, radians are the standard unit of angular measure in science
 and math.  A radian is the angle created by two lines intersecting at
 the center of a circle, with their ends on the circumference of the
-circle spaced one radius apart.  
+circle spaced one radius apart.
 
 The circumference is calculated as ``2πr``, so there is a relationship
 between radians and π, a value that shows up frequently in
@@ -981,13 +981,12 @@ values of *x* when subtracting from 1.
 
 .. seealso::
 
-    `math <http://docs.python.org/library/math.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`math`
 
-    `IEEE floating point arithmetic in Python <http://www.johndcook.com/blog/2009/07/21/ieee-arithmetic-python/>`__
-        Blog post by John Cook about how special values arise and are
-        dealt with when doing math in Python.
+   * `IEEE floating point arithmetic in Python
+     <http://www.johndcook.com/blog/2009/07/21/ieee-arithmetic-python/>`__
+     -- Blog post by John Cook about how special values arise and are
+     dealt with when doing math in Python.
 
-    `SciPy <http://scipy.org/>`_
-        Open source libraryes for scientific and mathematical
-        calculations in Python.
+   * `SciPy <http://scipy.org/>`_ -- Open source libraryes for
+     scientific and mathematical calculations in Python.
