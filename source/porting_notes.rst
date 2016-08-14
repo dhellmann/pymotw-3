@@ -172,11 +172,25 @@ in Python 3.0. See :mod:`subprocess` instead.
 compiler
 --------
 
-
 .. index::
    pair: porting; ast
 
 The :mod:`compiler` module has been removed. See :mod:`ast` instead.
+
+.. _porting-decimal:
+
+decimal
+-------
+
+.. index::
+   pair: porting; decimal
+
+Python 3.3 incorporated a C implementation of :mod:`decimal` based on
+``libmpdec``. This change improved performance, but also includes some
+API changes and behavior differences from the pure-Python
+implementation. See `the Python 3.3 release notes
+<https://docs.python.org/3.3/whatsnew/3.3.html#decimal>`__ for
+details.
 
 dircache
 --------

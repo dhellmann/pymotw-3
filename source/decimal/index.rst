@@ -413,6 +413,8 @@ it within each thread.
 
    * :pydoc:`decimal`
 
+   * :ref:`Porting notes for decimal <porting-decimal>`
+
    * `Wikipedia: Floating Point
      <http://en.wikipedia.org/wiki/Floating_point>`_ -- Article on
      floating point representations and arithmetic.
