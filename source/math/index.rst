@@ -254,8 +254,8 @@ only close to itself.
 
 .. {{{end}}}
 
-Converting to Integers
-======================
+Converting Floating Point Values to Integers
+============================================
 
 The :mod:`math` module includes three functions for converting
 floating point values to whole numbers.  Each takes a different
@@ -295,8 +295,8 @@ largest integer following sequentially after the input value.
 
 .. {{{end}}}
 
-Alternate Representations
-=========================
+Alternate Representations of Floating Point Values
+==================================================
 
 :func:`modf` takes a single floating point number and returns a tuple
 containing the fractional and whole number parts of the input value.
@@ -588,6 +588,31 @@ from that used by ``%``, so the sign of the result is different.
 	 5.0   2.0   1.00   1.00
 	 5.0  -2.0  -1.00   1.00
 	-5.0   2.0   1.00  -1.00
+
+.. {{{end}}}
+
+Use :func:`gcd` to find the largest integer that can divide evenly
+into two integers, the greatest common divisor.
+
+.. literalinclude:: math_gcd.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+If both values are ``0``, the result is ``0``.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'math_gcd.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 math_gcd.py
+	
+	2
+	10
+	25
+	1
+	0
 
 .. {{{end}}}
 
