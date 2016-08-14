@@ -17,7 +17,7 @@ c.prec = 3
 pi = c.create_decimal('3.1415')
 
 # The constant value is rounded off
-print 'PI    :', pi
+print('PI    :', pi)
 
 # The result of using the constant uses the global context
-print 'RESULT:', decimal.Decimal('2.01') * pi
+print('RESULT:', decimal.Decimal('2.01') * pi)
