@@ -6,7 +6,6 @@
     :synopsis: Mathematical functions
 
 :Purpose: Provides functions for specialized mathematical operations.
-:Python Version: 1.4 and later
 
 The :mod:`math` module implements many of the IEEE functions that would
 normally be found in the native platform C libraries for complex
@@ -18,8 +17,8 @@ Special Constants
 Many math operations depend on special constants.  :mod:`math`
 includes values for π (pi) and e.
 
-.. include:: math_constants.py
-   :literal:
+.. literalinclude:: math_constants.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Both values are limited in precision only by the platform's floating
@@ -46,8 +45,8 @@ values.  The first of these, ``INF`` (infinity), appears when the
 *double* used to hold a floating point value overflows from a value
 with a large absolute value.
 
-.. include:: math_isinf.py
-   :literal:
+.. literalinclude:: math_isinf.py
+   :caption:
    :start-after: #end_pymotw_header
 
 When the exponent in this example grows large enough, the square of
@@ -83,8 +82,8 @@ Calculating an exponent with floating point values, in particular,
 raises :class:`OverflowError` instead of preserving the ``INF``
 result.
 
-.. include:: math_overflow.py
-   :literal:
+.. literalinclude:: math_overflow.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This discrepancy is caused by an implementation difference in the
@@ -107,8 +106,8 @@ library used by C Python.
 Division operations using infinite values are undefined.  The result
 of dividing a number by infinity is ``NaN`` (not a number).
 
-.. include:: math_isnan.py
-   :literal:
+.. literalinclude:: math_isnan.py
+   :caption:
    :start-after: #end_pymotw_header
 
 ``NaN`` does not compare as equal to any value, even itself, so to
@@ -143,8 +142,8 @@ number portion of the value.  :func:`floor` converts its input to the
 largest preceding integer, and :func:`ceil` (ceiling) produces the
 largest integer following sequentially after the input value.
 
-.. include:: math_integers.py
-   :literal:
+.. literalinclude:: math_integers.py
+   :caption:
    :start-after: #end_pymotw_header
 
 :func:`trunc` is equivalent to converting to :class:`int` directly.
@@ -177,8 +176,8 @@ Alternate Representations
 :func:`modf` takes a single floating point number and returns a tuple
 containing the fractional and whole number parts of the input value.
 
-.. include:: math_modf.py
-   :literal:
+.. literalinclude:: math_modf.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Both numbers in the return value are floats.
@@ -204,8 +203,8 @@ Both numbers in the return value are floats.
 number, and can be used to create a more portable representation of
 the value.
 
-.. include:: math_frexp.py
-   :literal:
+.. literalinclude:: math_frexp.py
+   :caption:
    :start-after: #end_pymotw_header
 
 :func:`frexp` uses the formula ``x = m * 2**e``, and returns the
@@ -229,8 +228,8 @@ values *m* and *e*.
 
 :func:`ldexp` is the inverse of :func:`frexp`.  
 
-.. include:: math_ldexp.py
-   :literal:
+.. literalinclude:: math_ldexp.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Using the same formula as :func:`frexp`, :func:`ldexp` takes the
@@ -261,8 +260,8 @@ The absolute value of a number is its value without a sign.  Use
 :func:`fabs` to calculate the absolute value of a floating point
 number.
 
-.. include:: math_fabs.py
-   :literal:
+.. literalinclude:: math_fabs.py
+   :caption:
    :start-after: #end_pymotw_header
 
 In practical terms, the absolute value of a :class:`float` is
@@ -287,8 +286,8 @@ To determine the sign of a value, either to give a set of values the
 same sign or to compare two values, use :func:`copysign` to set the
 sign of a known good value.
 
-.. include:: math_copysign.py
-   :literal:
+.. literalinclude:: math_copysign.py
+   :caption:
    :start-after: #end_pymotw_header
 
 An extra function like :func:`copysign` is needed because comparing
@@ -324,8 +323,8 @@ likely a representation error will be introduced.  :mod:`math`
 includes a function for computing the sum of a series of floating
 point numbers using an efficient algorithm that minimize such errors.
 
-.. include:: math_fsum.py
-   :literal:
+.. literalinclude:: math_fsum.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Given a sequence of ten values, each equal to ``0.1``, the expected
@@ -353,8 +352,8 @@ permutations and combinations of a series of objects.  The factorial
 of a positive integer *n*, expressed ``n!``, is defined recursively as
 ``(n-1)! * n`` and stops with ``0! == 1``.
 
-.. include:: math_factorial.py
-   :literal:
+.. literalinclude:: math_factorial.py
+   :caption:
    :start-after: #end_pymotw_header
 
 :func:`factorial` only works with whole numbers, but does accept
@@ -384,8 +383,8 @@ integer without losing value.
 numbers and the value is shifted down by one (gamma is equal to ``(n -
 1)!``).
 
-.. include:: math_gamma.py
-   :literal:
+.. literalinclude:: math_gamma.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Since zero causes the start value to be negative, it is not allowed.
@@ -411,8 +410,8 @@ Since zero causes the start value to be negative, it is not allowed.
 :func:`lgamma` returns the natural logarithm of the absolute value of
 gamma for the input value.
 
-.. include:: math_lgamma.py
-   :literal:
+.. literalinclude:: math_lgamma.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Using :func:`lgamma` retains more precision than calculating the
@@ -443,8 +442,8 @@ point operations, intermediate calculations cause representational
 issues that result in a loss of data.  :func:`fmod` provides a more
 accurate implementation for floating point values.
 
-.. include:: math_fmod.py
-   :literal:
+.. literalinclude:: math_fmod.py
+   :caption:
    :start-after: #end_pymotw_header
 
 A potentially more frequent source of confusion is the fact that the
@@ -475,8 +474,8 @@ sciences.  Python has a built-in exponentiation operator ("``**``"),
 but :func:`pow` can be useful when a callable function is needed as an
 argument to another function.
 
-.. include:: math_pow.py
-   :literal:
+.. literalinclude:: math_pow.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Raising ``1`` to any power always returns ``1.0``, as does raising any
@@ -505,8 +504,8 @@ value ``nan`` return ``nan``.  If the exponent is less than ``1``,
 Since square roots (exponent of ``1/2``) are used so frequently, there
 is a separate function for computing them.
 
-.. include:: math_sqrt.py
-   :literal:
+.. literalinclude:: math_sqrt.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Computing the square roots of negative numbers requires *complex
@@ -532,8 +531,8 @@ The logarithm function finds *y* where ``x = b ** y``.  By default,
 :func:`log` computes the natural logarithm (the base is *e*).  If a
 second argument is provided, that value is used as the base.
 
-.. include:: math_log.py
-   :literal:
+.. literalinclude:: math_log.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Logarithms where *x* is less than one yield negative results.
@@ -558,8 +557,8 @@ representation and rounding errors, the computed value produced by
 :func:`log10` computes ``log(x, 10)``, using a more accurate algorithm
 than :func:`log`.
 
-.. include:: math_log10.py
-   :literal:
+.. literalinclude:: math_log10.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The lines in the output with trailing ``*`` highlight the inaccurate
@@ -591,8 +590,8 @@ values.
 :func:`log1p` calculates the Newton-Mercator series (the natural
 logarithm of ``1+x``).
 
-.. include:: math_log1p.py
-   :literal:
+.. literalinclude:: math_log1p.py
+   :caption:
    :start-after: #end_pymotw_header
 
 :func:`log1p` is more accurate for values of *x* very close to zero
@@ -616,8 +615,8 @@ from the initial addition.
 
 :func:`exp` computes the exponential function (``e**x``).  
 
-.. include:: math_exp.py
-   :literal:
+.. literalinclude:: math_exp.py
+   :caption:
    :start-after: #end_pymotw_header
 
 As with other special-case functions, it uses an algorithm that
@@ -641,8 +640,8 @@ produces more accurate results than the general-purpose equivalent
 :func:`expm1` is the inverse of :func:`log1p`, and calculates ``e**x -
 1``.
 
-.. include:: math_expm1.py
-   :literal:
+.. literalinclude:: math_expm1.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Small values of *x* lose precision when the subtraction is performed
@@ -679,8 +678,8 @@ formulas.
 
 To convert from degrees to radians, use :func:`radians`.
 
-.. include:: math_radians.py
-   :literal:
+.. literalinclude:: math_radians.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The formula for the conversion is ``rad = deg * π / 180``.
@@ -708,8 +707,8 @@ The formula for the conversion is ``rad = deg * π / 180``.
 
 To convert from radians to degrees, use :func:`degrees`.
 
-.. include:: math_degrees.py
-   :literal:
+.. literalinclude:: math_degrees.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The formula is ``deg = rad * 180 / π``.
@@ -752,8 +751,8 @@ the adjacent side to the hypotenuse (``cos A = adjacent/hypotenuse``).
 And the *tangent* is the ratio of the opposite side to the adjacent
 side (``tan A = opposite/adjacent``).
 
-.. include:: math_trig.py
-   :literal:
+.. literalinclude:: math_trig.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The tangent can also be defined as the ratio of the sine of the angle
@@ -790,8 +789,8 @@ Given a point (*x*, *y*), the length of the hypotenuse for the
 triangle between the points [(0, 0), (*x*, 0), (*x*, *y*)] is
 ``(x**2 + y**2) ** 1/2``, and can be computed with :func:`hypot`.
 
-.. include:: math_hypot.py
-   :literal:
+.. literalinclude:: math_hypot.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Points on the circle always have hypotenuse == ``1``.
@@ -817,8 +816,8 @@ Points on the circle always have hypotenuse == ``1``.
 
 The same function can be used to find the distance between two points.
 
-.. include:: math_distance_2_points.py
-   :literal:
+.. literalinclude:: math_distance_2_points.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Use the difference in the *x* and *y* values to move one endpoint to
@@ -843,8 +842,8 @@ the origin, and then pass the results to :func:`hypot`.
 
 :mod:`math` also defines inverse trigonometric functions.
 
-.. include:: math_inverse_trig.py
-   :literal:
+.. literalinclude:: math_inverse_trig.py
+   :caption:
    :start-after: #end_pymotw_header
 
 ``1.57`` is roughly equal to ``π/2``, or 90 degrees, the angle at
@@ -882,8 +881,8 @@ Hyperbolic functions appear in linear differential equations and are
 used when working with electromagnetic fields, fluid dynamics, special
 relativity, and other advanced physics and mathematics.
 
-.. include:: math_hyperbolic.py
-   :literal:
+.. literalinclude:: math_hyperbolic.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Whereas the cosine and sine functions enscribe a circle, the
@@ -916,8 +915,8 @@ Special Functions
 
 The Gauss Error function is used in statistics.
 
-.. include:: math_erf.py
-   :literal:
+.. literalinclude:: math_erf.py
+   :caption:
    :start-after: #end_pymotw_header
 
 For the error function, ``erf(-x) == -erf(x)``.
@@ -948,8 +947,8 @@ For the error function, ``erf(-x) == -erf(x)``.
 
 The complimentary error function is ``1 - erf(x)``.
 
-.. include:: math_erfc.py
-   :literal:
+.. literalinclude:: math_erfc.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The implementation of :func:`erfc` avoids precision errors for small
