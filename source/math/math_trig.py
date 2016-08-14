@@ -12,7 +12,7 @@ import math
 print('Degrees  Radians  Sine     Cosine    Tangent')
 print('-------  -------  -------  --------  -------')
 
-fmt = '  '.join(['%7.2f'] * 5)
+fmt = '  '.join(['{:7.2f}'] * 5)
 
 for deg in range(0, 361, 30):
     rad = math.radians(deg)
@@ -20,4 +20,4 @@ for deg in range(0, 361, 30):
         t = float('inf')
     else:
         t = math.tan(rad)
-    print(fmt % (deg, rad, math.sin(rad), math.cos(rad), t))
+    print(fmt.format(deg, rad, math.sin(rad), math.cos(rad), t))

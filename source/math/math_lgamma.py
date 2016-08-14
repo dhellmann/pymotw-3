@@ -17,4 +17,4 @@ for i in [0, 1.1, 2.2, 3.3, 4.4, 5.5, 6.6]:
             math.log(math.gamma(i)),
         ))
     except ValueError as err:
-        print('Error computing lgamma(%s):' % i, err)
+        print('Error computing lgamma({}): {}'.format(i, err))
