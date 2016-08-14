@@ -28,10 +28,10 @@ point C library.
 .. cog.out(run_script(cog.inFile, 'math_constants.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_constants.py
-
+	$ python3 math_constants.py
+	
 	π: 3.141592653589793115997963468544
 	e: 2.718281828459045090795598298428
 
@@ -57,13 +57,13 @@ infinite.
 .. cog.out(run_script(cog.inFile, 'math_isinf.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_isinf.py
-
+	$ python3 math_isinf.py
+	
 	 e   x       x**2    isinf 
 	---  ------  ------  ------
-	  0  1.0     1.0     False 
+	  0  1       1       False 
 	 20  1e+20   1e+40   False 
 	 40  1e+40   1e+80   False 
 	 60  1e+60   1e+120  False 
@@ -93,10 +93,10 @@ library used by C Python.
 .. cog.out(run_script(cog.inFile, 'math_overflow.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_overflow.py
-
+	$ python3 math_overflow.py
+	
 	x    = 1e+200
 	x*x  = inf
 	x**2 = (34, 'Result too large')
@@ -117,10 +117,10 @@ check for ``NaN`` use :func:`isnan`.
 .. cog.out(run_script(cog.inFile, 'math_isnan.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_isnan.py
-
+	$ python3 math_isnan.py
+	
 	x = inf
 	isnan(x) = False
 	y = x / x = nan
@@ -152,16 +152,16 @@ largest integer following sequentially after the input value.
 .. cog.out(run_script(cog.inFile, 'math_integers.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_integers.py
-
+	$ python3 math_integers.py
+	
 	  i     int   trunk  floor  ceil 
 	-----  -----  -----  -----  -----
 	 -1.5   -1.0   -1.0   -2.0   -1.0
-	 -0.8    0.0    0.0   -1.0   -0.0
-	 -0.5    0.0    0.0   -1.0   -0.0
-	 -0.2    0.0    0.0   -1.0   -0.0
+	 -0.8    0.0    0.0   -1.0    0.0
+	 -0.5    0.0    0.0   -1.0    0.0
+	 -0.2    0.0    0.0   -1.0    0.0
 	  0.0    0.0    0.0    0.0    0.0
 	  0.2    0.0    0.0    0.0    1.0
 	  0.5    0.0    0.0    0.0    1.0
@@ -186,10 +186,10 @@ Both numbers in the return value are floats.
 .. cog.out(run_script(cog.inFile, 'math_modf.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_modf.py
-
+	$ python3 math_modf.py
+	
 	0/2 = (0.0, 0.0)
 	1/2 = (0.5, 0.0)
 	2/2 = (0.0, 1.0)
@@ -214,10 +214,10 @@ values *m* and *e*.
 .. cog.out(run_script(cog.inFile, 'math_frexp.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_frexp.py
-
+	$ python3 math_frexp.py
+	
 	   x        m        e   
 	-------  -------  -------
 	   0.10     0.80       -3
@@ -240,10 +240,10 @@ number.
 .. cog.out(run_script(cog.inFile, 'math_ldexp.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_ldexp.py
-
+	$ python3 math_ldexp.py
+	
 	   m        e        x   
 	-------  -------  -------
 	   0.80       -3     0.10
@@ -271,10 +271,10 @@ represented as a positive value.
 .. cog.out(run_script(cog.inFile, 'math_fabs.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_fabs.py
-
+	$ python3 math_fabs.py
+	
 	1.1
 	0.0
 	0.0
@@ -297,10 +297,10 @@ NaN and -NaN directly with other values does not work.
 .. cog.out(run_script(cog.inFile, 'math_copysign.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_copysign.py
-
+	$ python3 math_copysign.py
+	
 	  f      s     < 0    > 0    = 0 
 	-----  -----  -----  -----  -----
 	 -1.0     -1  True   False  False
@@ -336,10 +336,10 @@ introduced into the sum unless it is calculated with :func:`fsum`.
 .. cog.out(run_script(cog.inFile, 'math_fsum.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_fsum.py
-
+	$ python3 math_fsum.py
+	
 	Input values: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
 	sum()       : 0.99999999999999988898
 	for-loop    : 0.99999999999999988898
@@ -364,10 +364,10 @@ integer without losing value.
 .. cog.out(run_script(cog.inFile, 'math_factorial.py', break_lines_at=65))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_factorial.py
-
+	$ python3 math_factorial.py
+	
 	 0       1
 	 1       1
 	 2       2
@@ -393,10 +393,10 @@ Since zero causes the start value to be negative, it is not allowed.
 .. cog.out(run_script(cog.inFile, 'math_gamma.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_gamma.py
-
+	$ python3 math_gamma.py
+	
 	Error computing gamma(0): math domain error
 	1.1    0.95
 	2.2    1.10
@@ -421,10 +421,10 @@ logarithm separately using the results of :func:`gamma`.
 .. cog.out(run_script(cog.inFile, 'math_lgamma.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_lgamma.py
-
+	$ python3 math_lgamma.py
+	
 	Error computing lgamma(0): math domain error
 	1.1  -0.04987244125984036103  -0.04987244125983997245
 	2.2  0.09694746679063825923  0.09694746679063866168
@@ -454,10 +454,10 @@ from that used by ``%``, so the sign of the result is different.
 .. cog.out(run_script(cog.inFile, 'math_fmod.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_fmod.py
-
+	$ python3 math_fmod.py
+	
 	 x     y      %    fmod 
 	----  ----  -----  -----
 	 5.0   2.0   1.00   1.00
@@ -487,10 +487,10 @@ value ``nan`` return ``nan``.  If the exponent is less than ``1``,
 .. cog.out(run_script(cog.inFile, 'math_pow.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_pow.py
-
+	$ python3 math_pow.py
+	
 	  2.0 ** 3.000 =  8.000
 	  2.1 ** 3.200 = 10.742
 	  1.0 ** 5.000 =  1.000
@@ -517,12 +517,12 @@ calculate a square root of a negative value results in a
 .. cog.out(run_script(cog.inFile, 'math_sqrt.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_sqrt.py
-
+	$ python3 math_sqrt.py
+	
 	3.0
-	1.73205080757
+	1.7320508075688772
 	Cannot compute sqrt(-1): math domain error
 
 .. {{{end}}}
@@ -541,11 +541,11 @@ Logarithms where *x* is less than one yield negative results.
 .. cog.out(run_script(cog.inFile, 'math_log.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_log.py
-
-	2.07944154168
+	$ python3 math_log.py
+	
+	2.0794415416798357
 	3.0
 	-1.0
 
@@ -568,10 +568,10 @@ values.
 .. cog.out(run_script(cog.inFile, 'math_log10.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_log10.py
-
+	$ python3 math_log10.py
+	
 	i        x         accurate        inaccurate       mismatch
 	--  ------------  ----------  --------------------  --------
 	 0           1.0  0.00000000  0.000000000000000000       
@@ -602,10 +602,10 @@ from the initial addition.
 .. cog.out(run_script(cog.inFile, 'math_log1p.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_log1p.py
-
+	$ python3 math_log1p.py
+	
 	x       : 1e-25
 	1 + x   : 1.0
 	log(1+x): 0.0
@@ -627,10 +627,10 @@ produces more accurate results than the general-purpose equivalent
 .. cog.out(run_script(cog.inFile, 'math_exp.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_exp.py
-
+	$ python3 math_exp.py
+	
 	7.38905609893064951876
 	7.38905609893064951876
 	7.38905609893065040694
@@ -651,10 +651,10 @@ separately, like with :func:`log1p`.
 .. cog.out(run_script(cog.inFile, 'math_expm1.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_expm1.py
-
+	$ python3 math_expm1.py
+	
 	1e-25
 	0.0
 	1e-25
@@ -688,10 +688,10 @@ The formula for the conversion is ``rad = deg * π / 180``.
 .. cog.out(run_script(cog.inFile, 'math_radians.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_radians.py
-
+	$ python3 math_radians.py
+	
 	Degrees  Radians  Expected
 	-------  -------  -------
 	      0     0.00     0.00
@@ -717,10 +717,10 @@ The formula is ``deg = rad * 180 / π``.
 .. cog.out(run_script(cog.inFile, 'math_degrees.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_degrees.py
-
+	$ python3 math_degrees.py
+	
 	Radians   Degrees   Expected
 	--------  --------  --------
 	    0.00      0.00      0.00
@@ -763,10 +763,10 @@ tangent is infinite.
 .. cog.out(run_script(cog.inFile, 'math_trig.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_trig.py
-
+	$ python3 math_trig.py
+	
 	Degrees  Radians  Sine     Cosine    Tangent
 	-------  -------  -------  --------  -------
 	   0.00     0.00     0.00     1.00     0.00
@@ -799,10 +799,10 @@ Points on the circle always have hypotenuse == ``1``.
 .. cog.out(run_script(cog.inFile, 'math_hypot.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_hypot.py
-
+	$ python3 math_hypot.py
+	
 	   X        Y     Hypotenuse
 	-------  -------  ----------
 	   1.00     1.00     1.41
@@ -827,10 +827,10 @@ the origin, and then pass the results to :func:`hypot`.
 .. cog.out(run_script(cog.inFile, 'math_distance_2_points.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_distance_2_points.py
-
+	$ python3 math_distance_2_points.py
+	
 	   X1        Y1        X2        Y2     Distance
 	--------  --------  --------  --------  --------
 	    5.00      5.00      6.00      6.00      1.41
@@ -853,10 +853,10 @@ which the sine is 1 and the cosine is 0.
 .. cog.out(run_script(cog.inFile, 'math_inverse_trig.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_inverse_trig.py
-
+	$ python3 math_inverse_trig.py
+	
 	arcsine(0.0)    =  0.00
 	arccosine(0.0)  =  1.57
 	arctangent(0.0) =  0.00
@@ -892,10 +892,10 @@ hyperbolic cosine and hyperbolic sine form half of a hyperbola.
 .. cog.out(run_script(cog.inFile, 'math_hyperbolic.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_hyperbolic.py
-
+	$ python3 math_hyperbolic.py
+	
 	  X      sinh    cosh    tanh 
 	------  ------  ------  ------
 	0.0000  0.0000  1.0000  0.0000
@@ -925,10 +925,10 @@ For the error function, ``erf(-x) == -erf(x)``.
 .. cog.out(run_script(cog.inFile, 'math_erf.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_erf.py
-
+	$ python3 math_erf.py
+	
 	  x    erf(x) 
 	-----  -------
 	-3.00  -1.0000
@@ -958,10 +958,10 @@ values of *x* when subtracting from 1.
 .. cog.out(run_script(cog.inFile, 'math_erfc.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python math_erfc.py
-
+	$ python3 math_erfc.py
+	
 	  x    erfc(x)
 	-----  -------
 	-3.00   2.0000

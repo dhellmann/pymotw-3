@@ -9,5 +9,5 @@
 
 import math
 
-print 'π: %.30f' % math.pi
-print 'e: %.30f' % math.e
+print('π: %.30f' % math.pi)
+print('e: %.30f' % math.e)
