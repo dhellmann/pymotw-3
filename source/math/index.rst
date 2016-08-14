@@ -580,7 +580,7 @@ Logarithms where *x* is less than one yield negative results.
 
 .. {{{end}}}
 
-There are two variations of :func:`log`.  Given floating point
+There are three variations of :func:`log`.  Given floating point
 representation and rounding errors, the computed value produced by
 ``log(x, b)`` has limited accuracy, especially for some bases.
 :func:`log10` computes ``log(x, 10)``, using a more accurate algorithm
@@ -613,6 +613,41 @@ values.
 	 7    10000000.0  7.00000000  7.000000000000000000       
 	 8   100000000.0  8.00000000  8.000000000000000000       
 	 9  1000000000.0  9.00000000  8.999999999999998224    *  
+
+.. {{{end}}}
+
+Similar to :func:`log10`, :func:`log2` calculates the equivalent of
+``math.log(x, 2)``.
+
+.. literalinclude:: math_log2.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Depending on the underlying platform, using the built-in and
+special-purpose function can offer better performance and accuracy by
+using special-purpose algorithms for base 2 that are not found in the
+more general purpose function.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'math_log2.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 math_log2.py
+	
+	 i    x    log2 
+	--  -----  -----
+	 0    1.0    0.0
+	 1    2.0    1.0
+	 2    4.0    2.0
+	 3    8.0    3.0
+	 4   16.0    4.0
+	 5   32.0    5.0
+	 6   64.0    6.0
+	 7  128.0    7.0
+	 8  256.0    8.0
+	 9  512.0    9.0
 
 .. {{{end}}}
 
