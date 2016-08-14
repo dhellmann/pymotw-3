@@ -952,8 +952,8 @@ tangent is infinite.
 
 	$ python3 math_trig.py
 	
-	Degrees Radians Sine    Cosine   Tangent
-	------- ------- ------- -------- -------
+	Degrees Radians  Sine   Cosine  Tangent
+	------- ------- ------- ------- -------
 	   0.00    0.00    0.00    1.00    0.00
 	  30.00    0.52    0.50    0.87    0.58
 	  60.00    1.05    0.87    0.50    1.73

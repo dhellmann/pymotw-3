@@ -9,8 +9,10 @@
 
 import math
 
-print('Degrees Radians Sine    Cosine   Tangent')
-print('------- ------- ------- -------- -------')
+print('{:^7} {:^7} {:^7} {:^7} {:^7}'.format(
+    'Degrees', 'Radians', 'Sine', 'Cosine', 'Tangent'))
+print('{:-^7} {:-^7} {:-^7} {:-^7} {:-^7}'.format(
+    '-', '-', '-', '-', '-'))
 
 fmt = '{:7.2f} {:7.2f} {:7.2f} {:7.2f} {:7.2f}'
 
