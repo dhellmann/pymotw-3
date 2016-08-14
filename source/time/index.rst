@@ -7,15 +7,6 @@
 
 :Purpose: Functions for manipulating clock time.
 
-The :mod:`time` module exposes C library functions for manipulating
-dates and times.  Since it is tied to the underlying C implementation,
-some details (such as the start of the epoch and maximum date value
-supported) are platform-specific.  Refer to the library documentation
-for complete details.
-
-Choosing a Clock
-================
-
 The :mod:`time` module provides access to several different types of
 clocks, each useful for different purposes. The standard system calls
 like :func:`time` report the system "wall clock" time. The
@@ -27,6 +18,17 @@ available resolution to make short time measurements more
 accurate. The CPU time is available through :func:`time`, and
 :func:`process_time` returns the combined processor time and system
 time.
+
+.. note::
+
+  The implementations expose C library functions for manipulating
+  dates and times.  Since they is tied to the underlying C
+  implementation, some details (such as the start of the epoch and
+  maximum date value supported) are platform-specific.  Refer to the
+  library documentation for complete details.
+
+Comparing Clocks
+================
 
 Implementation details for the clocks varies by platform. Use
 :func:`get_clock_info` to access basic information about the current
@@ -175,8 +177,7 @@ Processor Clock Time
 
 While :func:`time` returns a wall clock time, :func:`clock` returns
 processor clock time.  The values returned from :func:`clock` reflect
-the actual time used by the program, and can be more precise than the
-values from :func:`time`.
+the actual time used by the program.
 
 .. literalinclude:: time_clock.py
     :caption:
