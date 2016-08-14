@@ -14,14 +14,15 @@ logarithms and trigonometric operations.
 
 Special Constants
 =================
+
 Many math operations depend on special constants.  :mod:`math`
-includes values for π (pi) and e.
+includes values for π (pi), e, NaN (not a number), and infinity.
 
 .. literalinclude:: math_constants.py
    :caption:
    :start-after: #end_pymotw_header
 
-Both values are limited in precision only by the platform's floating
+Both π and e are limited in precision only by the platform's floating
 point C library.
 
 .. {{{cog
@@ -32,8 +33,10 @@ point C library.
 
 	$ python3 math_constants.py
 	
-	π: 3.141592653589793115997963468544
-	e: 2.718281828459045090795598298428
+	  π: 3.141592653589793115997963468544
+	  e: 2.718281828459045090795598298428
+	nan: nan
+	inf: inf
 
 .. {{{end}}}
 
