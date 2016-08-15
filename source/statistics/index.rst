@@ -125,3 +125,13 @@ Spread
 .. pvariance
 .. stdev
 .. variance
+
+
+.. seealso::
+
+   * :pydoc:`statistics`
+
+   * `mathtips.com: Median for Discrete and Continuous Frequency Type
+     Data (grouped data)
+     <http://www.mathstips.com/statistics/median-for-discrete-and-continuous-frequency-type.html>`__
+     -- Discussion of median for continuous data
