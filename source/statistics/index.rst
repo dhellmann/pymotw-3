@@ -34,19 +34,37 @@ the same type as the inputs.
 
 	$ python3 statistics_mean.py
 	
-	4.0
+	5.33
 
 .. {{{end}}}
 
 Calculate the most common data point in a data set using :func:`mode`.
 
+.. literalinclude:: statistics_mode.py
+   :caption:
+   :start-after: #end_pymotw_header
 
+The return value is always a member of the input data set. Because
+:func:`mode` treats the input as a set of discrete values, and counts
+the recurrences, the inputs do not actually need to be numerical
+values.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'statistics_mode.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 statistics_mode.py
+	
+	2
+
+.. {{{end}}}
 
 .. median
 .. median_low
 .. median_high
 .. median_grouped
-.. mode
 
 Spread
 ======
