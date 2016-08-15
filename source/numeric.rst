@@ -32,6 +32,7 @@ the native platform C libraries is available through the module.
    fractions/index
    random/index
    math/index
+   statistics/index
 
 ..
    .. toctree::
