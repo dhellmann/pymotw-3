@@ -5,8 +5,8 @@
 """
 #end_pymotw_header
 
-import statistics
+from statistics import *
 
 data = [1, 2, 2, 5, 10, 12]
 
-print(statistics.mode(data))
+print(mode(data))
