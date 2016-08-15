@@ -112,9 +112,9 @@ set changes.
 
 	$ python3 statistics_median_grouped.py
 	
-	1: 2.50
-	2: 2.00
-	3: 1.50
+	1: 29.50
+	2: 29.00
+	3: 28.50
 
 .. {{{end}}}
 
