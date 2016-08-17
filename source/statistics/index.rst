@@ -118,14 +118,56 @@ set changes.
 
 .. {{{end}}}
 
-Spread
-======
+Variance
+========
 
-.. pstdev
-.. pvariance
-.. stdev
-.. variance
+Statistics uses two values to express how disperse a set of values is
+relative to the mean. The *variance* is the average of the square of
+the difference of each value and the mean, and the *standard
+deviation* is the square root of the variance (which is useful because
+taking the square root allows the standard deviation to be expressed
+in the same units as the input data). Large values for variance or
+standard deviation indicate that a set of data is disperse, while
+small values indicate that the data is clustered closer to the mean.
 
+.. literalinclude:: statistics_variance.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Python includes two sets of functions for computing variance and
+standard deviation, depending on whether the data set represents the
+entire population or a sample of the population.  This example uses
+``wc`` to count the number of lines in the input files for all of the
+example programs and then uses :func:`pvariance` and :func:`pstdev` to
+compute the variance and standard deviation for the entire population
+before using :func:`variance` and :func:`stddev` to compute the sample
+variance and standard deviation for a subset created by using the
+length of every second file found.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'statistics_variance.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 statistics_variance.py
+	
+	Basic statistics:
+	  count     : 894
+	  min       :   4.00
+	  max       : 228.00
+	  mean      :  28.55
+	
+	Population variance:
+	  pstdev    :  18.58
+	  pvariance : 345.16
+	
+	Estimated variance for sample:
+	  count     : 447
+	  stdev     :  17.32
+	  variance  : 299.91
+
+.. {{{end}}}
 
 .. seealso::
 
@@ -135,3 +177,5 @@ Spread
      Data (grouped data)
      <http://www.mathstips.com/statistics/median-for-discrete-and-continuous-frequency-type.html>`__
      -- Discussion of median for continuous data
+
+   * :pep:`450` -- Adding A Statistics Module To The Standard Library
