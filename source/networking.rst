@@ -25,6 +25,3 @@ provided by the application.
 
    select/index
    socketserver/index
-
-..    io/index
-..    ssl/index

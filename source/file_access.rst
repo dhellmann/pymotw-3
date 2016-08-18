@@ -81,7 +81,7 @@ a file, but does not reside on disk.
     shutil/index
     mmap/index
     codecs/index
-    StringIO/index
+    StringIO/index (replace with io)
     fnmatch/index
     dircache/index
     filecmp/index

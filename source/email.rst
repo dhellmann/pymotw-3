@@ -33,6 +33,4 @@ Maildir formats used by many email client programs.
       imaplib/index
       mailbox/index
 
-..   mhlib/index
 ..   email/index
-..   poplib/index

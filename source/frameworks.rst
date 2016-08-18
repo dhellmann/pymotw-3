@@ -84,7 +84,6 @@ be used.
 
 ..
    getopt/index
-   optparse/index
    argparse/index
    readline/index
    getpass/index
