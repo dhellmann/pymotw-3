@@ -51,9 +51,4 @@ properly.
    abc/index
    warnings/index
    dis/index
-
-..
-   warnings/index
-   dis/index
    inspect/index
-   exceptions/index
