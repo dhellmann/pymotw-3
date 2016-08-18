@@ -54,20 +54,20 @@ Here are a few sample runs:
 .. cog.out(run_script(cog.inFile, 'inspect_getmoduleinfo.py notthere.pyc', include_prefix=False))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python inspect_getmoduleinfo.py example.py
+	$ python3 inspect_getmoduleinfo.py example.py
 	
 	NAME   : example
 	SUFFIX : .py
-	MODE   : U (universal newline)
+	MODE   : r 
 	MTYPE  : source
 
-	$ python inspect_getmoduleinfo.py readme.txt
+	$ python3 inspect_getmoduleinfo.py readme.txt
 	
 	Could not determine module type of readme.txt
 
-	$ python inspect_getmoduleinfo.py notthere.pyc
+	$ python3 inspect_getmoduleinfo.py notthere.pyc
 	
 	NAME   : notthere
 	SUFFIX : .pyc
@@ -102,18 +102,19 @@ are ignored in the output for this example because they are not
 actually part of the module and the list is long.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'inspect_getmembers_module.py', break_lines_at=65, line_break_mode='wrap'))
+.. cog.out(run_script(cog.inFile, 'inspect_getmembers_module.py',
+..         line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python inspect_getmembers_module.py
+	$ python3 inspect_getmembers_module.py
 	
 	A : <class 'example.A'>
 	B : <class 'example.B'>
-	instance_of_a : <example.A object at 0x1004ddd10>
+	instance_of_a : <example.A object at 0x1014afe48>
 	module_level_function : <function module_level_function at
-	0x1004cd050>
+	0x101488620>
 
 .. {{{end}}}
 
@@ -129,9 +130,9 @@ Only classes are included in the output, now.
 .. cog.out(run_script(cog.inFile, 'inspect_getmembers_module_class.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python inspect_getmembers_module_class.py
+	$ python3 inspect_getmembers_module_class.py
 	
 	A : <class 'example.A'>
 	B : <class 'example.B'>
@@ -153,38 +154,57 @@ Because no filtering is applied, the output shows the attributes,
 methods, slots, and other members of the class.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'inspect_getmembers_class.py'))
+.. cog.out(run_script(cog.inFile, 'inspect_getmembers_class.py',
+..         line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python inspect_getmembers_class.py
+	$ python3 inspect_getmembers_class.py
 	
-	[('__class__', <type 'type'>),
+	[('__class__', <class 'type'>),
 	 ('__delattr__',
 	  <slot wrapper '__delattr__' of 'object' objects>),
-	 ('__dict__', <dictproxy object at 0x1004d0da8>),
+	 ('__dict__',
+	  mappingproxy({'__dict__': <attribute '__dict__' of 'A'
+	objects>,
+	                '__doc__': 'The A class.',
+	                '__init__': <function A.__init__ at
+	0x10118ae18>,
+	                '__module__': 'example',
+	                '__weakref__': <attribute '__weakref__' of 'A'
+	objects>,
+	                'get_name': <function A.get_name at
+	0x10118aea0>})),
+	 ('__dir__', <method '__dir__' of 'object' objects>),
 	 ('__doc__', 'The A class.'),
+	 ('__eq__', <slot wrapper '__eq__' of 'object' objects>),
 	 ('__format__', <method '__format__' of 'object' objects>),
+	 ('__ge__', <slot wrapper '__ge__' of 'object' objects>),
 	 ('__getattribute__',
 	  <slot wrapper '__getattribute__' of 'object' objects>),
+	 ('__gt__', <slot wrapper '__gt__' of 'object' objects>),
 	 ('__hash__', <slot wrapper '__hash__' of 'object' objects>),
-	 ('__init__', <unbound method A.__init__>),
+	 ('__init__', <function A.__init__ at 0x10118ae18>),
+	 ('__le__', <slot wrapper '__le__' of 'object' objects>),
+	 ('__lt__', <slot wrapper '__lt__' of 'object' objects>),
 	 ('__module__', 'example'),
+	 ('__ne__', <slot wrapper '__ne__' of 'object' objects>),
 	 ('__new__',
-	  <built-in method __new__ of type object at 0x100187800>),
+	  <built-in method __new__ of type object at 0x100229960>),
 	 ('__reduce__', <method '__reduce__' of 'object' objects>),
-	 ('__reduce_ex__',
-	  <method '__reduce_ex__' of 'object' objects>),
+	 ('__reduce_ex__', <method '__reduce_ex__' of 'object'
+	objects>),
 	 ('__repr__', <slot wrapper '__repr__' of 'object' objects>),
 	 ('__setattr__',
 	  <slot wrapper '__setattr__' of 'object' objects>),
 	 ('__sizeof__', <method '__sizeof__' of 'object' objects>),
 	 ('__str__', <slot wrapper '__str__' of 'object' objects>),
 	 ('__subclasshook__',
-	  <built-in method __subclasshook__ of type object at 0x100385a10>),
+	  <built-in method __subclasshook__ of type object at
+	0x1014072c8>),
 	 ('__weakref__', <attribute '__weakref__' of 'A' objects>),
-	 ('get_name', <unbound method A.get_name>)]
+	 ('get_name', <function A.get_name at 0x10118aea0>)]
 
 .. {{{end}}}
 
@@ -201,12 +221,11 @@ Only unbound methods are returned now.
 .. cog.out(run_script(cog.inFile, 'inspect_getmembers_class_methods.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python inspect_getmembers_class_methods.py
+	$ python3 inspect_getmembers_class_methods.py
 	
-	[('__init__', <unbound method A.__init__>),
-	 ('get_name', <unbound method A.get_name>)]
+	[]
 
 .. {{{end}}}
 
@@ -226,13 +245,11 @@ identified as being methods of :class:`B`.
 .. cog.out(run_script(cog.inFile, 'inspect_getmembers_class_methods_b.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python inspect_getmembers_class_methods_b.py
+	$ python3 inspect_getmembers_class_methods_b.py
 	
-	[('__init__', <unbound method B.__init__>),
-	 ('do_something', <unbound method B.do_something>),
-	 ('get_name', <unbound method B.get_name>)]
+	[]
 
 .. {{{end}}}
 
@@ -256,9 +273,9 @@ through the attribute directly, but moved to the left margin by
 .. cog.out(run_script(cog.inFile, 'inspect_getdoc.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python inspect_getdoc.py
+	$ python3 inspect_getdoc.py
 	
 	B.__doc__:
 	This is the B class.
@@ -288,9 +305,9 @@ prefix stripped off.
 .. cog.out(run_script(cog.inFile, 'inspect_getcomments_method.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python inspect_getcomments_method.py
+	$ python3 inspect_getcomments_method.py
 	
 	# This method is not part of A.
 	
@@ -311,9 +328,9 @@ comment, but as soon as a blank line appears the comment is stopped.
 .. cog.out(run_script(cog.inFile, 'inspect_getcomments_module.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python inspect_getcomments_module.py
+	$ python3 inspect_getcomments_module.py
 	
 	# This comment appears first
 	# and spans 2 lines.
@@ -339,12 +356,13 @@ the output.
 .. cog.out(run_script(cog.inFile, 'inspect_getsource_class.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python inspect_getsource_class.py
+	$ python3 inspect_getsource_class.py
 	
 	class A(object):
 	    """The A class."""
+	
 	    def __init__(self, name):
 	        self.name = name
 	
@@ -368,9 +386,9 @@ The original indent level is retained in this case.
 .. cog.out(run_script(cog.inFile, 'inspect_getsource_method.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python inspect_getsource_method.py
+	$ python3 inspect_getsource_method.py
 	
 	    def get_name(self):
 	        "Returns the name of the instance."
@@ -394,14 +412,14 @@ number in the file where the source appears.
 .. cog.out(run_script(cog.inFile, 'inspect_getsourcelines_method.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python inspect_getsourcelines_method.py
+	$ python3 inspect_getsourcelines_method.py
 	
 	(['    def get_name(self):\n',
 	  '        "Returns the name of the instance."\n',
 	  '        return self.name\n'],
-	 20)
+	 24)
 
 .. {{{end}}}
 
@@ -433,9 +451,9 @@ have a default value. The single default therefore is matched up with
 .. cog.out(run_script(cog.inFile, 'inspect_getargspec_function.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python inspect_getargspec_function.py
+	$ python3 inspect_getargspec_function.py
 	
 	NAMES   : ['arg1', 'arg2']
 	*       : args
@@ -467,9 +485,9 @@ dictionary onto the stack as the arguments.
 .. cog.out(run_script(cog.inFile, 'inspect_getcallargs.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python inspect_getcallargs.py
+	$ python3 inspect_getcallargs.py
 	
 	('a',) {'unknown_name': 'value'}
 	{'arg1': 'a',
@@ -512,9 +530,9 @@ The output from this example is the "tree" of inheritance for the
 .. cog.out(run_script(cog.inFile, 'inspect_getclasstree.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python inspect_getclasstree.py
+	$ python3 inspect_getclasstree.py
 	
 	A, B, C, D:
 	 object
@@ -539,9 +557,9 @@ This time, :class:`D` only appears in the output once:
 .. cog.out(run_script(cog.inFile, 'inspect_getclasstree_unique.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python inspect_getclasstree_unique.py
+	$ python3 inspect_getclasstree_unique.py
 	
 	 object
 	   A
@@ -573,23 +591,23 @@ in the search order, because :class:`B` is derived from :class:`A`.
 .. cog.out(run_script(cog.inFile, 'inspect_getmro.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python inspect_getmro.py
+	$ python3 inspect_getmro.py
 	
 	B_First:
-		B_First
-		B
-		A
-		C
-		object
+		 B_First
+		 B
+		 A
+		 C
+		 object
 	
 	C_First:
-		C_First
-		C
-		B
-		A
-		object
+		 C_First
+		 C
+		 B
+		 A
+		 object
 
 .. {{{end}}}
 
@@ -628,9 +646,9 @@ variables even though it is not an argument to the function.
 .. cog.out(run_script(cog.inFile, 'inspect_getargvalues.py', break_lines_at=55))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python inspect_getargvalues.py
+	$ python3 inspect_getargvalues.py
 	
 	2 ArgInfo(args=['limit'], varargs=None, keywords=None, 
 	locals={'local_variable': '..', 'limit': 2})
@@ -658,45 +676,47 @@ The last part of the output represents the main program, outside of the
 .. cog.out(run_script(cog.inFile, 'inspect_stack.py', break_lines_at=65, line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python inspect_stack.py
+	$ python3 inspect_stack.py
 	
-	inspect_stack.py[9]
+	inspect_stack.py[10]
 	  -> for level in inspect.stack():
 	ArgInfo(args=[], varargs=None, keywords=None,
-	locals={'src_index': 0, 'line_num': 9, 'frame': <frame object at
-	0x100360750>, 'level': (<frame object at 0x100360750>,
-	'inspect_stack.py', 9, 'show_stack', ['    for level in
-	inspect.stack():\n'], 0), 'src_code': ['    for level in
-	inspect.stack():\n'], 'filename': 'inspect_stack.py', 'func':
-	'show_stack'})
+	locals={'src_index': 0, 'frame': <frame object at 0x10100ee38>,
+	'line_num': 10, 'func': 'show_stack', 'level':
+	FrameInfo(frame=<frame object at 0x10100ee38>,
+	filename='inspect_stack.py', lineno=10, function='show_stack',
+	code_context=['    for level in inspect.stack():\n'], index=0),
+	'src_code': ['    for level in inspect.stack():\n'], 'filename':
+	'inspect_stack.py'})
 	
-	inspect_stack.py[21]
+	inspect_stack.py[25]
 	  -> show_stack()
 	ArgInfo(args=['limit'], varargs=None, keywords=None,
 	locals={'local_variable': '', 'limit': 0})
 	
-	inspect_stack.py[23]
+	inspect_stack.py[27]
 	  -> recurse(limit - 1)
 	ArgInfo(args=['limit'], varargs=None, keywords=None,
 	locals={'local_variable': '.', 'limit': 1})
 	
-	inspect_stack.py[23]
+	inspect_stack.py[27]
 	  -> recurse(limit - 1)
 	ArgInfo(args=['limit'], varargs=None, keywords=None,
 	locals={'local_variable': '..', 'limit': 2})
 	
-	inspect_stack.py[27]
+	inspect_stack.py[31]
 	  -> recurse(2)
 	ArgInfo(args=[], varargs=None, keywords=None,
-	locals={'__builtins__': <module '__builtin__' (built-in)>,
-	'__file__': 'inspect_stack.py', 'inspect': <module 'inspect' from
-	'/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/
-	inspect.pyc'>, 'recurse': <function recurse at 0x1004cd050>,
-	'__package__': None, '__name__': '__main__', 'show_stack':
-	<function show_stack at 0x1004def50>, '__doc__': 'Inspecting the
-	call stack.\n'})
+	locals={'__cached__': None, '__package__': None, '__builtins__':
+	<module 'builtins' (built-in)>, 'show_stack': <function
+	show_stack at 0x100757f28>, 'recurse': <function recurse at
+	0x10138f620>, '__name__': '__main__', '__loader__':
+	<_frozen_importlib_external.SourceFileLoader object at
+	0x1007aa748>, '__file__': 'inspect_stack.py', 'inspect': <module
+	'inspect' from '.../lib/python3.5/inspect.py'>, '__doc__':
+	'Inspecting the call stack.\n', '__spec__': None})
 	
 
 .. {{{end}}}

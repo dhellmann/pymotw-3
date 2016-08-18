@@ -13,4 +13,5 @@ print('**      :', arg_spec[2])
 print('defaults:', arg_spec[3])
 
 args_with_defaults = arg_spec[0][-len(arg_spec[3]):]
-print('args & defaults:', zip(args_with_defaults, arg_spec[3]))
+print('args & defaults:',
+      list(zip(args_with_defaults, arg_spec[3])))
