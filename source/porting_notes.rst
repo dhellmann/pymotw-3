@@ -206,10 +206,10 @@ EasyDialogs
 The :mod:`EasyDialogs` module has been removed. See :mod:`tkinter`
 instead.
 
-exception
----------
+exceptions
+----------
 
-The :mod:`exception` module has been removed because all of the
+The :mod:`exceptions` module has been removed because all of the
 exceptions defined there are available as built-in classes.
 
 htmllib
