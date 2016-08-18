@@ -8,7 +8,6 @@
 :Purpose:
     The inspect module provides functions for introspecting on live
     objects and their source code.
-:Python Version: 2.1 and later
 
 The :mod:`inspect` module provides functions for learning about live
 objects, including modules, classes, instances, functions, and
@@ -24,8 +23,8 @@ Example Module
 The rest of the examples for this section use this example file,
 ``example.py``.
 
-.. include:: example.py
-    :literal:
+.. literalinclude:: example.py
+    :caption:
 
 Module Information
 ==================
@@ -43,8 +42,8 @@ is important to note that the function looks only at the file's name,
 and does not actually check if the file exists or try to read the
 file.
 
-.. include:: inspect_getmoduleinfo.py
-    :literal:
+.. literalinclude:: inspect_getmoduleinfo.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Here are a few sample runs:
@@ -81,19 +80,19 @@ Inspecting Modules
 ==================
 
 It is possible to probe live objects to determine their components
-using :func:`getmembers()`. The arguments are an object to scan (a
+using :func:`getmembers`. The arguments are an object to scan (a
 module, class, or instance) and an optional predicate function that is
 used to filter the objects returned. The return value is a list of
 tuples with two values: the name of the member, and the type of the
 member. The :mod:`inspect` module includes several such predicate
-functions with names like :func:`ismodule()`, :func:`isclass()`, etc.
+functions with names like :func:`ismodule`, :func:`isclass`, etc.
 
 The types of members that might be returned depend on the type of
 object scanned. Modules can contain classes and functions; classes can
 contain methods and attributes; and so on.
 
-.. include:: inspect_getmembers_module.py
-    :literal:
+.. literalinclude:: inspect_getmembers_module.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This sample prints the members of the ``example`` module. Modules have
@@ -120,8 +119,8 @@ actually part of the module and the list is long.
 
 The *predicate* argument can be used to filter the types of objects returned.
 
-.. include:: inspect_getmembers_module_class.py
-    :literal:
+.. literalinclude:: inspect_getmembers_module_class.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Only classes are included in the output, now.
@@ -143,11 +142,11 @@ Only classes are included in the output, now.
 Inspecting Classes
 ==================
 
-Classes are scanned using :func:`getmembers()` in the same way as
+Classes are scanned using :func:`getmembers` in the same way as
 modules, though the types of members are different.
 
-.. include:: inspect_getmembers_class.py
-    :literal:
+.. literalinclude:: inspect_getmembers_class.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Because no filtering is applied, the output shows the attributes,
@@ -190,10 +189,10 @@ methods, slots, and other members of the class.
 .. {{{end}}}
 
 
-To find the methods of a class, use the :func:`ismethod()` predicate:
+To find the methods of a class, use the :func:`ismethod` predicate:
 
-.. include:: inspect_getmembers_class_methods.py
-    :literal:
+.. literalinclude:: inspect_getmembers_class_methods.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Only unbound methods are returned now.
@@ -213,11 +212,11 @@ Only unbound methods are returned now.
 
 
 The output for :class:`B` includes the override for :func:`get_name`
-as well as the new method, and the inherited :func:`__init__()` method
+as well as the new method, and the inherited :func:`__init__` method
 implemented in :class:`A`.
 
-.. include:: inspect_getmembers_class_methods_b.py
-    :literal:
+.. literalinclude:: inspect_getmembers_class_methods_b.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Methods inherited from :class:`A`, such as :func:`__init__`, are
@@ -242,11 +241,11 @@ Documentation Strings
 =====================
 
 The docstring for an object can be retrieved with
-:func:`getdoc()`. The return value is the :attr:`__doc__` attribute
+:func:`getdoc`. The return value is the :attr:`__doc__` attribute
 with tabs expanded to spaces and with indentation made uniform.
 
-.. include:: inspect_getdoc.py
-    :literal:
+.. literalinclude:: inspect_getdoc.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The second line of the docstring is indented when it is retrieved
@@ -274,12 +273,12 @@ through the attribute directly, but moved to the left margin by
 
 In addition to the actual docstring, it is possible to retrieve the
 comments from the source file where an object is implemented, if the
-source is available. The :func:`getcomments()` function looks at the
+source is available. The :func:`getcomments` function looks at the
 source of the object and finds comments on lines preceding the
 implementation.
 
-.. include:: inspect_getcomments_method.py
-    :literal:
+.. literalinclude:: inspect_getcomments_method.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The lines returned include the comment prefix with any whitespace
@@ -298,11 +297,11 @@ prefix stripped off.
 
 .. {{{end}}}
 
-When a module is passed to :func:`getcomments()`, the return value is
+When a module is passed to :func:`getcomments`, the return value is
 always the first comment in the module.
 
-.. include:: inspect_getcomments_module.py
-    :literal:
+.. literalinclude:: inspect_getcomments_module.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Contiguous lines from the example file are included as a single
@@ -327,10 +326,10 @@ Retrieving Source
 
 If the ``.py`` file is available for a module, the original source
 code for the class or method can be retrieved using
-:func:`getsource()` and :func:`getsourcelines()`.
+:func:`getsource` and :func:`getsourcelines`.
 
-.. include:: inspect_getsource_class.py
-    :literal:
+.. literalinclude:: inspect_getsource_class.py
+    :caption:
     :start-after: #end_pymotw_header
 
 When a class is passed in, all of the methods for the class are included in
@@ -359,8 +358,8 @@ the output.
 To retrieve the source for a single method, pass the method reference
 to :func:`getsource`.
 
-.. include:: inspect_getsource_method.py
-    :literal:
+.. literalinclude:: inspect_getsource_method.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The original indent level is retained in this case.
@@ -380,14 +379,14 @@ The original indent level is retained in this case.
 
 .. {{{end}}}
 
-Use :func:`getsourcelines()` instead of :func:`getsource()` to
+Use :func:`getsourcelines` instead of :func:`getsource` to
 retrieve the lines of source split into individual strings.
 
-.. include:: inspect_getsourcelines_method.py
-    :literal:
+.. literalinclude:: inspect_getsourcelines_method.py
+    :caption:
     :start-after: #end_pymotw_header
 
-The return value from :func:`getsourcelines()` is a :class:`tuple` containing a
+The return value from :func:`getsourcelines` is a :class:`tuple` containing a
 list of strings (the lines from the source file), and a starting line
 number in the file where the source appears.
 
@@ -406,15 +405,15 @@ number in the file where the source appears.
 
 .. {{{end}}}
 
-If the source file is not available, :func:`getsource()` and
-:func:`getsourcelines()` raise an :class:`IOError`.
+If the source file is not available, :func:`getsource` and
+:func:`getsourcelines` raise an :class:`IOError`.
 
 Method and Function Arguments
 =============================
 
 In addition to the documentation for a function or method, it is
 possible to ask for a complete specification of the arguments the
-callable takes, including default values. The :func:`getargspec()`
+callable takes, including default values. The :func:`getargspec`
 function returns a tuple containing the list of positional argument
 names, the name of any variable positional arguments (e.g.,
 ``*args``), the names of any variable named arguments (e.g.,
@@ -422,8 +421,8 @@ names, the name of any variable positional arguments (e.g.,
 default values, they match up with the end of the positional argument
 list.
 
-.. include:: inspect_getargspec_function.py
-    :literal:
+.. literalinclude:: inspect_getargspec_function.py
+    :caption:
     :start-after: #end_pymotw_header
 
 In this example, the first argument to the function, *arg1*, does not
@@ -456,8 +455,8 @@ provides the necessary logic to handle the mapping.  It returns a
 dictionary populated with its arguments associated with the names of
 the arguments of a specified function.
 
-.. include:: inspect_getcallargs.py
-   :literal:
+.. literalinclude:: inspect_getcallargs.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The keys of the dictionary are the argument names of the function, so
@@ -494,14 +493,14 @@ Class Hierarchies
 =================
 
 :mod:`inspect` includes two methods for working directly with class
-hierarchies. The first, :func:`getclasstree()`, creates a tree-like
+hierarchies. The first, :func:`getclasstree`, creates a tree-like
 data structure based on the classes it is given and their base
 classes. Each element in the list returned is either a tuple with a
 class and its base classes, or another list containing tuples for
 subclasses.
 
-.. include:: inspect_getclasstree.py
-    :literal:
+.. literalinclude:: inspect_getclasstree.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The output from this example is the "tree" of inheritance for the
@@ -527,11 +526,11 @@ The output from this example is the "tree" of inheritance for the
 
 .. {{{end}}}
 
-If :func:`getclasstree()` is called with *unique* set to a true value,
+If :func:`getclasstree` is called with *unique* set to a true value,
 the output is different.
 
-.. include:: inspect_getclasstree_unique.py
-    :literal:
+.. literalinclude:: inspect_getclasstree_unique.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This time, :class:`D` only appears in the output once:
@@ -557,13 +556,13 @@ Method Resolution Order
 =======================
 
 The other function for working with class hierarchies is
-:func:`getmro()`, which returns a :class:`tuple` of classes in the
+:func:`getmro`, which returns a :class:`tuple` of classes in the
 order they should be scanned when resolving an attribute that might be
 inherited from a base class using the *Method Resolution Order*
 (MRO). Each class in the sequence appears only once.
 
-.. include:: inspect_getmro.py
-    :literal:
+.. literalinclude:: inspect_getmro.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This output demonstrates the "depth-first" nature of the MRO
@@ -611,15 +610,15 @@ can also be useful for logging or when debugging programs, since the
 stack frames can be interrogated to discover the argument values
 passed into the functions.
 
-:func:`currentframe()` returns the frame at the top of the stack (for
-the current function). :func:`getargvalues()` returns a tuple with
+:func:`currentframe` returns the frame at the top of the stack (for
+the current function). :func:`getargvalues` returns a tuple with
 argument names, the names of the variable arguments, and a dictionary
 with local values from the frame. Combining them shows the arguments
 to functions and local variables at different points in the call
 stack.
 
-.. include:: inspect_getargvalues.py
-    :literal:
+.. literalinclude:: inspect_getargvalues.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The value for :data:`local_variable` is included in the frame's local
@@ -643,13 +642,13 @@ variables even though it is not an argument to the function.
 .. {{{end}}}
 
 
-Using :func:`stack()`, it is also possible to access all of the stack
+Using :func:`stack`, it is also possible to access all of the stack
 frames from the current frame to the first caller. This example is
 similar to the one shown earlier, except it waits until reaching the
 end of the recursion to print the stack information.
 
-.. include:: inspect_stack.py
-    :literal:
+.. literalinclude:: inspect_stack.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The last part of the output represents the main program, outside of the
@@ -704,8 +703,8 @@ The last part of the output represents the main program, outside of the
 
 There are other functions for building lists of frames in different
 contexts, such as when an exception is being processed. See the
-documentation for :func:`trace()`, :func:`getouterframes()`, and
-:func:`getinnerframes()` for more details.
+documentation for :func:`trace`, :func:`getouterframes`, and
+:func:`getinnerframes` for more details.
 
 
 .. seealso::

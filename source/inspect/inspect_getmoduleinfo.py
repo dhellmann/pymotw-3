@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # Copyright 2007 Doug Hellmann.
 #
@@ -27,7 +27,6 @@
 
 """
 
-__version__ = "$Id$"
 #end_pymotw_header
 
 import imp
