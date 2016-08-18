@@ -1,6 +1,6 @@
-=================================
- inspect -- Inspect Live Objects
-=================================
+==================================
+ inspect --- Inspect Live Objects
+==================================
 
 .. module:: inspect
     :synopsis: Inspect live objects
@@ -15,7 +15,6 @@ methods. The functions in this module can be used to retrieve the
 original source code for a function, look at the arguments to a method
 on the stack, and extract the sort of information useful for producing
 library documentation for source code.
-
 
 Example Module
 ==============
@@ -729,14 +728,13 @@ documentation for :func:`trace`, :func:`getouterframes`, and
 
 .. seealso::
 
-    `inspect <http://docs.python.org/library/inspect.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`inspect`
 
-    `Python 2.3 Method Resolution Order <http://www.python.org/download/releases/2.3/mro/>`__
-        Documentation for the C3 Method Resolution order used by
-        Python 2.3 and later.
+   * `Python 2.3 Method Resolution Order
+     <http://www.python.org/download/releases/2.3/mro/>`__ --
+     Documentation for the C3 Method Resolution order used by Python
+     2.3 and later.
 
-    :mod:`pyclbr`
-        The ``pyclbr`` module provides access to some of the same
-        information as ``inspect`` by parsing the module without
-        importing it.
+   * :mod:`pyclbr` -- The ``pyclbr`` module provides access to some of
+     the same information as ``inspect`` by parsing the module without
+     importing it.
