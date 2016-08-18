@@ -11,12 +11,14 @@ import inspect
 import example
 import pprint
 
-for args, kwds in [
-    (('a',), {'unknown_name':'value'}),
-    (('a',), {'arg2':'value'}),
+INPUTS = [
+    (('a',), {'unknown_name': 'value'}),
+    (('a',), {'arg2': 'value'}),
     (('a', 'b', 'c', 'd'), {}),
-    ((), {'arg1':'a'}),
-    ]:
+    ((), {'arg1': 'a'}),
+]
+
+for args, kwds in INPUTS:
     print(args, kwds)
     callargs = inspect.getcallargs(example.module_level_function,
                                    *args, **kwds)

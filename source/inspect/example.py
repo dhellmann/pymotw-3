@@ -8,12 +8,16 @@
 """Sample file to serve as the basis for inspect examples.
 """
 
+
 def module_level_function(arg1, arg2='default', *args, **kwargs):
     """This function is declared in the module."""
-    local_variable = arg1
+    local_variable = arg1 * 2
+    return local_variable
+
 
 class A(object):
     """The A class."""
+
     def __init__(self, name):
         self.name = name
 
@@ -22,6 +26,7 @@ class A(object):
         return self.name
 
 instance_of_a = A('sample_instance')
+
 
 class B(A):
     """This is the B class.
