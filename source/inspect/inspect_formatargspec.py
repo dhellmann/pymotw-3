@@ -33,5 +33,5 @@ import inspect
 import example
 
 spec = inspect.getargspec(example.module_level_function)
-print spec
-print inspect.formatargspec(spec)
+print(spec)
+print(inspect.formatargspec(spec))

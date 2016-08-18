@@ -34,4 +34,4 @@ import inspect
 import example
 
 for name, data in inspect.getmembers(example, inspect.isclass):
-    print '%s :' % name, repr(data)
+    print('%s :' % name, repr(data))

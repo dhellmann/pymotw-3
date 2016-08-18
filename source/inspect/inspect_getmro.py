@@ -41,10 +41,10 @@ class C_First(C, example.B):
 class B_First(example.B, C):
     pass
 
-print 'B_First:'
+print('B_First:')
 for c in inspect.getmro(B_First):
-    print '\t', c.__name__
-print
-print 'C_First:'
+    print('\t', c.__name__)
+print()
+print('C_First:')
 for c in inspect.getmro(C_First):
-    print '\t', c.__name__
+    print('\t', c.__name__)

@@ -33,7 +33,7 @@ import inspect
 
 def recurse(limit):
     local_variable = '.' * limit
-    print limit, inspect.getargvalues(inspect.currentframe())
+    print(limit, inspect.getargvalues(inspect.currentframe()))
     if limit <= 0:
         return
     recurse(limit - 1)

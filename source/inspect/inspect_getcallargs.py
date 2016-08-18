@@ -17,9 +17,9 @@ for args, kwds in [
     (('a', 'b', 'c', 'd'), {}),
     ((), {'arg1':'a'}),
     ]:
-    print args, kwds
+    print(args, kwds)
     callargs = inspect.getcallargs(example.module_level_function,
                                    *args, **kwds)
     pprint.pprint(callargs, width=74)
     example.module_level_function(**callargs)
-    print
+    print()
