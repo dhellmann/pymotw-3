@@ -112,9 +112,9 @@ actually part of the module and the list is long.
 	
 	A : <class 'example.A'>
 	B : <class 'example.B'>
-	instance_of_a : <example.A object at 0x10148b390>
+	instance_of_a : <example.A object at 0x1014a1358>
 	module_level_function : <function module_level_function at
-	0x101487620>
+	0x10148c620>
 
 .. {{{end}}}
 
@@ -170,12 +170,12 @@ methods, slots, and other members of the class.
 	objects>,
 	                '__doc__': 'The A class.',
 	                '__init__': <function A.__init__ at
-	0x101c8ae18>,
+	0x101499e18>,
 	                '__module__': 'example',
 	                '__weakref__': <attribute '__weakref__' of 'A'
 	objects>,
 	                'get_name': <function A.get_name at
-	0x101c8aea0>})),
+	0x101499ea0>})),
 	 ('__dir__', <method '__dir__' of 'object' objects>),
 	 ('__doc__', 'The A class.'),
 	 ('__eq__', <slot wrapper '__eq__' of 'object' objects>),
@@ -185,7 +185,7 @@ methods, slots, and other members of the class.
 	  <slot wrapper '__getattribute__' of 'object' objects>),
 	 ('__gt__', <slot wrapper '__gt__' of 'object' objects>),
 	 ('__hash__', <slot wrapper '__hash__' of 'object' objects>),
-	 ('__init__', <function A.__init__ at 0x101c8ae18>),
+	 ('__init__', <function A.__init__ at 0x101499e18>),
 	 ('__le__', <slot wrapper '__le__' of 'object' objects>),
 	 ('__lt__', <slot wrapper '__lt__' of 'object' objects>),
 	 ('__module__', 'example'),
@@ -202,9 +202,9 @@ methods, slots, and other members of the class.
 	 ('__str__', <slot wrapper '__str__' of 'object' objects>),
 	 ('__subclasshook__',
 	  <built-in method __subclasshook__ of type object at
-	0x100512658>),
+	0x101302988>),
 	 ('__weakref__', <attribute '__weakref__' of 'A' objects>),
-	 ('get_name', <function A.get_name at 0x101c8aea0>)]
+	 ('get_name', <function A.get_name at 0x101499ea0>)]
 
 .. {{{end}}}
 
@@ -226,8 +226,8 @@ Only unbound methods are returned now.
 
 	$ python3 inspect_getmembers_class_methods.py
 	
-	[('__init__', <function A.__init__ at 0x101ca6e18>),
-	 ('get_name', <function A.get_name at 0x101ca6ea0>)]
+	[('__init__', <function A.__init__ at 0x101c77e18>),
+	 ('get_name', <function A.get_name at 0x101c77ea0>)]
 
 .. {{{end}}}
 
@@ -250,9 +250,9 @@ identified as being methods of :class:`B`.
 
 	$ python3 inspect_getmembers_class_methods_b.py
 	
-	[('__init__', <function A.__init__ at 0x101497e18>),
-	 ('do_something', <function B.do_something at 0x101497f28>),
-	 ('get_name', <function B.get_name at 0x101498048>)]
+	[('__init__', <function A.__init__ at 0x101c97e18>),
+	 ('do_something', <function B.do_something at 0x101c97f28>),
+	 ('get_name', <function B.get_name at 0x101c98048>)]
 
 .. {{{end}}}
 
@@ -712,9 +712,9 @@ The last part of the output represents the main program, outside of the
 	inspect_stack.py[10]
 	  -> for level in inspect.stack():
 	ArgInfo(args=[], varargs=None, keywords=None,
-	locals={'src_index': 0, 'frame': <frame object at 0x10042ef88>,
+	locals={'src_index': 0, 'frame': <frame object at 0x10074f6f8>,
 	'line_num': 10, 'func': 'show_stack', 'level':
-	FrameInfo(frame=<frame object at 0x10042ef88>,
+	FrameInfo(frame=<frame object at 0x10074f6f8>,
 	filename='inspect_stack.py', lineno=10, function='show_stack',
 	code_context=['    for level in inspect.stack():\n'], index=0),
 	'src_code': ['    for level in inspect.stack():\n'], 'filename':
@@ -741,7 +741,7 @@ The last part of the output represents the main program, outside of the
 	locals={'__cached__': None, '__package__': None, '__builtins__':
 	<module 'builtins' (built-in)>, 'show_stack': <function
 	show_stack at 0x101857f28>, 'recurse': <function recurse at
-	0x101c8a620>, '__name__': '__main__', '__loader__':
+	0x101c99620>, '__name__': '__main__', '__loader__':
 	<_frozen_importlib_external.SourceFileLoader object at
 	0x1018aa828>, '__file__': 'inspect_stack.py', 'inspect': <module
 	'inspect' from '.../lib/python3.5/inspect.py'>, '__doc__':

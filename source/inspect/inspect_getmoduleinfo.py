@@ -15,7 +15,8 @@ else:
 try:
     (name, suffix, mode, mtype) = inspect.getmoduleinfo(filename)
 except TypeError:
-    print('Could not determine module type of %s' % filename)
+    print('Could not determine module type of {}'.format(
+        filename))
 else:
     mtype_name = {
         imp.PY_SOURCE: 'source',
