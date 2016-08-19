@@ -760,6 +760,8 @@ documentation for :func:`trace`, :func:`getouterframes`, and
 
    * :pydoc:`inspect`
 
+   * :ref:`Porting notes for inspect <porting-inspect>`
+
    * `Python 2.3 Method Resolution Order
      <http://www.python.org/download/releases/2.3/mro/>`__ --
      Documentation for the C3 Method Resolution order used by Python

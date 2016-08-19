@@ -625,6 +625,19 @@ UTF-8. There is support for accepting unicode strings and encoding
 them automatically as outgoing commands are sent or as the username
 and password for logging in to the server.
 
+.. _porting-inspect:
+
+inspect
+-------
+
+.. index::
+   pair: porting; inspect
+
+The functions :func:`getargspec`, :func:`getfullargspec`,
+:func:`getargvalues`, :func:`getcallargs`, :func:`getargvalues`,
+:func:`formatargspec`, and :func:`formatargvalues` have been
+deprecated in favor of :func:`signature` (:pyissue:`20438`).
+
 .. _porting-itertools:
 
 itertools
