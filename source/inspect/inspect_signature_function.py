@@ -7,8 +7,9 @@ import inspect
 import example
 
 sig = inspect.signature(example.module_level_function)
+print('module_level_function{}'.format(sig))
 
-print('Parameters:')
+print('\nParameter details:')
 for name, param in sig.parameters.items():
     if param.kind == inspect.Parameter.POSITIONAL_ONLY:
         print('  {} (positional-only)'.format(name))

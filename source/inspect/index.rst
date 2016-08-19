@@ -112,9 +112,9 @@ actually part of the module and the list is long.
 	
 	A : <class 'example.A'>
 	B : <class 'example.B'>
-	instance_of_a : <example.A object at 0x101b92358>
+	instance_of_a : <example.A object at 0x101482358>
 	module_level_function : <function module_level_function at
-	0x101b7d620>
+	0x101466620>
 
 .. {{{end}}}
 
@@ -170,12 +170,12 @@ methods, slots, and other members of the class.
 	objects>,
 	                '__doc__': 'The A class.',
 	                '__init__': <function A.__init__ at
-	0x101c99e18>,
+	0x101c8ae18>,
 	                '__module__': 'example',
 	                '__weakref__': <attribute '__weakref__' of 'A'
 	objects>,
 	                'get_name': <function A.get_name at
-	0x101c99ea0>})),
+	0x101c8aea0>})),
 	 ('__dir__', <method '__dir__' of 'object' objects>),
 	 ('__doc__', 'The A class.'),
 	 ('__eq__', <slot wrapper '__eq__' of 'object' objects>),
@@ -185,7 +185,7 @@ methods, slots, and other members of the class.
 	  <slot wrapper '__getattribute__' of 'object' objects>),
 	 ('__gt__', <slot wrapper '__gt__' of 'object' objects>),
 	 ('__hash__', <slot wrapper '__hash__' of 'object' objects>),
-	 ('__init__', <function A.__init__ at 0x101c99e18>),
+	 ('__init__', <function A.__init__ at 0x101c8ae18>),
 	 ('__le__', <slot wrapper '__le__' of 'object' objects>),
 	 ('__lt__', <slot wrapper '__lt__' of 'object' objects>),
 	 ('__module__', 'example'),
@@ -202,9 +202,9 @@ methods, slots, and other members of the class.
 	 ('__str__', <slot wrapper '__str__' of 'object' objects>),
 	 ('__subclasshook__',
 	  <built-in method __subclasshook__ of type object at
-	0x101b25d08>),
+	0x101a18158>),
 	 ('__weakref__', <attribute '__weakref__' of 'A' objects>),
-	 ('get_name', <function A.get_name at 0x101c99ea0>)]
+	 ('get_name', <function A.get_name at 0x101c8aea0>)]
 
 .. {{{end}}}
 
@@ -226,8 +226,8 @@ Only unbound methods are returned now.
 
 	$ python3 inspect_getmembers_class_methods.py
 	
-	[('__init__', <function A.__init__ at 0x101477e18>),
-	 ('get_name', <function A.get_name at 0x101477ea0>)]
+	[('__init__', <function A.__init__ at 0x101c97e18>),
+	 ('get_name', <function A.get_name at 0x101c97ea0>)]
 
 .. {{{end}}}
 
@@ -250,9 +250,9 @@ identified as being methods of :class:`B`.
 
 	$ python3 inspect_getmembers_class_methods_b.py
 	
-	[('__init__', <function A.__init__ at 0x101c97e18>),
-	 ('do_something', <function B.do_something at 0x101c97f28>),
-	 ('get_name', <function B.get_name at 0x101c98048>)]
+	[('__init__', <function A.__init__ at 0x102497e18>),
+	 ('do_something', <function B.do_something at 0x102497f28>),
+	 ('get_name', <function B.get_name at 0x102491048>)]
 
 .. {{{end}}}
 
@@ -277,9 +277,9 @@ The predicate :func:`ismethod` recognizes two bound methods from
 	$ python3 inspect_getmembers_instance.py
 	
 	[('__init__', <bound method A.__init__ of <example.A object at 0
-	x1010b21d0>>),
+	x1007b21d0>>),
 	 ('get_name', <bound method A.get_name of <example.A object at 0
-	x1010b21d0>>)]
+	x1007b21d0>>)]
 
 .. {{{end}}}
 
@@ -482,11 +482,81 @@ function, *arg1*, does not have a default value, while *arg2* does.
 
 	$ python3 inspect_signature_function.py
 	
-	Parameters:
+	module_level_function(arg1, arg2='default', *args, **kwargs)
+	
+	Parameter details:
 	  arg1
 	  arg2='default'
 	  *args
 	  **kwargs
+
+.. {{{end}}}
+
+The :class:`Signature` for a function can be used by decorators or
+other functions to validate inputs, provide different defaults, etc.
+Writing a suitably generic and reusable validation decorator has one
+special challenge, though, because it can be complicated to match up
+incoming arguments with their names for functions that accept a
+combination of named and positional arguments. The :func:`bind` and
+:func:`bind_partial` methods provide the necessary logic to handle the
+mapping.  They return a :class:`BoundArguments` instance populated
+with the arguments associated with the names of the arguments of a
+specified function.
+
+.. literalinclude:: inspect_signature_bind.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The :class:`BoundArguments` instance has attributes ``args`` and
+``kwargs`` that can be used to call the function using the syntax to
+expand the tuple and dictionary onto the stack as the arguments.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'inspect_signature_bind.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 inspect_signature_bind.py
+	
+	Arguments:
+	arg1 = 'this is arg1'
+	arg2 = 'this is arg2'
+	args = ('this is an extra positional argument',)
+	kwargs = {'extra_named_arg': 'value'}
+	
+	Calling:
+	this is arg1this is arg1
+
+.. {{{end}}}
+
+If only some arguments are available, :func:`bind_partial` will still
+create a :class:`BoundArguments` instance. It may not be fully usable
+until the remaining arguments are added.
+
+.. literalinclude:: inspect_signature_bind_partial.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+:func:`apply_defaults` will add any values from the parameter
+defaults.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'inspect_signature_bind_partial.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 inspect_signature_bind_partial.py
+	
+	Without defaults:
+	arg1 = 'this is arg1'
+	
+	With defaults:
+	arg1 = 'this is arg1'
+	arg2 = 'default'
+	args = ()
+	kwargs = {}
 
 .. {{{end}}}
 
@@ -666,9 +736,9 @@ The last part of the output represents the main program, outside of the
 	inspect_stack.py[10]
 	  -> for level in inspect.stack():
 	ArgInfo(args=[], varargs=None, keywords=None,
-	locals={'src_index': 0, 'frame': <frame object at 0x101b10b28>,
+	locals={'src_index': 0, 'frame': <frame object at 0x10121b718>,
 	'line_num': 10, 'func': 'show_stack', 'level':
-	FrameInfo(frame=<frame object at 0x101b10b28>,
+	FrameInfo(frame=<frame object at 0x10121b718>,
 	filename='inspect_stack.py', lineno=10, function='show_stack',
 	code_context=['    for level in inspect.stack():\n'], index=0),
 	'src_code': ['    for level in inspect.stack():\n'], 'filename':
@@ -694,10 +764,10 @@ The last part of the output represents the main program, outside of the
 	ArgInfo(args=[], varargs=None, keywords=None,
 	locals={'__cached__': None, '__package__': None, '__builtins__':
 	<module 'builtins' (built-in)>, 'show_stack': <function
-	show_stack at 0x101857f28>, 'recurse': <function recurse at
-	0x101c99620>, '__name__': '__main__', '__loader__':
+	show_stack at 0x101157f28>, 'recurse': <function recurse at
+	0x101483620>, '__name__': '__main__', '__loader__':
 	<_frozen_importlib_external.SourceFileLoader object at
-	0x1018aa828>, '__file__': 'inspect_stack.py', 'inspect': <module
+	0x1011aa828>, '__file__': 'inspect_stack.py', 'inspect': <module
 	'inspect' from '.../lib/python3.5/inspect.py'>, '__doc__':
 	'Inspecting the call stack.\n', '__spec__': None})
 	
@@ -724,3 +794,5 @@ documentation for :func:`trace`, :func:`getouterframes`, and
    * :mod:`pyclbr` -- The ``pyclbr`` module provides access to some of
      the same information as ``inspect`` by parsing the module without
      importing it.
+
+   * :pep:`362` -- Function Signature Object
