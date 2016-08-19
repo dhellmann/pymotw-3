@@ -387,25 +387,16 @@ automatically.
 
 .. {{{end}}}
 
-
-
 .. seealso::
 
-    `tarfile <http://docs.python.org/library/tarfile.html>`_
-        The standard library documentation for this module.
-    
-    `GNU tar manual <http://www.gnu.org/software/tar/manual/html_node/Standard.html>`_
-        Documentation of the tar format, including extensions.
+   * :pydoc:`tarfile`
 
-    :mod:`zipfile`
-        Similar access for ZIP archives.
+   * `GNU tar manual
+     <http://www.gnu.org/software/tar/manual/html_node/Standard.html>`__
+     -- Documentation of the tar format, including extensions.
 
-    :mod:`gzip`
-        GNU zip compression
+   * :mod:`zipfile` -- Similar access for ZIP archives.
 
-    :mod:`bz2`
-        bzip2 compression
+   * :mod:`gzip` -- GNU zip compression
 
-    :mod:`contextlib`
-        The ``contextlib`` module includes :func:`closing`, for
-        managing file handles in :command:`with` statements.
+   * :mod:`bz2` -- bzip2 compression
