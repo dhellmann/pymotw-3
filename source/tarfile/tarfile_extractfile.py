@@ -15,8 +15,8 @@ with tarfile.open('example.tar', 'r') as t:
         try:
             f = t.extractfile(filename)
         except KeyError:
-            print('ERROR: Did not find %s in tar archive' %
-                  filename)
+            print('ERROR: Did not find {} in tar archive'.format(
+                filename))
         else:
             print(filename, ':')
             print(f.read().decode('utf-8'))

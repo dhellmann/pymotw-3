@@ -16,7 +16,8 @@ with tarfile.open('example.tar', 'r') as t:
         try:
             info = t.getmember(filename)
         except KeyError:
-            print('ERROR: Did not find %s in tar archive' %
-                  filename)
+            print('ERROR: Did not find {} in tar archive'.format(
+                filename))
         else:
-            print('%s is %d bytes' % (info.name, info.size))
+            print('{} is {:d} bytes'.format(
+                info.name, info.size))

@@ -11,9 +11,9 @@
 import tarfile
 import os
 
-fmt = '%-30s %-10s'
-print(fmt % ('FILENAME', 'SIZE'))
-print(fmt % ('README.txt', os.stat('README.txt').st_size))
+fmt = '{:<30} {:<10}'
+print(fmt.format('FILENAME', 'SIZE'))
+print(fmt.format('README.txt', os.stat('README.txt').st_size))
 
 FILES = [
     ('tarfile_compression.tar', 'w'),
@@ -25,7 +25,8 @@ for filename, write_mode in FILES:
     with tarfile.open(filename, mode=write_mode) as out:
         out.add('README.txt')
 
-    print(fmt % (filename, os.stat(filename).st_size), end=' ')
+    print(fmt.format(filename, os.stat(filename).st_size),
+          end=' ')
     print([
         m.name
         for m in tarfile.open(filename, 'r:*').getmembers()
