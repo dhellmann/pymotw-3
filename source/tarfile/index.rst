@@ -1,6 +1,6 @@
-===============================
- tarfile -- Tar Archive Access
-===============================
+================================
+ tarfile --- Tar Archive Access
+================================
 
 .. module:: tarfile
     :synopsis: Tar archive access
@@ -11,7 +11,7 @@ The :mod:`tarfile` module provides read and write access to UNIX tar
 archives, including compressed files.  In addition to the POSIX
 standards, several GNU tar extensions are supported.  UNIX special
 file types such as hard and soft links, and device nodes are also
-handled.  
+handled.
 
 .. note::
 
@@ -32,17 +32,18 @@ If the file does not exist, :func:`is_tarfile` raises an
 :class:`IOError`.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'tarfile_is_tarfile.py'))
+.. cog.out(run_script(cog.inFile, 'tarfile_is_tarfile.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python tarfile_is_tarfile.py
-
+	$ python3 tarfile_is_tarfile.py
+	
 	     README.txt  False
 	    example.tar  True
 	bad_example.tar  False
-	   notthere.tar  [Errno 2] No such file or directory: 'notthere.tar'
+	   notthere.tar  [Errno 2] No such file or directory:
+	'notthere.tar'
 
 .. {{{end}}}
 
@@ -67,16 +68,16 @@ contents.
 .. cog.out(run_script(cog.inFile, 'tarfile_getnames.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python tarfile_getnames.py
-
-	['README.txt', '__init__.py']
+	$ python3 tarfile_getnames.py
+	
+	['index.rst', 'README.txt']
 
 .. {{{end}}}
 
 In addition to names, metadata about the archive members is available
-as instances of :class:`TarInfo` objects.  
+as instances of :class:`TarInfo` objects.
 
 .. literalinclude:: tarfile_getmembers.py
     :caption:
@@ -88,21 +89,21 @@ Load the metadata via :func:`getmembers` and :func:`getmember`.
 .. cog.out(run_script(cog.inFile, 'tarfile_getmembers.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python tarfile_getmembers.py
-
-	README.txt
-		Modified:	Sun Nov 28 13:30:14 2010
-		Mode    :	0644
-		Type    :	0
-		Size    :	75 bytes
+	$ python3 tarfile_getmembers.py
 	
-	__init__.py
-		Modified:	Sun Nov 14 09:39:38 2010
-		Mode    :	0644
-		Type    :	0
-		Size    :	22 bytes
+	index.rst
+		Modified:	 Fri Aug 19 16:27:54 2016
+		Mode    :	 0o644
+		Type    :	 b'0'
+		Size    :	 9878 bytes
+	
+	README.txt
+		Modified:	 Fri Aug 19 16:27:54 2016
+		Mode    :	 0o644
+		Type    :	 b'0'
+		Size    :	 75 bytes
 	
 
 .. {{{end}}}
@@ -122,10 +123,10 @@ If the archive member is not present, :func:`getmember` raises a
 .. cog.out(run_script(cog.inFile, 'tarfile_getmember.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python tarfile_getmember.py
-
+	$ python3 tarfile_getmember.py
+	
 	README.txt is 75 bytes
 	ERROR: Did not find notthere.txt in tar archive
 
@@ -148,13 +149,13 @@ archive member can be read.
 .. cog.out(run_script(cog.inFile, 'tarfile_extractfile.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python tarfile_extractfile.py
-
+	$ python3 tarfile_extractfile.py
+	
 	README.txt :
-	The examples for the tarfile module use this file and example.tar as
-	data.
+	The examples for the tarfile module use this file and
+	example.tar as data.
 	
 	ERROR: Did not find notthere.txt in tar archive
 
@@ -176,10 +177,10 @@ file system, starting in the directory named in the arguments.
 .. cog.out(run_script(cog.inFile, 'tarfile_extract.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python tarfile_extract.py
-
+	$ python3 tarfile_extract.py
+	
 	['README.txt']
 
 .. {{{end}}}
@@ -202,11 +203,11 @@ directory where the files should be written.
 .. cog.out(run_script(cog.inFile, 'tarfile_extractall.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python tarfile_extractall.py
-
-	['__init__.py', 'README.txt']
+	$ python3 tarfile_extractall.py
+	
+	['README.txt', 'index.rst']
 
 .. {{{end}}}
 
@@ -225,10 +226,10 @@ When a *members* list is provided, only the named files are extracted.
 .. cog.out(run_script(cog.inFile, 'tarfile_extractall_members.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python tarfile_extractall_members.py
-
+	$ python3 tarfile_extractall_members.py
+	
 	['README.txt']
 
 .. {{{end}}}
@@ -236,8 +237,8 @@ When a *members* list is provided, only the named files are extracted.
 Creating New Archives
 =====================
 
-To create a new archive, open the :class:`TarFile` with a mode
-of ``'w'``. 
+To create a new archive, open the :class:`TarFile` with a mode of
+``'w'``.
 
 .. literalinclude:: tarfile_add.py
     :caption:
@@ -252,10 +253,10 @@ files, use the :func:`add` method.
 .. cog.out(run_script(cog.inFile, 'tarfile_add.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python tarfile_add.py
-
+	$ python3 tarfile_add.py
+	
 	creating archive
 	adding README.txt
 	
@@ -281,10 +282,10 @@ The archive includes only the changed filename:
 .. cog.out(run_script(cog.inFile, 'tarfile_addfile.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python tarfile_addfile.py
-
+	$ python3 tarfile_addfile.py
+	
 	creating archive
 	adding README.txt as RENAMED.txt
 	
@@ -299,7 +300,7 @@ Writing Data from Sources Other Than Files
 Sometimes it is necessary to write data into an archive directly from
 memory.  Rather than writing the data to a file, then adding that file
 to the archive, you can use :func:`addfile` to add data from an open
-file-like handle.
+file-like handle that returns bytes.
 
 .. literalinclude:: tarfile_addfile_string.py
     :caption:
@@ -307,17 +308,17 @@ file-like handle.
 
 By first constructing a :class:`TarInfo` object, the archive member
 can be given any name desired.  After setting the size, the data is
-written to the archive using :func:`addfile` and a :mod:`StringIO`
+written to the archive using :func:`addfile` and a :mod:`BytesIO`
 buffer as a source of the data.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'tarfile_addfile_string.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python tarfile_addfile_string.py
-
+	$ python3 tarfile_addfile_string.py
+	
 	Contents:
 	made_up_file.txt
 	This is the data to write to the archive.
@@ -340,14 +341,16 @@ The resulting archive ends up with two members:
 .. cog.out(run_script(cog.inFile, 'tarfile_append.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python tarfile_append.py
-
+	$ python3 tarfile_append.py
+	
 	creating archive
-	contents: ['README.txt']
+	contents:
+	['README.txt']
 	adding index.rst
-	contents: ['README.txt', 'index.rst']
+	contents:
+	['README.txt', 'index.rst']
 
 .. {{{end}}}
 
@@ -372,15 +375,15 @@ automatically.
 .. cog.out(run_script(cog.inFile, 'tarfile_compression.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python tarfile_compression.py
-
+	$ python3 tarfile_compression.py
+	
 	FILENAME                       SIZE      
 	README.txt                     75        
 	tarfile_compression.tar        10240      ['README.txt']
-	tarfile_compression.tar.gz     212        ['README.txt']
-	tarfile_compression.tar.bz2    187        ['README.txt']
+	tarfile_compression.tar.gz     213        ['README.txt']
+	tarfile_compression.tar.bz2    200        ['README.txt']
 
 .. {{{end}}}
 

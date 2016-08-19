@@ -34,3 +34,11 @@ dist/
 /source/zipfile/writestr.zip
 /source/zipfile/writestr_zipinfo.zip
 /source/bz2/compress-level-*.bz2
+/source/tarfile/addfile_string.tar
+/source/tarfile/outdir/*
+/source/tarfile/tarfile_add.tar
+/source/tarfile/tarfile_addfile.tar
+/source/tarfile/tarfile_append.tar
+/source/tarfile/tarfile_compression.tar
+/source/tarfile/tarfile_compression.tar.bz2
+/source/tarfile/tarfile_compression.tar.gz
