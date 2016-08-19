@@ -257,19 +257,6 @@ posixfile
 
 The :mod:`posixfile` module has been removed. See :mod:`io` instead.
 
-.. _porting-re:
-
-re
---
-
-.. index::
-   pair: porting; re
-
-The :const:`UNICODE` flag represents the default behavior. To restore
-the ASCII-specific behavior from Python 2, use the :const:`ASCII`
-flag.
-
-
 sets
 ----
 
@@ -304,37 +291,6 @@ statvfs
 The :mod:`statvfs` module was deprecated in Python 2.6 and removed
 in Python 3.0. See :func:`os.statvfs` in the :mod:`os` module
 instead.
-
-.. _porting-string:
-
-string
-------
-
-.. index::
-   pair: porting; string
-
-All functions from the :mod:`string` module that are also methods of
-:class:`str` objects have been removed.
-
-The constants :data:`letters`, :data:`lowercase`, and
-:data:`uppercase` have been removed. The new constants with similar
-names are limited to the ASCII character set.
-
-The :func:`maketrans` function has been replaced by methods on
-:class:`str`, :class:`bytes`, and :class:`bytearray` to clarify which
-input types are supported by each translation table.
-
-.. _porting-struct:
-
-struct
-------
-
-.. index::
-   pair: porting; struct
-
-:func:`struct.pack` now only supports byte strings when using the
-``s`` string pack code, and no longer implicitly encodes string
-objects to UTF-8 (:pyissue:`10783`).
 
 
 thread
@@ -866,6 +822,19 @@ random
 The function ``jumpahead()`` was removed in Python 3.0.
 
 
+.. _porting-re:
+
+re
+--
+
+.. index::
+   pair: porting; re
+
+The :const:`UNICODE` flag represents the default behavior. To restore
+the ASCII-specific behavior from Python 2, use the :const:`ASCII`
+flag.
+
+
 .. _porting-shelve:
 
 shelve
@@ -887,6 +856,39 @@ socketserver
 
 The :mod:`socketserver` module was named ``SocketServer`` under
 Python 2.
+
+
+.. _porting-string:
+
+string
+------
+
+.. index::
+   pair: porting; string
+
+All functions from the :mod:`string` module that are also methods of
+:class:`str` objects have been removed.
+
+The constants :data:`letters`, :data:`lowercase`, and
+:data:`uppercase` have been removed. The new constants with similar
+names are limited to the ASCII character set.
+
+The :func:`maketrans` function has been replaced by methods on
+:class:`str`, :class:`bytes`, and :class:`bytearray` to clarify which
+input types are supported by each translation table.
+
+
+.. _porting-struct:
+
+struct
+------
+
+.. index::
+   pair: porting; struct
+
+:func:`struct.pack` now only supports byte strings when using the
+``s`` string pack code, and no longer implicitly encodes string
+objects to UTF-8 (:pyissue:`10783`).
 
 
 .. _porting-sys:
