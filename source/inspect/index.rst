@@ -112,9 +112,9 @@ actually part of the module and the list is long.
 	
 	A : <class 'example.A'>
 	B : <class 'example.B'>
-	instance_of_a : <example.A object at 0x1014a1358>
+	instance_of_a : <example.A object at 0x101b92358>
 	module_level_function : <function module_level_function at
-	0x10148c620>
+	0x101b7d620>
 
 .. {{{end}}}
 
@@ -170,12 +170,12 @@ methods, slots, and other members of the class.
 	objects>,
 	                '__doc__': 'The A class.',
 	                '__init__': <function A.__init__ at
-	0x101499e18>,
+	0x101c99e18>,
 	                '__module__': 'example',
 	                '__weakref__': <attribute '__weakref__' of 'A'
 	objects>,
 	                'get_name': <function A.get_name at
-	0x101499ea0>})),
+	0x101c99ea0>})),
 	 ('__dir__', <method '__dir__' of 'object' objects>),
 	 ('__doc__', 'The A class.'),
 	 ('__eq__', <slot wrapper '__eq__' of 'object' objects>),
@@ -185,7 +185,7 @@ methods, slots, and other members of the class.
 	  <slot wrapper '__getattribute__' of 'object' objects>),
 	 ('__gt__', <slot wrapper '__gt__' of 'object' objects>),
 	 ('__hash__', <slot wrapper '__hash__' of 'object' objects>),
-	 ('__init__', <function A.__init__ at 0x101499e18>),
+	 ('__init__', <function A.__init__ at 0x101c99e18>),
 	 ('__le__', <slot wrapper '__le__' of 'object' objects>),
 	 ('__lt__', <slot wrapper '__lt__' of 'object' objects>),
 	 ('__module__', 'example'),
@@ -202,9 +202,9 @@ methods, slots, and other members of the class.
 	 ('__str__', <slot wrapper '__str__' of 'object' objects>),
 	 ('__subclasshook__',
 	  <built-in method __subclasshook__ of type object at
-	0x101302988>),
+	0x101b25d08>),
 	 ('__weakref__', <attribute '__weakref__' of 'A' objects>),
-	 ('get_name', <function A.get_name at 0x101499ea0>)]
+	 ('get_name', <function A.get_name at 0x101c99ea0>)]
 
 .. {{{end}}}
 
@@ -226,8 +226,8 @@ Only unbound methods are returned now.
 
 	$ python3 inspect_getmembers_class_methods.py
 	
-	[('__init__', <function A.__init__ at 0x101c77e18>),
-	 ('get_name', <function A.get_name at 0x101c77ea0>)]
+	[('__init__', <function A.__init__ at 0x101477e18>),
+	 ('get_name', <function A.get_name at 0x101477ea0>)]
 
 .. {{{end}}}
 
@@ -277,9 +277,9 @@ The predicate :func:`ismethod` recognizes two bound methods from
 	$ python3 inspect_getmembers_instance.py
 	
 	[('__init__', <bound method A.__init__ of <example.A object at 0
-	x1018b21d0>>),
+	x1010b21d0>>),
 	 ('get_name', <bound method A.get_name of <example.A object at 0
-	x1018b21d0>>)]
+	x1010b21d0>>)]
 
 .. {{{end}}}
 
@@ -455,84 +455,38 @@ number in the file where the source appears.
 If the source file is not available, :func:`getsource` and
 :func:`getsourcelines` raise an :class:`IOError`.
 
-Method and Function Arguments
-=============================
+Method and Function Signatures
+==============================
 
 In addition to the documentation for a function or method, it is
 possible to ask for a complete specification of the arguments the
-callable takes, including default values. The :func:`getargspec`
-function returns a tuple containing the list of positional argument
-names, the name of any variable positional arguments (e.g.,
-``*args``), the names of any variable named arguments (e.g.,
-``**kwds``), and default values for the arguments. If there are
-default values, they match up with the end of the positional argument
-list.
+callable takes, including default values. The :func:`signature`
+function returns a :class:`Signature` instance containing information
+about the arguments to the function.
 
-.. literalinclude:: inspect_getargspec_function.py
+.. literalinclude:: inspect_signature_function.py
     :caption:
     :start-after: #end_pymotw_header
 
-In this example, the first argument to the function, *arg1*, does not
-have a default value. The single default therefore is matched up with
-*arg2*.
+The function arguments are available through the :data:`parameters`
+attribute of the :class:`Signature`. :data:`parameters` is an ordered
+dictionary mapping the parameter names to :class:`Parameter` instances
+describing the argument.  In this example, the first argument to the
+function, *arg1*, does not have a default value, while *arg2* does.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'inspect_getargspec_function.py'))
+.. cog.out(run_script(cog.inFile, 'inspect_signature_function.py'))
 .. }}}
 
 .. code-block:: none
 
-	$ python3 inspect_getargspec_function.py
+	$ python3 inspect_signature_function.py
 	
-	NAMES   : ['arg1', 'arg2']
-	*       : args
-	**      : kwargs
-	defaults: ('default',)
-	args & defaults: [('arg2', 'default')]
-
-.. {{{end}}}
-
-The argspec for a function can be used by decorators or other
-functions to validate inputs, provide different defaults, etc.
-Writing a suitably generic and reusable validation decorator has one
-special challenge, though, because it can be complicated to match up
-incoming arguments with their names for functions that accept a
-combination of named and positional arguments.  :func:`getcallargs`
-provides the necessary logic to handle the mapping.  It returns a
-dictionary populated with its arguments associated with the names of
-the arguments of a specified function.
-
-.. literalinclude:: inspect_getcallargs.py
-   :caption:
-   :start-after: #end_pymotw_header
-
-The keys of the dictionary are the argument names of the function, so
-the function can be called using the ``**`` syntax to expand the
-dictionary onto the stack as the arguments.
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'inspect_getcallargs.py'))
-.. }}}
-
-.. code-block:: none
-
-	$ python3 inspect_getcallargs.py
-	
-	('a',) {'unknown_name': 'value'}
-	{'arg1': 'a',
-	 'arg2': 'default',
-	 'args': (),
-	 'kwargs': {'unknown_name': 'value'}}
-	
-	('a',) {'arg2': 'value'}
-	{'arg1': 'a', 'arg2': 'value', 'args': (), 'kwargs': {}}
-	
-	('a', 'b', 'c', 'd') {}
-	{'arg1': 'a', 'arg2': 'b', 'args': ('c', 'd'), 'kwargs': {}}
-	
-	() {'arg1': 'a'}
-	{'arg1': 'a', 'arg2': 'default', 'args': (), 'kwargs': {}}
-	
+	Parameters:
+	  arg1
+	  arg2='default'
+	  *args
+	  **kwargs
 
 .. {{{end}}}
 
@@ -712,9 +666,9 @@ The last part of the output represents the main program, outside of the
 	inspect_stack.py[10]
 	  -> for level in inspect.stack():
 	ArgInfo(args=[], varargs=None, keywords=None,
-	locals={'src_index': 0, 'frame': <frame object at 0x10074f6f8>,
+	locals={'src_index': 0, 'frame': <frame object at 0x101b10b28>,
 	'line_num': 10, 'func': 'show_stack', 'level':
-	FrameInfo(frame=<frame object at 0x10074f6f8>,
+	FrameInfo(frame=<frame object at 0x101b10b28>,
 	filename='inspect_stack.py', lineno=10, function='show_stack',
 	code_context=['    for level in inspect.stack():\n'], index=0),
 	'src_code': ['    for level in inspect.stack():\n'], 'filename':
