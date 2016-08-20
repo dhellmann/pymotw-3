@@ -690,7 +690,7 @@ read all of the rows from the ``task`` table.
    :caption:
    :start-after: #end_pymotw_header
 
-The threads are synchronized using a :class:`Event` from the
+The threads are synchronized using an :class:`Event` object from the
 :mod:`threading` module.  The :func:`writer` function connects and
 make changes to the database, but does not commit before the event
 fires.  The :func:`reader` function connects, then waits to query the
@@ -711,21 +711,21 @@ previous examples use deferred mode.
 
 	$ python3 sqlite3_isolation_levels.py DEFERRED
 	
-	2016-08-20 11:46:38,457 (Reader 1  ) waiting to synchronize
-	2016-08-20 11:46:38,457 (Reader 2  ) waiting to synchronize
-	2016-08-20 11:46:38,459 (Writer 1  ) waiting to synchronize
-	2016-08-20 11:46:39,461 (MainThread) setting ready
-	2016-08-20 11:46:39,461 (Reader 1  ) wait over
-	2016-08-20 11:46:39,461 (Reader 2  ) wait over
-	2016-08-20 11:46:39,461 (Writer 1  ) PAUSING
-	2016-08-20 11:46:39,463 (Reader 1  ) SELECT EXECUTED
-	2016-08-20 11:46:39,463 (Reader 2  ) SELECT EXECUTED
-	2016-08-20 11:46:39,463 (Reader 1  ) results fetched
-	2016-08-20 11:46:39,463 (Reader 2  ) results fetched
-	2016-08-20 11:46:40,466 (Writer 1  ) CHANGES COMMITTED
-	2016-08-20 11:46:40,545 (Writer 2  ) waiting to synchronize
-	2016-08-20 11:46:40,545 (Writer 2  ) PAUSING
-	2016-08-20 11:46:41,547 (Writer 2  ) CHANGES COMMITTED
+	2016-08-20 13:51:36,025 (Reader 1  ) waiting to synchronize
+	2016-08-20 13:51:36,025 (Reader 2  ) waiting to synchronize
+	2016-08-20 13:51:36,027 (Writer 1  ) waiting to synchronize
+	2016-08-20 13:51:37,026 (MainThread) setting ready
+	2016-08-20 13:51:37,027 (Reader 1  ) wait over
+	2016-08-20 13:51:37,027 (Writer 1  ) PAUSING
+	2016-08-20 13:51:37,027 (Reader 2  ) wait over
+	2016-08-20 13:51:37,027 (Reader 1  ) SELECT EXECUTED
+	2016-08-20 13:51:37,027 (Reader 2  ) SELECT EXECUTED
+	2016-08-20 13:51:37,027 (Reader 1  ) results fetched
+	2016-08-20 13:51:37,028 (Reader 2  ) results fetched
+	2016-08-20 13:51:38,029 (Writer 1  ) CHANGES COMMITTED
+	2016-08-20 13:51:38,128 (Writer 2  ) waiting to synchronize
+	2016-08-20 13:51:38,128 (Writer 2  ) PAUSING
+	2016-08-20 13:51:39,131 (Writer 2  ) CHANGES COMMITTED
 
 .. {{{end}}}
 
@@ -747,21 +747,21 @@ transaction is ongoing.
 
 	$ python3 sqlite3_isolation_levels.py IMMEDIATE
 	
-	2016-08-20 11:46:41,634 (Reader 1  ) waiting to synchronize
-	2016-08-20 11:46:41,635 (Reader 2  ) waiting to synchronize
-	2016-08-20 11:46:41,637 (Writer 1  ) waiting to synchronize
-	2016-08-20 11:46:42,637 (MainThread) setting ready
-	2016-08-20 11:46:42,637 (Reader 1  ) wait over
-	2016-08-20 11:46:42,637 (Writer 1  ) PAUSING
-	2016-08-20 11:46:42,637 (Reader 2  ) wait over
-	2016-08-20 11:46:42,637 (Reader 1  ) SELECT EXECUTED
-	2016-08-20 11:46:42,637 (Reader 2  ) SELECT EXECUTED
-	2016-08-20 11:46:42,638 (Reader 1  ) results fetched
-	2016-08-20 11:46:42,638 (Reader 2  ) results fetched
-	2016-08-20 11:46:43,639 (Writer 1  ) CHANGES COMMITTED
-	2016-08-20 11:46:43,725 (Writer 2  ) waiting to synchronize
-	2016-08-20 11:46:43,725 (Writer 2  ) PAUSING
-	2016-08-20 11:46:44,729 (Writer 2  ) CHANGES COMMITTED
+	2016-08-20 13:51:39,192 (Reader 1  ) waiting to synchronize
+	2016-08-20 13:51:39,193 (Reader 2  ) waiting to synchronize
+	2016-08-20 13:51:39,195 (Writer 1  ) waiting to synchronize
+	2016-08-20 13:51:40,199 (MainThread) setting ready
+	2016-08-20 13:51:40,199 (Reader 1  ) wait over
+	2016-08-20 13:51:40,200 (Reader 2  ) wait over
+	2016-08-20 13:51:40,200 (Writer 1  ) PAUSING
+	2016-08-20 13:51:40,201 (Reader 2  ) SELECT EXECUTED
+	2016-08-20 13:51:40,201 (Reader 1  ) SELECT EXECUTED
+	2016-08-20 13:51:40,201 (Reader 1  ) results fetched
+	2016-08-20 13:51:40,202 (Reader 2  ) results fetched
+	2016-08-20 13:51:41,205 (Writer 1  ) CHANGES COMMITTED
+	2016-08-20 13:51:41,275 (Writer 2  ) waiting to synchronize
+	2016-08-20 13:51:41,275 (Writer 2  ) PAUSING
+	2016-08-20 13:51:42,278 (Writer 2  ) CHANGES COMMITTED
 
 .. {{{end}}}
 
@@ -780,21 +780,21 @@ important, since each exclusive connection blocks all other users.
 
 	$ python3 sqlite3_isolation_levels.py EXCLUSIVE
 	
-	2016-08-20 11:46:44,824 (Reader 2  ) waiting to synchronize
-	2016-08-20 11:46:44,825 (Reader 1  ) waiting to synchronize
-	2016-08-20 11:46:44,827 (Writer 2  ) waiting to synchronize
-	2016-08-20 11:46:45,826 (MainThread) setting ready
-	2016-08-20 11:46:45,827 (Reader 2  ) wait over
-	2016-08-20 11:46:45,827 (Reader 1  ) wait over
-	2016-08-20 11:46:45,827 (Writer 2  ) PAUSING
-	2016-08-20 11:46:46,832 (Writer 2  ) CHANGES COMMITTED
-	2016-08-20 11:46:46,884 (Reader 2  ) SELECT EXECUTED
-	2016-08-20 11:46:46,884 (Reader 2  ) results fetched
-	2016-08-20 11:46:46,885 (Reader 1  ) SELECT EXECUTED
-	2016-08-20 11:46:46,885 (Reader 1  ) results fetched
-	2016-08-20 11:46:46,894 (Writer 1  ) waiting to synchronize
-	2016-08-20 11:46:46,894 (Writer 1  ) PAUSING
-	2016-08-20 11:46:47,896 (Writer 1  ) CHANGES COMMITTED
+	2016-08-20 13:51:42,392 (Reader 1  ) waiting to synchronize
+	2016-08-20 13:51:42,393 (Reader 2  ) waiting to synchronize
+	2016-08-20 13:51:42,395 (Writer 1  ) waiting to synchronize
+	2016-08-20 13:51:43,393 (MainThread) setting ready
+	2016-08-20 13:51:43,394 (Reader 1  ) wait over
+	2016-08-20 13:51:43,394 (Reader 2  ) wait over
+	2016-08-20 13:51:43,394 (Writer 1  ) PAUSING
+	2016-08-20 13:51:44,399 (Writer 1  ) CHANGES COMMITTED
+	2016-08-20 13:51:44,452 (Writer 2  ) waiting to synchronize
+	2016-08-20 13:51:44,452 (Writer 2  ) PAUSING
+	2016-08-20 13:51:45,453 (Writer 2  ) CHANGES COMMITTED
+	2016-08-20 13:51:45,474 (Reader 1  ) SELECT EXECUTED
+	2016-08-20 13:51:45,474 (Reader 2  ) SELECT EXECUTED
+	2016-08-20 13:51:45,474 (Reader 1  ) results fetched
+	2016-08-20 13:51:45,475 (Reader 2  ) results fetched
 
 .. {{{end}}}
 
@@ -830,19 +830,19 @@ either reader starts querying.
 
 	$ python3 sqlite3_autocommit.py
 	
-	2016-08-20 11:46:47,979 (Reader 2  ) waiting to synchronize
-	2016-08-20 11:46:47,980 (Reader 1  ) waiting to synchronize
-	2016-08-20 11:46:47,983 (Writer 1  ) waiting to synchronize
-	2016-08-20 11:46:47,986 (Writer 2  ) waiting to synchronize
-	2016-08-20 11:46:48,981 (MainThread) setting ready
-	2016-08-20 11:46:48,981 (Reader 2  ) wait over
-	2016-08-20 11:46:48,981 (Writer 1  ) PAUSING
-	2016-08-20 11:46:48,981 (Writer 2  ) PAUSING
-	2016-08-20 11:46:48,981 (Reader 1  ) wait over
-	2016-08-20 11:46:48,982 (Reader 2  ) SELECT EXECUTED
-	2016-08-20 11:46:48,982 (Reader 2  ) results fetched
-	2016-08-20 11:46:48,982 (Reader 1  ) SELECT EXECUTED
-	2016-08-20 11:46:48,982 (Reader 1  ) results fetched
+	2016-08-20 13:51:45,560 (Reader 1  ) waiting to synchronize
+	2016-08-20 13:51:45,560 (Reader 2  ) waiting to synchronize
+	2016-08-20 13:51:45,563 (Writer 2  ) waiting to synchronize
+	2016-08-20 13:51:45,564 (Writer 1  ) waiting to synchronize
+	2016-08-20 13:51:46,559 (MainThread) setting ready
+	2016-08-20 13:51:46,560 (Writer 2  ) PAUSING
+	2016-08-20 13:51:46,560 (Writer 1  ) PAUSING
+	2016-08-20 13:51:46,560 (Reader 2  ) wait over
+	2016-08-20 13:51:46,560 (Reader 1  ) wait over
+	2016-08-20 13:51:46,561 (Reader 1  ) SELECT EXECUTED
+	2016-08-20 13:51:46,562 (Reader 2  ) SELECT EXECUTED
+	2016-08-20 13:51:46,562 (Reader 2  ) results fetched
+	2016-08-20 13:51:46,562 (Reader 1  ) results fetched
 
 .. {{{end}}}
 
@@ -1029,42 +1029,6 @@ arguments the :func:`step` method takes, and the class to use.
 	mode(deadline) is: 2010-10-03
 
 .. {{{end}}}
-
-Custom Sorting
-==============
-
-A *collation* is a comparison function used in the :command:`order by`
-section of an SQL query.  Custom collations can be used to compare
-data types that could not otherwise be sorted by SQLite internally.
-For example, a custom collation would be needed to sort the pickled
-objects saved in ``sqlite3_custom_type.py``.
-
-.. literalinclude:: sqlite3_create_collation.py
-   :caption:
-   :start-after: #end_pymotw_header
-
-The arguments to the collation function are byte strings, so they must
-be unpickled and converted to :class:`MyObj` instances before the
-comparison can be performed.
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'sqlite3_create_collation.py'))
-.. }}}
-
-.. code-block:: none
-
-	$ python3 sqlite3_create_collation.py
-	
-	Querying:
-	7 MyObj(1)
-	6 MyObj(2)
-	5 MyObj(3)
-	4 MyObj(4)
-	3 MyObj(5)
-
-.. {{{end}}}
-
-
 
 Threading and Connection Sharing
 ================================
