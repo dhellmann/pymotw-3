@@ -25,10 +25,10 @@ Windows, but now also used on other platforms because of the
 simplicity of its API and portability of the format.
 
 .. toctree::
-    :maxdepth: 1
+   :maxdepth: 1
 
-    zlib/index
-    gzip/index
-    bz2/index
-    tarfile/index
-    zipfile/index
+   zlib/index
+   gzip/index
+   bz2/index
+   tarfile/index
+   zipfile/index

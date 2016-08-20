@@ -11,7 +11,7 @@ and well-tested versions that are ready to be used.
 The :mod:`enum` module provides an implementation of an *enumeration*
 type, with iteration and comparison capabilities. It can be used to
 create well-defined symbols for values, instead of using literal
-integer or strings.
+strings or integers.
 
 The :mod:`collections` module includes implementations of several data
 structures that extend those found in other modules.  For example,
@@ -83,8 +83,8 @@ container type using one of the abstract base classes defined in
     queue/index
     struct/index
     weakref/index
-    pprint/index
     copy/index
+    pprint/index
 
 ..
     types/index
