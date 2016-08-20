@@ -70,18 +70,7 @@ to another.
    pickle/index
    shelve/index
    dbm/index
+   sqlite3/index
    xml.etree.ElementTree/index
    csv/index
-
-..
-   .. toctree::
-       :maxdepth: 1
-
-       pickle/index
-       shelve/index
-       dbm/index
-       whichdb/index
-       sqlite3/index
-       xml/etree/ElementTree/index
-       csv/index
 
