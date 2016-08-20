@@ -18,4 +18,4 @@ with open('hmac_sha.py', 'rb') as f:
         digest_maker.update(block)
 
 digest = digest_maker.hexdigest()
-print digest
+print(digest)
