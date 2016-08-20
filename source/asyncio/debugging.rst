@@ -71,7 +71,7 @@ exits.
 	asyncio_debug.py:34> result=None created at asyncio_debug.py:44>
 	took 0.102 seconds
 	   INFO: outer completed
-	.../lib/python3.5/asyncio/base_events.py:379: ResourceWarning:
+	.../lib/python3.5/asyncio/base_events.py:429: ResourceWarning:
 	unclosed event loop <_UnixSelectorEventLoop running=False
 	closed=False debug=True>
 	  DEBUG: Close <_UnixSelectorEventLoop running=False

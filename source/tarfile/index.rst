@@ -383,7 +383,7 @@ automatically.
 	README.txt                     75        
 	tarfile_compression.tar        10240      ['README.txt']
 	tarfile_compression.tar.gz     213        ['README.txt']
-	tarfile_compression.tar.bz2    200        ['README.txt']
+	tarfile_compression.tar.bz2    199        ['README.txt']
 
 .. {{{end}}}
 

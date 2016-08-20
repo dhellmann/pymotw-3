@@ -40,7 +40,7 @@ filename extensions, and version details.
 
 	$ python3 sysconfig_get_config_vars.py
 	
-	Found 663 configuration settings
+	Found 665 configuration settings
 	
 	Some highlights:
 	
@@ -49,21 +49,21 @@ filename extensions, and version details.
 	  exec_prefix=/Library/Frameworks/Python.framework/Versions/3.5
 	
 	 Version info:
-	  py_version=3.5.1
+	  py_version=3.5.2
 	  py_version_short=3.5
 	  py_version_nodot=35
 	
 	 Base directories:
-	  base=/Users/dhellmann/Envs/pymotw35-tmp
-	  platbase=/Users/dhellmann/Envs/pymotw35-tmp
+	  base=/Users/dhellmann/Envs/pymotw35
+	  platbase=/Users/dhellmann/Envs/pymotw35
 	  userbase=/Users/dhellmann/Library/Python/3.5
 	  srcdir=/Library/Frameworks/Python.framework/Versions/3.5/lib/p
 	ython3.5/config-3.5m
 	
 	 Compiler and linker flags:
 	  LDFLAGS=-arch i386 -arch x86_64  -g
-	  BASECFLAGS=-fno-strict-aliasing -Wsign-compare -Wunreachable-
-	code -fno-common -dynamic
+	  BASECFLAGS=-fno-strict-aliasing -Wsign-compare -fno-common
+	-dynamic
 	  Py_ENABLE_SHARED=0
 
 .. {{{end}}}
@@ -89,8 +89,8 @@ where modules can be found on the current system.
 	$ python3 sysconfig_get_config_vars_by_name.py
 	
 	Base directories:
-	   /Users/dhellmann/Envs/pymotw35-tmp
-	   /Users/dhellmann/Envs/pymotw35-tmp
+	   /Users/dhellmann/Envs/pymotw35
+	   /Users/dhellmann/Envs/pymotw35
 	   /Users/dhellmann/Library/Python/3.5
 
 .. {{{end}}}
@@ -231,7 +231,7 @@ user-specific values for ``posix_user``.
 	
 	posix_prefix
 	============
-	prefix = /Users/dhellmann/Envs/pymotw35-tmp
+	prefix = /Users/dhellmann/Envs/pymotw35
 	
 	data
 	  .
@@ -293,8 +293,8 @@ because it does not recompute all of the paths each time.
 	
 	posix_prefix
 	============
-	purelib = /Users/dhellmann/Envs/pymotw35-tmp/lib/python3.5/site-
-	packages
+	purelib = /Users/dhellmann/Envs/pymotw35/lib/python3.5/site-pack
+	ages
 	
 	posix_user
 	==========
@@ -358,7 +358,7 @@ building a version-specific path.
 	sys.version_info:
 	  major       : 3
 	  minor       : 5
-	  micro       : 1
+	  micro       : 2
 	  releaselevel: final
 	  serial      : 0
 

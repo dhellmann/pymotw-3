@@ -129,7 +129,7 @@ until something uses ``await`` to allow it to be executed.
 	starter: waiting for inner
 	inner: starting
 	inner: waiting for <Task pending coro=<wrapped() running at
-	asyncio_ensure_future.py:17>>
+	asyncio_ensure_future.py:12>>
 	wrapped
 	inner: task returned 'result'
 	starter: inner returned

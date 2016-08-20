@@ -40,11 +40,11 @@ sample program.
 	
 	Version info:
 	
-	sys.version      = '3.5.1 (v3.5.1:37a07cee5969, Dec  5 2015, 21:
-	12:44) \n[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)]'
-	sys.version_info = sys.version_info(major=3, minor=5, micro=1, r
+	sys.version      = '3.5.2 (v3.5.2:4def2a2901a5, Jun 26 2016, 10:
+	47:25) \n[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)]'
+	sys.version_info = sys.version_info(major=3, minor=5, micro=2, r
 	eleaselevel='final', serial=0)
-	sys.hexversion   = 0x30501f0
+	sys.hexversion   = 0x30502f0
 	sys.api_version  = 1013
 
 .. {{{end}}}
@@ -104,7 +104,7 @@ other interpreters.
 	$ python3 sys_implementation.py
 	
 	Name: cpython
-	Version: sys.version_info(major=3, minor=5, micro=1, releaseleve
+	Version: sys.version_info(major=3, minor=5, micro=2, releaseleve
 	l='final', serial=0)
 	Cache tag: cpython-35
 

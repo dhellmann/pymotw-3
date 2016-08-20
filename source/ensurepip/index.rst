@@ -59,7 +59,7 @@ is installed, use the ``--upgrade`` option.
 	Collecting setuptools
 	Collecting pip
 	Installing collected packages: setuptools, pip
-	Successfully installed pip-7.1.2 setuptools-18.2
+	Successfully installed pip-8.1.1 setuptools-20.10.1
 
 .. {{{end}}}
 

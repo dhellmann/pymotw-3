@@ -427,7 +427,7 @@ name to new :class:`dircmp` objects.
 	$ python3 filecmp_dircmp_subdirs.py
 	
 	Subdirectories:
-	{'common_dir': <filecmp.dircmp object at 0x101356400>}
+	{'common_dir': <filecmp.dircmp object at 0x1019b2be0>}
 
 .. {{{end}}}
 

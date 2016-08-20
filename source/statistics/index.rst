@@ -153,19 +153,19 @@ length of every second file found.
 	$ python3 statistics_variance.py
 	
 	Basic statistics:
-	  count     : 894
+	  count     : 959
 	  min       :   4.00
 	  max       : 228.00
-	  mean      :  28.55
+	  mean      :  28.62
 	
 	Population variance:
-	  pstdev    :  18.58
-	  pvariance : 345.16
+	  pstdev    :  18.52
+	  pvariance : 342.95
 	
 	Estimated variance for sample:
-	  count     : 447
-	  stdev     :  17.32
-	  variance  : 299.91
+	  count     : 480
+	  stdev     :  21.09
+	  variance  : 444.61
 
 .. {{{end}}}
 

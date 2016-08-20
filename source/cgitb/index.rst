@@ -473,17 +473,17 @@ describing where to go to find the error log.
 	$ python3 cgitb_log_exception.py
 	
 	<p>A problem occurred in a Python script.
-	.../LOGS/tmpbl_28xhc.txt contains the description of this error.
+	.../LOGS/tmpc180s1m1.txt contains the description of this error.
 
 	$ ls LOGS
 	
-	tmpbl_28xhc.txt
+	tmpc180s1m1.txt
 
 	$ cat LOGS/*.txt
 	
 	ZeroDivisionError
-	Python 3.5.1: /Users/dhellmann/Envs/pymotw35/bin/python3
-	Sun Jun 12 11:29:53 2016
+	Python 3.5.2: .../bin/python3
+	Sat Aug 20 18:34:18 2016
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they

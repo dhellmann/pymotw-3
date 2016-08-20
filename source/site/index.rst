@@ -315,10 +315,10 @@ explicitly to ensure the module is picked up.
 	e_sitecustomize.py
 	
 	Loading sitecustomize.py
-	Adding new path /opt/python/3.5/Darwin-15.5.0-x86_64-i386-64bit
+	Adding new path /opt/python/3.5/Darwin-15.6.0-x86_64-i386-64bit
 	Running main program from
 	with_sitecustomize/site_sitecustomize.py
-	End of path: /opt/python/3.5/Darwin-15.5.0-x86_64-i386-64bit
+	End of path: /opt/python/3.5/Darwin-15.6.0-x86_64-i386-64bit
 
 .. {{{end}}}
 
@@ -407,10 +407,10 @@ before the automatic import was added, the interpreter accepts an
 	$ python3 -S site_import_path.py
 	
 	Path prefixes:
-	   /Users/dhellmann/Envs/pymotw35-tmp/bin/..
-	   /Users/dhellmann/Envs/pymotw35-tmp/bin/..
+	   /Users/dhellmann/Envs/pymotw35/bin/..
+	   /Users/dhellmann/Envs/pymotw35/bin/..
 	
-	/Users/dhellmann/Envs/pymotw35-tmp/bin/..
+	/Users/dhellmann/Envs/pymotw35/bin/..
 	
 	  lib/python3.5/site-packages
 	   exists : True

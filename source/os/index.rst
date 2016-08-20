@@ -93,6 +93,16 @@ This example shows a recursive directory listing.
 		zipimport_make_example.py
 	
 	../zipimport/__pycache__
+		__init__.cpython-35.pyc
+		zipimport_find_module.cpython-35.pyc
+		zipimport_get_code.cpython-35.pyc
+		zipimport_get_data.cpython-35.pyc
+		zipimport_get_data_nozip.cpython-35.pyc
+		zipimport_get_data_zip.cpython-35.pyc
+		zipimport_get_source.cpython-35.pyc
+		zipimport_is_package.cpython-35.pyc
+		zipimport_load_module.cpython-35.pyc
+		zipimport_make_example.cpython-35.pyc
 	
 	../zipimport/example_package
 		README.txt
@@ -100,6 +110,7 @@ This example shows a recursive directory listing.
 		__pycache__/
 	
 	../zipimport/example_package/__pycache__
+		__init__.cpython-35.pyc
 	
 
 .. {{{end}}}
@@ -186,22 +197,22 @@ installed. Try passing different filenames on the command line to
 	os.stat(os_stat.py):
 		Size: 593
 		Permissions: 0o100644
-		Owner: 501
-		Device: 16777220
-		Created      : Sun Jul 31 14:38:02 2016
-		Last modified: Sun Jul 31 14:38:02 2016
-		Last accessed: Sun Jul 31 15:54:32 2016
+		Owner: 527
+		Device: 16777218
+		Created      : Sat Aug 20 17:51:31 2016
+		Last modified: Sun Jul 31 16:03:22 2016
+		Last accessed: Sat Aug 20 18:34:56 2016
 
 	$ python3 os_stat.py index.rst
 	
 	os.stat(index.rst):
-		Size: 31508
+		Size: 26884
 		Permissions: 0o100644
-		Owner: 501
-		Device: 16777220
-		Created      : Sun Jul 31 15:52:09 2016
-		Last modified: Sun Jul 31 15:52:09 2016
-		Last accessed: Sun Jul 31 15:54:31 2016
+		Owner: 527
+		Device: 16777218
+		Created      : Sat Aug 20 18:12:55 2016
+		Last modified: Sat Aug 20 18:12:55 2016
+		Last accessed: Sat Aug 20 18:34:55 2016
 
 .. {{{end}}}
 
@@ -405,10 +416,10 @@ produced:
 	$ python3 os_process_user_example.py
 	
 	BEFORE CHANGE:
-	User (actual/effective)  : 501 / 501
-	Group (actual/effective) : 20 / 20
-	Actual Groups   : [20, 12, 61, 79, 80, 81, 98, 701, 702, 33,
-	100, 204, 395, 398, 399]
+	User (actual/effective)  : 527 / 527
+	Group (actual/effective) : 501 / 501
+	Actual Groups   : [501, 701, 402, 702, 500, 12, 61, 80, 98, 398,
+	399, 33, 100, 204, 395]
 	
 	ERROR: Could not change effective group. Rerun as root.
 	ERROR: Could not change effective user. Rerun as root.
@@ -593,7 +604,7 @@ the shell runs the command line.
 
 	$ python3 -u os_system_shell.py
 	
-	/var/folders/8t/tc7psbc57_38bfn0kygwhghc0000gn/T/
+	/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/
 
 .. {{{end}}}
 
@@ -620,9 +631,9 @@ accomplish the same thing.
 	$ python3 -u os_system_background.py
 	
 	Calling...
-	Sun Jul 31 15:54:32 EDT 2016
+	Sat Aug 20 18:34:57 EDT 2016
 	Sleeping...
-	Sun Jul 31 15:54:35 EDT 2016
+	Sat Aug 20 18:35:00 EDT 2016
 
 .. {{{end}}}
 
@@ -655,7 +666,7 @@ example is run, but it will look something like:
 
 	$ python3 -u os_fork_example.py
 	
-	Child process id: 7527
+	Child process id: 68542
 	I am the child
 
 .. {{{end}}}
@@ -693,8 +704,8 @@ the parent time to send the signal.
 	PARENT: Pausing before sending signal...
 	CHILD: Setting up signal handler
 	CHILD: Pausing to wait for signal
-	PARENT: Signaling 7530
-	Received USR1 in process 7530
+	PARENT: Signaling 68545
+	Received USR1 in process 68545
 
 .. {{{end}}}
 
@@ -763,16 +774,16 @@ status code returned by the process when it exited.
 
 	$ python3 -u os_wait_example.py
 	
-	PARENT 7535: Forking 0
-	PARENT 7535: Forking 1
+	PARENT 68558: Forking 0
+	PARENT 68558: Forking 1
 	PARENT: Waiting for 0
 	WORKER 0: Starting
 	WORKER 1: Starting
 	WORKER 0: Finishing
-	PARENT: Child done: (7536, 0)
+	PARENT: Child done: (68559, 0)
 	PARENT: Waiting for 1
 	WORKER 1: Finishing
-	PARENT: Child done: (7537, 256)
+	PARENT: Child done: (68560, 256)
 
 .. {{{end}}}
 
@@ -793,16 +804,16 @@ until that process exits.
 
 	$ python3 -u os_waitpid_example.py
 	
-	PARENT 7539: Forking 0
-	PARENT 7539: Forking 1
-	PARENT: Waiting for 7540
+	PARENT 68570: Forking 0
+	PARENT 68570: Forking 1
 	WORKER 0: Starting
+	PARENT: Waiting for 68571
 	WORKER 1: Starting
 	WORKER 0: Finishing
-	PARENT: Child done: (7540, 0)
-	PARENT: Waiting for 7541
+	PARENT: Child done: (68571, 0)
+	PARENT: Waiting for 68572
 	WORKER 1: Finishing
-	PARENT: Child done: (7541, 256)
+	PARENT: Child done: (68572, 256)
 
 .. {{{end}}}
 
