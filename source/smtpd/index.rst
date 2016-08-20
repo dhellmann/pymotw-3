@@ -6,7 +6,6 @@
     :synopsis: Includes classes for implementing SMTP servers.
 
 :Purpose: Includes classes for implementing SMTP servers.
-:Python Version: 2.1 and later
 
 The :mod:`smtpd` module includes classes for building simple mail
 transport protocol servers.  It is the server-side of the protocol
@@ -22,7 +21,7 @@ process the message once it is fully available.
 
 The constructor arguments are the local address to listen for
 connections and the remote address where proxied messages should be
-delivered.  The method :func:`process_message()` is provided as a hook
+delivered.  The method :func:`process_message` is provided as a hook
 to be overridden by a derived class.  It is called when the message is
 completely received, and given these arguments:
 
@@ -46,13 +45,13 @@ completely received, and given these arguments:
 
   The full RFC 2822 message body.
 
-The default implementation of :func:`process_message()` raises
+The default implementation of :func:`process_message` raises
 :class:`NotImplementedError`.  The next example defines a subclass
 that overrides the method to print information about the messages it
 receives.
 
-.. include:: smtpd_custom.py
-    :literal:
+.. literalinclude:: smtpd_custom.py
+    :caption:
     :start-after: #end_pymotw_header
 
 :class:`SMTPServer` uses :mod:`asyncore`, so to run the server call
@@ -62,8 +61,8 @@ A client is needed to demonstrate the server.  One of the examples
 from the section on :mod:`smtplib` can be adapted to create a client
 to send data to the test server running locally on port 1025.
 
-.. include:: smtpd_senddata.py
-    :literal:
+.. literalinclude:: smtpd_senddata.py
+    :caption:
     :start-after: #end_pymotw_header
 
 To test the programs, run ``smtpd_custom.py`` in one terminal and
@@ -121,14 +120,14 @@ To stop the server, press ``Ctrl-C``.
 Debugging Server
 ================
 
-The previous example shows the arguments to :func:`process_message()`,
+The previous example shows the arguments to :func:`process_message`,
 but :mod:`smtpd` also includes a server specifically designed for more
 complete debugging, called :class:`DebuggingServer`.  It prints the
 entire incoming message to the console and then stops processing (it
 does not proxy the message to a real mail server).
 
-.. include:: smtpd_debug.py
-    :literal:
+.. literalinclude:: smtpd_debug.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Using the ``smtpd_senddata.py`` client program from earlier, the output
@@ -166,8 +165,8 @@ as argument to the constructor.
 The steps for setting up the proxy server are similar to the debug
 server.
 
-.. include:: smtpd_proxy.py
-    :literal:
+.. literalinclude:: smtpd_proxy.py
+    :caption:
     :start-after: #end_pymotw_header
 
 It prints no output, though, so to verify that it is working look at
