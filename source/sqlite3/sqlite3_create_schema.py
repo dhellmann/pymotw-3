@@ -27,18 +27,18 @@ with sqlite3.connect(db_filename) as conn:
         conn.executescript("""
         insert into project (name, description, deadline)
         values ('pymotw', 'Python Module of the Week',
-                '2010-11-01');
+                '2016-11-01');
 
         insert into task (details, status, deadline, project)
-        values ('write about select', 'done', '2010-10-03',
+        values ('write about select', 'done', '2016-04-25',
                 'pymotw');
 
         insert into task (details, status, deadline, project)
-        values ('write about random', 'waiting', '2010-10-10',
+        values ('write about random', 'waiting', '2016-08-22',
                 'pymotw');
 
         insert into task (details, status, deadline, project)
-        values ('write about sqlite3', 'active', '2010-10-17',
+        values ('write about sqlite3', 'active', '2017-07-31',
                 'pymotw');
         """)
     else:
