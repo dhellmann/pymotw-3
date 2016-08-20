@@ -27,7 +27,7 @@ def converter_func(data):
     return pickle.loads(data)
 
 
-class MyObj(object):
+class MyObj:
 
     def __init__(self, arg):
         self.arg = arg

@@ -13,7 +13,7 @@ import collections
 db_filename = 'todo.db'
 
 
-class Mode(object):
+class Mode:
 
     def __init__(self):
         self.counter = collections.Counter()
