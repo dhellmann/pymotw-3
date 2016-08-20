@@ -13,8 +13,8 @@ db_filename = 'todo.db'
 
 
 def authorizer_func(action, table, column, sql_location, ignore):
-    print('\nauthorizer_func(%s, %s, %s, %s, %s)' %
-          (action, table, column, sql_location, ignore))
+    print('\nauthorizer_func({}, {}, {}, {}, {})'.format(
+        action, table, column, sql_location, ignore))
 
     response = sqlite3.SQLITE_OK  # be permissive by default
 
@@ -23,8 +23,8 @@ def authorizer_func(action, table, column, sql_location, ignore):
         response = sqlite3.SQLITE_OK
 
     elif action == sqlite3.SQLITE_READ:
-        print('requesting access to column %s.%s from %s' %
-              (table, column, sql_location))
+        print('requesting access to column {}.{} from {}'.format(
+            table, column, sql_location))
         if column == 'details':
             print('  ignoring details column')
             response = sqlite3.SQLITE_IGNORE

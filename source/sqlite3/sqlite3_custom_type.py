@@ -16,14 +16,14 @@ db_filename = 'todo.db'
 def adapter_func(obj):
     """Convert from in-memory to storage representation.
     """
-    print('adapter_func(%s)\n' % obj)
+    print('adapter_func({})\n'.format(obj))
     return pickle.dumps(obj)
 
 
 def converter_func(data):
     """Convert from storage to in-memory representation.
     """
-    print('converter_func(%r)\n' % data)
+    print('converter_func({!r})\n'.format(data))
     return pickle.loads(data)
 
 
@@ -33,7 +33,7 @@ class MyObj(object):
         self.arg = arg
 
     def __str__(self):
-        return 'MyObj(%r)' % self.arg
+        return 'MyObj({!r})'.format(self.arg)
 
 # Register the functions for manipulating the type.
 sqlite3.register_adapter(MyObj, adapter_func)

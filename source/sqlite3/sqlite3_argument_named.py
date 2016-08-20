@@ -25,5 +25,5 @@ with sqlite3.connect(db_filename) as conn:
 
     for row in cursor.fetchall():
         task_id, priority, details, status, deadline = row
-        print('%2d {%d} %-25s [%-8s] (%s)' % (
+        print('{:2d} [{:d}] {:<25} [{:<8}] ({})'.format(
             task_id, priority, details, status, deadline))

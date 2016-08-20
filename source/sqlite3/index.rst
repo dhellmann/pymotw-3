@@ -160,9 +160,9 @@ columns included in the :command:`select` clause of the query.
 
 	$ python3 sqlite3_select_tasks.py
 	
-	 1 {1} write about select   [done    ] (2010-10-03)
-	 2 {1} write about random   [waiting ] (2010-10-10)
-	 3 {1} write about sqlite3  [active  ] (2010-10-17)
+	 1 [1] write about select        [done    ] (2010-10-03)
+	 2 [1] write about random        [waiting ] (2010-10-10)
+	 3 [1] write about sqlite3       [active  ] (2010-10-17)
 
 .. {{{end}}}
 
@@ -189,9 +189,9 @@ be smaller than the maximum value.
 	  due 2010-11-01
 	
 	Next 5 tasks:
-	 1 {1} write about select        [done    ] (2010-10-03)
-	 2 {1} write about random        [waiting ] (2010-10-10)
-	 3 {1} write about sqlite3       [active  ] (2010-10-17)
+	 1 [1] write about select        [done    ] (2010-10-03)
+	 2 [1] write about random        [waiting ] (2010-10-10)
+	 3 [1] write about sqlite3       [active  ] (2010-10-17)
 
 .. {{{end}}}
 
@@ -276,9 +276,9 @@ columns in the query has been changed.
 	  due 2010-11-01
 	
 	Next 5 tasks:
-	 1 {1} write about select        [done    ] (2010-10-03)
-	 2 {1} write about random        [waiting ] (2010-10-10)
-	 3 {1} write about sqlite3       [active  ] (2010-10-17)
+	 1 [1] write about select        [done    ] (2010-10-03)
+	 2 [1] write about random        [waiting ] (2010-10-10)
+	 3 [1] write about sqlite3       [active  ] (2010-10-17)
 
 .. {{{end}}}
 
@@ -328,9 +328,9 @@ the database.
 
 	$ python3 sqlite3_argument_positional.py pymotw
 	
-	 1 {1} write about select        [done    ] (2010-10-03)
-	 2 {1} write about random        [waiting ] (2010-10-10)
-	 3 {1} write about sqlite3       [active  ] (2010-10-17)
+	 1 [1] write about select        [done    ] (2010-10-03)
+	 2 [1] write about random        [waiting ] (2010-10-10)
+	 3 [1] write about sqlite3       [active  ] (2010-10-17)
 
 .. {{{end}}}
 
@@ -356,9 +356,9 @@ since they are given special treatment by the query parser.
 
 	$ python3 sqlite3_argument_named.py pymotw
 	
-	 1 {1} write about select        [done    ] (2010-10-03)
-	 2 {1} write about random        [waiting ] (2010-10-10)
-	 3 {1} write about sqlite3       [active  ] (2010-10-17)
+	 1 [1] write about select        [done    ] (2010-10-03)
+	 2 [1] write about random        [waiting ] (2010-10-10)
+	 3 [1] write about sqlite3       [active  ] (2010-10-17)
 
 .. {{{end}}}
 
@@ -384,9 +384,9 @@ This :command:`update` statement uses two named parameters.  The
 	$ python3 sqlite3_argument_update.py 2 done
 	$ python3 sqlite3_argument_named.py pymotw
 	
-	 1 {1} write about select        [done    ] (2010-10-03)
-	 2 {1} write about random        [done    ] (2010-10-10)
-	 3 {1} write about sqlite3       [active  ] (2010-10-17)
+	 1 [1] write about select        [done    ] (2010-10-03)
+	 2 [1] write about random        [done    ] (2010-10-10)
+	 3 [1] write about sqlite3       [active  ] (2010-10-17)
 
 .. {{{end}}}
 
@@ -420,12 +420,12 @@ Running the program produces:
 	$ python3 sqlite3_load_csv.py tasks.csv
 	$ python3 sqlite3_argument_named.py pymotw
 	
-	 4 {2} finish reviewing markup   [active  ] (2010-10-02)
-	 1 {1} write about select        [done    ] (2010-10-03)
-	 6 {1} subtitle                  [active  ] (2010-10-03)
-	 5 {2} revise chapter intros     [active  ] (2010-10-03)
-	 2 {1} write about random        [done    ] (2010-10-10)
-	 3 {1} write about sqlite3       [active  ] (2010-10-17)
+	 4 [2] finish reviewing markup   [active  ] (2010-10-02)
+	 1 [1] write about select        [done    ] (2010-10-03)
+	 6 [1] subtitle                  [active  ] (2010-10-03)
+	 5 [2] revise chapter intros     [active  ] (2010-10-03)
+	 2 [1] write about random        [done    ] (2010-10-10)
+	 3 [1] write about sqlite3       [active  ] (2010-10-17)
 
 .. {{{end}}}
 
@@ -707,21 +707,21 @@ previous examples use deferred mode.
 
 	$ python3 sqlite3_isolation_levels.py DEFERRED
 	
-	2016-08-20 13:51:36,025 (Reader 1  ) waiting to synchronize
-	2016-08-20 13:51:36,025 (Reader 2  ) waiting to synchronize
-	2016-08-20 13:51:36,027 (Writer 1  ) waiting to synchronize
-	2016-08-20 13:51:37,026 (MainThread) setting ready
-	2016-08-20 13:51:37,027 (Reader 1  ) wait over
-	2016-08-20 13:51:37,027 (Writer 1  ) PAUSING
-	2016-08-20 13:51:37,027 (Reader 2  ) wait over
-	2016-08-20 13:51:37,027 (Reader 1  ) SELECT EXECUTED
-	2016-08-20 13:51:37,027 (Reader 2  ) SELECT EXECUTED
-	2016-08-20 13:51:37,027 (Reader 1  ) results fetched
-	2016-08-20 13:51:37,028 (Reader 2  ) results fetched
-	2016-08-20 13:51:38,029 (Writer 1  ) CHANGES COMMITTED
-	2016-08-20 13:51:38,128 (Writer 2  ) waiting to synchronize
-	2016-08-20 13:51:38,128 (Writer 2  ) PAUSING
-	2016-08-20 13:51:39,131 (Writer 2  ) CHANGES COMMITTED
+	2016-08-20 17:12:46,340 (Reader 1  ) waiting to synchronize
+	2016-08-20 17:12:46,340 (Reader 2  ) waiting to synchronize
+	2016-08-20 17:12:46,342 (Writer 1  ) waiting to synchronize
+	2016-08-20 17:12:47,341 (MainThread) setting ready
+	2016-08-20 17:12:47,341 (Writer 1  ) PAUSING
+	2016-08-20 17:12:47,342 (Reader 1  ) wait over
+	2016-08-20 17:12:47,342 (Reader 2  ) wait over
+	2016-08-20 17:12:47,342 (Reader 1  ) SELECT EXECUTED
+	2016-08-20 17:12:47,342 (Reader 1  ) results fetched
+	2016-08-20 17:12:47,342 (Reader 2  ) SELECT EXECUTED
+	2016-08-20 17:12:47,342 (Reader 2  ) results fetched
+	2016-08-20 17:12:48,345 (Writer 1  ) CHANGES COMMITTED
+	2016-08-20 17:12:48,410 (Writer 2  ) waiting to synchronize
+	2016-08-20 17:12:48,410 (Writer 2  ) PAUSING
+	2016-08-20 17:12:49,415 (Writer 2  ) CHANGES COMMITTED
 
 .. {{{end}}}
 
@@ -743,21 +743,21 @@ transaction is ongoing.
 
 	$ python3 sqlite3_isolation_levels.py IMMEDIATE
 	
-	2016-08-20 13:51:39,192 (Reader 1  ) waiting to synchronize
-	2016-08-20 13:51:39,193 (Reader 2  ) waiting to synchronize
-	2016-08-20 13:51:39,195 (Writer 1  ) waiting to synchronize
-	2016-08-20 13:51:40,199 (MainThread) setting ready
-	2016-08-20 13:51:40,199 (Reader 1  ) wait over
-	2016-08-20 13:51:40,200 (Reader 2  ) wait over
-	2016-08-20 13:51:40,200 (Writer 1  ) PAUSING
-	2016-08-20 13:51:40,201 (Reader 2  ) SELECT EXECUTED
-	2016-08-20 13:51:40,201 (Reader 1  ) SELECT EXECUTED
-	2016-08-20 13:51:40,201 (Reader 1  ) results fetched
-	2016-08-20 13:51:40,202 (Reader 2  ) results fetched
-	2016-08-20 13:51:41,205 (Writer 1  ) CHANGES COMMITTED
-	2016-08-20 13:51:41,275 (Writer 2  ) waiting to synchronize
-	2016-08-20 13:51:41,275 (Writer 2  ) PAUSING
-	2016-08-20 13:51:42,278 (Writer 2  ) CHANGES COMMITTED
+	2016-08-20 17:12:49,513 (Reader 2  ) waiting to synchronize
+	2016-08-20 17:12:49,513 (Reader 1  ) waiting to synchronize
+	2016-08-20 17:12:49,514 (Writer 2  ) waiting to synchronize
+	2016-08-20 17:12:50,515 (MainThread) setting ready
+	2016-08-20 17:12:50,515 (Reader 2  ) wait over
+	2016-08-20 17:12:50,515 (Writer 2  ) PAUSING
+	2016-08-20 17:12:50,515 (Reader 1  ) wait over
+	2016-08-20 17:12:50,515 (Reader 2  ) SELECT EXECUTED
+	2016-08-20 17:12:50,515 (Reader 2  ) results fetched
+	2016-08-20 17:12:50,516 (Reader 1  ) SELECT EXECUTED
+	2016-08-20 17:12:50,516 (Reader 1  ) results fetched
+	2016-08-20 17:12:51,516 (Writer 2  ) CHANGES COMMITTED
+	2016-08-20 17:12:51,593 (Writer 1  ) waiting to synchronize
+	2016-08-20 17:12:51,593 (Writer 1  ) PAUSING
+	2016-08-20 17:12:52,594 (Writer 1  ) CHANGES COMMITTED
 
 .. {{{end}}}
 
@@ -776,21 +776,21 @@ important, since each exclusive connection blocks all other users.
 
 	$ python3 sqlite3_isolation_levels.py EXCLUSIVE
 	
-	2016-08-20 13:51:42,392 (Reader 1  ) waiting to synchronize
-	2016-08-20 13:51:42,393 (Reader 2  ) waiting to synchronize
-	2016-08-20 13:51:42,395 (Writer 1  ) waiting to synchronize
-	2016-08-20 13:51:43,393 (MainThread) setting ready
-	2016-08-20 13:51:43,394 (Reader 1  ) wait over
-	2016-08-20 13:51:43,394 (Reader 2  ) wait over
-	2016-08-20 13:51:43,394 (Writer 1  ) PAUSING
-	2016-08-20 13:51:44,399 (Writer 1  ) CHANGES COMMITTED
-	2016-08-20 13:51:44,452 (Writer 2  ) waiting to synchronize
-	2016-08-20 13:51:44,452 (Writer 2  ) PAUSING
-	2016-08-20 13:51:45,453 (Writer 2  ) CHANGES COMMITTED
-	2016-08-20 13:51:45,474 (Reader 1  ) SELECT EXECUTED
-	2016-08-20 13:51:45,474 (Reader 2  ) SELECT EXECUTED
-	2016-08-20 13:51:45,474 (Reader 1  ) results fetched
-	2016-08-20 13:51:45,475 (Reader 2  ) results fetched
+	2016-08-20 17:12:52,679 (Reader 1  ) waiting to synchronize
+	2016-08-20 17:12:52,679 (Reader 2  ) waiting to synchronize
+	2016-08-20 17:12:52,682 (Writer 2  ) waiting to synchronize
+	2016-08-20 17:12:53,681 (MainThread) setting ready
+	2016-08-20 17:12:53,681 (Reader 1  ) wait over
+	2016-08-20 17:12:53,681 (Reader 2  ) wait over
+	2016-08-20 17:12:53,681 (Writer 2  ) PAUSING
+	2016-08-20 17:12:54,683 (Writer 2  ) CHANGES COMMITTED
+	2016-08-20 17:12:54,730 (Reader 2  ) SELECT EXECUTED
+	2016-08-20 17:12:54,730 (Reader 2  ) results fetched
+	2016-08-20 17:12:54,739 (Reader 1  ) SELECT EXECUTED
+	2016-08-20 17:12:54,739 (Reader 1  ) results fetched
+	2016-08-20 17:12:54,760 (Writer 1  ) waiting to synchronize
+	2016-08-20 17:12:54,760 (Writer 1  ) PAUSING
+	2016-08-20 17:12:55,766 (Writer 1  ) CHANGES COMMITTED
 
 .. {{{end}}}
 
@@ -826,19 +826,19 @@ either reader starts querying.
 
 	$ python3 sqlite3_autocommit.py
 	
-	2016-08-20 13:51:45,560 (Reader 1  ) waiting to synchronize
-	2016-08-20 13:51:45,560 (Reader 2  ) waiting to synchronize
-	2016-08-20 13:51:45,563 (Writer 2  ) waiting to synchronize
-	2016-08-20 13:51:45,564 (Writer 1  ) waiting to synchronize
-	2016-08-20 13:51:46,559 (MainThread) setting ready
-	2016-08-20 13:51:46,560 (Writer 2  ) PAUSING
-	2016-08-20 13:51:46,560 (Writer 1  ) PAUSING
-	2016-08-20 13:51:46,560 (Reader 2  ) wait over
-	2016-08-20 13:51:46,560 (Reader 1  ) wait over
-	2016-08-20 13:51:46,561 (Reader 1  ) SELECT EXECUTED
-	2016-08-20 13:51:46,562 (Reader 2  ) SELECT EXECUTED
-	2016-08-20 13:51:46,562 (Reader 2  ) results fetched
-	2016-08-20 13:51:46,562 (Reader 1  ) results fetched
+	2016-08-20 17:12:55,833 (Reader 1  ) waiting to synchronize
+	2016-08-20 17:12:55,839 (Reader 2  ) waiting to synchronize
+	2016-08-20 17:12:55,843 (Writer 1  ) waiting to synchronize
+	2016-08-20 17:12:55,844 (Writer 2  ) waiting to synchronize
+	2016-08-20 17:12:56,842 (MainThread) setting ready
+	2016-08-20 17:12:56,842 (Reader 1  ) wait over
+	2016-08-20 17:12:56,842 (Reader 2  ) wait over
+	2016-08-20 17:12:56,843 (Writer 1  ) PAUSING
+	2016-08-20 17:12:56,843 (Writer 2  ) PAUSING
+	2016-08-20 17:12:56,843 (Reader 1  ) SELECT EXECUTED
+	2016-08-20 17:12:56,844 (Reader 2  ) SELECT EXECUTED
+	2016-08-20 17:12:56,844 (Reader 1  ) results fetched
+	2016-08-20 17:12:56,844 (Reader 2  ) results fetched
 
 .. {{{end}}}
 

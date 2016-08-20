@@ -19,12 +19,13 @@ class Mode(object):
         self.counter = collections.Counter()
 
     def step(self, value):
-        print('step(%r)' % value)
+        print('step({!r})'.format(value))
         self.counter[value] += 1
 
     def finalize(self):
         result, count = self.counter.most_common(1)[0]
-        print('finalize() -> %r (%d times)' % (result, count))
+        print('finalize() -> {!r} ({} times)'.format(
+            result, count))
         return result
 
 

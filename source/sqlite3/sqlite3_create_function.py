@@ -14,12 +14,12 @@ db_filename = 'todo.db'
 
 
 def encrypt(s):
-    print('Encrypting %r' % s)
+    print('Encrypting {!r}'.format(s))
     return codecs.encode(s, 'rot-13')
 
 
 def decrypt(s):
-    print('Decrypting %r' % s)
+    print('Decrypting {!r}'.format(s))
     return codecs.encode(s, 'rot-13')
 
 
