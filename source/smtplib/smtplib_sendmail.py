@@ -20,8 +20,8 @@ msg['From'] = email.utils.formataddr(('Author',
                                       'author@example.com'))
 msg['Subject'] = 'Simple test message'
 
-server = smtplib.SMTP('mail')
-server.set_debuglevel(True) # show communication with the server
+server = smtplib.SMTP('localhost', 1025)
+server.set_debuglevel(True)  # show communication with the server
 try:
     server.sendmail('author@example.com',
                     ['recipient@example.com'],
