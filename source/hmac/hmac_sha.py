@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Generate an HMAC signature using SHA1.
 """
 #end_pymotw_header

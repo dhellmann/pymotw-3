@@ -8,7 +8,6 @@ hmac -- Cryptographic Message Signing and Verification
 :Purpose: 
     The hmac module implements keyed-hashing for message authentication, as
     described in RFC 2104.
-:Python Version: 2.2 and later
 
 The HMAC algorithm can be used to verify the integrity of information
 passed between applications or stored in a potentially vulnerable
@@ -28,8 +27,8 @@ Signing Messages
 The :func:`new` function creates a new object for calculating a
 message signature.  This example uses the default MD5 hash algorithm.
 
-.. include:: hmac_simple.py
-    :literal:
+.. literalinclude:: hmac_simple.py
+    :caption:
     :start-after: #end_pymotw_header
 
 When run, the code reads a data file and computes an HMAC
@@ -56,8 +55,8 @@ weaknesses, such as collisions (where two different messages produce
 the same hash). The SHA-1 algorithm is considered to be stronger, and
 should be used instead.
 
-.. include:: hmac_sha.py
-    :literal:
+.. literalinclude:: hmac_sha.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The :func:`new` function takes three arguments. The first is the
@@ -66,7 +65,7 @@ communicating so both ends can use the same value. The second value is
 an initial message. If the message content that needs to be
 authenticated is small, such as a timestamp or HTTP POST, the entire
 body of the message can be passed to :func:`new` instead of using the
-:func:`update()` method. The last argument is the digest module to be
+:func:`update` method. The last argument is the digest module to be
 used. The default is :const:`hashlib.md5`. This example
 substitutes :const:`hashlib.sha1`.
 
@@ -92,8 +91,8 @@ value that may include unprintable or non-ASCII characters, including
 :const:`NUL`.  Some web services (Google checkout, Amazon S3) use the
 base64 encoded version of the binary digest instead of the hexdigest.
 
-.. include:: hmac_base64.py
-    :literal:
+.. literalinclude:: hmac_base64.py
+    :caption:
     :start-after: #end_pymotw_header
 
 the base64 encoded string ends in a newline, which frequently needs to

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Check the digests of pickles passed through a stream.
 """
 #end_pymotw_header
