@@ -64,9 +64,8 @@ while True:
     first_line = in_s.readline()
     if not first_line:
         break
-    first_line = first_line.decode('utf-8')
-    incoming_digest, incoming_length = first_line.split(' ')
-    incoming_length = int(incoming_length)
+    incoming_digest, incoming_length = first_line.split(b' ')
+    incoming_length = int(incoming_length.decode('utf-8'))
     print('\nREAD:', incoming_digest, incoming_length)
 
     incoming_pickled_data = in_s.read(incoming_length)
@@ -74,8 +73,8 @@ while True:
     actual_digest = make_digest(incoming_pickled_data)
     print('ACTUAL:', actual_digest)
 
-    if incoming_digest != actual_digest:
-        print('WARNING: Data corruption')
-    else:
+    if hmac.compare_digest(actual_digest, incoming_digest):
         obj = pickle.loads(incoming_pickled_data)
         print('OK:', obj)
+    else:
+        print('WARNING: Data corruption')
