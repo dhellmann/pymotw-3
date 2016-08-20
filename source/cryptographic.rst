@@ -12,13 +12,7 @@ for verifying that a message has not been altered in transmission.
    :maxdepth: 1
 
    hashlib/index
-
-..
-   .. toctree::
-       :maxdepth: 1
-
-       hashlib/index
-       hmac/index
+   hmac/index
 
 .. ssl
 
