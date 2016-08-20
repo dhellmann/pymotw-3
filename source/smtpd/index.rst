@@ -1,6 +1,6 @@
-==============================
- smtpd -- Sample Mail Servers
-==============================
+===============================
+ smtpd --- Sample Mail Servers
+===============================
 
 .. module:: smtpd
     :synopsis: Includes classes for implementing SMTP servers.
@@ -68,9 +68,9 @@ to send data to the test server running locally on port 1025.
 To test the programs, run ``smtpd_custom.py`` in one terminal and
 ``smtpd_senddata.py`` in another.
 
-::
+.. code-block:: none
 
-    $ python smtpd_custom.py 
+    $ python3 smtpd_custom.py 
 
     Receiving message from: ('127.0.0.1', 58541)
     Message addressed from: author@example.com
@@ -80,39 +80,41 @@ To test the programs, run ``smtpd_custom.py`` in one terminal and
 The debug output from ``smtpd_senddata.py`` shows all of the
 communication with the server.
 
-::
+.. cog.out(run_script(cog.inFile, 'smtpd_senddata.py'))
 
-    $ python smtpd_senddata.py 
-    
-    send: 'ehlo farnsworth.local\r\n'
-    reply: '502 Error: command "EHLO" not implemented\r\n'
-    reply: retcode (502); Msg: Error: command "EHLO" not implemented
-    send: 'helo farnsworth.local\r\n'
-    reply: '250 farnsworth.local\r\n'
-    reply: retcode (250); Msg: farnsworth.local
-    send: 'mail FROM:<author@example.com>\r\n'
-    reply: '250 Ok\r\n'
-    reply: retcode (250); Msg: Ok
-    send: 'rcpt TO:<recipient@example.com>\r\n'
-    reply: '250 Ok\r\n'
-    reply: retcode (250); Msg: Ok
-    send: 'data\r\n'
-    reply: '354 End data with <CR><LF>.<CR><LF>\r\n'
-    reply: retcode (354); Msg: End data with <CR><LF>.<CR><LF>
-    data: (354, 'End data with <CR><LF>.<CR><LF>')
-    send: 'Content-Type: text/plain; charset="us-ascii"\r\nMIME-Version:
-     1.0\r\n
-    Content-Transfer-Encoding: 7bit\r\nTo: Recipient <recipient@example.
-    com>\r\n
-    From: Author <author@example.com>\r\nSubject: Simple test message\r\
-    n\r\nThis
-     is the body of the message.\r\n.\r\n'
-    reply: '250 Ok\r\n'
-    reply: retcode (250); Msg: Ok
-    data: (250, 'Ok')
-    send: 'quit\r\n'
-    reply: '221 Bye\r\n'
-    reply: retcode (221); Msg: Bye
+.. code-block:: none
+
+	$ python3 smtpd_senddata.py
+	
+	send: 'ehlo 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.
+	0.0.0.0.0.0.ip6.arpa\r\n'
+	reply: b'250-1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0
+	.0.0.0.0.0.0.ip6.arpa\r\n'
+	reply: b'250-SIZE 33554432\r\n'
+	reply: b'250 HELP\r\n'
+	reply: retcode (250); Msg: b'1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0
+	.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa\nSIZE 33554432\nHELP'
+	send: 'mail FROM:<author@example.com> size=236\r\n'
+	reply: b'250 OK\r\n'
+	reply: retcode (250); Msg: b'OK'
+	send: 'rcpt TO:<recipient@example.com>\r\n'
+	reply: b'250 OK\r\n'
+	reply: retcode (250); Msg: b'OK'
+	send: 'data\r\n'
+	reply: b'354 End data with <CR><LF>.<CR><LF>\r\n'
+	reply: retcode (354); Msg: b'End data with <CR><LF>.<CR><LF>'
+	data: (354, b'End data with <CR><LF>.<CR><LF>')
+	send: b'Content-Type: text/plain; charset="us-ascii"\r\nMIME-Ver
+	sion: 1.0\r\nContent-Transfer-Encoding: 7bit\r\nTo: Recipient <r
+	ecipient@example.com>\r\nFrom: Author <author@example.com>\r\nSu
+	bject: Simple test message\r\n\r\nThis is the body of the messag
+	e.\r\n.\r\n'
+	reply: b'250 OK\r\n'
+	reply: retcode (250); Msg: b'OK'
+	data: (250, b'OK')
+	send: 'quit\r\n'
+	reply: b'221 Bye\r\n'
+	reply: retcode (221); Msg: b'Bye'
 
 To stop the server, press ``Ctrl-C``.
 
@@ -133,21 +135,19 @@ does not proxy the message to a real mail server).
 Using the ``smtpd_senddata.py`` client program from earlier, the output
 of the :class:`DebuggingServer` is:
 
-::
+.. code-block:: none
 
-    $ python smtpd_debug.py
-
-    ---------- MESSAGE FOLLOWS ----------
-    Content-Type: text/plain; charset="us-ascii"
-    MIME-Version: 1.0
-    Content-Transfer-Encoding: 7bit
-    To: Recipient <recipient@example.com>
-    From: Author <author@example.com>
-    Subject: Simple test message
-    X-Peer: 127.0.0.1
-
-    This is the body of the message.
-    ------------ END MESSAGE ------------
+   ---------- MESSAGE FOLLOWS ----------
+   Content-Type: text/plain; charset="us-ascii"
+   MIME-Version: 1.0
+   Content-Transfer-Encoding: 7bit
+   To: Recipient <recipient@example.com>
+   From: Author <author@example.com>
+   Subject: Simple test message
+   X-Peer: 127.0.0.1
+   
+   This is the body of the message.
+   ------------ END MESSAGE ------------
 
 Proxy Server
 ============
@@ -174,7 +174,7 @@ the mail server logs.
 
 ::
 
-    Oct 19 19:16:34 homer sendmail[6785]: m9JNGXJb006785: 
+    Aug 20 19:16:34 homer sendmail[6785]: m9JNGXJb006785: 
     from=<author@example.com>, size=248, class=0, nrcpts=1, 
     msgid=<200810192316.m9JNGXJb006785@homer.example.com>, 
     proto=ESMTP, daemon=MTA, relay=[192.168.1.17]
@@ -182,18 +182,13 @@ the mail server logs.
 
 .. seealso::
 
-    `smtpd <http://docs.python.org/lib/module-smtpd.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`smtpd`
 
-    :mod:`smtplib`
-        Provides a client interface.
+   * :mod:`smtplib` -- Provides a client interface.
 
-    :mod:`email`
-        Parses email messages.
+   * :mod:`email` -- Parses email messages.
 
-    :mod:`asyncore`
-        Base module for writing asynchronous servers.
+   * :mod:`asyncore` -- Base module for writing asynchronous servers.
 
-    :rfc:`2822`
-        Defines the email message format.
+   * :rfc:`2822` -- Defines the email message format.
 
