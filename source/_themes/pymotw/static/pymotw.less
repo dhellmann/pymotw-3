@@ -322,6 +322,12 @@ div.linenodiv pre {
 	content: "# ";
 }
 
+#todo-schema-sql .code-block-caption .caption-text:before {
+	/* insert a # before the filename in the caption to make it look like
+       a code comment */
+	content: "-- ";
+}
+
 /* center captions for figures under their image */
 div.figure p.caption {
 	text-align: center;
