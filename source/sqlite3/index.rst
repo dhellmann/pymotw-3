@@ -1,12 +1,11 @@
-=========================================
- sqlite3 -- Embedded Relational Database
-=========================================
+==========================================
+ sqlite3 --- Embedded Relational Database
+==========================================
 
 .. module:: sqlite3
     :synopsis: Embedded relational database
 
 :Purpose: Implements an embedded relational database with SQL support.
-
 
 The :mod:`sqlite3` module provides a DB-API 2.0 compliant interface to
 SQLite, an in-process relational database.  SQLite is designed to be
@@ -259,11 +258,11 @@ the column index or name.
    :start-after: #end_pymotw_header
 
 This version of the ``sqlite3_select_variations.py`` example has been
-re-written using :class:`Row` instances instead of tuples.  The
-row from the project table is still printed by accessing the column values through
-position, but the :command:`print` statement for tasks uses keyword
-lookup instead, so it does not matter that the order of the columns in
-the query has been changed.
+re-written using :class:`Row` instances instead of tuples.  The row
+from the project table is still printed by accessing the column values
+through position, but the :command:`print` statement for tasks uses
+keyword lookup instead, so it does not matter that the order of the
+columns in the query has been changed.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'sqlite3_row_factory.py'))
@@ -571,8 +570,6 @@ type is part of the query instead of the original table definition.
 
 .. {{{end}}}
 
-
-
 Transactions
 ============
 
@@ -580,8 +577,7 @@ One of the key features of relational databases is the use of
 *transactions* to maintain a consistent internal state.  With
 transactions enabled, several changes can be made through one
 connection without effecting any other users until the results are
-*committed* and flushed to the actual database.  
-
+*committed* and flushed to the actual database.
 
 Preserving Changes
 ------------------
@@ -917,8 +913,6 @@ remaining syntactically correct.
 
 .. {{{end}}}
 
-
-
 Using Python Functions in SQL
 =============================
 
@@ -1059,7 +1053,6 @@ Attempts to share a connection between threads result in an exception.
 
 .. {{{end}}}
 
-
 Restricting Access to Data
 ==========================
 
@@ -1149,26 +1142,19 @@ controlled as well.
 .. * loading from api
 .. * loading from sql
 
-
-
 .. seealso::
 
-    `sqlite3 <http://docs.python.org/library/sqlite3.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`sqlite3`
 
-    :pep:`249` -- DB API 2.0 Specification
-        A standard interface for modules that provide access to
-        relational databases.
+   * :pep:`249` -- DB API 2.0 Specification (A standard interface for
+     modules that provide access to relational databases.)
 
-    `SQLite`_
-        The official site of the SQLite library.
+   * `SQLite`_ -- The official site of the SQLite library.
 
-    :mod:`shelve`
-        Key-value store for saving arbitrary Python objects.
+   * :mod:`shelve` -- Key-value store for saving arbitrary Python objects.
 
-    SQLAlchemy_
-        A popular object-relational mapper that supports SQLite among
-        many other relational databases.
+   * SQLAlchemy_ -- A popular object-relational mapper that supports
+     SQLite among many other relational databases.
 
 .. _SQLite: http://www.sqlite.org/
 .. _SQLAlchemy: http://sqlalchemy.org/
