@@ -21,16 +21,9 @@ Maildir formats used by many email client programs.
 .. toctree::
    :maxdepth: 1
 
+   smtplib/index
    smtpd/index
    mailbox/index
    imaplib/index
-
-..
-   .. toctree::
-      :maxdepth: 1
-
-      smtplib/index
-      imaplib/index
-      mailbox/index
 
 ..   email/index
