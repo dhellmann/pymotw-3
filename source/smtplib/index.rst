@@ -6,7 +6,6 @@
     :synopsis: Simple mail transfer protocol client.
 
 :Purpose: Interact with SMTP servers, including sending email.
-:Python Version: 1.5.2 and later
 
 :mod:`smtplib` includes the class :class:`SMTP`, which can be used to
 communicate with mail servers to send mail.
@@ -30,8 +29,8 @@ comply with RFC 2882, since :mod:`smtplib` does not modify the
 contents or headers at all.  That means the ``From`` and ``To``
 headers need to be added by the caller.
 
-.. include:: smtplib_sendmail.py
-    :literal:
+.. literalinclude:: smtplib_sendmail.py
+    :caption:
     :start-after: #end_pymotw_header
 
 In this example, debugging is also turned on to show the communication
@@ -107,8 +106,8 @@ identify the client to the server and ask it what extensions are
 available.  Then call :func:`has_extn` to check the results.  After TLS
 is started, :func:`ehlo` must be called again before authenticating.
 
-.. include:: smtplib_authenticated.py
-    :literal:
+.. literalinclude:: smtplib_authenticated.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The ``STARTTLS`` extension does not appear in the reply to ``EHLO``
@@ -200,8 +199,8 @@ can ask the server about an address and receive a status code
 indicating validity along with the user's full name, if it is
 available.
 
-.. include:: smtplib_verify.py
-    :literal:
+.. literalinclude:: smtplib_verify.py
+    :caption:
     :start-after: #end_pymotw_header
 
 As the last two lines of output here show, the address ``dhellmann``
