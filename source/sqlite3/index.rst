@@ -329,9 +329,9 @@ the database.
 
 	$ python3 sqlite3_argument_positional.py pymotw
 	
-	 1 {1} write about select   [done    ] (2010-10-03)
-	 2 {1} write about random   [waiting ] (2010-10-10)
-	 3 {1} write about sqlite3  [active  ] (2010-10-17)
+	 1 {1} write about select        [done    ] (2010-10-03)
+	 2 {1} write about random        [waiting ] (2010-10-10)
+	 3 {1} write about sqlite3       [active  ] (2010-10-17)
 
 .. {{{end}}}
 
@@ -440,7 +440,7 @@ columns.  Data of these types is converted automatically by
 stored in the database, and back again, as needed.  Integer values are
 loaded from the database into :class:`int` or :class:`long` variables,
 depending on the size of the value.  Text is saved and retrieved as
-:class:`unicode`, unless the :attr:`text_factory` for the
+:class:`str`, unless the :attr:`text_factory` for the
 :class:`Connection` has been changed.
 
 Although SQLite only supports a few data types internally,
@@ -495,7 +495,7 @@ string from the database and returns a Python object.  Use
 This example uses :mod:`pickle` to save an object to a string that can
 be stored in the database, a useful technique for storing arbitrary
 objects, but one that does not allow querying based on object
-attributes.  A real *object-relational mapper*, such as SQLAlchemy, that
+attributes.  A real *object-relational mapper*, such as SQLAlchemy_, that
 stores attribute values in their own columns will be more useful for
 large amounts of data.
 
@@ -518,10 +518,11 @@ large amounts of data.
 	converter_func(b'\x80\x03c__main__\nMyObj\nq\x00)\x81q\x01}q\x02X\x0
 	3\x00\x00\x00argq\x03K*sb.')
 	
-	Retrieved 1 MyObj('this is a value to save') <class '__main__.MyObj'
-	>
+	Retrieved 1 MyObj('this is a value to save')
+	  with type <class '__main__.MyObj'>
 	
-	Retrieved 2 MyObj(42) <class '__main__.MyObj'>
+	Retrieved 2 MyObj(42)
+	  with type <class '__main__.MyObj'>
 	
 
 .. {{{end}}}
@@ -561,10 +562,11 @@ type is part of the query instead of the original table definition.
 	converter_func(b'\x80\x03c__main__\nMyObj\nq\x00)\x81q\x01}q\x02X\x0
 	3\x00\x00\x00argq\x03K*sb.')
 	
-	Retrieved 1 MyObj('this is a value to save') <class '__main__.MyObj'
-	>
+	Retrieved 1 MyObj('this is a value to save')
+	  with type <class '__main__.MyObj'>
 	
-	Retrieved 2 MyObj(42) <class '__main__.MyObj'>
+	Retrieved 2 MyObj(42)
+	  with type <class '__main__.MyObj'>
 	
 
 .. {{{end}}}
@@ -709,21 +711,21 @@ previous examples use deferred mode.
 
 	$ python3 sqlite3_isolation_levels.py DEFERRED
 	
-	2016-08-20 11:33:58,565 (Reader 2  ) waiting to synchronize
-	2016-08-20 11:33:58,566 (Reader 1  ) waiting to synchronize
-	2016-08-20 11:33:58,568 (Writer 1  ) waiting to synchronize
-	2016-08-20 11:33:59,567 (MainThread) setting ready
-	2016-08-20 11:33:59,568 (Reader 2  ) wait over
-	2016-08-20 11:33:59,568 (Writer 1  ) PAUSING
-	2016-08-20 11:33:59,568 (Reader 1  ) wait over
-	2016-08-20 11:33:59,569 (Reader 2  ) SELECT EXECUTED
-	2016-08-20 11:33:59,569 (Reader 2  ) results fetched
-	2016-08-20 11:33:59,569 (Reader 1  ) SELECT EXECUTED
-	2016-08-20 11:33:59,569 (Reader 1  ) results fetched
-	2016-08-20 11:34:00,570 (Writer 1  ) CHANGES COMMITTED
-	2016-08-20 11:34:00,648 (Writer 2  ) waiting to synchronize
-	2016-08-20 11:34:00,649 (Writer 2  ) PAUSING
-	2016-08-20 11:34:01,653 (Writer 2  ) CHANGES COMMITTED
+	2016-08-20 11:46:38,457 (Reader 1  ) waiting to synchronize
+	2016-08-20 11:46:38,457 (Reader 2  ) waiting to synchronize
+	2016-08-20 11:46:38,459 (Writer 1  ) waiting to synchronize
+	2016-08-20 11:46:39,461 (MainThread) setting ready
+	2016-08-20 11:46:39,461 (Reader 1  ) wait over
+	2016-08-20 11:46:39,461 (Reader 2  ) wait over
+	2016-08-20 11:46:39,461 (Writer 1  ) PAUSING
+	2016-08-20 11:46:39,463 (Reader 1  ) SELECT EXECUTED
+	2016-08-20 11:46:39,463 (Reader 2  ) SELECT EXECUTED
+	2016-08-20 11:46:39,463 (Reader 1  ) results fetched
+	2016-08-20 11:46:39,463 (Reader 2  ) results fetched
+	2016-08-20 11:46:40,466 (Writer 1  ) CHANGES COMMITTED
+	2016-08-20 11:46:40,545 (Writer 2  ) waiting to synchronize
+	2016-08-20 11:46:40,545 (Writer 2  ) PAUSING
+	2016-08-20 11:46:41,547 (Writer 2  ) CHANGES COMMITTED
 
 .. {{{end}}}
 
@@ -745,21 +747,21 @@ transaction is ongoing.
 
 	$ python3 sqlite3_isolation_levels.py IMMEDIATE
 	
-	2016-08-20 11:34:01,709 (Reader 1  ) waiting to synchronize
-	2016-08-20 11:34:01,710 (Reader 2  ) waiting to synchronize
-	2016-08-20 11:34:01,713 (Writer 1  ) waiting to synchronize
-	2016-08-20 11:34:02,714 (MainThread) setting ready
-	2016-08-20 11:34:02,714 (Reader 1  ) wait over
-	2016-08-20 11:34:02,714 (Writer 1  ) PAUSING
-	2016-08-20 11:34:02,714 (Reader 2  ) wait over
-	2016-08-20 11:34:02,715 (Reader 1  ) SELECT EXECUTED
-	2016-08-20 11:34:02,715 (Reader 1  ) results fetched
-	2016-08-20 11:34:02,715 (Reader 2  ) SELECT EXECUTED
-	2016-08-20 11:34:02,715 (Reader 2  ) results fetched
-	2016-08-20 11:34:03,717 (Writer 1  ) CHANGES COMMITTED
-	2016-08-20 11:34:03,806 (Writer 2  ) waiting to synchronize
-	2016-08-20 11:34:03,807 (Writer 2  ) PAUSING
-	2016-08-20 11:34:04,813 (Writer 2  ) CHANGES COMMITTED
+	2016-08-20 11:46:41,634 (Reader 1  ) waiting to synchronize
+	2016-08-20 11:46:41,635 (Reader 2  ) waiting to synchronize
+	2016-08-20 11:46:41,637 (Writer 1  ) waiting to synchronize
+	2016-08-20 11:46:42,637 (MainThread) setting ready
+	2016-08-20 11:46:42,637 (Reader 1  ) wait over
+	2016-08-20 11:46:42,637 (Writer 1  ) PAUSING
+	2016-08-20 11:46:42,637 (Reader 2  ) wait over
+	2016-08-20 11:46:42,637 (Reader 1  ) SELECT EXECUTED
+	2016-08-20 11:46:42,637 (Reader 2  ) SELECT EXECUTED
+	2016-08-20 11:46:42,638 (Reader 1  ) results fetched
+	2016-08-20 11:46:42,638 (Reader 2  ) results fetched
+	2016-08-20 11:46:43,639 (Writer 1  ) CHANGES COMMITTED
+	2016-08-20 11:46:43,725 (Writer 2  ) waiting to synchronize
+	2016-08-20 11:46:43,725 (Writer 2  ) PAUSING
+	2016-08-20 11:46:44,729 (Writer 2  ) CHANGES COMMITTED
 
 .. {{{end}}}
 
@@ -778,21 +780,21 @@ important, since each exclusive connection blocks all other users.
 
 	$ python3 sqlite3_isolation_levels.py EXCLUSIVE
 	
-	2016-08-20 11:34:04,872 (Reader 1  ) waiting to synchronize
-	2016-08-20 11:34:04,872 (Reader 2  ) waiting to synchronize
-	2016-08-20 11:34:04,876 (Writer 2  ) waiting to synchronize
-	2016-08-20 11:34:05,874 (MainThread) setting ready
-	2016-08-20 11:34:05,877 (Reader 1  ) wait over
-	2016-08-20 11:34:05,877 (Reader 2  ) wait over
-	2016-08-20 11:34:05,877 (Writer 2  ) PAUSING
-	2016-08-20 11:34:06,882 (Writer 2  ) CHANGES COMMITTED
-	2016-08-20 11:34:06,944 (Reader 2  ) SELECT EXECUTED
-	2016-08-20 11:34:06,945 (Reader 2  ) results fetched
-	2016-08-20 11:34:06,945 (Reader 1  ) SELECT EXECUTED
-	2016-08-20 11:34:06,945 (Reader 1  ) results fetched
-	2016-08-20 11:34:06,962 (Writer 1  ) waiting to synchronize
-	2016-08-20 11:34:06,963 (Writer 1  ) PAUSING
-	2016-08-20 11:34:07,965 (Writer 1  ) CHANGES COMMITTED
+	2016-08-20 11:46:44,824 (Reader 2  ) waiting to synchronize
+	2016-08-20 11:46:44,825 (Reader 1  ) waiting to synchronize
+	2016-08-20 11:46:44,827 (Writer 2  ) waiting to synchronize
+	2016-08-20 11:46:45,826 (MainThread) setting ready
+	2016-08-20 11:46:45,827 (Reader 2  ) wait over
+	2016-08-20 11:46:45,827 (Reader 1  ) wait over
+	2016-08-20 11:46:45,827 (Writer 2  ) PAUSING
+	2016-08-20 11:46:46,832 (Writer 2  ) CHANGES COMMITTED
+	2016-08-20 11:46:46,884 (Reader 2  ) SELECT EXECUTED
+	2016-08-20 11:46:46,884 (Reader 2  ) results fetched
+	2016-08-20 11:46:46,885 (Reader 1  ) SELECT EXECUTED
+	2016-08-20 11:46:46,885 (Reader 1  ) results fetched
+	2016-08-20 11:46:46,894 (Writer 1  ) waiting to synchronize
+	2016-08-20 11:46:46,894 (Writer 1  ) PAUSING
+	2016-08-20 11:46:47,896 (Writer 1  ) CHANGES COMMITTED
 
 .. {{{end}}}
 
@@ -828,19 +830,19 @@ either reader starts querying.
 
 	$ python3 sqlite3_autocommit.py
 	
-	2016-08-20 11:34:08,105 (Reader 1  ) waiting to synchronize
-	2016-08-20 11:34:08,106 (Reader 2  ) waiting to synchronize
-	2016-08-20 11:34:08,113 (Writer 2  ) waiting to synchronize
-	2016-08-20 11:34:08,114 (Writer 1  ) waiting to synchronize
-	2016-08-20 11:34:09,112 (MainThread) setting ready
-	2016-08-20 11:34:09,112 (Reader 1  ) wait over
-	2016-08-20 11:34:09,113 (Reader 1  ) SELECT EXECUTED
-	2016-08-20 11:34:09,113 (Reader 1  ) results fetched
-	2016-08-20 11:34:09,114 (Reader 2  ) wait over
-	2016-08-20 11:34:09,114 (Reader 2  ) SELECT EXECUTED
-	2016-08-20 11:34:09,114 (Reader 2  ) results fetched
-	2016-08-20 11:34:09,115 (Writer 2  ) PAUSING
-	2016-08-20 11:34:09,115 (Writer 1  ) PAUSING
+	2016-08-20 11:46:47,979 (Reader 2  ) waiting to synchronize
+	2016-08-20 11:46:47,980 (Reader 1  ) waiting to synchronize
+	2016-08-20 11:46:47,983 (Writer 1  ) waiting to synchronize
+	2016-08-20 11:46:47,986 (Writer 2  ) waiting to synchronize
+	2016-08-20 11:46:48,981 (MainThread) setting ready
+	2016-08-20 11:46:48,981 (Reader 2  ) wait over
+	2016-08-20 11:46:48,981 (Writer 1  ) PAUSING
+	2016-08-20 11:46:48,981 (Writer 2  ) PAUSING
+	2016-08-20 11:46:48,981 (Reader 1  ) wait over
+	2016-08-20 11:46:48,982 (Reader 2  ) SELECT EXECUTED
+	2016-08-20 11:46:48,982 (Reader 2  ) results fetched
+	2016-08-20 11:46:48,982 (Reader 1  ) SELECT EXECUTED
+	2016-08-20 11:46:48,982 (Reader 1  ) results fetched
 
 .. {{{end}}}
 
@@ -1200,8 +1202,9 @@ controlled as well.
     :mod:`shelve`
         Key-value store for saving arbitrary Python objects.
 
-    `SQLAlchemy <http://sqlalchemy.org/>`_
+    SQLAlchemy_
         A popular object-relational mapper that supports SQLite among
         many other relational databases.
 
 .. _SQLite: http://www.sqlite.org/
+.. _SQLAlchemy: http://sqlalchemy.org/

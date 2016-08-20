@@ -7,11 +7,8 @@
 """
 #end_pymotw_header
 
+import pickle
 import sqlite3
-try:
-    import cPickle as pickle
-except:
-    import pickle
 
 db_filename = 'todo.db'
 
@@ -68,5 +65,6 @@ with sqlite3.connect(
     # Query the database for the objects just saved
     cursor.execute("select id, data from obj")
     for obj_id, obj in cursor.fetchall():
-        print('Retrieved', obj_id, obj, type(obj))
+        print('Retrieved', obj_id, obj)
+        print('  with type', type(obj))
         print()

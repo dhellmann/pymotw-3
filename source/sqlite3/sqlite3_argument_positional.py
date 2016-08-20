@@ -16,13 +16,14 @@ project_name = sys.argv[1]
 with sqlite3.connect(db_filename) as conn:
     cursor = conn.cursor()
 
-    query = """select id, priority, details, status, deadline from task
-            where project = ?
-            """
+    query = """
+    select id, priority, details, status, deadline from task
+    where project = ?
+    """
 
     cursor.execute(query, (project_name,))
 
     for row in cursor.fetchall():
         task_id, priority, details, status, deadline = row
-        print('%2d {%d} %-20s [%-8s] (%s)' % (
+        print('%2d {%d} %-25s [%-8s] (%s)' % (
             task_id, priority, details, status, deadline))
