@@ -6,7 +6,6 @@
     :synopsis: Embedded relational database
 
 :Purpose: Implements an embedded relational database with SQL support.
-:Python Version: 2.5 and later
 
 
 The :mod:`sqlite3` module provides a DB-API 2.0 compliant interface to
@@ -29,8 +28,8 @@ This example looks for the database file before opening it with
 :func:`connect` so it knows when to create the schema for new
 databases.
 
-.. include:: sqlite3_createdb.py
-   :literal:
+.. literalinclude:: sqlite3_createdb.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Running the script twice shows that it creates the empty file if it
@@ -103,8 +102,8 @@ are:
 The :func:`executescript` method of the :class:`Connection` can be
 used to run the DDL instructions to create the schema.
 
-.. include:: sqlite3_create_schema.py
-   :literal:
+.. literalinclude:: sqlite3_create_schema.py
+   :caption:
    :start-after: #end_pymotw_header
 
 After the tables are created, a few :command:`insert` statements
@@ -143,8 +142,8 @@ Python program, create a :class:`Cursor` from a database connection.
 A cursor produces a consistent view of the data, and is the primary
 means of interacting with a transactional database system like SQLite.
 
-.. include:: sqlite3_select_tasks.py
-   :literal:
+.. literalinclude:: sqlite3_select_tasks.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Querying is a two step process.  First, run the query with the
@@ -170,8 +169,8 @@ columns included in the :command:`select` clause of the query.
 The results can be retrieved one at a time with :func:`fetchone`, or
 in fixed-size batches with :func:`fetchmany`.
 
-.. include:: sqlite3_select_variations.py
-   :literal:
+.. literalinclude:: sqlite3_select_variations.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The value passed to :func:`fetchmany` is the maximum number of items
@@ -206,8 +205,8 @@ value is a sequence of tuples containing the column name, type,
 display size, internal size, precision, scale, and a flag that says
 whether null values are accepted.
 
-.. include:: sqlite3_cursor_description.py
-   :literal:
+.. literalinclude:: sqlite3_cursor_description.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Because :mod:`sqlite3` does not enforce type or size constraints on
@@ -253,8 +252,8 @@ includes a :class:`Row` class intended to be used as a row factory.
 Column values can be accessed through :class:`Row` instances by using
 the column index or name.
 
-.. include:: sqlite3_row_factory.py
-   :literal:
+.. literalinclude:: sqlite3_row_factory.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This version of the ``sqlite3_select_variations.py`` example has been
@@ -311,8 +310,8 @@ Positional Parameters
 A question mark (``?``) denotes a positional argument, passed to
 :func:`execute` as a member of a tuple.
 
-.. include:: sqlite3_argument_positional.py
-   :literal:
+.. literalinclude:: sqlite3_argument_positional.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The command line argument is passed safely to the query as a
@@ -340,8 +339,8 @@ Use named parameters for more complex queries with a lot of parameters,
 or where some parameters are repeated multiple times within the query.
 Named parameters are prefixed with a colon (e.g., ``:param_name``).
 
-.. include:: sqlite3_argument_named.py
-   :literal:
+.. literalinclude:: sqlite3_argument_named.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Neither positional nor named parameters need to be quoted or escaped,
@@ -365,8 +364,8 @@ Query parameters can be used with :command:`select`,
 :command:`insert`, and :command:`update` statements.  They can appear
 in any part of the query where a literal value is legal.
 
-.. include:: sqlite3_argument_update.py
-   :literal:
+.. literalinclude:: sqlite3_argument_update.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This :command:`update` statement uses two named parameters.  The
@@ -399,8 +398,8 @@ apply loop optimizations.  This example program reads a list of tasks
 from a comma-separated value file using the :mod:`csv` module and
 loads them into the database.
 
-.. include:: sqlite3_load_csv.py
-   :literal:
+.. literalinclude:: sqlite3_load_csv.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The sample data file ``tasks.csv`` contains:
@@ -449,8 +448,8 @@ the database connection using the :data:`detect_types` flag.  Use
 :const:`PARSE_DECLTYPES` if the column was declared using the desired
 type when the table was defined.
 
-.. include:: sqlite3_date_types.py
-   :literal:
+.. literalinclude:: sqlite3_date_types.py
+   :caption:
    :start-after: #end_pymotw_header
 
 :mod:`sqlite3` provides converters for date and timestamp columns,
@@ -486,8 +485,8 @@ string from the database and returns a Python object.  Use
 :func:`register_adapter` to define an adapter function, and
 :func:`register_converter` for a converter function.
 
-.. include:: sqlite3_custom_type.py
-   :literal:
+.. literalinclude:: sqlite3_custom_type.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example uses :mod:`pickle` to save an object to a string that can
@@ -533,8 +532,8 @@ type of a real column, as shown earlier.  A type specifier can also be
 included in the :command:`select` clause of the query itself using the
 form ``as "name [type]"``.
 
-.. include:: sqlite3_custom_type_column.py
-   :literal:
+.. literalinclude:: sqlite3_custom_type_column.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Use the :data:`detect_types` flag :const:`PARSE_COLNAMES` when the
@@ -595,8 +594,8 @@ uses several connections to the database.  A new row is inserted with
 the first connection, and then two attempts are made to read it back
 using separate connections.
 
-.. include:: sqlite3_transaction_commit.py
-   :literal:
+.. literalinclude:: sqlite3_transaction_commit.py
+   :caption:
    :start-after: #end_pymotw_header
 
 When :func:`show_projects` is called before :data:`conn1` has been
@@ -638,8 +637,8 @@ Uncommitted changes can also be discarded entirely using
 usually called from different parts of the same ``try:except`` block,
 with errors triggering a rollback.
 
-.. include:: sqlite3_transaction_rollback.py
-   :literal:
+.. literalinclude:: sqlite3_transaction_rollback.py
+   :caption:
    :start-after: #end_pymotw_header
 
 After calling :func:`rollback`, the changes to the database are no
@@ -682,8 +681,8 @@ database.  Four threads are created.  Two threads write changes to the
 database by updating existing rows.  The other two threads attempt to
 read all of the rows from the ``task`` table.
 
-.. include:: sqlite3_isolation_levels.py
-   :literal:
+.. literalinclude:: sqlite3_isolation_levels.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The threads are synchronized using a :class:`Event` from the
@@ -863,8 +862,8 @@ The contents of an in-memory database can be saved using the
 returned by :func:`iterdump` produces a series of strings that
 together build SQL instructions to recreate the state of the database.
 
-.. include:: sqlite3_iterdump.py
-   :literal:
+.. literalinclude:: sqlite3_iterdump.py
+   :caption:
    :start-after: #end_pymotw_header
 
 :func:`iterdump` can also be used with databases saved to files, but
@@ -925,8 +924,8 @@ returning it from the query, and can be used to convert between
 different formats, perform calculations that would be clumsy in pure
 SQL, and reuse application code.
 
-.. include:: sqlite3_create_function.py
-   :literal:
+.. literalinclude:: sqlite3_create_function.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Functions are exposed using the :func:`create_function` method of the
@@ -998,8 +997,8 @@ the aggregate value.  This example implements an aggregator for the
 arithmetic *mode*.  It returns the value that appears most frequently
 in the input.
 
-.. include:: sqlite3_create_aggregate.py
-   :literal:
+.. literalinclude:: sqlite3_create_aggregate.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The aggregator class is registered with the :func:`create_aggregate`
@@ -1035,8 +1034,8 @@ data types that could not otherwise be sorted by SQLite internally.
 For example, a custom collation would be needed to sort the pickled
 objects saved in ``sqlite3_custom_type.py``.
 
-.. include:: sqlite3_create_collation.py
-   :literal:
+.. literalinclude:: sqlite3_create_collation.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The arguments to the collation function are byte strings, so they must
@@ -1075,8 +1074,8 @@ For historical reasons having to do with old versions of SQLite,
 :class:`Connection` objects cannot be shared between threads.  Each
 thread must create its own connection to the database.
 
-.. include:: sqlite3_threading.py
-   :literal:
+.. literalinclude:: sqlite3_threading.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Attempts to share a connection between threads result in an exception.
@@ -1115,8 +1114,8 @@ arguments are the name of the table, the name of the column, the
 location in the SQL where the access is occurring (main query, trigger,
 etc.), and ``None``.  
 
-.. include:: sqlite3_set_authorizer.py
-   :literal:
+.. literalinclude:: sqlite3_set_authorizer.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example uses :const:`SQLITE_IGNORE` to cause the strings from the
