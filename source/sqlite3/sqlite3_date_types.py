@@ -21,7 +21,7 @@ def show_deadline(conn):
     cursor.execute(sql)
     row = cursor.fetchone()
     for col in ['id', 'details', 'deadline']:
-        print('  %-8s  %-30r %s' %
+        print('  %-8s  %-26r %s' %
               (col, row[col], type(row[col])))
     return
 

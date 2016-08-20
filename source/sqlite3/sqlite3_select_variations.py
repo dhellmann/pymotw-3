@@ -20,7 +20,7 @@ with sqlite3.connect(db_filename) as conn:
     """)
     name, description, deadline = cursor.fetchone()
 
-    print('Project details for %s (%s) due %s' %
+    print('Project details for %s (%s)\n  due %s' %
           (description, name, deadline))
 
     cursor.execute("""

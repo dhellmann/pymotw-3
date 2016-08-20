@@ -42,3 +42,4 @@ dist/
 /source/tarfile/tarfile_compression.tar
 /source/tarfile/tarfile_compression.tar.bz2
 /source/tarfile/tarfile_compression.tar.gz
+/source/sqlite3/todo.db

@@ -7,11 +7,10 @@
 """
 #end_pymotw_header
 
+import functools
+import pickle
 import sqlite3
-try:
-    import cPickle as pickle
-except:
-    import pickle
+import sys
 
 db_filename = 'todo.db'
 
@@ -24,6 +23,7 @@ def converter_func(data):
     return pickle.loads(data)
 
 
+@functools.total_ordering
 class MyObj(object):
 
     def __init__(self, arg):
@@ -32,8 +32,11 @@ class MyObj(object):
     def __str__(self):
         return 'MyObj(%r)' % self.arg
 
-    def __cmp__(self, other):
-        return cmp(self.arg, other.arg)
+    def __eq__(self, other):
+        return self.arg == other.arg
+
+    def __gt__(self, other):
+        return self.arg > other.arg
 
 
 # Register the functions for manipulating the type.
@@ -45,20 +48,26 @@ def collation_func(a, b):
     a_obj = converter_func(a)
     b_obj = converter_func(b)
     print('collation_func(%s, %s)' % (a_obj, b_obj))
-    return cmp(a_obj, b_obj)
+    if a_obj == b_obj:
+        return 0
+    elif a_obj < b_obj:
+        return -1
+    else:
+        return 1
 
 
-with sqlite3.connect(db_filename,
-                     detect_types=sqlite3.PARSE_DECLTYPES,
-                     ) as conn:
+with sqlite3.connect(
+        db_filename,
+        detect_types=sqlite3.PARSE_DECLTYPES) as conn:
     # Define the collation
     conn.create_collation('unpickle', collation_func)
 
     # Clear the table and insert new values
     conn.execute('delete from obj')
-    conn.executemany('insert into obj (data) values (?)',
-                     [(MyObj(x),) for x in range(5, 0, -1)],
-                     )
+    conn.executemany(
+        'insert into obj (data) values (?)',
+        [(MyObj(x),) for x in range(5, 0, -1)],
+    )
 
     # Query the database for the objects just saved
     print('Querying:')

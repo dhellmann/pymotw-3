@@ -7,6 +7,7 @@
 """
 #end_pymotw_header
 
+import codecs
 import sqlite3
 
 db_filename = 'todo.db'
@@ -14,12 +15,12 @@ db_filename = 'todo.db'
 
 def encrypt(s):
     print('Encrypting %r' % s)
-    return s.encode('rot-13')
+    return codecs.encode(s, 'rot-13')
 
 
 def decrypt(s):
     print('Decrypting %r' % s)
-    return s.encode('rot-13')
+    return codecs.encode(s, 'rot-13')
 
 
 with sqlite3.connect(db_filename) as conn:
