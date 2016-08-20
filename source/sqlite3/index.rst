@@ -707,21 +707,21 @@ previous examples use deferred mode.
 
 	$ python3 sqlite3_isolation_levels.py DEFERRED
 	
-	2016-08-20 17:26:25,132 (Reader 2  ) waiting to synchronize
-	2016-08-20 17:26:25,132 (Reader 1  ) waiting to synchronize
-	2016-08-20 17:26:25,135 (Writer 1  ) waiting to synchronize
-	2016-08-20 17:26:26,133 (MainThread) setting ready
-	2016-08-20 17:26:26,133 (Reader 2  ) wait over
-	2016-08-20 17:26:26,134 (Writer 1  ) PAUSING
-	2016-08-20 17:26:26,134 (Reader 1  ) wait over
-	2016-08-20 17:26:26,134 (Reader 2  ) SELECT EXECUTED
-	2016-08-20 17:26:26,134 (Reader 2  ) results fetched
-	2016-08-20 17:26:26,134 (Reader 1  ) SELECT EXECUTED
-	2016-08-20 17:26:26,134 (Reader 1  ) results fetched
-	2016-08-20 17:26:27,136 (Writer 1  ) CHANGES COMMITTED
-	2016-08-20 17:26:27,200 (Writer 2  ) waiting to synchronize
-	2016-08-20 17:26:27,200 (Writer 2  ) PAUSING
-	2016-08-20 17:26:28,202 (Writer 2  ) CHANGES COMMITTED
+	2016-08-20 17:46:26,972 (Reader 1  ) waiting to synchronize
+	2016-08-20 17:46:26,972 (Reader 2  ) waiting to synchronize
+	2016-08-20 17:46:26,973 (Writer 1  ) waiting to synchronize
+	2016-08-20 17:46:27,977 (MainThread) setting ready
+	2016-08-20 17:46:27,979 (Reader 1  ) wait over
+	2016-08-20 17:46:27,979 (Writer 1  ) PAUSING
+	2016-08-20 17:46:27,979 (Reader 2  ) wait over
+	2016-08-20 17:46:27,981 (Reader 1  ) SELECT EXECUTED
+	2016-08-20 17:46:27,982 (Reader 1  ) results fetched
+	2016-08-20 17:46:27,982 (Reader 2  ) SELECT EXECUTED
+	2016-08-20 17:46:27,982 (Reader 2  ) results fetched
+	2016-08-20 17:46:28,985 (Writer 1  ) CHANGES COMMITTED
+	2016-08-20 17:46:29,043 (Writer 2  ) waiting to synchronize
+	2016-08-20 17:46:29,043 (Writer 2  ) PAUSING
+	2016-08-20 17:46:30,044 (Writer 2  ) CHANGES COMMITTED
 
 .. {{{end}}}
 
@@ -743,21 +743,21 @@ transaction is ongoing.
 
 	$ python3 sqlite3_isolation_levels.py IMMEDIATE
 	
-	2016-08-20 17:26:28,292 (Reader 1  ) waiting to synchronize
-	2016-08-20 17:26:28,293 (Reader 2  ) waiting to synchronize
-	2016-08-20 17:26:28,295 (Writer 2  ) waiting to synchronize
-	2016-08-20 17:26:29,294 (MainThread) setting ready
-	2016-08-20 17:26:29,294 (Reader 1  ) wait over
-	2016-08-20 17:26:29,294 (Reader 2  ) wait over
-	2016-08-20 17:26:29,294 (Writer 2  ) PAUSING
-	2016-08-20 17:26:29,295 (Reader 1  ) SELECT EXECUTED
-	2016-08-20 17:26:29,295 (Reader 2  ) SELECT EXECUTED
-	2016-08-20 17:26:29,295 (Reader 1  ) results fetched
-	2016-08-20 17:26:29,295 (Reader 2  ) results fetched
-	2016-08-20 17:26:30,297 (Writer 2  ) CHANGES COMMITTED
-	2016-08-20 17:26:30,348 (Writer 1  ) waiting to synchronize
-	2016-08-20 17:26:30,349 (Writer 1  ) PAUSING
-	2016-08-20 17:26:31,351 (Writer 1  ) CHANGES COMMITTED
+	2016-08-20 17:46:30,121 (Reader 1  ) waiting to synchronize
+	2016-08-20 17:46:30,121 (Reader 2  ) waiting to synchronize
+	2016-08-20 17:46:30,123 (Writer 1  ) waiting to synchronize
+	2016-08-20 17:46:31,122 (MainThread) setting ready
+	2016-08-20 17:46:31,122 (Reader 1  ) wait over
+	2016-08-20 17:46:31,122 (Reader 2  ) wait over
+	2016-08-20 17:46:31,122 (Writer 1  ) PAUSING
+	2016-08-20 17:46:31,124 (Reader 1  ) SELECT EXECUTED
+	2016-08-20 17:46:31,124 (Reader 2  ) SELECT EXECUTED
+	2016-08-20 17:46:31,125 (Reader 2  ) results fetched
+	2016-08-20 17:46:31,125 (Reader 1  ) results fetched
+	2016-08-20 17:46:32,128 (Writer 1  ) CHANGES COMMITTED
+	2016-08-20 17:46:32,199 (Writer 2  ) waiting to synchronize
+	2016-08-20 17:46:32,199 (Writer 2  ) PAUSING
+	2016-08-20 17:46:33,200 (Writer 2  ) CHANGES COMMITTED
 
 .. {{{end}}}
 
@@ -776,21 +776,21 @@ important, since each exclusive connection blocks all other users.
 
 	$ python3 sqlite3_isolation_levels.py EXCLUSIVE
 	
-	2016-08-20 17:26:31,427 (Reader 1  ) waiting to synchronize
-	2016-08-20 17:26:31,427 (Reader 2  ) waiting to synchronize
-	2016-08-20 17:26:31,430 (Writer 1  ) waiting to synchronize
-	2016-08-20 17:26:32,428 (MainThread) setting ready
-	2016-08-20 17:26:32,428 (Reader 1  ) wait over
-	2016-08-20 17:26:32,428 (Writer 1  ) PAUSING
-	2016-08-20 17:26:32,428 (Reader 2  ) wait over
-	2016-08-20 17:26:33,429 (Writer 1  ) CHANGES COMMITTED
-	2016-08-20 17:26:33,480 (Reader 2  ) SELECT EXECUTED
-	2016-08-20 17:26:33,480 (Reader 2  ) results fetched
-	2016-08-20 17:26:33,488 (Writer 2  ) waiting to synchronize
-	2016-08-20 17:26:33,488 (Writer 2  ) PAUSING
-	2016-08-20 17:26:34,490 (Writer 2  ) CHANGES COMMITTED
-	2016-08-20 17:26:34,509 (Reader 1  ) SELECT EXECUTED
-	2016-08-20 17:26:34,509 (Reader 1  ) results fetched
+	2016-08-20 17:46:33,320 (Reader 1  ) waiting to synchronize
+	2016-08-20 17:46:33,320 (Reader 2  ) waiting to synchronize
+	2016-08-20 17:46:33,324 (Writer 2  ) waiting to synchronize
+	2016-08-20 17:46:34,323 (MainThread) setting ready
+	2016-08-20 17:46:34,323 (Reader 1  ) wait over
+	2016-08-20 17:46:34,323 (Writer 2  ) PAUSING
+	2016-08-20 17:46:34,323 (Reader 2  ) wait over
+	2016-08-20 17:46:35,327 (Writer 2  ) CHANGES COMMITTED
+	2016-08-20 17:46:35,368 (Reader 2  ) SELECT EXECUTED
+	2016-08-20 17:46:35,368 (Reader 2  ) results fetched
+	2016-08-20 17:46:35,369 (Reader 1  ) SELECT EXECUTED
+	2016-08-20 17:46:35,369 (Reader 1  ) results fetched
+	2016-08-20 17:46:35,385 (Writer 1  ) waiting to synchronize
+	2016-08-20 17:46:35,385 (Writer 1  ) PAUSING
+	2016-08-20 17:46:36,386 (Writer 1  ) CHANGES COMMITTED
 
 .. {{{end}}}
 
@@ -826,19 +826,19 @@ either reader starts querying.
 
 	$ python3 sqlite3_autocommit.py
 	
-	2016-08-20 17:26:34,573 (Reader 1  ) waiting to synchronize
-	2016-08-20 17:26:34,573 (Reader 2  ) waiting to synchronize
-	2016-08-20 17:26:34,578 (Writer 1  ) waiting to synchronize
-	2016-08-20 17:26:34,579 (Writer 2  ) waiting to synchronize
-	2016-08-20 17:26:35,573 (MainThread) setting ready
-	2016-08-20 17:26:35,573 (Reader 1  ) wait over
-	2016-08-20 17:26:35,573 (Reader 2  ) wait over
-	2016-08-20 17:26:35,573 (Writer 2  ) PAUSING
-	2016-08-20 17:26:35,573 (Writer 1  ) PAUSING
-	2016-08-20 17:26:35,574 (Reader 1  ) SELECT EXECUTED
-	2016-08-20 17:26:35,574 (Reader 1  ) results fetched
-	2016-08-20 17:26:35,575 (Reader 2  ) SELECT EXECUTED
-	2016-08-20 17:26:35,575 (Reader 2  ) results fetched
+	2016-08-20 17:46:36,451 (Reader 1  ) waiting to synchronize
+	2016-08-20 17:46:36,451 (Reader 2  ) waiting to synchronize
+	2016-08-20 17:46:36,455 (Writer 1  ) waiting to synchronize
+	2016-08-20 17:46:36,456 (Writer 2  ) waiting to synchronize
+	2016-08-20 17:46:37,452 (MainThread) setting ready
+	2016-08-20 17:46:37,452 (Reader 1  ) wait over
+	2016-08-20 17:46:37,452 (Writer 2  ) PAUSING
+	2016-08-20 17:46:37,452 (Reader 2  ) wait over
+	2016-08-20 17:46:37,453 (Writer 1  ) PAUSING
+	2016-08-20 17:46:37,453 (Reader 1  ) SELECT EXECUTED
+	2016-08-20 17:46:37,454 (Reader 2  ) SELECT EXECUTED
+	2016-08-20 17:46:37,454 (Reader 1  ) results fetched
+	2016-08-20 17:46:37,454 (Reader 2  ) results fetched
 
 .. {{{end}}}
 
@@ -977,6 +977,51 @@ function takes, and the Python function to expose.
 	(4, 'finish reviewing markup')
 	(5, 'revise chapter intros')
 	(6, 'subtitle')
+	
+	Decrypting...
+	Decrypting 'jevgr nobhg fryrpg'
+	Decrypting 'jevgr nobhg enaqbz'
+	Decrypting 'jevgr nobhg fdyvgr3'
+	Decrypting 'svavfu erivrjvat znexhc'
+	Decrypting 'erivfr puncgre vagebf'
+	Decrypting 'fhogvgyr'
+
+.. {{{end}}}
+
+Querying with Regular Expressions
+=================================
+
+Sqlite supports several special user functions that are associated
+with SQL syntax. For example, a function ``regexp`` can be used in a
+query to check if a column's string value matches a regular expression
+using the following syntax.
+
+.. code-block:: sql
+
+   SELECT * FROM table
+   WHERE column REGEXP '.*pattern.*'
+
+This examples associates a function with :func:`regexp` to test values
+using Python's :mod:`re` module.
+
+.. literalinclude:: sqlite3_regex.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The output is all of the tasks where the details column matches the
+pattern.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'sqlite3_regex.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 sqlite3_regex.py
+	
+	 1 [9] write about select        [done    ] (2016-04-25)
+	 2 [9] write about random        [done    ] (2016-08-22)
+	 3 [9] write about sqlite3       [active  ] (2017-07-31)
 
 .. {{{end}}}
 

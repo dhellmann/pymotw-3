@@ -51,3 +51,7 @@ with sqlite3.connect(db_filename) as conn:
     cursor.execute(query)
     for row in cursor.fetchall():
         print(row)
+
+    print('\nDecrypting...')
+    query = "update task set details = decrypt(details)"
+    cursor.execute(query)
