@@ -18,6 +18,6 @@ with sqlite3.connect(db_filename) as conn:
     select * from task where project = 'pymotw'
     """)
 
-    print 'Task table has these columns:'
+    print('Task table has these columns:')
     for colinfo in cursor.description:
-        print colinfo
+        print(colinfo)

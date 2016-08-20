@@ -11,12 +11,14 @@ import sqlite3
 
 db_filename = 'todo.db'
 
+
 def encrypt(s):
-    print 'Encrypting %r' % s
+    print('Encrypting %r' % s)
     return s.encode('rot-13')
 
+
 def decrypt(s):
-    print 'Decrypting %r' % s
+    print('Decrypting %r' % s)
     return s.encode('rot-13')
 
 
@@ -27,24 +29,24 @@ with sqlite3.connect(db_filename) as conn:
     cursor = conn.cursor()
 
     # Raw values
-    print 'Original values:'
+    print('Original values:')
     query = "select id, details from task"
     cursor.execute(query)
     for row in cursor.fetchall():
-        print row
+        print(row)
 
-    print '\nEncrypting...'
+    print('\nEncrypting...')
     query = "update task set details = encrypt(details)"
     cursor.execute(query)
-    
-    print '\nRaw encrypted values:'
+
+    print('\nRaw encrypted values:')
     query = "select id, details from task"
     cursor.execute(query)
     for row in cursor.fetchall():
-        print row
-    
-    print '\nDecrypting in query...'
+        print(row)
+
+    print('\nDecrypting in query...')
     query = "select id, decrypt(details) from task"
     cursor.execute(query)
     for row in cursor.fetchall():
-        print row
+        print(row)

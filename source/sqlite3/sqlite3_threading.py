@@ -13,22 +13,21 @@ import threading
 import time
 
 db_filename = 'todo.db'
-isolation_level = None # autocommit mode
+isolation_level = None  # autocommit mode
+
 
 def reader(conn):
-    my_name = threading.currentThread().name
-    print 'Starting thread'
+    print('Starting thread')
     try:
         cursor = conn.cursor()
         cursor.execute('select * from task')
-        results = cursor.fetchall()
-        print 'results fetched'
-    except Exception, err:
-        print 'ERROR:', err
-    return
+        cursor.fetchall()
+        print('results fetched')
+    except Exception as err:
+        print('ERROR:', err)
+
 
 if __name__ == '__main__':
-
     with sqlite3.connect(db_filename,
                          isolation_level=isolation_level,
                          ) as conn:

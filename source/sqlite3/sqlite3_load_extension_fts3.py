@@ -17,7 +17,7 @@ with sqlite3.connect(db_filename) as conn:
     conn.enable_load_extension(True)
     conn.load_extension('fts3.so')
     conn.enable_load_extension(False)
-    
+
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -26,9 +26,13 @@ with sqlite3.connect(db_filename) as conn:
     """)
 
     cursor.execute(
-        "select id, details from searchable_task where searchable_task match ?",
+        """
+        select id, details from searchable_task
+        where searchable_task match ?
+        """,
         ('write',),
-        )
+    )
     for row in cursor.fetchall():
         task_id, priority, details, status, deadline = row
-        print '%2d {%d} %-20s [%-8s] (%s)' % (task_id, priority, details, status, deadline)
+        print('%2d {%d} %-20s [%-8s] (%s)' %
+              (task_id, priority, details, status, deadline))

@@ -20,16 +20,16 @@ with sqlite3.connect(db_filename) as conn:
     """)
     name, description, deadline = cursor.fetchone()
 
-    print 'Project details for %s (%s) due %s' % \
-        (description, name, deadline)
+    print('Project details for %s (%s) due %s' %
+          (description, name, deadline))
 
     cursor.execute("""
     select id, priority, details, status, deadline from task
     where project = 'pymotw' order by deadline
     """)
 
-    print '\nNext 5 tasks:'
+    print('\nNext 5 tasks:')
     for row in cursor.fetchmany(5):
         task_id, priority, details, status, deadline = row
-        print '%2d {%d} %-25s [%-8s] (%s)' % \
-            (task_id, priority, details, status, deadline)
+        print('%2d {%d} %-25s [%-8s] (%s)' %
+              (task_id, priority, details, status, deadline))

@@ -21,9 +21,9 @@ with sqlite3.connect(db_filename) as conn:
             order by deadline, priority
             """
 
-    cursor.execute(query, {'project_name':project_name})
+    cursor.execute(query, {'project_name': project_name})
 
     for row in cursor.fetchall():
         task_id, priority, details, status, deadline = row
-        print '%2d {%d} %-25s [%-8s] (%s)' % (\
-            task_id, priority, details, status, deadline)
+        print('%2d {%d} %-25s [%-8s] (%s)' % (
+            task_id, priority, details, status, deadline))
