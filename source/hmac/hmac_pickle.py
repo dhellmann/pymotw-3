@@ -5,17 +5,19 @@
 
 import hashlib
 import hmac
+import io
 import pickle
 import pprint
-from StringIO import StringIO
 
 
 def make_digest(message):
     "Return a digest for the message."
-    hash = hmac.new('secret-shared-key-goes-here',
-                    message,
-                    hashlib.sha1)
-    return hash.hexdigest()
+    hash = hmac.new(
+        b'secret-shared-key-goes-here',
+        message,
+        hashlib.sha1,
+    )
+    return hash.hexdigest().encode('utf-8')
 
 
 class SimpleObject(object):
@@ -29,39 +31,40 @@ class SimpleObject(object):
         return self.name
 
 
-# Simulate a writable socket or pipe with StringIO
-out_s = StringIO()
+# Simulate a writable socket or pipe with a buffer
+out_s = io.BytesIO()
 
 # Write a valid object to the stream:
 #  digest\nlength\npickle
 o = SimpleObject('digest matches')
 pickled_data = pickle.dumps(o)
 digest = make_digest(pickled_data)
-header = '%s %s' % (digest, len(pickled_data))
-print('WRITING:', header)
-out_s.write(header + '\n')
+header = b'%s %d\n' % (digest, len(pickled_data))
+print('WRITING: {}'.format(header))
+out_s.write(header)
 out_s.write(pickled_data)
 
 # Write an invalid object to the stream
 o = SimpleObject('digest does not match')
 pickled_data = pickle.dumps(o)
-digest = make_digest('not the pickled data at all')
-header = '%s %s' % (digest, len(pickled_data))
-print('\nWRITING:', header)
-out_s.write(header + '\n')
+digest = make_digest(b'not the pickled data at all')
+header = b'%s %d\n' % (digest, len(pickled_data))
+print('\nWRITING: {}'.format(header))
+out_s.write(header)
 out_s.write(pickled_data)
 
 out_s.flush()
 
 
-# Simulate a readable socket or pipe with StringIO
-in_s = StringIO(out_s.getvalue())
+# Simulate a readable socket or pipe with a buffer
+in_s = io.BytesIO(out_s.getvalue())
 
 # Read the data
 while True:
     first_line = in_s.readline()
     if not first_line:
         break
+    first_line = first_line.decode('utf-8')
     incoming_digest, incoming_length = first_line.split(' ')
     incoming_length = int(incoming_length)
     print('\nREAD:', incoming_digest, incoming_length)

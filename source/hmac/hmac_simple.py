@@ -5,7 +5,7 @@
 
 import hmac
 
-digest_maker = hmac.new('secret-shared-key-goes-here')
+digest_maker = hmac.new(b'secret-shared-key-goes-here')
 
 with open('lorem.txt', 'rb') as f:
     while True:

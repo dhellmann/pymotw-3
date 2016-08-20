@@ -38,10 +38,10 @@ signature for it.
 .. cog.out(run_script(cog.inFile, 'hmac_simple.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python hmac_simple.py
-
+	$ python3 hmac_simple.py
+	
 	4bcb287e284f8c21e87e14ba2dc40b16
 
 .. {{{end}}}
@@ -73,11 +73,11 @@ substitutes :const:`hashlib.sha1`.
 .. cog.out(run_script(cog.inFile, 'hmac_sha.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python hmac_sha.py
-
-	b9e8c6737883a9d3a258a0b5090559b7e8e2efcb
+	$ python3 hmac_sha.py
+	
+	b788fe34586df5078ef94ea503ab1fc99e086314
 
 .. {{{end}}}
 
@@ -103,12 +103,11 @@ formatting-sensitive contexts.
 .. cog.out(run_script(cog.inFile, 'hmac_base64.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python hmac_base64.py
-
-	olW2DoXHGJEKGU0aE9fOwSVE/o4=
+	$ python3 hmac_base64.py
 	
+	b'olW2DoXHGJEKGU0aE9fOwSVE/o4=\n'
 
 .. {{{end}}}
 
@@ -180,20 +179,20 @@ The output shows that the first object is verified and the second is deemed
 .. cog.out(run_script(cog.inFile, 'hmac_pickle.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python hmac_pickle.py
-
-	WRITING: 387632cfa3d18cd19bdfe72b61ac395dfcdc87c9 124
+	$ python3 hmac_pickle.py
 	
-	WRITING: b01b209e28d7e053408ebe23b90fe5c33bc6a0ec 131
+	WRITING: b'f49cd2bf7922911129e8df37f76f95485a0b52ca 69\n'
 	
-	READ: 387632cfa3d18cd19bdfe72b61ac395dfcdc87c9 124
-	ACTUAL: 387632cfa3d18cd19bdfe72b61ac395dfcdc87c9
-	OK: digest matches
+	WRITING: b'b01b209e28d7e053408ebe23b90fe5c33bc6a0ec 76\n'
 	
-	READ: b01b209e28d7e053408ebe23b90fe5c33bc6a0ec 131
-	ACTUAL: dec53ca1ad3f4b657dd81d514f17f735628b6828
+	READ: f49cd2bf7922911129e8df37f76f95485a0b52ca 69
+	ACTUAL: b'f49cd2bf7922911129e8df37f76f95485a0b52ca'
+	WARNING: Data corruption
+	
+	READ: b01b209e28d7e053408ebe23b90fe5c33bc6a0ec 76
+	ACTUAL: b'2ab061f9a9f749b8dd6f175bf57292e02e95c119'
 	WARNING: Data corruption
 
 .. {{{end}}}

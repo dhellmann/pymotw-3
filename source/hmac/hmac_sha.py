@@ -6,9 +6,11 @@
 import hmac
 import hashlib
 
-digest_maker = hmac.new('secret-shared-key-goes-here',
-                        '',
-                        hashlib.sha1)
+digest_maker = hmac.new(
+    b'secret-shared-key-goes-here',
+    b'',
+    hashlib.sha1,
+)
 
 with open('hmac_sha.py', 'rb') as f:
     while True:
