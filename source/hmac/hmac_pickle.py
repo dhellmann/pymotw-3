@@ -20,7 +20,7 @@ def make_digest(message):
     return hash.hexdigest().encode('utf-8')
 
 
-class SimpleObject(object):
+class SimpleObject:
     """Demonstrate checking digests before unpickling.
     """
 
