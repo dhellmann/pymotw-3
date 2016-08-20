@@ -348,10 +348,11 @@ def common_cleanups(options):
     sh("sed -i '' -e 's/()`/`/g' source/%s/*.rst" % module)
 
 @task
-def print_cleanups(options):
+def manual_review_cleanups(options):
     module = _get_module(options)
     sh("sed -i '' -e 's|print \(.*\)|print(\\1)|g' source/%s/*.py" % module)
     sh("sed -i '' -e 's|print$|print()|g' source/%s/*.py" % module)
+    sh("sed -i '' -e 's|(object):|:|g' source/%s/*.py" % module)
 
 
 @task
@@ -389,7 +390,7 @@ def migrate(options):
     common_cleanups(options)
     sh('git add ' + dest)
     sh('git commit -m "%s: common cleanups"' % module)
-    print_cleanups(options)
+    manual_review_cleanups(options)
 
 
 def get_post_title(filename):
