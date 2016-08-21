@@ -51,18 +51,20 @@ OS X:
 .. cog.out(run_script(cog.inFile, 'platform_python.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python platform_python.py
+	$ python3 platform_python.py
 	
-	Version      : 2.7.0
-	Version tuple: ('2', '7', '0')
-	Compiler     : GCC 4.0.1 (Apple Inc. build 5493)
-	Build        : ('r27:82508', 'Jul  3 2010 21:12:11')
+	Version      : 3.5.2
+	Version tuple: ('3', '5', '2')
+	Compiler     : GCC 4.2.1 (Apple Inc. build 5666) (dot 3)
+	Build        : ('v3.5.2:4def2a2901a5', 'Jun 26 2016 10:47:25')
 
 .. {{{end}}}
 
-Linux::
+Linux:
+
+.. code-block:: none
 
     $ python platform_python.py 
 
@@ -101,17 +103,19 @@ OS X:
 .. cog.out(run_script(cog.inFile, 'platform_platform.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python platform_platform.py
+	$ python3 platform_platform.py
 	
-	Normal : Darwin-10.5.0-i386-64bit
-	Aliased: Darwin-10.5.0-i386-64bit
-	Terse  : Darwin-10.5.0
+	Normal : Darwin-15.6.0-x86_64-i386-64bit
+	Aliased: Darwin-15.6.0-x86_64-i386-64bit
+	Terse  : Darwin-15.6.0
 
 .. {{{end}}}
 
-Linux::
+Linux:
+
+.. code-block:: none
 
     $ python platform_platform.py 
 
@@ -163,25 +167,28 @@ OS X:
 ..                    line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python platform_os_info.py
+	$ python3 platform_os_info.py
 	
-	uname: ('Darwin', 'farnsworth.local', '10.5.0', 'Darwin Kernel
-	Version 10.5.0: Fri Nov  5 23:20:39 PDT 2010;
-	root:xnu-1504.9.17~1/RELEASE_I386', 'i386', 'i386')
+	uname: uname_result(system='Darwin', node='hubert.local',
+	release='15.6.0', version='Darwin Kernel Version 15.6.0: Thu Jun
+	23 18:25:34 PDT 2016; root:xnu-3248.60.10~1/RELEASE_X86_64',
+	machine='x86_64', processor='i386')
 	
 	system   : Darwin
-	node     : farnsworth.local
-	release  : 10.5.0
-	version  : Darwin Kernel Version 10.5.0: Fri Nov  5 23:20:39 PDT
-	2010; root:xnu-1504.9.17~1/RELEASE_I386
-	machine  : i386
+	node     : hubert.local
+	release  : 15.6.0
+	version  : Darwin Kernel Version 15.6.0: Thu Jun 23 18:25:34 PDT
+	2016; root:xnu-3248.60.10~1/RELEASE_X86_64
+	machine  : x86_64
 	processor: i386
 
 .. {{{end}}}
 
-Linux::
+Linux:
+
+.. code-block:: none
 
     $ python platform_os_info.py 
 
@@ -229,16 +236,18 @@ OS X:
 .. cog.out(run_script(cog.inFile, 'platform_architecture.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python platform_architecture.py
+	$ python3 platform_architecture.py
 	
 	interpreter: ('64bit', '')
 	/bin/ls    : ('64bit', '')
 
 .. {{{end}}}
 
-Linux::
+Linux:
+
+.. code-block:: none
 
     $ python platform_architecture.py 
 
