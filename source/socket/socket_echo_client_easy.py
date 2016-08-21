@@ -38,7 +38,7 @@ try:
 
     # Send data
     message = 'This is the message.  It will be repeated.'
-    print('sending "%s"' % message)
+    print('sending {!r}'.format(message))
     sock.sendall(message)
 
     amount_received = 0
@@ -47,7 +47,7 @@ try:
     while amount_received < amount_expected:
         data = sock.recv(16)
         amount_received += len(data)
-        print('received "%s"' % data)
+        print('received {!r}'.format(data))
 
 finally:
     print('closing socket')

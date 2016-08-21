@@ -25,7 +25,7 @@ while True:
     connection, client_address = sock.accept()
     try:
         data = connection.recv(unpacker.size)
-        print('received %r' % binascii.hexlify(data))
+        print('received {!r}'.format(binascii.hexlify(data)))
 
         unpacked_data = unpacker.unpack(data)
         print('unpacked:', unpacked_data)

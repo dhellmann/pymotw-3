@@ -25,7 +25,7 @@ print('values =', values)
 
 try:
     # Send data
-    print('sending %r' % binascii.hexlify(packed_data))
+    print('sending {!r}'.format(binascii.hexlify(packed_data)))
     sock.sendall(packed_data)
 finally:
     print('closing socket')

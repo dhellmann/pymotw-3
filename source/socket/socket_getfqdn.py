@@ -10,4 +10,4 @@
 import socket
 
 for host in ['apu', 'pymotw.com']:
-    print('%6s : %s' % (host, socket.getfqdn(host)))
+    print('{:>6} : {}'.format(host, socket.getfqdn(host)))

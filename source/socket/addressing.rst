@@ -378,8 +378,8 @@ Without the flag, the canonical name value is left empty.
 	Family        : AF_INET
 	Type          : SOCK_STREAM
 	Protocol      : IPPROTO_TCP
-	Canonical name: pymotw.com
-	Socket address: ('66.33.211.242', 80)
+	Canonical name: prod.python.map.fastlylb.net
+	Socket address: ('151.101.32.223', 80)
 	
 
 .. {{{end}}}

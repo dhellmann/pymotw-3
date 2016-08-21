@@ -34,8 +34,8 @@ while True:
     print('\nwaiting to receive message')
     data, address = sock.recvfrom(1024)
 
-    print('received %s bytes from %s' %
-          (len(data), address))
+    print('received {} bytes from {}'.format(
+        len(data), address))
     print(data)
 
     print('sending acknowledgement to', address)

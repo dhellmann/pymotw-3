@@ -18,6 +18,6 @@ HOSTS = [
 
 for host in HOSTS:
     try:
-        print('%s : %s' % (host, socket.gethostbyname(host)))
+        print('{} : {}'.format(host, socket.gethostbyname(host)))
     except socket.error as msg:
-        print('%s : %s' % (host, msg))
+        print('{} : {}'.format(host, msg))

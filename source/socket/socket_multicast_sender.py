@@ -29,7 +29,7 @@ sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, ttl)
 try:
 
     # Send data to the multicast group
-    print('sending "%s"' % message)
+    print('sending {!r}'.format(message))
     sent = sock.sendto(message, multicast_group)
 
     # Look for responses from all recipients
@@ -41,8 +41,8 @@ try:
             print('timed out, no more responses')
             break
         else:
-            print('received "%s" from %s' %
-                  (data, server))
+            print('received {!r} from {}'.format(
+                data, server))
 
 finally:
     print('closing socket')

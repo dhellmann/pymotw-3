@@ -25,4 +25,4 @@ URLS = [
 for url in URLS:
     parsed_url = urlparse(url)
     port = socket.getservbyname(parsed_url.scheme)
-    print('%6s : %s' % (parsed_url.scheme, port))
+    print('{:>6} : {}'.format(parsed_url.scheme, port))
