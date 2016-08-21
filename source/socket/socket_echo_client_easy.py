@@ -37,7 +37,7 @@ print()
 try:
 
     # Send data
-    message = 'This is the message.  It will be repeated.'
+    message = b'This is the message.  It will be repeated.'
     print('sending {!r}'.format(message))
     sock.sendall(message)
 

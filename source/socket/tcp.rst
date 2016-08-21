@@ -76,39 +76,34 @@ they can communicate with each other.  The server output shows the
 incoming connection and data, as well as the response sent back to
 the client.
 
-::
+.. code-block:: none
 
-    $ python ./socket_echo_server.py 
-
-    starting up on localhost port 10000
-    waiting for a connection
-    connection from ('127.0.0.1', 52186)
-    received "This is the mess"
-    sending data back to the client
-    received "age.  It will be"
-    sending data back to the client
-    received " repeated."
-    sending data back to the client
-    received ""
-    no data from ('127.0.0.1', 52186)
-    waiting for a connection
+   $ python3 socket_echo_server.py
+   starting up on localhost port 10000
+   waiting for a connection
+   connection from ('127.0.0.1', 65141)
+   received b'This is the mess'
+   sending data back to the client
+   received b'age.  It will be'
+   sending data back to the client
+   received b' repeated.'
+   sending data back to the client
+   received b''
+   no data from ('127.0.0.1', 65141)
+   waiting for a connection
 
 The client output shows the outgoing message and the response from the
 server.
 
-::
+.. code-block:: none
 
-    $ python socket_echo_client.py 
-
-    connecting to localhost port 10000
-    sending "This is the message.  It will be repeated."
-    received "This is the mess"
-    received "age.  It will be"
-    received " repeated."
-    closing socket
-
-    $
-
+   $ python3 socket_echo_client.py
+   connecting to localhost port 10000
+   sending b'This is the message.  It will be repeated.'
+   received b'This is the mess'
+   received b'age.  It will be'
+   received b' repeated.'
+   closing socket
 
 Easy Client Connections
 =======================
@@ -128,19 +123,18 @@ first configuration that creates a successful connection.  The
 :attr:`family`, :attr:`type`, and :attr:`proto` attributes can be
 examined to determine the type of :class:`socket` being returned.
 
-::
+.. code-block:: none
 
-    $ python socket_echo_client_easy.py 
-    
-    Family  : AF_INET
-    Type    : SOCK_STREAM
-    Protocol: IPPROTO_TCP
-    
-    sending "This is the message.  It will be repeated."
-    received "This is the mess"
-    received "age.  It will be"
-    received " repeated."
-    closing socket
+   $ python3 socket_echo_client_easy.py
+   Family  : AF_INET
+   Type    : SOCK_STREAM
+   Protocol: IPPROTO_TCP
+   
+   sending b'This is the message.  It will be repeated.'
+   received b'This is the mess'
+   received b'age.  It will be'
+   received b' repeated.'
+   closing socket
 
 Choosing an Address for Listening
 =================================
@@ -164,57 +158,57 @@ server can be tested.
    :caption:
    :start-after: #end_pymotw_header
 
-After starting the server with the argument
-``farnsworth.hellfly.net``, the :command:`netstat` command shows it
-listening on the address for the named host.
+After starting the server with the argument ``hubert``, the
+:command:`netstat` command shows it listening on the address for the
+named host.
 
-::
+.. code-block:: none
 
-    $ host farnsworth.hellfly.net
+    $ host hubert.hellfly.net
 
-    farnsworth.hellfly.net has address 192.168.1.17
+    hubert.hellfly.net has address 10.9.0.6
     
-    $ netstat -an
+    $ netstat -an | grep 10000
 
     Active Internet connections (including servers)
-    Proto Recv-Q Send-Q  Local Address       Foreign Address   (state)
+    Proto Recv-Q Send-Q  Local Address          Foreign Address        (state)
     ...
-    tcp4       0      0  192.168.1.17.10000  *.*               LISTEN
+    tcp4       0      0  10.9.0.6.10000         *.*                    LISTEN
     ...
-
 
 Running the client on another host, passing
-``farnsworth.hellfly.net`` as the host where the server is running,
+``hubert.hellfly.net`` as the host where the server is running,
 produces:
 
-::
+.. code-block:: none
 
     $ hostname
 
-    homer
+    apu
     
-    $ python socket_echo_client_explicit.py farnsworth.hellfly.net
-
-    connecting to farnsworth.hellfly.net port 10000
-    sending "This is the message.  It will be repeated."
-    received "This is the mess"
-    received "age.  It will be"
-    received " repeated."
+    $ python3.5 ./socket_echo_client_explicit.py hubert.hellfly.net
+    connecting to hubert.hellfly.net port 10000
+    sending b'This is the message.  It will be repeated.'
+    received b'This is the mess'
+    received b'age.  It will be'
+    received b' repeated.'
 
 And the server output is:
 
-::
+.. code-block:: none
 
-    $ python ./socket_echo_server_explicit.py farnsworth.hellfly.net
-
-    starting up on farnsworth.hellfly.net port 10000
-    waiting for a connection
-    client connected: ('192.168.1.8', 57471)
-    received "This is the mess"
-    received "age.  It will be"
-    received " repeated."
-    received ""
-    waiting for a connection
+   $ python3 socket_echo_server_explicit.py hubert.hellfly.net
+   starting up on hubert.hellfly.net port 10000
+   waiting for a connection
+   client connected: ('10.9.0.10', 33139)
+   received b''
+   waiting for a connection
+   client connected: ('10.9.0.10', 33140)
+   received b'This is the mess'
+   received b'age.  It will be'
+   received b' repeated.'
+   received b''
+   waiting for a connection
 
 Many servers have more than one network interface, and therefore more
 than one IP address.  Rather than running separate copies of a service
