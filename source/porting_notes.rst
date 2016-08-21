@@ -763,6 +763,25 @@ The ``print`` command alias has been removed so that it does not
 shadow the ``print()`` function (:pyissue:`18764`). The ``p`` shortcut
 is retained.
 
+.. _porting-platform:
+
+platform
+--------
+
+.. index::
+   pair: porting; platform
+
+:func:`platform.popen` has been deprecated. Use :func:`subprocess.popen`
+instead (:pyissue:`11377`).
+
+:func:`platform.uname` now returns a :class:`namedtuple`.
+
+Because Linux distributions do not have a consistent way to describe
+themselves, the functions for getting the descriptions
+(:func:`platform.dist` and :func:`platform.linux_distribution`) are
+deprecated and scheduled to be removed in Python 3.7
+(:pyissue:`1322`).
+
 .. _porting-pickle:
 
 pickle

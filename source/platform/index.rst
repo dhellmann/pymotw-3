@@ -264,3 +264,5 @@ Linux:
 .. seealso::
 
    * :pydoc:`platform`
+
+   * :ref:`Porting notes for platform <porting-platform>`
