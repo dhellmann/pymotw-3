@@ -43,36 +43,34 @@ The program output is mostly the same, with appropriate updates for
 the address information.  The server shows the messages received and
 sent back to the client.
 
-::
+.. code-block:: none
 
-    $ python ./socket_echo_server_uds.py 
-
-    starting up on ./uds_socket
-    waiting for a connection
-    connection from 
-    received "This is the mess"
-    sending data back to the client
-    received "age.  It will be"
-    sending data back to the client
-    received " repeated."
-    sending data back to the client
-    received ""
-    no data from 
-    waiting for a connection
+   $ python3 socket_echo_server_uds.py
+   starting up on ./uds_socket
+   waiting for a connection
+   connection from
+   received b'This is the mess'
+   sending data back to the client
+   received b'age.  It will be'
+   sending data back to the client
+   received b' repeated.'
+   sending data back to the client
+   received b''
+   no data from
+   waiting for a connection
 
 The client sends the message all at once, and receives parts of it
 back incrementally.
 
-::
+.. code-block:: none
 
-    $ python socket_echo_client_uds.py 
-
-    connecting to ./uds_socket
-    sending "This is the message.  It will be repeated."
-    received "This is the mess"
-    received "age.  It will be"
-    received " repeated."
-    closing socket
+   $ python3 socket_echo_client_uds.py
+   connecting to ./uds_socket
+   sending b'This is the message.  It will be repeated.'
+   received b'This is the mess'
+   received b'age.  It will be'
+   received b' repeated.'
+   closing socket
 
 Permissions
 ===========
@@ -85,20 +83,20 @@ server.
 
     $ ls -l ./uds_socket
 
-    srwxr-xr-x  1 dhellmann  dhellmann  0 Sep 20 08:24 ./uds_socket
+    srwxr-xr-x  1 dhellmann  dhellmann  0 Aug 21 11:19 uds_socket
     
     $ sudo chown root ./uds_socket
     
     $ ls -l ./uds_socket
 
-    srwxr-xr-x  1 root  dhellmann  0 Sep 20 08:24 ./uds_socket
+    srwxr-xr-x  1 root  dhellmann  0 Aug 21 11:19 uds_socket
 
 Running the client as a user other than ``root`` now results in an
 error because the process does not have permission to open the socket.
 
 ::
 
-    $ python socket_echo_client_uds.py 
+    $ python3 socket_echo_client_uds.py 
     
     connecting to ./uds_socket
     [Errno 13] Permission denied
@@ -120,16 +118,16 @@ address family, socket type, and even protocol options to control how
 the sockets are created.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'socket_socketpair.py'))
+.. cog.out(run_script(cog.inFile, '-u socket_socketpair.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python socket_socketpair.py
-
-	in child, waiting for message
-	message from parent: ping
+	$ python3 -u socket_socketpair.py
+	
 	in parent, sending message
-	response from child: pong
+	in child, waiting for message
+	message from parent: b'ping'
+	response from child: b'pong'
 
 .. {{{end}}}
