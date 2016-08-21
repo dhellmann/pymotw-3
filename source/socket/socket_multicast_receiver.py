@@ -39,4 +39,4 @@ while True:
     print(data)
 
     print('sending acknowledgement to', address)
-    sock.sendto('ack', address)
+    sock.sendto(b'ack', address)

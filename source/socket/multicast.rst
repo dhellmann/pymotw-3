@@ -85,39 +85,42 @@ Example Output
 ==============
 
 This example shows the multicast receiver running on two different
-hosts. ``A`` has address ``192.168.1.17`` and ``B`` has address
-``192.168.1.8``.
+hosts. ``A`` has address ``192.168.1.13`` and ``B`` has address
+``192.168.1.14``.
 
-::
+.. code-block:: none
 
-    [A]$ python ./socket_multicast_receiver.py  
-        
-    waiting to receive message
-    received 19 bytes from ('192.168.1.17', 51382)
-    very important data
-    sending acknowledgement to ('192.168.1.17', 51382)
-        
-    [B]$ python ./socket_multicast_receiver.py 
-        
-    waiting to receive message
-    received 19 bytes from ('192.168.1.17', 51382)
-    very important data
-    sending acknowledgement to ('192.168.1.17', 51382)
+   [A]$ python3 socket_multicast_receiver.py
 
-The sender is running on host ``A``.
+   waiting to receive message
+   received 19 bytes from ('192.168.1.14', 62650)
+   b'very important data'
+   sending acknowledgement to ('192.168.1.14', 62650)
 
-::
+   waiting to receive message
 
-    $ python ./socket_multicast_sender.py 
-    
-    sending "very important data"
-    waiting to receive
-    received "ack" from ('192.168.1.17', 10000)
-    waiting to receive
-    received "ack" from ('192.168.1.8', 10000)
-    waiting to receive
-    timed out, no more responses
-    closing socket
+   [B]$ python source/socket/socket_multicast_receiver.py
+
+   waiting to receive message
+   received 19 bytes from ('192.168.1.14', 64288)
+   b'very important data'
+   sending acknowledgement to ('192.168.1.14', 64288)
+
+   waiting to receive message
+
+The sender is running on host ``B``.
+
+.. code-block:: none
+
+   [B]$ python3 socket_multicast_sender.py
+   sending b'very important data'
+   waiting to receive
+   received b'ack' from ('192.168.1.14', 10000)
+   waiting to receive
+   received b'ack' from ('192.168.1.13', 10000)
+   waiting to receive
+   timed out, no more responses
+   closing socket
 
 The message is sent one time, and two acknowledgements of the outgoing
 message are received, one from each of host ``A`` and ``B``.
