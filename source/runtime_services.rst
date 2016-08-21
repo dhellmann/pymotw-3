@@ -57,13 +57,14 @@ generate paths and other settings dynamically.
 
     site/index
     os/index
+    platform/index
     sys/index
     sysconfig/index
 
 ..
     site/index
     os/index
-    platform/index
-    resource/index
-    gc/index
+    *platform/index
+    *resource/index
+    *gc/index
     sysconfig/index
