@@ -9,4 +9,4 @@
 
 import gc
 
-print len(gc.get_objects())
+print(len(gc.get_objects()))

@@ -11,12 +11,12 @@ import gc
 import pprint
 import Queue
 
-class Graph(object):
+class Graph:
     def __init__(self, name):
         self.name = name
         self.next = None
     def set_next(self, next):
-        print 'Linking nodes %s.next = %s' % (self, next)
+        print('Linking nodes %s.next = %s' % (self, next))
         self.next = next
     def __repr__(self):
         return '%s(%s)' % (self.__class__.__name__, self.name)
@@ -29,7 +29,7 @@ one.set_next(two)
 two.set_next(three)
 three.set_next(one)
 
-print
+print()
 
 seen = set()
 to_process = Queue.Queue()
@@ -43,17 +43,17 @@ while not to_process.empty():
     chain, next = to_process.get()
     chain = chain[:]
     chain.append(next)
-    print 'Examining:', repr(next)
+    print('Examining:', repr(next))
     seen.add(id(next))
     for r in gc.get_referents(next):
         if isinstance(r, basestring) or isinstance(r, type):
             # Ignore strings and classes
             pass
         elif id(r) in seen:
-            print
-            print 'Found a cycle to %s:' % r
+            print()
+            print('Found a cycle to %s:' % r)
             for i, link in enumerate(chain):
-                print '  %d: ' % i,
+                print('  %d: ' % i, end=' ')
                 pprint.pprint(link)
         else:
             to_process.put( (chain, r) )

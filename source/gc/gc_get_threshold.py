@@ -9,4 +9,4 @@
 
 import gc
 
-print gc.get_threshold()
+print(gc.get_threshold())

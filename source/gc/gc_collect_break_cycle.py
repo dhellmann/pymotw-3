@@ -10,17 +10,17 @@
 import gc
 import pprint
 
-class Graph(object):
+class Graph:
     def __init__(self, name):
         self.name = name
         self.next = None
     def set_next(self, next):
-        print 'Linking nodes %s.next = %s' % (self, next)
+        print('Linking nodes %s.next = %s' % (self, next))
         self.next = next
     def __repr__(self):
         return '%s(%s)' % (self.__class__.__name__, self.name)
     def __del__(self):
-        print '%s.__del__()' % self
+        print('%s.__del__()' % self)
 
 # Construct a graph cycle
 one = Graph('one')
@@ -34,24 +34,24 @@ three.set_next(one)
 one = two = three = None
 
 # Collecting now keeps the objects as uncollectable
-print
-print 'Collecting...'
+print()
+print('Collecting...')
 n = gc.collect()
-print 'Unreachable objects:', n
-print 'Remaining Garbage:', 
+print('Unreachable objects:', n)
+print('Remaining Garbage:', end=' ')
 pprint.pprint(gc.garbage)
     
 # Break the cycle
-print
-print 'Breaking the cycle'
+print()
+print('Breaking the cycle')
 gc.garbage[0].set_next(None)
-print 'Removing references in gc.garbage'
+print('Removing references in gc.garbage')
 del gc.garbage[:]
 
 # Now the objects are removed
-print
-print 'Collecting...'
+print()
+print('Collecting...')
 n = gc.collect()
-print 'Unreachable objects:', n
-print 'Remaining Garbage:', 
+print('Unreachable objects:', n)
+print('Remaining Garbage:', end=' ')
 pprint.pprint(gc.garbage)

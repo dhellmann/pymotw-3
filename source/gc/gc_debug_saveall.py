@@ -17,7 +17,7 @@ flags = (gc.DEBUG_COLLECTABLE |
 
 gc.set_debug(flags)
 
-class Graph(object):
+class Graph:
     def __init__(self, name):
         self.name = name
         self.next = None
@@ -28,7 +28,7 @@ class Graph(object):
 
 class CleanupGraph(Graph):
     def __del__(self):
-        print '%s.__del__()' % self
+        print('%s.__del__()' % self)
 
 # Construct a graph cycle
 one = Graph('one')
@@ -49,11 +49,11 @@ five.set_next(four)
 one = two = three = four = five = None
 
 # Force a sweep
-print 'Collecting'
+print('Collecting')
 gc.collect()
-print 'Done'
+print('Done')
 
 # Report on what was left
 for o in gc.garbage:
     if isinstance(o, Graph):
-        print 'Retained: %s 0x%x' % (o, id(o))
+        print('Retained: %s 0x%x' % (o, id(o)))
