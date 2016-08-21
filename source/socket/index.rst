@@ -46,6 +46,10 @@ network.
      use the more convenient libraries for accessing remote resources
      through a URL.
 
+   * *Foundations of Python Network Programming, 3/E* -- By Brandon
+     Rhodes and John Goerzen. Published by
+     Apress, 2014. ISBN-10: 1430258543.
+
    * *Unix Network Programming, Volume 1: The Sockets Networking API,
      3/E* -- By W. Richard Stevens, Bill Fenner, and
      Andrew M. Rudoff. Published by Addison-Wesley
