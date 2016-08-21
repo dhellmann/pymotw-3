@@ -46,28 +46,24 @@ Client and Server Together
 
 Running the server produces:
 
-::
+.. code-block::
 
-    $ python ./socket_echo_server_dgram.py 
-    
-    starting up on localhost port 10000
-    
-    waiting to receive message
-    received 42 bytes from ('127.0.0.1', 50139)
-    This is the message.  It will be repeated.
-    sent 42 bytes back to ('127.0.0.1', 50139)
-    
-    waiting to receive message
+   $ python3 socket_echo_server_dgram.py
+   starting up on localhost port 10000
+   
+   waiting to receive message
+   received 42 bytes from ('127.0.0.1', 57870)
+   b'This is the message.  It will be repeated.'
+   sent 42 bytes back to ('127.0.0.1', 57870)
+   
+   waiting to receive message
     
 The client output is:
 
-::
+.. code-block:: none
 
-    $ python ./socket_echo_client_dgram.py 
-    
-    sending "This is the message.  It will be repeated."
-    waiting to receive
-    received "This is the message.  It will be repeated."
-    closing socket
-    
-    $
+   $ python3 socket_echo_client_dgram.py
+   sending b'This is the message.  It will be repeated.'
+   waiting to receive
+   received b'This is the message.  It will be repeated.'
+   closing socket
