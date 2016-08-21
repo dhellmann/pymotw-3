@@ -22,4 +22,4 @@ for url in [ 'http://www.python.org',
              ]:
     parsed_url = urlparse(url)
     port = socket.getservbyname(parsed_url.scheme)
-    print '%6s : %s' % (parsed_url.scheme, port)
+    print('%6s : %s' % (parsed_url.scheme, port))

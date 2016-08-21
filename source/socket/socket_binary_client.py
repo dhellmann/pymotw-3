@@ -21,14 +21,12 @@ values = (1, 'ab', 2.7)
 packer = struct.Struct('I 2s f')
 packed_data = packer.pack(*values)
 
-print 'values =', values
+print('values =', values)
 
 try:
-    
     # Send data
-    print >>sys.stderr, 'sending %r' % binascii.hexlify(packed_data)
+    print('sending %r' % binascii.hexlify(packed_data))
     sock.sendall(packed_data)
-
 finally:
-    print >>sys.stderr, 'closing socket'
+    print('closing socket')
     sock.close()

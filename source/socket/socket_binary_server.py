@@ -21,14 +21,14 @@ sock.listen(1)
 unpacker = struct.Struct('I 2s f')
 
 while True:
-    print >>sys.stderr, '\nwaiting for a connection'
+    print('\nwaiting for a connection')
     connection, client_address = sock.accept()
     try:
         data = connection.recv(unpacker.size)
-        print >>sys.stderr, 'received %r' % binascii.hexlify(data)
+        print('received %r' % binascii.hexlify(data))
 
         unpacked_data = unpacker.unpack(data)
-        print >>sys.stderr, 'unpacked:', unpacked_data
+        print('unpacked:', unpacked_data)
         
     finally:
         connection.close()

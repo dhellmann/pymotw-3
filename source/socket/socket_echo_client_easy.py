@@ -26,16 +26,16 @@ protocols = get_constants('IPPROTO_')
 # Create a TCP/IP socket
 sock = socket.create_connection(('localhost', 10000))
 
-print >>sys.stderr, 'Family  :', families[sock.family]
-print >>sys.stderr, 'Type    :', types[sock.type]
-print >>sys.stderr, 'Protocol:', protocols[sock.proto]
-print >>sys.stderr
+print('Family  :', families[sock.family])
+print('Type    :', types[sock.type])
+print('Protocol:', protocols[sock.proto])
+print(>>sys.stderr)
 
 try:
     
     # Send data
     message = 'This is the message.  It will be repeated.'
-    print >>sys.stderr, 'sending "%s"' % message
+    print('sending "%s"' % message)
     sock.sendall(message)
 
     amount_received = 0
@@ -44,8 +44,8 @@ try:
     while amount_received < amount_expected:
         data = sock.recv(16)
         amount_received += len(data)
-        print >>sys.stderr, 'received "%s"' % data
+        print('received "%s"' % data)
 
 finally:
-    print >>sys.stderr, 'closing socket'
+    print('closing socket')
     sock.close()

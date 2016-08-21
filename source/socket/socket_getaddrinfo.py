@@ -27,9 +27,9 @@ for response in socket.getaddrinfo('www.python.org', 'http'):
     # Unpack the response tuple
     family, socktype, proto, canonname, sockaddr = response
 
-    print 'Family        :', families[family]
-    print 'Type          :', types[socktype]
-    print 'Protocol      :', protocols[proto]
-    print 'Canonical name:', canonname
-    print 'Socket address:', sockaddr
-    print 
+    print('Family        :', families[family])
+    print('Type          :', types[socktype])
+    print('Protocol      :', protocols[proto])
+    print('Canonical name:', canonname)
+    print('Socket address:', sockaddr)
+    print()

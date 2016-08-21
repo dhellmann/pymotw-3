@@ -15,18 +15,18 @@ sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 
 # Connect the socket to the port where the server is listening
 server_address = './uds_socket'
-print >>sys.stderr, 'connecting to %s' % server_address
+print('connecting to %s' % server_address)
 try:
     sock.connect(server_address)
 except socket.error, msg:
-    print >>sys.stderr, msg
+    print(msg)
     sys.exit(1)
 
 try:
     
     # Send data
     message = 'This is the message.  It will be repeated.'
-    print >>sys.stderr, 'sending "%s"' % message
+    print('sending "%s"' % message)
     sock.sendall(message)
 
     amount_received = 0
@@ -35,8 +35,8 @@ try:
     while amount_received < amount_expected:
         data = sock.recv(16)
         amount_received += len(data)
-        print >>sys.stderr, 'received "%s"' % data
+        print('received "%s"' % data)
 
 finally:
-    print >>sys.stderr, 'closing socket'
+    print('closing socket')
     sock.close()

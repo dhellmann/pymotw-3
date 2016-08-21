@@ -23,5 +23,5 @@ protocols = get_constants('IPPROTO_')
 for name in [ 'icmp', 'udp', 'tcp' ]:
     proto_num = socket.getprotobyname(name)
     const_name = protocols[proto_num]
-    print '%4s -> %2d (socket.%-12s = %2d)' % \
-        (name, proto_num, const_name, getattr(socket, const_name))
+    print('%4s -> %2d (socket.%-12s = %2d)' %
+          (name, proto_num, const_name, getattr(socket, const_name)))
