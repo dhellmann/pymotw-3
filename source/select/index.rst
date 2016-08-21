@@ -13,6 +13,13 @@ function :func:`select`, which is available on UNIX and Windows.  The
 module also includes :func:`poll`, a UNIX-only API, and several
 options that only work with specific variants of UNIX.
 
+.. note::
+
+   The new :mod:`selectors` module provides a higher-level interface
+   built on top of the APIs in :mod:`select`. It is easier to build
+   portable code using :mod:`selectors`, so use that module unless the
+   low-level APIs provided by :mod:`select` are somehow required.
+
 Using select()
 ==============
 
@@ -444,6 +451,9 @@ more detail about how they work.
 .. seealso::
 
     * :pydoc:`select`
+
+    * :mod:`selectors` -- Higher-level abstraction on top of
+      :mod:`select`.
 
     * `Socket Programming HOWOTO
       <http://docs.python.org/howto/sockets.html>`__ -- An
