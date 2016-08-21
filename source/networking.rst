@@ -23,6 +23,7 @@ the application.
 .. toctree::
    :maxdepth: 1
 
+   socket/index
    select/index
    socketserver/index
 
