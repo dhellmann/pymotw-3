@@ -11,33 +11,23 @@ closed, and needs to be removed each time the server starts up.  The
 echo server example from earlier can be updated to use UDS by making a
 few changes in the setup section.
 
-.. literalinclude:: socket_echo_server_uds.py
-   :lines: 10-21
-
 The :class:`socket` needs to be created with address family
-:const:`AF_UNIX`.
+:const:`AF_UNIX`. Binding the socket and managing the incoming
+connections works the same as with TCP/IP sockets.
 
 .. literalinclude:: socket_echo_server_uds.py
-   :lines: 23-24
-
-Binding the socket and managing the incoming connections works the
-same as with TCP/IP sockets.
-
-.. literalinclude:: socket_echo_server_uds.py
-   :lines: 26-
+   :caption:
+   :start-after: #end_pymotw_header
 
 The client setup also needs to be modified to work with UDS.  It
 should assume the file system node for the socket exists, since the
-server creates it by binding to the address.
+server creates it by binding to the address.  Sending and receiving
+data works the same way in the UDS client as the TCP/IP client from
+before.
 
 .. literalinclude:: socket_echo_client_uds.py
-   :lines: 10-23
-
-Sending and receiving data works the same way in the UDS client as the
-TCP/IP client from before.
-
-.. literalinclude:: socket_echo_client_uds.py
-   :lines: 25-
+   :caption:
+   :start-after: #end_pymotw_header
 
 The program output is mostly the same, with appropriate updates for
 the address information.  The server shows the messages received and
