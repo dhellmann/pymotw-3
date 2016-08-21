@@ -1,11 +1,12 @@
-========================================
- platform -- System Version Information
-========================================
+=========================================
+ platform --- System Version Information
+=========================================
 
 .. module:: platform
     :synopsis: System version information
 
-:Purpose: Probe the underlying platform's hardware, operating system, and interpreter version information.
+:Purpose: Probe the underlying platform's hardware, operating system,
+          and interpreter version information.
 
 Although Python is often used as a cross-platform language, it is
 occasionally necessary to know what sort of system a program is
@@ -23,12 +24,11 @@ is running.
 
 .. note::
 
-    The example output in this section was generated on three systems:
-    a MacBook Pro3,1 running OS X 10.6.5, a VMware Fusion VM running
-    CentOS 5.5, and a Dell PC running Microsoft Windows 2008.  Python
-    was installed on the OS X and Windows systems using the
+    The example output in this section was generated on two systems: a
+    Mac mini running OS X 10.11.6 and a Dell PC running Ubuntu Linux
+    14.04.  Python was installed on the OS X system using the
     pre-compiled installer from python.org.  The Linux system is
-    running an interpreter built from source locally.
+    running a version in a system package.
 
 Interpreter
 ===========
@@ -44,7 +44,6 @@ build of the interpreter.
 .. literalinclude:: platform_python.py
     :caption:
     :start-after: #end_pymotw_header
-
 
 OS X:
 
@@ -72,14 +71,15 @@ Linux::
     Compiler     : GCC 4.1.2 20080704 (Red Hat 4.1.2-46)
     Build        : ('r27', 'Aug 20 2010 11:37:51')
 
-Windows::
+..
+   Windows::
 
-    C:> python.exe platform_python.py
+       C:> python.exe platform_python.py
 
-    Version      : 2.7.0
-    Version tuple: ['2', '7', '0']
-    Compiler     : MSC v.1500 64 bit (AMD64)
-    Build        : ('r27:82525', 'Jul  4 2010 07:43:08')
+       Version      : 2.7.0
+       Version tuple: ['2', '7', '0']
+       Compiler     : MSC v.1500 64 bit (AMD64)
+       Build        : ('r27:82525', 'Jul  4 2010 07:43:08')
 
 Platform
 ========
@@ -119,14 +119,14 @@ Linux::
     Aliased: Linux-2.6.18-194.3.1.el5-i686-with-redhat-5.5-Final
     Terse  : Linux-2.6.18-194.3.1.el5-i686-with-glibc2.3
 
-Windows::
+..
+   Windows::
 
-    C:> python.exe platform_platform.py
+       C:> python.exe platform_platform.py
 
-    Normal : Windows-2008ServerR2-6.1.7600
-    Aliased: Windows-2008ServerR2-6.1.7600
-    Terse  : Windows-2008ServerR2
-    
+       Normal : Windows-2008ServerR2-6.1.7600
+       Aliased: Windows-2008ServerR2-6.1.7600
+       Terse  : Windows-2008ServerR2
 
 Operating System and Hardware Info
 ==================================
@@ -159,8 +159,8 @@ Information Functions`.
 OS X:
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'platform_os_info.py', 
-..                    break_lines_at=65, line_break_mode='wrap'))
+.. cog.out(run_script(cog.inFile, 'platform_os_info.py',
+..                    line_break_mode='wrap'))
 .. }}}
 
 ::
@@ -195,20 +195,20 @@ Linux::
     machine  : i686
     processor: i686
 
-Windows::
+..
+   Windows::
 
-    C:> python.exe platform_os_info.py
+       C:> python.exe platform_os_info.py
 
-    uname: ('Windows', 'dhellmann', '2008ServerR2', '6.1.7600', 
-    'AMD64', 'Intel64 Family 6 Model 15 Stepping 11, GenuineIntel')
+       uname: ('Windows', 'dhellmann', '2008ServerR2', '6.1.7600', 
+       'AMD64', 'Intel64 Family 6 Model 15 Stepping 11, GenuineIntel')
 
-    system   : Windows
-    node     : dhellmann
-    release  : 2008ServerR2
-    version  : 6.1.7600
-    machine  : AMD64
-    processor: Intel64 Family 6 Model 15 Stepping 11, GenuineIntel
-    
+       system   : Windows
+       node     : dhellmann
+       release  : 2008ServerR2
+       version  : 6.1.7600
+       machine  : AMD64
+       processor: Intel64 Family 6 Model 15 Stepping 11, GenuineIntel
 
 Executable Architecture
 =======================
@@ -222,7 +222,6 @@ architecture and the linkage format used.
 .. literalinclude:: platform_architecture.py
     :caption:
     :start-after: #end_pymotw_header
-
 
 OS X:
 
@@ -246,14 +245,14 @@ Linux::
     interpreter: ('32bit', 'ELF')
     /bin/ls    : ('32bit', 'ELF')
 
-Windows::
+..
+   Windows::
 
-    C:> python.exe platform_architecture.py
+       C:> python.exe platform_architecture.py
 
-    interpreter  : ('64bit', 'WindowsPE')
-    iexplore.exe : ('64bit', '')
+       interpreter  : ('64bit', 'WindowsPE')
+       iexplore.exe : ('64bit', '')
 
 .. seealso::
 
-    `platform <http://docs.python.org/lib/module-platform.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`platform`
