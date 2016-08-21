@@ -40,9 +40,9 @@ many resources.
 
 	$ python3 resource_getrusage.py
 	
-	User time                 (ru_utime  ) = 0.018414
-	System time               (ru_stime  ) = 0.004652
-	Max. Resident Set Size    (ru_maxrss ) = 6455296
+	User time                 (ru_utime  ) = 0.021876
+	System time               (ru_stime  ) = 0.0067269999999999995
+	Max. Resident Set Size    (ru_maxrss ) = 6479872
 	Shared Memory Size        (ru_ixrss  ) = 0
 	Unshared Memory Size      (ru_idrss  ) = 0
 	Stack Size                (ru_isrss  ) = 0
@@ -132,8 +132,8 @@ them, but in this case it just prints a message and exits.
 	Soft limit starts as  : 9223372036854775807
 	Soft limit changed to : 1
 	
-	Starting: Sun Aug 21 18:39:09 2016
-	EXPIRED : Sun Aug 21 18:39:10 2016
+	Starting: Sun Aug 21 19:18:51 2016
+	EXPIRED : Sun Aug 21 19:18:52 2016
 	(time ran out)
 
 .. {{{end}}}

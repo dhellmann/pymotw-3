@@ -24,5 +24,5 @@ RESOURCES = [
 usage = resource.getrusage(resource.RUSAGE_SELF)
 
 for name, desc in RESOURCES:
-    print('%-25s (%-10s) = %s' %
-          (desc, name, getattr(usage, name)))
+    print('{:<25} ({:<10}) = {}'.format(
+        desc, name, getattr(usage, name)))

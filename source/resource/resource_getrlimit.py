@@ -25,4 +25,4 @@ print('Resource limits (soft/hard):')
 for name, desc in LIMITS:
     limit_num = getattr(resource, name)
     soft, hard = resource.getrlimit(limit_num)
-    print('%-23s %s/%s' % (desc, soft, hard))
+    print('{:<23} {}/{}'.format(desc, soft, hard))
