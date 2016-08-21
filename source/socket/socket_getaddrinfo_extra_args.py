@@ -26,7 +26,7 @@ types = get_constants('SOCK_')
 protocols = get_constants('IPPROTO_')
 
 responses = socket.getaddrinfo(
-    host='pymotw.com',
+    host='www.python.org',
     port='http',
     family=socket.AF_INET,
     type=socket.SOCK_STREAM,

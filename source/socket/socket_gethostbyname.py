@@ -10,8 +10,8 @@
 import socket
 
 HOSTS = [
-    'pymotw.org',
-    'www',
+    'apu',
+    'pymotw.com',
     'www.python.org',
     'nosuchname',
 ]

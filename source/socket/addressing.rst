@@ -83,8 +83,8 @@ laptop attached to a wireless LAN).
 .. code-block:: none
 
 	$ python3 socket_gethostname.py
-
-	farnsworth.hellfly.net
+	
+	apu.hellfly.net
 
 Use :func:`gethostbyname` to consult the operating system hostname
 resolution API and convert the name of a server to its numerical
@@ -101,17 +101,18 @@ well as the base hostname).  If the name cannot be found, an exception
 of type :class:`socket.error` is raised.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'socket_gethostbyname.py'))
+.. cog.out(run_script(cog.inFile, 'socket_gethostbyname.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python socket_gethostbyname.py
-
-	homer : 192.168.1.8
-	www : 192.168.1.8
-	www.python.org : 82.94.164.162
-	nosuchname : [Errno 8] nodename nor servname provided, or not known
+	$ python3 socket_gethostbyname.py
+	
+	apu : 10.9.0.10
+	pymotw.com : 66.33.211.242
+	www.python.org : 151.101.32.223
+	nosuchname : [Errno 8] nodename nor servname provided, or not
+	known
 
 .. {{{end}}}
 
@@ -131,24 +132,24 @@ own load balancing or fail-over algorithms.
 .. cog.out(run_script(cog.inFile, 'socket_gethostbyname_ex.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python socket_gethostbyname_ex.py
-
-	homer
-	  Hostname: homer.hellfly.net
-	  Aliases : []
-	 Addresses: ['192.168.1.8']
+	$ python3 socket_gethostbyname_ex.py
 	
-	www
-	  Hostname: homer.hellfly.net
-	  Aliases : ['www.hellfly.net']
-	 Addresses: ['192.168.1.8']
+	apu
+	  Hostname: apu.hellfly.net
+	  Aliases : ['apu']
+	 Addresses: ['10.9.0.10']
+	
+	pymotw.com
+	  Hostname: pymotw.com
+	  Aliases : []
+	 Addresses: ['66.33.211.242']
 	
 	www.python.org
-	  Hostname: www.python.org
-	  Aliases : []
-	 Addresses: ['82.94.164.162']
+	  Hostname: prod.python.map.fastlylb.net
+	  Aliases : ['www.python.org', 'python.map.fastly.net']
+	 Addresses: ['151.101.32.223']
 	
 	nosuchname
 	ERROR: [Errno 8] nodename nor servname provided, or not known
@@ -170,12 +171,12 @@ way if the input is an alias, such as ``www`` is here.
 .. cog.out(run_script(cog.inFile, 'socket_getfqdn.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python socket_getfqdn.py
-
-	 homer : homer.hellfly.net
-	   www : homer.hellfly.net
+	$ python3 socket_getfqdn.py
+	
+	   apu : apu.hellfly.net
+	pymotw.com : apache2-echo.catalina.dreamhost.com
 
 .. {{{end}}}
 
@@ -192,6 +193,15 @@ and all IP addresses associated with the name.
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'socket_gethostbyaddr.py'))
 .. }}}
+
+.. code-block:: none
+
+	$ python3 socket_gethostbyaddr.py
+	
+	Hostname : apu.hellfly.net
+	Aliases  : ['apu']
+	Addresses: ['10.9.0.10']
+
 .. {{{end}}}
 
 Finding Service Information
@@ -222,10 +232,10 @@ flexible when new services are added in the future.
 .. cog.out(run_script(cog.inFile, 'socket_getservbyname.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python socket_getservbyname.py
-
+	$ python3 socket_getservbyname.py
+	
 	  http : 80
 	 https : 443
 	   ftp : 21
@@ -251,10 +261,10 @@ arbitrary addresses.
 .. cog.out(run_script(cog.inFile, 'socket_getservbyport.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python socket_getservbyport.py
-
+	$ python3 socket_getservbyport.py
+	
 	http://example.com/
 	https://example.com/
 	ftp://example.com/
@@ -281,10 +291,10 @@ constants in :mod:`socket` with the prefix ``IPPROTO_``.
 .. cog.out(run_script(cog.inFile, 'socket_getprotobyname.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python socket_getprotobyname.py
-
+	$ python3 socket_getprotobyname.py
+	
 	icmp ->  1 (socket.IPPROTO_ICMP =  1)
 	 udp -> 17 (socket.IPPROTO_UDP  = 17)
 	 tcp ->  6 (socket.IPPROTO_TCP  =  6)
@@ -311,21 +321,33 @@ for ``www.python.org``.
 .. cog.out(run_script(cog.inFile, 'socket_getaddrinfo.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python socket_getaddrinfo.py
-
+	$ python3 socket_getaddrinfo.py
+	
 	Family        : AF_INET
 	Type          : SOCK_DGRAM
 	Protocol      : IPPROTO_UDP
 	Canonical name: 
-	Socket address: ('82.94.164.162', 80)
+	Socket address: ('151.101.32.223', 80)
 	
 	Family        : AF_INET
 	Type          : SOCK_STREAM
 	Protocol      : IPPROTO_TCP
 	Canonical name: 
-	Socket address: ('82.94.164.162', 80)
+	Socket address: ('151.101.32.223', 80)
+	
+	Family        : AF_INET6
+	Type          : SOCK_DGRAM
+	Protocol      : IPPROTO_UDP
+	Canonical name: 
+	Socket address: ('2a04:4e42:8::223', 80, 0, 0)
+	
+	Family        : AF_INET6
+	Type          : SOCK_STREAM
+	Protocol      : IPPROTO_TCP
+	Canonical name: 
+	Socket address: ('2a04:4e42:8::223', 80, 0, 0)
 	
 
 .. {{{end}}}
@@ -348,6 +370,18 @@ Without the flag, the canonical name value is left empty.
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'socket_getaddrinfo_extra_args.py'))
 .. }}}
+
+.. code-block:: none
+
+	$ python3 socket_getaddrinfo_extra_args.py
+	
+	Family        : AF_INET
+	Type          : SOCK_STREAM
+	Protocol      : IPPROTO_TCP
+	Canonical name: pymotw.com
+	Socket address: ('66.33.211.242', 80)
+	
+
 .. {{{end}}}
 
 
@@ -371,16 +405,16 @@ transmitted safely over the network, or saved to a database compactly.
 .. cog.out(run_script(cog.inFile, 'socket_address_packing.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python socket_address_packing.py
-
+	$ python3 socket_address_packing.py
+	
 	Original: 192.168.1.1
-	Packed  : c0a80101
+	Packed  : b'c0a80101'
 	Unpacked: 192.168.1.1
 	
 	Original: 127.0.0.1
-	Packed  : 7f000001
+	Packed  : b'7f000001'
 	Unpacked: 127.0.0.1
 	
 
@@ -402,12 +436,12 @@ the original value.
 .. cog.out(run_script(cog.inFile, 'socket_ipv6_address_packing.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python socket_ipv6_address_packing.py
-
+	$ python3 socket_ipv6_address_packing.py
+	
 	Original: 2002:ac10:10a:1234:21e:52ff:fe74:40e
-	Packed  : 2002ac10010a1234021e52fffe74040e
+	Packed  : b'2002ac10010a1234021e52fffe74040e'
 	Unpacked: 2002:ac10:10a:1234:21e:52ff:fe74:40e
 
 .. {{{end}}}

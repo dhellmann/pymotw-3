@@ -8,7 +8,7 @@
 #end_pymotw_header
 
 import socket
-from urlparse import urlparse
+from urllib.parse import urlparse
 
 URLS = [
     'http://www.python.org',

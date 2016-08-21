@@ -9,5 +9,5 @@
 
 import socket
 
-for host in ['hubert', 'pymotw.com']:
+for host in ['apu', 'pymotw.com']:
     print('%6s : %s' % (host, socket.getfqdn(host)))

@@ -8,10 +8,10 @@
 #end_pymotw_header
 
 import socket
-import urlparse
+from urllib.parse import urlunparse
 
 for port in [80, 443, 21, 70, 25, 143, 993, 110, 995]:
-    print(urlparse.urlunparse(
+    print(urlunparse(
         (socket.getservbyport(port),
          'example.com', '/', '', '', ''))
     )
