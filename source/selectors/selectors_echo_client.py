@@ -62,9 +62,9 @@ while keep_running:
         if mask & selectors.EVENT_WRITE:
             print('  ready to write')
             if not outgoing:
-                # We are out of messages, so we no longer need to write
-                # anything. Change our registration to let us keep reading
-                # responses from the server.
+                # We are out of messages, so we no longer need to
+                # write anything. Change our registration to let
+                # us keep reading responses from the server.
                 print('  switching to read-only')
                 mysel.modify(sock, selectors.EVENT_READ)
             else:
