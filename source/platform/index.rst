@@ -24,11 +24,15 @@ is running.
 
 .. note::
 
-    The example output in this section was generated on two systems: a
-    Mac mini running OS X 10.11.6 and a Dell PC running Ubuntu Linux
-    14.04.  Python was installed on the OS X system using the
-    pre-compiled installer from python.org.  The Linux system is
-    running a version in a system package.
+    The example output in this section was generated on three systems:
+    a Mac mini running OS X 10.11.6, a Dell PC running Ubuntu Linux
+    14.04, and a VirtualBox VM running Windows 10.  Python was
+    installed on the OS X and Windows systems using the pre-compiled
+    installers from python.org. The Linux system is running a version
+    in a system package.
+
+    Special thanks is owed to Patrick Kettner (@patrickkettner) for
+    helping collect the example output on Windows.
 
 Interpreter
 ===========
@@ -67,20 +71,22 @@ Linux:
 .. code-block:: none
 
    $ python3 platform_python.py
+
    Version      : 3.5.2
    Version tuple: ('3', '5', '2')
    Compiler     : GCC 4.8.4
    Build        : ('default', 'Jul 17 2016 00:00:00')
 
-..
-   Windows::
+Windows:
 
-       C:> python.exe platform_python.py
+.. code-block:: none
 
-       Version      : 2.7.0
-       Version tuple: ['2', '7', '0']
-       Compiler     : MSC v.1500 64 bit (AMD64)
-       Build        : ('r27:82525', 'Jul  4 2010 07:43:08')
+   C:\>Desktop\platform_python.py
+
+   Version      : 3.5.1
+   Version tuple: ('3', '5', '1')
+   Compiler     : MSC v.1900 64 bit (AMD64)
+   Build        : ('v3.5.1:37a07cee5969', 'Dec  6 2015 01:54:25')
 
 Platform
 ========
@@ -122,14 +128,15 @@ Linux:
    Aliased: Linux-3.13.0-55-generic-x86_64-with-Ubuntu-14.04-trusty
    Terse  : Linux-3.13.0-55-generic-x86_64-with-glibc2.9
 
-..
-   Windows::
+Windows:
 
-       C:> python.exe platform_platform.py
+.. code-block:: none
 
-       Normal : Windows-2008ServerR2-6.1.7600
-       Aliased: Windows-2008ServerR2-6.1.7600
-       Terse  : Windows-2008ServerR2
+   C:\>platform_platform.py
+
+   Normal : Windows-10-10.0.10240-SP0
+   Aliased: Windows-10-10.0.10240-SP0
+   Terse  : Windows-10
 
 Operating System and Hardware Info
 ==================================
@@ -201,20 +208,22 @@ Linux:
    machine  : x86_64
    processor: x86_64
 
-..
-   Windows::
+Windows:
 
-       C:> python.exe platform_os_info.py
+.. code-block:: none
 
-       uname: ('Windows', 'dhellmann', '2008ServerR2', '6.1.7600', 
-       'AMD64', 'Intel64 Family 6 Model 15 Stepping 11, GenuineIntel')
+   C:\>Desktop\platform_os_info.py
 
-       system   : Windows
-       node     : dhellmann
-       release  : 2008ServerR2
-       version  : 6.1.7600
-       machine  : AMD64
-       processor: Intel64 Family 6 Model 15 Stepping 11, GenuineIntel
+   uname: uname_result(system='Windows', node='IE11WIN10', 
+   release='10', version='10.0.10240', machine='AMD64', 
+   processor='Intel64 Family 6 Model 70 Stepping 1, GenuineIntel')
+   
+   system   : Windows
+   node     : IE11WIN10
+   release  : 10
+   version  : 10.0.10240
+   machine  : AMD64
+   processor: Intel64 Family 6 Model 70 Stepping 1, GenuineIntel
 
 Executable Architecture
 =======================
@@ -253,13 +262,14 @@ Linux:
    interpreter: ('64bit', 'ELF')
    /bin/ls    : ('64bit', 'ELF')
 
-..
-   Windows::
+Windows:
 
-       C:> python.exe platform_architecture.py
+.. code-block:: none
 
-       interpreter  : ('64bit', 'WindowsPE')
-       iexplore.exe : ('64bit', '')
+   C:\>Desktop\platform_architecture.py
+
+   interpreter: ('64bit', 'WindowsPE')
+   /bin/ls    : ('64bit', '')
 
 .. seealso::
 
