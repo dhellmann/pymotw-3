@@ -20,14 +20,12 @@ to associate its socket with a port, and then wait for individual
 messages.
 
 .. literalinclude:: socket_echo_server_dgram.py
-   :lines: 10-19
+   :caption:
+   :start-after: #end_pymotw_header
 
 Messages are read from the socket using :func:`recvfrom`, which
 returns the data as well as the address of the client from which it
 was sent.
-
-.. literalinclude:: socket_echo_server_dgram.py
-   :lines: 21-
 
 Echo Client
 ===========
