@@ -859,6 +859,19 @@ shelve
 The default output format for :mod:`shelve` may create a file with a
 ``.db`` extension added to the name given to :func:`shelve.open`.
 
+.. _porting-socket:
+
+socket
+------
+
+.. index::
+   pair: porting; socket
+
+Under Python 2 typically :class:`str` objects could be sent directly
+over a socket. Because :class:`str` replaces :class:`unicode`, in
+Python 3 the values must be encoded before being sent. The examples in
+the :mod:`socket` section use byte strings, which are already encoded.
+
 .. _porting-socketserver:
 
 socketserver

@@ -29,10 +29,7 @@ network.
 
    * :pydoc:`socket`
 
-   * `Socket Programming HOWOTO
-     <http://docs.python.org/howto/sockets.html>`__ -- An
-     instructional guide by Gordon McMillan, included in the standard
-     library documentation.
+   * :ref:`Porting notes for socket <porting-socket>`
 
    * :mod:`select` -- Testing a socket to see if it is ready for
      reading or writing for non-blocking I/O.
@@ -45,6 +42,11 @@ network.
    * :mod:`urllib` and :mod:`urllib2` -- Most network clients should
      use the more convenient libraries for accessing remote resources
      through a URL.
+
+   * `Socket Programming HOWOTO
+     <http://docs.python.org/3/howto/sockets.html>`__ -- An
+     instructional guide by Gordon McMillan, included in the standard
+     library documentation.
 
    * *Foundations of Python Network Programming, 3/E* -- By Brandon
      Rhodes and John Goerzen. Published by
