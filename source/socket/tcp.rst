@@ -12,17 +12,15 @@ Echo Server
 
 This sample program, based on the one in the standard library
 documentation, receives incoming messages and echos them back to the
-sender.  It starts by creating a TCP/IP socket.
+sender.  It starts by creating a TCP/IP socket, then :func:`bind` is
+used to associate the socket with the server address.  In this case,
+the address is ``localhost``, referring to the current server, and the
+port number is 10000.
+
 
 .. literalinclude:: socket_echo_server.py
-   :lines: 10-14
-
-Then :func:`bind` is used to associate the socket with the server
-address.  In this case, the address is ``localhost``, referring to the
-current server, and the port number is 10000.
-
-.. literalinclude:: socket_echo_server.py
-   :lines: 16-19
+   :caption:
+   :start-after: #end_pymotw_header
 
 Calling :func:`listen` puts the socket into server mode, and
 :func:`accept` waits for an incoming connection.  The integer argument
@@ -30,17 +28,11 @@ is the number of connections the system should queue up in the
 background before rejecting new clients.  This example only expects to
 work with one connection at a time.
 
-.. literalinclude:: socket_echo_server.py
-   :lines: 21-27
-
 :func:`accept` returns an open connection between the server and
 client, along with the address of the client.  The connection is
 actually a different socket on another port (assigned by the kernel).
 Data is read from the connection with :func:`recv` and transmitted
 with :func:`sendall`.
-
-.. literalinclude:: socket_echo_server.py
-   :lines: 28-
 
 When communication with a client is finished, the connection needs to
 be cleaned up using :func:`close`.  This example uses a
@@ -56,17 +48,13 @@ uses :func:`connect` to attach the socket directly to the remote
 address.
 
 .. literalinclude:: socket_echo_client.py
-   :lines: 10-19
+   :caption:
+   :start-after: #end_pymotw_header
 
 After the connection is established, data can be sent through the
 :class:`socket` with :func:`sendall` and received with :func:`recv`,
-just as in the server.
-
-.. literalinclude:: socket_echo_client.py
-   :lines: 21-
-
-When the entire message is sent and a copy received, the socket is
-closed to free up the port.
+just as in the server. When the entire message is sent and a copy
+received, the socket is closed to free up the port.
 
 Client and Server Together
 ==========================
