@@ -276,3 +276,34 @@ Windows:
    * :pydoc:`platform`
 
    * :ref:`Porting notes for platform <porting-platform>`
+
+..
+   3.6.0a4 output from Brad Threatt via
+   https://docs.google.com/document/d/1qRfcpEDZjOojfusW4IPcdNbGr115DxTj1CAe1HZoWAc/edit
+
+   Interpreter:
+
+   Version      : 3.6.0a4
+   Version tuple: ('3', '6', '0a4')
+   Compiler     : MSC v.1900 64 bit (AMD64)
+   Build        : ('v3.6.0a4:017cf260936b', 'Aug 16 2016 00:59:16')
+
+   Platform:
+
+   Normal : Windows-10-10.0.10586-SP0
+   Aliased: Windows-10-10.0.10586-SP0
+   Terse  : Windows-10
+
+   OS & Hardware:
+
+   system   : Windows
+   node     : DESKTOP-JDHLQQV
+   release  : 10
+   version  : 10.0.10586
+   machine  : AMD64
+   processor: Intel64 Family 6 Model 78 Stepping 3, GenuineIntel
+
+   Arch:
+
+   interpreter: ('64bit', 'WindowsPE')
+   /bin/ls    : ('64bit', '')
