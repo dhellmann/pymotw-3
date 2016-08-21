@@ -37,8 +37,8 @@ The UDP echo client is similar the server, but does not use
 :func:`sendto` to deliver its message directly to the server, and
 :func:`recvfrom` to receive the response.
 
-.. include:: socket_echo_client_dgram.py
-   :literal:
+.. literalinclude:: socket_echo_client_dgram.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Client and Server Together

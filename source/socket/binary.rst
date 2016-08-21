@@ -12,8 +12,8 @@ This client program encodes an integer, a string of two characters,
 and a floating point value into a sequence of bytes that can be passed
 to the socket for transmission.
 
-.. include:: socket_binary_client.py
-   :literal:
+.. literalinclude:: socket_binary_client.py
+   :caption:
    :start-after: #end_pymotw_header
 
 When sending multi-byte binary data between two systems, it is
@@ -23,8 +23,8 @@ for the local architecture.  The server program uses the same
 :class:`Struct` specifier to unpack the bytes it receives so they are
 interpreted in the correct order.
 
-.. include:: socket_binary_server.py
-   :literal:
+.. literalinclude:: socket_binary_server.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Running the client produces:

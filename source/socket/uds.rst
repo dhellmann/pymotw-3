@@ -111,8 +111,8 @@ for inter-process communication under Unix.  It creates a pair of
 connected sockets that can be used to communicate between a parent
 process and a child process after the child is forked.
 
-.. include:: socket_socketpair.py
-   :literal:
+.. literalinclude:: socket_socketpair.py
+   :caption:
    :start-after: #end_pymotw_header
 
 By default, a UDS socket is created, but the caller can also pass

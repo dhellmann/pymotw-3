@@ -6,7 +6,6 @@
     :synopsis: Network communication
 
 :Purpose: Provides access to network communication
-:Python Version: 1.4 and later
 
 The :mod:`socket` module exposes the low-level C API for communicating
 over a network using the BSD socket interface.  It includes the

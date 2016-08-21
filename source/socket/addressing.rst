@@ -72,8 +72,8 @@ as well as the name value being used.
 To find the official name of the current host, use
 :func:`gethostname`.
 
-.. include:: socket_gethostname.py
-   :literal:
+.. literalinclude:: socket_gethostname.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The name returned will depend on the network settings for the current
@@ -90,8 +90,8 @@ Use :func:`gethostbyname` to consult the operating system hostname
 resolution API and convert the name of a server to its numerical
 address.
 
-.. include:: socket_gethostbyname.py
-   :literal:
+.. literalinclude:: socket_gethostbyname.py
+   :caption:
    :start-after: #end_pymotw_header
 
 If the DNS configuration of the current system includes one or more
@@ -120,8 +120,8 @@ For access to more naming information about a server, use
 server, any aliases, and all of the available IP addresses that can be
 used to reach it.
 
-.. include:: socket_gethostbyname_ex.py
-   :literal:
+.. literalinclude:: socket_gethostbyname_ex.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Having all known IP addresses for a server lets a client implement its
@@ -159,8 +159,8 @@ own load balancing or fail-over algorithms.
 Use :func:`getfqdn` to convert a partial name to a fully qualified
 domain name.
 
-.. include:: socket_getfqdn.py
-   :literal:
+.. literalinclude:: socket_getfqdn.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The name returned will not necessarily match the input argument in any
@@ -182,8 +182,8 @@ way if the input is an alias, such as ``www`` is here.
 When the address of a server is available, use :func:`gethostbyaddr`
 to do a "reverse" lookup for the name.
 
-.. include:: socket_gethostbyaddr.py
-   :literal:
+.. literalinclude:: socket_gethostbyaddr.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The return value is a tuple containing the full hostname, any aliases,
@@ -215,8 +215,8 @@ over port number 25 using TCP, and web clients and servers use port 80
 for HTTP.  The port numbers for network services with standardized
 names can be looked up with :func:`getservbyname`.
 
-.. include:: socket_getservbyname.py
-   :literal:
+.. literalinclude:: socket_getservbyname.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Although a standardized service is unlikely to change ports, looking
@@ -245,8 +245,8 @@ flexible when new services are added in the future.
 
 To reverse the service port lookup, use :func:`getservbyport`.
 
-.. include:: socket_getservbyport.py
-   :literal:
+.. literalinclude:: socket_getservbyport.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The reverse lookup is useful for constructing URLs to services from
@@ -275,8 +275,8 @@ arbitrary addresses.
 The number assigned to a transport protocol can be retrieved with
 :func:`getprotobyname`.
 
-.. include:: socket_getprotobyname.py
-   :literal:
+.. literalinclude:: socket_getprotobyname.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The values for protocol numbers are standardized, and defined as
@@ -305,8 +305,8 @@ list of tuples with all of the information necessary to make a
 connection.  The contents of each tuple will vary, containing
 different network families or protocols.
 
-.. include:: socket_getaddrinfo.py
-   :literal:
+.. literalinclude:: socket_getaddrinfo.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This program demonstrates how to look up the connection information
@@ -341,8 +341,8 @@ arguments.  The optional arguments are *family*, *socktype*, *proto*,
 and *flags*.  The optional values should be either ``0`` or one of the
 constants defined by :mod:`socket`.
 
-.. include:: socket_getaddrinfo_extra_args.py
-   :literal:
+.. literalinclude:: socket_getaddrinfo_extra_args.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Since *flags* includes :const:`AI_CANONNAME`, the canonical name of
@@ -371,8 +371,8 @@ string addresses usually found in Python programs).  To convert IPv4
 addresses between the Python representation and the C representation,
 use :func:`inet_aton` and :func:`inet_ntoa`.
 
-.. include:: socket_address_packing.py
-   :literal:
+.. literalinclude:: socket_address_packing.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The four bytes in the packed format can be passed to C libraries,
@@ -401,8 +401,8 @@ The related functions :func:`inet_pton` and :func:`inet_ntop` work
 with both IPv4 and IPv6 addresses, producing the appropriate format
 based on the address family parameter passed in.
 
-.. include:: socket_ipv6_address_packing.py
-   :literal:
+.. literalinclude:: socket_ipv6_address_packing.py
+   :caption:
    :start-after: #end_pymotw_header
 
 An IPv6 address is already a hexadecimal value, so converting the

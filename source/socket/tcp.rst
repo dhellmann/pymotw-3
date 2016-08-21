@@ -118,8 +118,8 @@ TCP/IP clients can save a few steps by using the convenience function
 one argument, a two-value tuple containing the address of the server,
 and derives the best address to use for the connection.
 
-.. include:: socket_echo_client_easy.py
-   :literal:
+.. literalinclude:: socket_echo_client_easy.py
+   :caption:
    :start-after: #end_pymotw_header
 
 :func:`create_connection` uses :func:`getaddrinfo` to find candidate
@@ -153,15 +153,15 @@ as the value returned by :func:`gethostname`, to allow other hosts to
 connect.  This example modifies the echo server to listen on an
 address specified via a command line argument.
 
-.. include:: socket_echo_server_explicit.py
-   :literal:
+.. literalinclude:: socket_echo_server_explicit.py
+   :caption:
    :start-after: #end_pymotw_header
 
 A similar modification to the client program is needed before the
 server can be tested.
 
-.. include:: socket_echo_client_explicit.py
-   :literal:
+.. literalinclude:: socket_echo_client_explicit.py
+   :caption:
    :start-after: #end_pymotw_header
 
 After starting the server with the argument
@@ -225,8 +225,8 @@ must be converted to a dotted-notation string address before it can be
 passed to :func:`bind`.  As a shortcut, use "``0.0.0.0``" or an empty
 string (``''``) instead of doing the conversion.
 
-.. include:: socket_echo_server_any.py
-   :literal:
+.. literalinclude:: socket_echo_server_any.py
+   :caption:
    :start-after: #end_pymotw_header
 
 To see the actual address being used by a socket, call its
