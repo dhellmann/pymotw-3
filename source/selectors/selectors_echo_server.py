@@ -34,6 +34,7 @@ def read(connection, mask):
         # Tell the main loop to stop
         keep_running = False
 
+
 def accept(sock, mask):
     "Callback for new connections"
     new_connection, addr = sock.accept()
@@ -42,13 +43,11 @@ def accept(sock, mask):
     mysel.register(new_connection, selectors.EVENT_READ, read)
 
 
-server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.setblocking(False)
-
 server_address = ('localhost', 10000)
 print('starting up on {} port {}'.format(*server_address))
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.setblocking(False)
 server.bind(server_address)
-
 server.listen(5)
 
 mysel.register(server, selectors.EVENT_READ, accept)
