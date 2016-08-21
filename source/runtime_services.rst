@@ -47,25 +47,13 @@ The :mod:`sysconfig` module holds the compile-time variables from the
 build scripts, and can be used by build and packaging tools to
 generate paths and other settings dynamically.
 
-.. It includes modules that provide the ability to probe
-.. and control the operating system or hardware platform, adjust the
-.. garbage collection system, examine the interpreter installation, and
-.. introspect objects and code.
-
 .. toctree::
     :maxdepth: 1
 
     site/index
-    os/index
-    platform/index
-    resource/index
     sys/index
-    sysconfig/index
-
-..
-    site/index
     os/index
     platform/index
     resource/index
-    *gc/index
+    gc/index
     sysconfig/index
