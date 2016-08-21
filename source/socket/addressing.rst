@@ -175,7 +175,7 @@ way if the input is an alias, such as ``www`` is here.
 
 	$ python3 socket_getfqdn.py
 	
-	   apu : apu.hellfly.net
+	       apu : apu.hellfly.net
 	pymotw.com : apache2-echo.catalina.dreamhost.com
 
 .. {{{end}}}
