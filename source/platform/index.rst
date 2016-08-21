@@ -6,7 +6,6 @@
     :synopsis: System version information
 
 :Purpose: Probe the underlying platform's hardware, operating system, and interpreter version information.
-:Python Version: 2.3 and later
 
 Although Python is often used as a cross-platform language, it is
 occasionally necessary to know what sort of system a program is
@@ -42,8 +41,8 @@ version with major, minor, and patch level components.
 interpreter. And :func:`python_build` gives a version string for the
 build of the interpreter.
 
-.. include:: platform_python.py
-    :literal:
+.. literalinclude:: platform_python.py
+    :caption:
     :start-after: #end_pymotw_header
 
 
@@ -92,8 +91,8 @@ are converted from a formal name to their more common form. When
 *terse* is true, a minimal value with some parts dropped is returned
 instead of the full string.
 
-.. include:: platform_platform.py
-    :literal:
+.. literalinclude:: platform_platform.py
+    :caption:
     :start-after: #end_pymotw_header
 
 OS X:
@@ -152,8 +151,8 @@ Information Functions`.
   :func:`processor`  a real identifier for the processor (the same value as :func:`machine` in many cases)
   =================  ============
 
-.. include:: platform_os_info.py
-    :literal:
+.. literalinclude:: platform_os_info.py
+    :caption:
     :start-after: #end_pymotw_header
 
 
@@ -220,8 +219,8 @@ executable program (defaulting to :data:`sys.executable`, the Python
 interpreter). The return value is a tuple containing the bit
 architecture and the linkage format used.
 
-.. include:: platform_architecture.py
-    :literal:
+.. literalinclude:: platform_architecture.py
+    :caption:
     :start-after: #end_pymotw_header
 
 
