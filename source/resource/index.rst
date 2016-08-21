@@ -1,0 +1,149 @@
+========================================
+ resource -- System Resource Management
+========================================
+
+.. module:: resource
+    :synopsis: System resource management
+
+:Purpose: Manage the system resource limits for a Unix program.
+:Python Version: 1.5.2 and later
+
+The functions in :mod:`resource` probe the current system resources
+consumed by a process, and place limits on them to control how much
+load a program can impose on a system.
+
+Current Usage
+=============
+
+Use :func:`getrusage()` to probe the resources used by the current
+process and/or its children.  The return value is a data structure
+containing several resource metrics based on the current state of the
+system.
+
+.. note::
+
+  Not all of the resource values gathered are displayed here.  Refer
+  to the standard library documentation for :mod:`resource` for a more
+  complete list.
+
+.. include:: resource_getrusage.py
+    :literal:
+    :start-after: #end_pymotw_header
+
+Because the test program is extremely simple, it does not use very
+many resources.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'resource_getrusage.py'))
+.. }}}
+
+::
+
+	$ python resource_getrusage.py
+	
+	User time                 (ru_utime  ) = 0.013974
+	System time               (ru_stime  ) = 0.013182
+	Max. Resident Set Size    (ru_maxrss ) = 5378048
+	Shared Memory Size        (ru_ixrss  ) = 0
+	Unshared Memory Size      (ru_idrss  ) = 0
+	Stack Size                (ru_isrss  ) = 0
+	Block inputs              (ru_inblock) = 0
+	Block outputs             (ru_oublock) = 1
+
+.. {{{end}}}
+
+Resource Limits
+===============
+
+Separate from the current actual usage, it is possible to check the
+*limits* imposed on the application, and then change them.
+
+.. include:: resource_getrlimit.py
+    :literal:
+    :start-after: #end_pymotw_header
+
+The return value for each limit is a tuple containing the *soft* limit
+imposed by the current configuration and the *hard* limit imposed by
+the operating system.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'resource_getrlimit.py'))
+.. }}}
+
+::
+
+	$ python resource_getrlimit.py
+	
+	Resource limits (soft/hard):
+	core file size          0 / 9223372036854775807
+	CPU time                9223372036854775807 / 9223372036854775807
+	file size               9223372036854775807 / 9223372036854775807
+	heap size               9223372036854775807 / 9223372036854775807
+	stack size              8388608 / 67104768
+	resident set size       9223372036854775807 / 9223372036854775807
+	number of processes     266 / 532
+	number of open files    7168 / 9223372036854775807
+	lockable memory address 9223372036854775807 / 9223372036854775807
+
+.. {{{end}}}
+
+The limits can be changed with :func:`setrlimit()`.  
+
+.. include:: resource_setrlimit_nofile.py
+    :literal:
+    :start-after: #end_pymotw_header
+
+This example uses :const:`RLIMIT_NOFILE` to control the number of open
+files allowed, changing it to a smaller soft limit than the default.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'resource_setrlimit_nofile.py'))
+.. }}}
+
+::
+
+	$ python resource_setrlimit_nofile.py
+	
+	Soft limit starts as  : 7168
+	Soft limit changed to : 4
+	random has fd = 3
+	[Errno 24] Too many open files: '/dev/null'
+
+.. {{{end}}}
+
+It can also be useful to limit the amount of CPU time a process should
+consume, to avoid using too much.  When the process runs past the
+allotted amount of time, it sent a :const:`SIGXCPU` signal.
+
+.. include:: resource_setrlimit_cpu.py
+    :literal:
+    :start-after: #end_pymotw_header
+
+Normally the signal handler should flush all open files and close
+them, but in this case it just prints a message and exits.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'resource_setrlimit_cpu.py', ignore_error=True))
+.. }}}
+
+::
+
+	$ python resource_setrlimit_cpu.py
+	
+	Soft limit starts as  : 9223372036854775807
+	Soft limit changed to : 1
+	
+	Starting: Sat Dec  4 15:02:57 2010
+	EXPIRED : Sat Dec  4 15:02:58 2010
+	(time ran out)
+
+.. {{{end}}}
+
+
+.. seealso::
+
+    `resource <http://docs.python.org/library/resource.html>`_
+        The standard library documentation for this module.
+
+    :mod:`signal`
+        For details on registering signal handlers.
