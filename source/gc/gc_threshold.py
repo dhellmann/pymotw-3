@@ -17,10 +17,13 @@ except (IndexError, ValueError, TypeError):
     print('Missing or invalid threshold, using default')
     threshold = 5
 
+
 class MyObj:
+
     def __init__(self, name):
         self.name = name
         print('Created', self.name)
+
 
 gc.set_debug(gc.DEBUG_STATS)
 

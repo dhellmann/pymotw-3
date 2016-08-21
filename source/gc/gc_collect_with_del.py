@@ -10,17 +10,23 @@
 import gc
 import pprint
 
+
 class Graph:
+
     def __init__(self, name):
         self.name = name
         self.next = None
+
     def set_next(self, next):
         print('%s.next = %s' % (self, next))
         self.next = next
+
     def __repr__(self):
         return '%s(%s)' % (self.__class__.__name__, self.name)
+
     def __del__(self):
         print('%s.__del__()' % self)
+
 
 # Construct a graph cycle
 one = Graph('one')
@@ -39,4 +45,3 @@ n = gc.collect()
 print('Unreachable objects:', n)
 print('Remaining Garbage:', end=' ')
 pprint.pprint(gc.garbage)
-    
