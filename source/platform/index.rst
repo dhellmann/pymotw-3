@@ -66,12 +66,11 @@ Linux:
 
 .. code-block:: none
 
-    $ python platform_python.py 
-
-    Version      : 2.7.0
-    Version tuple: ('2', '7', '0')
-    Compiler     : GCC 4.1.2 20080704 (Red Hat 4.1.2-46)
-    Build        : ('r27', 'Aug 20 2010 11:37:51')
+   $ python3 platform_python.py
+   Version      : 3.5.2
+   Version tuple: ('3', '5', '2')
+   Compiler     : GCC 4.8.4
+   Build        : ('default', 'Jul 17 2016 00:00:00')
 
 ..
    Windows::
@@ -117,11 +116,11 @@ Linux:
 
 .. code-block:: none
 
-    $ python platform_platform.py 
+   $ python3 platform_platform.py
 
-    Normal : Linux-2.6.18-194.3.1.el5-i686-with-redhat-5.5-Final
-    Aliased: Linux-2.6.18-194.3.1.el5-i686-with-redhat-5.5-Final
-    Terse  : Linux-2.6.18-194.3.1.el5-i686-with-glibc2.3
+   Normal : Linux-3.13.0-55-generic-x86_64-with-Ubuntu-14.04-trusty
+   Aliased: Linux-3.13.0-55-generic-x86_64-with-Ubuntu-14.04-trusty
+   Terse  : Linux-3.13.0-55-generic-x86_64-with-glibc2.9
 
 ..
    Windows::
@@ -159,7 +158,6 @@ Information Functions`.
     :caption:
     :start-after: #end_pymotw_header
 
-
 OS X:
 
 .. {{{cog
@@ -190,17 +188,18 @@ Linux:
 
 .. code-block:: none
 
-    $ python platform_os_info.py 
+   $ python3 platform_os_info.py
 
-    uname: ('Linux', 'hermes.hellfly.net', '2.6.18-194.3.1.el5', 
-    '#1 SMP Thu May 13 13:09:10 EDT 2010', 'i686', 'i686')
-    
-    system   : Linux
-    node     : hermes.hellfly.net
-    release  : 2.6.18-194.3.1.el5
-    version  : #1 SMP Thu May 13 13:09:10 EDT 2010
-    machine  : i686
-    processor: i686
+   uname: uname_result(system='Linux', node='apu',
+   release='3.13.0-55-generic', version='#94-Ubuntu SMP Thu Jun 18
+   00:27:10 UTC 2015', machine='x86_64', processor='x86_64')
+   
+   system   : Linux
+   node     : apu
+   release  : 3.13.0-55-generic
+   version  : #94-Ubuntu SMP Thu Jun 18 00:27:10 UTC 2015
+   machine  : x86_64
+   processor: x86_64
 
 ..
    Windows::
@@ -249,10 +248,10 @@ Linux:
 
 .. code-block:: none
 
-    $ python platform_architecture.py 
+   $ python3 platform_architecture.py
 
-    interpreter: ('32bit', 'ELF')
-    /bin/ls    : ('32bit', 'ELF')
+   interpreter: ('64bit', 'ELF')
+   /bin/ls    : ('64bit', 'ELF')
 
 ..
    Windows::
