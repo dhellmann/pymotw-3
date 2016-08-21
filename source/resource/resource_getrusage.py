@@ -22,4 +22,4 @@ for name, desc in [
     ('ru_inblock', 'Block inputs'),
     ('ru_oublock', 'Block outputs'),
     ]:
-    print '%-25s (%-10s) = %s' % (desc, name, getattr(usage, name))
+    print('%-25s (%-10s) = %s' % (desc, name, getattr(usage, name)))
