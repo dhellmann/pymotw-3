@@ -3,10 +3,9 @@
 =====================
 
 Sockets transmit streams of bytes.  Those bytes can contain text
-messages, as in the previous examples, or they can be made up of
-binary data that has been encoded for transmission.  To prepare binary
-data values for transmission, pack them into a buffer with
-:mod:`struct`.
+messages encoded to bytes, as in the previous examples, or they can be
+made up of binary data that has been packed into a buffer with
+:mod:`struct` to prepare it for transmission.
 
 This client program encodes an integer, a string of two characters,
 and a floating point value into a sequence of bytes that can be passed
@@ -29,25 +28,24 @@ interpreted in the correct order.
 
 Running the client produces:
 
-::
+.. code-block:: none
 
-    $ python ./socket_binary_client.py 
-
-    values = (1, 'ab', 2.7)    
-    sending '0100000061620000cdcc2c40'
-    closing socket
+   $ python3 source/socket/socket_binary_client.py
+   values = (1, b'ab', 2.7)
+   sending b'0100000061620000cdcc2c40'
+   closing socket
 
 And the server shows the values it receives:
 
-::
+.. code-block:: none
 
-    $ python ./socket_binary_server.py 
-    
-    waiting for a connection
-    received '0100000061620000cdcc2c40'
-    unpacked: (1, 'ab', 2.700000047683716)
-    
-    waiting for a connection
+   $ python3 socket_binary_server.py
+   
+   waiting for a connection
+   received b'0100000061620000cdcc2c40'
+   unpacked: (1, b'ab', 2.700000047683716)
+   
+   waiting for a connection
 
 The floating point value loses some precision as it is packed and
 unpacked, but otherwise the data is transmitted as expected.  One
