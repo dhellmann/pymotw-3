@@ -186,7 +186,7 @@ produces:
 
     apu
     
-    $ python3.5 ./socket_echo_client_explicit.py hubert.hellfly.net
+    $ python3 ./socket_echo_client_explicit.py hubert.hellfly.net
     connecting to hubert.hellfly.net port 10000
     sending b'This is the message.  It will be repeated.'
     received b'This is the mess'
