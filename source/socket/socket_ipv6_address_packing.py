@@ -3,7 +3,7 @@
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
 #
-"""Converting between string and binary representations of addresses.
+"""String and binary representations of addresses.
 """
 #end_pymotw_header
 

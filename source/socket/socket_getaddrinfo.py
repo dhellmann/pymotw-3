@@ -9,14 +9,17 @@
 
 import socket
 
+
 def get_constants(prefix):
     """Create a dictionary mapping socket module
     constants to their names.
     """
-    return dict( (getattr(socket, n), n)
-                 for n in dir(socket)
-                 if n.startswith(prefix)
-                 )
+    return {
+        getattr(socket, n): n
+        for n in dir(socket)
+        if n.startswith(prefix)
+    }
+
 
 families = get_constants('AF_')
 types = get_constants('SOCK_')

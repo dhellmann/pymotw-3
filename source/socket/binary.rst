@@ -58,5 +58,4 @@ represented as a string, but four when packed into the structure.
 
 .. seealso::
 
-    :mod:`struct`
-        Converting between strings and other data types.
+   * :mod:`struct` -- Converting between strings and other data types.

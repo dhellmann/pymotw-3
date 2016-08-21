@@ -9,7 +9,7 @@
 
 import socket
 
-hostname, aliases, addresses = socket.gethostbyaddr('192.168.1.8')
+hostname, aliases, addresses = socket.gethostbyaddr('10.9.0.10')
 
 print('Hostname :', hostname)
 print('Aliases  :', aliases)

@@ -11,7 +11,7 @@ closed, and needs to be removed each time the server starts up.  The
 echo server example from earlier can be updated to use UDS by making a
 few changes in the setup section.
 
-.. literalinclude:: socket_echo_server_uds.py 
+.. literalinclude:: socket_echo_server_uds.py
    :lines: 10-21
 
 The :class:`socket` needs to be created with address family

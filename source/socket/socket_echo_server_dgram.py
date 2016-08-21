@@ -3,7 +3,7 @@
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
 #
-"""Echo the data to the client without printing it on the console.
+"""Datagram echo server
 """
 #end_pymotw_header
 
@@ -21,11 +21,11 @@ sock.bind(server_address)
 while True:
     print('\nwaiting to receive message')
     data, address = sock.recvfrom(4096)
-    
+
     print('received %s bytes from %s' %
           (len(data), address))
     print(data)
-    
+
     if data:
         sent = sock.sendto(data, address)
         print('sent %s bytes back to %s' %

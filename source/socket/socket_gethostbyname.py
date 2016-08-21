@@ -9,8 +9,15 @@
 
 import socket
 
-for host in [ 'homer', 'www', 'www.python.org', 'nosuchname' ]:
+HOSTS = [
+    'pymotw.org',
+    'www',
+    'www.python.org',
+    'nosuchname',
+]
+
+for host in HOSTS:
     try:
         print('%s : %s' % (host, socket.gethostbyname(host)))
-    except socket.error, msg:
+    except socket.error as msg:
         print('%s : %s' % (host, msg))

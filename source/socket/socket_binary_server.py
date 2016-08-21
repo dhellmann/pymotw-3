@@ -29,6 +29,6 @@ while True:
 
         unpacked_data = unpacker.unpack(data)
         print('unpacked:', unpacked_data)
-        
+
     finally:
         connection.close()

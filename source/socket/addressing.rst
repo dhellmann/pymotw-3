@@ -63,11 +63,11 @@ Looking up Hosts on the Network
 ===============================
 
 :mod:`socket` includes functions to interface with the domain name
-services on the network so a program can convert the host name of a server into its
-numerical network address.  Applications do not need to convert
-addresses explicitly before using them to connect to a server, but it
-can be useful when reporting errors to include the numerical address
-as well as the name value being used.
+services on the network so a program can convert the host name of a
+server into its numerical network address.  Applications do not need
+to convert addresses explicitly before using them to connect to a
+server, but it can be useful when reporting errors to include the
+numerical address as well as the name value being used.
 
 To find the official name of the current host, use
 :func:`gethostname`.
@@ -80,9 +80,9 @@ The name returned will depend on the network settings for the current
 system, and may change if it is on a different network (such as a
 laptop attached to a wireless LAN).
 
-::
+.. code-block:: none
 
-	$ python socket_gethostname.py
+	$ python3 socket_gethostname.py
 
 	farnsworth.hellfly.net
 
@@ -189,15 +189,10 @@ to do a "reverse" lookup for the name.
 The return value is a tuple containing the full hostname, any aliases,
 and all IP addresses associated with the name.
 
-.. Do not cog this, since it depends on being on home network.
-
-::
-
-    $ python socket_gethostbyaddr.py
-    
-    Hostname : homer.hellfly.net
-    Aliases  : ['8.1.168.192.in-addr.arpa']
-    Addresses: ['192.168.1.8']
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'socket_gethostbyaddr.py'))
+.. }}}
+.. {{{end}}}
 
 Finding Service Information
 ===========================
@@ -350,17 +345,11 @@ the server, which may be different from the value used for the lookup
 if the host has any aliases, is included in the results this time.
 Without the flag, the canonical name value is left empty.
 
-.. Do not cog, since the output depends on being on home network.
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'socket_getaddrinfo_extra_args.py'))
+.. }}}
+.. {{{end}}}
 
-::
-
-    $ python socket_getaddrinfo_extra_args.py
-    
-    Family        : AF_INET
-    Type          : SOCK_STREAM
-    Protocol      : IPPROTO_TCP
-    Canonical name: homer.doughellmann.com
-    Socket address: ('192.168.1.8', 80)
 
 IP Address Representations
 ==========================
@@ -425,12 +414,13 @@ the original value.
 
 .. seealso::
 
+   * `Wikipedia: IPv6 <http://en.wikipedia.org/wiki/IPv6>`__ --
+     Article discussing Internet Protocol Version 6 (IPv6).
 
-    `Wikipedia: IPv6 <http://en.wikipedia.org/wiki/IPv6>`__
-        Article discussing Internet Protocol Version 6 (IPv6).
+   * `Wikipedia: OSI Networking Model
+     <http://en.wikipedia.org/wiki/OSI_model>`__ -- Article describing
+     the seven layer model of networking implementation.
 
-    `Wikipedia: OSI Networking Model <http://en.wikipedia.org/wiki/OSI_model>`__
-        Article describing the seven layer model of networking implementation.
-
-    `Assigned Internet Protocol Numbers <http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml>`__
-        List of standard protocol names and numbers.
+   * `Assigned Internet Protocol Numbers
+     <http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml>`__
+     -- List of standard protocol names and numbers.

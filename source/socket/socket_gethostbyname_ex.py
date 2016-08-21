@@ -9,11 +9,18 @@
 
 import socket
 
-for host in [ 'homer', 'www', 'www.python.org', 'nosuchname' ]:
+HOSTS = [
+    'hubert',
+    'www',
+    'www.python.org',
+    'nosuchname',
+]
+
+for host in HOSTS:
     print(host)
     try:
-        hostname, aliases, addresses = socket.gethostbyname_ex(host)
-        print('  Hostname:', hostname)
+        name, aliases, addresses = socket.gethostbyname_ex(host)
+        print('  Hostname:', name)
         print('  Aliases :', aliases)
         print(' Addresses:', addresses)
     except socket.error as msg:

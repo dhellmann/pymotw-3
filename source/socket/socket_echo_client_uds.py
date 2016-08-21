@@ -18,12 +18,12 @@ server_address = './uds_socket'
 print('connecting to %s' % server_address)
 try:
     sock.connect(server_address)
-except socket.error, msg:
+except socket.error as msg:
     print(msg)
     sys.exit(1)
 
 try:
-    
+
     # Send data
     message = 'This is the message.  It will be repeated.'
     print('sending "%s"' % message)
@@ -31,7 +31,7 @@ try:
 
     amount_received = 0
     amount_expected = len(message)
-    
+
     while amount_received < amount_expected:
         data = sock.recv(16)
         amount_received += len(data)

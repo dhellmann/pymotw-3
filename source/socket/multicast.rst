@@ -124,8 +124,9 @@ message are received, one from each of host ``A`` and ``B``.
 
 .. seealso::
 
-    `Wikipedia: Multicast <http://en.wikipedia.org/wiki/Multicast>`__
-        Article describing technical details of multicasting.
+   * `Wikipedia: Multicast <http://en.wikipedia.org/wiki/Multicast>`__
+     -- Article describing technical details of multicasting.
 
-    `Wikipedia: IP Multicast <http://en.wikipedia.org/wiki/IP_multicast>`__
-        Article about IP multicasting, with information about addressing.
+   * `Wikipedia: IP Multicast
+     <http://en.wikipedia.org/wiki/IP_multicast>`__ -- Article about
+     IP multicasting, with information about addressing.
