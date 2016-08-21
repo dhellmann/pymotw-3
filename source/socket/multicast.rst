@@ -34,9 +34,6 @@ then report all of the responses it receives.  Since it has no way of
 knowing how many responses to expect, it uses a timeout value on the
 socket to avoid blocking indefinitely while waiting for an answer.
 
-.. literalinclude:: socket_multicast_sender.py
-   :lines: 10-22
-
 The socket also needs to be configured with a *time-to-live* value
 (TTL) for the messages.  The TTL controls how many networks will
 receive the packet.  Set the TTL with the :const:`IP_MULTICAST_TTL`
@@ -46,40 +43,31 @@ segment.  The value can range up to 255, and should be packed into a
 single byte.
 
 .. literalinclude:: socket_multicast_sender.py
-   :lines: 24-27
+   :caption:
+   :start-after: #end_pymotw_header
 
 The rest of the sender looks like the UDP echo client, except that it
 expects multiple responses so uses a loop to call :func:`recvfrom`
 until it times out.
 
-.. literalinclude:: socket_multicast_sender.py
-   :lines: 29-
-
 Receiving Multicast Messages
 ============================
 
 The first step to establishing a multicast receiver is to create the
-UDP socket.
+UDP socket. After the regular socket is created and bound to a port,
+it can be added to the multicast group by using :func:`setsockopt` to
+change the :const:`IP_ADD_MEMBERSHIP` option.  The option value is the
+8-byte packed representation of the multicast group address followed
+by the network interface on which the server should listen for the
+traffic, identified by its IP address.  In this case, the receiver
+listens on all interfaces using :const:`INADDR_ANY`.
 
 .. literalinclude:: socket_multicast_receiver.py
-   :lines: 10-21
-
-After the regular socket is created and bound to a port, it can be
-added to the multicast group by using :func:`setsockopt` to change the
-:const:`IP_ADD_MEMBERSHIP` option.  The option value is the 8-byte
-packed representation of the multicast group address followed by the
-network interface on which the server should listen for the traffic,
-identified by its IP address.  In this case, the receiver listens on
-all interfaces using :const:`INADDR_ANY`.
-
-.. literalinclude:: socket_multicast_receiver.py
-   :lines: 23-27
+   :caption:
+   :start-after: #end_pymotw_header
 
 The main loop for the receiver is just like the regular UDP echo
 server.
-
-.. literalinclude:: socket_multicast_receiver.py
-   :lines: 29-
 
 Example Output
 ==============
