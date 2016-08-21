@@ -46,7 +46,7 @@ Client and Server Together
 
 Running the server produces:
 
-.. code-block::
+.. code-block:: none
 
    $ python3 socket_echo_server_dgram.py
    starting up on localhost port 10000

@@ -79,7 +79,7 @@ Since the UDS socket is represented by a node on the file system,
 standard file system permissions can be used to control access to the
 server.
 
-::
+.. code-block:: none
 
     $ ls -l ./uds_socket
 
@@ -94,7 +94,7 @@ server.
 Running the client as a user other than ``root`` now results in an
 error because the process does not have permission to open the socket.
 
-::
+.. code-block:: none
 
     $ python3 socket_echo_client_uds.py 
     

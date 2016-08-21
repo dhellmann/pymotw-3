@@ -228,7 +228,7 @@ To see the actual address being used by a socket, call its
 :command:`netstat` again shows it listening for incoming connections
 on any address.
 
-::
+.. code-block:: none
 
     $ netstat -an
 
