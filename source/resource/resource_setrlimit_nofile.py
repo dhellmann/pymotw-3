@@ -22,7 +22,7 @@ random = open('/dev/random', 'r')
 print('random has fd =', random.fileno())
 try:
     null = open('/dev/null', 'w')
-except IOError, err:
+except IOError as err:
     print(err)
 else:
     print('null has fd =', null.fileno())

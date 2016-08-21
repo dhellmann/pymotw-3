@@ -12,6 +12,7 @@ import sys
 import signal
 import time
 
+
 # Set up a signal handler to notify us
 # when we run out of time.
 def time_expired(n, stack):

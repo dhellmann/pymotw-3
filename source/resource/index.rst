@@ -36,18 +36,18 @@ many resources.
 .. cog.out(run_script(cog.inFile, 'resource_getrusage.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python resource_getrusage.py
+	$ python3 resource_getrusage.py
 	
-	User time                 (ru_utime  ) = 0.013974
-	System time               (ru_stime  ) = 0.013182
-	Max. Resident Set Size    (ru_maxrss ) = 5378048
+	User time                 (ru_utime  ) = 0.018414
+	System time               (ru_stime  ) = 0.004652
+	Max. Resident Set Size    (ru_maxrss ) = 6455296
 	Shared Memory Size        (ru_ixrss  ) = 0
 	Unshared Memory Size      (ru_idrss  ) = 0
 	Stack Size                (ru_isrss  ) = 0
 	Block inputs              (ru_inblock) = 0
-	Block outputs             (ru_oublock) = 1
+	Block outputs             (ru_oublock) = 0
 
 .. {{{end}}}
 
@@ -69,20 +69,20 @@ the operating system.
 .. cog.out(run_script(cog.inFile, 'resource_getrlimit.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python resource_getrlimit.py
+	$ python3 resource_getrlimit.py
 	
 	Resource limits (soft/hard):
-	core file size          0 / 9223372036854775807
-	CPU time                9223372036854775807 / 9223372036854775807
-	file size               9223372036854775807 / 9223372036854775807
-	heap size               9223372036854775807 / 9223372036854775807
-	stack size              8388608 / 67104768
-	resident set size       9223372036854775807 / 9223372036854775807
-	number of processes     266 / 532
-	number of open files    7168 / 9223372036854775807
-	lockable memory address 9223372036854775807 / 9223372036854775807
+	core file size          0/9223372036854775807
+	CPU time                9223372036854775807/9223372036854775807
+	file size               9223372036854775807/9223372036854775807
+	heap size               9223372036854775807/9223372036854775807
+	stack size              8388608/67104768
+	resident set size       9223372036854775807/9223372036854775807
+	number of processes     709/1064
+	number of open files    7168/9223372036854775807
+	lockable memory address 9223372036854775807/9223372036854775807
 
 .. {{{end}}}
 
@@ -99,9 +99,9 @@ files allowed, changing it to a smaller soft limit than the default.
 .. cog.out(run_script(cog.inFile, 'resource_setrlimit_nofile.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python resource_setrlimit_nofile.py
+	$ python3 resource_setrlimit_nofile.py
 	
 	Soft limit starts as  : 7168
 	Soft limit changed to : 4
@@ -125,15 +125,15 @@ them, but in this case it just prints a message and exits.
 .. cog.out(run_script(cog.inFile, 'resource_setrlimit_cpu.py', ignore_error=True))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python resource_setrlimit_cpu.py
+	$ python3 resource_setrlimit_cpu.py
 	
 	Soft limit starts as  : 9223372036854775807
 	Soft limit changed to : 1
 	
-	Starting: Sat Dec  4 15:02:57 2010
-	EXPIRED : Sat Dec  4 15:02:58 2010
+	Starting: Sun Aug 21 18:39:09 2016
+	EXPIRED : Sun Aug 21 18:39:10 2016
 	(time ran out)
 
 .. {{{end}}}
