@@ -1,6 +1,6 @@
-========================================
- resource -- System Resource Management
-========================================
+=========================================
+ resource --- System Resource Management
+=========================================
 
 .. module:: resource
     :synopsis: System resource management
@@ -86,7 +86,7 @@ the operating system.
 
 .. {{{end}}}
 
-The limits can be changed with :func:`setrlimit`.  
+The limits can be changed with :func:`setrlimit`.
 
 .. literalinclude:: resource_setrlimit_nofile.py
     :caption:
@@ -138,11 +138,8 @@ them, but in this case it just prints a message and exits.
 
 .. {{{end}}}
 
-
 .. seealso::
 
-    `resource <http://docs.python.org/library/resource.html>`_
-        The standard library documentation for this module.
+    * :pydoc:`resource`
 
-    :mod:`signal`
-        For details on registering signal handlers.
+    * :mod:`signal` -- For details on registering signal handlers.
