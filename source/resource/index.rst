@@ -6,7 +6,6 @@
     :synopsis: System resource management
 
 :Purpose: Manage the system resource limits for a Unix program.
-:Python Version: 1.5.2 and later
 
 The functions in :mod:`resource` probe the current system resources
 consumed by a process, and place limits on them to control how much
@@ -15,7 +14,7 @@ load a program can impose on a system.
 Current Usage
 =============
 
-Use :func:`getrusage()` to probe the resources used by the current
+Use :func:`getrusage` to probe the resources used by the current
 process and/or its children.  The return value is a data structure
 containing several resource metrics based on the current state of the
 system.
@@ -26,8 +25,8 @@ system.
   to the standard library documentation for :mod:`resource` for a more
   complete list.
 
-.. include:: resource_getrusage.py
-    :literal:
+.. literalinclude:: resource_getrusage.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Because the test program is extremely simple, it does not use very
@@ -58,8 +57,8 @@ Resource Limits
 Separate from the current actual usage, it is possible to check the
 *limits* imposed on the application, and then change them.
 
-.. include:: resource_getrlimit.py
-    :literal:
+.. literalinclude:: resource_getrlimit.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The return value for each limit is a tuple containing the *soft* limit
@@ -87,10 +86,10 @@ the operating system.
 
 .. {{{end}}}
 
-The limits can be changed with :func:`setrlimit()`.  
+The limits can be changed with :func:`setrlimit`.  
 
-.. include:: resource_setrlimit_nofile.py
-    :literal:
+.. literalinclude:: resource_setrlimit_nofile.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example uses :const:`RLIMIT_NOFILE` to control the number of open
@@ -115,8 +114,8 @@ It can also be useful to limit the amount of CPU time a process should
 consume, to avoid using too much.  When the process runs past the
 allotted amount of time, it sent a :const:`SIGXCPU` signal.
 
-.. include:: resource_setrlimit_cpu.py
-    :literal:
+.. literalinclude:: resource_setrlimit_cpu.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Normally the signal handler should flush all open files and close
