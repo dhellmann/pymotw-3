@@ -10,9 +10,11 @@ existing services remotely.
 
 The low-level :mod:`socket` library provides direct access to the
 native C socket library, and can be used to communicate with any
-network service.  :mod:`select` watches multiple sockets
-simultaneously, and is useful for allowing network servers to
-communicate with multiple clients simultaneously.
+network service.  :mod:`selectors` provides a high-level interface for
+watching multiple sockets simultaneously, and is useful for allowing
+network servers to communicate with multiple clients
+simultaneously. :mod:`select` provides the low-level APIs used by
+:mod:`selectors`.
 
 The frameworks in :mod:`socketserver` abstract out a lot of the
 repetitive work necessary to create a new network server.  The classes
@@ -24,8 +26,6 @@ the application.
    :maxdepth: 1
 
    socket/index
+   selectors/index
    select/index
    socketserver/index
-
-..
-   selectors
