@@ -3,8 +3,8 @@ Test Data
 
 This text produced by a Lorem Ipsum generator is used as sample input.
 
-.. include:: linecache_data.py
-    :literal:
+.. literalinclude:: linecache_data.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Reading Specific Lines
@@ -13,8 +13,8 @@ Reading Specific Lines
 The line numbers of files read by the :mod:`linecache` module start
 with 1, but normally lists start indexing the array from 0.
 
-.. include:: linecache_getline.py
-    :literal:
+.. literalinclude:: linecache_getline.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Each line returned includes a trailing newline.
@@ -41,8 +41,8 @@ Handling Blank Lines
 The return value always includes the newline at the end of the line,
 so if the line is empty the return value is just the newline.
 
-.. include:: linecache_empty_line.py
-    :literal:
+.. literalinclude:: linecache_empty_line.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Line eight of the input file contains no text.
@@ -65,8 +65,8 @@ Error Handling
 If the requested line number falls out of the range of valid lines in the
 file, :func:`getline` returns an empty string. 
 
-.. include:: linecache_out_of_range.py
-    :literal:
+.. literalinclude:: linecache_out_of_range.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The input file only has 12 lines, so requesting line 500 is like
@@ -86,8 +86,8 @@ trying to read past the end of the file.
 
 Reading from a file that does not exist is handled in the same way.
 
-.. include:: linecache_missing_file.py
-    :literal:
+.. literalinclude:: linecache_missing_file.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The module never raises an exception when the caller tries to read data.

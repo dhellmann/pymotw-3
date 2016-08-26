@@ -5,8 +5,8 @@ Since :mod:`linecache` is used so heavily when producing tracebacks,
 one of its key features is the ability to find Python source modules
 in the import path by specifying the base name of the module. 
 
-.. include:: linecache_path_search.py
-    :literal:
+.. literalinclude:: linecache_path_search.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The cache population code in :mod:`linecache` searches
