@@ -21,4 +21,4 @@ PATHS = [
 ]
 
 for path in PATHS:
-    print('%21r :' % path, os.path.splitext(path))
+    print('{!r:>21} : {!r}'.format(path, os.path.splitext(path)))

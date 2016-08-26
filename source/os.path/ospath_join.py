@@ -17,4 +17,4 @@ PATHS = [
 ]
 
 for parts in PATHS:
-    print(parts, ': %r' % os.path.join(*parts))
+    print('{} : {!r}'.format(parts, os.path.join(*parts)))

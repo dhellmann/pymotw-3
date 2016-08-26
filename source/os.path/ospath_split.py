@@ -19,4 +19,4 @@ PATHS = [
 ]
 
 for path in PATHS:
-    print('%17r : %s' % (path, os.path.split(path)))
+    print('{!r:>17} : {}'.format(path, os.path.split(path)))

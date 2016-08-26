@@ -223,9 +223,9 @@ unchanged, as with ``~nosuchuser`` in this example.
 
 	$ python3 ospath_expanduser.py
 	
-	           ~ : /Users/dhellmann
-	  ~dhellmann : /Users/dhellmann
-	 ~nosuchuser : ~nosuchuser
+	            '~' : '/Users/dhellmann'
+	   '~dhellmann' : '/Users/dhellmann'
+	  '~nosuchuser' : '~nosuchuser'
 
 .. {{{end}}}
 
@@ -273,9 +273,9 @@ evaluated and collapsed.
 
 	$ python3 ospath_normpath.py
 	
-	     one//two//three : one/two/three
-	   one/./two/./three : one/two/three
-	one/../alt/two/three : alt/two/three
+	     'one//two//three' : 'one/two/three'
+	   'one/./two/./three' : 'one/two/three'
+	'one/../alt/two/three' : 'alt/two/three'
 
 .. {{{end}}}
 
@@ -330,7 +330,7 @@ represented in bytes.
 	$ python3 ospath_properties.py
 	
 	File         : ospath_properties.py
-	Access time  : Fri Aug 26 16:13:04 2016
+	Access time  : Fri Aug 26 16:21:37 2016
 	Modified time: Fri Aug 26 15:50:48 2016
 	Change time  : Fri Aug 26 15:50:49 2016
 	Size         : 481
