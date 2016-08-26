@@ -41,9 +41,9 @@ Each line returned includes a trailing newline.
 .. cog.out(run_script(cog.inFile, 'linecache_getline.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python linecache_getline.py
+	$ python3 linecache_getline.py
 	
 	SOURCE:
 	'fermentum id, nonummy a, nonummy sit amet, ligula. Curabitur'
@@ -69,9 +69,9 @@ Line eight of the input file contains no text.
 .. cog.out(run_script(cog.inFile, 'linecache_empty_line.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python linecache_empty_line.py
+	$ python3 linecache_empty_line.py
 	
 	BLANK : '\n'
 
@@ -94,9 +94,9 @@ trying to read past the end of the file.
 .. cog.out(run_script(cog.inFile, 'linecache_out_of_range.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python linecache_out_of_range.py
+	$ python3 linecache_out_of_range.py
 	
 	NOT THERE: '' includes 0 characters
 
@@ -114,9 +114,9 @@ The module never raises an exception when the caller tries to read data.
 .. cog.out(run_script(cog.inFile, 'linecache_missing_file.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python linecache_missing_file.py
+	$ python3 linecache_missing_file.py
 	
 	NO FILE: ''
 
@@ -144,9 +144,9 @@ the file from the standard library is found instead.
 ..                    break_lines_at=76, line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python linecache_path_search.py
+	$ python3 linecache_path_search.py
 	
 	MODULE:
 	'This is intended to read lines from modules imported -- hence if a
