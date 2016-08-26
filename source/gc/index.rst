@@ -38,10 +38,10 @@ class.
 .. cog.out(run_script(cog.inFile, 'gc_get_referents.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python gc_get_referents.py
-
+	$ python3 gc_get_referents.py
+	
 	Linking nodes Graph(one).next = Graph(two)
 	Linking nodes Graph(two).next = Graph(three)
 	Linking nodes Graph(three).next = Graph(one)
@@ -73,31 +73,30 @@ the :class:`Graph` instances, and hold their instance attributes.
 .. cog.out(run_script(cog.inFile, 'gc_get_referents_cycles.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python gc_get_referents_cycles.py
-
+	$ python3 gc_get_referents_cycles.py
+	
 	Linking nodes Graph(one).next = Graph(two)
 	Linking nodes Graph(two).next = Graph(three)
 	Linking nodes Graph(three).next = Graph(one)
 	
 	Examining: Graph(three)
-	Examining: {'name': 'three', 'next': Graph(one)}
+	Examining: {'next': Graph(one), 'name': 'three'}
 	Examining: Graph(one)
-	Examining: {'name': 'one', 'next': Graph(two)}
+	Examining: {'next': Graph(two), 'name': 'one'}
 	Examining: Graph(two)
-	Examining: {'name': 'two', 'next': Graph(three)}
+	Examining: {'next': Graph(three), 'name': 'two'}
 	
 	Found a cycle to Graph(three):
-	  0: Graph(three)
-	  1: {'name': 'three', 'next': Graph(one)}
-	  2: Graph(one)
-	  3: {'name': 'one', 'next': Graph(two)}
-	  4: Graph(two)
-	  5: {'name': 'two', 'next': Graph(three)}
+	  0:  Graph(three)
+	  1:  {'name': 'three', 'next': Graph(one)}
+	  2:  Graph(one)
+	  3:  {'name': 'one', 'next': Graph(two)}
+	  4:  Graph(two)
+	  5:  {'name': 'two', 'next': Graph(three)}
 
 .. {{{end}}}
-
 
 Forcing Garbage Collection
 ==========================
@@ -122,95 +121,23 @@ three objects with their instance attribute dictionaries.
 .. cog.out(run_script(cog.inFile, 'gc_collect.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python gc_collect.py
-
+	$ python3 gc_collect.py
+	
 	Linking nodes Graph(one).next = Graph(two)
 	Linking nodes Graph(two).next = Graph(three)
 	Linking nodes Graph(three).next = Graph(one)
 	
 	Collecting 0 ...
 	Unreachable objects: 6
-	Remaining Garbage:[]
+	Remaining Garbage: []
 	
 	Collecting 1 ...
 	Unreachable objects: 0
-	Remaining Garbage:[]
-	
+	Remaining Garbage: []
 
 .. {{{end}}}
-
-If :class:`Graph` has a :func:`__del__` method, however, the garbage
-collector cannot break the cycle.  
-
-.. literalinclude:: gc_collect_with_del.py
-   :caption:
-   :start-after: #end_pymotw_header
-
-Because more than one object in the cycle has a finalizer method, the
-order in which the objects need to be finalized and then garbage
-collected cannot be determined, so the garbage collector plays it safe
-and keeps the objects.
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'gc_collect_with_del.py'))
-.. }}}
-
-::
-
-	$ python gc_collect_with_del.py
-
-	Graph(one).next = Graph(two)
-	Graph(two).next = Graph(three)
-	Graph(three).next = Graph(one)
-	Collecting...
-	Unreachable objects: 6
-	Remaining Garbage:[Graph(one), Graph(two), Graph(three)]
-
-.. {{{end}}}
-
-When the cycle is broken, the :class:`Graph` instances can be
-collected.
-
-.. literalinclude:: gc_collect_break_cycle.py
-   :caption:
-   :start-after: #end_pymotw_header
-
-Because ``gc.garbage`` holds a reference to the objects from the
-previous garbage collection run, it needs to be cleared out after the
-cycle is broken to reduce the reference counts so they can be
-finalized and freed.
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'gc_collect_break_cycle.py'))
-.. }}}
-
-::
-
-	$ python gc_collect_break_cycle.py
-
-	Linking nodes Graph(one).next = Graph(two)
-	Linking nodes Graph(two).next = Graph(three)
-	Linking nodes Graph(three).next = Graph(one)
-	
-	Collecting...
-	Unreachable objects: 6
-	Remaining Garbage:[Graph(one), Graph(two), Graph(three)]
-	
-	Breaking the cycle
-	Linking nodes Graph(one).next = None
-	Removing references in gc.garbage
-	Graph(two).__del__()
-	Graph(three).__del__()
-	Graph(one).__del__()
-	
-	Collecting...
-	Unreachable objects: 0
-	Remaining Garbage:[]
-
-.. {{{end}}}
-
 
 Finding References to Objects that Cannot be Collected
 ======================================================
@@ -234,40 +161,30 @@ the unexpected relationship.
 .. cog.out(run_script(cog.inFile, 'gc_get_referrers.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python gc_get_referrers.py
-
+	$ python3 gc_get_referrers.py
+	
 	Linking nodes Graph(one).next = Graph(two)
 	Linking nodes Graph(two).next = Graph(three)
 	Linking nodes Graph(three).next = Graph(one)
 	
 	Collecting...
+	Graph(one).__del__()
+	Graph(two).__del__()
+	Graph(three).__del__()
 	Unreachable objects: 6
-	Remaining Garbage:[Graph(one), Graph(two), Graph(three)]
+	Remaining Garbage: []
 	
 	Clearing referrers:
-	Looking for references to Graph(one)
-	Looking for references to {'name': 'three', 'next': Graph(one)}
-	Linking nodes Graph(three).next = None
-	Looking for references to Graph(two)
-	Looking for references to {'name': 'one', 'next': Graph(two)}
-	Linking nodes Graph(one).next = None
-	Looking for references to Graph(three)
-	Looking for references to {'name': 'two', 'next': Graph(three)}
-	Linking nodes Graph(two).next = None
 	
 	Clearing gc.garbage:
-	Graph(three).__del__()
-	Graph(two).__del__()
-	Graph(one).__del__()
 	
 	Collecting...
 	Unreachable objects: 0
-	Remaining Garbage:[]
+	Remaining Garbage: []
 
 .. {{{end}}}
-
 
 Collection Thresholds and Generations
 =====================================
@@ -295,18 +212,17 @@ The return value is a tuple with the threshold for each generation.
 .. cog.out(run_script(cog.inFile, 'gc_get_threshold.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python gc_get_threshold.py
-
+	$ python3 gc_get_threshold.py
+	
 	(700, 10, 10)
 
 .. {{{end}}}
 
 The thresholds can be changed with :func:`set_threshold`.  This
-example program reads the threshold for generation ``0`` from the
-command line, adjusts the :mod:`gc` settings, then allocates a series
-of objects.
+example program uses a command line argument to set the threshold for
+generation ``0`` then allocates a series of objects.
 
 .. literalinclude:: gc_threshold.py
    :caption:
@@ -319,36 +235,46 @@ different times, shown here because debugging is enabled.
 .. cog.out(run_script(cog.inFile, '-u gc_threshold.py 5'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python -u gc_threshold.py 5
-
+	$ python3 -u gc_threshold.py 5
+	
+	gc: collecting generation 1...
+	gc: objects in each generation: 240 1439 4709
+	gc: done, 0.0003s elapsed
 	Thresholds: (5, 1, 1)
 	Clear the collector by forcing a run
 	gc: collecting generation 2...
-	gc: objects in each generation: 218 2683 0
-	gc: done, 0.0008s elapsed.
+	gc: objects in each generation: 1 0 6282
+	gc: done, 0.0010s elapsed
 	
+	gc: collecting generation 0...
+	gc: objects in each generation: 5 0 6275
+	gc: done, 0.0000s elapsed
 	Creating objects
 	gc: collecting generation 0...
-	gc: objects in each generation: 7 0 2819
-	gc: done, 0.0000s elapsed.
+	gc: objects in each generation: 8 0 6275
+	gc: done, 0.0000s elapsed
 	Created 0
 	Created 1
 	Created 2
+	gc: collecting generation 1...
+	gc: objects in each generation: 9 2 6275
+	gc: done, 0.0000s elapsed
 	Created 3
 	Created 4
-	gc: collecting generation 0...
-	gc: objects in each generation: 6 4 2819
-	gc: done, 0.0000s elapsed.
 	Created 5
+	gc: collecting generation 0...
+	gc: objects in each generation: 9 0 6280
+	gc: done, 0.0000s elapsed
 	Created 6
 	Created 7
 	Created 8
+	gc: collecting generation 0...
+	gc: objects in each generation: 9 3 6280
+	gc: done, 0.0000s elapsed
 	Created 9
-	gc: collecting generation 2...
-	gc: objects in each generation: 5 6 2817
-	gc: done, 0.0007s elapsed.
+	Exiting
 
 .. {{{end}}}
 
@@ -358,49 +284,60 @@ A smaller threshold causes the sweeps to run more frequently.
 .. cog.out(run_script(cog.inFile, '-u gc_threshold.py 2'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python -u gc_threshold.py 2
-
+	$ python3 -u gc_threshold.py 2
+	
+	gc: collecting generation 1...
+	gc: objects in each generation: 240 1439 4709
+	gc: done, 0.0006s elapsed
 	Thresholds: (2, 1, 1)
 	Clear the collector by forcing a run
 	gc: collecting generation 2...
-	gc: objects in each generation: 218 2683 0
-	gc: done, 0.0008s elapsed.
+	gc: objects in each generation: 1 0 6282
+	gc: done, 0.0028s elapsed
+	gc: collecting generation 0...
+	gc: objects in each generation: 3 0 6275
+	gc: done, 0.0000s elapsed
 	
 	Creating objects
 	gc: collecting generation 0...
-	gc: objects in each generation: 3 0 2819
-	gc: done, 0.0000s elapsed.
-	gc: collecting generation 0...
-	gc: objects in each generation: 4 3 2819
-	gc: done, 0.0000s elapsed.
+	gc: objects in each generation: 6 0 6275
+	gc: done, 0.0000s elapsed
+	gc: collecting generation 1...
+	gc: objects in each generation: 3 4 6275
+	gc: done, 0.0000s elapsed
 	Created 0
 	Created 1
-	gc: collecting generation 1...
-	gc: objects in each generation: 3 4 2819
-	gc: done, 0.0000s elapsed.
+	gc: collecting generation 0...
+	gc: objects in each generation: 4 0 6277
+	gc: done, 0.0000s elapsed
 	Created 2
+	gc: collecting generation 0...
+	gc: objects in each generation: 8 1 6277
+	gc: done, 0.0000s elapsed
 	Created 3
 	Created 4
-	gc: collecting generation 0...
-	gc: objects in each generation: 5 0 2824
-	gc: done, 0.0000s elapsed.
+	gc: collecting generation 1...
+	gc: objects in each generation: 4 3 6277
+	gc: done, 0.0000s elapsed
 	Created 5
+	gc: collecting generation 0...
+	gc: objects in each generation: 8 0 6281
+	gc: done, 0.0000s elapsed
 	Created 6
 	Created 7
 	gc: collecting generation 0...
-	gc: objects in each generation: 5 3 2824
-	gc: done, 0.0000s elapsed.
+	gc: objects in each generation: 4 2 6281
+	gc: done, 0.0000s elapsed
 	Created 8
+	gc: collecting generation 1...
+	gc: objects in each generation: 8 3 6281
+	gc: done, 0.0000s elapsed
 	Created 9
-	gc: collecting generation 2...
-	gc: objects in each generation: 2 6 2820
-	gc: done, 0.0008s elapsed.
+	Exiting
 
 .. {{{end}}}
-
-
 
 Debugging
 =========
@@ -408,9 +345,8 @@ Debugging
 Debugging memory leaks can be challenging.  :mod:`gc` includes several
 options to expose the inner workings to make the job easier.  The
 options are bit-flags meant to be combined and passed to
-:func:`set_debug` to configure the garbage collector while the
-program is running.  Debugging information is printed to
-:data:`sys.stderr`.
+:func:`set_debug` to configure the garbage collector while the program
+is running.  Debugging information is printed to :data:`sys.stderr`.
 
 The :const:`DEBUG_STATS` flag turns on statistics reporting, causing
 the garbage collector to report when it is running, the number of
@@ -429,24 +365,29 @@ interpreter exits.
 .. cog.out(run_script(cog.inFile, 'gc_debug_stats.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python gc_debug_stats.py
-
+	$ python3 gc_debug_stats.py
+	
 	gc: collecting generation 2...
-	gc: objects in each generation: 83 2683 0
-	gc: done, 0.0010s elapsed.
+	gc: objects in each generation: 123 1063 4711
+	gc: done, 0.0056s elapsed
+	Exiting
 	gc: collecting generation 2...
-	gc: objects in each generation: 0 0 2747
-	gc: done, 0.0008s elapsed.
+	gc: objects in each generation: 1 0 5880
+	gc: done, 0.0037s elapsed
+	gc: collecting generation 2...
+	gc: objects in each generation: 99 0 5688
+	gc: done, 2114 unreachable, 0 uncollectable, 0.0018s elapsed
+	gc: collecting generation 2...
+	gc: objects in each generation: 0 0 3118
+	gc: done, 292 unreachable, 0 uncollectable, 0.0006s elapsed
 
 .. {{{end}}}
 
 Enabling :const:`DEBUG_COLLECTABLE` and :const:`DEBUG_UNCOLLECTABLE`
 causes the collector to report on whether each object it examines can
-or cannot be collected.  These flags need to be combined with
-:const:`DEBUG_OBJECTS` so :mod:`gc` will print information about the
-objects being held.
+or cannot be collected.
 
 .. literalinclude:: gc_debug_collectable_objects.py
    :caption:
@@ -469,68 +410,32 @@ and cannot be freed.
 .. cog.out(run_script(cog.inFile, '-u gc_debug_collectable_objects.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python -u gc_debug_collectable_objects.py
-
-	Creating Graph 0x100d99ad0 (one)
-	Creating Graph 0x100d99b10 (two)
+	$ python3 -u gc_debug_collectable_objects.py
+	
+	Creating Graph 0x1011c71d0 (one)
+	Creating Graph 0x1011c7278 (two)
 	Linking nodes Graph(one).next = Graph(two)
 	Linking nodes Graph(two).next = Graph(one)
-	Creating CleanupGraph 0x100d99b50 (three)
-	Creating CleanupGraph 0x100d99b90 (four)
-	Creating CleanupGraph 0x100d99bd0 (five)
+	Creating CleanupGraph 0x1011c7358 (three)
+	Creating CleanupGraph 0x1011c7390 (four)
+	Creating CleanupGraph 0x1011c73c8 (five)
 	Linking nodes CleanupGraph(four).next = CleanupGraph(five)
 	Linking nodes CleanupGraph(five).next = CleanupGraph(four)
 	CleanupGraph(three).__del__()
 	
 	Collecting
-	gc: collectable <Graph 0x100d99ad0>
-	gc: collectable <Graph 0x100d99b10>
-	gc: collectable <dict 0x100c5b8e0>
-	gc: collectable <dict 0x100c5cb70>
-	gc: uncollectable <CleanupGraph 0x100d99b90>
-	gc: uncollectable <CleanupGraph 0x100d99bd0>
-	gc: uncollectable <dict 0x100c5cc90>
-	gc: uncollectable <dict 0x100c5cff0>
-	Done
-
-.. {{{end}}}
-
-The flag :const:`DEBUG_INSTANCES` works much the same way for
-instances of old-style classes (not derived from :class:`object`).
-
-.. literalinclude:: gc_debug_collectable_instances.py
-   :caption:
-   :start-after: #end_pymotw_header
-
-In this case, however, the :class:`dict` objects holding the instance
-attributes are not included in the output.
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, '-u gc_debug_collectable_instances.py'))
-.. }}}
-
-::
-
-	$ python -u gc_debug_collectable_instances.py
-
-	Creating Graph 0x100da23f8 (one)
-	Creating Graph 0x100da2440 (two)
-	Linking nodes Graph(one).next = Graph(two)
-	Linking nodes Graph(two).next = Graph(one)
-	Creating CleanupGraph 0x100da24d0 (three)
-	Creating CleanupGraph 0x100da2518 (four)
-	Creating CleanupGraph 0x100da2560 (five)
-	Linking nodes CleanupGraph(four).next = CleanupGraph(five)
-	Linking nodes CleanupGraph(five).next = CleanupGraph(four)
-	CleanupGraph(three).__del__()
-	
-	Collecting
-	gc: collectable <Graph instance at 0x100da23f8>
-	gc: collectable <Graph instance at 0x100da2440>
-	gc: uncollectable <CleanupGraph instance at 0x100da2518>
-	gc: uncollectable <CleanupGraph instance at 0x100da2560>
+	gc: collectable <Graph 0x1011c71d0>
+	gc: collectable <Graph 0x1011c7278>
+	gc: collectable <dict 0x101094108>
+	gc: collectable <dict 0x101094148>
+	gc: collectable <CleanupGraph 0x1011c7390>
+	gc: collectable <CleanupGraph 0x1011c73c8>
+	gc: collectable <dict 0x1011ce548>
+	gc: collectable <dict 0x1011ce488>
+	CleanupGraph(four).__del__()
+	CleanupGraph(five).__del__()
 	Done
 
 .. {{{end}}}
@@ -552,25 +457,27 @@ the object id when each object is created.
 .. cog.out(run_script(cog.inFile, '-u gc_debug_saveall.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python -u gc_debug_saveall.py
-
+	$ python3 -u gc_debug_saveall.py
+	
 	CleanupGraph(three).__del__()
 	Collecting
-	gc: collectable <Graph 0x100d99b10>
-	gc: collectable <Graph 0x100d99b50>
-	gc: collectable <dict 0x100c5c740>
-	gc: collectable <dict 0x100c5cb60>
-	gc: uncollectable <CleanupGraph 0x100d99bd0>
-	gc: uncollectable <CleanupGraph 0x100d99c10>
-	gc: uncollectable <dict 0x100c5cc80>
-	gc: uncollectable <dict 0x100c5cfe0>
+	gc: collectable <Graph 0x1013e7240>
+	gc: collectable <Graph 0x1013e7320>
+	gc: collectable <dict 0x100794108>
+	gc: collectable <dict 0x100794148>
+	gc: collectable <CleanupGraph 0x1013e7400>
+	gc: collectable <CleanupGraph 0x1013e7438>
+	gc: collectable <dict 0x1013ee548>
+	gc: collectable <dict 0x1013ee488>
+	CleanupGraph(four).__del__()
+	CleanupGraph(five).__del__()
 	Done
-	Retained: Graph(one) 0x100d99b10
-	Retained: Graph(two) 0x100d99b50
-	Retained: CleanupGraph(four) 0x100d99bd0
-	Retained: CleanupGraph(five) 0x100d99c10
+	Retained: Graph(one) 0x1013e7240
+	Retained: Graph(two) 0x1013e7320
+	Retained: CleanupGraph(four) 0x1013e7400
+	Retained: CleanupGraph(five) 0x1013e7438
 
 .. {{{end}}}
 
@@ -589,25 +496,27 @@ have been collected and deleted are retained.
 .. cog.out(run_script(cog.inFile, '-u gc_debug_leak.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python -u gc_debug_leak.py
-
+	$ python3 -u gc_debug_leak.py
+	
 	CleanupGraph(three).__del__()
 	Collecting
-	gc: collectable <Graph 0x100d99b10>
-	gc: collectable <Graph 0x100d99b50>
-	gc: collectable <dict 0x100c5b8d0>
-	gc: collectable <dict 0x100c5cad0>
-	gc: uncollectable <CleanupGraph 0x100d99bd0>
-	gc: uncollectable <CleanupGraph 0x100d99c10>
-	gc: uncollectable <dict 0x100c5cbf0>
-	gc: uncollectable <dict 0x100c5cf50>
+	gc: collectable <Graph 0x1013e7240>
+	gc: collectable <Graph 0x1013e7320>
+	gc: collectable <dict 0x101194108>
+	gc: collectable <dict 0x101194148>
+	gc: collectable <CleanupGraph 0x1013e7400>
+	gc: collectable <CleanupGraph 0x1013e7438>
+	gc: collectable <dict 0x1013ee548>
+	gc: collectable <dict 0x1013ee488>
+	CleanupGraph(four).__del__()
+	CleanupGraph(five).__del__()
 	Done
-	Retained: Graph(one) 0x100d99b10
-	Retained: Graph(two) 0x100d99b50
-	Retained: CleanupGraph(four) 0x100d99bd0
-	Retained: CleanupGraph(five) 0x100d99c10
+	Retained: Graph(one) 0x1013e7240
+	Retained: Graph(two) 0x1013e7320
+	Retained: CleanupGraph(four) 0x1013e7400
+	Retained: CleanupGraph(five) 0x1013e7438
 
 .. {{{end}}}
 

@@ -9,10 +9,7 @@
 
 import gc
 
-flags = (gc.DEBUG_COLLECTABLE |
-         gc.DEBUG_UNCOLLECTABLE |
-         gc.DEBUG_OBJECTS
-         )
+flags = gc.DEBUG_COLLECTABLE | gc.DEBUG_UNCOLLECTABLE
 gc.set_debug(flags)
 
 
@@ -62,3 +59,8 @@ print()
 print('Collecting')
 gc.collect()
 print('Done')
+
+# Reset the debug flags before exiting to avoid dumping a lot
+# of extra information and making the example output more
+# confusing.
+gc.set_debug(0)

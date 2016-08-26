@@ -38,3 +38,7 @@ print('Creating objects')
 objs = []
 for i in range(10):
     objs.append(MyObj(i))
+print('Exiting')
+
+# Turn off debugging
+gc.set_debug(0)

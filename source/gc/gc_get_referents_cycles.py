@@ -9,7 +9,7 @@
 
 import gc
 import pprint
-import Queue
+import queue
 
 
 class Graph:
@@ -37,7 +37,7 @@ three.set_next(one)
 print()
 
 seen = set()
-to_process = Queue.Queue()
+to_process = queue.Queue()
 
 # Start with an empty object chain and Graph three.
 to_process.put(([], three))

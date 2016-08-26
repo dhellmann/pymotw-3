@@ -9,7 +9,6 @@
 
 import gc
 import pprint
-import Queue
 
 
 class Graph:

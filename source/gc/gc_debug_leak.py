@@ -60,3 +60,8 @@ print('Done')
 for o in gc.garbage:
     if isinstance(o, Graph):
         print('Retained: %s 0x%x' % (o, id(o)))
+
+# Reset the debug flags before exiting to avoid dumping a lot
+# of extra information and making the example output more
+# confusing.
+gc.set_debug(0)
