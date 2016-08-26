@@ -63,7 +63,8 @@ a file, but does not reside on disk.
 
 .. toctree::
     :maxdepth: 1
-    
+
+    os.path/index
     glob/index
     fnmatch/index
     filecmp/index
