@@ -44,3 +44,9 @@ dist/
 /source/tarfile/tarfile_compression.tar.gz
 /source/sqlite3/todo.db
 /source/os.path/broken_link
+/source/codecs/decode_error.txt
+/source/codecs/encode_error.txt
+/source/codecs/nonnative-encoded.txt
+/source/codecs/utf-16.txt
+/source/codecs/utf-32.txt
+/source/codecs/utf-8.txt

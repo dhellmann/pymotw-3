@@ -18,7 +18,7 @@ print('Raw    :', to_hex(raw_bytes, 2))
 
 # Re-open the file and let codecs detect the BOM
 with codecs.open('nonnative-encoded.txt',
-                 mode='rt',
+                 mode='r',
                  encoding='utf-16',
                  ) as f:
     decoded_text = f.read()

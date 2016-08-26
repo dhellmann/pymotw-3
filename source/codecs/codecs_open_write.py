@@ -16,7 +16,7 @@ encoding = sys.argv[1]
 filename = encoding + '.txt'
 
 print('Writing to', filename)
-with codecs.open(filename, mode='wt', encoding=encoding) as f:
+with codecs.open(filename, mode='w', encoding=encoding) as f:
     f.write(u'pi: \u03c0')
 
 # Determine the byte grouping to use for to_hex()
@@ -28,5 +28,5 @@ nbytes = {
 
 # Show the raw bytes in the file
 print('File contents:')
-with open(filename, mode='rt') as f:
+with open(filename, mode='rb') as f:
     print(to_hex(f.read(), nbytes))

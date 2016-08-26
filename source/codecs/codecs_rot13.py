@@ -8,9 +8,9 @@
 #end_pymotw_header
 
 import codecs
-from cStringIO import StringIO
+import io
 
-buffer = StringIO()
+buffer = io.StringIO()
 stream = codecs.getwriter('rot_13')(buffer)
 
 text = 'abcdefghijklmnopqrstuvwxyz'

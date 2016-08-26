@@ -8,14 +8,14 @@
 #end_pymotw_header
 
 import codecs
-from cStringIO import StringIO
+import io
 
 from codecs_to_hex import to_hex
 
-buffer = StringIO()
+buffer = io.BytesIO()
 stream = codecs.getwriter('zlib')(buffer)
 
-text = 'abcdefghijklmnopqrstuvwxyz\n' * 50
+text = b'abcdefghijklmnopqrstuvwxyz\n' * 50
 
 stream.write(text)
 stream.flush()
@@ -24,7 +24,7 @@ print('Original length :', len(text))
 compressed_data = buffer.getvalue()
 print('ZIP compressed  :', len(compressed_data))
 
-buffer = StringIO(compressed_data)
+buffer = io.BytesIO(compressed_data)
 stream = codecs.getreader('zlib')(buffer)
 
 first_line = stream.readline()

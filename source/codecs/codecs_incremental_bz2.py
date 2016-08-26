@@ -12,7 +12,7 @@ import sys
 
 from codecs_to_hex import to_hex
 
-text = 'abcdefghijklmnopqrstuvwxyz\n'
+text = b'abcdefghijklmnopqrstuvwxyz\n'
 repetitions = 50
 
 print('Text length :', len(text))
@@ -35,9 +35,9 @@ for i in range(repetitions):
     else:
         sys.stdout.write('.')
 
-bytes = ''.join(encoded)
+all_encoded = b''.join(encoded)
 print()
-print('Total encoded length:', len(bytes))
+print('Total encoded length:', len(all_encoded))
 print()
 
 # Decode the byte string one byte at a time
@@ -45,9 +45,9 @@ decoder = codecs.getincrementaldecoder('bz2')()
 decoded = []
 
 print('Decoding:', end=' ')
-for i, b in enumerate(bytes):
+for i, b in enumerate(all_encoded):
     final = (i + 1) == len(text)
-    c = decoder.decode(b, final)
+    c = decoder.decode(bytes([b]), final)
     if c:
         print('\nDecoded : {} characters'.format(len(c)))
         print('Decoding:', end=' ')
@@ -56,7 +56,7 @@ for i, b in enumerate(bytes):
         sys.stdout.write('.')
 print()
 
-restored = u''.join(decoded)
+restored = b''.join(decoded)
 
 print()
 print('Total uncompressed length:', len(restored))

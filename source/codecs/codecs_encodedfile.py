@@ -10,7 +10,7 @@
 from codecs_to_hex import to_hex
 
 import codecs
-from cStringIO import StringIO
+import io
 
 # Raw version of the original data.
 data = u'pi: \u03c0'
@@ -20,7 +20,7 @@ utf8 = data.encode('utf-8')
 print('Start as UTF-8   :', to_hex(utf8, 1))
 
 # Set up an output buffer, then wrap it as an EncodedFile.
-output = StringIO()
+output = io.BytesIO()
 encoded_file = codecs.EncodedFile(output, data_encoding='utf-8',
                                   file_encoding='utf-16')
 encoded_file.write(utf8)
@@ -31,7 +31,7 @@ print('Encoded to UTF-16:', to_hex(utf16, 2))
 
 # Set up another buffer with the UTF-16 data for reading,
 # and wrap it with another EncodedFile.
-buffer = StringIO(utf16)
+buffer = io.BytesIO(utf16)
 encoded_file = codecs.EncodedFile(buffer, data_encoding='utf-8',
                                   file_encoding='utf-16')
 
