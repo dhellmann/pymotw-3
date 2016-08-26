@@ -920,62 +920,60 @@ inheritance can be used for the implementation.
 
 .. seealso::
 
-    `codecs <http://docs.python.org/library/codecs.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`codecs`
 
-    :mod:`locale`
-        Accessing and managing the localization-based configuration
-        settings and behaviors.
+   * :mod:`locale` -- Accessing and managing the localization-based
+     configuration settings and behaviors.
 
-    :mod:`io`
-        The ``io`` module includes file and stream wrappers that
-        handle encoding and decoding, too.
+   * :mod:`io` -- The ``io`` module includes file and stream wrappers
+     that handle encoding and decoding, too.
 
-    :mod:`SocketServer`
-        For a more detailed example of an echo server, see the
-        ``SocketServer`` module.
+   * :mod:`socketserver` -- For a more detailed example of an echo
+     server, see the ``socketserver`` module.
 
-    :mod:`encodings`
-        Package in the standard library containing the encoder/decoder
-        implementations provided by Python.
+   * :mod:`encodings` -- Package in the standard library containing
+     the encoder/decoder implementations provided by Python.
 
-    :pep:`100`
-        Python Unicode Integration PEP.
+   * :pep:`100` -- Python Unicode Integration PEP.
 
-    `Unicode HOWTO`_
-        The official guide for using Unicode with Python 2.x.
+   * `Unicode HOWTO`_ -- The official guide for using Unicode with Python.
 
-    * `Text vs. Data Instead of Unicode vs. 8-bit
-      <https://docs.python.org/3.0/whatsnew/3.0.html#text-vs-data-instead-of-unicode-vs-8-bit>`__
-      -- Section of the "What's New" article for Python 3.0 covering
-      the text handling changes.
+   * `Text vs. Data Instead of Unicode vs. 8-bit
+     <https://docs.python.org/3.0/whatsnew/3.0.html#text-vs-data-instead-of-unicode-vs-8-bit>`__
+     -- Section of the "What's New" article for Python 3.0 covering
+     the text handling changes.
 
-    `Python Unicode Objects <http://effbot.org/zone/unicode-objects.htm>`_
-        Fredrik Lundh's article about using non-ASCII character sets
-        in Python 2.0.
+   * `Python Unicode Objects
+     <http://effbot.org/zone/unicode-objects.htm>`_ -- Fredrik Lundh's
+     article about using non-ASCII character sets in Python 2.0.
 
-    `How to Use UTF-8 with Python <http://evanjones.ca/python-utf8.html>`_
-        Evan Jones' quick guide to working with Unicode, including XML
-        data and the Byte-Order Marker.
+   * `How to Use UTF-8 with Python
+     <http://evanjones.ca/python-utf8.html>`__ -- Evan Jones' quick
+     guide to working with Unicode, including XML data and the
+     Byte-Order Marker.
 
-    `On the Goodness of Unicode <http://www.tbray.org/ongoing/When/200x/2003/04/06/Unicode>`_
-        Introduction to internationalization and Unicode by Tim Bray.
+   * `On the Goodness of Unicode
+     <http://www.tbray.org/ongoing/When/200x/2003/04/06/Unicode>`__ --
+     Introduction to internationalization and Unicode by Tim Bray.
 
-    `On Character Strings <http://www.tbray.org/ongoing/When/200x/2003/04/13/Strings>`_
-        A look at the history of string processing in programming
-        languages, by Tim Bray.
+   * `On Character Strings
+     <http://www.tbray.org/ongoing/When/200x/2003/04/13/Strings>`__ --
+     A look at the history of string processing in programming
+     languages, by Tim Bray.
 
-    `Characters vs. Bytes <http://www.tbray.org/ongoing/When/200x/2003/04/26/UTF>`_
-        Part one of Tim Bray's "essay on modern character string
-        processing for computer programmers."  This installment covers
-        in-memory representation of text in formats other than ASCII
-        bytes.
+   * `Characters vs. Bytes
+     <http://www.tbray.org/ongoing/When/200x/2003/04/26/UTF>`__ --
+     Part one of Tim Bray's "essay on modern character string
+     processing for computer programmers."  This installment covers
+     in-memory representation of text in formats other than ASCII
+     bytes.
 
-    `Endianness <http://en.wikipedia.org/wiki/Endianness>`_
-        Explanation of endianness in Wikipedia.
+   * `Endianness <http://en.wikipedia.org/wiki/Endianness>`__ --
+     Explanation of endianness in Wikipedia.
 
-    `W3C XML Entity Definitions for Characters <http://www.w3.org/TR/xml-entity-names/>`__
-        Specification for XML representations of character references
-        that cannot be represented in an encoding.
+   * `W3C XML Entity Definitions for Characters
+     <http://www.w3.org/TR/xml-entity-names/>`__ -- Specification for
+     XML representations of character references that cannot be
+     represented in an encoding.
 
 .. _Unicode HOWTO: https://docs.python.org/3/howto/unicode.html
