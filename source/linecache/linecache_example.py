@@ -37,14 +37,15 @@ print('SOURCE: ', lorem.split('\n')[4])
 print('CACHE : ', linecache.getline(temp_file_name, 5).rstrip())
 
 # Blank lines include the newline
-print('\nBLANK : %r' % linecache.getline(temp_file_name, 6))
+print('\nBLANK : {!r}'.format(
+    linecache.getline(temp_file_name, 6)))
 
 # The cache always returns a string, and uses
 # an empty string to indicate a line which does
 # not exist.
 not_there = linecache.getline(temp_file_name, 500)
-print('\nNOT THERE: %r includes %d characters' %
-      (not_there, len(not_there)))
+print('\nNOT THERE: {!r} includes {} characters'.format(
+    not_there, len(not_there)))
 
 # Errors are even hidden if linecache cannot find the file
 no_such_file = linecache.getline(
