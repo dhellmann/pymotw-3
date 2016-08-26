@@ -3,7 +3,7 @@
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
 #
-"""Demonstrate the representations of values using different encodings.
+"""Representations of values using different encodings.
 """
 #end_pymotw_header
 

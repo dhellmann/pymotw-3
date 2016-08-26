@@ -11,16 +11,16 @@ import codecs
 
 from codecs_invertcaps_charmap import encoding_map, decoding_map
 
-# Stateless encoder/decoder
 
 class InvertCapsCodec(codecs.Codec):
+    "Stateless encoder/decoder"
+
     def encode(self, input, errors='strict'):
         return codecs.charmap_encode(input, errors, encoding_map)
 
     def decode(self, input, errors='strict'):
         return codecs.charmap_decode(input, errors, decoding_map)
 
-# Incremental forms
 
 class InvertCapsIncrementalEncoder(codecs.IncrementalEncoder):
     def encode(self, input, final=False):
@@ -29,6 +29,7 @@ class InvertCapsIncrementalEncoder(codecs.IncrementalEncoder):
                                              encoding_map)
         return data
 
+
 class InvertCapsIncrementalDecoder(codecs.IncrementalDecoder):
     def decode(self, input, final=False):
         data, nbytes = codecs.charmap_decode(input,
@@ -36,15 +37,16 @@ class InvertCapsIncrementalDecoder(codecs.IncrementalDecoder):
                                              decoding_map)
         return data
 
-# Stream reader and writer
 
-class InvertCapsStreamReader(InvertCapsCodec, codecs.StreamReader):
+class InvertCapsStreamReader(InvertCapsCodec,
+                             codecs.StreamReader):
     pass
 
-class InvertCapsStreamWriter(InvertCapsCodec, codecs.StreamWriter):
+
+class InvertCapsStreamWriter(InvertCapsCodec,
+                             codecs.StreamWriter):
     pass
 
-# Register the codec search function
 
 def find_invertcaps(encoding):
     """Return the codec for 'invertcaps'.
@@ -58,7 +60,7 @@ def find_invertcaps(encoding):
             incrementaldecoder=InvertCapsIncrementalDecoder,
             streamreader=InvertCapsStreamReader,
             streamwriter=InvertCapsStreamWriter,
-            )
+        )
     return None
 
 codecs.register(find_invertcaps)

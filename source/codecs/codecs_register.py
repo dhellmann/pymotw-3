@@ -10,9 +10,11 @@
 import codecs
 import encodings
 
+
 def search1(encoding):
     print('search1: Searching for:', encoding)
     return None
+
 
 def search2(encoding):
     print('search2: Searching for:', encoding)
@@ -26,6 +28,5 @@ print('UTF-8:', utf8)
 
 try:
     unknown = codecs.lookup('no-such-encoding')
-except LookupError, err:
+except LookupError as err:
     print('ERROR:', err)
-

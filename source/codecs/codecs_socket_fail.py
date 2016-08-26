@@ -25,12 +25,12 @@ if __name__ == '__main__':
     import socket
     import threading
 
-    address = ('localhost', 0) # let the kernel assign a port
+    address = ('localhost', 0)  # let the kernel assign a port
     server = SocketServer.TCPServer(address, Echo)
-    ip, port = server.server_address # what port was assigned?
+    ip, port = server.server_address  # what port was assigned?
 
     t = threading.Thread(target=server.serve_forever)
-    t.setDaemon(True) # don't hang on exit
+    t.setDaemon(True)  # don't hang on exit
     t.start()
 
     # Connect to the server

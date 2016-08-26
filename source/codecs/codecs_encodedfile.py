@@ -38,4 +38,3 @@ encoded_file = codecs.EncodedFile(buffer, data_encoding='utf-8',
 # Read the UTF-8 encoded version of the data.
 recoded = encoded_file.read()
 print('Back to UTF-8    :', to_hex(recoded, 1))
-

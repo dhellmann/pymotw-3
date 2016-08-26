@@ -21,10 +21,10 @@ try:
                      encoding='ascii',
                      errors=error_handling) as f:
         f.write(text)
-        
-except UnicodeEncodeError, err:
+
+except UnicodeEncodeError as err:
     print('ERROR:', err)
-    
+
 else:
     # If there was no error writing to the file,
     # show what it contains.

@@ -19,14 +19,16 @@ print('Text length :', len(text))
 print('Repetitions :', repetitions)
 print('Expected len:', len(text) * repetitions)
 
-# Encode the text several times to build up a large amount of data
+# Encode the text several times to build up a
+# large amount of data
 encoder = codecs.getincrementalencoder('bz2')()
 encoded = []
 
 print()
 print('Encoding:', end=' ')
+last = repetitions - 1
 for i in range(repetitions):
-    en_c = encoder.encode(text, final = (i==repetitions-1))
+    en_c = encoder.encode(text, final=(i == last))
     if en_c:
         print('\nEncoded : {} bytes'.format(len(en_c)))
         encoded.append(en_c)
@@ -44,7 +46,7 @@ decoded = []
 
 print('Decoding:', end=' ')
 for i, b in enumerate(bytes):
-    final= (i+1) == len(text)
+    final = (i + 1) == len(text)
     c = decoder.decode(b, final)
     if c:
         print('\nDecoded : {} characters'.format(len(c)))

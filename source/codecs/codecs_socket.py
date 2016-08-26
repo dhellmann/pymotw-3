@@ -14,11 +14,13 @@ import SocketServer
 class Echo(SocketServer.BaseRequestHandler):
 
     def handle(self):
-        # Get some bytes and echo them back to the client.  There is
-        # no need to decode them, since they are not used.
+        """Get some bytes and echo them back to the client.
+
+        There is no need to decode them, since they are not used.
+
+        """
         data = self.request.recv(1024)
         self.request.send(data)
-        return
 
 
 class PassThrough:
@@ -41,19 +43,19 @@ class PassThrough:
 
     def close(self):
         return self.other.close()
-    
+
 
 if __name__ == '__main__':
     import codecs
     import socket
     import threading
 
-    address = ('localhost', 0) # let the kernel assign a port
+    address = ('localhost', 0)  # let the kernel assign a port
     server = SocketServer.TCPServer(address, Echo)
-    ip, port = server.server_address # what port was assigned?
+    ip, port = server.server_address  # what port was assigned?
 
     t = threading.Thread(target=server.serve_forever)
-    t.setDaemon(True) # don't hang on exit
+    t.setDaemon(True)  # don't hang on exit
     t.start()
 
     # Connect to the server

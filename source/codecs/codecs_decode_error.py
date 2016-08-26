@@ -18,7 +18,8 @@ text = u'pi: \u03c0'
 print('Original     :', repr(text))
 
 # Save the data with one encoding
-with codecs.open('decode_error.txt', 'w', encoding='utf-16') as f:
+with codecs.open('decode_error.txt', 'w',
+                 encoding='utf-16') as f:
     f.write(text)
 
 # Dump the bytes from the file
@@ -31,7 +32,7 @@ with codecs.open('decode_error.txt', 'r',
                  errors=error_handling) as f:
     try:
         data = f.read()
-    except UnicodeDecodeError, err:
+    except UnicodeDecodeError as err:
         print('ERROR:', err)
     else:
         print('Read         :', repr(data))
