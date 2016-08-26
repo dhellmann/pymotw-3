@@ -70,12 +70,14 @@ a file, but does not reside on disk.
     mmap/index
 
 ..
-    ospath/index
-    linecache/index
-    tempfile/index
-    shutil/index
-    mmap/index
-    codecs/index
-    StringIO/index (replace with io)
+    * ospath/index
+    * pathlib/index
+    glob
     fnmatch/index
+    * linecache/index
+    * tempfile/index
+    * shutil/index
     filecmp/index
+    mmap/index
+    * codecs/index
+    * StringIO/index (replace with io)
