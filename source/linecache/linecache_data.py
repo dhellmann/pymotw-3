@@ -22,15 +22,14 @@ lorem, ac imperdiet eros odio a sapien. Nulla mauris tellus,
 aliquam non, egestas a, nonummy et, erat. Vivamus sagittis
 porttitor eros.'''
 
+
 def make_tempfile():
     fd, temp_file_name = tempfile.mkstemp()
     os.close(fd)
-    f = open(temp_file_name, 'wt')
-    try:
+    with open(temp_file_name, 'wt') as f:
         f.write(lorem)
-    finally:
-        f.close()
     return temp_file_name
+
 
 def cleanup(filename):
     os.unlink(filename)
