@@ -174,6 +174,32 @@ though one path does not include a directory named ``three``.
 
 .. {{{end}}}
 
+:func:`commonpath` does honor path separators, and returns a prefix
+that does not include partial path values.
+
+.. literalinclude:: ospath_commonpath.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Because ``"threefold"`` does not have a path separator after
+``"three"`` the common prefix is ``/one/two``.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'ospath_commonpath.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 ospath_commonpath.py
+	
+	PATH: /one/two/three/four
+	PATH: /one/two/threefold
+	PATH: /one/two/three/
+	
+	PREFIX: /one/two
+
+.. {{{end}}}
+
 Building Paths
 ==============
 
@@ -330,7 +356,7 @@ represented in bytes.
 	$ python3 ospath_properties.py
 	
 	File         : ospath_properties.py
-	Access time  : Fri Aug 26 16:21:37 2016
+	Access time  : Fri Aug 26 16:38:05 2016
 	Modified time: Fri Aug 26 15:50:48 2016
 	Change time  : Fri Aug 26 15:50:49 2016
 	Size         : 481
