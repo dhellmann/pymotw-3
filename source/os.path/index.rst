@@ -50,10 +50,10 @@ the path is an empty string.
 .. cog.out(run_script(cog.inFile, 'ospath_split.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python ospath_split.py
-
+	$ python3 ospath_split.py
+	
 	 /one/two/three : ('/one/two', 'three')
 	/one/two/three/ : ('/one/two/three', '')
 	              / : ('/', '')
@@ -78,10 +78,10 @@ empty.
 .. cog.out(run_script(cog.inFile, 'ospath_basename.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python ospath_basename.py
-
+	$ python3 ospath_basename.py
+	
 	 /one/two/three : three
 	/one/two/three/ : 
 	              / : 
@@ -103,10 +103,10 @@ the original path.
 .. cog.out(run_script(cog.inFile, 'ospath_dirname.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python ospath_dirname.py
-
+	$ python3 ospath_dirname.py
+	
 	 /one/two/three : /one/two
 	/one/two/three/ : /one/two/three
 	              / : /
@@ -131,10 +131,10 @@ prefix.
 .. cog.out(run_script(cog.inFile, 'ospath_splitext.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python ospath_splitext.py
-
+	$ python3 ospath_splitext.py
+	
 	         filename.txt : ('filename', '.txt')
 	             filename : ('filename', '')
 	/path/to/filename.txt : ('/path/to/filename', '.txt')
@@ -162,10 +162,10 @@ though one path does not include a directory named ``three``.
 .. cog.out(run_script(cog.inFile, 'ospath_commonprefix.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python ospath_commonprefix.py
-
+	$ python3 ospath_commonprefix.py
+	
 	PATH: /one/two/three/four
 	PATH: /one/two/threefold
 	PATH: /one/two/three/
@@ -193,10 +193,10 @@ of the return value.
 .. cog.out(run_script(cog.inFile, 'ospath_join.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python ospath_join.py
-
+	$ python3 ospath_join.py
+	
 	('one', 'two', 'three') : one/two/three
 	('/', 'one', 'two', 'three') : /one/two/three
 	('/one', '/two', '/three') : /three
@@ -213,19 +213,19 @@ directory.
     :start-after: #end_pymotw_header
 
 If the user's home directory cannot be found, the string is returned
-unchanged, as with ``~postgresql`` in this example.
+unchanged, as with ``~nosuchuser`` in this example.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'ospath_expanduser.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python ospath_expanduser.py
-
+	$ python3 ospath_expanduser.py
+	
 	           ~ : /Users/dhellmann
 	  ~dhellmann : /Users/dhellmann
-	 ~postgresql : ~postgresql
+	 ~nosuchuser : ~nosuchuser
 
 .. {{{end}}}
 
@@ -243,10 +243,10 @@ in the name of a file that already exists.
 .. cog.out(run_script(cog.inFile, 'ospath_expandvars.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python ospath_expandvars.py
-
+	$ python3 ospath_expandvars.py
+	
 	/path/to/VALUE
 
 .. {{{end}}}
@@ -269,10 +269,10 @@ evaluated and collapsed.
 .. cog.out(run_script(cog.inFile, 'ospath_normpath.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python ospath_normpath.py
-
+	$ python3 ospath_normpath.py
+	
 	     one//two//three : one/two/three
 	   one/./two/./three : one/two/three
 	one/../alt/two/three : alt/two/three
@@ -293,10 +293,10 @@ tree.
 .. cog.out(run_script(cog.inFile, 'ospath_abspath.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python ospath_abspath.py
-
+	$ python3 ospath_abspath.py
+	
 	                . : "/private/tmp"
 	               .. : "/private"
 	  ./one/two/three : "/private/tmp/one/two/three"
@@ -325,15 +325,15 @@ represented in bytes.
 .. cog.out(run_script(cog.inFile, 'ospath_properties.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python ospath_properties.py
-
+	$ python3 ospath_properties.py
+	
 	File         : ospath_properties.py
-	Access time  : Sat Nov 27 12:19:50 2010
-	Modified time: Sun Nov 14 09:40:36 2010
-	Change time  : Tue Nov 16 08:07:32 2010
-	Size         : 495
+	Access time  : Fri Aug 26 16:04:15 2016
+	Modified time: Fri Aug 26 15:50:48 2016
+	Change time  : Fri Aug 26 15:50:49 2016
+	Size         : 481
 
 .. {{{end}}}
 
@@ -357,11 +357,11 @@ All of the test functions return boolean values.
 .. cog.out(run_script(cog.inFile, 'ospath_tests.py', include_prefix=False))
 .. }}}
 
-::
+.. code-block:: none
 
 	$ ln -s /does/not/exist broken_link
-	$ python ospath_tests.py
-
+	$ python3 ospath_tests.py
+	
 	File        : ospath_tests.py
 	Absolute    : False
 	Is File?    : True
