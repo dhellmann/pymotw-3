@@ -59,26 +59,26 @@ finally:
 
 # Pick out the same line from source and cache.
 # (Notice that linecache counts from 1)
-print 'SOURCE: ', lorem.split('\n')[4]
-print 'CACHE : ', linecache.getline(temp_file_name, 5).rstrip()
+print('SOURCE: ', lorem.split('\n')[4])
+print('CACHE : ', linecache.getline(temp_file_name, 5).rstrip())
 
 # Blank lines include the newline
-print '\nBLANK : %r' % linecache.getline(temp_file_name, 6)
+print('\nBLANK : %r' % linecache.getline(temp_file_name, 6))
 
 # The cache always returns a string, and uses
 # an empty string to indicate a line which does
 # not exist.
 not_there = linecache.getline(temp_file_name, 500)
-print '\nNOT THERE: %r includes %d characters' %  (not_there, len(not_there))
+print('\nNOT THERE: %r includes %d characters' %  (not_there, len(not_there)))
 
 # Errors are even hidden if linecache cannot find the file
 no_such_file = linecache.getline('this_file_does_not_exist.txt', 1)
-print '\nNO FILE: ', no_such_file
+print('\nNO FILE: ', no_such_file)
 
 # Look for the linecache module, using
 # the built in sys.path search.
 module_line = linecache.getline('linecache.py', 3)
-print '\nMODULE : ', module_line
+print('\nMODULE : ', module_line)
 
 # Clean up
 os.unlink(temp_file_name)
