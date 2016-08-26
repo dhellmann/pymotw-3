@@ -404,13 +404,12 @@ All of the test functions return boolean values.
 
 .. seealso::
 
-    `os.path <http://docs.python.org/lib/module-os.path.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`os.path`
 
-    :mod:`os`
-        The ``os`` module is a parent of ``os.path``.
+   * :mod:`pathlib` -- Paths as objects.
 
-    :mod:`time`
-        The time module includes functions to convert between the
-        representation used by the time property functions in
-        ``os.path`` and easy-to-read strings.
+   * :mod:`os` -- The ``os`` module is a parent of ``os.path``.
+
+   * :mod:`time` -- The time module includes functions to convert
+     between the representation used by the time property functions in
+     ``os.path`` and easy-to-read strings.
