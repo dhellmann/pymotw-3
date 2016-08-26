@@ -6,8 +6,8 @@ are also byte-streams, and so Unicode data must be encoded into bytes
 before it is written to a socket.  This server echos data it receives
 back to the sender.
 
-.. include:: codecs_socket_fail.py
-   :literal:
+.. literalinclude:: codecs_socket_fail.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The data could be encoded explicitly before each call to :func:`send`,
@@ -33,8 +33,8 @@ Using :func:`makefile` to get a file-like handle for the socket, and
 then wrapping that with a stream-based reader or writer, means Unicode
 strings will be encoded on the way in to and out of the socket.
 
-.. include:: codecs_socket.py
-   :literal:
+.. literalinclude:: codecs_socket.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example uses :class:`PassThrough` to show that the data is
@@ -69,8 +69,8 @@ encoding which converts uppercase letters to lowercase, and lowercase
 letters to uppercase.  Here is a simple definition of an encoding
 function that performs this transformation on an input string:
 
-.. include:: codecs_invertcaps.py
-   :literal:
+.. literalinclude:: codecs_invertcaps.py
+   :caption:
    :start-after: #end_pymotw_header
 
 In this case, the encoder and decoder are the same function (as with
@@ -101,8 +101,8 @@ map.  The C functions :func:`charmap_encode` and
 :func:`charmap_decode` use the maps to convert their input data
 efficiently.
 
-.. include:: codecs_invertcaps_charmap.py
-   :literal:
+.. literalinclude:: codecs_invertcaps_charmap.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Although the encoding and decoding maps for invertcaps are the same,
@@ -129,8 +129,8 @@ The character map encoder and decoder support all of the standard
 error handling methods described earlier, so no extra work is needed
 to comply with that part of the API.
 
-.. include:: codecs_invertcaps_error.py
-   :literal:
+.. literalinclude:: codecs_invertcaps_error.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Because the Unicode code point for ``π`` is not in the encoding map,
@@ -159,8 +159,8 @@ it.  The search function must take a single string argument with the
 name of the encoding, and return a :class:`CodecInfo` object if it
 knows the encoding, or ``None`` if it does not.
 
-.. include:: codecs_register.py
-   :literal:
+.. literalinclude:: codecs_register.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Multiple search functions can be registered, and each will be called
@@ -193,8 +193,8 @@ map encoding.  This example puts all of the pieces together to
 register a search function that returns a :class:`CodecInfo` instance
 configured for the invertcaps codec.
 
-.. include:: codecs_invertcaps_register.py
-   :literal:
+.. literalinclude:: codecs_invertcaps_register.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The stateless encoder/decoder base class is :class:`Codec`.  Override

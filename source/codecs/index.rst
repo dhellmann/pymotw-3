@@ -6,7 +6,6 @@
     :synopsis: String encoding and decoding.
 
 :Purpose: Encoders and decoders for converting text between different representations.
-:Python Version: 2.1 and later
 
 The :mod:`codecs` module provides stream and file interfaces for
 transcoding data.  It is most commonly used to work with Unicode text,

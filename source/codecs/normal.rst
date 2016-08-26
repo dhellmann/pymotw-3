@@ -39,8 +39,8 @@ series of bytes produced by encoding the same string in different
 ways.  The following examples use this function to format the byte
 string to make it easier to read.
 
-.. include:: codecs_to_hex.py
-   :literal:
+.. literalinclude:: codecs_to_hex.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The function uses :mod:`binascii` to get a hexadecimal representation
@@ -67,8 +67,8 @@ character is replaced with the expression for its Unicode code point,
 respectively, and show the hexadecimal values resulting from the
 encoding.
 
-.. include:: codecs_encodings.py
-   :literal:
+.. literalinclude:: codecs_encodings.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The result of encoding a :class:`unicode` string is a :class:`str`
@@ -92,8 +92,8 @@ Given a sequence of encoded bytes as a :class:`str` instance, the
 :func:`decode` method translates them to code points and returns the
 sequence as a :class:`unicode` instance.
 
-.. include:: codecs_decode.py
-   :literal:
+.. literalinclude:: codecs_decode.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The choice of encoding used does not change the output type.
@@ -138,8 +138,8 @@ the built-in :func:`open` function.  The new version works just like
 the built-in, but adds two new arguments to specify the encoding and
 desired error handling technique.
 
-.. include:: codecs_open_write.py
-   :literal:
+.. literalinclude:: codecs_open_write.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example starts with a :class:`unicode` string with the code point
@@ -181,8 +181,8 @@ part of the file, but usually it is up to the application to manage.
 :mod:`codecs` simply takes the encoding as an argument and assumes it
 is correct.
 
-.. include:: codecs_open_read.py
-   :literal:
+.. literalinclude:: codecs_open_read.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example reads the files created by the previous program, and
@@ -231,8 +231,8 @@ such a way that 0xFFFE and 0xFEFF are not valid characters, and can be
 used to indicate the byte order.  :mod:`codecs` defines constants for
 the byte order markers used by UTF-16 and UTF-32.
 
-.. include:: codecs_bom.py
-   :literal:
+.. literalinclude:: codecs_bom.py
+   :caption:
    :start-after: #end_pymotw_header
 
 ``BOM``, ``BOM_UTF16``, and ``BOM_UTF32`` are automatically set to the
@@ -264,8 +264,8 @@ Byte ordering is detected and handled automatically by the decoders in
 :mod:`codecs`, but an explicit ordering can be specified when
 encoding.
 
-.. include:: codecs_bom_create_file.py
-   :literal:
+.. literalinclude:: codecs_bom_create_file.py
+   :caption:
    :start-after: #end_pymotw_header
 
 ``codecs_bom_create_file.py`` figures out the native byte ordering,
@@ -290,8 +290,8 @@ demonstrate auto-detection while reading.
 the file, so the decoder uses the BOM value in the first two bytes of
 the file to determine it.
 
-.. include:: codecs_bom_detection.py
-   :literal:
+.. literalinclude:: codecs_bom_detection.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Since the first two bytes of the file are used for byte order
@@ -348,8 +348,8 @@ output stream, such as a regular file or :data:`sys.stdout`.  This
 sample program can be used to experiment with the different error
 handling modes.
 
-.. include:: codecs_encode_error.py
-   :literal:
+.. literalinclude:: codecs_encode_error.py
+   :caption:
    :start-after: #end_pymotw_header
 
 While ``strict`` mode is safest for ensuring an application explicitly
@@ -445,8 +445,8 @@ Decoding Errors
 It is also possible to see errors when decoding data, especially if
 the wrong encoding is used.
 
-.. include:: codecs_decode_error.py
-   :literal:
+.. literalinclude:: codecs_decode_error.py
+   :caption:
    :start-after: #end_pymotw_header
 
 As with encoding, ``strict`` error handling mode raises an exception
@@ -515,8 +515,8 @@ code that tries to print :class:`unicode` data to the console or a
 Unix pipeline when :data:`sys.stdout` is not configured with an
 encoding.
 
-.. include:: codecs_stdout.py
-   :literal:
+.. literalinclude:: codecs_stdout.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Problems with the default encoding of the standard I/O channels can be
@@ -555,8 +555,8 @@ To explicitly set the encoding on the standard output channel, use
 encoding.  Instantiate the class, passing ``sys.stdout`` as the only
 argument.
 
-.. include:: codecs_stdout_wrapped.py
-   :literal:
+.. literalinclude:: codecs_stdout_wrapped.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Writing to the wrapped version of ``sys.stdout`` passes the Unicode
@@ -586,8 +586,8 @@ explicit arguments to every program setting the input and output
 encodings.  Fortunately, there is a global way to get a reasonable
 default encoding using :mod:`locale`.
 
-.. include:: codecs_stdout_locale.py
-   :literal:
+.. literalinclude:: codecs_stdout_locale.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The function :func:`locale.getdefaultlocale` returns the language and
@@ -611,8 +611,8 @@ The encoding also needs to be set up when working with
 :data:`sys.stdin`.  Use :func:`getreader` to get a reader capable of
 decoding the input bytes.
 
-.. include:: codecs_stdin.py
-   :literal:
+.. literalinclude:: codecs_stdin.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Reading from the wrapped handle returns :class:`unicode` objects
@@ -641,8 +641,8 @@ intermediate data format is useful.  :func:`EncodedFile` takes an open
 file handle using one encoding and wraps it with a class that
 translates the data to another encoding as the I/O occurs.
 
-.. include:: codecs_encodedfile.py
-   :literal:
+.. literalinclude:: codecs_encodedfile.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example shows reading from and writing to separate handles
@@ -675,8 +675,8 @@ Although most of the earlier examples use Unicode encodings,
 example, Python includes codecs for working with base-64, bzip2,
 ROT-13, ZIP, and other data formats.
 
-.. include:: codecs_rot13.py
-   :literal:
+.. literalinclude:: codecs_rot13.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Any transformation that can be expressed as a function taking a single
@@ -699,8 +699,8 @@ registered as a codec.
 Using :mod:`codecs` to wrap a data stream provides a simpler interface
 than working directly with :mod:`zlib`.
 
-.. include:: codecs_zlib.py
-   :literal:
+.. literalinclude:: codecs_zlib.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Not all of the compression or encoding systems support reading a
@@ -736,8 +736,8 @@ working on one small chunk of data at a time.  The
 :class:`IncrementalEncoder` and :class:`IncrementalDecoder` API is
 designed for this purpose.
 
-.. include:: codecs_incremental_bz2.py
-   :literal:
+.. literalinclude:: codecs_incremental_bz2.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Each time data is passed to the encoder or decoder its internal state
