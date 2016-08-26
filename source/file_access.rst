@@ -70,6 +70,7 @@ a file, but does not reside on disk.
     linecache/index
     filecmp/index
     mmap/index
+    codecs/index
 
 ..
     ospath/index
@@ -81,5 +82,5 @@ a file, but does not reside on disk.
     * shutil/index
     filecmp/index
     mmap/index
-    * codecs/index
+    codecs/index
     * StringIO/index (replace with io)
