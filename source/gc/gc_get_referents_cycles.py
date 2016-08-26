@@ -19,11 +19,12 @@ class Graph:
         self.next = None
 
     def set_next(self, next):
-        print('Linking nodes %s.next = %s' % (self, next))
+        print('Linking nodes {}.next = {}'.format(self, next))
         self.next = next
 
     def __repr__(self):
-        return '%s(%s)' % (self.__class__.__name__, self.name)
+        return '{}({})'.format(
+            self.__class__.__name__, self.name)
 
 
 # Construct a graph cycle
@@ -57,9 +58,9 @@ while not to_process.empty():
             pass
         elif id(r) in seen:
             print()
-            print('Found a cycle to %s:' % r)
+            print('Found a cycle to {}:'.format(r))
             for i, link in enumerate(chain):
-                print('  %d: ' % i, end=' ')
+                print('  {}: '.format(i), end=' ')
                 pprint.pprint(link)
         else:
             to_process.put((chain, r))

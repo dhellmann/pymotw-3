@@ -18,14 +18,15 @@ class Graph:
         self.next = None
 
     def set_next(self, next):
-        print('Linking nodes %s.next = %s' % (self, next))
+        print('Linking nodes {}.next = {}'.format(self, next))
         self.next = next
 
     def __repr__(self):
-        return '%s(%s)' % (self.__class__.__name__, self.name)
+        return '{}({})'.format(
+            self.__class__.__name__, self.name)
 
     def __del__(self):
-        print('%s.__del__()' % self)
+        print('{}.__del__()'.format(self))
 
 
 # Construct two graph cycles
@@ -51,7 +52,7 @@ REFERRERS_TO_IGNORE = [locals(), globals(), gc.garbage]
 
 
 def find_referring_graphs(obj):
-    print('Looking for references to %s' % repr(obj))
+    print('Looking for references to {!r}'.format(obj))
     referrers = (r for r in gc.get_referrers(obj)
                  if r not in REFERRERS_TO_IGNORE)
     for ref in referrers:

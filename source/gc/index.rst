@@ -241,12 +241,12 @@ different times, shown here because debugging is enabled.
 	
 	gc: collecting generation 1...
 	gc: objects in each generation: 240 1439 4709
-	gc: done, 0.0003s elapsed
+	gc: done, 0.0013s elapsed
 	Thresholds: (5, 1, 1)
 	Clear the collector by forcing a run
 	gc: collecting generation 2...
 	gc: objects in each generation: 1 0 6282
-	gc: done, 0.0010s elapsed
+	gc: done, 0.0025s elapsed
 	
 	gc: collecting generation 0...
 	gc: objects in each generation: 5 0 6275
@@ -290,12 +290,12 @@ A smaller threshold causes the sweeps to run more frequently.
 	
 	gc: collecting generation 1...
 	gc: objects in each generation: 240 1439 4709
-	gc: done, 0.0006s elapsed
+	gc: done, 0.0003s elapsed
 	Thresholds: (2, 1, 1)
 	Clear the collector by forcing a run
 	gc: collecting generation 2...
 	gc: objects in each generation: 1 0 6282
-	gc: done, 0.0028s elapsed
+	gc: done, 0.0010s elapsed
 	gc: collecting generation 0...
 	gc: objects in each generation: 3 0 6275
 	gc: done, 0.0000s elapsed
@@ -371,17 +371,17 @@ interpreter exits.
 	
 	gc: collecting generation 2...
 	gc: objects in each generation: 123 1063 4711
-	gc: done, 0.0056s elapsed
+	gc: done, 0.0008s elapsed
 	Exiting
 	gc: collecting generation 2...
 	gc: objects in each generation: 1 0 5880
-	gc: done, 0.0037s elapsed
+	gc: done, 0.0007s elapsed
 	gc: collecting generation 2...
 	gc: objects in each generation: 99 0 5688
-	gc: done, 2114 unreachable, 0 uncollectable, 0.0018s elapsed
+	gc: done, 2114 unreachable, 0 uncollectable, 0.0011s elapsed
 	gc: collecting generation 2...
 	gc: objects in each generation: 0 0 3118
-	gc: done, 292 unreachable, 0 uncollectable, 0.0006s elapsed
+	gc: done, 292 unreachable, 0 uncollectable, 0.0003s elapsed
 
 .. {{{end}}}
 
@@ -414,26 +414,26 @@ and cannot be freed.
 
 	$ python3 -u gc_debug_collectable_objects.py
 	
-	Creating Graph 0x1011c71d0 (one)
-	Creating Graph 0x1011c7278 (two)
+	Creating Graph 0x101be71d0 (one)
+	Creating Graph 0x101be7240 (two)
 	Linking nodes Graph(one).next = Graph(two)
 	Linking nodes Graph(two).next = Graph(one)
-	Creating CleanupGraph 0x1011c7358 (three)
-	Creating CleanupGraph 0x1011c7390 (four)
-	Creating CleanupGraph 0x1011c73c8 (five)
+	Creating CleanupGraph 0x101be7320 (three)
+	Creating CleanupGraph 0x101be7358 (four)
+	Creating CleanupGraph 0x101be7390 (five)
 	Linking nodes CleanupGraph(four).next = CleanupGraph(five)
 	Linking nodes CleanupGraph(five).next = CleanupGraph(four)
 	CleanupGraph(three).__del__()
 	
 	Collecting
-	gc: collectable <Graph 0x1011c71d0>
-	gc: collectable <Graph 0x1011c7278>
-	gc: collectable <dict 0x101094108>
-	gc: collectable <dict 0x101094148>
-	gc: collectable <CleanupGraph 0x1011c7390>
-	gc: collectable <CleanupGraph 0x1011c73c8>
-	gc: collectable <dict 0x1011ce548>
-	gc: collectable <dict 0x1011ce488>
+	gc: collectable <Graph 0x101be71d0>
+	gc: collectable <Graph 0x101be7240>
+	gc: collectable <dict 0x101894108>
+	gc: collectable <dict 0x101894148>
+	gc: collectable <CleanupGraph 0x101be7358>
+	gc: collectable <CleanupGraph 0x101be7390>
+	gc: collectable <dict 0x101bee548>
+	gc: collectable <dict 0x101bee488>
 	CleanupGraph(four).__del__()
 	CleanupGraph(five).__del__()
 	Done
@@ -463,21 +463,21 @@ the object id when each object is created.
 	
 	CleanupGraph(three).__del__()
 	Collecting
-	gc: collectable <Graph 0x1013e7240>
-	gc: collectable <Graph 0x1013e7320>
-	gc: collectable <dict 0x100794108>
-	gc: collectable <dict 0x100794148>
-	gc: collectable <CleanupGraph 0x1013e7400>
-	gc: collectable <CleanupGraph 0x1013e7438>
-	gc: collectable <dict 0x1013ee548>
-	gc: collectable <dict 0x1013ee488>
+	gc: collectable <Graph 0x101be7240>
+	gc: collectable <Graph 0x101be72e8>
+	gc: collectable <dict 0x101994108>
+	gc: collectable <dict 0x101994148>
+	gc: collectable <CleanupGraph 0x101be73c8>
+	gc: collectable <CleanupGraph 0x101be7400>
+	gc: collectable <dict 0x101bee548>
+	gc: collectable <dict 0x101bee488>
 	CleanupGraph(four).__del__()
 	CleanupGraph(five).__del__()
 	Done
-	Retained: Graph(one) 0x1013e7240
-	Retained: Graph(two) 0x1013e7320
-	Retained: CleanupGraph(four) 0x1013e7400
-	Retained: CleanupGraph(five) 0x1013e7438
+	Retained: Graph(one) 0x101be7240
+	Retained: Graph(two) 0x101be72e8
+	Retained: CleanupGraph(four) 0x101be73c8
+	Retained: CleanupGraph(five) 0x101be7400
 
 .. {{{end}}}
 
@@ -503,20 +503,20 @@ have been collected and deleted are retained.
 	CleanupGraph(three).__del__()
 	Collecting
 	gc: collectable <Graph 0x1013e7240>
-	gc: collectable <Graph 0x1013e7320>
+	gc: collectable <Graph 0x1013e72e8>
 	gc: collectable <dict 0x101194108>
 	gc: collectable <dict 0x101194148>
+	gc: collectable <CleanupGraph 0x1013e73c8>
 	gc: collectable <CleanupGraph 0x1013e7400>
-	gc: collectable <CleanupGraph 0x1013e7438>
 	gc: collectable <dict 0x1013ee548>
 	gc: collectable <dict 0x1013ee488>
 	CleanupGraph(four).__del__()
 	CleanupGraph(five).__del__()
 	Done
 	Retained: Graph(one) 0x1013e7240
-	Retained: Graph(two) 0x1013e7320
-	Retained: CleanupGraph(four) 0x1013e7400
-	Retained: CleanupGraph(five) 0x1013e7438
+	Retained: Graph(two) 0x1013e72e8
+	Retained: CleanupGraph(four) 0x1013e73c8
+	Retained: CleanupGraph(five) 0x1013e7400
 
 .. {{{end}}}
 

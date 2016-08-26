@@ -18,11 +18,12 @@ class Graph:
         self.next = None
 
     def set_next(self, next):
-        print('Linking nodes %s.next = %s' % (self, next))
+        print('Linking nodes {}.next = {}'.format(self, next))
         self.next = next
 
     def __repr__(self):
-        return '%s(%s)' % (self.__class__.__name__, self.name)
+        return '{}({})'.format(
+            self.__class__.__name__, self.name)
 
 
 # Construct a graph cycle
@@ -38,7 +39,7 @@ one = two = three = None
 
 # Show the effect of garbage collection
 for i in range(2):
-    print('\nCollecting %d ...' % i)
+    print('\nCollecting {} ...'.format(i))
     n = gc.collect()
     print('Unreachable objects:', n)
     print('Remaining Garbage:', end=' ')

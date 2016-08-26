@@ -18,11 +18,12 @@ class Graph:
         self.next = None
 
     def set_next(self, next):
-        print('Linking nodes %s.next = %s' % (self, next))
+        print('Linking nodes {}.next = {}'.format(self, next))
         self.next = next
 
     def __repr__(self):
-        return '%s(%s)' % (self.__class__.__name__, self.name)
+        return '{}({})'.format(
+            self.__class__.__name__, self.name)
 
 
 # Construct a graph cycle
