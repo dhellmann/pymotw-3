@@ -1,6 +1,6 @@
-=========================
- gc -- Garbage Collector
-=========================
+==========================
+ gc --- Garbage Collector
+==========================
 
 .. module:: gc
     :synopsis: Garbage Collector
@@ -523,16 +523,18 @@ have been collected and deleted are retained.
 
 .. seealso::
 
-    `gc <http://docs.python.org/library/gc.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`gc`
 
-    :mod:`weakref`
-        The ``weakref`` module provides a way to create references
-        to objects without increasing their reference count, so they
-        can still be garbage collected.
+   * :ref:`Porting notes for gc <porting-gc>`
 
-    `Supporting Cyclic Garbage Collection <http://docs.python.org/c-api/gcsupport.html>`__
-        Background material from Python's C API documentation.
+   * :mod:`weakref` -- The ``weakref`` module provides a way to create
+     references to objects without increasing their reference count,
+     so they can still be garbage collected.
 
-    `How does Python manage memory? <http://effbot.org/pyfaq/how-does-python-manage-memory.htm>`__
-        An article on Python memory management by Fredrik Lundh.
+   * `Supporting Cyclic Garbage Collection
+     <http://docs.python.org/3/c-api/gcsupport.html>`__ -- Background
+     material from Python's C API documentation.
+
+   * `How does Python manage memory?
+     <http://effbot.org/pyfaq/how-does-python-manage-memory.htm>`__ --
+     An article on Python memory management by Fredrik Lundh.

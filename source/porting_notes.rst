@@ -588,6 +588,19 @@ The :func:`from_float` and :func:`from_decimal` class methods are no
 longer needed. Floating point and :class:`Decimal` values can be
 passed directly to the :class:`Fraction` constructor.
 
+.. _porting-gc:
+
+gc
+--
+
+.. index::
+   pair: porting; gc
+
+The flags :const:`DEBUG_OBJECT` and :const:`DEBUG_INSTANCE` have been
+removed. They are no longer needed to differentiate between new and
+old-style classes.
+
+
 .. _porting-gettext:
 
 gettext
