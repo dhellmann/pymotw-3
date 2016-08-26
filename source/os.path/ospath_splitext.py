@@ -10,12 +10,15 @@
 
 import os.path
 
-for path in [ 'filename.txt',
-              'filename',
-              '/path/to/filename.txt',
-              '/',
-              '',
-              'my-archive.tar.gz',
-              'no-extension.',
-              ]:
+PATHS = [
+    'filename.txt',
+    'filename',
+    '/path/to/filename.txt',
+    '/',
+    '',
+    'my-archive.tar.gz',
+    'no-extension.',
+]
+
+for path in PATHS:
     print('%21s :' % path, os.path.splitext(path))

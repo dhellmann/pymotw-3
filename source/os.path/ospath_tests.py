@@ -10,11 +10,12 @@
 
 import os.path
 
-FILENAMES = [ __file__,
-              os.path.dirname(__file__),
-              '/',
-              './broken_link',
-              ]
+FILENAMES = [
+    __file__,
+    os.path.dirname(__file__),
+    '/',
+    './broken_link',
+]
 
 for file in FILENAMES:
     print('File        :', file)

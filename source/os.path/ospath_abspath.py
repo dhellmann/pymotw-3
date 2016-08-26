@@ -13,9 +13,12 @@ import os.path
 
 os.chdir('/tmp')
 
-for path in [ '.',
-              '..',
-              './one/two/three',
-              '../one/two/three',
-              ]:
+PATHS = [
+    '.',
+    '..',
+    './one/two/three',
+    '../one/two/three',
+]
+
+for path in PATHS:
     print('%17s : "%s"' % (path, os.path.abspath(path)))

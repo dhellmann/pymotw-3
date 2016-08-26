@@ -10,8 +10,11 @@
 
 import os.path
 
-for path in [ 'one//two//three', 
-              'one/./two/./three', 
-              'one/../alt/two/three',
-              ]:
+PATHS = [
+    'one//two//three',
+    'one/./two/./three',
+    'one/../alt/two/three',
+]
+
+for path in PATHS:
     print('%20s : %s' % (path, os.path.normpath(path)))

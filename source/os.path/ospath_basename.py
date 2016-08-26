@@ -10,9 +10,13 @@
 
 import os.path
 
-for path in [ '/one/two/three', 
-              '/one/two/three/',
-              '/',
-              '.',
-              '']:
+PATHS = [
+    '/one/two/three',
+    '/one/two/three/',
+    '/',
+    '.',
+    '',
+]
+
+for path in PATHS:
     print('%15s : %s' % (path, os.path.basename(path)))

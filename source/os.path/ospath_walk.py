@@ -12,6 +12,7 @@ import os
 import os.path
 import pprint
 
+
 def visit(arg, dirname, names):
     print(dirname, arg)
     for name in names:
@@ -21,6 +22,7 @@ def visit(arg, dirname, names):
         else:
             print('  %s' % name)
     print()
+
 
 if not os.path.exists('example'):
     os.mkdir('example')

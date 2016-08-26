@@ -10,8 +10,11 @@
 
 import os.path
 
-for parts in [ ('one', 'two', 'three'),
-               ('/', 'one', 'two', 'three'),
-               ('/one', '/two', '/three'),
-               ]:
+PATHS = [
+    ('one', 'two', 'three'),
+    ('/', 'one', 'two', 'three'),
+    ('/one', '/two', '/three'),
+]
+
+for parts in PATHS:
     print(parts, ':', os.path.join(*parts))
