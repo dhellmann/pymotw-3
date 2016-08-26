@@ -1,11 +1,12 @@
-========================================
- codecs -- String Encoding and Decoding
-========================================
+=========================================
+ codecs --- String Encoding and Decoding
+=========================================
 
 .. module:: codecs
     :synopsis: String encoding and decoding.
 
-:Purpose: Encoders and decoders for converting text between different representations.
+:Purpose: Encoders and decoders for converting text between different
+          representations.
 
 The :mod:`codecs` module provides stream and file interfaces for
 transcoding data.  It is most commonly used to work with Unicode text,
@@ -14,28 +15,26 @@ but other encodings are also available for other purposes.
 Unicode Primer
 ==============
 
-CPython 2.x supports two types of strings for working with text data.
-Old-style :class:`str` instances use a single 8-bit byte to represent
-each character of the string using its ASCII code.  In contrast,
-:class:`unicode` strings are managed internally as a sequence of
+CPython 3.x differentiates between "text" and "byte" strings.
+:class:`bytes` instances use a sequence of 8-bit byte values.  In
+contrast, :class:`str` strings are managed internally as a sequence of
 Unicode *code points*.  The code point values are saved as a sequence
 of 2 or 4 bytes each, depending on the options given when Python was
-compiled.  Both :class:`unicode` and :class:`str` are derived from a
-common base class, and support a similar API.
+compiled.
 
-When :class:`unicode` strings are output, they are encoded using one
-of several standard schemes so that the sequence of bytes can be
-reconstructed as the same string of text later.  The bytes of the encoded
-value are not necessarily the same as the code point values, and the
-encoding defines a way to translate between the two sets of values.
-Reading Unicode data also requires knowing the encoding so that the
-incoming bytes can be converted to the internal representation used by
-the :class:`unicode` class.
+When :class:`str` values are output, they are encoded using one of
+several standard schemes so that the sequence of bytes can be
+reconstructed as the same string of text later.  The bytes of the
+encoded value are not necessarily the same as the code point values,
+and the encoding defines a way to translate between the two sets of
+values.  Reading Unicode data also requires knowing the encoding so
+that the incoming bytes can be converted to the internal
+representation used by the :class:`unicode` class.
 
 The most common encodings for Western languages are ``UTF-8`` and
 ``UTF-16``, which use sequences of one and two byte values
-respectively to represent each code point.  Other encodings can be more
-efficient for storing languages where most of the characters are
+respectively to represent each code point.  Other encodings can be
+more efficient for storing languages where most of the characters are
 represented by code points that do not fit into two bytes.
 
 .. seealso::
@@ -74,18 +73,16 @@ bytes before returning the value.
 .. {{{end}}}
 
 The first encoding example begins by printing the text ``'pi: π'``
-using the raw representation of the :class:`unicode` class.  The ``π``
-character is replaced with the expression for its Unicode code point,
-``\u03c0``.  The next two lines encode the string as UTF-8 and UTF-16
-respectively, and show the hexadecimal values resulting from the
-encoding.
+using the raw representation of the :class:`unicode` class, followed
+by the name of each character from the Unicode database.  The next two
+lines encode the string as UTF-8 and UTF-16 respectively, and show the
+hexadecimal values resulting from the encoding.
 
 .. literalinclude:: codecs_encodings.py
    :caption:
    :start-after: #end_pymotw_header
 
-The result of encoding a :class:`unicode` string is a :class:`str`
-object.
+The result of encoding a :class:`str` is a :class:`bytes` object.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'codecs_encodings.py'))
@@ -96,14 +93,19 @@ object.
 	$ python3 codecs_encodings.py
 	
 	Raw   : 'pi: π'
+	  'p': LATIN SMALL LETTER P
+	  'i': LATIN SMALL LETTER I
+	  ':': COLON
+	  ' ': SPACE
+	  'π': GREEK SMALL LETTER PI
 	UTF-8 : b'70 69 3a 20 cf 80'
 	UTF-16: b'fffe 7000 6900 3a00 2000 c003'
 
 .. {{{end}}}
 
-Given a sequence of encoded bytes as a :class:`str` instance, the
+Given a sequence of encoded bytes as a :class:`bytes` instance, the
 :func:`decode` method translates them to code points and returns the
-sequence as a :class:`unicode` instance.
+sequence as a :class:`str` instance.
 
 .. literalinclude:: codecs_decode.py
    :caption:
@@ -146,7 +148,7 @@ whether enough bytes have been read in order to fully decode the data.
 :mod:`codecs` provides classes that manage the data encoding and
 decoding, so applications do not have to do that work.
 
-The simplest interface provided by :mod:`codecs` is a replacement for
+The simplest interface provided by :mod:`codecs` is an alternative to
 the built-in :func:`open` function.  The new version works just like
 the built-in, but adds two new arguments to specify the encoding and
 desired error handling technique.
@@ -336,8 +338,8 @@ encoding is used while writing then an error will be generated and
 data may be lost.
 
 :mod:`codecs` uses the same five error handling options that are
-provided by the :func:`encode` method of :class:`unicode` and the
-:func:`decode` method of :class:`str`, listed in :table:`Codec Error
+provided by the :func:`encode` method of :class:`str` and the
+:func:`decode` method of :class:`bytes`, listed in :table:`Codec Error
 Handling Modes`.
 
 .. table:: Codec Error Handling Modes
@@ -370,15 +372,15 @@ sets the correct encoding for all I/O operations, it can lead to
 program crashes when an exception is raised.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'codecs_encode_error.py strict', break_lines_at=69))
+.. cog.out(run_script(cog.inFile, 'codecs_encode_error.py strict', line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
 
 	$ python3 codecs_encode_error.py strict
 	
-	ERROR: 'ascii' codec can't encode character '\u03c0' in position 4: o
-	rdinal not in range(128)
+	ERROR: 'ascii' codec can't encode character '\u03c0' in position
+	4: ordinal not in range(128)
 
 .. {{{end}}}
 
@@ -523,7 +525,7 @@ with a black background containing a white question mark.
 Encoding Translation
 ====================
 
-Although most applications will work with :class:`unicode` data
+Although most applications will work with :class:`str` data
 internally, decoding or encoding it as part of an I/O operation, there
 are times when changing a file's encoding without holding on to that
 intermediate data format is useful.  :func:`EncodedFile` takes an open
@@ -571,7 +573,7 @@ ROT-13, ZIP, and other data formats.
 Any transformation that can be expressed as a function taking a single
 input argument and returning a byte or Unicode string can be
 registered as a codec. For the ``'rot_13'`` codec, the input should be
-a Unicode string.
+a Unicode string and the output will also be a Unicode string.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'codecs_rot13.py'))
@@ -638,7 +640,7 @@ last bit of data is passed in, the argument *final* should be set to
 ``True`` so the codec knows to flush any remaining buffered data.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'codecs_incremental_bz2.py', break_lines_at=69))
+.. cog.out(run_script(cog.inFile, 'codecs_incremental_bz2.py'))
 .. }}}
 
 .. code-block:: none
@@ -654,8 +656,8 @@ last bit of data is passed in, the argument *final* should be set to
 	
 	Total encoded length: 99
 	
-	Decoding: ...........................................................
-	.............................
+	Decoding: ......................................................
+	..................................
 	Decoded : 1350 characters
 	Decoding: ..........
 	
@@ -666,10 +668,11 @@ last bit of data is passed in, the argument *final* should be set to
 Unicode Data and Network Communication
 ======================================
 
-Like the standard input and output file descriptors, network sockets
-are also byte-streams, and so Unicode data must be encoded into bytes
-before it is written to a socket.  This server echos data it receives
-back to the sender.
+Uetwork sockets are byte-streams, and unlike the standard input and
+output streams they do not support encoding by default. That means
+programs that want to send or receive Unicode data over the network
+must encode into bytes before it is written to a socket.  This server
+echos data it receives back to the sender.
 
 .. literalinclude:: codecs_socket_fail.py
    :caption:
@@ -682,17 +685,20 @@ error.
 .. Do not re-run this example every time, since it sometimes generates
 .. errors within the thread that distracts from the unicode error.
 
+.. {{{cog
 .. cog.out(run_script(cog.inFile, 'codecs_socket_fail.py', ignore_error=True))
+.. }}}
 
-::
+.. code-block:: none
 
-	$ python codecs_socket_fail.py
+	$ python3 codecs_socket_fail.py
+	
 	Traceback (most recent call last):
 	  File "codecs_socket_fail.py", line 43, in <module>
 	    len_sent = s.send(text)
-	UnicodeEncodeError: 'ascii' codec can't encode character 
-     u'\u03c0' in position 4: ordinal not in range(128)
+	TypeError: a bytes-like object is required, not 'str'
 
+.. {{{end}}}
 
 Using :func:`makefile` to get a file-like handle for the socket, and
 then wrapping that with a stream-based reader or writer, means Unicode
@@ -709,16 +715,23 @@ received in the client.
 .. Do not re-run this example every time, since it sometimes generates
 .. errors within the thread that distracts from the unicode error.
 
+.. {{{cog
 .. cog.out(run_script(cog.inFile, 'codecs_socket.py'))
+.. }}}
 
-::
+.. code-block:: none
 
-	$ python codecs_socket.py
+	$ python3 codecs_socket.py
+	
+	Sending : 'pi: π'
+	Writing : b'pi: \xcf\x80'
+	Reading :
+	b'pi: \xcf\x80'
+	Reading :
+	b''
+	Received: 'pi: π'
 
-	Sending : u'pi: \u03c0'
-	Writing : 'pi: \xcf\x80'
-	Reading : 'pi: \xcf\x80'
-	Received: u'pi: \u03c0'
+.. {{{end}}}
 
 Defining a Custom Encoding
 ==========================
@@ -732,14 +745,14 @@ The first step is to understand the nature of the transformation
 described by the encoding.  These examples will use an "invertcaps"
 encoding which converts uppercase letters to lowercase, and lowercase
 letters to uppercase.  Here is a simple definition of an encoding
-function that performs this transformation on an input string:
+function that performs this transformation on an input string.
 
 .. literalinclude:: codecs_invertcaps.py
    :caption:
    :start-after: #end_pymotw_header
 
-In this case, the encoder and decoder are the same function (as with
-``ROT-13``).
+In this case, the encoder and decoder are the same function (as is
+also the case with ``ROT-13``).
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'codecs_invertcaps.py'))
@@ -749,8 +762,8 @@ In this case, the encoder and decoder are the same function (as with
 
 	$ python3 codecs_invertcaps.py
 	
-	abc.DEF
-	ABC.def
+	abcDEF
+	ABCdef
 
 .. {{{end}}}
 
@@ -802,7 +815,7 @@ Because the Unicode code point for ``π`` is not in the encoding map,
 the strict error handling mode raises an exception.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'codecs_invertcaps_error.py', ignore_error=True, break_lines_at=69))
+.. cog.out(run_script(cog.inFile, 'codecs_invertcaps_error.py', ignore_error=True, line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
@@ -811,8 +824,8 @@ the strict error handling mode raises an exception.
 	
 	ignore : (b'PI: ', 5)
 	replace: (b'PI: ?', 5)
-	strict : 'charmap' codec can't encode character '\u03c0' in position 
-	4: character maps to <undefined>
+	strict : 'charmap' codec can't encode character '\u03c0' in
+	position 4: character maps to <undefined>
 
 .. {{{end}}}
 
@@ -836,15 +849,15 @@ knows how to load the standard codecs such as UTF-8 from
 functions.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'codecs_register.py'))
+.. cog.out(run_script(cog.inFile, 'codecs_register.py', line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
 
 	$ python3 codecs_register.py
 	
-	UTF-8: <codecs.CodecInfo object for encoding utf-8 at 0x1007773a
-	8>
+	UTF-8: <codecs.CodecInfo object for encoding utf-8 at
+	0x1019773a8>
 	search1: Searching for: no-such-encoding
 	search2: Searching for: no-such-encoding
 	ERROR: unknown encoding: no-such-encoding
@@ -932,6 +945,11 @@ inheritance can be used for the implementation.
     `Unicode HOWTO`_
         The official guide for using Unicode with Python 2.x.
 
+    * `Text vs. Data Instead of Unicode vs. 8-bit
+      <https://docs.python.org/3.0/whatsnew/3.0.html#text-vs-data-instead-of-unicode-vs-8-bit>`__
+      -- Section of the "What's New" article for Python 3.0 covering
+      the text handling changes.
+
     `Python Unicode Objects <http://effbot.org/zone/unicode-objects.htm>`_
         Fredrik Lundh's article about using non-ASCII character sets
         in Python 2.0.
@@ -960,4 +978,4 @@ inheritance can be used for the implementation.
         Specification for XML representations of character references
         that cannot be represented in an encoding.
 
-.. _Unicode HOWTO: http://docs.python.org/howto/unicode
+.. _Unicode HOWTO: https://docs.python.org/3/howto/unicode.html

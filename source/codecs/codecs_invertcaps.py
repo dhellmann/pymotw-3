@@ -21,5 +21,5 @@ def invertcaps(text):
     )
 
 if __name__ == '__main__':
-    print(invertcaps('ABC.def'))
-    print(invertcaps('abc.DEF'))
+    print(invertcaps('ABCdef'))
+    print(invertcaps('abcDEF'))

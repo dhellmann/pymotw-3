@@ -8,10 +8,10 @@
 #end_pymotw_header
 
 import sys
-import SocketServer
+import socketserver
 
 
-class Echo(SocketServer.BaseRequestHandler):
+class Echo(socketserver.BaseRequestHandler):
 
     def handle(self):
         """Get some bytes and echo them back to the client.
@@ -51,7 +51,7 @@ if __name__ == '__main__':
     import threading
 
     address = ('localhost', 0)  # let the kernel assign a port
-    server = SocketServer.TCPServer(address, Echo)
+    server = socketserver.TCPServer(address, Echo)
     ip, port = server.server_address  # what port was assigned?
 
     t = threading.Thread(target=server.serve_forever)
@@ -63,9 +63,9 @@ if __name__ == '__main__':
     s.connect((ip, port))
 
     # Wrap the socket with a reader and writer.
-    read_file = s.makefile('r')
+    read_file = s.makefile('rb')
     incoming = codecs.getreader('utf-8')(PassThrough(read_file))
-    write_file = s.makefile('w')
+    write_file = s.makefile('wb')
     outgoing = codecs.getwriter('utf-8')(PassThrough(write_file))
 
     # Send the data
