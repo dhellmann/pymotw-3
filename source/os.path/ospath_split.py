@@ -19,4 +19,4 @@ PATHS = [
 ]
 
 for path in PATHS:
-    print('%15s : %s' % (path, os.path.split(path)))
+    print('%17r : %s' % (path, os.path.split(path)))

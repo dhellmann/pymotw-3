@@ -1,6 +1,6 @@
-===========================================================
- os.path -- Platform-independent Manipulation of Filenames
-===========================================================
+============================================================
+ os.path --- Platform-independent Manipulation of Filenames
+============================================================
 
 .. module:: os.path
     :synopsis: Platform-independent manipulation of filenames.
@@ -54,11 +54,11 @@ the path is an empty string.
 
 	$ python3 ospath_split.py
 	
-	 /one/two/three : ('/one/two', 'three')
-	/one/two/three/ : ('/one/two/three', '')
-	              / : ('/', '')
-	              . : ('', '.')
-	                : ('', '')
+	 '/one/two/three' : ('/one/two', 'three')
+	'/one/two/three/' : ('/one/two/three', '')
+	              '/' : ('/', '')
+	              '.' : ('', '.')
+	               '' : ('', '')
 
 .. {{{end}}}
 
@@ -82,11 +82,11 @@ empty.
 
 	$ python3 ospath_basename.py
 	
-	 /one/two/three : three
-	/one/two/three/ : 
-	              / : 
-	              . : .
-	                : 
+	 '/one/two/three' : 'three'
+	'/one/two/three/' : ''
+	              '/' : ''
+	              '.' : '.'
+	               '' : ''
 
 .. {{{end}}}
 
@@ -107,11 +107,11 @@ the original path.
 
 	$ python3 ospath_dirname.py
 	
-	 /one/two/three : /one/two
-	/one/two/three/ : /one/two/three
-	              / : /
-	              . : 
-	                : 
+	 '/one/two/three' : '/one/two'
+	'/one/two/three/' : '/one/two/three'
+	              '/' : '/'
+	              '.' : ''
+	               '' : ''
 
 .. {{{end}}}
 
@@ -135,13 +135,13 @@ prefix.
 
 	$ python3 ospath_splitext.py
 	
-	         filename.txt : ('filename', '.txt')
-	             filename : ('filename', '')
-	/path/to/filename.txt : ('/path/to/filename', '.txt')
-	                    / : ('/', '')
-	                      : ('', '')
-	    my-archive.tar.gz : ('my-archive.tar', '.gz')
-	        no-extension. : ('no-extension', '.')
+	       'filename.txt' : ('filename', '.txt')
+	           'filename' : ('filename', '')
+	'/path/to/filename.txt' : ('/path/to/filename', '.txt')
+	                  '/' : ('/', '')
+	                   '' : ('', '')
+	  'my-archive.tar.gz' : ('my-archive.tar', '.gz')
+	      'no-extension.' : ('no-extension', '.')
 
 .. {{{end}}}
 
@@ -197,9 +197,9 @@ of the return value.
 
 	$ python3 ospath_join.py
 	
-	('one', 'two', 'three') : one/two/three
-	('/', 'one', 'two', 'three') : /one/two/three
-	('/one', '/two', '/three') : /three
+	('one', 'two', 'three') : 'one/two/three'
+	('/', 'one', 'two', 'three') : '/one/two/three'
+	('/one', '/two', '/three') : '/three'
 
 .. {{{end}}}
 
@@ -297,10 +297,10 @@ tree.
 
 	$ python3 ospath_abspath.py
 	
-	                . : "/private/tmp"
-	               .. : "/private"
-	  ./one/two/three : "/private/tmp/one/two/three"
-	 ../one/two/three : "/private/one/two/three"
+	                  '.' : '/private/tmp'
+	                 '..' : '/private'
+	    './one/two/three' : '/private/tmp/one/two/three'
+	   '../one/two/three' : '/private/one/two/three'
 
 .. {{{end}}}
 
@@ -330,7 +330,7 @@ represented in bytes.
 	$ python3 ospath_properties.py
 	
 	File         : ospath_properties.py
-	Access time  : Fri Aug 26 16:04:15 2016
+	Access time  : Fri Aug 26 16:13:04 2016
 	Modified time: Fri Aug 26 15:50:48 2016
 	Change time  : Fri Aug 26 15:50:49 2016
 	Size         : 481
@@ -362,7 +362,7 @@ All of the test functions return boolean values.
 	$ ln -s /does/not/exist broken_link
 	$ python3 ospath_tests.py
 	
-	File        : ospath_tests.py
+	File        : 'ospath_tests.py'
 	Absolute    : False
 	Is File?    : True
 	Is Dir?     : False
@@ -371,7 +371,7 @@ All of the test functions return boolean values.
 	Exists?     : True
 	Link Exists?: True
 	
-	File        : 
+	File        : ''
 	Absolute    : False
 	Is File?    : False
 	Is Dir?     : False
@@ -380,7 +380,7 @@ All of the test functions return boolean values.
 	Exists?     : False
 	Link Exists?: False
 	
-	File        : /
+	File        : '/'
 	Absolute    : True
 	Is File?    : False
 	Is Dir?     : True
@@ -389,7 +389,7 @@ All of the test functions return boolean values.
 	Exists?     : True
 	Link Exists?: True
 	
-	File        : ./broken_link
+	File        : './broken_link'
 	Absolute    : False
 	Is File?    : False
 	Is Dir?     : False

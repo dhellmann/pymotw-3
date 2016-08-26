@@ -21,4 +21,4 @@ PATHS = [
 ]
 
 for path in PATHS:
-    print('%21s :' % path, os.path.splitext(path))
+    print('%21r :' % path, os.path.splitext(path))
