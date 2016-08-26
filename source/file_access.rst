@@ -71,7 +71,7 @@ a file, but does not reside on disk.
     mmap/index
 
 ..
-    * ospath/index
+    ospath/index
     * pathlib/index
     glob
     fnmatch/index
