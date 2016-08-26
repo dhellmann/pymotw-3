@@ -1,20 +1,22 @@
-==========================================
- linecache -- Read Text Files Efficiently
-==========================================
+===========================================
+ linecache --- Read Text Files Efficiently
+===========================================
 
 .. module:: linecache
     :synopsis: Read text files efficiently
 
-:Purpose: Retrieve lines of text from files or imported Python modules, holding a cache of the results to make reading many lines from the same file more efficient.
+:Purpose: Retrieve lines of text from files or imported Python
+          modules, holding a cache of the results to make reading many
+          lines from the same file more efficient.
 
 The :mod:`linecache` module is used within other parts of the Python
 standard library when dealing with Python source files. The
 implementation of the cache holds the contents of files, parsed into
 separate lines, in memory. The API returns the requested line(s) by
-indexing into a :class:`list`, and saves time over repeatedly reading the file
-and parsing lines to find the one desired. This is especially useful
-when looking for multiple lines from the same file, such as when
-producing a traceback for an error report.
+indexing into a :class:`list`, and saves time over repeatedly reading
+the file and parsing lines to find the one desired. This is especially
+useful when looking for multiple lines from the same file, such as
+when producing a traceback for an error report.
 
 Test Data
 =========
@@ -80,14 +82,14 @@ Line eight of the input file contains no text.
 Error Handling
 ==============
 
-If the requested line number falls out of the range of valid lines in the
-file, :func:`getline` returns an empty string. 
+If the requested line number falls out of the range of valid lines in
+the file, :func:`getline` returns an empty string.
 
 .. literalinclude:: linecache_out_of_range.py
     :caption:
     :start-after: #end_pymotw_header
 
-The input file only has 12 lines, so requesting line 500 is like
+The input file only has 15 lines, so requesting line 500 is like
 trying to read past the end of the file.
 
 .. {{{cog
@@ -127,7 +129,7 @@ Reading Python Source Files
 
 Since :mod:`linecache` is used so heavily when producing tracebacks,
 one of its key features is the ability to find Python source modules
-in the import path by specifying the base name of the module. 
+in the import path by specifying the base name of the module.
 
 .. literalinclude:: linecache_path_search.py
     :caption:
@@ -140,8 +142,8 @@ that name in the current directory.  This example looks for
 the file from the standard library is found instead.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'linecache_path_search.py', 
-..                    break_lines_at=76, line_break_mode='wrap'))
+.. cog.out(run_script(cog.inFile, 'linecache_path_search.py',
+..                    line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
@@ -149,19 +151,15 @@ the file from the standard library is found instead.
 	$ python3 linecache_path_search.py
 	
 	MODULE:
-	'This is intended to read lines from modules imported -- hence if a
-	filename\n'
+	'This is intended to read lines from modules imported -- hence
+	if a filename\n'
 	
 	FILE:
-	'This is intended to read lines from modules imported -- hence if a
-	filename\n'
+	'This is intended to read lines from modules imported -- hence
+	if a filename\n'
 
 .. {{{end}}}
 
 .. seealso::
 
-    `linecache <http://docs.python.org/library/linecache.html>`_
-        The standard library documentation for this module.
-
-    http://www.ipsum.com/
-        Lorem Ipsum generator.
+   * :pydoc:`linecache`
