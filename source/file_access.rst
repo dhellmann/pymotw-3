@@ -16,11 +16,6 @@ of filenames from a pattern.
 The file name pattern matching used by :mod:`glob` is also exposed
 directly through :mod:`fnmatch` so it can be used in other contexts.
 
-:mod:`dircache` provides an efficient way to scan and process the
-contents of a directory on the file system, and is useful when
-processing files in situations where the names are not known in
-advance.
-
 After the name of the file is identified, other characteristics, such
 as permissions or the file size, can be checked using
 :func:`os.stat()` and the constants in :mod:`stat`.
@@ -83,5 +78,4 @@ a file, but does not reside on disk.
     codecs/index
     StringIO/index (replace with io)
     fnmatch/index
-    dircache/index
     filecmp/index
