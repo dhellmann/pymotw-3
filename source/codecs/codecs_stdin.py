@@ -18,5 +18,5 @@ locale.setlocale(locale.LC_ALL, '')
 lang, encoding = locale.getdefaultlocale()
 sys.stdin = codecs.getreader(encoding)(sys.stdin)
 
-print 'From stdin:'
-print repr(sys.stdin.read())
+print('From stdin:')
+print(repr(sys.stdin.read()))

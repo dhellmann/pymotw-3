@@ -17,7 +17,7 @@ data = u'pi: \u03c0'
 
 # Manually encode it as UTF-8.
 utf8 = data.encode('utf-8')
-print 'Start as UTF-8   :', to_hex(utf8, 1)
+print('Start as UTF-8   :', to_hex(utf8, 1))
 
 # Set up an output buffer, then wrap it as an EncodedFile.
 output = StringIO()
@@ -27,7 +27,7 @@ encoded_file.write(utf8)
 
 # Fetch the buffer contents as a UTF-16 encoded byte string
 utf16 = output.getvalue()
-print 'Encoded to UTF-16:', to_hex(utf16, 2)
+print('Encoded to UTF-16:', to_hex(utf16, 2))
 
 # Set up another buffer with the UTF-16 data for reading,
 # and wrap it with another EncodedFile.
@@ -37,5 +37,5 @@ encoded_file = codecs.EncodedFile(buffer, data_encoding='utf-8',
 
 # Read the UTF-8 encoded version of the data.
 recoded = encoded_file.read()
-print 'Back to UTF-8    :', to_hex(recoded, 1)
+print('Back to UTF-8    :', to_hex(recoded, 1))
 

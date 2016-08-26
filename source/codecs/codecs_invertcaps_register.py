@@ -69,15 +69,15 @@ if __name__ == '__main__':
     encoder = codecs.getencoder('invertcaps')
     text = 'abc.DEF'
     encoded_text, consumed = encoder(text)
-    print 'Encoded "{}" to "{}", consuming {} characters'.format(
-        text, encoded_text, consumed)
+    print('Encoded "{}" to "{}", consuming {} characters'.format(
+        text, encoded_text, consumed))
 
     # Stream writer
     import sys
     writer = codecs.getwriter('invertcaps')(sys.stdout)
-    print 'StreamWriter for stdout: ',
+    print('StreamWriter for stdout: ', end=' ')
     writer.write('abc.DEF')
-    print
+    print()
 
     # Incremental decoder
     decoder_factory = codecs.getincrementaldecoder('invertcaps')
@@ -87,5 +87,5 @@ if __name__ == '__main__':
         decoded_text_parts.append(decoder.decode(c, final=False))
     decoded_text_parts.append(decoder.decode('', final=True))
     decoded_text = ''.join(decoded_text_parts)
-    print 'IncrementalDecoder converted "{}" to "{}"'.format(
-        encoded_text, decoded_text)
+    print('IncrementalDecoder converted "{}" to "{}"'.format(
+        encoded_text, decoded_text))

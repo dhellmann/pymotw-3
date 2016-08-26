@@ -17,4 +17,4 @@ for error in [ 'ignore', 'replace', 'strict' ]:
         encoded = codecs.charmap_encode(text, error, encoding_map)
     except UnicodeEncodeError, err:
         encoded = str(err)
-    print '{:7}: {}'.format(error, encoded)
+    print('{:7}: {}'.format(error, encoded))

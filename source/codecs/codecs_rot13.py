@@ -18,5 +18,5 @@ text = 'abcdefghijklmnopqrstuvwxyz'
 stream.write(text)
 stream.flush()
 
-print 'Original:', text
-print 'ROT-13  :', buffer.getvalue()
+print('Original:', text)
+print('ROT-13  :', buffer.getvalue())

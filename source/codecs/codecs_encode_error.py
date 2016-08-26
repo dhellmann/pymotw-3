@@ -23,10 +23,10 @@ try:
         f.write(text)
         
 except UnicodeEncodeError, err:
-    print 'ERROR:', err
+    print('ERROR:', err)
     
 else:
     # If there was no error writing to the file,
     # show what it contains.
     with open('encode_error.txt', 'rb') as f:
-        print 'File contents:', repr(f.read())
+        print('File contents:', repr(f.read()))

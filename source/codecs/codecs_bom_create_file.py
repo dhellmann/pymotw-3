@@ -18,12 +18,12 @@ else:
     bom = codecs.BOM_UTF16_BE
     encoding = 'utf_16_be'
 
-print 'Native order  :', to_hex(codecs.BOM_UTF16, 2)
-print 'Selected order:', to_hex(bom, 2)
+print('Native order  :', to_hex(codecs.BOM_UTF16, 2))
+print('Selected order:', to_hex(bom, 2))
 
 # Encode the text.
 encoded_text = u'pi: \u03c0'.encode(encoding)
-print '{:14}: {}'.format(encoding, to_hex(encoded_text, 2))
+print('{:14}: {}'.format(encoding, to_hex(encoded_text, 2)))
 
 with open('nonnative-encoded.txt', mode='wb') as f:
     # Write the selected byte-order marker.  It is not included

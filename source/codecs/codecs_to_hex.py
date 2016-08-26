@@ -21,6 +21,6 @@ def to_hex(t, nbytes):
         )
 
 if __name__ == '__main__':
-    print to_hex('abcdef', 1)
-    print to_hex('abcdef', 2)
+    print(to_hex('abcdef', 1))
+    print(to_hex('abcdef', 2))
     

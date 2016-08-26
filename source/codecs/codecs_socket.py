@@ -21,19 +21,19 @@ class Echo(SocketServer.BaseRequestHandler):
         return
 
 
-class PassThrough(object):
+class PassThrough:
 
     def __init__(self, other):
         self.other = other
 
     def write(self, data):
-        print 'Writing :', repr(data)
+        print('Writing :', repr(data))
         return self.other.write(data)
 
     def read(self, size=-1):
-        print 'Reading :',
+        print('Reading :',)
         data = self.other.read(size)
-        print repr(data)
+        print(repr(data))
         return data
 
     def flush(self):
@@ -68,13 +68,13 @@ if __name__ == '__main__':
 
     # Send the data
     text = u'pi: π'
-    print 'Sending :', repr(text)
+    print('Sending :', repr(text))
     outgoing.write(text)
     outgoing.flush()
 
     # Receive a response
     response = incoming.read()
-    print 'Received:', repr(response)
+    print('Received:', repr(response))
 
     # Clean up
     s.close()

@@ -20,4 +20,4 @@ wrapped_stdout.write(u'Via write: ' + text + '\n')
 # Replace sys.stdout with a writer
 sys.stdout = wrapped_stdout
 
-print u'Via print:', text
+print(u'Via print:', text)

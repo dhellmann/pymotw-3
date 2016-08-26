@@ -15,7 +15,7 @@ from codecs_to_hex import to_hex
 error_handling = sys.argv[1]
 
 text = u'pi: \u03c0'
-print 'Original     :', repr(text)
+print('Original     :', repr(text))
 
 # Save the data with one encoding
 with codecs.open('decode_error.txt', 'w', encoding='utf-16') as f:
@@ -23,7 +23,7 @@ with codecs.open('decode_error.txt', 'w', encoding='utf-16') as f:
 
 # Dump the bytes from the file
 with open('decode_error.txt', 'rb') as f:
-    print 'File contents:', to_hex(f.read(), 1)
+    print('File contents:', to_hex(f.read(), 1))
 
 # Try to read the data with the wrong encoding
 with codecs.open('decode_error.txt', 'r',
@@ -32,6 +32,6 @@ with codecs.open('decode_error.txt', 'r',
     try:
         data = f.read()
     except UnicodeDecodeError, err:
-        print 'ERROR:', err
+        print('ERROR:', err)
     else:
-        print 'Read         :', repr(data)
+        print('Read         :', repr(data))

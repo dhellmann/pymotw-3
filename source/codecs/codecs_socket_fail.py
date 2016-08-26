@@ -44,7 +44,7 @@ if __name__ == '__main__':
 
     # Receive a response
     response = s.recv(len_sent)
-    print repr(response)
+    print(repr(response))
 
     # Clean up
     s.close()

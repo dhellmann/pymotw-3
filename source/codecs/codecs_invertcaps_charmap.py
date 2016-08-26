@@ -34,7 +34,7 @@ decoding_map.update( dict( (lower, upper)
 encoding_map = codecs.make_encoding_map(decoding_map)
 
 if __name__ == '__main__':
-    print codecs.charmap_encode('abc.DEF', 'strict', encoding_map)
-    print codecs.charmap_decode('abc.DEF', 'strict', decoding_map)
-    print encoding_map == decoding_map
+    print(codecs.charmap_encode('abc.DEF', 'strict', encoding_map))
+    print(codecs.charmap_decode('abc.DEF', 'strict', decoding_map))
+    print(encoding_map == decoding_map)
     
