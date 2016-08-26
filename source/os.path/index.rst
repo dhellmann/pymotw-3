@@ -6,7 +6,6 @@
     :synopsis: Platform-independent manipulation of filenames.
 
 :Purpose: Parse, build, test, and otherwise work on filenames and paths.
-:Python Version: 1.4 and later
 
 Writing code to work with files on multiple platforms is easy using
 the functions included in the :mod:`os.path` module. Even programs not
@@ -40,8 +39,8 @@ returns a :class:`tuple` with the results. The second element of the
 :class:`tuple` is the last component of the path, and the first element is
 everything that comes before it.
 
-.. include:: ospath_split.py
-    :literal:
+.. literalinclude:: ospath_split.py
+    :caption:
     :start-after: #end_pymotw_header
 
 When the input argument ends in :const:`os.sep`, the "last element" of
@@ -66,8 +65,8 @@ the path is an empty string.
 The :func:`basename` function returns a value equivalent to the second
 part of the :func:`split` value.
 
-.. include:: ospath_basename.py
-    :literal:
+.. literalinclude:: ospath_basename.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The full path is stripped down to the last element, whether that
@@ -93,8 +92,8 @@ empty.
 
 The :func:`dirname` function returns the first part of the split path:
 
-.. include:: ospath_dirname.py
-    :literal:
+.. literalinclude:: ospath_dirname.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Combining the results of :func:`basename` with :func:`dirname` gives
@@ -119,8 +118,8 @@ the original path.
 :func:`splitext` works like :func:`split`, but divides the path on the
 extension separator, rather than the directory separator.
 
-.. include:: ospath_splitext.py
-    :literal:
+.. literalinclude:: ospath_splitext.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Only the last occurrence of :const:`os.extsep` is used when looking
@@ -152,8 +151,8 @@ paths. The value may represent a path that does not actually exist,
 and the path separator is not included in the consideration, so the
 prefix might not stop on a separator boundary.
 
-.. include:: ospath_commonprefix.py
-    :literal:
+.. literalinclude:: ospath_commonprefix.py
+    :caption:
     :start-after: #end_pymotw_header
 
 In this example, the common prefix string is ``/one/two/three``, even
@@ -182,8 +181,8 @@ Besides taking existing paths apart, it is frequently necessary to
 build paths from other strings.  To combine several path components
 into a single value, use :func:`join`:
 
-.. include:: ospath_join.py
-    :literal:
+.. literalinclude:: ospath_join.py
+    :caption:
     :start-after: #end_pymotw_header
 
 If any argument to join begins with :const:`os.sep`, all of the
@@ -209,8 +208,8 @@ that can be expanded automatically. For example, :func:`expanduser`
 converts the tilde (``~``) character to the name of a user's home
 directory.
 
-.. include:: ospath_expanduser.py
-    :literal:
+.. literalinclude:: ospath_expanduser.py
+    :caption:
     :start-after: #end_pymotw_header
 
 If the user's home directory cannot be found, the string is returned
@@ -233,8 +232,8 @@ unchanged, as with ``~postgresql`` in this example.
 :func:`expandvars` is more general, and expands any shell environment
 variables present in the path.
 
-.. include:: ospath_expandvars.py
-    :literal:
+.. literalinclude:: ospath_expandvars.py
+    :caption:
     :start-after: #end_pymotw_header
 
 No validation is performed to ensure that the variable value results
@@ -259,8 +258,8 @@ Paths assembled from separate strings using :func:`join` or with
 embedded variables might end up with extra separators or relative path
 components. Use :func:`normpath` to clean them up:
 
-.. include:: ospath_normpath.py
-    :literal:
+.. literalinclude:: ospath_normpath.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Path segments made up of :const:`os.curdir` and :const:`os.pardir` are
@@ -283,8 +282,8 @@ evaluated and collapsed.
 To convert a relative path to an absolute filename, use
 :func:`abspath`.
 
-.. include:: ospath_abspath.py
-    :literal:
+.. literalinclude:: ospath_abspath.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The result is a complete path, starting at the top of the file system
@@ -312,8 +311,8 @@ Besides working with paths, :mod:`os.path` includes functions for
 retrieving file properties, similar to the ones returned by
 :func:`os.stat`:
 
-.. include:: ospath_properties.py
-    :literal:
+.. literalinclude:: ospath_properties.py
+    :caption:
     :start-after: #end_pymotw_header
 
 :func:`os.path.getatime` returns the access time,
@@ -346,8 +345,8 @@ the path refers to a file, directory, or symlink and whether it
 exists.  :mod:`os.path` includes functions for testing all of these
 conditions.
 
-.. include:: ospath_tests.py
-    :literal:
+.. literalinclude:: ospath_tests.py
+    :caption:
     :start-after: #end_pymotw_header
 
 All of the test functions return boolean values.
@@ -410,8 +409,8 @@ Traversing a Directory Tree
 calls a provided function, passing it the directory name and the names of
 the contents of that directory as arguments.
 
-.. include:: ospath_walk.py
-    :literal:
+.. literalinclude:: ospath_walk.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example produces a recursive directory listing, ignoring ``.svn``
