@@ -402,40 +402,6 @@ All of the test functions return boolean values.
 .. {{{end}}}
 
 
-Traversing a Directory Tree
-===========================
-
-:func:`os.path.walk` traverses all of the directories in a tree and
-calls a provided function, passing it the directory name and the names of
-the contents of that directory as arguments.
-
-.. literalinclude:: ospath_walk.py
-    :caption:
-    :start-after: #end_pymotw_header
-
-This example produces a recursive directory listing, ignoring ``.svn``
-directories.
-
-.. {{{cog
-.. run_script(cog.inFile, 'rm -rf example', interpreter='')
-.. cog.out(run_script(cog.inFile, 'ospath_walk.py'))
-.. }}}
-
-::
-
-	$ python ospath_walk.py
-
-	example (User data)
-	  one/
-	  two.txt
-	
-	example/one (User data)
-	  file.txt
-	
-
-.. {{{end}}}
-
-
 .. seealso::
 
     `os.path <http://docs.python.org/lib/module-os.path.html>`_

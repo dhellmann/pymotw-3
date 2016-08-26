@@ -764,6 +764,17 @@ The function :func:`os.stat_float_times` is deprecated
 
 :func:`os.unsetenv` no longer ignores errors (:pyissue:`13415`).
 
+.. _porting-os.path:
+
+os.path
+-------
+
+.. index::
+   pair: porting; os.path
+
+:func:`os.path.walk` has been removed. Use :func:`os.walk` instead.
+
+
 .. _porting-pdb:
 
 pdb
