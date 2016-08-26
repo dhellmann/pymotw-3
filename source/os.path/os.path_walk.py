@@ -13,14 +13,14 @@ import os.path
 import pprint
 
 def visit(arg, dirname, names):
-    print dirname, arg
+    print(dirname, arg)
     for name in names:
         subname = os.path.join(dirname, name)
         if os.path.isdir(subname):
-            print '  %s/' % name
+            print('  %s/' % name)
         else:
-            print '  %s' % name
-    print
+            print('  %s' % name)
+    print()
 
 if not os.path.exists('example'):
     os.mkdir('example')

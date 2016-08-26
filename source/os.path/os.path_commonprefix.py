@@ -15,7 +15,7 @@ paths = ['/one/two/three/four',
          '/one/two/three/',
          ]
 for path in paths:
-    print 'PATH:', path
+    print('PATH:', path)
 
-print
-print 'PREFIX:', os.path.commonprefix(paths)
+print()
+print('PREFIX:', os.path.commonprefix(paths))

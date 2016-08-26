@@ -18,4 +18,4 @@ for path in [ 'filename.txt',
               'my-archive.tar.gz',
               'no-extension.',
               ]:
-    print '%21s :' % path, os.path.splitext(path)
+    print('%21s :' % path, os.path.splitext(path))
