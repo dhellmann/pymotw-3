@@ -432,6 +432,8 @@ All of the test functions return boolean values.
 
    * :pydoc:`os.path`
 
+   * :ref:`Porting notes for os.path <porting-os.path>`
+
    * :mod:`pathlib` -- Paths as objects.
 
    * :mod:`os` -- The ``os`` module is a parent of ``os.path``.
