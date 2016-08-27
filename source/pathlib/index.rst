@@ -165,6 +165,36 @@ before printing it so the member values can be printed.
 
 .. {{{end}}}
 
+Other parts of the path can be accessed through properties of the path
+object.  The ``name`` property holds the last part of the path, after
+the final path separator (the same value that :func:`os.path.basename`
+produces). The ``suffix`` property holds the value after the extension
+separator (usually ".") and the ``stem`` property holds the portion of
+the name before the suffix (these match the values produced by
+:func:`os.path.splitext`).
+
+.. literalinclude:: pathlib_name.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Unlike with :func:`os.path.splitext`, the ``suffix`` and ``stem``
+values are based on the value of ``name`` and not the full path.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'pathlib_name.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 pathlib_name.py
+	
+	path  : source/pathlib/pathlib_name.py
+	name  : pathlib_name.py
+	suffix: .py
+	stem  : pathlib_name
+
+.. {{{end}}}
+
 
 
 .. examples of windows paths
