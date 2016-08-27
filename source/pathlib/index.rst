@@ -39,8 +39,11 @@ a new path referring to a value relative to an existing path, use the
 
 As the value for ``root`` in the example output shows, the operator
 combines the path values as they are given, and does not normalize the
-result when it contains the parent directory reference ``".."``. Extra
-path separators, however, are removed from the value for ``etc``.
+result when it contains the parent directory reference
+``".."``. However, if a segment begins with the path separator it is
+interpreted as a new "root" reference in the same way as
+:func:`os.path.join`.  Extra path separators are removed from the
+middle of the path value, as in the ``etc`` example here.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'pathlib_operator.py'))
