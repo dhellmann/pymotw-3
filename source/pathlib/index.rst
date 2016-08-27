@@ -257,6 +257,151 @@ absolute file system reference.
 
 .. {{{end}}}
 
+Directory Contents
+==================
+
+There are three methods for accessing the directory listings to
+discover the names of files available on the file
+system. :func:`iterdir` is a generator, yielding a new :class:`Path`
+instance for each item in the containing directory.
+
+.. literalinclude:: pathlib_iterdir.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+If the :class:`Path` does not refer to a directory, :func:`iterdir`
+raises :class:`NotADirectoryError`.
+
+.. {{{cog
+.. run_script(cog.inFile, 'rm -f *~', interpreter='')
+.. cog.out(run_script(cog.inFile, 'pathlib_iterdir.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 pathlib_iterdir.py
+	
+	index.rst
+	pathlib_convenience.py
+	pathlib_from_existing.py
+	pathlib_glob.py
+	pathlib_iterdir.py
+	pathlib_joinpath.py
+	pathlib_name.py
+	pathlib_operator.py
+	pathlib_parents.py
+	pathlib_parts.py
+	pathlib_resolve.py
+	pathlib_rglob.py
+
+.. {{{end}}}
+
+Use :func:`glob` to find only files matching a pattern.
+
+.. literalinclude:: pathlib_glob.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+This example shows all of the reStructuredText_ input files in the
+parent directory of the script.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'pathlib_glob.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 pathlib_glob.py
+	
+	../about.rst
+	../algorithm_tools.rst
+	../compression.rst
+	../concurrency.rst
+	../cryptographic.rst
+	../data_types.rst
+	../dates.rst
+	../dev_tools.rst
+	../email.rst
+	../file_access.rst
+	../frameworks.rst
+	../i18n.rst
+	../importing.rst
+	../index.rst
+	../internet_protocols.rst
+	../language.rst
+	../networking.rst
+	../numeric.rst
+	../persistence.rst
+	../porting_notes.rst
+	../runtime_services.rst
+	../text.rst
+	../unix.rst
+
+.. {{{end}}}
+
+The glob processor support recursive scanning using the pattern prefix
+``**`` or by calling :func:`rglob` instead of :func:`glob`.
+
+.. literalinclude:: pathlib_rglob.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Because this example starts from the parent directory, a recursive
+search is necessary to find the example files matching
+``pathlib_*.py``.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'pathlib_rglob.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 pathlib_rglob.py
+	
+	../pathlib/pathlib_convenience.py
+	../pathlib/pathlib_from_existing.py
+	../pathlib/pathlib_glob.py
+	../pathlib/pathlib_iterdir.py
+	../pathlib/pathlib_joinpath.py
+	../pathlib/pathlib_name.py
+	../pathlib/pathlib_operator.py
+	../pathlib/pathlib_parents.py
+	../pathlib/pathlib_parts.py
+	../pathlib/pathlib_resolve.py
+	../pathlib/pathlib_rglob.py
+
+.. {{{end}}}
+
+Examining the File System
+=========================
+
+.. todo:: stat
+.. todo:: exists
+.. todo:: is_dir, is_file, is_symlink, is_socket, is_fifo, is_block_device, is_char_device
+
+Permissions
+===========
+
+.. todo:: chmod, group, owner
+
+Reading and Writing Files
+=========================
+
+.. open
+.. read_bytes, write_bytes
+.. read_text, write_text
+
+Creating and Deleting Files and Directories
+===========================================
+
+.. mkdir, rmdir
+.. rename, replace
+
+.. symlink_to
+.. touch
+.. unlink
+
+
 
 
 .. examples of windows paths
@@ -266,32 +411,8 @@ absolute file system reference.
 .. match
 
 .. relative_to
-.. with_name
-.. with_suffix
 
-.. cwd class method
-.. home class method
-
-.. stat
-.. chmod, group, owner
-.. exists
 .. expanduser
-.. glob, rglob
-
-.. is_dir, is_file, is_symlink, is_socket, is_fifo, is_block_device, is_char_device
-
-.. iterdir
-
-.. mkdir, rmdir
-.. rename, replace
-
-.. open
-.. read_bytes, write_bytes
-.. read_text, write_text
-
-.. symlink_to
-.. touch
-.. unlink
 
 
 .. seealso::
@@ -300,4 +421,8 @@ absolute file system reference.
 
    * :mod:`os.path` -- Platform-independent manipulation of filenames
 
+   * :mod:`glob` -- UNIX shell pattern matching for filenames
+
    * :pep:`428` -- The pathlib module
+
+.. _reStructuredText: http://docutils.sourceforge.net/
