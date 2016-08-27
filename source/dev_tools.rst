@@ -51,6 +51,12 @@ next step is to work on performance.  Using :mod:`profile` and
 :mod:`timeit`, a developer can measure the speed of a program and find
 the slow parts so they can be isolated and improved.
 
+It is important to indent source code consistently in a langauge like
+Python, where white-space is significant.  The :mod:`tabnanny` module
+provides a scanner to report on "ambiguous" use of indentation, and
+can be used in tests to ensure that code meets a minimum standard
+before it is checked in to the source repository.
+
 Python programs are run by giving the interpreter a byte-compiled
 version of the original program source.  The byte-compiled versions
 can be created on-the-fly, or once when the program is packaged.  The
@@ -84,20 +90,25 @@ pip.
 
     doctest/index
     cgitb/index
-    compileall/index
     pdb/index
     profile/index
     tabnanny/index
+    compileall/index
     venv/index
     ensurepip/index
 
 ..
-    pydoc/index
+    * pydoc/index
     doctest/index
-    unittest/index
-    traceback/index
+    * unittest/index
+    * trace/index
+    * traceback/index
+    cgitb/index
     pdb/index
-    trace/index
     profile/index
-    timeit/index
-    pyclbr/index
+    * timeit/index
+    tabnanny/index
+    compileall/index
+    * pyclbr/index
+    venv
+    ensurepip

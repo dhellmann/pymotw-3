@@ -79,20 +79,20 @@ be used.
    getpass/index
    shlex/index
    configparser/index
-   atexit/index
    fileinput/index
+   atexit/index
 
 ..
-   getopt/index
    argparse/index
-   readline/index
+   getopt/index
+   * readline/index
    getpass/index
-   cmd/index
+   * cmd/index
    shlex/index
    ConfigParser/index
-   logging/index
-   fileinput/index
+   * logging/index
    atexit/index
-   sched/index
+   fileinput/index
+   * sched/index
 
 ..    runpy/index
