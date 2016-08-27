@@ -109,6 +109,32 @@ instance.
 
 .. {{{end}}}
 
+Parsing Paths
+=============
+
+Path objects have methods and properties for extracting partial values
+from the name. For example, the ``parts`` property produces a sequence
+of path segments parsed based on the path separator value.
+
+.. literalinclude:: pathlib_parts.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The sequence is a tuple, reflecting the immutability of the path
+instance.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'pathlib_parts.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 pathlib_parts.py
+	
+	('/', 'usr', 'local')
+
+.. {{{end}}}
+
 
 
 .. pure vs. concrete
