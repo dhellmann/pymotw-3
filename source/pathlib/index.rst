@@ -294,6 +294,7 @@ raises :class:`NotADirectoryError`.
 	pathlib_parts.py
 	pathlib_resolve.py
 	pathlib_rglob.py
+	pathlib_stat.py
 	pathlib_types.py
 
 .. {{{end}}}
@@ -371,6 +372,7 @@ search is necessary to find the example files matching
 	../pathlib/pathlib_parts.py
 	../pathlib/pathlib_resolve.py
 	../pathlib/pathlib_rglob.py
+	../pathlib/pathlib_stat.py
 	../pathlib/pathlib_types.py
 
 .. {{{end}}}
@@ -443,8 +445,52 @@ arguments.
 
 .. {{{end}}}
 
-Properties?
-===========
+File Properties
+===============
+
+Detailed information about a file can be accessed using the methods
+:func:`stat` or :func:`lstat` (for checking the status of something
+that might be a symbolic link). These methods produce the same results
+as :func:`os.stat` and :func:`os.lstat`.
+
+.. literalinclude:: pathlib_stat.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The output will vary depending on how the example code was
+installed. Try passing different filenames on the command line to
+``pathlib_stat.py``.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'pathlib_stat.py'))
+.. cog.out(run_script(cog.inFile, 'pathlib_stat.py index.rst', include_prefix=False))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 pathlib_stat.py
+	
+	pathlib_stat.py:
+		Size: 607
+		Permissions: 0o100644
+		Owner: 527
+		Device: 16777218
+		Created      : Sat Aug 27 19:55:05 2016
+		Last modified: Sat Aug 27 19:55:04 2016
+		Last accessed: Sat Aug 27 19:56:17 2016
+
+	$ python3 pathlib_stat.py index.rst
+	
+	index.rst:
+		Size: 13707
+		Permissions: 0o100644
+		Owner: 527
+		Device: 16777218
+		Created      : Sat Aug 27 19:56:13 2016
+		Last modified: Sat Aug 27 19:56:13 2016
+		Last accessed: Sat Aug 27 19:56:16 2016
+
+.. {{{end}}}
 
 .. todo:: stat
 .. todo:: exists
