@@ -50,3 +50,4 @@ dist/
 /source/codecs/utf-16.txt
 /source/codecs/utf-32.txt
 /source/codecs/utf-8.txt
+/source/pathlib/test_files

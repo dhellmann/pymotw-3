@@ -274,6 +274,7 @@ raises :class:`NotADirectoryError`.
 
 .. {{{cog
 .. run_script(cog.inFile, 'rm -f *~', interpreter='')
+.. run_script(cog.inFile, 'rm -rf test_files', interpreter='')
 .. cog.out(run_script(cog.inFile, 'pathlib_iterdir.py'))
 .. }}}
 
@@ -293,6 +294,7 @@ raises :class:`NotADirectoryError`.
 	pathlib_parts.py
 	pathlib_resolve.py
 	pathlib_rglob.py
+	pathlib_types.py
 
 .. {{{end}}}
 
@@ -369,15 +371,83 @@ search is necessary to find the example files matching
 	../pathlib/pathlib_parts.py
 	../pathlib/pathlib_resolve.py
 	../pathlib/pathlib_rglob.py
+	../pathlib/pathlib_types.py
 
 .. {{{end}}}
 
-Examining the File System
-=========================
+File Types
+==========
+
+A :class:`Path` instance includes several methods for testing the type
+of file refered to by the path. This example creates several files of
+different types and tests those as well as a few other device-specific
+files available on the local operating system.
+
+.. literalinclude:: pathlib_types.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Each of the methods, :func:`is_dir`, :func:`is_file`,
+:func:`is_symlink`, :func:`is_socket`, :func:`is_fifo`,
+:func:`is_block_device`, and :func:`is_char_device`, takes no
+arguments.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'pathlib_types.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 pathlib_types.py
+	
+	test_files/fifo
+	Is File?             : False
+	Is Dir?              : False
+	Is Link?             : False
+	Is FIFO?             : True
+	Is lock device?      : False
+	Is character device? : False
+	
+	test_files/file
+	Is File?             : True
+	Is Dir?              : False
+	Is Link?             : False
+	Is FIFO?             : False
+	Is lock device?      : False
+	Is character device? : False
+	
+	test_files/symlink
+	Is File?             : True
+	Is Dir?              : False
+	Is Link?             : True
+	Is FIFO?             : False
+	Is lock device?      : False
+	Is character device? : False
+	
+	/dev/disk0
+	Is File?             : False
+	Is Dir?              : False
+	Is Link?             : False
+	Is FIFO?             : False
+	Is lock device?      : True
+	Is character device? : False
+	
+	/dev/console
+	Is File?             : False
+	Is Dir?              : False
+	Is Link?             : False
+	Is FIFO?             : False
+	Is lock device?      : False
+	Is character device? : True
+	
+
+.. {{{end}}}
+
+Properties?
+===========
 
 .. todo:: stat
 .. todo:: exists
-.. todo:: is_dir, is_file, is_symlink, is_socket, is_fifo, is_block_device, is_char_device
 
 Permissions
 ===========
