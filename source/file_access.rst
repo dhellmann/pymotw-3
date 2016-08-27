@@ -67,6 +67,7 @@ a file, but does not reside on disk.
     os.path/index
     glob/index
     fnmatch/index
+    pathlib/index
     linecache/index
     filecmp/index
     mmap/index
@@ -74,9 +75,9 @@ a file, but does not reside on disk.
 
 ..
     ospath/index
-    * pathlib/index
     glob
     fnmatch/index
+    pathlib/index
     linecache/index
     * tempfile/index
     * shutil/index
