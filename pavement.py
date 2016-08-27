@@ -15,6 +15,12 @@ from sphinxcontrib.paverutils import cog, run_script
 import wordpress_xmlrpc
 import wordpress_xmlrpc.exceptions
 
+import pybitbucket.auth as pybb_auth
+import pybitbucket.bitbucket as pybb_bb
+import pybitbucket.repository as pybb_repo
+import uritemplate
+import urllib.parse
+import pprint
 
 # Set PYTHONHASHSEED so ensure the "randomness" for mapping-related
 # items is always the same between runs to avoid unnecessary cog
@@ -495,3 +501,55 @@ def blog(options):
     print('title {!r}'.format(title))
     post_draft(title, body)
     return
+
+
+@task
+@consume_args
+def review_task(options):
+    """Create a bitbucket issue for reviewing a module.
+    """
+    module = _get_module(options)
+
+    cfg_filename = path('~/.bitbucketrc').expanduser()
+    cfg = configparser.ConfigParser()
+    if not cfg.read(cfg_filename):
+        raise RuntimeError('Did not find configuration file {}'.format(cfg_filename))
+
+    auth = pybb_auth.OAuth1Authenticator(
+        client_key=cfg['bitbucket']['client_key'],
+        client_secret=cfg['bitbucket']['client_secret'],
+        client_email=cfg['bitbucket']['email'],
+    )
+
+    client = pybb_bb.Client(auth)
+
+    repo = pybb_repo.Repository.find_repository_by_name_and_owner(
+        repository_name='pymotw-3',
+        owner='dhellmann',
+        client=client,
+    )
+
+    # The client library doesn't have issue support yet, so we have to
+    # do it by hand.
+    url_template = repo.v1.get_link_template('issues')
+    url = uritemplate.expand(
+        url_template,
+        {'bitbucket_url': client.get_bitbucket_url(),
+         'owner': 'dhellmann',
+         'repository_name': 'pymotw-3',
+        },
+    )
+    args = {
+        'title': 'technical review for {}'.format(module),
+        'content': 'Perform the technical review for {}'.format(module),
+        'kind': 'task',
+        'priority': 'major',
+    }
+    encoded = urllib.parse.urlencode(args)
+
+    response = repo.v1.post(
+        url=url,
+        client=client,
+        data=encoded,
+    )
+    pprint.pprint(response)
