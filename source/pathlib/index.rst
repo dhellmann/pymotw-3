@@ -137,9 +137,10 @@ instance.
 
 There are two ways to navigate "up" the filesystem hierarchy from a
 given path object. The ``parent`` property refers to a new path
-instance for the directory containing the path.  The ``parents``
-property is an iterable that produces parent directory references,
-continually going "up" the path hierarchy until reaching the root.
+instance for the directory containing the path, the value returned by
+:func:`os.path.dirname`.  The ``parents`` property is an iterable that
+produces parent directory references, continually going "up" the path
+hierarchy until reaching the root.
 
 .. literalinclude:: pathlib_parents.py
    :caption:
