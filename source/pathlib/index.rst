@@ -31,7 +31,8 @@ Building Paths
 To instantiate a new path, give a string as the first argument. The
 string representation of the path object is this name value. To create
 a new path referring to a value relative to an existing path, use the
-``/`` operator to extend the path.
+``/`` operator to extend the path. The argument to the operator can
+either be a string or another path object.
 
 .. literalinclude:: pathlib_operator.py
    :caption:
@@ -55,6 +56,7 @@ middle of the path value, as in the ``etc`` example here.
 	
 	/usr
 	/usr/local
+	/usr/share
 	/usr/..
 	/etc
 

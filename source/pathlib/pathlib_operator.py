@@ -16,6 +16,9 @@ print(usr)
 usr_local = usr / 'local'
 print(usr_local)
 
+usr_share = usr / pathlib.PurePosixPath('share')
+print(usr_share)
+
 root = usr / '..'
 print(root)
 
