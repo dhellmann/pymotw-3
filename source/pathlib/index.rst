@@ -135,9 +135,11 @@ instance.
 
 .. {{{end}}}
 
-The ``parents`` property is an iterable that produces parent directory
-references, continually going "up" the path hierarchy until reaching
-the root.
+There are two ways to navigate "up" the filesystem hierarchy from a
+given path object. The ``parent`` property refers to a new path
+instance for the directory containing the path.  The ``parents``
+property is an iterable that produces parent directory references,
+continually going "up" the path hierarchy until reaching the root.
 
 .. literalinclude:: pathlib_parents.py
    :caption:
@@ -154,21 +156,21 @@ before printing it so the member values can be printed.
 
 	$ python3 pathlib_parents.py
 	
-	[PurePosixPath('/usr'), PurePosixPath('/')]
+	parent: /usr/local
+	
+	hierarchy:
+	/usr/local
+	/usr
+	/
 
 .. {{{end}}}
 
 
 
-.. pure vs. concrete
 .. examples of windows paths
 
 .. sorting, hashing
 
-.. slash operator for combining segments
-.. joinpath() method for same
-.. parts attribute for parsing
-.. parents attribute for moving up the tree
 .. parent attribute for looking at containing directory
 .. name attribute for final component
 .. suffix attribute for getting the extension
