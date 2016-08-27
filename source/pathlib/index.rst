@@ -85,6 +85,28 @@ target.
 
 .. {{{end}}}
 
+To build paths when the segments are not known in advance, use
+:func:`joinpath`, passing each path segment as a separate argument.
+
+.. literalinclude:: pathlib_joinpath.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+As with the ``/`` operator, calling :func:`joinpath` creates a new
+instance.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'pathlib_joinpath.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 pathlib_joinpath.py
+	
+	/usr/local
+
+.. {{{end}}}
+
 
 
 .. pure vs. concrete
