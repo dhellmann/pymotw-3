@@ -196,16 +196,45 @@ values are based on the value of ``name`` and not the full path.
 
 .. {{{end}}}
 
+Creating Concrete Paths
+=======================
+
+Instances of the concrete :class:`Path` class can be created from
+string arguments referring to the name (or potential name) of a file,
+directory, or symbolic link on the file system. The class also
+provides several convenience methods for building instances using
+commonly used locations that change, such as the current working
+directory and the user's home directory.
+
+.. literalinclude:: pathlib_convenience.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Both methods create :class:`Path` instances pre-populated with an
+absolute file system reference.
+
+.. {{{cog
+.. # replace long cwd value from build with a shorter faux value
+.. def _faux_cwd(infile, line):
+..     bad = '/Users/dhellmann/Dropbox/PyMOTW/Python3/pymotw-3/source/pathlib'
+..     return line.replace(bad, '/Users/dhellmann/PyMOTW')
+.. cog.out(run_script(cog.inFile, 'pathlib_convenience.py', line_cleanups=[_faux_cwd]))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 pathlib_convenience.py
+	
+	home:  /Users/dhellmann
+	cwd :  /Users/dhellmann/PyMOTW
+
+.. {{{end}}}
+
 
 
 .. examples of windows paths
 
 .. sorting, hashing
-
-.. parent attribute for looking at containing directory
-.. name attribute for final component
-.. suffix attribute for getting the extension
-.. stem attribute for the base name
 
 .. match
 
