@@ -135,6 +135,29 @@ instance.
 
 .. {{{end}}}
 
+The ``parents`` property is an iterable that produces parent directory
+references, continually going "up" the path hierarchy until reaching
+the root.
+
+.. literalinclude:: pathlib_parents.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The example converts the ``parents`` iterator to a :class:`list`
+before printing it so the member values can be printed.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'pathlib_parents.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 pathlib_parents.py
+	
+	[PurePosixPath('/usr'), PurePosixPath('/')]
+
+.. {{{end}}}
+
 
 
 .. pure vs. concrete
