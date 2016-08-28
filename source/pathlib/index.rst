@@ -305,6 +305,7 @@ raises :class:`NotADirectoryError`.
 	pathlib_symlink_to.py
 	pathlib_touch.py
 	pathlib_types.py
+	pathlib_unlink.py
 
 .. {{{end}}}
 
@@ -390,6 +391,7 @@ search is necessary to find the example files matching
 	../pathlib/pathlib_symlink_to.py
 	../pathlib/pathlib_touch.py
 	../pathlib/pathlib_types.py
+	../pathlib/pathlib_unlink.py
 
 .. {{{end}}}
 
@@ -463,42 +465,6 @@ If the path already exists, :func:`mkdir` raises a
 
 .. {{{end}}}
 
-To remove an empty directory, use :func:`rmdir`.
-
-.. literalinclude:: pathlib_rmdir.py
-   :caption:
-   :start-after: #end_pymotw_header
-
-A :class:`FileNotFoundError` exception is raised if the
-post-conditions are already met and the directory does not exist. It
-is also an error to try to remove a directory that is not empty.
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'pathlib_rmdir.py'))
-.. cog.out(run_script(cog.inFile, 'pathlib_rmdir.py', include_prefix=False, ignore_error=True, line_break_mode='wrap'))
-.. }}}
-
-.. code-block:: none
-
-	$ python3 pathlib_rmdir.py
-	
-	Removing example_dir
-
-	$ python3 pathlib_rmdir.py
-	
-	Removing example_dir
-	Traceback (most recent call last):
-	  File "pathlib_rmdir.py", line 16, in <module>
-	    p.rmdir()
-	  File ".../lib/python3.5/pathlib.py", line 1262, in rmdir
-	    self._accessor.rmdir(self)
-	  File ".../lib/python3.5/pathlib.py", line 371, in wrapped
-	    return strfunc(str(pathobj), *args)
-	FileNotFoundError: [Errno 2] No such file or directory:
-	'example_dir'
-
-.. {{{end}}}
-
 Use :func:`symlink_to` to create a symbolic link. The link will be
 named based on the path's value and will refer to the name given as
 argument to :func:`symlink_to`.
@@ -523,12 +489,6 @@ read the link to find what it points to and print the name.
 	index.rst
 
 .. {{{end}}}
-
-
-.. todo:: rename, replace
-
-
-.. todo:: exists
 
 File Types
 ==========
@@ -630,18 +590,18 @@ installed. Try passing different filenames on the command line to
 		Device: 16777218
 		Created      : Sat Aug 27 19:55:05 2016
 		Last modified: Sat Aug 27 19:55:04 2016
-		Last accessed: Sat Aug 27 21:31:39 2016
+		Last accessed: Sat Aug 27 21:45:41 2016
 
 	$ python3 pathlib_stat.py index.rst
 	
 	index.rst:
-		Size: 19500
+		Size: 20080
 		Permissions: 0o100644
 		Owner: 527
 		Device: 16777218
-		Created      : Sat Aug 27 21:31:37 2016
-		Last modified: Sat Aug 27 21:31:37 2016
-		Last accessed: Sat Aug 27 21:31:38 2016
+		Created      : Sat Aug 27 21:45:33 2016
+		Last modified: Sat Aug 27 21:45:33 2016
+		Last accessed: Sat Aug 27 21:45:40 2016
 
 .. {{{end}}}
 
@@ -689,18 +649,16 @@ subsequent runs.
 	$ python3 pathlib_touch.py
 	
 	creating new
-	Start: Sat Aug 27 21:31:40 2016
-	End  : Sat Aug 27 21:31:41 2016
+	Start: Sat Aug 27 21:45:41 2016
+	End  : Sat Aug 27 21:45:42 2016
 
 	$ python3 pathlib_touch.py
 	
 	already exists
-	Start: Sat Aug 27 21:31:41 2016
-	End  : Sat Aug 27 21:31:42 2016
+	Start: Sat Aug 27 21:45:42 2016
+	End  : Sat Aug 27 21:45:43 2016
 
 .. {{{end}}}
-
-.. todo:: unlink
 
 Permissions
 ===========
@@ -731,7 +689,74 @@ of the file when run.
 
 .. {{{end}}}
 
+Deleting
+========
 
+There are two methods for removing things from the file system,
+depending on the type.  To remove an empty directory, use
+:func:`rmdir`.
+
+.. literalinclude:: pathlib_rmdir.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+A :class:`FileNotFoundError` exception is raised if the
+post-conditions are already met and the directory does not exist. It
+is also an error to try to remove a directory that is not empty.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'pathlib_rmdir.py'))
+.. cog.out(run_script(cog.inFile, 'pathlib_rmdir.py', include_prefix=False,
+..         ignore_error=True, line_break_mode='wrap'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 pathlib_rmdir.py
+	
+	Removing example_dir
+
+	$ python3 pathlib_rmdir.py
+	
+	Removing example_dir
+	Traceback (most recent call last):
+	  File "pathlib_rmdir.py", line 16, in <module>
+	    p.rmdir()
+	  File ".../lib/python3.5/pathlib.py", line 1262, in rmdir
+	    self._accessor.rmdir(self)
+	  File ".../lib/python3.5/pathlib.py", line 371, in wrapped
+	    return strfunc(str(pathobj), *args)
+	FileNotFoundError: [Errno 2] No such file or directory:
+	'example_dir'
+
+.. {{{end}}}
+
+For files, symbolic links, and most other path types use
+:func:`unlink`.
+
+.. literalinclude:: pathlib_unlink.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The user must have permission to remove the file, symbolic link,
+socket, or other file system object.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'pathlib_unlink.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 pathlib_unlink.py
+	
+	exists before removing: True
+	exists after removing: False
+
+.. {{{end}}}
+
+
+
+.. todo:: rename, replace
 
 .. examples of windows paths
 
