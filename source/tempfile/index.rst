@@ -49,9 +49,9 @@ using a common pattern for making up a name, versus using the
 	
 	Building a filename with PID:
 	temp:
-	  <_io.BufferedRandom name='/tmp/guess_my_name.7787.txt'>
+	  <_io.BufferedRandom name='/tmp/guess_my_name.12151.txt'>
 	temp.name:
-	  '/tmp/guess_my_name.7787.txt'
+	  '/tmp/guess_my_name.12151.txt'
 	
 	TemporaryFile:
 	temp:
@@ -131,9 +131,9 @@ The file is removed after the handle is closed.
 	$ python3 tempfile_NamedTemporaryFile.py
 	
 	temp:
-	  <tempfile._TemporaryFileWrapper object at 0x1022b2d30>
+	  <tempfile._TemporaryFileWrapper object at 0x1011b2d30>
 	temp.name:
-	  '/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpc73ycjon'
+	  '/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmps4qh5zde'
 	Exists after close: False
 
 .. {{{end}}}
@@ -191,10 +191,10 @@ amount of data, no file would be created on disk except that
 
 	$ python3 tempfile_SpooledTemporaryFile_explicit.py
 	
-	temp: <tempfile.SpooledTemporaryFile object at 0x101ab2c88>
-	False <_io.StringIO object at 0x101aa3d38>
-	False <_io.StringIO object at 0x101aa3d38>
-	False <_io.StringIO object at 0x101aa3d38>
+	temp: <tempfile.SpooledTemporaryFile object at 0x1007b2c88>
+	False <_io.StringIO object at 0x1007a3d38>
+	False <_io.StringIO object at 0x1007a3d38>
+	False <_io.StringIO object at 0x1007a3d38>
 	rolling over
 	True <_io.TextIOWrapper name=4 mode='w+t' encoding='utf-8'>
 
@@ -222,7 +222,7 @@ be used within the context block to build other file names.
 
 	$ python3 tempfile_TemporaryDirectory.py
 	
-	/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpylwzxpcm
+	/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmp_urhiioj
 	Directory exists after? False
 	Contents after: []
 
@@ -261,9 +261,9 @@ as-is and used as the location of the new file.
 	$ python3 tempfile_NamedTemporaryFile_args.py
 	
 	temp:
-	   <tempfile._TemporaryFileWrapper object at 0x1019b2d68>
+	   <tempfile._TemporaryFileWrapper object at 0x1018b2d68>
 	temp.name:
-	   /tmp/prefix_dzf6jcse_suffix
+	   /tmp/prefix_q6wd5czl_suffix
 
 .. {{{end}}}
 
@@ -330,29 +330,6 @@ variable.
 	gettempdir(): /I/changed/this/path
 
 .. {{{end}}}
-
-.. low level functions mkstemp mkdtemp
-
-
-..
-   .. literalinclude:: tempfile_mkdtemp.py
-       :caption:
-       :start-after: #end_pymotw_header
-
-   Since the directory is not "opened" per se, it must be removed
-   explicitly when it is no longer needed.
-
-   .. {{{cog
-   .. cog.out(run_script(cog.inFile, 'tempfile_mkdtemp.py'))
-   .. }}}
-
-   .. code-block:: none
-
-   	$ python3 tempfile_mkdtemp.py
-   	
-   	/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpt5vnrm2w
-
-   .. {{{end}}}
 
 .. seealso::
 
