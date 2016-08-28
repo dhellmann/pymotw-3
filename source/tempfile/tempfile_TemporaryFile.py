@@ -12,7 +12,7 @@ import os
 import tempfile
 
 print('Building a filename with PID:')
-filename = '/tmp/guess_my_name.%s.txt' % os.getpid()
+filename = '/tmp/guess_my_name.{}.txt'.format(os.getpid())
 with open(filename, 'w+b') as temp:
     print('temp:')
     print('  {!r}'.format(temp))
