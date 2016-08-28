@@ -292,6 +292,7 @@ raises :class:`NotADirectoryError`.
 	pathlib_joinpath.py
 	pathlib_name.py
 	pathlib_operator.py
+	pathlib_ownership.py
 	pathlib_parents.py
 	pathlib_parts.py
 	pathlib_resolve.py
@@ -371,6 +372,7 @@ search is necessary to find the example files matching
 	../pathlib/pathlib_joinpath.py
 	../pathlib/pathlib_name.py
 	../pathlib/pathlib_operator.py
+	../pathlib/pathlib_ownership.py
 	../pathlib/pathlib_parents.py
 	../pathlib/pathlib_parts.py
 	../pathlib/pathlib_resolve.py
@@ -480,23 +482,42 @@ installed. Try passing different filenames on the command line to
 		Device: 16777218
 		Created      : Sat Aug 27 19:55:05 2016
 		Last modified: Sat Aug 27 19:55:04 2016
-		Last accessed: Sat Aug 27 20:09:32 2016
+		Last accessed: Sat Aug 27 20:13:05 2016
 
 	$ python3 pathlib_stat.py index.rst
 	
 	index.rst:
-		Size: 14478
+		Size: 14718
 		Permissions: 0o100644
 		Owner: 527
 		Device: 16777218
-		Created      : Sat Aug 27 20:09:26 2016
-		Last modified: Sat Aug 27 20:09:26 2016
-		Last accessed: Sat Aug 27 20:09:32 2016
+		Created      : Sat Aug 27 20:12:47 2016
+		Last modified: Sat Aug 27 20:12:47 2016
+		Last accessed: Sat Aug 27 20:13:04 2016
 
 .. {{{end}}}
 
-.. todo:: stat
-.. todo:: exists
+For simpler access to information about the owner of a file, use
+:func:`owner` and :func:`group`.
+
+.. literalinclude:: pathlib_ownership.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+While :func:`stat` returns numerical system ID values, these methods
+look up the name associated with the IDs.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'pathlib_ownership.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 pathlib_ownership.py
+	
+	pathlib_ownership.py is owned by dhellmann/dhellmann
+
+.. {{{end}}}
 
 Permissions
 ===========
@@ -527,8 +548,6 @@ of the file when run.
 
 .. {{{end}}}
 
-.. todo:: chmod, group, owner
-
 Reading and Writing Files
 =========================
 
@@ -546,6 +565,8 @@ Creating and Deleting Files and Directories
 .. touch
 .. unlink
 
+
+.. todo:: exists
 
 
 
