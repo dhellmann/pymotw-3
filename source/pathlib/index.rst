@@ -275,6 +275,7 @@ raises :class:`NotADirectoryError`.
 .. {{{cog
 .. run_script(cog.inFile, 'rm -f *~', interpreter='')
 .. run_script(cog.inFile, 'rm -rf test_files', interpreter='')
+.. run_script(cog.inFile, 'rm -f pathlib_chmod_example.txt', interpreter='')
 .. cog.out(run_script(cog.inFile, 'pathlib_iterdir.py'))
 .. }}}
 
@@ -283,6 +284,7 @@ raises :class:`NotADirectoryError`.
 	$ python3 pathlib_iterdir.py
 	
 	index.rst
+	pathlib_chmod.py
 	pathlib_convenience.py
 	pathlib_from_existing.py
 	pathlib_glob.py
@@ -361,6 +363,7 @@ search is necessary to find the example files matching
 
 	$ python3 pathlib_rglob.py
 	
+	../pathlib/pathlib_chmod.py
 	../pathlib/pathlib_convenience.py
 	../pathlib/pathlib_from_existing.py
 	../pathlib/pathlib_glob.py
@@ -477,18 +480,18 @@ installed. Try passing different filenames on the command line to
 		Device: 16777218
 		Created      : Sat Aug 27 19:55:05 2016
 		Last modified: Sat Aug 27 19:55:04 2016
-		Last accessed: Sat Aug 27 19:56:17 2016
+		Last accessed: Sat Aug 27 20:09:32 2016
 
 	$ python3 pathlib_stat.py index.rst
 	
 	index.rst:
-		Size: 13707
+		Size: 14478
 		Permissions: 0o100644
 		Owner: 527
 		Device: 16777218
-		Created      : Sat Aug 27 19:56:13 2016
-		Last modified: Sat Aug 27 19:56:13 2016
-		Last accessed: Sat Aug 27 19:56:16 2016
+		Created      : Sat Aug 27 20:09:26 2016
+		Last modified: Sat Aug 27 20:09:26 2016
+		Last accessed: Sat Aug 27 20:09:32 2016
 
 .. {{{end}}}
 
@@ -497,6 +500,32 @@ installed. Try passing different filenames on the command line to
 
 Permissions
 ===========
+
+On UNIX-like systems, file permissions can be changed using
+:func:`chmod`, passing the mode as an integer. Mode values can be
+constructed using constants defined in the :mod:`stat` module.  This
+example toggles the user's execute permission bit.
+
+.. literalinclude:: pathlib_chmod.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The script assumes it has the permissions necessary to modify the mode
+of the file when run.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'pathlib_chmod.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 pathlib_chmod.py
+	
+	Before: 644
+	Adding execute permission
+	After: 744
+
+.. {{{end}}}
 
 .. todo:: chmod, group, owner
 

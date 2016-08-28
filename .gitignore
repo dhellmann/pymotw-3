@@ -51,3 +51,4 @@ dist/
 /source/codecs/utf-32.txt
 /source/codecs/utf-8.txt
 /source/pathlib/test_files
+/source/pathlib/pathlib_chmod_example.txt
