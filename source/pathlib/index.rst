@@ -283,6 +283,7 @@ raises :class:`NotADirectoryError`.
 
 	$ python3 pathlib_iterdir.py
 	
+	example_link
 	index.rst
 	pathlib_chmod.py
 	pathlib_convenience.py
@@ -301,6 +302,7 @@ raises :class:`NotADirectoryError`.
 	pathlib_rglob.py
 	pathlib_rmdir.py
 	pathlib_stat.py
+	pathlib_symlink_to.py
 	pathlib_types.py
 
 .. {{{end}}}
@@ -384,6 +386,7 @@ search is necessary to find the example files matching
 	../pathlib/pathlib_rglob.py
 	../pathlib/pathlib_rmdir.py
 	../pathlib/pathlib_stat.py
+	../pathlib/pathlib_symlink_to.py
 	../pathlib/pathlib_types.py
 
 .. {{{end}}}
@@ -494,13 +497,35 @@ is also an error to try to remove a directory that is not empty.
 
 .. {{{end}}}
 
+Use :func:`symlink_to` to create a symbolic link. The link will be
+named based on the path's value and will refer to the name given as
+argument to :func:`symlink_to`.
+
+.. literalinclude:: pathlib_symlink_to.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+This example creates a symbolic link, then uses :func:`resolve` to
+read the link to find what it points to and print the name.
+
+.. {{{cog
+.. run_script(cog.inFile, 'rm -f example_link', interpreter='')
+.. cog.out(run_script(cog.inFile, 'pathlib_symlink_to.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 pathlib_symlink_to.py
+	
+	example_link
+	index.rst
+
+.. {{{end}}}
 
 
-.. rename, replace
-
-.. symlink_to
 .. todo:: touch
 .. todo:: unlink
+.. todo:: rename, replace
 
 
 .. todo:: exists
@@ -605,18 +630,18 @@ installed. Try passing different filenames on the command line to
 		Device: 16777218
 		Created      : Sat Aug 27 19:55:05 2016
 		Last modified: Sat Aug 27 19:55:04 2016
-		Last accessed: Sat Aug 27 21:05:03 2016
+		Last accessed: Sat Aug 27 21:13:06 2016
 
 	$ python3 pathlib_stat.py index.rst
 	
 	index.rst:
-		Size: 17789
+		Size: 18541
 		Permissions: 0o100644
 		Owner: 527
 		Device: 16777218
-		Created      : Sat Aug 27 21:05:00 2016
-		Last modified: Sat Aug 27 21:05:00 2016
-		Last accessed: Sat Aug 27 21:05:02 2016
+		Created      : Sat Aug 27 21:12:26 2016
+		Last modified: Sat Aug 27 21:12:26 2016
+		Last accessed: Sat Aug 27 21:13:05 2016
 
 .. {{{end}}}
 
