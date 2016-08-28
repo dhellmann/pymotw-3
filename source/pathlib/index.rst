@@ -275,7 +275,7 @@ raises :class:`NotADirectoryError`.
 .. {{{cog
 .. run_script(cog.inFile, 'rm -f *~', interpreter='')
 .. run_script(cog.inFile, 'rm -rf test_files', interpreter='')
-.. run_script(cog.inFile, 'rm -f pathlib_chmod_example.txt', interpreter='')
+.. run_script(cog.inFile, 'rm -f *example.txt', interpreter='')
 .. cog.out(run_script(cog.inFile, 'pathlib_iterdir.py'))
 .. }}}
 
@@ -290,6 +290,7 @@ raises :class:`NotADirectoryError`.
 	pathlib_glob.py
 	pathlib_iterdir.py
 	pathlib_joinpath.py
+	pathlib_mkdir.py
 	pathlib_name.py
 	pathlib_operator.py
 	pathlib_ownership.py
@@ -298,6 +299,7 @@ raises :class:`NotADirectoryError`.
 	pathlib_read_write.py
 	pathlib_resolve.py
 	pathlib_rglob.py
+	pathlib_rmdir.py
 	pathlib_stat.py
 	pathlib_types.py
 
@@ -371,6 +373,7 @@ search is necessary to find the example files matching
 	../pathlib/pathlib_glob.py
 	../pathlib/pathlib_iterdir.py
 	../pathlib/pathlib_joinpath.py
+	../pathlib/pathlib_mkdir.py
 	../pathlib/pathlib_name.py
 	../pathlib/pathlib_operator.py
 	../pathlib/pathlib_ownership.py
@@ -379,6 +382,7 @@ search is necessary to find the example files matching
 	../pathlib/pathlib_read_write.py
 	../pathlib/pathlib_resolve.py
 	../pathlib/pathlib_rglob.py
+	../pathlib/pathlib_rmdir.py
 	../pathlib/pathlib_stat.py
 	../pathlib/pathlib_types.py
 
@@ -414,6 +418,92 @@ operation directly.
 	read_text(): 'This is the content'
 
 .. {{{end}}}
+
+Manipulating Directories and Symbolic Links
+===========================================
+
+Paths representing directories or symbolic links that do not exist can
+be used to create the associated file system entries.
+
+.. literalinclude:: pathlib_mkdir.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+If the path already exists, :func:`mkdir` raises a
+:class:`FileExistsError`.
+
+.. {{{cog
+.. run_script(cog.inFile, 'rm -rf example_dir', interpreter='')
+.. cog.out(run_script(cog.inFile, 'pathlib_mkdir.py'))
+.. cog.out(run_script(cog.inFile, 'pathlib_mkdir.py', include_prefix=False, ignore_error=True))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 pathlib_mkdir.py
+	
+	Creating example_dir
+
+	$ python3 pathlib_mkdir.py
+	
+	Creating example_dir
+	Traceback (most recent call last):
+	  File "pathlib_mkdir.py", line 16, in <module>
+	    p.mkdir()
+	  File ".../lib/python3.5/pathlib.py", line 1214, in mkdir
+	    self._accessor.mkdir(self, mode)
+	  File ".../lib/python3.5/pathlib.py", line 371, in wrapped
+	    return strfunc(str(pathobj), *args)
+	FileExistsError: [Errno 17] File exists: 'example_dir'
+
+.. {{{end}}}
+
+To remove an empty directory, use :func:`rmdir`.
+
+.. literalinclude:: pathlib_rmdir.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+A :class:`FileNotFoundError` exception is raised if the
+post-conditions are already met and the directory does not exist. It
+is also an error to try to remove a directory that is not empty.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'pathlib_rmdir.py'))
+.. cog.out(run_script(cog.inFile, 'pathlib_rmdir.py', include_prefix=False, ignore_error=True, line_break_mode='wrap'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 pathlib_rmdir.py
+	
+	Removing example_dir
+
+	$ python3 pathlib_rmdir.py
+	
+	Removing example_dir
+	Traceback (most recent call last):
+	  File "pathlib_rmdir.py", line 16, in <module>
+	    p.rmdir()
+	  File ".../lib/python3.5/pathlib.py", line 1262, in rmdir
+	    self._accessor.rmdir(self)
+	  File ".../lib/python3.5/pathlib.py", line 371, in wrapped
+	    return strfunc(str(pathobj), *args)
+	FileNotFoundError: [Errno 2] No such file or directory:
+	'example_dir'
+
+.. {{{end}}}
+
+
+
+.. rename, replace
+
+.. symlink_to
+.. todo:: touch
+.. todo:: unlink
+
+
+.. todo:: exists
 
 File Types
 ==========
@@ -515,18 +605,18 @@ installed. Try passing different filenames on the command line to
 		Device: 16777218
 		Created      : Sat Aug 27 19:55:05 2016
 		Last modified: Sat Aug 27 19:55:04 2016
-		Last accessed: Sat Aug 27 20:26:59 2016
+		Last accessed: Sat Aug 27 21:05:03 2016
 
 	$ python3 pathlib_stat.py index.rst
 	
 	index.rst:
-		Size: 15853
+		Size: 17789
 		Permissions: 0o100644
 		Owner: 527
 		Device: 16777218
-		Created      : Sat Aug 27 20:26:27 2016
-		Last modified: Sat Aug 27 20:26:27 2016
-		Last accessed: Sat Aug 27 20:26:59 2016
+		Created      : Sat Aug 27 21:05:00 2016
+		Last modified: Sat Aug 27 21:05:00 2016
+		Last accessed: Sat Aug 27 21:05:02 2016
 
 .. {{{end}}}
 
@@ -580,19 +670,6 @@ of the file when run.
 	After: 744
 
 .. {{{end}}}
-
-Creating and Deleting Files and Directories
-===========================================
-
-.. mkdir, rmdir
-.. rename, replace
-
-.. symlink_to
-.. touch
-.. unlink
-
-
-.. todo:: exists
 
 
 
