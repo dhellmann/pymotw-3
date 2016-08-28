@@ -295,6 +295,7 @@ raises :class:`NotADirectoryError`.
 	pathlib_ownership.py
 	pathlib_parents.py
 	pathlib_parts.py
+	pathlib_read_write.py
 	pathlib_resolve.py
 	pathlib_rglob.py
 	pathlib_stat.py
@@ -375,10 +376,42 @@ search is necessary to find the example files matching
 	../pathlib/pathlib_ownership.py
 	../pathlib/pathlib_parents.py
 	../pathlib/pathlib_parts.py
+	../pathlib/pathlib_read_write.py
 	../pathlib/pathlib_resolve.py
 	../pathlib/pathlib_rglob.py
 	../pathlib/pathlib_stat.py
 	../pathlib/pathlib_types.py
+
+.. {{{end}}}
+
+Reading and Writing Files
+=========================
+
+Each :class:`Path` instance includes methods for working with the
+contents of the file to which it refers. For immediately retrieving
+the contents, use :func:`read_bytes` or :func:`read_text`. To write to
+the file, use :func:`write_bytes` or :func:`write_text`.  Use the
+:func:`open` method to open the file and retain the file handle,
+instead of passing the name to the built-in :func:`open` function.
+
+.. literalinclude:: pathlib_read_write.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The convenience methods do some type checking before opening the file
+and writing to it, but otherwise they are equivalent to doing the
+operation directly.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'pathlib_read_write.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 pathlib_read_write.py
+	
+	read from open(): 'This is the content'
+	read_text(): 'This is the content'
 
 .. {{{end}}}
 
@@ -482,18 +515,18 @@ installed. Try passing different filenames on the command line to
 		Device: 16777218
 		Created      : Sat Aug 27 19:55:05 2016
 		Last modified: Sat Aug 27 19:55:04 2016
-		Last accessed: Sat Aug 27 20:13:05 2016
+		Last accessed: Sat Aug 27 20:26:59 2016
 
 	$ python3 pathlib_stat.py index.rst
 	
 	index.rst:
-		Size: 14718
+		Size: 15853
 		Permissions: 0o100644
 		Owner: 527
 		Device: 16777218
-		Created      : Sat Aug 27 20:12:47 2016
-		Last modified: Sat Aug 27 20:12:47 2016
-		Last accessed: Sat Aug 27 20:13:04 2016
+		Created      : Sat Aug 27 20:26:27 2016
+		Last modified: Sat Aug 27 20:26:27 2016
+		Last accessed: Sat Aug 27 20:26:59 2016
 
 .. {{{end}}}
 
@@ -547,13 +580,6 @@ of the file when run.
 	After: 744
 
 .. {{{end}}}
-
-Reading and Writing Files
-=========================
-
-.. open
-.. read_bytes, write_bytes
-.. read_text, write_text
 
 Creating and Deleting Files and Directories
 ===========================================
