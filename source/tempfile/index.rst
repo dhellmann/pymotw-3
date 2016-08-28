@@ -13,7 +13,7 @@ is challenging. The :mod:`tempfile` module provides several functions
 for creating temporary file system resources securely.
 :func:`TemporaryFile` opens and returns an unnamed file,
 :func:`NamedTemporaryFile` opens and returns a named file,
-:func:`SpooledTemporaryFile` holds its content in memory before
+:class:`SpooledTemporaryFile` holds its content in memory before
 writing to disk, and :class:`TemporaryDirectory` is a context manager
 what removes the directory when the context is closed.
 
@@ -49,9 +49,9 @@ using a common pattern for making up a name, versus using the
 	
 	Building a filename with PID:
 	temp:
-	  <_io.BufferedRandom name='/tmp/guess_my_name.1562.txt'>
+	  <_io.BufferedRandom name='/tmp/guess_my_name.5911.txt'>
 	temp.name:
-	  '/tmp/guess_my_name.1562.txt'
+	  '/tmp/guess_my_name.5911.txt'
 	
 	TemporaryFile:
 	temp:
@@ -131,9 +131,9 @@ The file is removed after the handle is closed.
 	$ python3 tempfile_NamedTemporaryFile.py
 	
 	temp:
-	  <tempfile._TemporaryFileWrapper object at 0x101ab2d30>
+	  <tempfile._TemporaryFileWrapper object at 0x1007b2d30>
 	temp.name:
-	  '/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpgw0fdpsr'
+	  '/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpr54puvwg'
 	Exists after close: False
 
 .. {{{end}}}
@@ -141,7 +141,64 @@ The file is removed after the handle is closed.
 Spooled Files
 =============
 
+For temporary files containing relatively small amounts of data, it is
+likely to be more efficient to use a :class:`SpooledTemporaryFile`
+because it holds the file contents in memory using a
+:class:`io.BytesIO` or :class:`io.StringIO` buffer until they reach a
+threshold size. When the data passes the threshold, it is written to
+disk and the buffer is replaced with a normal :func:`TemporaryFile`.
 
+.. literalinclude:: tempfile_SpooledTemporaryFile.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+This example uses private attributes of the
+:class:`SpooledTemporaryFile` to determine when the "rollover" to disk
+has happened. It is not normally necessary to check this status except
+when tuning the buffer size.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'tempfile_SpooledTemporaryFile.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 tempfile_SpooledTemporaryFile.py
+	
+	temp: <tempfile.SpooledTemporaryFile object at 0x1007b2c88>
+	False <_io.StringIO object at 0x1007a3d38>
+	False <_io.StringIO object at 0x1007a3d38>
+	True <_io.TextIOWrapper name=4 mode='w+t' encoding='utf-8'>
+
+.. {{{end}}}
+
+To explicitly cause the buffer to be written to disk, call the
+:func:`rollover` or :func:`fileno` methods.
+
+.. literalinclude:: tempfile_SpooledTemporaryFile_explicit.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+In this example, because the buffer size is so much larger than the
+amount of data, no file would be created on disk except that
+:func:`rollover` was called.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'tempfile_SpooledTemporaryFile_explicit.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 tempfile_SpooledTemporaryFile_explicit.py
+	
+	temp: <tempfile.SpooledTemporaryFile object at 0x1018b2c88>
+	False <_io.StringIO object at 0x1018a3d38>
+	False <_io.StringIO object at 0x1018a3d38>
+	False <_io.StringIO object at 0x1018a3d38>
+	rolling over
+	True <_io.TextIOWrapper name=4 mode='w+t' encoding='utf-8'>
+
+.. {{{end}}}
 
 Temporary Directories
 =====================
@@ -165,7 +222,7 @@ be used within the context block to build other file names.
 
 	$ python3 tempfile_TemporaryDirectory.py
 	
-	/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpvp11grvy
+	/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmp0ttis0dn
 	Directory exists after? False
 	Contents after: []
 
@@ -204,9 +261,9 @@ as-is and used as the location of the new file.
 	$ python3 tempfile_NamedTemporaryFile_args.py
 	
 	temp:
-	   <tempfile._TemporaryFileWrapper object at 0x101ab2d68>
+	   <tempfile._TemporaryFileWrapper object at 0x1007b2d68>
 	temp.name:
-	   /tmp/prefix_yt6uijt1_suffix
+	   /tmp/prefix_xc8ohblw_suffix
 
 .. {{{end}}}
 
@@ -293,7 +350,7 @@ variable.
 
    	$ python3 tempfile_mkdtemp.py
    	
-   	/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpwpi531xn
+   	/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmp5zu2rswk
 
    .. {{{end}}}
 
