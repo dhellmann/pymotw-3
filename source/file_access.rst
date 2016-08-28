@@ -9,9 +9,16 @@ examining file contents.
 The first step in working with files is to determine the name of the
 file to work on.  Python represents filenames as simple strings, but
 provides tools for building them from standard, platform-independent,
-components in :mod:`os.path`.  List the contents of a directory with
-:func:`listdir()` from :mod:`os`, or use :mod:`glob` to build a list
-of filenames from a pattern.
+components in :mod:`os.path`.
+
+The :mod:`pathlib` module provides an object-oriented API for working
+with file system paths. Using it instead of :mod:`os.path` provides
+some conveniences because it operates at a higher level of
+abstraction.
+
+List the contents of a directory with :func:`listdir()` from
+:mod:`os`, or use :mod:`glob` to build a list of filenames from a
+pattern.
 
 The file name pattern matching used by :mod:`glob` is also exposed
 directly through :mod:`fnmatch` so it can be used in other contexts.
@@ -65,9 +72,9 @@ a file, but does not reside on disk.
     :maxdepth: 1
 
     os.path/index
+    pathlib/index
     glob/index
     fnmatch/index
-    pathlib/index
     linecache/index
     filecmp/index
     mmap/index
