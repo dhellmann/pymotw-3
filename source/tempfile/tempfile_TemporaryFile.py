@@ -13,25 +13,21 @@ import tempfile
 
 print('Building a filename with PID:')
 filename = '/tmp/guess_my_name.%s.txt' % os.getpid()
-temp = open(filename, 'w+b')
-try:
+with open(filename, 'w+b') as temp:
     print('temp:')
-    print('  ', temp)
+    print('  {!r}'.format(temp))
     print('temp.name:')
-    print('  ', temp.name)
-finally:
-    temp.close()
-    # Clean up the temporary file yourself
-    os.remove(filename)
+    print('  {!r}'.format(temp.name))
+
+# Clean up the temporary file yourself.
+os.remove(filename)
 
 print()
 print('TemporaryFile:')
-temp = tempfile.TemporaryFile()
-try:
+with tempfile.TemporaryFile() as temp:
     print('temp:')
-    print('  ', temp)
+    print('  {!r}'.format(temp))
     print('temp.name:')
-    print('  ', temp.name)
-finally:
-    # Automatically cleans up the file
-    temp.close()
+    print('  {!r}'.format(temp.name))
+
+# Automatically cleans up the file.

@@ -9,12 +9,15 @@
 #end_pymotw_header
 
 import os
+import pathlib
 import tempfile
 
 with tempfile.NamedTemporaryFile() as temp:
     print('temp:')
-    print('  ', temp)
+    print('  {!r}'.format(temp))
     print('temp.name:')
-    print('  ', temp.name)
+    print('  {!r}'.format(temp.name))
 
-print('Exists after close:', os.path.exists(temp.name))
+    f = pathlib.Path(temp.name)
+
+print('Exists after close:', f.exists())

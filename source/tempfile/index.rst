@@ -1,6 +1,6 @@
-===========================================
- tempfile -- Temporary File System Objects
-===========================================
+============================================
+ tempfile --- Temporary File System Objects
+============================================
 
 .. module:: tempfile
     :synopsis: Temporary file system objects
@@ -8,12 +8,14 @@
 :Purpose: Create temporary file system objects.
 
 Creating temporary files with unique names securely, so they cannot be
-guessed by someone wanting to break the application or steal the data, is
-challenging. The :mod:`tempfile` module provides several functions for
-creating temporary file system resources securely. :func:`TemporaryFile` opens
-and returns an unnamed file, :func:`NamedTemporaryFile` opens and
-returns a named file, and :func:`mkdtemp` creates a temporary
-directory and returns its name.
+guessed by someone wanting to break the application or steal the data,
+is challenging. The :mod:`tempfile` module provides several functions
+for creating temporary file system resources securely.
+:func:`TemporaryFile` opens and returns an unnamed file,
+:func:`NamedTemporaryFile` opens and returns a named file,
+:func:`SpooledTemporaryFile` holds its content in memory before
+writing to disk, and :class:`TemporaryDirectory` is a context manager
+what removes the directory when the context is closed.
 
 Temporary Files
 ===============
@@ -25,8 +27,8 @@ creates a file, and on platforms where it is possible, unlinks it
 immediately. This makes it impossible for another program to find or
 open the file, since there is no reference to it in the file system
 table. The file created by :func:`TemporaryFile` is removed
-automatically when it is closed, whether by calling :func:`close` or by
-using the context manager API and ``with`` statement.
+automatically when it is closed, whether by calling :func:`close` or
+by using the context manager API and ``with`` statement.
 
 .. literalinclude:: tempfile_TemporaryFile.py
     :caption:
@@ -41,22 +43,21 @@ using a common pattern for making up a name, versus using the
 .. cog.out(run_script(cog.inFile, 'tempfile_TemporaryFile.py', break_lines_at=58))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python tempfile_TemporaryFile.py
-
+	$ python3 tempfile_TemporaryFile.py
+	
 	Building a filename with PID:
 	temp:
-	   <open file '/tmp/guess_my_name.1074.txt', mode 'w+b' at
-	 0x100d881e0>
+	  <_io.BufferedRandom name='/tmp/guess_my_name.1562.txt'>
 	temp.name:
-	   /tmp/guess_my_name.1074.txt
+	  '/tmp/guess_my_name.1562.txt'
 	
 	TemporaryFile:
 	temp:
-	   <open file '<fdopen>', mode 'w+b' at 0x100d88780>
+	  <_io.BufferedRandom name=4>
 	temp.name:
-	   <fdopen>
+	  4
 
 .. {{{end}}}
 
@@ -75,11 +76,11 @@ in order to read the data back from it.
 .. cog.out(run_script(cog.inFile, 'tempfile_TemporaryFile_binary.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python tempfile_TemporaryFile_binary.py
-
-	Some data
+	$ python3 tempfile_TemporaryFile_binary.py
+	
+	b'Some data'
 
 .. {{{end}}}
 
@@ -96,10 +97,10 @@ The file handle treats the data as text.
 .. cog.out(run_script(cog.inFile, 'tempfile_TemporaryFile_text.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python tempfile_TemporaryFile_text.py
-
+	$ python3 tempfile_TemporaryFile_text.py
+	
 	first
 	second
 
@@ -112,8 +113,8 @@ There are situations where having a named temporary file is
 important. For applications spanning multiple processes, or even
 hosts, naming the file is the simplest way to pass it between parts of
 the application. The :func:`NamedTemporaryFile` function creates a
-file without unlinking it, so it retains its name (accessed with
-the :attr:`name` attribute).
+file without unlinking it, so it retains its name (accessed with the
+:attr:`name` attribute).
 
 .. literalinclude:: tempfile_NamedTemporaryFile.py
     :caption:
@@ -125,41 +126,48 @@ The file is removed after the handle is closed.
 .. cog.out(run_script(cog.inFile, 'tempfile_NamedTemporaryFile.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python tempfile_NamedTemporaryFile.py
-
+	$ python3 tempfile_NamedTemporaryFile.py
+	
 	temp:
-	   <open file '<fdopen>', mode 'w+b' at 0x100d881e0>
+	  <tempfile._TemporaryFileWrapper object at 0x101ab2d30>
 	temp.name:
-	   /var/folders/9R/9R1t+tR02Raxzk+F71Q50U+++Uw/-Tmp-/tmp926BkT
+	  '/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpgw0fdpsr'
 	Exists after close: False
 
 .. {{{end}}}
+
+Spooled Files
+=============
+
+
 
 Temporary Directories
 =====================
 
 When several temporary files are needed, it may be more convenient to
-create a single temporary directory with :func:`mkdtemp` and open all
-of the files in that directory.
+create a single temporary directory with :class:`TemporaryDirectory`
+and open all of the files in that directory.
 
-.. literalinclude:: tempfile_mkdtemp.py
-    :caption:
-    :start-after: #end_pymotw_header
+.. literalinclude:: tempfile_TemporaryDirectory.py
+   :caption:
+   :start-after: #end_pymotw_header
 
-Since the directory is not "opened" per se, it must be removed
-explicitly when it is no longer needed.
+The context manager produces the name of the directory, which can then
+be used within the context block to build other file names.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'tempfile_mkdtemp.py'))
+.. cog.out(run_script(cog.inFile, 'tempfile_TemporaryDirectory.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python tempfile_mkdtemp.py
-
-	/var/folders/9R/9R1t+tR02Raxzk+F71Q50U+++Uw/-Tmp-/tmpA7DKtP
+	$ python3 tempfile_TemporaryDirectory.py
+	
+	/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpvp11grvy
+	Directory exists after? False
+	Contents after: []
 
 .. {{{end}}}
 
@@ -170,13 +178,14 @@ While less secure than strictly anonymous temporary files, including a
 predictable portion in the name makes it possible to find the file and
 examine it for debugging purposes. All of the functions described so
 far take three arguments to control the filenames to some
-degree. Names are generated using the formula::
+degree. Names are generated using the formula:
+
+.. code-block:: none
 
     dir + prefix + random + suffix
 
-All of the values except *random* can be passed as arguments to
-:func:`TemporaryFile`, :func:`NamedTemporaryFile`, and
-:func:`mkdtemp`. For example:
+All of the values except *random* can be passed as arguments to the
+functions for creating temporary files or directories.
 
 .. literalinclude:: tempfile_NamedTemporaryFile_args.py
     :caption:
@@ -190,14 +199,14 @@ as-is and used as the location of the new file.
 .. cog.out(run_script(cog.inFile, 'tempfile_NamedTemporaryFile_args.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python tempfile_NamedTemporaryFile_args.py
-
+	$ python3 tempfile_NamedTemporaryFile_args.py
+	
 	temp:
-	   <open file '<fdopen>', mode 'w+b' at 0x100d881e0>
+	   <tempfile._TemporaryFileWrapper object at 0x101ab2d68>
 	temp.name:
-	   /tmp/prefix_kjvHYS_suffix
+	   /tmp/prefix_yt6uijt1_suffix
 
 .. {{{end}}}
 
@@ -205,8 +214,8 @@ Temporary File Location
 =======================
 
 If an explicit destination is not given using the *dir* argument, the
-path used for the temporary files will vary based on the
-current platform and settings. The :mod:`tempfile` module includes two
+path used for the temporary files will vary based on the current
+platform and settings. The :mod:`tempfile` module includes two
 functions for querying the settings being used at runtime.
 
 .. literalinclude:: tempfile_settings.py
@@ -221,11 +230,11 @@ prefix for new file and directory names.
 .. cog.out(run_script(cog.inFile, 'tempfile_settings.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python tempfile_settings.py
-
-	gettempdir(): /var/folders/9R/9R1t+tR02Raxzk+F71Q50U+++Uw/-Tmp-
+	$ python3 tempfile_settings.py
+	
+	gettempdir(): /var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T
 	gettempprefix(): tmp
 
 .. {{{end}}}
@@ -238,10 +247,9 @@ list is:
 1. The environment variable ``TMPDIR``
 2. The environment variable ``TEMP``
 3. The environment variable ``TMP``
-4. A fallback, based on the platform.  (RiscOS uses ``Wimp$ScrapDir``.
-   Windows uses the first available of ``C:\TEMP``, ``C:\TMP``,
-   ``\TEMP``, or ``\TMP``.  Other platforms use ``/tmp``,
-   ``/var/tmp``, or ``/usr/tmp``.)
+4. A fallback, based on the platform.  (Windows uses the first
+   available of ``C:\temp``, ``C:\tmp``, ``\temp``, or ``\tmp``.
+   Other platforms use ``/tmp``, ``/var/tmp``, or ``/usr/tmp``.)
 5. If no other directory can be found, the current working directory
    is used.
 
@@ -258,15 +266,40 @@ variable.
 .. cog.out(run_script(cog.inFile, 'tempfile_tempdir.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python tempfile_tempdir.py
-
+	$ python3 tempfile_tempdir.py
+	
 	gettempdir(): /I/changed/this/path
 
 .. {{{end}}}
 
+.. low level functions mkstemp mkdtemp
+
+
+..
+   .. literalinclude:: tempfile_mkdtemp.py
+       :caption:
+       :start-after: #end_pymotw_header
+
+   Since the directory is not "opened" per se, it must be removed
+   explicitly when it is no longer needed.
+
+   .. {{{cog
+   .. cog.out(run_script(cog.inFile, 'tempfile_mkdtemp.py'))
+   .. }}}
+
+   .. code-block:: none
+
+   	$ python3 tempfile_mkdtemp.py
+   	
+   	/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpwpi531xn
+
+   .. {{{end}}}
+
 .. seealso::
 
-    `tempfile <http://docs.python.org/lib/module-tempfile.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`tempfile`
+
+   * :mod:`random` -- Psuedorandom number generators, used to
+     introduce random values into temporary file names
