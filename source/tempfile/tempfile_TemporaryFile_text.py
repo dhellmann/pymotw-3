@@ -15,4 +15,4 @@ with tempfile.TemporaryFile(mode='w+t') as f:
     f.seek(0)
 
     for line in f:
-        print line.rstrip()
+        print(line.rstrip())

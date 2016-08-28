@@ -15,4 +15,4 @@ with tempfile.TemporaryFile() as temp:
     temp.write('Some data')
     temp.seek(0)
     
-    print temp.read()
+    print(temp.read())
