@@ -754,20 +754,12 @@ socket, or other file system object.
 
 .. {{{end}}}
 
-
-
-.. todo:: rename, replace
-
+.. rename, replace
 .. examples of windows paths
-
 .. sorting, hashing
-
 .. match
-
 .. relative_to
-
 .. expanduser
-
 
 .. seealso::
 
