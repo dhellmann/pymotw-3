@@ -303,6 +303,7 @@ raises :class:`NotADirectoryError`.
 	pathlib_rmdir.py
 	pathlib_stat.py
 	pathlib_symlink_to.py
+	pathlib_touch.py
 	pathlib_types.py
 
 .. {{{end}}}
@@ -387,6 +388,7 @@ search is necessary to find the example files matching
 	../pathlib/pathlib_rmdir.py
 	../pathlib/pathlib_stat.py
 	../pathlib/pathlib_symlink_to.py
+	../pathlib/pathlib_touch.py
 	../pathlib/pathlib_types.py
 
 .. {{{end}}}
@@ -523,8 +525,6 @@ read the link to find what it points to and print the name.
 .. {{{end}}}
 
 
-.. todo:: touch
-.. todo:: unlink
 .. todo:: rename, replace
 
 
@@ -630,18 +630,18 @@ installed. Try passing different filenames on the command line to
 		Device: 16777218
 		Created      : Sat Aug 27 19:55:05 2016
 		Last modified: Sat Aug 27 19:55:04 2016
-		Last accessed: Sat Aug 27 21:13:06 2016
+		Last accessed: Sat Aug 27 21:31:39 2016
 
 	$ python3 pathlib_stat.py index.rst
 	
 	index.rst:
-		Size: 18541
+		Size: 19500
 		Permissions: 0o100644
 		Owner: 527
 		Device: 16777218
-		Created      : Sat Aug 27 21:12:26 2016
-		Last modified: Sat Aug 27 21:12:26 2016
-		Last accessed: Sat Aug 27 21:13:05 2016
+		Created      : Sat Aug 27 21:31:37 2016
+		Last modified: Sat Aug 27 21:31:37 2016
+		Last accessed: Sat Aug 27 21:31:38 2016
 
 .. {{{end}}}
 
@@ -666,6 +666,41 @@ look up the name associated with the IDs.
 	pathlib_ownership.py is owned by dhellmann/dhellmann
 
 .. {{{end}}}
+
+The :func:`touch` method works like the UNIX command :command:`touch`
+to create a file or update an existing file's modification time and
+permissions.
+
+.. literalinclude:: pathlib_touch.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Running this example more than once updates the existing file on
+subsequent runs.
+
+.. {{{cog
+.. run_script(cog.inFile, 'rm -f touched', interpreter='')
+.. cog.out(run_script(cog.inFile, 'pathlib_touch.py'))
+.. cog.out(run_script(cog.inFile, 'pathlib_touch.py', include_prefix=False))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 pathlib_touch.py
+	
+	creating new
+	Start: Sat Aug 27 21:31:40 2016
+	End  : Sat Aug 27 21:31:41 2016
+
+	$ python3 pathlib_touch.py
+	
+	already exists
+	Start: Sat Aug 27 21:31:41 2016
+	End  : Sat Aug 27 21:31:42 2016
+
+.. {{{end}}}
+
+.. todo:: unlink
 
 Permissions
 ===========
