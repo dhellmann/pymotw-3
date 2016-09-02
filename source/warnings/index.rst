@@ -158,15 +158,15 @@ not``". The pattern matches because the regular expression is always
 compiled to look for case insensitive matches.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'warnings_filterwarnings_message.py'))
+.. cog.out(run_script(cog.inFile, 'warnings_filterwarnings_message.py', line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
 
 	$ python3 warnings_filterwarnings_message.py
 	
-	warnings_filterwarnings_message.py:14: UserWarning: Show this me
-	ssage
+	warnings_filterwarnings_message.py:14: UserWarning: Show this
+	message
 	  warnings.warn('Show this message')
 
 .. {{{end}}}
@@ -338,18 +338,18 @@ The format function must return a single string containing the
 representation of the warning to be displayed to the user.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, '-u warnings_formatwarning.py'))
+.. cog.out(run_script(cog.inFile, '-u warnings_formatwarning.py', line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
 
 	$ python3 -u warnings_formatwarning.py
 	
-	warnings_formatwarning.py:18: UserWarning: Warning message, befo
-	re
+	warnings_formatwarning.py:18: UserWarning: Warning message,
+	before
 	  warnings.warn('Warning message, before')
-	-> warnings_formatwarning.py:20: UserWarning:Warning message, af
-	ter
+	-> warnings_formatwarning.py:20: UserWarning:Warning message,
+	after
 
 .. {{{end}}}
 
