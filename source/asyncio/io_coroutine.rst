@@ -197,7 +197,7 @@ before all of the data is prepared.
 
 .. code-block:: none
 
-    $ python asyncio_echo_server_coroutine.py
+    $ python3 asyncio_echo_server_coroutine.py
     asyncio: Using selector: KqueueSelector
     main: starting up on localhost port 10000
     echo_::1_64624: connection accepted

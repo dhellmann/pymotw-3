@@ -656,7 +656,7 @@ And the resulting program takes all three options:
 
 .. code-block:: none
 
-    $ python argparse_uses_parent.py -h
+    $ python3 argparse_uses_parent.py -h
 
     usage: argparse_uses_parent.py [-h] [--user USER] 
                                    [--password PASSWORD] 
@@ -692,7 +692,7 @@ example, the stand-alone option ``-b`` is masked by the alias for
 
 .. code-block:: none
 
-    $ python argparse_conflict_handler_resolve.py
+    $ python3 argparse_conflict_handler_resolve.py
 
     usage: argparse_conflict_handler_resolve.py [-h] [-a A] 
     [--long-b LONG_B]
@@ -717,7 +717,7 @@ Now both options can be used together.
 
 .. code-block:: none
 
-    $ python argparse_conflict_handler_resolve2.py
+    $ python3 argparse_conflict_handler_resolve2.py
 
     usage: argparse_conflict_handler_resolve2.py [-h] [-a A] 
                                                  [--long-b LONG_B] 
@@ -792,7 +792,7 @@ The help output now shows the authentication options together.
 
 .. code-block:: none
 
-    $ python argparse_uses_parent_with_group.py -h
+    $ python3 argparse_uses_parent_with_group.py -h
 
     usage: argparse_uses_parent_with_group.py [-h] [--user USER]
                                               [--password PASSWORD] 
@@ -986,7 +986,7 @@ accurate syntax diagram as part of the command help text.
 
 .. code-block:: none
 
-    $ python argparse_nargs.py -h
+    $ python3 argparse_nargs.py -h
 
     usage: argparse_nargs.py [-h] [--three THREE THREE THREE]
                     [--optional [OPTIONAL]] 
@@ -1000,11 +1000,11 @@ accurate syntax diagram as part of the command help text.
       --all [ALL [ALL ...]]
       --one-or-more ONE_OR_MORE [ONE_OR_MORE ...]
 
-    $ python argparse_nargs.py
+    $ python3 argparse_nargs.py
 
     Namespace(all=None, one_or_more=None, optional=None, three=None)
 
-    $ python argparse_nargs.py --three
+    $ python3 argparse_nargs.py --three
 
     usage: argparse_nargs.py [-h] [--three THREE THREE THREE]
                     [--optional [OPTIONAL]] 
@@ -1013,36 +1013,36 @@ accurate syntax diagram as part of the command help text.
     argparse_nargs.py: error: argument --three: expected 3 
     argument(s)
 
-    $ python argparse_nargs.py --three a b c
+    $ python3 argparse_nargs.py --three a b c
 
     Namespace(all=None, one_or_more=None, optional=None, 
     three=['a', 'b', 'c'])
 
-    $ python argparse_nargs.py --optional
+    $ python3 argparse_nargs.py --optional
 
     Namespace(all=None, one_or_more=None, optional=None, three=None)
 
-    $ python argparse_nargs.py --optional with_value
+    $ python3 argparse_nargs.py --optional with_value
 
     Namespace(all=None, one_or_more=None, optional='with_value', 
     three=None)
 
-    $ python argparse_nargs.py --all with multiple values
+    $ python3 argparse_nargs.py --all with multiple values
 
     Namespace(all=['with', 'multiple', 'values'], one_or_more=None, 
     optional=None, three=None)
 
-    $ python argparse_nargs.py --one-or-more with_value
+    $ python3 argparse_nargs.py --one-or-more with_value
 
     Namespace(all=None, one_or_more=['with_value'], optional=None, 
     three=None)
 
-    $ python argparse_nargs.py --one-or-more with multiple values
+    $ python3 argparse_nargs.py --one-or-more with multiple values
 
     Namespace(all=None, one_or_more=['with', 'multiple', 'values'], 
     optional=None, three=None)
 
-    $ python argparse_nargs.py --one-or-more
+    $ python3 argparse_nargs.py --one-or-more
 
     usage: argparse_nargs.py [-h] [--three THREE THREE THREE]
                     [--optional [OPTIONAL]] 

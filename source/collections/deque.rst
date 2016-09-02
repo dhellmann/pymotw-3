@@ -107,7 +107,7 @@ until the :class:`deque` is empty.
 
 .. code-block:: none
 
-	$ python collections_deque_both_ends.py
+	$ python3 collections_deque_both_ends.py
     
         Left: 0
        Right: 4

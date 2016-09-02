@@ -583,7 +583,7 @@ second has extra whitespace after ``[`` and before ``]``, so it fails.
 
 .. code-block:: none
 
-    $ python -m doctest -v doctest_normalize_whitespace.py
+    $ python3 -m doctest -v doctest_normalize_whitespace.py
 
     Trying:
         my_function(['A', 'B'], 3) #doctest: +NORMALIZE_WHITESPACE

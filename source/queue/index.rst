@@ -167,7 +167,7 @@ Running the sample script produces output similar to the following.
 
 .. code-block:: none
 
-    $ python fetch_podcasts.py 
+    $ python3 fetch_podcasts.py 
     
     worker-0: looking for the next enclosure
     worker-1: looking for the next enclosure

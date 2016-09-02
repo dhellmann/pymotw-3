@@ -87,7 +87,7 @@ hosts. ``A`` has address ``192.168.1.13`` and ``B`` has address
 
    waiting to receive message
 
-   [B]$ python source/socket/socket_multicast_receiver.py
+   [B]$ python3 source/socket/socket_multicast_receiver.py
 
    waiting to receive message
    received 19 bytes from ('192.168.1.14', 64288)

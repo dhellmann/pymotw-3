@@ -399,7 +399,7 @@ globals and locals from the current frame already populated.
 
 .. code-block:: none
 
-    $ python -m pdb pdb_interact.py
+    $ python3 -m pdb pdb_interact.py
     > .../pdb_interact.py(7)<module>()
     -> import pdb
     (Pdb) break 14
@@ -1823,7 +1823,7 @@ well.
     continue
     list
 
-    $ python -m pdb pdb_function_arguments.py
+    $ python3 -m pdb pdb_function_arguments.py
     Breakpoint 1 at .../pdb_function_arguments.py:11
       6
       7  import pdb
@@ -1849,7 +1849,7 @@ they are consistent across several runs.
     $ cat .pdbrc
     run a b c "long argument"
 
-    $ python -m pdb pdb_run.py
+    $ python3 -m pdb pdb_run.py
     Restarting pdb_run.py with arguments:
           a b c "long argument"
     > .../pdb_run.py(7)<module>()
