@@ -16,7 +16,7 @@ Running from the Command Line
 
 The simplest way to use :mod:`tabnanny` is to run it from the command
 line, passing the names of files to check.  If you pass directory
-names, the directories are scanned recursively to find `.py` files to
+names, the directories are scanned recursively to find ``.py`` files to
 check.
 
 Running tabnanny across the PyMOTW source code exposed one old
@@ -25,35 +25,37 @@ module with tabs instead of spaces:
 .. code-block:: none
 
     $ python3 -m tabnanny .
-    ./source/queue/fetch_podcasts.py 65 "    \t\tparsed_url = urlparse(enclosure['url'])\n"
+    ./source/queue/fetch_podcasts.py 65 "    \t\tparsed_url = \
+    urlparse(enclosure['url'])\n"
 
-Line 65 of `fetch_podcasts.py` had two tabs instead of 8 spaces.  This
+Line 65 of ``fetch_podcasts.py`` had two tabs instead of 8 spaces.  This
 wasn't apparent in a text editor editor, which was configured to with
 tabstops set to 4 spaces, so visually there was no difference.
 
 .. literalinclude:: ../queue/fetch_podcasts.py
-   :caption:
    :lines: 64-68
 
-Correcting line 78 and running tabnanny again showed another error on
-line 79.  One last problem showed up on line 80.
+Correcting line 65 and running tabnanny again showed another error on
+line 66.  One last problem showed up on line 67.
 
 If you want to scan files, but not see the details about the error,
-you can use the `-q` option to suppress all information except the
-filename.
+use the ``-q`` option to suppress all information except the filename.
 
 .. code-block:: none
 
     $ python3 -m tabnanny -q .
     ./source/queue/fetch_podcasts.py
 
-To see more information about the files being scanned, use the `-v` option.
+To see more information about the files being scanned, use the ``-v``
+option.
 
 .. code-block:: none
 
     'source/queue/': listing directory
-    'source/queue/fetch_podcasts.py': *** Line 65: trouble in tab city! ***
-    offending line: "    \t\tparsed_url = urlparse(enclosure['url'])\n"
+    'source/queue/fetch_podcasts.py': *** Line 65: trouble in tab
+    city! ***
+    offending line: "    \t\tparsed_url = urlparse(enclosure['url'])
+    \n"
     indent not greater e.g. at tab sizes 1, 2
     'source/queue/queue_fifo.py': Clean bill of health.
     'source/queue/queue_lifo.py': Clean bill of health.
