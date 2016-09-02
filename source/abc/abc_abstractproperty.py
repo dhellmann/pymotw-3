@@ -15,12 +15,12 @@ class Base(abc.ABC):
     @property
     @abc.abstractmethod
     def value(self):
-        return 'Should never get here'
+        return 'Should never reach here'
 
     @property
     @abc.abstractmethod
     def constant(self):
-        return 'Should never get here'
+        return 'Should never reach here'
 
 
 class Implementation(Base):

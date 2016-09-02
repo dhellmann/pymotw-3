@@ -29,8 +29,8 @@ base.  If an application or library requires a particular API,
 object against the abstract class.
 
 To start, define an abstract base class to represent the API of a set
-of plug-ins for saving and loading data.  Set the meta-class for the
-new base class to :class:`ABCMeta`, and using decorators to establish
+of plug-ins for saving and loading data.  Set the metaclass for the
+new base class to :class:`ABCMeta`, and use decorators to establish
 the public API for the class.  The following examples use
 ``abc_base.py``, which contains:
 
@@ -127,10 +127,10 @@ because it is not actually derived from the base.
 Helper Base Class
 =================
 
-Forgetting to set the meta-class properly means the concrete
+Forgetting to set the metaclass properly means the concrete
 implementations do not have their APIs enforced. To make it easier to
 set up the abstract class properly, a base class is provided that sets
-the meta-class.
+the metaclass automatically.
 
 .. literalinclude:: abc_abc_base.py
    :caption:
@@ -259,9 +259,10 @@ Abstract read-write properties can also be defined.
     :start-after: #end_pymotw_header
 
 The concrete property must be defined the same way as the abstract
-property.  Overriding a read-write property in
-:class:`PartialImplementation` with one that is read-only leaves the
-property read-only.
+property, as either read-write or read-only.  Overriding a read-write
+property in :class:`PartialImplementation` with one that is read-only
+leaves the property read-only -- the property's setter method from the
+base class is not reused.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'abc_abstractproperty_rw.py', 
@@ -298,15 +299,15 @@ instance, it still prevents the class from being instantiated if it is
 not defined.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'abc_class_static.py'))
+.. cog.out(run_script(cog.inFile, 'abc_class_static.py', line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
 
 	$ python3 abc_class_static.py
 	
-	ERROR: Can't instantiate abstract class Base with abstract metho
-	ds const_behavior, factory
+	ERROR: Can't instantiate abstract class Base with abstract
+	methods const_behavior, factory
 	Implementation.const_behavior : Static behavior differs
 
 .. {{{end}}}

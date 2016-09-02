@@ -20,7 +20,7 @@ class Base(abc.ABC):
     @staticmethod
     @abc.abstractmethod
     def const_behavior():
-        return 'Should never get here'
+        return 'Should never reach here'
 
 
 class Implementation(Base):

@@ -15,11 +15,11 @@ class Base(abc.ABC):
     @property
     @abc.abstractmethod
     def value(self):
-        return 'Should never see this'
+        return 'Should never reach here'
 
     @value.setter
     @abc.abstractmethod
-    def value(self, newvalue):
+    def value(self, new_value):
         return
 
 
@@ -39,8 +39,8 @@ class Implementation(Base):
         return self._value
 
     @value.setter
-    def value(self, newvalue):
-        self._value = newvalue
+    def value(self, new_value):
+        self._value = new_value
 
 
 try:
@@ -49,9 +49,10 @@ try:
 except Exception as err:
     print('ERROR:', str(err))
 
+p = PartialImplementation()
+print('PartialImplementation.value:', p.value)
+
 try:
-    p = PartialImplementation()
-    print('PartialImplementation.value:', p.value)
     p.value = 'Alteration'
     print('PartialImplementation.value:', p.value)
 except Exception as err:
