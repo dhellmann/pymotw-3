@@ -125,12 +125,12 @@ The new file has all of the same characteristics as the old version.
 	SOURCE:
 		Mode    : 0o100644
 		Created : Sat Sep  3 09:51:54 2016
-		Accessed: Sat Sep  3 10:58:59 2016
+		Accessed: Sat Sep  3 11:00:15 2016
 		Modified: Sat Sep  3 09:51:54 2016
 	DEST:
 		Mode    : 0o100644
-		Created : Sat Sep  3 10:58:59 2016
-		Accessed: Sat Sep  3 10:58:59 2016
+		Created : Sat Sep  3 11:00:15 2016
+		Accessed: Sat Sep  3 11:00:15 2016
 		Modified: Sat Sep  3 09:51:54 2016
 
 .. {{{end}}}
@@ -184,13 +184,13 @@ with :func:`copystat`.
 	
 	BEFORE:
 		Mode    : 0o100444
-		Created : Sat Sep  3 10:59:00 2016
-		Accessed: Sat Sep  3 10:59:00 2016
-		Modified: Sat Sep  3 10:59:00 2016
+		Created : Sat Sep  3 11:00:15 2016
+		Accessed: Sat Sep  3 11:00:15 2016
+		Modified: Sat Sep  3 11:00:15 2016
 	AFTER:
 		Mode    : 0o100644
-		Created : Sat Sep  3 10:59:00 2016
-		Accessed: Sat Sep  3 10:59:00 2016
+		Created : Sat Sep  3 11:00:15 2016
+		Accessed: Sat Sep  3 11:00:15 2016
 		Modified: Sat Sep  3 09:55:22 2016
 
 .. {{{end}}}
@@ -408,7 +408,7 @@ printing them.
 	
 	Total: 499.42 GB  465.12 GiB
 	Used : 246.63 GB  229.69 GiB
-	Free : 252.52 GB  235.18 GiB
+	Free : 252.53 GB  235.18 GiB
 
 .. {{{end}}}
 
