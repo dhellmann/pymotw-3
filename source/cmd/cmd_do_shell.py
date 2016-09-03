@@ -22,7 +22,7 @@ class ShellEnabled(cmd.Cmd):
         sub_cmd = subprocess.Popen(line,
                                    shell=True,
                                    stdout=subprocess.PIPE)
-        output = sub_cmd.communicate()[0]
+        output = sub_cmd.communicate()[0].decode('utf-8')
         print(output)
         self.last_output = output
 

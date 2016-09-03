@@ -1,8 +1,8 @@
-.. Do not need to both with cog for this one, since the examples are interactive.
+.. Do not need to bother with cog for this one, since the examples are interactive.
 
-=========================================
- cmd -- Line-oriented Command Processors
-=========================================
+==========================================
+ cmd --- Line-oriented Command Processors
+==========================================
 
 .. module:: cmd
     :synopsis: Create line-oriented command processors.
@@ -39,9 +39,9 @@ This simple example program supports the "greet" command:
 Running it interactively demonstrates how commands are dispatched and
 shows of some of the features included in :class:`Cmd`.
 
-::
+.. code-block:: none
 
-    $ python cmd_simple.py 
+    $ python3 cmd_simple.py 
 
     (Cmd) 
 
@@ -50,13 +50,15 @@ prompt can be configured through the attribute *prompt*. If the prompt
 changes as the result of a command processor, the new value is used to
 query for the next command.
 
-::
+.. code-block:: none
 
-    (Cmd) help
+   Documented commands (type help <topic>):
+   ========================================
+   help
 
-    Undocumented commands:
-    ======================
-    EOF  greet  help
+   Undocumented commands:
+   ======================
+   EOF  greet
 
 The :command:`help` command is built into :class:`Cmd`. With no
 arguments, :command:`help` shows the list of commands available. If
@@ -66,7 +68,7 @@ restricted to details of that command, when available.
 If the command is :command:`greet`, :func:`do_greet` is invoked to
 handle it:
 
-::
+.. code-block:: none
 
     (Cmd) greet
     hello
@@ -76,7 +78,7 @@ command, the method :func:`default` is called with the entire input
 line as an argument. The built-in implementation of :func:`default`
 reports an error.
 
-::
+.. code-block:: none
 
     (Cmd) foo
     *** Unknown syntax: foo
@@ -84,7 +86,7 @@ reports an error.
 Since :func:`do_EOF` returns True, typing Ctrl-D causes the
 interpreter to exit.
 
-::
+.. code-block:: none
 
     (Cmd) ^D$ 
 
@@ -103,19 +105,19 @@ some of the annoyances and add help for the :command:`greet` command.
 The docstring added to :func:`do_greet` becomes the help text for
 the command:
 
-::
+.. code-block:: none
 
-    $ python cmd_arguments.py 
+    $ python3 cmd_arguments.py 
 
     (Cmd) help
 
-    Documented commands (type help ):
+    Documented commands (type help <topic>):
     ========================================
-    greet
+    greet  help
 
     Undocumented commands:
     ======================
-    EOF  help
+    EOF
 
     (Cmd) help greet
     greet [person]
@@ -130,7 +132,7 @@ empty argument is valid, or do any further parsing and processing of
 the command. In this example, if a person's name is provided then the
 greeting is personalized.
 
-::
+.. code-block:: none
 
     (Cmd) greet Alice
     hi, Alice
@@ -162,9 +164,9 @@ In this example, the text is static but formatted more nicely. It
 would also be possible to use previous command state to tailor the
 contents of the help text to the current context.
 
-::
+.. code-block:: none
 
-    $ python cmd_do_help.py 
+    $ python3 cmd_do_help.py
 
     (Cmd) help greet
     greet [person]
@@ -182,9 +184,16 @@ completion by hitting the tab key at an input prompt. When multiple
 completions are possible, pressing tab twice prints a list of the
 options.
 
-::
+.. note::
 
-    $ python cmd_do_help.py 
+   The GNU libraries needed for :mod:`readline` are not available on
+   all platforms by default. In those cases, tab completion may not
+   work. See :mod:`readline` for tips on installing the necessary
+   libraries if your Python installation does not have them.
+
+.. code-block:: none
+
+    $ python3 cmd_do_help.py 
 
     (Cmd) <tab><tab>
     EOF    greet  help   
@@ -207,9 +216,9 @@ read it once then cache the contents to be scanned as needed.
 When there is input text, :func:`complete_greet` returns a list of
 friends that match. Otherwise, the full list of friends is returned.
 
-::
+.. code-block:: none
 
-    $ python cmd_arg_completion.py 
+    $ python3 cmd_arg_completion.py 
 
     (Cmd) greet <tab><tab>
     Adam     Alice    Barbara  Bob      
@@ -222,7 +231,7 @@ friends that match. Otherwise, the full list of friends is returned.
 If the name given is not in the list of friends, the formal greeting
 is given.
 
-::
+.. code-block:: none
 
     (Cmd) greet Joe
     hello, Joe
@@ -255,9 +264,9 @@ instead. Finally :func:`postcmd` is called.
 
 Here is an example session with ``print`` statements added:
 
-::
+.. code-block:: none
 
-    $ python cmd_illustrate_methods.py 
+    $ python3 cmd_illustrate_methods.py 
 
     cmdloop(Illustrating the methods of cmd.Cmd)
     preloop()
@@ -294,9 +303,9 @@ it can be set on the class directly.  When printing help, the
 This example class shows a command processor to let the user control
 the prompt for the interactive session.
 
-::
+.. code-block:: none
 
-    $ python cmd_attributes.py 
+    $ python3 cmd_attributes.py 
 
     Simple command processor example.
     prompt: prompt hello
@@ -304,11 +313,11 @@ the prompt for the interactive session.
 
     doc_header
     ----------
-    prompt
+    help  prompt
 
     undoc_header
     ------------
-    EOF  help
+    EOF
 
     hello: 
 
@@ -330,37 +339,35 @@ This :command:`echo` command implementation replaces the string
 ``$out`` in its argument with the output from the previous shell
 command.
 
-::
+.. code-block:: none
 
-    $ python cmd_do_shell.py 
+    $ python3 cmd_do_shell.py 
 
     (Cmd) ?
 
-    Documented commands (type help ):
+    Documented commands (type help <topic>):
     ========================================
-    echo  shell
+    echo  help  shell
 
     Undocumented commands:
     ======================
-    EOF  help
+    EOF
 
     (Cmd) ? shell
     Run a shell command
     (Cmd) ? echo
     Print the input, replacing '$out' with 
-    the output of the last shell command
+            the output of the last shell command
     (Cmd) shell pwd
     running shell command: pwd
-    /Users/dhellmann/Documents/PyMOTW/in_progress/cmd
+    .../pymotw-3/source/cmd
 
     (Cmd) ! pwd
     running shell command: pwd
-    /Users/dhellmann/Documents/PyMOTW/in_progress/cmd
+    .../pymotw-3/source/cmd
 
     (Cmd) echo $out
-    /Users/dhellmann/Documents/PyMOTW/in_progress/cmd
-
-    (Cmd) 
+    .../pymotw-3/source/cmd
 
 
 Alternative Inputs
@@ -371,18 +378,18 @@ through the :mod:`readline` library, it is also possible to pass a
 series of commands in to standard input using standard Unix shell
 redirection.
 
-::
+.. code-block:: none
 
-    $ echo help | python cmd_do_help.py 
+    $ echo help | python3 cmd_do_help.py
 
     (Cmd) 
-    Documented commands (type help ):
+    Documented commands (type help <topic>):
     ========================================
-    greet
+    greet  help
 
     Undocumented commands:
     ======================
-    EOF  help
+    EOF
 
     (Cmd) 
 
@@ -406,9 +413,9 @@ the script can be called on this input file:
 
 to produce this output:
 
-::
+.. code-block:: none
 
-    $ python cmd_file.py cmd_file.txt 
+    $ python3 cmd_file.py cmd_file.txt 
 
     hello, 
     hello, Alice and Bob
@@ -428,13 +435,13 @@ the console or a file.  To use the command line arguments, call
 Since :func:`onecmd` takes a single string as input, the arguments
 to the program need to be joined together before being passed in.
 
-::
+.. code-block:: none
 
-    $ python cmd_argv.py greet Command-Line User
+    $ python3 cmd_argv.py greet Command-Line User
 
     hello, Command-Line User
 
-    $ python cmd_argv.py
+    $ python3 cmd_argv.py
 
     (Cmd) greet Interactive User
     hello, Interactive User
@@ -442,20 +449,17 @@ to the program need to be joined together before being passed in.
 
 .. seealso::
 
-    `cmd <http://docs.python.org/library/cmd.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`cmd`
 
-    `cmd2 <http://pypi.python.org/pypi/cmd2>`__
-        Drop-in replacement for ``cmd`` with additional features.
+   * `cmd2 <http://pypi.python.org/pypi/cmd2>`__ -- Drop-in
+     replacement for ``cmd`` with additional features.
 
-    `GNU readline`_
-        The GNU Readline library provides functions that allow users
-        to edit input lines as they are typed.
+   * `GNU readline`_ -- The GNU Readline library provides functions
+     that allow users to edit input lines as they are typed.
 
-    :mod:`readline`
-        The Python standard library interface to readline.
+   * :mod:`readline` -- The Python standard library interface to
+     readline.
 
-    :mod:`subprocess`
-        Managing other processes and their output.
+   * :mod:`subprocess` -- Managing other processes and their output.
 
 .. _GNU readline: http://tiswww.case.edu/php/chet/readline/rltop.html

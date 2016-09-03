@@ -8,6 +8,14 @@
 
 #end_pymotw_header
 
+# Set up gnureadline as readline if installed.
+try:
+    import gnureadline
+    import sys
+    sys.modules['readline'] = gnureadline
+except ImportError:
+    pass
+
 import cmd
 
 
