@@ -541,6 +541,11 @@ extracted. If no directory is given, the current directory is used.
    :caption:
    :start-after: #end_pymotw_header
 
+In this example :func:`unpack_archive` is able to determine the format
+of the archive because the filename ends with ``tar.gz``, and that
+value is associated with the ``gztar`` format in the unpack format
+registry.
+
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'shutil_unpack_archive.py'))
 .. }}}
@@ -576,9 +581,6 @@ extracted. If no directory is given, the current directory is used.
 	shutil/shutil_which_regular_file.py
 
 .. {{{end}}}
-
-
-
 
 File System Space
 =================
