@@ -8,7 +8,10 @@
 
 #end_pymotw_header
 
-import readline
+try:
+    import gnureadline as readline
+except ImportError:
+    import readline
 import logging
 import os
 

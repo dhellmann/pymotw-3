@@ -8,7 +8,10 @@
 
 #end_pymotw_header
 
-import readline
+try:
+    import gnureadline as readline
+except ImportError:
+    import readline
 
 readline.parse_and_bind('tab: complete')
 readline.parse_and_bind('set editing-mode vi')

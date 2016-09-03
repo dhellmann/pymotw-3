@@ -28,7 +28,8 @@ provide command line text completion, or "tab completion".
    you may need to recompile the Python interpreter to enable the
    module, after installing the dependencies. A stand-alone version of
    the library is also distributed from the Python Package Index under
-   the name gnureadline_.
+   the name gnureadline_. The examples in this section first try to
+   import gnureadline, and then fall back to readline.
 
 Configuring
 ===========
@@ -114,18 +115,18 @@ sequences of state values.
 
     $ tail -f /tmp/completer.log
 
-    DEBUG:root:(empty input) matches: ['list', 'print', 'start', 'stop']
-    DEBUG:root:complete('', 0) => 'list'
-    DEBUG:root:complete('', 1) => 'print'
-    DEBUG:root:complete('', 2) => 'start'
-    DEBUG:root:complete('', 3) => 'stop'
-    DEBUG:root:complete('', 4) => None
-    DEBUG:root:(empty input) matches: ['list', 'print', 'start', 'stop']
-    DEBUG:root:complete('', 0) => 'list'
-    DEBUG:root:complete('', 1) => 'print'
-    DEBUG:root:complete('', 2) => 'start'
-    DEBUG:root:complete('', 3) => 'stop'
-    DEBUG:root:complete('', 4) => None
+    (empty input) matches: ['list', 'print', 'start', 'stop']
+    complete('', 0) => 'list'
+    complete('', 1) => 'print'
+    complete('', 2) => 'start'
+    complete('', 3) => 'stop'
+    complete('', 4) => None
+    (empty input) matches: ['list', 'print', 'start', 'stop']
+    complete('', 0) => 'list'
+    complete('', 1) => 'print'
+    complete('', 2) => 'start'
+    complete('', 3) => 'stop'
+    complete('', 4) => None
 
 The first sequence is from the first TAB key-press.  The completion
 algorithm asks for all candidates but does not expand the empty input
@@ -143,12 +144,12 @@ and the log reflects the different arguments to :func:`complete`:
 
 .. code-block:: none
 
-    DEBUG:root:'l' matches: ['list']
-    DEBUG:root:complete('l', 0) => 'list'
-    DEBUG:root:complete('l', 1) => None
+    'l' matches: ['list']
+    complete('l', 0) => 'list'
+    complete('l', 1) => None
 
-Pressing RETURN now causes :func:`raw_input` to return the value, and
-the :command:`while` loop cycles.
+Pressing RETURN now causes :func:`input` to return the value, and the
+:command:`while` loop cycles.
 
 .. code-block:: none
 
@@ -164,10 +165,10 @@ The log file shows:
 
 .. code-block:: none
 
-    DEBUG:root:'s' matches: ['start', 'stop']
-    DEBUG:root:complete('s', 0) => 'start'
-    DEBUG:root:complete('s', 1) => 'stop'
-    DEBUG:root:complete('s', 2) => None
+    's' matches: ['start', 'stop']
+    complete('s', 0) => 'start'
+    complete('s', 1) => 'stop'
+    complete('s', 2) => None
 
 and the screen:
 
@@ -186,10 +187,11 @@ and the screen:
 Accessing the Completion Buffer
 ===============================
 
-The completion algorithm in :class:`SimpleCompleter` is simplistic because it only looks at the
-text argument passed to the function, but does not use any more of
-readline's internal state.  It is also possible to use :mod:`readline`
-functions to manipulate the text of the input buffer.
+The completion algorithm in :class:`SimpleCompleter` is simplistic
+because it only looks at the text argument passed to the function, but
+does not use any more of readline's internal state.  It is also
+possible to use :mod:`readline` functions to manipulate the text of
+the input buffer.
 
 .. literalinclude:: readline_buffer.py
     :caption:
@@ -233,27 +235,27 @@ and in the log:
 
 .. code-block:: none
 
-    DEBUG:root:origline=''
-    DEBUG:root:begin=0
-    DEBUG:root:end=0
-    DEBUG:root:being_completed=
-    DEBUG:root:words=[]
-    DEBUG:root:complete('', 0) => list
-    DEBUG:root:complete('', 1) => print
-    DEBUG:root:complete('', 2) => stop
-    DEBUG:root:complete('', 3) => None
-    DEBUG:root:origline=''
-    DEBUG:root:begin=0
-    DEBUG:root:end=0
-    DEBUG:root:being_completed=
-    DEBUG:root:words=[]
-    DEBUG:root:complete('', 0) => list
-    DEBUG:root:complete('', 1) => print
-    DEBUG:root:complete('', 2) => stop
-    DEBUG:root:complete('', 3) => None
+    origline=''
+    begin=0
+    end=0
+    being_completed=
+    words=[]
+    complete('', 0) => list
+    complete('', 1) => print
+    complete('', 2) => stop
+    complete('', 3) => None
+    origline=''
+    begin=0
+    end=0
+    being_completed=
+    words=[]
+    complete('', 0) => list
+    complete('', 1) => print
+    complete('', 2) => stop
+    complete('', 3) => None
 
 If the first word is ``"list "`` (with a space after the word), the
-candidates for completion are different:
+candidates for completion are different.
 
 .. code-block:: none
 
@@ -265,26 +267,24 @@ but the portion after ``list``.
 
 .. code-block:: none
 
-    DEBUG:root:origline='list '
-    DEBUG:root:begin=5
-    DEBUG:root:end=5
-    DEBUG:root:being_completed=
-    DEBUG:root:words=['list']
-    DEBUG:root:candidates=['files', 'directories']
-    DEBUG:root:complete('', 0) => files
-    DEBUG:root:complete('', 1) => directories
-    DEBUG:root:complete('', 2) => None
-    DEBUG:root:origline='list '
-    DEBUG:root:begin=5
-    DEBUG:root:end=5
-    DEBUG:root:being_completed=
-    DEBUG:root:words=['list']
-    DEBUG:root:candidates=['files', 'directories']
-    DEBUG:root:complete('', 0) => files
-    DEBUG:root:complete('', 1) => directories
-    DEBUG:root:complete('', 2) => None
-
-
+    origline='list '
+    begin=5
+    end=5
+    being_completed=
+    words=['list']
+    candidates=['files', 'directories']
+    complete('', 0) => files
+    complete('', 1) => directories
+    complete('', 2) => None
+    origline='list '
+    begin=5
+    end=5
+    being_completed=
+    words=['list']
+    candidates=['files', 'directories']
+    complete('', 0) => files
+    complete('', 1) => directories
+    complete('', 2) => None
 
 Input History
 =============
@@ -327,16 +327,16 @@ The log shows this output when the "``b``" is followed by two TABs.
 
 .. code-block:: none
 
-    DEBUG:root:history: ['foo', 'bar', 'blah']
-    DEBUG:root:matches: ['bar', 'blah']
-    DEBUG:root:complete('b', 0) => 'bar'
-    DEBUG:root:complete('b', 1) => 'blah'
-    DEBUG:root:complete('b', 2) => None
-    DEBUG:root:history: ['foo', 'bar', 'blah']
-    DEBUG:root:matches: ['bar', 'blah']
-    DEBUG:root:complete('b', 0) => 'bar'
-    DEBUG:root:complete('b', 1) => 'blah'
-    DEBUG:root:complete('b', 2) => None
+    history: ['foo', 'bar', 'blah']
+    matches: ['bar', 'blah']
+    complete('b', 0) => 'bar'
+    complete('b', 1) => 'blah'
+    complete('b', 2) => None
+    history: ['foo', 'bar', 'blah']
+    matches: ['bar', 'blah']
+    complete('b', 0) => 'bar'
+    complete('b', 1) => 'blah'
+    complete('b', 2) => None
 
 When the script is run the second time, all of the history is read
 from the file.
@@ -351,7 +351,6 @@ from the file.
 
 There are functions for removing individual history items and clearing
 the entire history, as well.
-
 
 Hooks
 =====
@@ -377,7 +376,6 @@ modify the input buffer.
 If the buffer is modified inside the pre-input hook, :func:`redisplay`
 must be called to update the screen.
 
-
 .. seealso::
 
    * :pydoc:`readline`
@@ -399,7 +397,7 @@ must be called to update the screen.
 
    * `pyreadline <https://launchpad.net/pyreadline>`_ -- pyreadline,
      developed as a Python-based replacement for readline to be used
-     in `iPython <http://ipython.scipy.org/>`_.
+     on Windows.
 
    * :mod:`cmd` -- The ``cmd`` module uses ``readline`` extensively to
      implement tab-completion in the command interface.  Some of the
