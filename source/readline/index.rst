@@ -93,7 +93,7 @@ When run, the initial output is:
 
 .. code-block:: none
 
-    $ python readline_completer.py 
+    $ python3 readline_completer.py 
 
     Prompt ("stop" to quit): 
 
@@ -101,7 +101,7 @@ Pressing ``TAB`` twice causes a list of options to be printed.
 
 .. code-block:: none
 
-    $ python readline_completer.py 
+    $ python3 readline_completer.py 
 
     Prompt ("stop" to quit): 
     list   print  start  stop
@@ -223,7 +223,7 @@ gives the three top-level commands:
 
 .. code-block:: none
 
-    $ python readline_buffer.py 
+    $ python3 readline_buffer.py 
 
     Prompt ("stop" to quit): 
     list   print  stop   
@@ -307,7 +307,7 @@ those values when completing subsequent inputs.
 
 .. code-block:: none
 
-    $ python readline_history.py 
+    $ python3 readline_history.py 
 
     Max history file length: -1
     Startup history: []
@@ -343,7 +343,7 @@ from the file.
 
 .. code-block:: none
 
-    $ python readline_history.py 
+    $ python3 readline_history.py 
 
     Max history file length: -1
     Startup history: ['foo', 'bar', 'blah', 'stop']
@@ -370,7 +370,7 @@ modify the input buffer.
 
 .. code-block:: none
 
-    $ python readline_hooks.py 
+    $ python3 readline_hooks.py 
 
     Prompt ("stop" to quit): from startup_hook from pre_input_hook
 
