@@ -78,6 +78,7 @@ be used.
    getopt/index
    readline/index
    getpass/index
+   cmd/index
    shlex/index
    configparser/index
    fileinput/index
@@ -88,7 +89,7 @@ be used.
    getopt/index
    readline/index
    getpass/index
-   * cmd/index
+   cmd/index
    shlex/index
    ConfigParser/index
    * logging/index
