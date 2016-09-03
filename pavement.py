@@ -360,6 +360,7 @@ def manual_review_cleanups(options):
     sh("sed -i '' -e 's|print \(.*\)|print(\\1)|g' source/%s/*.py" % module)
     sh("sed -i '' -e 's|print$|print()|g' source/%s/*.py" % module)
     sh("sed -i '' -e 's|(object):|:|g' source/%s/*.py" % module)
+    sh("sed -i '' -e 's/^ *$//g' source/%s/*.py" % module)
 
 
 @task
