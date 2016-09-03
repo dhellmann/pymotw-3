@@ -126,12 +126,12 @@ The new file has all of the same characteristics as the old version.
 	SOURCE:
 		Mode    : 0o100644
 		Created : Sat Sep  3 09:51:54 2016
-		Accessed: Sat Sep  3 13:03:23 2016
+		Accessed: Sat Sep  3 13:10:29 2016
 		Modified: Sat Sep  3 09:51:54 2016
 	DEST:
 		Mode    : 0o100644
-		Created : Sat Sep  3 13:03:23 2016
-		Accessed: Sat Sep  3 13:03:23 2016
+		Created : Sat Sep  3 13:10:29 2016
+		Accessed: Sat Sep  3 13:10:29 2016
 		Modified: Sat Sep  3 09:51:54 2016
 
 .. {{{end}}}
@@ -185,13 +185,13 @@ with :func:`copystat`.
 	
 	BEFORE:
 		Mode    : 0o100444
-		Created : Sat Sep  3 13:03:23 2016
-		Accessed: Sat Sep  3 13:03:23 2016
-		Modified: Sat Sep  3 13:03:23 2016
+		Created : Sat Sep  3 13:10:30 2016
+		Accessed: Sat Sep  3 13:10:30 2016
+		Modified: Sat Sep  3 13:10:30 2016
 	AFTER:
 		Mode    : 0o100644
-		Created : Sat Sep  3 13:03:23 2016
-		Accessed: Sat Sep  3 13:03:23 2016
+		Created : Sat Sep  3 13:10:30 2016
+		Accessed: Sat Sep  3 13:10:29 2016
 		Modified: Sat Sep  3 09:55:22 2016
 
 .. {{{end}}}
@@ -244,6 +244,7 @@ destination tree.
 	 '/tmp/example/shutil_copytree_verbose.py',
 	 '/tmp/example/shutil_disk_usage.py',
 	 '/tmp/example/shutil_get_archive_formats.py',
+	 '/tmp/example/shutil_get_unpack_formats.py',
 	 '/tmp/example/shutil_make_archive.py',
 	 '/tmp/example/shutil_move.py',
 	 '/tmp/example/shutil_rmtree.py',
@@ -494,12 +495,41 @@ This example starts within the source directory for the examples for
 	shutil/shutil_copytree_verbose.py
 	shutil/shutil_disk_usage.py
 	shutil/shutil_get_archive_formats.py
+	shutil/shutil_get_unpack_formats.py
 	shutil/shutil_make_archive.py
 	shutil/shutil_move.py
 	shutil/shutil_rmtree.py
 	shutil/shutil_unpack_archive.py
 	shutil/shutil_which.py
 	shutil/shutil_which_regular_file.py
+
+.. {{{end}}}
+
+:mod:`shutil` maintains a registry of formats that can be unpacked on
+the current system, accessible via :func:`get_unpack_formats`.
+
+.. literalinclude:: shutil_get_unpack_formats.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+This registry is different from the registry for creating archives
+because it also includes common file extensions used for each format
+so that the function for extracting an archive can guess which format
+to use based on the file extension.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'shutil_get_unpack_formats.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 shutil_get_unpack_formats.py
+	
+	bztar: bzip2'ed tar-file, names ending in ['.tar.bz2', '.tbz2']
+	gztar: gzip'ed tar-file, names ending in ['.tar.gz', '.tgz']
+	tar  : uncompressed tar file, names ending in ['.tar']
+	xztar: xz'ed tar-file, names ending in ['.tar.xz', '.txz']
+	zip  : ZIP file, names ending in ['.zip']
 
 .. {{{end}}}
 
@@ -537,6 +567,7 @@ extracted. If no directory is given, the current directory is used.
 	shutil/shutil_copytree_verbose.py
 	shutil/shutil_disk_usage.py
 	shutil/shutil_get_archive_formats.py
+	shutil/shutil_get_unpack_formats.py
 	shutil/shutil_make_archive.py
 	shutil/shutil_move.py
 	shutil/shutil_rmtree.py
@@ -545,6 +576,7 @@ extracted. If no directory is given, the current directory is used.
 	shutil/shutil_which_regular_file.py
 
 .. {{{end}}}
+
 
 
 
@@ -573,7 +605,7 @@ printing them.
 	$ python3 shutil_disk_usage.py
 	
 	Total: 499.42 GB  465.12 GiB
-	Used : 246.68 GB  229.74 GiB
+	Used : 246.68 GB  229.73 GiB
 	Free : 252.48 GB  235.14 GiB
 
 .. {{{end}}}
