@@ -81,6 +81,7 @@ be used.
    cmd/index
    shlex/index
    configparser/index
+   logging/index
    fileinput/index
    atexit/index
 
@@ -92,7 +93,7 @@ be used.
    cmd/index
    shlex/index
    ConfigParser/index
-   * logging/index
+   logging/index
    atexit/index
    fileinput/index
    * sched/index
