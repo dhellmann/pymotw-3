@@ -18,7 +18,7 @@ Logging in Applications vs. Libraries
 
 Application developers and library authors can both use
 :mod:`logging`, but each audience has different considerations to keep
-in mind.  
+in mind.
 
 Application developers configure the :mod:`logging` module, directing
 the messages to appropriate output channels.  It is possible to log
@@ -65,7 +65,6 @@ After running the script, the log message is written to
 
 .. {{{end}}}
 
-
 Rotating Log Files
 ==================
 
@@ -81,7 +80,7 @@ files automatically and preserves the old log file at the same time.
     :start-after: #end_pymotw_header
 
 The result is six separate files, each with part of the log
-history for the application:
+history for the application.
 
 .. {{{cog
 .. run_script(cog.inFile, 'rm -f logging_*.out*', interpreter='')
@@ -108,7 +107,7 @@ etc.) and the ``.5`` file is erased.
 
 .. note::
 
-  Obviously this example sets the log length much too small as an
+  Obviously, this example sets the log length much too small as an
   extreme example. Set *maxBytes* to a more appropriate value in a
   real program.
 
@@ -116,11 +115,11 @@ Verbosity Levels
 ================
 
 Another useful feature of the :mod:`logging` API is the ability to
-produce different messages at different *log levels*. This means code can be
-instrumented with debug messages, for example, and the log level can
-be set so that those debug messages are not written on a production
-system.  :table:`Logging Levels` lists the logging levels defined by
-:mod:`logging`.
+produce different messages at different *log levels*. This means code
+can be instrumented with debug messages, for example, and the log
+level can be set so that those debug messages are not written on a
+production system.  :table:`Logging Levels` lists the logging levels
+defined by :mod:`logging`.
 
 .. table:: Logging Levels
 
@@ -184,13 +183,13 @@ inherits the configuration of its parent, and log messages sent to a
 logger include the name of that logger. Optionally, each logger can be
 configured differently, so that messages from different modules are
 handled in different ways. Here is an example of how to log from
-different modules so it is easy to trace the source of the message:
+different modules so it is easy to trace the source of the message.
 
 .. literalinclude:: logging_modules_example.py
     :caption:
     :start-after: #end_pymotw_header
 
-And the output:
+The output shows the different module names for each output line.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'logging_modules_example.py'))
@@ -201,8 +200,7 @@ And the output:
 	$ python3 logging_modules_example.py
 	
 	WARNING:package1.module1:This message comes from one module
-	WARNING:package2.module2:And this message comes from another mod
-	ule
+	WARNING:package2.module2:This comes from another module
 
 .. {{{end}}}
 
