@@ -126,12 +126,12 @@ The new file has all of the same characteristics as the old version.
 	SOURCE:
 		Mode    : 0o100644
 		Created : Sat Sep  3 09:51:54 2016
-		Accessed: Sat Sep  3 12:46:09 2016
+		Accessed: Sat Sep  3 12:53:23 2016
 		Modified: Sat Sep  3 09:51:54 2016
 	DEST:
 		Mode    : 0o100644
-		Created : Sat Sep  3 12:46:09 2016
-		Accessed: Sat Sep  3 12:46:09 2016
+		Created : Sat Sep  3 12:53:23 2016
+		Accessed: Sat Sep  3 12:53:23 2016
 		Modified: Sat Sep  3 09:51:54 2016
 
 .. {{{end}}}
@@ -185,13 +185,13 @@ with :func:`copystat`.
 	
 	BEFORE:
 		Mode    : 0o100444
-		Created : Sat Sep  3 12:46:09 2016
-		Accessed: Sat Sep  3 12:46:09 2016
-		Modified: Sat Sep  3 12:46:09 2016
+		Created : Sat Sep  3 12:53:24 2016
+		Accessed: Sat Sep  3 12:53:24 2016
+		Modified: Sat Sep  3 12:53:24 2016
 	AFTER:
 		Mode    : 0o100644
-		Created : Sat Sep  3 12:46:09 2016
-		Accessed: Sat Sep  3 12:46:09 2016
+		Created : Sat Sep  3 12:53:24 2016
+		Accessed: Sat Sep  3 12:53:24 2016
 		Modified: Sat Sep  3 09:55:22 2016
 
 .. {{{end}}}
@@ -446,7 +446,60 @@ where it is run.
 
 .. {{{end}}}
 
+Use :func:`make_archive` to create a new archive file. Its inputs are
+designed to best support archiving an entire directory and all of its
+contents, recursively. By default it uses the current working
+directory, so that all of the files and subdirectories appear at the
+top level of the archive. To change that behavior, use the *root_dir*
+argument to move to a new relative position on the filesystem and the
+*base_dir* argument to specify a directory to add to the archive.
 
+.. literalinclude:: shutil_make_archive.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+This example starts within the source directory for the examples for
+:mod:`shutil` and moves up one level in the file system, then adds the
+``shutil`` directory to a tar archive compressed with gzip. The
+:mod:`logging` module is configured to show messages from
+:func:`make_archive` about what it is doing.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'shutil_make_archive.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 shutil_make_archive.py
+	
+	Creating archive:
+	changing into '..'
+	Creating tar archive
+	changing back to '...'
+	
+	Archive contents:
+	shutil
+	shutil/config.ini
+	shutil/example.out
+	shutil/file_to_change.txt
+	shutil/index.rst
+	shutil/shutil_copy.py
+	shutil/shutil_copy2.py
+	shutil/shutil_copyfile.py
+	shutil/shutil_copyfileobj.py
+	shutil/shutil_copymode.py
+	shutil/shutil_copystat.py
+	shutil/shutil_copytree.py
+	shutil/shutil_copytree_verbose.py
+	shutil/shutil_disk_usage.py
+	shutil/shutil_get_archive_formats.py
+	shutil/shutil_make_archive.py
+	shutil/shutil_move.py
+	shutil/shutil_rmtree.py
+	shutil/shutil_which.py
+	shutil/shutil_which_regular_file.py
+
+.. {{{end}}}
 
 File System Space
 =================
@@ -473,8 +526,8 @@ printing them.
 	$ python3 shutil_disk_usage.py
 	
 	Total: 499.42 GB  465.12 GiB
-	Used : 246.67 GB  229.73 GiB
-	Free : 252.49 GB  235.15 GiB
+	Used : 246.68 GB  229.73 GiB
+	Free : 252.48 GB  235.14 GiB
 
 .. {{{end}}}
 
