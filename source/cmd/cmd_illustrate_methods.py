@@ -23,7 +23,7 @@ class Illustrate(cmd.Cmd):
     "Illustrate the base class method use."
 
     def cmdloop(self, intro=None):
-        print('cmdloop(%s)' % intro)
+        print('cmdloop({})'.format(intro))
         return cmd.Cmd.cmdloop(self, intro)
 
     def preloop(self):
@@ -33,13 +33,13 @@ class Illustrate(cmd.Cmd):
         print('postloop()')
 
     def parseline(self, line):
-        print('parseline(%s) =>' % line,)
+        print('parseline({!r}) =>'.format(line), end='')
         ret = cmd.Cmd.parseline(self, line)
         print(ret)
         return ret
 
     def onecmd(self, s):
-        print('onecmd(%s)' % s)
+        print('onecmd({})'.format(s))
         return cmd.Cmd.onecmd(self, s)
 
     def emptyline(self):
@@ -47,15 +47,15 @@ class Illustrate(cmd.Cmd):
         return cmd.Cmd.emptyline(self)
 
     def default(self, line):
-        print('default(%s)' % line)
+        print('default({})'.format(line))
         return cmd.Cmd.default(self, line)
 
     def precmd(self, line):
-        print('precmd(%s)' % line)
+        print('precmd({})'.format(line))
         return cmd.Cmd.precmd(self, line)
 
     def postcmd(self, stop, line):
-        print('postcmd(%s, %s)' % (stop, line))
+        print('postcmd({}, {})'.format(stop, line))
         return cmd.Cmd.postcmd(self, stop, line)
 
     def do_greet(self, line):

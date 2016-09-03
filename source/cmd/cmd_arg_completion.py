@@ -27,9 +27,9 @@ class HelloWorld(cmd.Cmd):
     def do_greet(self, person):
         "Greet the person"
         if person and person in self.FRIENDS:
-            greeting = 'hi, %s!' % person
+            greeting = 'hi, {}!'.format(person)
         elif person:
-            greeting = "hello, " + person
+            greeting = 'hello, {}'.format(person)
         else:
             greeting = 'hello'
         print(greeting)
