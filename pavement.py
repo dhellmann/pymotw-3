@@ -553,3 +553,7 @@ def review_task(options):
         data=encoded,
     )
     pprint.pprint(response)
+    print()
+    task_url = 'https://bitbucket.org/dhellmann/pymotw-3/issues/{}'.format(
+        response['local_id'])
+    print(task_url)
