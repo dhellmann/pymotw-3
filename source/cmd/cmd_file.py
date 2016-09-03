@@ -20,7 +20,7 @@ class HelloWorld(cmd.Cmd):
     prompt = ''
     
     def do_greet(self, line):
-        print "hello,", line
+        print("hello,", line)
     
     def do_EOF(self, line):
         return True

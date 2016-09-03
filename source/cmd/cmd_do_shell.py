@@ -17,12 +17,12 @@ class ShellEnabled(cmd.Cmd):
 
     def do_shell(self, line):
         "Run a shell command"
-        print "running shell command:", line
+        print("running shell command:", line)
         sub_cmd = subprocess.Popen(line,
                                    shell=True,
                                    stdout=subprocess.PIPE)
         output = sub_cmd.communicate()[0]
-        print output
+        print(output)
         self.last_output = output
     
     def do_echo(self, line):
@@ -30,7 +30,7 @@ class ShellEnabled(cmd.Cmd):
         the output of the last shell command.
         """
         # Obviously not robust
-        print line.replace('$out', self.last_output)
+        print(line.replace('$out', self.last_output))
     
     def do_EOF(self, line):
         return True

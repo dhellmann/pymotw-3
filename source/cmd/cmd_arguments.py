@@ -17,15 +17,15 @@ class HelloWorld(cmd.Cmd):
         """greet [person]
         Greet the named person"""
         if person:
-            print "hi,", person
+            print("hi,", person)
         else:
-            print 'hi'
+            print('hi')
     
     def do_EOF(self, line):
         return True
     
     def postloop(self):
-        print
+        print()
 
 if __name__ == '__main__':
     HelloWorld().cmdloop()

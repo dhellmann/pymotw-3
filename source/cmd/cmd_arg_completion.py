@@ -23,7 +23,7 @@ class HelloWorld(cmd.Cmd):
             greeting = "hello, " + person
         else:
             greeting = 'hello'
-        print greeting
+        print(greeting)
     
     def complete_greet(self, text, line, begidx, endidx):
         if not text:
