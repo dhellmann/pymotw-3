@@ -125,12 +125,12 @@ The new file has all of the same characteristics as the old version.
 	SOURCE:
 		Mode    : 0o100644
 		Created : Sat Sep  3 09:51:54 2016
-		Accessed: Sat Sep  3 11:00:15 2016
+		Accessed: Sat Sep  3 12:20:06 2016
 		Modified: Sat Sep  3 09:51:54 2016
 	DEST:
 		Mode    : 0o100644
-		Created : Sat Sep  3 11:00:15 2016
-		Accessed: Sat Sep  3 11:00:15 2016
+		Created : Sat Sep  3 12:20:06 2016
+		Accessed: Sat Sep  3 12:20:06 2016
 		Modified: Sat Sep  3 09:51:54 2016
 
 .. {{{end}}}
@@ -184,13 +184,13 @@ with :func:`copystat`.
 	
 	BEFORE:
 		Mode    : 0o100444
-		Created : Sat Sep  3 11:00:15 2016
-		Accessed: Sat Sep  3 11:00:15 2016
-		Modified: Sat Sep  3 11:00:15 2016
+		Created : Sat Sep  3 12:20:06 2016
+		Accessed: Sat Sep  3 12:20:06 2016
+		Modified: Sat Sep  3 12:20:06 2016
 	AFTER:
 		Mode    : 0o100644
-		Created : Sat Sep  3 11:00:15 2016
-		Accessed: Sat Sep  3 11:00:15 2016
+		Created : Sat Sep  3 12:20:06 2016
+		Accessed: Sat Sep  3 12:20:06 2016
 		Modified: Sat Sep  3 09:55:22 2016
 
 .. {{{end}}}
@@ -240,11 +240,59 @@ destination tree.
 	 '/tmp/example/shutil_copymode.py',
 	 '/tmp/example/shutil_copystat.py',
 	 '/tmp/example/shutil_copytree.py',
+	 '/tmp/example/shutil_copytree_verbose.py',
 	 '/tmp/example/shutil_disk_usage.py',
 	 '/tmp/example/shutil_move.py',
 	 '/tmp/example/shutil_rmtree.py',
 	 '/tmp/example/shutil_which.py',
 	 '/tmp/example/shutil_which_regular_file.py']
+
+.. {{{end}}}
+
+:func:`copytree` accepts two callable arguments to control its
+behavior. The *ignore* argument is called with the name of each
+directory or subdirectory being copied along with a list of the
+contents of the directory. It should return a list of items that
+should be copied. The *copy_function* argument is called to actually
+copy the file.
+
+.. literalinclude:: shutil_copytree_verbose.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+In the example, :func:`ignore_patterns` is used to create an ignore
+function to skip copying Python source files. :func:`verbose_copy`
+prints the names of files as they are copied then uses :func:`copy2`,
+the default copy function, to make the copies.
+
+.. {{{cog
+.. run_script(cog.inFile, 'rm -rf /tmp/example', interpreter='')
+.. run_script(cog.inFile, 'rm -rf *.copy', interpreter='')
+.. cog.out(run_script(cog.inFile, 'shutil_copytree_verbose.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 shutil_copytree_verbose.py
+	
+	BEFORE:
+	[]
+	
+	copying
+	 '../shutil/example.out'
+	 to '/tmp/example/example.out'
+	copying
+	 '../shutil/file_to_change.txt'
+	 to '/tmp/example/file_to_change.txt'
+	copying
+	 '../shutil/index.rst'
+	 to '/tmp/example/index.rst'
+	
+	AFTER:
+	['/tmp/example/example',
+	 '/tmp/example/example.out',
+	 '/tmp/example/file_to_change.txt',
+	 '/tmp/example/index.rst']
 
 .. {{{end}}}
 
@@ -270,20 +318,7 @@ provided in the third argument.
 	['/tmp/example/example',
 	 '/tmp/example/example.out',
 	 '/tmp/example/file_to_change.txt',
-	 '/tmp/example/index.rst',
-	 '/tmp/example/shutil_copy.py',
-	 '/tmp/example/shutil_copy2.py',
-	 '/tmp/example/shutil_copyfile.py',
-	 '/tmp/example/shutil_copyfile.py.copy',
-	 '/tmp/example/shutil_copyfileobj.py',
-	 '/tmp/example/shutil_copymode.py',
-	 '/tmp/example/shutil_copystat.py',
-	 '/tmp/example/shutil_copytree.py',
-	 '/tmp/example/shutil_disk_usage.py',
-	 '/tmp/example/shutil_move.py',
-	 '/tmp/example/shutil_rmtree.py',
-	 '/tmp/example/shutil_which.py',
-	 '/tmp/example/shutil_which_regular_file.py']
+	 '/tmp/example/index.rst']
 	
 	AFTER:
 	[]
@@ -400,8 +435,8 @@ printing them.
 	$ python3 shutil_disk_usage.py
 	
 	Total: 499.42 GB  465.12 GiB
-	Used : 246.63 GB  229.69 GiB
-	Free : 252.53 GB  235.18 GiB
+	Used : 246.66 GB  229.72 GiB
+	Free : 252.50 GB  235.16 GiB
 
 .. {{{end}}}
 
