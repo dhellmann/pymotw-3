@@ -58,3 +58,4 @@ dist/
 /source/shutil/shutil_copyfile.py.copy
 /source/shutil/example.out
 /source/shutil/file_to_change.txt
+/source/shutil/config.ini

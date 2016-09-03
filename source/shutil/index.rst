@@ -27,6 +27,8 @@ as new special files with :func:`copyfile`.
 
 .. {{{cog
 .. run_script(cog.inFile, 'rm -rf *.copy', interpreter=None)
+.. run_script(cog.inFile, 'rm -rf config.ini', interpreter=None)
+.. run_script(cog.inFile, 'rm -rf *~', interpreter=None)
 .. cog.out(run_script(cog.inFile, 'shutil_copyfile.py'))
 .. }}}
 
@@ -123,12 +125,12 @@ The new file has all of the same characteristics as the old version.
 	SOURCE:
 		Mode    : 0o100644
 		Created : Sat Sep  3 09:51:54 2016
-		Accessed: Sat Sep  3 10:33:33 2016
+		Accessed: Sat Sep  3 10:58:59 2016
 		Modified: Sat Sep  3 09:51:54 2016
 	DEST:
 		Mode    : 0o100644
-		Created : Sat Sep  3 10:33:33 2016
-		Accessed: Sat Sep  3 10:33:33 2016
+		Created : Sat Sep  3 10:58:59 2016
+		Accessed: Sat Sep  3 10:58:59 2016
 		Modified: Sat Sep  3 09:51:54 2016
 
 .. {{{end}}}
@@ -182,13 +184,13 @@ with :func:`copystat`.
 	
 	BEFORE:
 		Mode    : 0o100444
-		Created : Sat Sep  3 10:33:33 2016
-		Accessed: Sat Sep  3 10:33:33 2016
-		Modified: Sat Sep  3 10:33:33 2016
+		Created : Sat Sep  3 10:59:00 2016
+		Accessed: Sat Sep  3 10:59:00 2016
+		Modified: Sat Sep  3 10:59:00 2016
 	AFTER:
 		Mode    : 0o100644
-		Created : Sat Sep  3 10:33:33 2016
-		Accessed: Sat Sep  3 10:33:33 2016
+		Created : Sat Sep  3 10:59:00 2016
+		Accessed: Sat Sep  3 10:59:00 2016
 		Modified: Sat Sep  3 09:55:22 2016
 
 .. {{{end}}}
@@ -247,7 +249,9 @@ destination tree.
 	 '/tmp/example/shutil_copytree.py',
 	 '/tmp/example/shutil_disk_usage.py',
 	 '/tmp/example/shutil_move.py',
-	 '/tmp/example/shutil_rmtree.py']
+	 '/tmp/example/shutil_rmtree.py',
+	 '/tmp/example/shutil_which.py',
+	 '/tmp/example/shutil_which_regular_file.py']
 
 .. {{{end}}}
 
@@ -284,7 +288,9 @@ provided in the third argument.
 	 '/tmp/example/shutil_copytree.py',
 	 '/tmp/example/shutil_disk_usage.py',
 	 '/tmp/example/shutil_move.py',
-	 '/tmp/example/shutil_rmtree.py']
+	 '/tmp/example/shutil_rmtree.py',
+	 '/tmp/example/shutil_which.py',
+	 '/tmp/example/shutil_which_regular_file.py']
 	
 	AFTER:
 	[]
@@ -318,6 +324,64 @@ the source is removed.
 
 .. {{{end}}}
 
+Finding Files
+=============
+
+The :func:`which` function scans a search path looking for a named
+file. The typical use case is to find an executable program on the
+shell's search path defined in the environment variable ``PATH``.
+
+.. literalinclude:: shutil_which.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+If no file matching the search parameters can be found, :func:`which`
+returns ``None``.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'shutil_which.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 shutil_which.py
+	
+	/Users/dhellmann/Library/Python/3.5/bin/virtualenv
+	/Users/dhellmann/Library/Python/3.5/bin/tox
+	None
+
+.. {{{end}}}
+
+:func:`which` takes arguments to filter based on the permissions the
+file has, and the search path to examine. The *path* argument defaults
+to ``os.environ('PATH')``, but can be any string containing directory
+names separated by :const:`os.pathsep`. The *mode* argument should be
+a bitmask matching the permissions of the file. By default the mask
+looks for executable files, but the following example uses a readable
+bitmask and an alternate search path to find a configuration file.
+
+.. literalinclude:: shutil_which_regular_file.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+There is still a race condition searching for readable files this way,
+because in the time between finding the file and actually trying to
+use it, the file can be deleted or its permissions can be changed.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'touch config.ini', interpreter='', trailing_newlines=False))
+.. cog.out(run_script(cog.inFile, 'shutil_which_regular_file.py', include_prefix=False))
+.. }}}
+
+.. code-block:: none
+
+	$ touch config.ini
+	$ python3 shutil_which_regular_file.py
+	
+	./config.ini
+
+.. {{{end}}}
+
 File System Space
 =================
 
@@ -343,8 +407,8 @@ printing them.
 	$ python3 shutil_disk_usage.py
 	
 	Total: 499.42 GB  465.12 GiB
-	Used : 246.62 GB  229.68 GiB
-	Free : 252.54 GB  235.20 GiB
+	Used : 246.63 GB  229.69 GiB
+	Free : 252.52 GB  235.18 GiB
 
 .. {{{end}}}
 
