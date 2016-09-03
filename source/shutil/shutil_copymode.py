@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Copying the permissions from one file to another
 """
 #end_pymotw_header

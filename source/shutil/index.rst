@@ -6,7 +6,6 @@
     :synopsis: High-level file operations.
 
 :Purpose: High-level file operations.
-:Python Version: 1.4 and later
 
 The :mod:`shutil` module includes high-level file operations such as
 copying and setting permissions.
@@ -14,17 +13,17 @@ copying and setting permissions.
 Copying Files
 =============
 
-:func:`copyfile()` copies the contents of the source to the
+:func:`copyfile` copies the contents of the source to the
 destination and raises :class:`IOError` if it does
 not have permission to write to the destination file.  
 
-.. include:: shutil_copyfile.py
-    :literal:
+.. literalinclude:: shutil_copyfile.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Because the function opens the input file for reading, regardless of
 its type, special files (such as Unix device nodes) cannot be copied
-as new special files with :func:`copyfile()`.
+as new special files with :func:`copyfile`.
 
 .. {{{cog
 .. run_script(cog.inFile, 'rm -rf *.copy', interpreter=None)
@@ -41,14 +40,14 @@ as new special files with :func:`copyfile()`.
 .. {{{end}}}
 
 
-The implementation of :func:`copyfile()` uses the lower-level function
-:func:`copyfileobj()`. While the arguments to :func:`copyfile()` are
-filenames, the arguments to :func:`copyfileobj()` are open file
+The implementation of :func:`copyfile` uses the lower-level function
+:func:`copyfileobj`. While the arguments to :func:`copyfile` are
+filenames, the arguments to :func:`copyfileobj` are open file
 handles. The optional third argument is a buffer length to use for
 reading in blocks.
 
-.. include:: shutil_copyfileobj.py
-    :literal:
+.. literalinclude:: shutil_copyfileobj.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The default behavior is to read using large blocks.  Use ``-1`` to
@@ -79,13 +78,13 @@ to show the effect.
 .. {{{end}}}
 
 
-The :func:`copy()` function interprets the output name like the Unix
+The :func:`copy` function interprets the output name like the Unix
 command line tool ``cp``. If the named destination refers to a
 directory instead of a file, a new file is created in the directory
 using the base name of the source. 
 
-.. include:: shutil_copy.py
-    :literal:
+.. literalinclude:: shutil_copy.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The permissions of the file are copied along with the contents.
@@ -105,11 +104,11 @@ The permissions of the file are copied along with the contents.
 .. {{{end}}}
 
 
-:func:`copy2()` works like :func:`copy()`, but includes the access and
+:func:`copy2` works like :func:`copy`, but includes the access and
 modification times in the metadata copied to the new file.
 
-.. include:: shutil_copy2.py
-    :literal:
+.. literalinclude:: shutil_copy2.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The new file has all of the same characteristics as the old version.
@@ -142,16 +141,16 @@ Copying File Metadata
 
 By default when a new file is created under Unix, it receives
 permissions based on the umask of the current user. To copy the
-permissions from one file to another, use :func:`copymode()`.
+permissions from one file to another, use :func:`copymode`.
 
-.. include:: shutil_copymode.py
-    :literal:
+.. literalinclude:: shutil_copymode.py
+    :caption:
     :start-after: #end_pymotw_header
 
 First, create a file to be modified.
 
-.. include:: shutil_copymode.sh
-    :literal:
+.. literalinclude:: shutil_copymode.sh
+    :caption:
 
 Then, run the example script to change the permissions.
 
@@ -171,10 +170,10 @@ Then, run the example script to change the permissions.
 
 .. {{{end}}}
 
-To copy other metadata about the file use :func:`copystat()`.
+To copy other metadata about the file use :func:`copystat`.
 
-.. include:: shutil_copystat.py
-    :literal:
+.. literalinclude:: shutil_copystat.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Only the permissions and dates associated with the file are duplicated
@@ -209,19 +208,19 @@ Working With Directory Trees
 
 :mod:`shutil` includes three functions for working with directory
 trees. To copy a directory from one place to another, use
-:func:`copytree()`. It recurses through the source directory tree,
+:func:`copytree`. It recurses through the source directory tree,
 copying files to the destination. The destination directory must not
 exist in advance.
 
 .. note::
 
-  The documentation for :func:`copytree()` says it should be
+  The documentation for :func:`copytree` says it should be
   considered a sample implementation, rather than a tool.  Consider
   starting with the current implementation and making it more robust,
   or adding features like a progress meter, before using it.
 
-.. include:: shutil_copytree.py
-    :literal:
+.. literalinclude:: shutil_copytree.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The *symlinks* argument controls whether symbolic links are copied as
@@ -264,10 +263,10 @@ destination tree.
 
 .. {{{end}}}
 
-To remove a directory and its contents, use :func:`rmtree()`. 
+To remove a directory and its contents, use :func:`rmtree`. 
 
-.. include:: shutil_rmtree.py
-    :literal:
+.. literalinclude:: shutil_rmtree.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Errors are raised as exceptions by default, but can be ignored if the
@@ -308,10 +307,10 @@ provided in the third argument.
 .. {{{end}}}
 
 To move a file or directory from one place to another, use
-:func:`move()`. 
+:func:`move`. 
 
-.. include:: shutil_move.py
-    :literal:
+.. literalinclude:: shutil_move.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The semantics are similar to those of the Unix command :command:`mv`. If the
