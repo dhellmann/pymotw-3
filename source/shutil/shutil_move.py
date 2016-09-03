@@ -35,6 +35,6 @@ from glob import glob
 with open('example.txt', 'wt') as f:
     f.write('contents')
 
-print 'BEFORE: ', glob('example*')
+print('BEFORE: ', glob('example*'))
 move('example.txt', 'example.out')
-print 'AFTER : ', glob('example*')
+print('AFTER : ', glob('example*'))
