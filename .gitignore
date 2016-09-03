@@ -59,3 +59,4 @@ dist/
 /source/shutil/example.out
 /source/shutil/file_to_change.txt
 /source/shutil/config.ini
+/source/shutil/example.tar.gz

@@ -29,6 +29,7 @@ as new special files with :func:`copyfile`.
 .. run_script(cog.inFile, 'rm -rf *.copy', interpreter=None)
 .. run_script(cog.inFile, 'rm -rf config.ini', interpreter=None)
 .. run_script(cog.inFile, 'rm -rf *~', interpreter=None)
+.. run_script(cog.inFile, 'rm -rf *.tar.gz', interpreter=None)
 .. cog.out(run_script(cog.inFile, 'shutil_copyfile.py'))
 .. }}}
 
@@ -125,12 +126,12 @@ The new file has all of the same characteristics as the old version.
 	SOURCE:
 		Mode    : 0o100644
 		Created : Sat Sep  3 09:51:54 2016
-		Accessed: Sat Sep  3 12:20:06 2016
+		Accessed: Sat Sep  3 12:46:09 2016
 		Modified: Sat Sep  3 09:51:54 2016
 	DEST:
 		Mode    : 0o100644
-		Created : Sat Sep  3 12:20:06 2016
-		Accessed: Sat Sep  3 12:20:06 2016
+		Created : Sat Sep  3 12:46:09 2016
+		Accessed: Sat Sep  3 12:46:09 2016
 		Modified: Sat Sep  3 09:51:54 2016
 
 .. {{{end}}}
@@ -184,13 +185,13 @@ with :func:`copystat`.
 	
 	BEFORE:
 		Mode    : 0o100444
-		Created : Sat Sep  3 12:20:06 2016
-		Accessed: Sat Sep  3 12:20:06 2016
-		Modified: Sat Sep  3 12:20:06 2016
+		Created : Sat Sep  3 12:46:09 2016
+		Accessed: Sat Sep  3 12:46:09 2016
+		Modified: Sat Sep  3 12:46:09 2016
 	AFTER:
 		Mode    : 0o100644
-		Created : Sat Sep  3 12:20:06 2016
-		Accessed: Sat Sep  3 12:20:06 2016
+		Created : Sat Sep  3 12:46:09 2016
+		Accessed: Sat Sep  3 12:46:09 2016
 		Modified: Sat Sep  3 09:55:22 2016
 
 .. {{{end}}}
@@ -242,6 +243,8 @@ destination tree.
 	 '/tmp/example/shutil_copytree.py',
 	 '/tmp/example/shutil_copytree_verbose.py',
 	 '/tmp/example/shutil_disk_usage.py',
+	 '/tmp/example/shutil_get_archive_formats.py',
+	 '/tmp/example/shutil_make_archive.py',
 	 '/tmp/example/shutil_move.py',
 	 '/tmp/example/shutil_rmtree.py',
 	 '/tmp/example/shutil_which.py',
@@ -410,6 +413,41 @@ use it, the file can be deleted or its permissions can be changed.
 
 .. {{{end}}}
 
+Archives
+========
+
+Python's standard library includes many modules for managing archive
+files such as :mod:`tarfile` and :mod:`zipfile`. There are also
+several higher-level functions for creating and extracting archives in
+:mod:`shutil`. :func:`get_archive_formats` returns a sequence of names
+and descriptions for formats supported on the current system.
+
+.. literalinclude:: shutil_get_archive_formats.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The formats supported depend on which modules and underlying libraries
+are available, so the output for this example may change based on
+where it is run.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'shutil_get_archive_formats.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 shutil_get_archive_formats.py
+	
+	bztar: bzip2'ed tar-file
+	gztar: gzip'ed tar-file
+	tar  : uncompressed tar file
+	xztar: xz'ed tar-file
+	zip  : ZIP file
+
+.. {{{end}}}
+
+
+
 File System Space
 =================
 
@@ -435,8 +473,8 @@ printing them.
 	$ python3 shutil_disk_usage.py
 	
 	Total: 499.42 GB  465.12 GiB
-	Used : 246.66 GB  229.72 GiB
-	Free : 252.50 GB  235.16 GiB
+	Used : 246.67 GB  229.73 GiB
+	Free : 252.49 GB  235.15 GiB
 
 .. {{{end}}}
 
@@ -445,3 +483,6 @@ printing them.
 .. seealso::
 
    * :pydoc:`shutil`
+
+   * :doc:`/compression` -- Modules for dealing with archive and
+     compression formats.
