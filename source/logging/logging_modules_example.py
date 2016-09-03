@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # Copyright 2007 Doug Hellmann.
 #
@@ -29,7 +29,6 @@ See http://blog.doughellmann.com/2007/05/pymotw-logging.html
 
 """
 
-__module_id__ = "$Id$"
 #end_pymotw_header
 
 import logging

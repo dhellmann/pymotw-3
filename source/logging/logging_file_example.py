@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Example use of Python's logging module writing to a file.
 """
 #end_pymotw_header

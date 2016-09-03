@@ -6,7 +6,6 @@
     :synopsis: Report status, error, and informational messages.
 
 :Purpose: Report status, error, and informational messages.
-:Python Version: 2.3 and later
 
 The :mod:`logging` module defines a standard API for reporting errors
 and status information from applications and libraries. The key
@@ -41,11 +40,11 @@ Logging to a File
 =================
 
 Most applications are configured to log to a file. Use the
-:func:`basicConfig()` function to set up the default handler so that
+:func:`basicConfig` function to set up the default handler so that
 debug messages are written to a file.
 
-.. include:: logging_file_example.py
-    :literal:
+.. literalinclude:: logging_file_example.py
+    :caption:
     :start-after: #end_pymotw_header
 
 After running the script, the log message is written to
@@ -73,13 +72,13 @@ Rotating Log Files
 
 Running the script repeatedly causes more messages to be appended to
 the file. To create a new file each time the program runs, pass a
-``filemode`` argument to :func:`basicConfig()` with a value of
+``filemode`` argument to :func:`basicConfig` with a value of
 ``'w'``. Rather than managing the creation of files this way, though,
 it is better to use a :class:`RotatingFileHandler`, which creates new
 files automatically and preserves the old log file at the same time.
 
-.. include:: logging_rotatingfile_example.py
-    :literal:
+.. literalinclude:: logging_rotatingfile_example.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The result is six separate files, each with part of the log
@@ -145,8 +144,8 @@ the message is emitted (50 > 40). If a message is a :const:`WARNING`,
 and the logger is set to produce only messages set to :const:`ERROR`,
 the message is not emitted (30 < 40).
 
-.. include:: logging_level_example.py
-    :literal:
+.. literalinclude:: logging_level_example.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Run the script with an argument like 'debug' or 'warning' to see which
@@ -189,8 +188,8 @@ configured differently, so that messages from different modules are
 handled in different ways. Here is an example of how to log from
 different modules so it is easy to trace the source of the message:
 
-.. include:: logging_modules_example.py
-    :literal:
+.. literalinclude:: logging_modules_example.py
+    :caption:
     :start-after: #end_pymotw_header
 
 And the output:
