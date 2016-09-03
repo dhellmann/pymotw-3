@@ -9,7 +9,7 @@ import os
 
 with open('file_to_change.txt', 'wt') as f:
     f.write('content')
-os.chmod('file_to_change.txt', 0444)
+os.chmod('file_to_change.txt', 0o444)
 
 print('BEFORE:')
 print(getstatus('file_to_change.txt'))
