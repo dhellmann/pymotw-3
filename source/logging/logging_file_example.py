@@ -15,5 +15,5 @@ logging.debug('This message should go to the log file')
 with open(LOG_FILENAME, 'rt') as f:
     body = f.read()
 
-print 'FILE:'
-print body
+print('FILE:')
+print(body)

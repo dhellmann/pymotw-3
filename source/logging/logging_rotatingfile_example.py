@@ -55,4 +55,4 @@ for i in range(20):
 # See what files are created
 logfiles = glob.glob('%s*' % LOG_FILENAME)
 for filename in logfiles:
-    print filename
+    print(filename)
