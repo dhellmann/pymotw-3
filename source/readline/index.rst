@@ -6,7 +6,6 @@
     :synopsis: The GNU readline library
 
 :Purpose: Provides an interface to the GNU readline library for interacting with the user at a command prompt.
-:Python Version: 1.4 and later
 
 The :mod:`readline` module can be used to enhance interactive command
 line programs to make them easier to use.  It is primarily used to
@@ -45,20 +44,20 @@ the default of "emacs".  To edit the current input line, press ``ESC``
 then use normal :command:`vi` navigation keys such as ``j``, ``k``,
 ``l``, and ``h``.
 
-.. include:: readline_parse_and_bind.py
-    :literal:
+.. literalinclude:: readline_parse_and_bind.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The same configuration can be stored as instructions in a file read by
 the library with a single call.  If ``myreadline.rc`` contains
 
-.. include:: myreadline.rc
-    :literal:
+.. literalinclude:: myreadline.rc
+    :caption:
 
 the file can be read with :func:`read_init_file`
 
-.. include:: readline_read_init_file.py
-    :literal:
+.. literalinclude:: readline_read_init_file.py
+    :caption:
     :start-after: #end_pymotw_header
 
     
@@ -69,8 +68,8 @@ Completing Text
 This program has a built-in set of possible commands and uses
 tab-completion when the user is entering instructions.
 
-.. include:: readline_completer.py
-    :literal:
+.. literalinclude:: readline_completer.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The :func:`input_loop` function reads one line after another
@@ -191,8 +190,8 @@ text argument passed to the function, but does not use any more of
 readline's internal state.  It is also possible to use :mod:`readline`
 functions to manipulate the text of the input buffer.
 
-.. include:: readline_buffer.py
-    :literal:
+.. literalinclude:: readline_buffer.py
+    :caption:
     :start-after: #end_pymotw_header
 
 In this example, commands with sub-options are being completed.
@@ -298,8 +297,8 @@ same history can be saved to a file to be reloaded later using
 the entire history is saved but the maximum length of the file can be
 set with :func:`set_history_length`.  A length of -1 means no limit.
 
-.. include:: readline_history.py
-    :literal:
+.. literalinclude:: readline_history.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The :class:`HistoryCompleter` remembers everything typed, and uses
@@ -361,8 +360,8 @@ the interaction sequence.  The *startup* hook is invoked immediately
 before printing the prompt, and the *pre-input* hook is run after the
 prompt, but before reading text from the user.
 
-.. include:: readline_hooks.py
-    :literal:
+.. literalinclude:: readline_hooks.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Either hook is a potentially good place to use :func:`insert_text` to
