@@ -60,3 +60,4 @@ dist/
 /source/shutil/file_to_change.txt
 /source/shutil/config.ini
 /source/shutil/example.tar.gz
+/source/logging/logging_rotatingfile_example.out*

@@ -1,6 +1,6 @@
-=============================================================
- logging -- Report Status, Error, and Informational Messages
-=============================================================
+==============================================================
+ logging --- Report Status, Error, and Informational Messages
+==============================================================
 
 .. module:: logging
     :synopsis: Report status, error, and informational messages.
@@ -51,15 +51,14 @@ After running the script, the log message is written to
 ``logging_example.out``:
 
 .. {{{cog
-.. outfile = path(cog.inFile).parent / 'logging_example.out'
-.. outfile.unlink()
+.. run_script(cog.inFile, 'rm -f logging_*.out', interpreter='')
 .. cog.out(run_script(cog.inFile, 'logging_file_example.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python logging_file_example.py
-
+	$ python3 logging_file_example.py
+	
 	FILE:
 	DEBUG:root:This message should go to the log file
 	
@@ -85,15 +84,14 @@ The result is six separate files, each with part of the log
 history for the application:
 
 .. {{{cog
-.. outfile = path(cog.inFile).parent / 'logging_rotatingfile_example.out'
-.. deleted = [ f.unlink() for f in outfile.glob('*') ]
+.. run_script(cog.inFile, 'rm -f logging_*.out*', interpreter='')
 .. cog.out(run_script(cog.inFile, 'logging_rotatingfile_example.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python logging_rotatingfile_example.py
-
+	$ python3 logging_rotatingfile_example.py
+	
 	logging_rotatingfile_example.out
 	logging_rotatingfile_example.out.1
 	logging_rotatingfile_example.out.2
@@ -156,18 +154,18 @@ messages show up at different levels:
 .. cog.out(run_script(cog.inFile, 'logging_level_example.py info', include_prefix=False))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python logging_level_example.py debug
-
+	$ python3 logging_level_example.py debug
+	
 	DEBUG:root:This is a debug message
 	INFO:root:This is an info message
 	WARNING:root:This is a warning message
 	ERROR:root:This is an error message
 	CRITICAL:root:This is a critical error message
 
-	$ python logging_level_example.py info
-
+	$ python3 logging_level_example.py info
+	
 	INFO:root:This is an info message
 	WARNING:root:This is a warning message
 	ERROR:root:This is an error message
@@ -198,12 +196,13 @@ And the output:
 .. cog.out(run_script(cog.inFile, 'logging_modules_example.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python logging_modules_example.py
-
+	$ python3 logging_modules_example.py
+	
 	WARNING:package1.module1:This message comes from one module
-	WARNING:package2.module2:And this message comes from another module
+	WARNING:package2.module2:And this message comes from another mod
+	ule
 
 .. {{{end}}}
 
@@ -216,5 +215,4 @@ covered in depth in the library module documentation.
 
 .. seealso::
 
-    `logging <http://docs.python.org/library/logging.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`logging`
