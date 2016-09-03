@@ -1,0 +1,5 @@
+# Turn on tab completion
+tab: complete
+
+# Use vi editing mode instead of emacs
+set editing-mode vi
