@@ -206,13 +206,6 @@ trees. To copy a directory from one place to another, use
 copying files to the destination. The destination directory must not
 exist in advance.
 
-.. note::
-
-  The documentation for :func:`copytree` says it should be
-  considered a sample implementation, rather than a tool.  Consider
-  starting with the current implementation and making it more robust,
-  or adding features like a progress meter, before using it.
-
 .. literalinclude:: shutil_copytree.py
     :caption:
     :start-after: #end_pymotw_header
