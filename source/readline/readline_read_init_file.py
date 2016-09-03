@@ -16,4 +16,4 @@ while True:
     line = raw_input('Prompt ("stop" to quit): ')
     if line == 'stop':
         break
-    print 'ENTERED: "%s"' % line
+    print('ENTERED: "%s"' % line)

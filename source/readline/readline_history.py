@@ -25,7 +25,7 @@ def get_history_items():
              for i in xrange(1, num_items)
              ]
 
-class HistoryCompleter(object):
+class HistoryCompleter:
     
     def __init__(self):
         self.matches = []
@@ -54,17 +54,17 @@ class HistoryCompleter(object):
 def input_loop():
     if os.path.exists(HISTORY_FILENAME):
         readline.read_history_file(HISTORY_FILENAME)
-    print 'Max history file length:', readline.get_history_length()
-    print 'Startup history:', get_history_items()
+    print('Max history file length:', readline.get_history_length())
+    print('Startup history:', get_history_items())
     try:
         while True:
             line = raw_input('Prompt ("stop" to quit): ')
             if line == 'stop':
                 break
             if line:
-                print 'Adding "%s" to the history' % line
+                print('Adding "%s" to the history' % line)
     finally:
-        print 'Final history:', get_history_items()
+        print('Final history:', get_history_items())
         readline.write_history_file(HISTORY_FILENAME)
 
 # Register our completer function

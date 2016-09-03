@@ -16,7 +16,7 @@ logging.basicConfig(filename=LOG_FILENAME,
                     level=logging.DEBUG,
                     )
 
-class SimpleCompleter(object):
+class SimpleCompleter:
     
     def __init__(self, options):
         self.options = sorted(options)
@@ -52,7 +52,7 @@ def input_loop():
     line = ''
     while line != 'stop':
         line = raw_input('Prompt ("stop" to quit): ')
-        print 'Dispatch %s' % line
+        print('Dispatch %s' % line)
 
 # Register the completer function
 OPTIONS = ['start', 'stop', 'list', 'print']

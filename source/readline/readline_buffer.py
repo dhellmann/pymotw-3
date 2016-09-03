@@ -16,7 +16,7 @@ logging.basicConfig(filename=LOG_FILENAME,
                     level=logging.DEBUG,
                     )
 
-class BufferAwareCompleter(object):
+class BufferAwareCompleter:
     
     def __init__(self, options):
         self.options = options
@@ -84,7 +84,7 @@ def input_loop():
     line = ''
     while line != 'stop':
         line = raw_input('Prompt ("stop" to quit): ')
-        print 'Dispatch %s' % line
+        print('Dispatch %s' % line)
 
 # Register our completer function
 readline.set_completer(BufferAwareCompleter(
