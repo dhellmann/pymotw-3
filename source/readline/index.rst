@@ -1,11 +1,12 @@
-======================================
- readline -- The GNU readline Library
-======================================
+=======================================
+ readline --- The GNU readline Library
+=======================================
 
 .. module:: readline
     :synopsis: The GNU readline library
 
-:Purpose: Provides an interface to the GNU readline library for interacting with the user at a command prompt.
+:Purpose: Provides an interface to the GNU readline library for
+          interacting with the user at a command prompt.
 
 The :mod:`readline` module can be used to enhance interactive command
 line programs to make them easier to use.  It is primarily used to
@@ -25,7 +26,9 @@ provide command line text completion, or "tab completion".
    The GNU libraries needed for :mod:`readline` are not available on
    all platforms by default.  If your system does not include them,
    you may need to recompile the Python interpreter to enable the
-   module, after installing the dependencies.
+   module, after installing the dependencies. A stand-alone version of
+   the library is also distributed from the Python Package Index under
+   the name gnureadline_.
 
 Configuring
 ===========
@@ -60,8 +63,6 @@ the file can be read with :func:`read_init_file`
     :caption:
     :start-after: #end_pymotw_header
 
-    
-
 Completing Text
 ===============
 
@@ -90,7 +91,7 @@ candidate matches one at a time on subsequent calls.
 
 When run, the initial output is:
 
-::
+.. code-block:: none
 
     $ python readline_completer.py 
 
@@ -98,7 +99,7 @@ When run, the initial output is:
 
 Pressing ``TAB`` twice causes a list of options to be printed.
 
-::
+.. code-block:: none
 
     $ python readline_completer.py 
 
@@ -109,7 +110,7 @@ Pressing ``TAB`` twice causes a list of options to be printed.
 The log file shows that :func:`complete` was called with two separate
 sequences of state values.
 
-::
+.. code-block:: none
 
     $ tail -f /tmp/completer.log
 
@@ -134,13 +135,13 @@ so it can be printed for the user.
 If the next input is "``l``" followed by another TAB, the screen
 shows:
 
-::
+.. code-block:: none
 
     Prompt ("stop" to quit): list
 
 and the log reflects the different arguments to :func:`complete`:
 
-::
+.. code-block:: none
 
     DEBUG:root:'l' matches: ['list']
     DEBUG:root:complete('l', 0) => 'list'
@@ -149,7 +150,7 @@ and the log reflects the different arguments to :func:`complete`:
 Pressing RETURN now causes :func:`raw_input` to return the value, and
 the :command:`while` loop cycles.
 
-::
+.. code-block:: none
 
     Dispatch list
     Prompt ("stop" to quit):
@@ -161,7 +162,7 @@ the screen by adding a "``t``".
 
 The log file shows:
 
-::
+.. code-block:: none
 
     DEBUG:root:'s' matches: ['start', 'stop']
     DEBUG:root:complete('s', 0) => 'start'
@@ -170,7 +171,7 @@ The log file shows:
 
 and the screen:
 
-::
+.. code-block:: none
 
     Prompt ("stop" to quit): st
 
@@ -220,7 +221,7 @@ There are three top-level commands, two of which have sub-commands.
 Following the same sequence of actions as before, pressing TAB twice
 gives the three top-level commands:
 
-::
+.. code-block:: none
 
     $ python readline_buffer.py 
 
@@ -230,7 +231,7 @@ gives the three top-level commands:
 
 and in the log:
 
-::
+.. code-block:: none
 
     DEBUG:root:origline=''
     DEBUG:root:begin=0
@@ -254,7 +255,7 @@ and in the log:
 If the first word is ``"list "`` (with a space after the word), the
 candidates for completion are different:
 
-::
+.. code-block:: none
 
     Prompt ("stop" to quit): list 
     directories  files
@@ -262,7 +263,7 @@ candidates for completion are different:
 The log shows that the text being completed is *not* the full line,
 but the portion after ``list``.
 
-::
+.. code-block:: none
 
     DEBUG:root:origline='list '
     DEBUG:root:begin=5
@@ -304,7 +305,7 @@ set with :func:`set_history_length`.  A length of -1 means no limit.
 The :class:`HistoryCompleter` remembers everything typed, and uses
 those values when completing subsequent inputs.
 
-::
+.. code-block:: none
 
     $ python readline_history.py 
 
@@ -324,7 +325,7 @@ those values when completing subsequent inputs.
 
 The log shows this output when the "``b``" is followed by two TABs.
 
-::
+.. code-block:: none
 
     DEBUG:root:history: ['foo', 'bar', 'blah']
     DEBUG:root:matches: ['bar', 'blah']
@@ -340,7 +341,7 @@ The log shows this output when the "``b``" is followed by two TABs.
 When the script is run the second time, all of the history is read
 from the file.
 
-::
+.. code-block:: none
 
     $ python readline_history.py 
 
@@ -367,7 +368,7 @@ prompt, but before reading text from the user.
 Either hook is a potentially good place to use :func:`insert_text` to
 modify the input buffer.
 
-::
+.. code-block:: none
 
     $ python readline_hooks.py 
 
@@ -379,27 +380,32 @@ must be called to update the screen.
 
 .. seealso::
 
-    `readline <http://docs.python.org/library/readline.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`readline`
 
-    `GNU readline <http://tiswww.case.edu/php/chet/readline/readline.html>`_
-        Documentation for the GNU readline library.
-        
-    `readline init file format <http://tiswww.case.edu/php/chet/readline/readline.html#SEC10>`_
-        The initialization and configuration file format.
-    
-    `effbot: The readline module <http://sandbox.effbot.org/librarybook/readline.htm>`_
-        Effbot's guide to the readline module.
+   * `GNU readline
+     <http://tiswww.case.edu/php/chet/readline/readline.html>`_ --
+     Documentation for the GNU readline library.
 
-    `pyreadline <https://launchpad.net/pyreadline>`_
-        pyreadline, developed as a Python-based replacement for readline to be
-        used in `iPython <http://ipython.scipy.org/>`_.
+   * `readline init file format
+     <http://tiswww.case.edu/php/chet/readline/readline.html#SEC10>`_
+     -- The initialization and configuration file format.
 
-    :mod:`cmd`
-        The ``cmd`` module uses ``readline`` extensively to implement  
-        tab-completion in the command interface.  Some of the examples here
-        were adapted from the code in ``cmd``.
-    
-    :mod:`rlcompleter`
-        ``rlcompleter`` uses ``readline`` to add tab-completion to the interactive 
-        Python interpreter.
+   * `effbot: The readline module
+     <http://sandbox.effbot.org/librarybook/readline.htm>`_ --
+     Effbot's guide to the readline module.
+
+   * gnureadline_ -- A statically linked version of :mod:`readline`
+     available for many platforms and installable via ``pip``.
+
+   * `pyreadline <https://launchpad.net/pyreadline>`_ -- pyreadline,
+     developed as a Python-based replacement for readline to be used
+     in `iPython <http://ipython.scipy.org/>`_.
+
+   * :mod:`cmd` -- The ``cmd`` module uses ``readline`` extensively to
+     implement tab-completion in the command interface.  Some of the
+     examples here were adapted from the code in ``cmd``.
+
+   * :mod:`rlcompleter` -- ``rlcompleter`` uses ``readline`` to add
+     tab-completion to the interactive Python interpreter.
+
+.. _gnureadline: https://pypi.python.org/pypi/gnureadline

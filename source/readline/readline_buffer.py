@@ -13,6 +13,7 @@ import logging
 
 LOG_FILENAME = '/tmp/completer.log'
 logging.basicConfig(
+    format='%(message)s',
     filename=LOG_FILENAME,
     level=logging.DEBUG,
 )

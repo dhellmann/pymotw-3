@@ -16,6 +16,7 @@ LOG_FILENAME = '/tmp/completer.log'
 HISTORY_FILENAME = '/tmp/completer.hist'
 
 logging.basicConfig(
+    format='%(message)s',
     filename=LOG_FILENAME,
     level=logging.DEBUG,
 )
