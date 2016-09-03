@@ -77,6 +77,7 @@ a file, but does not reside on disk.
     fnmatch/index
     linecache/index
     tempfile/index
+    shutil/index
     filecmp/index
     mmap/index
     codecs/index
@@ -88,7 +89,7 @@ a file, but does not reside on disk.
     pathlib/index
     linecache/index
     tempfile/index
-    * shutil/index
+    shutil/index
     filecmp/index
     mmap/index
     codecs/index
