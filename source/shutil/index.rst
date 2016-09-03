@@ -123,12 +123,12 @@ The new file has all of the same characteristics as the old version.
 	SOURCE:
 		Mode    : 0o100644
 		Created : Sat Sep  3 09:51:54 2016
-		Accessed: Sat Sep  3 10:04:27 2016
+		Accessed: Sat Sep  3 10:33:33 2016
 		Modified: Sat Sep  3 09:51:54 2016
 	DEST:
 		Mode    : 0o100644
-		Created : Sat Sep  3 10:04:27 2016
-		Accessed: Sat Sep  3 10:04:27 2016
+		Created : Sat Sep  3 10:33:33 2016
+		Accessed: Sat Sep  3 10:33:33 2016
 		Modified: Sat Sep  3 09:51:54 2016
 
 .. {{{end}}}
@@ -182,13 +182,13 @@ with :func:`copystat`.
 	
 	BEFORE:
 		Mode    : 0o100444
-		Created : Sat Sep  3 10:04:27 2016
-		Accessed: Sat Sep  3 10:04:27 2016
-		Modified: Sat Sep  3 10:04:27 2016
+		Created : Sat Sep  3 10:33:33 2016
+		Accessed: Sat Sep  3 10:33:33 2016
+		Modified: Sat Sep  3 10:33:33 2016
 	AFTER:
 		Mode    : 0o100644
-		Created : Sat Sep  3 10:04:27 2016
-		Accessed: Sat Sep  3 10:04:27 2016
+		Created : Sat Sep  3 10:33:33 2016
+		Accessed: Sat Sep  3 10:33:33 2016
 		Modified: Sat Sep  3 09:55:22 2016
 
 .. {{{end}}}
@@ -245,6 +245,7 @@ destination tree.
 	 '/tmp/example/shutil_copymode.py',
 	 '/tmp/example/shutil_copystat.py',
 	 '/tmp/example/shutil_copytree.py',
+	 '/tmp/example/shutil_disk_usage.py',
 	 '/tmp/example/shutil_move.py',
 	 '/tmp/example/shutil_rmtree.py']
 
@@ -281,6 +282,7 @@ provided in the third argument.
 	 '/tmp/example/shutil_copymode.py',
 	 '/tmp/example/shutil_copystat.py',
 	 '/tmp/example/shutil_copytree.py',
+	 '/tmp/example/shutil_disk_usage.py',
 	 '/tmp/example/shutil_move.py',
 	 '/tmp/example/shutil_rmtree.py']
 	
@@ -315,6 +317,37 @@ the source is removed.
 	AFTER :  ['example.out']
 
 .. {{{end}}}
+
+File System Space
+=================
+
+It can be useful to examine the local file system to see how much
+space is available before performing a long running operation that may
+exhaust that space. :func:`disk_usage` returns a tuple with the total
+space, the amount currently being used, and the amount remaining free.
+
+.. literalinclude:: shutil_disk_usage.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The values returned by :func:`disk_usage` are the number of bytes, so
+the example program converts them to more readable units before
+printing them.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'shutil_disk_usage.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 shutil_disk_usage.py
+	
+	Total: 499.42 GB  465.12 GiB
+	Used : 246.62 GB  229.68 GiB
+	Free : 252.54 GB  235.20 GiB
+
+.. {{{end}}}
+
 
 
 .. seealso::
