@@ -3,11 +3,14 @@
 """
 #end_pymotw_header
 
-from shutil import *
-from commands import *
+import glob
+import pprint
+import shutil
 
 print('BEFORE:')
-print(getoutput('ls -rlast /tmp/example'))
-rmtree('/tmp/example')
-print('AFTER:')
-print(getoutput('ls -rlast /tmp/example'))
+pprint.pprint(glob.glob('/tmp/example/*'))
+
+shutil.rmtree('/tmp/example')
+
+print('\nAFTER:')
+pprint.pprint(glob.glob('/tmp/example/*'))

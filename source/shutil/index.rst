@@ -30,9 +30,9 @@ as new special files with :func:`copyfile`.
 .. cog.out(run_script(cog.inFile, 'shutil_copyfile.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python shutil_copyfile.py
+	$ python3 shutil_copyfile.py
 	
 	BEFORE: ['shutil_copyfile.py']
 	AFTER: ['shutil_copyfile.py', 'shutil_copyfile.py.copy']
@@ -59,9 +59,9 @@ to show the effect.
 .. cog.out(run_script(cog.inFile, 'shutil_copyfileobj.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python shutil_copyfileobj.py
+	$ python3 shutil_copyfileobj.py
 	
 	Default:
 	read(16384) bytes
@@ -90,13 +90,13 @@ using the base name of the source.
 The permissions of the file are copied along with the contents.
 
 .. {{{cog
-.. (path(cog.inFile).parent / 'example').rmtree()
+.. run_script(cog.inFile, 'rm -rf example', interpreter='')
 .. cog.out(run_script(cog.inFile, 'shutil_copy.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python shutil_copy.py
+	$ python3 shutil_copy.py
 	
 	BEFORE: []
 	AFTER: ['shutil_copy.py']
@@ -114,24 +114,24 @@ modification times in the metadata copied to the new file.
 The new file has all of the same characteristics as the old version.
 
 .. {{{cog
-.. (path(cog.inFile).parent / 'example').rmtree()
+.. run_script(cog.inFile, 'rm -rf example', interpreter='')
 .. cog.out(run_script(cog.inFile, 'shutil_copy2.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python shutil_copy2.py
+	$ python3 shutil_copy2.py
 	
 	SOURCE:
 		Mode    : 33188
-		Created : Sat Dec  4 10:41:32 2010
-		Accessed: Sat Dec  4 17:41:01 2010
-		Modified: Sun Nov 14 09:40:36 2010
+		Created : Sat Sep  3 09:25:01 2016
+		Accessed: Sat Sep  3 09:48:32 2016
+		Modified: Sat Sep  3 09:25:01 2016
 	DEST:
 		Mode    : 33188
-		Created : Sat Dec  4 17:41:01 2010
-		Accessed: Sat Dec  4 17:41:01 2010
-		Modified: Sun Nov 14 09:40:36 2010
+		Created : Sat Sep  3 09:48:32 2016
+		Accessed: Sat Sep  3 09:48:32 2016
+		Modified: Sat Sep  3 09:25:01 2016
 
 .. {{{end}}}
 
@@ -155,18 +155,16 @@ First, create a file to be modified.
 Then, run the example script to change the permissions.
 
 .. {{{cog
-.. (path(cog.inFile).parent / 'file_to_change.txt').unlink()
+.. run_script(cog.inFile, 'rm -f file_to_change.txt', interpreter='')
 .. cog.out(run_script(cog.inFile, 'shutil_copymode.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python shutil_copymode.py
+	$ python3 shutil_copymode.py
 	
-	BEFORE:
-	-r--r--r--  1 dhellmann  dhellmann  7 Dec  4 17:41 file_to_change.txt
-	AFTER :
-	-rw-r--r--  1 dhellmann  dhellmann  7 Dec  4 17:41 file_to_change.txt
+	BEFORE: 0o100444
+	AFTER : 0o100644
 
 .. {{{end}}}
 
@@ -180,24 +178,24 @@ Only the permissions and dates associated with the file are duplicated
 with :func:`copystat`.
 
 .. {{{cog
-.. (path(cog.inFile).parent / 'file_to_change.txt').unlink()
+.. run_script(cog.inFile, 'rm -f file_to_change.txt', interpreter='')
 .. cog.out(run_script(cog.inFile, 'shutil_copystat.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python shutil_copystat.py
+	$ python3 shutil_copystat.py
 	
 	BEFORE:
 		Mode    : 33060
-		Created : Sat Dec  4 17:41:01 2010
-		Accessed: Sat Dec  4 17:41:01 2010
-		Modified: Sat Dec  4 17:41:01 2010
+		Created : Sat Sep  3 09:48:32 2016
+		Accessed: Sat Sep  3 09:48:32 2016
+		Modified: Sat Sep  3 09:48:32 2016
 	AFTER:
 		Mode    : 33188
-		Created : Sat Dec  4 17:41:01 2010
-		Accessed: Sat Dec  4 17:41:01 2010
-		Modified: Sun Nov 14 09:45:12 2010
+		Created : Sat Sep  3 09:48:32 2016
+		Accessed: Sat Sep  3 09:48:32 2016
+		Modified: Sat Sep  3 09:25:48 2016
 
 .. {{{end}}}
 
@@ -229,37 +227,33 @@ files. If the option is true, new symlinks are created within the
 destination tree.
 
 .. {{{cog
-.. path('/tmp/example').rmtree()
+.. run_script(cog.inFile, 'rm -rf /tmp/example', interpreter='')
 .. cog.out(run_script(cog.inFile, 'shutil_copytree.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python shutil_copytree.py
+	$ python3 shutil_copytree.py
 	
 	BEFORE:
-	ls: /tmp/example: No such file or directory
+	[]
 	
 	AFTER:
-	total 136
-	 8 -rwxr-xr-x   1 dhellmann  wheel   109 Oct 28 07:33 shutil_copymode.sh
-	 8 -rw-r--r--   1 dhellmann  wheel  1313 Nov 14 09:39 shutil_rmtree.py
-	 8 -rw-r--r--   1 dhellmann  wheel  1300 Nov 14 09:39 shutil_copyfile.py
-	 8 -rw-r--r--   1 dhellmann  wheel  1276 Nov 14 09:39 shutil_copy.py
-	 8 -rw-r--r--   1 dhellmann  wheel  1140 Nov 14 09:39 __init__.py
-	 8 -rw-r--r--   1 dhellmann  wheel  1595 Nov 14 09:40 shutil_copy2.py
-	 8 -rw-r--r--   1 dhellmann  wheel  1729 Nov 14 09:45 shutil_copystat.py
-	 8 -rw-r--r--   1 dhellmann  wheel     7 Nov 14 09:45 file_to_change.txt
-	 8 -rw-r--r--   1 dhellmann  wheel  1324 Nov 14 09:45 shutil_move.py
-	 8 -rw-r--r--   1 dhellmann  wheel   419 Nov 27 12:49 shutil_copymode.py
-	 8 -rw-r--r--   1 dhellmann  wheel  1331 Dec  1 21:51 shutil_copytree.py
-	 8 -rw-r--r--   1 dhellmann  wheel   816 Dec  4 17:39 shutil_copyfileobj.py
-	 8 -rw-r--r--   1 dhellmann  wheel     8 Dec  4 17:39 example.out
-	24 -rw-r--r--   1 dhellmann  wheel  9767 Dec  4 17:40 index.rst
-	 8 -rw-r--r--   1 dhellmann  wheel  1300 Dec  4 17:41 shutil_copyfile.py.copy
-	 0 drwxr-xr-x   3 dhellmann  wheel   102 Dec  4 17:41 example
-	 0 drwxrwxrwt  18 root       wheel   612 Dec  4 17:41 ..
-	 0 drwxr-xr-x  18 dhellmann  wheel   612 Dec  4 17:41 .
+	['/tmp/example/example',
+	 '/tmp/example/example.out',
+	 '/tmp/example/file_to_change.txt',
+	 '/tmp/example/index.rst',
+	 '/tmp/example/shutil_copy.py',
+	 '/tmp/example/shutil_copy2.py',
+	 '/tmp/example/shutil_copyfile.py',
+	 '/tmp/example/shutil_copyfile.py.copy',
+	 '/tmp/example/shutil_copyfileobj.py',
+	 '/tmp/example/shutil_copymode.py',
+	 '/tmp/example/shutil_copymode.sh',
+	 '/tmp/example/shutil_copystat.py',
+	 '/tmp/example/shutil_copytree.py',
+	 '/tmp/example/shutil_move.py',
+	 '/tmp/example/shutil_rmtree.py']
 
 .. {{{end}}}
 
@@ -277,32 +271,29 @@ provided in the third argument.
 .. cog.out(run_script(cog.inFile, 'shutil_rmtree.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python shutil_rmtree.py
+	$ python3 shutil_rmtree.py
 	
 	BEFORE:
-	total 136
-	 8 -rwxr-xr-x   1 dhellmann  wheel   109 Oct 28 07:33 shutil_copymode.sh
-	 8 -rw-r--r--   1 dhellmann  wheel  1313 Nov 14 09:39 shutil_rmtree.py
-	 8 -rw-r--r--   1 dhellmann  wheel  1300 Nov 14 09:39 shutil_copyfile.py
-	 8 -rw-r--r--   1 dhellmann  wheel  1276 Nov 14 09:39 shutil_copy.py
-	 8 -rw-r--r--   1 dhellmann  wheel  1140 Nov 14 09:39 __init__.py
-	 8 -rw-r--r--   1 dhellmann  wheel  1595 Nov 14 09:40 shutil_copy2.py
-	 8 -rw-r--r--   1 dhellmann  wheel  1729 Nov 14 09:45 shutil_copystat.py
-	 8 -rw-r--r--   1 dhellmann  wheel     7 Nov 14 09:45 file_to_change.txt
-	 8 -rw-r--r--   1 dhellmann  wheel  1324 Nov 14 09:45 shutil_move.py
-	 8 -rw-r--r--   1 dhellmann  wheel   419 Nov 27 12:49 shutil_copymode.py
-	 8 -rw-r--r--   1 dhellmann  wheel  1331 Dec  1 21:51 shutil_copytree.py
-	 8 -rw-r--r--   1 dhellmann  wheel   816 Dec  4 17:39 shutil_copyfileobj.py
-	 8 -rw-r--r--   1 dhellmann  wheel     8 Dec  4 17:39 example.out
-	24 -rw-r--r--   1 dhellmann  wheel  9767 Dec  4 17:40 index.rst
-	 8 -rw-r--r--   1 dhellmann  wheel  1300 Dec  4 17:41 shutil_copyfile.py.copy
-	 0 drwxr-xr-x   3 dhellmann  wheel   102 Dec  4 17:41 example
-	 0 drwxrwxrwt  18 root       wheel   612 Dec  4 17:41 ..
-	 0 drwxr-xr-x  18 dhellmann  wheel   612 Dec  4 17:41 .
+	['/tmp/example/example',
+	 '/tmp/example/example.out',
+	 '/tmp/example/file_to_change.txt',
+	 '/tmp/example/index.rst',
+	 '/tmp/example/shutil_copy.py',
+	 '/tmp/example/shutil_copy2.py',
+	 '/tmp/example/shutil_copyfile.py',
+	 '/tmp/example/shutil_copyfile.py.copy',
+	 '/tmp/example/shutil_copyfileobj.py',
+	 '/tmp/example/shutil_copymode.py',
+	 '/tmp/example/shutil_copymode.sh',
+	 '/tmp/example/shutil_copystat.py',
+	 '/tmp/example/shutil_copytree.py',
+	 '/tmp/example/shutil_move.py',
+	 '/tmp/example/shutil_rmtree.py']
+	
 	AFTER:
-	ls: /tmp/example: No such file or directory
+	[]
 
 .. {{{end}}}
 
@@ -319,14 +310,14 @@ renamed.  Otherwise the source is copied to the destination and then
 the source is removed.
 
 .. {{{cog
-.. (path(cog.inFile).parent / 'example').rmtree()
-.. d = [ f.unlink() for f in path(cog.inFile).parent.glob('example.*') ]
+.. run_script(cog.inFile, 'rm -rf example', interpreter='')
+.. run_script(cog.inFile, 'rm -f example*', interpreter='')
 .. cog.out(run_script(cog.inFile, 'shutil_move.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python shutil_move.py
+	$ python3 shutil_move.py
 	
 	BEFORE:  ['example.txt']
 	AFTER :  ['example.out']

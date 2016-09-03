@@ -55,3 +55,6 @@ dist/
 /source/pathlib/example.txt
 /source/pathlib/example_link
 /source/pathlib/touched
+/source/shutil/shutil_copyfile.py.copy
+/source/shutil/example.out
+/source/shutil/file_to_change.txt
