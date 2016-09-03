@@ -29,7 +29,8 @@ provide command line text completion, or "tab completion".
    module, after installing the dependencies. A stand-alone version of
    the library is also distributed from the Python Package Index under
    the name gnureadline_. The examples in this section first try to
-   import gnureadline, and then fall back to readline.
+   import gnureadline, and then fall back to readline. *Special thanks
+   to Jim Baker for pointing out this package.*
 
 Configuring
 ===========
@@ -312,11 +313,11 @@ those values when completing subsequent inputs.
     Max history file length: -1
     Startup history: []
     Prompt ("stop" to quit): foo
-    Adding "foo" to the history
+    Adding 'foo' to the history
     Prompt ("stop" to quit): bar
-    Adding "bar" to the history
+    Adding 'bar' to the history
     Prompt ("stop" to quit): blah
-    Adding "blah" to the history
+    Adding 'blah' to the history
     Prompt ("stop" to quit): b
     bar   blah  
     Prompt ("stop" to quit): b

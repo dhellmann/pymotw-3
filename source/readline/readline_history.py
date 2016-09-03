@@ -74,7 +74,7 @@ def input_loop():
             if line == 'stop':
                 break
             if line:
-                print('Adding "%s" to the history' % line)
+                print('Adding {!r} to the history'.format(line))
     finally:
         print('Final history:', get_history_items())
         readline.write_history_file(HISTORY_FILENAME)

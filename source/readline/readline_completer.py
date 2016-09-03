@@ -61,7 +61,7 @@ def input_loop():
     line = ''
     while line != 'stop':
         line = input('Prompt ("stop" to quit): ')
-        print('Dispatch %s' % line)
+        print('Dispatch {}'.format(line))
 
 # Register the completer function
 OPTIONS = ['start', 'stop', 'list', 'print']

@@ -93,7 +93,7 @@ def input_loop():
     line = ''
     while line != 'stop':
         line = input('Prompt ("stop" to quit): ')
-        print('Dispatch %s' % line)
+        print('Dispatch {}'.format(line))
 
 # Register our completer function
 completer = BufferAwareCompleter({
