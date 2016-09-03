@@ -8,7 +8,7 @@
 :Purpose: High-level file operations.
 
 The :mod:`shutil` module includes high-level file operations such as
-copying and setting permissions.
+copying and archiving.
 
 Copying Files
 =============

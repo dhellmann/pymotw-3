@@ -39,8 +39,8 @@ components so they are not easily guessable.
 
 Frequently, programs need to work on files as a whole, without regard
 to their content.  The :mod:`shutil` module includes high-level file
-operations such as copying files and directories, and setting
-permissions.
+operations such as copying files and directories, and creating or
+extracting archives of files.
 
 The :mod:`filecmp` module compares files and directories by looking at
 the bytes they contain, but without any special knowledge about their
