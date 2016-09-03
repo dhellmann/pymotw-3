@@ -899,6 +899,9 @@ come up frequently.
    * :mod:`tempfile` -- The ``tempfile`` module for working with
      temporary files.
 
+   * :ref:`shutil-directory-functions` -- The :mod:`shutil` module
+     also includes functions for working with directory trees.
+
    * `Unix Manual Page Introduction
      <http://www.scit.wlv.ac.uk/cgi-bin/mansec?2+intro>`__ -- Includes
      definitions of real and effective ids, etc.
@@ -919,8 +922,3 @@ come up frequently.
      Professional, 2005.  ISBN-10: 0201433079 -- This book covers
      working with multiple processes, such as handling signals,
      closing duplicated file descriptors, etc.
-
-..
-    :ref:`shutil-directory-functions`
-        The :mod:`shutil` module also includes functions for working
-        with directory trees.
