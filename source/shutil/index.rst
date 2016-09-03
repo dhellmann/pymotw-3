@@ -126,12 +126,12 @@ The new file has all of the same characteristics as the old version.
 	SOURCE:
 		Mode    : 0o100644
 		Created : Sat Sep  3 09:51:54 2016
-		Accessed: Sat Sep  3 12:53:23 2016
+		Accessed: Sat Sep  3 13:03:23 2016
 		Modified: Sat Sep  3 09:51:54 2016
 	DEST:
 		Mode    : 0o100644
-		Created : Sat Sep  3 12:53:23 2016
-		Accessed: Sat Sep  3 12:53:23 2016
+		Created : Sat Sep  3 13:03:23 2016
+		Accessed: Sat Sep  3 13:03:23 2016
 		Modified: Sat Sep  3 09:51:54 2016
 
 .. {{{end}}}
@@ -185,13 +185,13 @@ with :func:`copystat`.
 	
 	BEFORE:
 		Mode    : 0o100444
-		Created : Sat Sep  3 12:53:24 2016
-		Accessed: Sat Sep  3 12:53:24 2016
-		Modified: Sat Sep  3 12:53:24 2016
+		Created : Sat Sep  3 13:03:23 2016
+		Accessed: Sat Sep  3 13:03:23 2016
+		Modified: Sat Sep  3 13:03:23 2016
 	AFTER:
 		Mode    : 0o100644
-		Created : Sat Sep  3 12:53:24 2016
-		Accessed: Sat Sep  3 12:53:24 2016
+		Created : Sat Sep  3 13:03:23 2016
+		Accessed: Sat Sep  3 13:03:23 2016
 		Modified: Sat Sep  3 09:55:22 2016
 
 .. {{{end}}}
@@ -247,6 +247,7 @@ destination tree.
 	 '/tmp/example/shutil_make_archive.py',
 	 '/tmp/example/shutil_move.py',
 	 '/tmp/example/shutil_rmtree.py',
+	 '/tmp/example/shutil_unpack_archive.py',
 	 '/tmp/example/shutil_which.py',
 	 '/tmp/example/shutil_which_regular_file.py']
 
@@ -496,10 +497,56 @@ This example starts within the source directory for the examples for
 	shutil/shutil_make_archive.py
 	shutil/shutil_move.py
 	shutil/shutil_rmtree.py
+	shutil/shutil_unpack_archive.py
 	shutil/shutil_which.py
 	shutil/shutil_which_regular_file.py
 
 .. {{{end}}}
+
+Extract the archive with :func:`unpack_archive`, passing the archive
+file name and optionally the directory where it should be
+extracted. If no directory is given, the current directory is used.
+
+.. literalinclude:: shutil_unpack_archive.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'shutil_unpack_archive.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 shutil_unpack_archive.py
+	
+	Unpacking archive:
+	
+	Created:
+	shutil
+	shutil/config.ini
+	shutil/example.out
+	shutil/file_to_change.txt
+	shutil/index.rst
+	shutil/shutil_copy.py
+	shutil/shutil_copy2.py
+	shutil/shutil_copyfile.py
+	shutil/shutil_copyfileobj.py
+	shutil/shutil_copymode.py
+	shutil/shutil_copystat.py
+	shutil/shutil_copytree.py
+	shutil/shutil_copytree_verbose.py
+	shutil/shutil_disk_usage.py
+	shutil/shutil_get_archive_formats.py
+	shutil/shutil_make_archive.py
+	shutil/shutil_move.py
+	shutil/shutil_rmtree.py
+	shutil/shutil_unpack_archive.py
+	shutil/shutil_which.py
+	shutil/shutil_which_regular_file.py
+
+.. {{{end}}}
+
+
 
 File System Space
 =================
@@ -526,7 +573,7 @@ printing them.
 	$ python3 shutil_disk_usage.py
 	
 	Total: 499.42 GB  465.12 GiB
-	Used : 246.68 GB  229.73 GiB
+	Used : 246.68 GB  229.74 GiB
 	Free : 252.48 GB  235.14 GiB
 
 .. {{{end}}}
