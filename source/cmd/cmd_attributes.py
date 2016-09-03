@@ -10,6 +10,7 @@
 
 import cmd
 
+
 class HelloWorld(cmd.Cmd):
     """Simple command processor example."""
 
@@ -19,9 +20,9 @@ class HelloWorld(cmd.Cmd):
     doc_header = 'doc_header'
     misc_header = 'misc_header'
     undoc_header = 'undoc_header'
-    
+
     ruler = '-'
-    
+
     def do_prompt(self, line):
         "Change the interactive prompt"
         self.prompt = line + ': '

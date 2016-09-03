@@ -10,6 +10,7 @@
 
 import cmd
 
+
 class InteractiveOrCommandLine(cmd.Cmd):
     """Accepts commands via the normal interactive
     prompt or on the command line.
@@ -17,7 +18,7 @@ class InteractiveOrCommandLine(cmd.Cmd):
 
     def do_greet(self, line):
         print('hello,', line)
-    
+
     def do_EOF(self, line):
         return True
 
