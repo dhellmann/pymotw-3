@@ -15,18 +15,22 @@ import os
 LOG_FILENAME = '/tmp/completer.log'
 HISTORY_FILENAME = '/tmp/completer.hist'
 
-logging.basicConfig(filename=LOG_FILENAME,
-                    level=logging.DEBUG,
-                    )
+logging.basicConfig(
+    filename=LOG_FILENAME,
+    level=logging.DEBUG,
+)
+
 
 def get_history_items():
     num_items = readline.get_current_history_length() + 1
-    return [ readline.get_history_item(i)
-             for i in xrange(1, num_items)
-             ]
+    return [
+        readline.get_history_item(i)
+        for i in range(1, num_items)
+    ]
+
 
 class HistoryCompleter:
-    
+
     def __init__(self):
         self.matches = []
         return
@@ -37,9 +41,11 @@ class HistoryCompleter:
             history_values = get_history_items()
             logging.debug('history: %s', history_values)
             if text:
-                self.matches = sorted(h 
-                                      for h in history_values 
-                                      if h and h.startswith(text))
+                self.matches = sorted(
+                    h
+                    for h in history_values
+                    if h and h.startswith(text)
+                )
             else:
                 self.matches = []
             logging.debug('matches: %s', self.matches)
@@ -47,18 +53,20 @@ class HistoryCompleter:
             response = self.matches[state]
         except IndexError:
             response = None
-        logging.debug('complete(%s, %s) => %s', 
+        logging.debug('complete(%s, %s) => %s',
                       repr(text), state, repr(response))
         return response
+
 
 def input_loop():
     if os.path.exists(HISTORY_FILENAME):
         readline.read_history_file(HISTORY_FILENAME)
-    print('Max history file length:', readline.get_history_length())
+    print('Max history file length:',
+          readline.get_history_length())
     print('Startup history:', get_history_items())
     try:
         while True:
-            line = raw_input('Prompt ("stop" to quit): ')
+            line = input('Prompt ("stop" to quit): ')
             if line == 'stop':
                 break
             if line:
