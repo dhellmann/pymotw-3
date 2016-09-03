@@ -3,16 +3,16 @@
 """
 #end_pymotw_header
 
-from shutil import *
+import io
 import os
-from io import StringIO
+import shutil
 import sys
 
 
-class VerboseStringIO(StringIO):
+class VerboseStringIO(io.StringIO):
 
     def read(self, n=-1):
-        next = StringIO.read(self, n)
+        next = io.StringIO.read(self, n)
         print('read(%d) bytes' % n)
         return next
 
@@ -24,19 +24,19 @@ ante ipsum.'''
 
 print('Default:')
 input = VerboseStringIO(lorem_ipsum)
-output = StringIO()
-copyfileobj(input, output)
+output = io.StringIO()
+shutil.copyfileobj(input, output)
 
 print()
 
 print('All at once:')
 input = VerboseStringIO(lorem_ipsum)
-output = StringIO()
-copyfileobj(input, output, -1)
+output = io.StringIO()
+shutil.copyfileobj(input, output, -1)
 
 print()
 
 print('Blocks of 256:')
 input = VerboseStringIO(lorem_ipsum)
-output = StringIO()
-copyfileobj(input, output, 256)
+output = io.StringIO()
+shutil.copyfileobj(input, output, 256)

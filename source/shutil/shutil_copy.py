@@ -3,10 +3,13 @@
 """
 #end_pymotw_header
 
-from shutil import *
+import glob
 import os
+import shutil
 
 os.mkdir('example')
-print('BEFORE:', os.listdir('example'))
-copy('shutil_copy.py', 'example')
-print('AFTER:', os.listdir('example'))
+print('BEFORE:', glob.glob('example/*'))
+
+shutil.copy('shutil_copy.py', 'example')
+
+print('AFTER :', glob.glob('example/*'))

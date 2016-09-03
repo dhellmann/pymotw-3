@@ -99,7 +99,7 @@ The permissions of the file are copied along with the contents.
 	$ python3 shutil_copy.py
 	
 	BEFORE: []
-	AFTER: ['shutil_copy.py']
+	AFTER : ['example/shutil_copy.py']
 
 .. {{{end}}}
 
@@ -123,15 +123,15 @@ The new file has all of the same characteristics as the old version.
 	$ python3 shutil_copy2.py
 	
 	SOURCE:
-		Mode    : 33188
-		Created : Sat Sep  3 09:25:01 2016
-		Accessed: Sat Sep  3 09:48:32 2016
-		Modified: Sat Sep  3 09:25:01 2016
+		Mode    : 0o100644
+		Created : Sat Sep  3 09:51:54 2016
+		Accessed: Sat Sep  3 10:00:17 2016
+		Modified: Sat Sep  3 09:51:54 2016
 	DEST:
-		Mode    : 33188
-		Created : Sat Sep  3 09:48:32 2016
-		Accessed: Sat Sep  3 09:48:32 2016
-		Modified: Sat Sep  3 09:25:01 2016
+		Mode    : 0o100644
+		Created : Sat Sep  3 10:00:17 2016
+		Accessed: Sat Sep  3 10:00:17 2016
+		Modified: Sat Sep  3 09:51:54 2016
 
 .. {{{end}}}
 
@@ -150,7 +150,6 @@ permissions from one file to another, use :func:`copymode`.
 First, create a file to be modified.
 
 .. literalinclude:: shutil_copymode.sh
-    :caption:
 
 Then, run the example script to change the permissions.
 
@@ -187,15 +186,15 @@ with :func:`copystat`.
 	$ python3 shutil_copystat.py
 	
 	BEFORE:
-		Mode    : 33060
-		Created : Sat Sep  3 09:48:32 2016
-		Accessed: Sat Sep  3 09:48:32 2016
-		Modified: Sat Sep  3 09:48:32 2016
+		Mode    : 0o100444
+		Created : Sat Sep  3 10:00:17 2016
+		Accessed: Sat Sep  3 10:00:17 2016
+		Modified: Sat Sep  3 10:00:17 2016
 	AFTER:
-		Mode    : 33188
-		Created : Sat Sep  3 09:48:32 2016
-		Accessed: Sat Sep  3 09:48:32 2016
-		Modified: Sat Sep  3 09:25:48 2016
+		Mode    : 0o100644
+		Created : Sat Sep  3 10:00:17 2016
+		Accessed: Sat Sep  3 10:00:17 2016
+		Modified: Sat Sep  3 09:55:22 2016
 
 .. {{{end}}}
 

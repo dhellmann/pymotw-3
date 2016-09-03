@@ -3,12 +3,14 @@
 """
 #end_pymotw_header
 
-from shutil import *
-from glob import glob
+import glob
+import shutil
 
 with open('example.txt', 'wt') as f:
     f.write('contents')
 
-print('BEFORE: ', glob('example*'))
-move('example.txt', 'example.out')
-print('AFTER : ', glob('example*'))
+print('BEFORE: ', glob.glob('example*'))
+
+shutil.move('example.txt', 'example.out')
+
+print('AFTER : ', glob.glob('example*'))

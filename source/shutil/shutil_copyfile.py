@@ -3,9 +3,11 @@
 """
 #end_pymotw_header
 
-from shutil import *
-from glob import glob
+import glob
+import shutil
 
-print('BEFORE:', glob('shutil_copyfile.*'))
-copyfile('shutil_copyfile.py', 'shutil_copyfile.py.copy')
-print('AFTER:', glob('shutil_copyfile.*'))
+print('BEFORE:', glob.glob('shutil_copyfile.*'))
+
+shutil.copyfile('shutil_copyfile.py', 'shutil_copyfile.py.copy')
+
+print('AFTER:', glob.glob('shutil_copyfile.*'))
