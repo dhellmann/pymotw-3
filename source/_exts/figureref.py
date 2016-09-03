@@ -39,10 +39,11 @@ class figureref(nodes.reference):
 def _role(typ, rawtext, text, lineno, inliner,
           options={}, content=[], nodeclass=None):
     text = utils.unescape(text)
-    pnode = nodeclass(rawsource=text,
-                      text='',
-                      internal=True,
-                      refuri=text,
+    pnode = nodeclass(
+        rawsource=text,
+        text='',
+        internal=True,
+        refuri=text,
     )
     return [pnode], []
 
@@ -67,15 +68,17 @@ def html_depart_figureref(self, node):
 
 def builder_inited(app):
     app.info('defining figure role')
-    app.add_role('figure', functools.partial(_role, nodeclass=figureref))
+    app.add_role(
+        'figure',
+        functools.partial(_role, nodeclass=figureref)
+    )
 
 
 def setup(app):
     app.info('initializing figureref')
-    app.add_node(figureref,
-                 latex=(latex_visit_figureref, None),
-                 html=(html_visit_figureref,
-                       html_depart_figureref,
-                 )
+    app.add_node(
+        figureref,
+        latex=(latex_visit_figureref, None),
+        html=(html_visit_figureref, html_depart_figureref),
     )
     app.connect('builder-inited', builder_inited)

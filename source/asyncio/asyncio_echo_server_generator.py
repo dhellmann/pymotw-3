@@ -2,7 +2,7 @@
 # encoding: utf-8
 #
 # Copyright (c) 2014 Doug Hellmann.  All rights reserved.
-"""TCP echo server using asyncio with coroutines implemented as generators.
+"""TCP echo server using asyncio with generator coroutines.
 """
 #end_pymotw_header
 

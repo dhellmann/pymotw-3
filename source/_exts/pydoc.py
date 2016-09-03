@@ -24,10 +24,10 @@
 # ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 # THIS SOFTWARE.
 #
-"""Extension to allow references to Python standard library documentation.
+"""Extension to allow references to Python documentation.
 
-Use the ``:pydoc:`` role in-line, specifying the name of the module to
-link to.
+Use the ``:pydoc:`` role in-line, specifying the name of the
+module to link to.
 
 For example::
 
@@ -42,7 +42,11 @@ from docutils.parsers.rst.roles import set_classes
 
 
 PYTHON_VERSION = '{}.{}'.format(*(sys.version_info[:2]))
-URL_TEMPLATE = 'http://docs.python.org/' + PYTHON_VERSION + '/library/{}.html'
+URL_TEMPLATE = (
+    'http://docs.python.org/' +
+    PYTHON_VERSION +
+    '/library/{}.html'
+)
 TITLE_TEMPLATE = 'Standard library documentation for {}'
 
 
@@ -63,17 +67,19 @@ def make_link_node(rawtext, app, module_name, options):
     return node
 
 
-def pydoc_role(name, rawtext, text, lineno, inliner, options={}, content=[]):
+def pydoc_role(name, rawtext, text, lineno, inliner,
+               options={}, content=[]):
     """Link to a Python module documentation page.
 
-    Returns 2 part tuple containing list of nodes to insert into the
-    document and a list of system messages.  Both are allowed to be
-    empty.
+    Returns 2 part tuple containing list of nodes to insert into
+    the document and a list of system messages.  Both are allowed
+    to be empty.
 
     :param name: The role name used in the document.
     :param rawtext: The entire markup snippet, with role.
     :param text: The text marked with the role.
-    :param lineno: The line number where rawtext appears in the input.
+    :param lineno: The line number where rawtext appears in the
+                   input.
     :param inliner: The inliner instance that called us.
     :param options: Directive options for customization.
     :param content: The directive content for customization.
