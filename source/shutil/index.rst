@@ -1,6 +1,6 @@
-======================================
- shutil -- High-level File Operations
-======================================
+=======================================
+ shutil --- High-level File Operations
+=======================================
 
 .. module:: shutil
     :synopsis: High-level file operations.
@@ -13,9 +13,9 @@ copying and setting permissions.
 Copying Files
 =============
 
-:func:`copyfile` copies the contents of the source to the
-destination and raises :class:`IOError` if it does
-not have permission to write to the destination file.  
+:func:`copyfile` copies the contents of the source to the destination
+and raises :class:`IOError` if it does not have permission to write to
+the destination file.
 
 .. literalinclude:: shutil_copyfile.py
     :caption:
@@ -38,7 +38,6 @@ as new special files with :func:`copyfile`.
 	AFTER: ['shutil_copyfile.py', 'shutil_copyfile.py.copy']
 
 .. {{{end}}}
-
 
 The implementation of :func:`copyfile` uses the lower-level function
 :func:`copyfileobj`. While the arguments to :func:`copyfile` are
@@ -77,11 +76,10 @@ to show the effect.
 
 .. {{{end}}}
 
-
 The :func:`copy` function interprets the output name like the Unix
 command line tool ``cp``. If the named destination refers to a
 directory instead of a file, a new file is created in the directory
-using the base name of the source. 
+using the base name of the source.
 
 .. literalinclude:: shutil_copy.py
     :caption:
@@ -125,21 +123,20 @@ The new file has all of the same characteristics as the old version.
 	SOURCE:
 		Mode    : 0o100644
 		Created : Sat Sep  3 09:51:54 2016
-		Accessed: Sat Sep  3 10:00:17 2016
+		Accessed: Sat Sep  3 10:04:27 2016
 		Modified: Sat Sep  3 09:51:54 2016
 	DEST:
 		Mode    : 0o100644
-		Created : Sat Sep  3 10:00:17 2016
-		Accessed: Sat Sep  3 10:00:17 2016
+		Created : Sat Sep  3 10:04:27 2016
+		Accessed: Sat Sep  3 10:04:27 2016
 		Modified: Sat Sep  3 09:51:54 2016
 
 .. {{{end}}}
 
-
 Copying File Metadata
 =====================
 
-By default when a new file is created under Unix, it receives
+By default when a new file is created under UNIX, it receives
 permissions based on the umask of the current user. To copy the
 permissions from one file to another, use :func:`copymode`.
 
@@ -147,11 +144,9 @@ permissions from one file to another, use :func:`copymode`.
     :caption:
     :start-after: #end_pymotw_header
 
-First, create a file to be modified.
-
-.. literalinclude:: shutil_copymode.sh
-
-Then, run the example script to change the permissions.
+This example script creates a file to be modified, then uses
+:func:`copymode` to duplicate the permissions of the script to the
+example file.
 
 .. {{{cog
 .. run_script(cog.inFile, 'rm -f file_to_change.txt', interpreter='')
@@ -187,13 +182,13 @@ with :func:`copystat`.
 	
 	BEFORE:
 		Mode    : 0o100444
-		Created : Sat Sep  3 10:00:17 2016
-		Accessed: Sat Sep  3 10:00:17 2016
-		Modified: Sat Sep  3 10:00:17 2016
+		Created : Sat Sep  3 10:04:27 2016
+		Accessed: Sat Sep  3 10:04:27 2016
+		Modified: Sat Sep  3 10:04:27 2016
 	AFTER:
 		Mode    : 0o100644
-		Created : Sat Sep  3 10:00:17 2016
-		Accessed: Sat Sep  3 10:00:17 2016
+		Created : Sat Sep  3 10:04:27 2016
+		Accessed: Sat Sep  3 10:04:27 2016
 		Modified: Sat Sep  3 09:55:22 2016
 
 .. {{{end}}}
@@ -248,7 +243,6 @@ destination tree.
 	 '/tmp/example/shutil_copyfile.py.copy',
 	 '/tmp/example/shutil_copyfileobj.py',
 	 '/tmp/example/shutil_copymode.py',
-	 '/tmp/example/shutil_copymode.sh',
 	 '/tmp/example/shutil_copystat.py',
 	 '/tmp/example/shutil_copytree.py',
 	 '/tmp/example/shutil_move.py',
@@ -256,7 +250,7 @@ destination tree.
 
 .. {{{end}}}
 
-To remove a directory and its contents, use :func:`rmtree`. 
+To remove a directory and its contents, use :func:`rmtree`.
 
 .. literalinclude:: shutil_rmtree.py
     :caption:
@@ -285,7 +279,6 @@ provided in the third argument.
 	 '/tmp/example/shutil_copyfile.py.copy',
 	 '/tmp/example/shutil_copyfileobj.py',
 	 '/tmp/example/shutil_copymode.py',
-	 '/tmp/example/shutil_copymode.sh',
 	 '/tmp/example/shutil_copystat.py',
 	 '/tmp/example/shutil_copytree.py',
 	 '/tmp/example/shutil_move.py',
@@ -297,7 +290,7 @@ provided in the third argument.
 .. {{{end}}}
 
 To move a file or directory from one place to another, use
-:func:`move`. 
+:func:`move`.
 
 .. literalinclude:: shutil_move.py
     :caption:
@@ -326,5 +319,4 @@ the source is removed.
 
 .. seealso::
 
-    `shutil <http://docs.python.org/lib/module-shutil.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`shutil`
