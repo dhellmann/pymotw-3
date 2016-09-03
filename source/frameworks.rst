@@ -76,6 +76,7 @@ be used.
 
    argparse/index
    getopt/index
+   readline/index
    getpass/index
    shlex/index
    configparser/index
@@ -85,7 +86,7 @@ be used.
 ..
    argparse/index
    getopt/index
-   * readline/index
+   readline/index
    getpass/index
    * cmd/index
    shlex/index
