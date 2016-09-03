@@ -26,7 +26,6 @@ class SimpleCompleter:
 
     def __init__(self, options):
         self.options = sorted(options)
-        return
 
     def complete(self, text, state):
         response = None

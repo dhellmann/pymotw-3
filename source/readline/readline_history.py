@@ -37,7 +37,6 @@ class HistoryCompleter:
 
     def __init__(self):
         self.matches = []
-        return
 
     def complete(self, text, state):
         response = None

@@ -27,7 +27,6 @@ class BufferAwareCompleter:
     def __init__(self, options):
         self.options = options
         self.current_candidates = []
-        return
 
     def complete(self, text, state):
         response = None
