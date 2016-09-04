@@ -52,13 +52,13 @@ Running the program produces:
 .. cog.out(run_script(cog.inFile, 'sched_basic.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python sched_basic.py
-
-	START: Sun Oct 31 20:48:47 2010
-	EVENT: Sun Oct 31 20:48:49 2010 elapsed=2 name=first
-	EVENT: Sun Oct 31 20:48:50 2010 elapsed=3 name=second
+	$ python3 sched_basic.py
+	
+	START: Sun Sep  4 15:59:49 2016
+	EVENT: Sun Sep  4 15:59:51 2016 elapsed=2 name=first
+	EVENT: Sun Sep  4 15:59:52 2016 elapsed=3 name=second
 
 .. {{{end}}}
 
@@ -89,15 +89,15 @@ past the desired start time of the second event.
 .. cog.out(run_script(cog.inFile, 'sched_overlap.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python sched_overlap.py
-
-	START: Sun Oct 31 20:48:50 2010
-	BEGIN EVENT : Sun Oct 31 20:48:52 2010 first
-	FINISH EVENT: Sun Oct 31 20:48:54 2010 first
-	BEGIN EVENT : Sun Oct 31 20:48:54 2010 second
-	FINISH EVENT: Sun Oct 31 20:48:56 2010 second
+	$ python3 sched_overlap.py
+	
+	START: Sun Sep  4 15:59:52 2016
+	BEGIN EVENT : Sun Sep  4 15:59:54 2016 first
+	FINISH EVENT: Sun Sep  4 15:59:56 2016 first
+	BEGIN EVENT : Sun Sep  4 15:59:56 2016 second
+	FINISH EVENT: Sun Sep  4 15:59:58 2016 second
 
 .. {{{end}}}
 
@@ -121,13 +121,13 @@ run the event, instead of the amount of time to delay.
 .. cog.out(run_script(cog.inFile, 'sched_priority.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python sched_priority.py
-
-	START: Sun Oct 31 20:48:56 2010
-	EVENT: Sun Oct 31 20:48:58 2010 second
-	EVENT: Sun Oct 31 20:48:58 2010 first
+	$ python3 sched_priority.py
+	
+	START: Sun Sep  4 15:59:58 2016
+	EVENT: Sun Sep  4 16:00:00 2016 second
+	EVENT: Sun Sep  4 16:00:00 2016 first
 
 .. {{{end}}}
 
@@ -136,7 +136,7 @@ Canceling Events
 ================
 
 Both :func:`enter` and :func:`enterabs` return a reference to the
-event that can be used to cancel it later. Since :func:`run` blocks,
+event that can be used to cancel it later. Because :func:`run` blocks,
 the event has to be canceled in a different thread. For this example,
 a thread is started to run the scheduler and the main processing
 thread is used to cancel the event.
@@ -153,12 +153,12 @@ time.
 .. cog.out(run_script(cog.inFile, 'sched_cancel.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python sched_cancel.py
-
-	START: Sun Oct 31 20:48:58 2010
-	EVENT: Sun Oct 31 20:49:01 2010 E2
+	$ python3 sched_cancel.py
+	
+	START: Sun Sep  4 16:00:00 2016
+	EVENT: Sun Sep  4 16:00:03 2016 E2
 	NOW: 1
 	FINAL: 1
 

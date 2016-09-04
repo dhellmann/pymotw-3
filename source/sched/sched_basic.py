@@ -12,9 +12,8 @@ scheduler = sched.scheduler(time.time, time.sleep)
 def print_event(name, start):
     now = time.time()
     elapsed = int(now - start)
-    print('EVENT: %s elapsed=%s name=%s' % (time.ctime(now),
-                                            elapsed,
-                                            name))
+    print('EVENT: {} elapsed={} name={}'.format(
+        time.ctime(now), elapsed, name))
 
 start = time.time()
 print('START:', time.ctime(start))
