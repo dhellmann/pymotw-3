@@ -6,7 +6,6 @@
     :synopsis: Generic event scheduler.
 
 :Purpose: Generic event scheduler.
-:Python Version: 1.4 and later
 
 The :mod:`sched` module implements a generic event scheduler for
 running tasks at specific times. The scheduler class uses a *time*
@@ -43,8 +42,8 @@ seconds respectively. When the event's time comes up,
 :func:`print_event` is called and prints the current time and the name
 argument passed to the event.
 
-.. include:: sched_basic.py
-    :literal:
+.. literalinclude:: sched_basic.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Running the program produces:
@@ -78,8 +77,8 @@ scheduled. In the next example, :func:`long_event` sleeps but it could
 just as easily delay by performing a long calculation or by blocking
 on I/O.
 
-.. include:: sched_overlap.py
-    :literal:
+.. literalinclude:: sched_overlap.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The result is the second event is run immediately after the first
@@ -109,8 +108,8 @@ Event Priorities
 If more than one event is scheduled for the same time their priority values
 are used to determine the order they are run. 
 
-.. include:: sched_priority.py
-    :literal:
+.. literalinclude:: sched_priority.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example needs to ensure that they are scheduled for the exact
@@ -142,8 +141,8 @@ the event has to be canceled in a different thread. For this example,
 a thread is started to run the scheduler and the main processing
 thread is used to cancel the event.
 
-.. include:: sched_cancel.py
-    :literal:
+.. literalinclude:: sched_cancel.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Two events were scheduled, but the first was later canceled. Only the
