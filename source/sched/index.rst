@@ -17,9 +17,10 @@ purposes.
 The *time* function is called without any arguments, and should return
 a number representing the current time. The *delay* function is called
 with a single integer argument, using the same scale as the time
-function, and should wait that many time units before returning. For
-example, the :func:`time.time` and :func:`time.sleep` functions meet
-these requirements.
+function, and should wait that many time units before returning. By
+default :func:`time.monotonic` and :func:`time.sleep` are used, but
+the examples in this section use :func:`time.time` , which also meets
+the requirements, because it makes the output easier to understand.
 
 To support multi-threaded applications, the delay function is called
 with argument 0 after each event is generated, to ensure that other
@@ -56,9 +57,9 @@ Running the program produces:
 
 	$ python3 sched_basic.py
 	
-	START: Sun Sep  4 15:59:49 2016
-	EVENT: Sun Sep  4 15:59:51 2016 elapsed=2 name=first
-	EVENT: Sun Sep  4 15:59:52 2016 elapsed=3 name=second
+	START: Sun Sep  4 16:21:01 2016
+	EVENT: Sun Sep  4 16:21:03 2016 elapsed=2 name=first
+	EVENT: Sun Sep  4 16:21:04 2016 elapsed=3 name=second
 
 .. {{{end}}}
 
@@ -93,11 +94,11 @@ past the desired start time of the second event.
 
 	$ python3 sched_overlap.py
 	
-	START: Sun Sep  4 15:59:52 2016
-	BEGIN EVENT : Sun Sep  4 15:59:54 2016 first
-	FINISH EVENT: Sun Sep  4 15:59:56 2016 first
-	BEGIN EVENT : Sun Sep  4 15:59:56 2016 second
-	FINISH EVENT: Sun Sep  4 15:59:58 2016 second
+	START: Sun Sep  4 16:21:04 2016
+	BEGIN EVENT : Sun Sep  4 16:21:06 2016 first
+	FINISH EVENT: Sun Sep  4 16:21:08 2016 first
+	BEGIN EVENT : Sun Sep  4 16:21:08 2016 second
+	FINISH EVENT: Sun Sep  4 16:21:10 2016 second
 
 .. {{{end}}}
 
@@ -125,9 +126,9 @@ run the event, instead of the amount of time to delay.
 
 	$ python3 sched_priority.py
 	
-	START: Sun Sep  4 15:59:58 2016
-	EVENT: Sun Sep  4 16:00:00 2016 second
-	EVENT: Sun Sep  4 16:00:00 2016 first
+	START: Sun Sep  4 16:21:10 2016
+	EVENT: Sun Sep  4 16:21:12 2016 second
+	EVENT: Sun Sep  4 16:21:12 2016 first
 
 .. {{{end}}}
 
@@ -157,8 +158,8 @@ time.
 
 	$ python3 sched_cancel.py
 	
-	START: Sun Sep  4 16:00:00 2016
-	EVENT: Sun Sep  4 16:00:03 2016 E2
+	START: Sun Sep  4 16:21:13 2016
+	EVENT: Sun Sep  4 16:21:16 2016 E2
 	NOW: 1
 	FINAL: 1
 
