@@ -544,7 +544,7 @@ def review_task(options):
         'title': 'technical review for {}'.format(module),
         'content': 'Perform the technical review for {}'.format(module),
         'kind': 'task',
-        'priority': 'major',
+        'priority': 'minor',
     }
     encoded = urllib.parse.urlencode(args)
 
