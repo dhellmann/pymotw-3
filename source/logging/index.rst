@@ -274,15 +274,11 @@ the :const:`WARNING` level.
 
 .. {{{end}}}
 
-
-.. adapter
-.. filter
-.. format string default keys
-
-
 .. seealso::
 
-   * :pydoc:`logging`
+   * :pydoc:`logging` -- The documentation for :mod:`logging` is
+     extensive, and includes tutorials and reference material that
+     goes beyond the exmaples presented here.
 
    * :ref:`Porting notes for logging <porting-logging>`
 
@@ -291,3 +287,8 @@ the :const:`WARNING` level.
    * `logging_tree <https://pypi.python.org/pypi/logging_tree>`__ --
      Third-party package by Brandon Rhodes for showing the logger tree
      for an application.
+
+   * `Logging Cookbook
+     <https://docs.python.org/3.5/howto/logging-cookbook.html>`__ --
+     Part of the standard library documentation, with examples of
+     using :mod:`logging` for different tasks.
