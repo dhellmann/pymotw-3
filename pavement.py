@@ -510,6 +510,8 @@ def review_task(options):
     """Create a bitbucket issue for reviewing a module.
     """
     module = _get_module(options)
+    if not module:
+        raise RuntimeError('could not determine which module to use')
 
     cfg_filename = path('~/.bitbucketrc').expanduser()
     cfg = configparser.ConfigParser()
