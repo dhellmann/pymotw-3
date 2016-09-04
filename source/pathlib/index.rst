@@ -243,7 +243,7 @@ absolute file system reference.
 .. {{{cog
 .. # replace long cwd value from build with a shorter faux value
 .. def _faux_cwd(infile, line):
-..     bad = '/Users/dhellmann/Dropbox/PyMOTW/Python3/pymotw-3/source/pathlib'
+..     bad = '/Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/pathlib'
 ..     return line.replace(bad, '/Users/dhellmann/PyMOTW')
 .. cog.out(run_script(cog.inFile, 'pathlib_convenience.py', line_cleanups=[_faux_cwd]))
 .. }}}
@@ -520,7 +520,7 @@ arguments.
 	Is Dir?              : False
 	Is Link?             : False
 	Is FIFO?             : True
-	Is lock device?      : False
+	Is block device?     : False
 	Is character device? : False
 	
 	test_files/file
@@ -528,7 +528,7 @@ arguments.
 	Is Dir?              : False
 	Is Link?             : False
 	Is FIFO?             : False
-	Is lock device?      : False
+	Is block device?     : False
 	Is character device? : False
 	
 	test_files/symlink
@@ -536,7 +536,7 @@ arguments.
 	Is Dir?              : False
 	Is Link?             : True
 	Is FIFO?             : False
-	Is lock device?      : False
+	Is block device?     : False
 	Is character device? : False
 	
 	/dev/disk0
@@ -544,7 +544,7 @@ arguments.
 	Is Dir?              : False
 	Is Link?             : False
 	Is FIFO?             : False
-	Is lock device?      : True
+	Is block device?     : True
 	Is character device? : False
 	
 	/dev/console
@@ -552,7 +552,7 @@ arguments.
 	Is Dir?              : False
 	Is Link?             : False
 	Is FIFO?             : False
-	Is lock device?      : False
+	Is block device?     : False
 	Is character device? : True
 	
 

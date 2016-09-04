@@ -39,6 +39,6 @@ for f in to_scan:
     print('Is Dir?              :', f.is_dir())
     print('Is Link?             :', f.is_symlink())
     print('Is FIFO?             :', f.is_fifo())
-    print('Is lock device?      :', f.is_block_device())
+    print('Is block device?     :', f.is_block_device())
     print('Is character device? :', f.is_char_device())
     print()
