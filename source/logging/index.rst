@@ -241,11 +241,43 @@ library to control which messages are logged and where they go.
 .. graphviz:: logger_tree_multihandler.dot
    :caption: logging: Different Levels and Handlers
 
-There are many more options for configuring logging, including
-different log message formatting options, having messages delivered to
-multiple destinations, and changing the configuration of a long-running
-application on the fly using a socket interface. All of these options are
-covered in depth in the library module documentation.
+Integration with the warnings Module
+====================================
+
+The logging module integrates with :mod:`warnings` through
+:func:`captureWarnings`, which configures :mod:`warnings` to send
+messages through the logging system instead of outputting them
+directly.
+
+.. literalinclude:: logging_capture_warnings.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The warning message is sent to a logger named ``py.warnings`` using
+the :const:`WARNING` level.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'logging_capture_warnings.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 logging_capture_warnings.py
+	
+	logging_capture_warnings.py:13: UserWarning: This warning is not
+	 sent to the logs
+	  warnings.warn('This warning is not sent to the logs')
+	WARNING:py.warnings:logging_capture_warnings.py:17: UserWarning:
+	 This warning is sent to the logs
+	  warnings.warn('This warning is sent to the logs')
+	
+
+.. {{{end}}}
+
+
+.. adapter
+.. filter
+.. format string default keys
 
 
 .. seealso::
@@ -253,6 +285,8 @@ covered in depth in the library module documentation.
    * :pydoc:`logging`
 
    * :ref:`Porting notes for logging <porting-logging>`
+
+   * :mod:`warnings` -- Non-fatal alerts.
 
    * `logging_tree <https://pypi.python.org/pypi/logging_tree>`__ --
      Third-party package by Brandon Rhodes for showing the logger tree
