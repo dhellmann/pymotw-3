@@ -5,19 +5,9 @@ digraph {
    "";
 
    node [shape = rect];
-   "myapp" -> "";
    "package1" -> "" [label="level=INFO"];
    "package1.module2" -> "package1";
    "package2" -> "" [label="level=WARNING"];
    "package2.module2" -> "package2";
-
-   node [shape = note];
-   debug [label="/var/log/app/debug.log"];
-   error [label="/var/log/app/error.log"];
-
-   "" -> error [label="level=ERROR"];
-   "" -> debug [label="level=DEBUG"];
-
-   {rank = same; ""; debug; error}
-
+   "myapp" -> "" [label="level=DEBUG"];
 }

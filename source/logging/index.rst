@@ -236,7 +236,7 @@ be collected and sent to the same place.
 
 The tree structure also allows different verbosity levels, handlers,
 and formatters to be set for different parts of the application or
-library.
+library to control which messages are logged and where they go.
 
 .. graphviz:: logger_tree_multihandler.dot
    :caption: logging: Different Levels and Handlers
