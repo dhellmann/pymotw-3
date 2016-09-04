@@ -1,6 +1,6 @@
-================================
- sched -- Timed Event Scheduler
-================================
+=================================
+ sched --- Timed Event Scheduler
+=================================
 
 .. module:: sched
     :synopsis: Generic event scheduler.
@@ -167,9 +167,7 @@ time.
 
 .. seealso::
 
-    `sched <http://docs.python.org/lib/module-sched.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`sched`
 
-    :mod:`time`
-        The ``time`` module.
+   * :mod:`time` -- The ``time`` module.
 
