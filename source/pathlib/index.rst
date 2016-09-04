@@ -173,8 +173,8 @@ hierarchy until reaching the root.
    :caption:
    :start-after: #end_pymotw_header
 
-The example converts the ``parents`` iterator to a :class:`list`
-before printing it so the member values can be printed.
+The example iterates over the ``parents`` property and prints the
+member values.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'pathlib_parents.py'))
