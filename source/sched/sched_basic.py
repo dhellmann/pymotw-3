@@ -8,6 +8,7 @@ import time
 
 scheduler = sched.scheduler(time.time, time.sleep)
 
+
 def print_event(name, start):
     now = time.time()
     elapsed = int(now - start)
