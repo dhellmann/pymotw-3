@@ -679,6 +679,20 @@ The normalized version of the name of the UTF-8 encoding has changed
 from "UTF8" to "UTF-8" because Mac OS X and OpenBSD do not support the
 use of "UTF8" (:pyissue:`10154` and :pyissue:`10090`).
 
+.. _porting-logging:
+
+logging
+-------
+
+.. index::
+   pair: porting; logging
+
+The :mod:`logging` module now includes a ``lastResort`` logger that is
+used if no other logging configuration is performed by an
+application. This eliminates the need to configure logging in an
+application solely to avoid having a user see error messages in case a
+library imported by an application uses logging but the application
+itself does not.
 
 .. _porting-mailbox:
 

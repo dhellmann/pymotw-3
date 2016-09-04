@@ -252,6 +252,8 @@ covered in depth in the library module documentation.
 
    * :pydoc:`logging`
 
+   * :ref:`Porting notes for logging <porting-logging>`
+
    * `logging_tree <https://pypi.python.org/pypi/logging_tree>`__ --
      Third-party package by Brandon Rhodes for showing the logger tree
      for an application.
