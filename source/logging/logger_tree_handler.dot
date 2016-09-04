@@ -1,0 +1,18 @@
+digraph {
+   rankdir = BT;
+
+   node [shape = doublecircle];
+   "";
+
+   node [shape = rect];
+   "myapp" -> "";
+   "package1" -> "";
+   "package1.module2" -> "package1";
+   "package2" -> "";
+   "package2.module2" -> "package2";
+
+   node [shape = note];
+   "" -> "/var/log/app.log";
+
+   {rank = same; ""; "/var/log/app.log"}
+}

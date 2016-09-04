@@ -13,6 +13,18 @@ benefit of having the logging API provided by a standard library
 module is that all Python modules can participate in logging, so an
 application's log can include messages from third-party modules.
 
+Logging Components
+==================
+
+The logging system is made up of four interacting types of
+objects. Each module or application that wants to log uses a
+:class:`Logger` instance to add information to the logs. Invoking the
+logger creates a :class:`LogRecord`, which is used to hold the
+information in memory until it is processed. A :class:`Logger` may
+have a number of :class:`Handler` objects configured to receive and
+process log records. The :class:`Handler` uses a :class:`Formatter` to
+turn the log records into output messages.
+
 Logging in Applications vs. Libraries
 =====================================
 
@@ -175,15 +187,12 @@ messages show up at different levels:
 Naming Logger Instances
 =======================
 
-All of the previous log messages all have 'root' embedded in them. The
-:mod:`logging` module supports a hierarchy of loggers with different
-names. An easy way to tell where a specific log message comes from is
-to use a separate logger object for each module. Every new logger
-inherits the configuration of its parent, and log messages sent to a
-logger include the name of that logger. Optionally, each logger can be
-configured differently, so that messages from different modules are
-handled in different ways. Here is an example of how to log from
-different modules so it is easy to trace the source of the message.
+All of the previous log messages all have 'root' embedded in them
+because the code uses the root logger.  An easy way to tell where a
+specific log message comes from is to use a separate logger object for
+each module. Log messages sent to a logger include the name of that
+logger. Here is an example of how to log from different modules so it
+is easy to trace the source of the message.
 
 .. literalinclude:: logging_modules_example.py
     :caption:
@@ -204,6 +213,34 @@ The output shows the different module names for each output line.
 
 .. {{{end}}}
 
+The Logging Tree
+================
+
+The :class:`Logger` instances are configured in a tree structure,
+based on their names. Typically each application or library defines a
+base name, with loggers for individual modules set as children. The
+root logger has no name.
+
+.. graphviz:: logger_tree.dot
+   :caption: logging: Example Logger Tree
+
+The tree structure is useful for configuring logging because it means
+each logger does not need its own set of handlers. If a logger does
+not have any handlers, the message is handed to its parent for
+processing. This means that for most applications it is only necessary
+to configure handlers on the root logger, and all log information will
+be collected and sent to the same place.
+
+.. graphviz:: logger_tree_handler.dot
+   :caption: logging: One Logging Handler
+
+The tree structure also allows different verbosity levels, handlers,
+and formatters to be set for different parts of the application or
+library.
+
+.. graphviz:: logger_tree_multihandler.dot
+   :caption: logging: Different Levels and Handlers
+
 There are many more options for configuring logging, including
 different log message formatting options, having messages delivered to
 multiple destinations, and changing the configuration of a long-running
@@ -214,3 +251,7 @@ covered in depth in the library module documentation.
 .. seealso::
 
    * :pydoc:`logging`
+
+   * `logging_tree <https://pypi.python.org/pypi/logging_tree>`__ --
+     Third-party package by Brandon Rhodes for showing the logger tree
+     for an application.
