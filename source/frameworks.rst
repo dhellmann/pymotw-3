@@ -84,18 +84,6 @@ be used.
    logging/index
    fileinput/index
    atexit/index
-
-..
-   argparse/index
-   getopt/index
-   readline/index
-   getpass/index
-   cmd/index
-   shlex/index
-   ConfigParser/index
-   logging/index
-   atexit/index
-   fileinput/index
-   * sched/index
+   sched/index
 
 ..    runpy/index
