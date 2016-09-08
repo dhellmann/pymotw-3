@@ -18,7 +18,7 @@ Python and tools used.
    :maxdepth: 2
 
    text
-   data_types
+   data_structures
    algorithm_tools
    dates
    numeric
