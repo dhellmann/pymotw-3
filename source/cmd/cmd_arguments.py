@@ -12,7 +12,6 @@ import cmd
 
 
 class HelloWorld(cmd.Cmd):
-    """Simple command processor example."""
 
     def do_greet(self, person):
         """greet [person]

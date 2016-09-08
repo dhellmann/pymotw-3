@@ -20,7 +20,6 @@ import cmd
 
 
 class HelloWorld(cmd.Cmd):
-    """Simple command processor example."""
 
     FRIENDS = ['Alice', 'Adam', 'Barbara', 'Bob']
 

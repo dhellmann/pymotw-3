@@ -12,7 +12,6 @@ import cmd
 
 
 class HelloWorld(cmd.Cmd):
-    """Simple command processor example."""
 
     prompt = 'prompt: '
     intro = "Simple command processor example."

@@ -12,7 +12,6 @@ import cmd
 
 
 class HelloWorld(cmd.Cmd):
-    """Simple command processor example."""
 
     # Disable rawinput module use
     use_rawinput = False
