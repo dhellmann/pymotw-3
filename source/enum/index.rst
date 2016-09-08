@@ -266,17 +266,43 @@ Non-integer Member Values
 
 Enum member values are not restricted to integers. Any type of object
 can be associated with a member. If the value is a tuple, the members
-are passed as individual arguments to :func:`__init__`. Other objects
-are passed directly to :func:`__init__` as the only argument other
-than ``self``.
+are passed as individual arguments to :func:`__init__`.
+
+.. literalinclude:: enum_tuple_values.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+In this example, each member value is a tuple containing the numerical
+id (such as might be stored in a database) and a list of valid
+transitions away from the current state.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'enum_tuple_values.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 enum_tuple_values.py
+	
+	Name: BugStatus.in_progress
+	Value: (3, ['new', 'fix_committed'])
+	Custom attribute: ['new', 'fix_committed']
+	Using attribute: True
+
+.. {{{end}}}
+
+For more complex cases, tuples might become unwieldy. Since member
+values can be any type of object, it is possible to use dictionaries
+for cases where there are a lot of separate attributes to track for
+each enum value. Complex values are passed directly to
+:func:`__init__` as the only argument other than ``self``.
 
 .. literalinclude:: enum_complex_values.py
    :caption:
    :start-after: #end_pymotw_header
 
-In this example, each member value is a dictionary containing the
-numerical value (such as might be stored in a database) and a list of
-valid transitions away from the current state.
+This example expresses the same data as the previous example, using
+dictionaries rather than tuples.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'enum_complex_values.py'))
@@ -287,7 +313,7 @@ valid transitions away from the current state.
 	$ python3 enum_complex_values.py
 	
 	Name: BugStatus.in_progress
-	Value: {'transitions': ['new', 'fix_committed'], 'value': 3}
+	Value: {'transitions': ['new', 'fix_committed'], 'num': 3}
 	Custom attribute: ['new', 'fix_committed']
 	Using attribute: True
 
