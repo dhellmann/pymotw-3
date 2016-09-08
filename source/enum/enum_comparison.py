@@ -21,7 +21,7 @@ class BugStatus(enum.Enum):
 actual_state = BugStatus.wont_fix
 desired_state = BugStatus.fix_released
 
-print('Equal   :',
+print('Equality:',
       actual_state == desired_state,
       actual_state == BugStatus.wont_fix)
 print('Identity:',

@@ -7,7 +7,7 @@
 
 The :mod:`enum` module defines an enumeration type with iteration and
 comparison capabilities. It can be used to create well-defined symbols
-for values, instead of using literal integer or strings.
+for values, instead of using literal integers or strings.
 
 Creating Enumerations
 =====================
@@ -90,7 +90,7 @@ The greater-than and less-than comparison operators raise a
 
 	$ python3 enum_comparison.py
 	
-	Equal   : False True
+	Equality: False True
 	Identity: False True
 	Ordered by value:
 	  Cannot sort: unorderable types: BugStatus() < BugStatus()
@@ -127,7 +127,7 @@ Unique Enumeration Values
 =========================
 
 Enum members with the same value are tracked as alias references to
-the same member object. Any aliases do not cause repeated values to be
+the same member object. Aliases do not cause repeated values to be
 present in the iterator for the :class:`Enum`.
 
 .. literalinclude:: enum_aliases.py
