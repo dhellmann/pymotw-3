@@ -45,10 +45,10 @@ shows of some of the features included in :class:`Cmd`.
 
     (Cmd) 
 
-The first thing to notice is the command prompt, ``(Cmd)``. The
-prompt can be configured through the attribute *prompt*. If the prompt
-changes as the result of a command handler, the new value is used to
-query for the next command.
+The first thing to notice is the command prompt, ``(Cmd)``. The prompt
+can be configured through the attribute *prompt*. The prompt value is
+dynamic, and if a command handler changes the prompt attribute the new
+value is used to query for the next command.
 
 .. code-block:: none
 
@@ -368,7 +368,6 @@ command.
 
     (Cmd) echo $out
     .../pymotw-3/source/cmd
-
 
 Alternative Inputs
 ==================
