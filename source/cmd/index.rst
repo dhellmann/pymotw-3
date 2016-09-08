@@ -47,7 +47,7 @@ shows of some of the features included in :class:`Cmd`.
 
 The first thing to notice is the command prompt, ``(Cmd)``. The
 prompt can be configured through the attribute *prompt*. If the prompt
-changes as the result of a command processor, the new value is used to
+changes as the result of a command handler, the new value is used to
 query for the next command.
 
 .. code-block:: none
@@ -73,10 +73,10 @@ handle it:
     (Cmd) greet
     hello
 
-If the class does not include a specific command processor for a
-command, the method :func:`default` is called with the entire input
-line as an argument. The built-in implementation of :func:`default`
-reports an error.
+If the class does not include a specific handler for a command, the
+method :func:`default` is called with the entire input line as an
+argument. The built-in implementation of :func:`default` reports an
+error.
 
 .. code-block:: none
 
@@ -127,7 +127,7 @@ The output shows one optional argument to :command:`greet`,
 *person*. Although the argument is optional to the command, there is a
 distinction between the command and the callback method. The method
 always takes the argument, but sometimes the value is an empty
-string. It is left up to the command processor to determine if an
+string. It is left up to the command handler to determine if an
 empty argument is valid, or do any further parsing and processing of
 the command. In this example, if a person's name is provided then the
 greeting is personalized.
@@ -140,8 +140,8 @@ greeting is personalized.
     hi
 
 Whether an argument is given by the user or not, the value passed to
-the command processor does not include the command itself. That
-simplifies parsing in the command processor, especially if multiple
+the command handler does not include the command itself. That
+simplifies parsing in the command handler, especially if multiple
 arguments are needed.
 
 Live Help
@@ -179,7 +179,7 @@ Auto-Completion
 ===============
 
 :class:`Cmd` includes support for command completion based on the
-names of the commands with processor methods. The user triggers
+names of the commands with handler methods. The user triggers
 completion by hitting the tab key at an input prompt. When multiple
 completions are possible, pressing tab twice prints a list of the
 options.
@@ -252,13 +252,13 @@ interpreter. Overriding it is usually not necessary, since the
 :func:`preloop` and :func:`postloop` hooks are available.
 
 Each iteration through :func:`cmdloop` calls :func:`onecmd` to
-dispatch the command to its processor. The actual input line is parsed
+dispatch the command to its handler. The actual input line is parsed
 with :func:`parseline` to create a tuple containing the command, and
 the remaining portion of the line.
 
 If the line is empty, :func:`emptyline` is called. The default
 implementation runs the previous command again. If the line contains a
-command, first :func:`precmd` is called then the processor is looked
+command, first :func:`precmd` is called then the handler is looked
 up and invoked. If none is found, :func:`default` is called
 instead. Finally :func:`postcmd` is called.
 
@@ -300,7 +300,7 @@ it can be set on the class directly.  When printing help, the
     :caption:
     :start-after: #end_pymotw_header
 
-This example class shows a command processor to let the user control
+This example class shows a command handler to let the user control
 the prompt for the interactive session.
 
 .. code-block:: none
