@@ -486,7 +486,7 @@ PM January 13, 2016 in the US/Eastern time zone.
 ..   ('%a', 'Abbreviated weekday name'),
 ..   ('%A', 'Full weekday name'),
 ..   ('%w', 'Weekday number -- 0 (Sunday) through 6 (Saturday)'),
-..   ('%d', 'Day of the month (zero padded'),
+..   ('%d', 'Day of the month (zero padded)'),
 ..   ('%b', 'Abbreviated month name'),
 ..   ('%B', 'Full month name'),
 ..   ('%m', 'Month of the year'),
@@ -524,7 +524,7 @@ PM January 13, 2016 in the US/Eastern time zone.
    ``%a``, Abbreviated weekday name, ``'Wed'``
    ``%A``, Full weekday name, ``'Wednesday'``
    ``%w``, Weekday number -- 0 (Sunday) through 6 (Saturday), ``'3'``
-   ``%d``, Day of the month (zero padded, ``'13'``
+   ``%d``, Day of the month (zero padded), ``'13'``
    ``%b``, Abbreviated month name, ``'Jan'``
    ``%B``, Full month name, ``'January'``
    ``%m``, Month of the year, ``'01'``
