@@ -673,12 +673,12 @@ alphanumeric character.
 	  'This is some text -- with punctuation.'
 	  'This'
 	
-	'\w+\S*$' (word near end of string, no punctuation)
+	'\w+\S*$' (word near end of string)
 	
 	  'This is some text -- with punctuation.'
 	  ..........................'punctuation.'
 	
-	'\w+\S*\Z' (word near end of string, no punctuation)
+	'\w+\S*\Z' (word near end of string)
 	
 	  'This is some text -- with punctuation.'
 	  ..........................'punctuation.'
