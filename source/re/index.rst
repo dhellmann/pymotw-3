@@ -217,7 +217,7 @@ the value appears at least *m* times, with no maximum.
    :caption:
    :start-after: #end_pymotw_header
 
-There are more matches are for ``ab*`` and ``ab?`` than ``ab+``.
+There are more matches for ``ab*`` and ``ab?`` than ``ab+``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 're_repetition.py'))
