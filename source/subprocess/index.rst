@@ -51,6 +51,7 @@ avoids the need for escaping quotes or other special characters that
 might be interpreted by the shell.
 
 .. {{{cog
+.. run_script(cog.inFile, 'rm -f *~ *.pyc', interpreter='')
 .. cog.out(run_script(cog.inFile, 'subprocess_os_system.py'))
 .. }}}
 
@@ -76,7 +77,7 @@ might be interpreted by the shell.
 	subprocess_popen_write.py
 	subprocess_shell_variables.py
 	subprocess_signal_parent_shell.py
-	subprocess_signal_setsid.py
+	subprocess_signal_setpgrp.py
 
 .. {{{end}}}
 
@@ -155,7 +156,7 @@ standard output is captured and returned.
 
 	$ python3 subprocess_check_output.py
 	
-	Have 450 bytes in output
+	Have 451 bytes in output
 	index.rst
 	interaction.py
 	repeater.py
@@ -174,7 +175,7 @@ standard output is captured and returned.
 	subprocess_popen_write.py
 	subprocess_shell_variables.py
 	subprocess_signal_parent_shell.py
-	subprocess_signal_setsid.py
+	subprocess_signal_setpgrp.py
 	
 
 .. {{{end}}}
@@ -422,7 +423,7 @@ names of the files being included.
 		 signal_child.py
 		 signal_parent.py
 		 subprocess_signal_parent_shell.py
-		 subprocess_signal_setsid.py
+		 subprocess_signal_setpgrp.py
 
 .. {{{end}}}
 
@@ -527,10 +528,10 @@ The output is:
 	$ python3 signal_parent.py
 	
 	PARENT      : Pausing before sending signal...
-	CHILD  96994: Setting up signal handler
-	CHILD  96994: Pausing to wait for signal
+	CHILD  21101: Setting up signal handler
+	CHILD  21101: Pausing to wait for signal
 	PARENT      : Signaling child
-	CHILD  96994: Received USR1
+	CHILD  21101: Received USR1
 
 .. {{{end}}}
 
@@ -566,23 +567,23 @@ are three separate processes interacting:
 
 	$ python3 subprocess_signal_parent_shell.py
 	
-	PARENT      : Pausing before signaling 97000...
-	Shell script in process 97000
-	+ python signal_child.py
-	CHILD  97001: Setting up signal handler
-	CHILD  97001: Pausing to wait for signal
-	PARENT      : Signaling child 97000
-	CHILD  97001: Never received signal
+	PARENT      : Pausing before signaling 21107...
+	Shell script in process 21107
+	+ python3 signal_child.py
+	CHILD  21108: Setting up signal handler
+	CHILD  21108: Pausing to wait for signal
+	PARENT      : Signaling child 21107
+	CHILD  21108: Never received signal
 
 .. {{{end}}}
 
 To send signals to descendants without knowing their process id, use a
 *process group* to associate the children so they can be signaled
-together.  The process group is created with :func:`os.setsid`,
+together.  The process group is created with :func:`os.setpgrp`,
 setting the "session id" to the process id of the current process.
 All child processes inherit their session id from their parent, and
 since it should only be set in the shell created by :class:`Popen`
-and its descendants, :func:`os.setsid` should not be called in the
+and its descendants, :func:`os.setpgrp` should not be called in the
 same process where the :class:`Popen` is created.  Instead, the
 function is passed to :class:`Popen` as the *preexec_fn* argument so
 it is run after the :func:`fork` inside the new process, before it
@@ -590,7 +591,7 @@ uses :func:`exec` to run the shell.  To signal the entire process
 group, use :func:`os.killpg` with the :attr:`pid` value from the
 :class:`Popen` instance.
 
-.. literalinclude:: subprocess_signal_setsid.py
+.. literalinclude:: subprocess_signal_setpgrp.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -598,7 +599,7 @@ The sequence of events is
 
 1. The parent program instantiates :class:`Popen`.
 2. The :class:`Popen` instance forks a new process.
-3. The new process runs :func:`os.setsid`.
+3. The new process runs :func:`os.setpgrp`.
 4. The new process runs :func:`exec` to start the shell.
 5. The shell runs the shell script.
 6. The shell script forks again and that process execs Python.
@@ -609,21 +610,22 @@ The sequence of events is
 11. The Python process running ``signal_child.py`` invokes the signal handler.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'subprocess_signal_setsid.py'))
+.. cog.out(run_script(cog.inFile, 'subprocess_signal_setpgrp.py'))
 .. }}}
 
 .. code-block:: none
 
-	$ python3 subprocess_signal_setsid.py
+	$ python3 subprocess_signal_setpgrp.py
 	
-	Calling os.setsid() from 97017
-	PARENT      : Pausing before signaling 97017...
-	Shell script in process 97017
-	+ python signal_child.py
-	CHILD  97019: Setting up signal handler
-	CHILD  97019: Pausing to wait for signal
-	PARENT      : Signaling process group 97017
-	CHILD  97019: Received USR1
+	Calling os.setpgrp() from 21119
+	Process group is now 21119
+	PARENT      : Pausing before signaling 21119...
+	Shell script in process 21119
+	+ python3 signal_child.py
+	CHILD  21120: Setting up signal handler
+	CHILD  21120: Pausing to wait for signal
+	PARENT      : Signaling process group 21119
+	CHILD  21120: Received USR1
 
 .. {{{end}}}
 

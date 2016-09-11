@@ -15,16 +15,18 @@ import time
 import sys
 
 
-def show_setting_sid():
-    print('Calling os.setsid() from {}'.format(os.getpid()))
+def show_setting_prgrp():
+    print('Calling os.setpgrp() from {}'.format(os.getpid()))
+    os.setpgrp()
+    print('Process group is now {}'.format(
+        os.getpid(), os.getpgrp()))
     sys.stdout.flush()
-    os.setsid()
 
 
 script = '''#!/bin/sh
 echo "Shell script in process $$"
 set -x
-python signal_child.py
+python3 signal_child.py
 '''
 script_file = tempfile.NamedTemporaryFile('wt')
 script_file.write(script)
@@ -32,7 +34,7 @@ script_file.flush()
 
 proc = subprocess.Popen(
     ['sh', script_file.name],
-    preexec_fn=show_setting_sid,
+    preexec_fn=show_setting_prgrp,
 )
 print('PARENT      : Pausing before signaling {}...'.format(
     proc.pid))
