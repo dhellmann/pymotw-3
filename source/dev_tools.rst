@@ -88,6 +88,7 @@ pip.
 .. toctree::
     :maxdepth: 1
 
+    pydoc/index
     doctest/index
     cgitb/index
     pdb/index
@@ -98,9 +99,10 @@ pip.
     ensurepip/index
 
 ..
-    * pydoc/index
+    pydoc/index
     doctest/index
     * unittest/index
+    * unittest.mock/index
     * trace/index
     * traceback/index
     cgitb/index
