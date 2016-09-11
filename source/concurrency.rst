@@ -49,15 +49,6 @@ concurrent tasks.
    subprocess/index
    signal/index
    threading/index
+   multiprocessing/index
    asyncio/index
    concurrent.futures/index
-
-..
-   .. toctree::
-      :maxdepth: 1
-
-      subprocess/index
-      signal/index
-      threading/index
-      * multiprocessing/index
-      asyncio/index
