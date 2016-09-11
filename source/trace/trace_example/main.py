@@ -5,16 +5,14 @@
 #
 """
 """
-
-#__version__ = "$Id$"
 #end_pymotw_header
 
 from recurse import recurse
 
+
 def main():
-    print 'This is the main program.'
+    print('This is the main program.')
     recurse(2)
-    return
 
 if __name__ == '__main__':
     main()

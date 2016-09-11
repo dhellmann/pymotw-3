@@ -5,15 +5,14 @@
 #
 """
 """
-
-#__version__ = "$Id$"
 #end_pymotw_header
 
+
 def recurse(level):
-    print 'recurse(%s)' % level
+    print('recurse({})'.format(level))
     if level:
-        recurse(level-1)
-    return
+        recurse(level - 1)
+
 
 def not_called():
-    print 'This function is never called.'
+    print('This function is never called.')
