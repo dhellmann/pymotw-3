@@ -47,6 +47,7 @@ concurrent tasks.
    :maxdepth: 1
 
    subprocess/index
+   signal/index
    threading/index
    asyncio/index
    concurrent.futures/index
@@ -58,5 +59,5 @@ concurrent tasks.
       subprocess/index
       signal/index
       threading/index
-      multiprocessing/index
+      * multiprocessing/index
       asyncio/index
