@@ -78,6 +78,7 @@ like the exit code and output.
 	subprocess_run_check.py
 	subprocess_run_output.py
 	subprocess_run_output_error.py
+	subprocess_run_output_error_suppress.py
 	subprocess_run_output_error_trap.py
 	subprocess_shell_variables.py
 	subprocess_signal_parent_shell.py
@@ -175,7 +176,7 @@ standard output is captured and returned.
 	$ python3 subprocess_run_output.py
 	
 	returncode: 0
-	Have 482 bytes in stdout:
+	Have 522 bytes in stdout:
 	index.rst
 	interaction.py
 	repeater.py
@@ -192,6 +193,7 @@ standard output is captured and returned.
 	subprocess_run_check.py
 	subprocess_run_output.py
 	subprocess_run_output_error.py
+	subprocess_run_output_error_suppress.py
 	subprocess_run_output_error_trap.py
 	subprocess_shell_variables.py
 	subprocess_signal_parent_shell.py
@@ -277,6 +279,35 @@ the standard output stream and how much data is being printed.
 	$ python3 subprocess_check_output_error_trap_output.py
 	
 	Have 20 bytes in output: 'to stdout\nto stderr\n'
+
+.. {{{end}}}
+
+Suppressing Output
+------------------
+
+For cases where the output should not be shown or captured, use
+:const:`DEVNULL` to suppress an output stream. This example suppresses
+both the standard output and error streams.
+
+.. literalinclude:: subprocess_run_output_error_suppress.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The name :const:`DEVNULL` comes from the UNIX special device file,
+``/dev/null``, which responds with end-of-file when opened for reading
+and receives but ignores any amount of input when writing.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'subprocess_run_output_error_suppress.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 subprocess_run_output_error_suppress.py
+	
+	returncode: 1
+	stdout is None
+	stderr is None
 
 .. {{{end}}}
 
@@ -461,6 +492,7 @@ names of the files being included.
 	subprocess_run_output_error.py
 	subprocess_run_output_error_trap.py
 	subprocess_check_output_error_trap_output.py
+	subprocess_run_output_error_suppress.py
 	subprocess_popen_read.py
 	subprocess_popen_write.py
 	subprocess_popen2.py
@@ -577,10 +609,10 @@ The output is:
 	$ python3 signal_parent.py
 	
 	PARENT      : Pausing before sending signal...
-	CHILD  23387: Setting up signal handler
-	CHILD  23387: Pausing to wait for signal
+	CHILD  26976: Setting up signal handler
+	CHILD  26976: Pausing to wait for signal
 	PARENT      : Signaling child
-	CHILD  23387: Received USR1
+	CHILD  26976: Received USR1
 
 .. {{{end}}}
 
@@ -616,13 +648,13 @@ are three separate processes interacting:
 
 	$ python3 subprocess_signal_parent_shell.py
 	
-	PARENT      : Pausing before signaling 23393...
-	Shell script in process 23393
+	PARENT      : Pausing before signaling 26984...
+	Shell script in process 26984
 	+ python3 signal_child.py
-	CHILD  23394: Setting up signal handler
-	CHILD  23394: Pausing to wait for signal
-	PARENT      : Signaling child 23393
-	CHILD  23394: Never received signal
+	CHILD  26985: Setting up signal handler
+	CHILD  26985: Pausing to wait for signal
+	PARENT      : Signaling child 26984
+	CHILD  26985: Never received signal
 
 .. {{{end}}}
 
@@ -666,15 +698,15 @@ The sequence of events is
 
 	$ python3 subprocess_signal_setpgrp.py
 	
-	Calling os.setpgrp() from 23405
-	Process group is now 23405
-	PARENT      : Pausing before signaling 23405...
-	Shell script in process 23405
+	Calling os.setpgrp() from 26992
+	Process group is now 26992
+	PARENT      : Pausing before signaling 26992...
+	Shell script in process 26992
 	+ python3 signal_child.py
-	CHILD  23406: Setting up signal handler
-	CHILD  23406: Pausing to wait for signal
-	PARENT      : Signaling process group 23405
-	CHILD  23406: Received USR1
+	CHILD  26993: Setting up signal handler
+	CHILD  26993: Pausing to wait for signal
+	PARENT      : Signaling process group 26992
+	CHILD  26993: Received USR1
 
 .. {{{end}}}
 
