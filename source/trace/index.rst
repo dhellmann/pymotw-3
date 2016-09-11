@@ -3,7 +3,7 @@
 ===============================
 
 .. module:: trace
-    :synopsis: Follow Program FLow
+    :synopsis: Follow Program Flow
 
 :Purpose: Monitor which statements and functions are executed as a
           program runs to produce coverage and call-graph information.
@@ -36,51 +36,51 @@ Tracing Execution
 
 It is easy use :mod:`trace` directly from the command line.  The
 statements being executed as the program runs are printed when the
-:option:`--trace` option is given.
+``--trace`` option is given. This example also ignores the location of
+the Python standard library to avoid tracing into :mod:`importlib` and
+other modules that might be more interesting in another example, but
+that clutter up the output in this simple example.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, '-m trace --trace trace_example/main.py'))
+.. import os
+.. cog.out(run_script(cog.inFile, ['-m trace --ignore-dir=' + os.path.abspath(os.path.dirname(os.__file__)), '--trace trace_example/main.py'], break_lines_at=60))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python -m trace --trace trace_example/main.py
+	$ python3 -m trace --ignore-dir=.../lib/python3.5 \
+	--trace trace_example/main.py
 	
-	 --- modulename: threading, funcname: settrace
-	threading.py(89):     _trace_hook = func
-	 --- modulename: trace, funcname: <module>
-	<string>(1):   --- modulename: trace, funcname: <module>
+	 --- modulename: main, funcname: <module>
 	main.py(7): """
-	main.py(12): from recurse import recurse
+	main.py(10): from recurse import recurse
 	 --- modulename: recurse, funcname: <module>
 	recurse.py(7): """
-	recurse.py(12): def recurse(level):
-	recurse.py(18): def not_called():
-	main.py(14): def main():
-	main.py(19): if __name__ == '__main__':
-	main.py(20):     main()
-	 --- modulename: trace, funcname: main
-	main.py(15):     print 'This is the main program.'
+	recurse.py(11): def recurse(level):
+	recurse.py(17): def not_called():
+	main.py(13): def main():
+	main.py(17): if __name__ == '__main__':
+	main.py(18):     main()
+	 --- modulename: main, funcname: main
+	main.py(14):     print('This is the main program.')
 	This is the main program.
-	main.py(16):     recurse(2)
+	main.py(15):     recurse(2)
 	 --- modulename: recurse, funcname: recurse
-	recurse.py(13):     print 'recurse(%s)' % level
+	recurse.py(12):     print('recurse({})'.format(level))
 	recurse(2)
-	recurse.py(14):     if level:
-	recurse.py(15):         recurse(level-1)
+	recurse.py(13):     if level:
+	recurse.py(14):         recurse(level - 1)
 	 --- modulename: recurse, funcname: recurse
-	recurse.py(13):     print 'recurse(%s)' % level
+	recurse.py(12):     print('recurse({})'.format(level))
 	recurse(1)
-	recurse.py(14):     if level:
-	recurse.py(15):         recurse(level-1)
+	recurse.py(13):     if level:
+	recurse.py(14):         recurse(level - 1)
 	 --- modulename: recurse, funcname: recurse
-	recurse.py(13):     print 'recurse(%s)' % level
+	recurse.py(12):     print('recurse({})'.format(level))
 	recurse(0)
-	recurse.py(14):     if level:
-	recurse.py(16):     return
-	recurse.py(16):     return
-	recurse.py(16):     return
-	main.py(17):     return
+	recurse.py(13):     if level:
+	 --- modulename: trace, funcname: _unsettrace
+	trace.py(77):         sys.settrace(None)
 
 .. {{{end}}}
 
@@ -94,7 +94,7 @@ is entered three times, as expected based on the way it is called in
 Code Coverage
 =============
 
-Running :mod:`trace` from the command line with the :option:`--count`
+Running :mod:`trace` from the command line with the ``--count``
 option will produce code coverage report information, detailing which
 lines are run and which are skipped.  Since a complex program is
 usually made up of multiple files, a separate coverage report is
@@ -106,9 +106,9 @@ to the same directory as the module, named after the module but with a
 .. cog.out(run_script(cog.inFile, '-m trace --count trace_example/main.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python -m trace --count trace_example/main.py
+	$ python3 -m trace --count trace_example/main.py
 	
 	This is the main program.
 	recurse(2)
@@ -133,42 +133,44 @@ and ``trace_example/recurse.cover``:
 
     Although the line ``def recurse(level):`` has a count of ``1``,
     that does not mean the function was only run once.  It means the
-    function *definition* was only executed once.
+    function *definition* was only executed once. The same applies to
+    ``def not_called():``, because the function definition is
+    evaluated even though the function itself is never called.
 
 It is also possible to run the program several times, perhaps with
 different options, to save the coverage data and produce a combined
 report.
 
 .. {{{cog
-.. (path(cog.inFile).parent / 'coverdir1').rmtree()
-.. (path(cog.inFile).parent / 'coverdir1').mkdir()
-.. cog.out(run_script(cog.inFile, '-m trace --coverdir coverdir1 --count --file coverdir1/coverage_report.dat trace_example/main.py'))
-.. cog.out(run_script(cog.inFile, '-m trace --coverdir coverdir1 --count --file coverdir1/coverage_report.dat trace_example/main.py', include_prefix=False))
-.. cog.out(run_script(cog.inFile, '-m trace --coverdir coverdir1 --count --file coverdir1/coverage_report.dat trace_example/main.py', include_prefix=False))
+.. run_script(cog.inFile, 'rm -rf coverdir1', interpreter='')
+.. run_script(cog.inFile, 'mkdir coverdir1', interpreter='')
+.. cog.out(run_script(cog.inFile, ['-m trace --coverdir coverdir1 --count', '--file coverdir1/coverage_report.dat trace_example/main.py']))
+.. cog.out(run_script(cog.inFile, ['-m trace --coverdir coverdir1 --count', '--file coverdir1/coverage_report.dat trace_example/main.py'], include_prefix=False))
+.. cog.out(run_script(cog.inFile, ['-m trace --coverdir coverdir1 --count', '--file coverdir1/coverage_report.dat trace_example/main.py'], include_prefix=False))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python -m trace --coverdir coverdir1 --count --file coverdir1/cove\
-	rage_report.dat trace_example/main.py
-	
-	Skipping counts file 'coverdir1/coverage_report.dat': [Errno 2] No suc
-	h file or directory: 'coverdir1/coverage_report.dat'
-	This is the main program.
-	recurse(2)
-	recurse(1)
-	recurse(0)
-
-	$ python -m trace --coverdir coverdir1 --count --file coverdir1/cove\
-	rage_report.dat trace_example/main.py
+	$ python3 -m trace --coverdir coverdir1 --count \
+	--file coverdir1/coverage_report.dat trace_example/main.py
 	
 	This is the main program.
 	recurse(2)
 	recurse(1)
 	recurse(0)
+	Skipping counts file 'coverdir1/coverage_report.dat': [Errno 2] 
+	No such file or directory: 'coverdir1/coverage_report.dat'
 
-	$ python -m trace --coverdir coverdir1 --count --file coverdir1/cove\
-	rage_report.dat trace_example/main.py
+	$ python3 -m trace --coverdir coverdir1 --count \
+	--file coverdir1/coverage_report.dat trace_example/main.py
+	
+	This is the main program.
+	recurse(2)
+	recurse(1)
+	recurse(0)
+
+	$ python3 -m trace --coverdir coverdir1 --count \
+	--file coverdir1/coverage_report.dat trace_example/main.py
 	
 	This is the main program.
 	recurse(2)
@@ -178,27 +180,28 @@ report.
 .. {{{end}}}
 
 To produce reports once the coverage information is recorded to the
-``.cover`` files, use the :option:`--report` option.
+``.cover`` files, use the ``--report`` option.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, '-m trace --coverdir coverdir1 --report --summary --missing --file coverdir1/coverage_report.dat trace_example/main.py'))
+.. cog.out(run_script(cog.inFile, ['-m trace --coverdir coverdir1 --report --summary', '--missing --file coverdir1/coverage_report.dat', 'trace_example/main.py'], line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python -m trace --coverdir coverdir1 --report --summary --missing \
-	--file coverdir1/coverage_report.dat trace_example/main.py
+	$ python3 -m trace --coverdir coverdir1 --report --summary \
+	--missing --file coverdir1/coverage_report.dat \
+	trace_example/main.py
 	
 	lines   cov%   module   (path)
-	  599     0%   threading   (/Library/Frameworks/Python.framework/Versi
-	ons/2.7/lib/python2.7/threading.py)
-	    8   100%   trace_example.main   (trace_example/main.py)
-	    8    87%   trace_example.recurse   (trace_example/recurse.py)
+	  537     0%   trace   (.../lib/python3.5/trace.py)
+	    7   100%   trace_example.main   (trace_example/main.py)
+	    7    85%   trace_example.recurse
+	(trace_example/recurse.py)
 
 .. {{{end}}}
 
 Since the program ran three times, the coverage report shows values
-three times higher than the first report.  The :option:`--summary`
+three times higher than the first report.  The ``--summary``
 option adds the percent covered information to the output.  The
 ``recurse`` module is only 87% covered.  Looking at the cover file for
 ``recurse`` shows that the body of ``not_called`` is indeed never
@@ -214,15 +217,16 @@ Calling Relationships
 In addition to coverage information, :mod:`trace` will collect and
 report on the relationships between functions that call each other.
 
-For a simple list of the functions called, use :option:`--listfuncs`:
+For a simple list of the functions called, use ``--listfuncs``.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, '-m trace --listfuncs trace_example/main.py'))
+.. cog.out(run_script(cog.inFile, ['-m trace --listfuncs trace_example/main.py |', 'grep -v importlib'], line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python -m trace --listfuncs trace_example/main.py
+	$ python3 -m trace --listfuncs trace_example/main.py | \
+	grep -v importlib
 	
 	This is the main program.
 	recurse(2)
@@ -230,28 +234,29 @@ For a simple list of the functions called, use :option:`--listfuncs`:
 	recurse(0)
 	
 	functions called:
-	filename: /Library/Frameworks/Python.framework/Versions/2.7/lib/python
-	2.7/threading.py, modulename: threading, funcname: settrace
-	filename: <string>, modulename: <string>, funcname: <module>
-	filename: trace_example/main.py, modulename: main, funcname: <module>
-	filename: trace_example/main.py, modulename: main, funcname: main
-	filename: trace_example/recurse.py, modulename: recurse, funcname: <mo
-	dule>
-	filename: trace_example/recurse.py, modulename: recurse, funcname: rec
-	urse
+	filename: .../lib/python3.5/trace.py, modulename: trace,
+	funcname: _unsettrace
+	filename: trace_example/main.py, modulename: main, funcname:
+	<module>
+	filename: trace_example/main.py, modulename: main, funcname:
+	main
+	filename: trace_example/recurse.py, modulename: recurse,
+	funcname: <module>
+	filename: trace_example/recurse.py, modulename: recurse,
+	funcname: recurse
 
 .. {{{end}}}
 
-For more details about who is doing the calling, use
-:option:`--trackcalls`.
+For more details about who is doing the calling, use ``--trackcalls``.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, '-m trace --listfuncs --trackcalls trace_example/main.py'))
+.. cog.out(run_script(cog.inFile, ['-m trace --listfuncs --trackcalls', 'trace_example/main.py | grep -v importlib']))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python -m trace --listfuncs --trackcalls trace_example/main.py
+	$ python3 -m trace --listfuncs --trackcalls \
+	trace_example/main.py | grep -v importlib
 	
 	This is the main program.
 	recurse(2)
@@ -260,28 +265,29 @@ For more details about who is doing the calling, use
 	
 	calling relationships:
 	
-	*** /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/tr
-	ace.py ***
-	  --> /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/
-	threading.py
-	    trace.Trace.run -> threading.settrace
-	  --> <string>
-	    trace.Trace.run -> <string>.<module>
-	
-	*** <string> ***
+	*** .../lib/python3.5/trace.py ***
+	    trace.Trace.runctx -> trace._unsettrace
 	  --> trace_example/main.py
-	    <string>.<module> -> main.<module>
+	    trace.Trace.runctx -> main.<module>
+	
+	  --> trace_example/recurse.py
+	
 	
 	*** trace_example/main.py ***
 	    main.<module> -> main.main
 	  --> trace_example/recurse.py
-	    main.<module> -> recurse.<module>
 	    main.main -> recurse.recurse
 	
 	*** trace_example/recurse.py ***
 	    recurse.recurse -> recurse.recurse
 
 .. {{{end}}}
+
+.. note::
+
+   Neither ``--listfuncs`` nor ``--trackcalls`` honors the
+   ``--ignore-dirs`` or ``--ignore-mods`` arguments, so part of the
+   output from this example is stripped using ``grep`` instead.
 
 Programming Interface
 =====================
@@ -303,30 +309,27 @@ information from ``main.py`` is included in the output.
 .. cog.out(run_script(cog.inFile, 'trace_run.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python trace_run.py
+	$ python3 trace_run.py
 	
-	 --- modulename: threading, funcname: settrace
-	threading.py(89):     _trace_hook = func
 	 --- modulename: trace_run, funcname: <module>
-	<string>(1):   --- modulename: recurse, funcname: recurse
-	recurse.py(13):     print 'recurse(%s)' % level
+	<string>(1):  --- modulename: recurse, funcname: recurse
+	recurse.py(12):     print('recurse({})'.format(level))
 	recurse(2)
-	recurse.py(14):     if level:
-	recurse.py(15):         recurse(level-1)
+	recurse.py(13):     if level:
+	recurse.py(14):         recurse(level - 1)
 	 --- modulename: recurse, funcname: recurse
-	recurse.py(13):     print 'recurse(%s)' % level
+	recurse.py(12):     print('recurse({})'.format(level))
 	recurse(1)
-	recurse.py(14):     if level:
-	recurse.py(15):         recurse(level-1)
+	recurse.py(13):     if level:
+	recurse.py(14):         recurse(level - 1)
 	 --- modulename: recurse, funcname: recurse
-	recurse.py(13):     print 'recurse(%s)' % level
+	recurse.py(12):     print('recurse({})'.format(level))
 	recurse(0)
-	recurse.py(14):     if level:
-	recurse.py(16):     return
-	recurse.py(16):     return
-	recurse.py(16):     return
+	recurse.py(13):     if level:
+	 --- modulename: trace, funcname: _unsettrace
+	trace.py(77):         sys.settrace(None)
 
 .. {{{end}}}
 
@@ -344,27 +347,24 @@ which are passed to the function when it is called by the tracer.
 .. cog.out(run_script(cog.inFile, 'trace_runfunc.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python trace_runfunc.py
+	$ python3 trace_runfunc.py
 	
 	 --- modulename: recurse, funcname: recurse
-	recurse.py(13):     print 'recurse(%s)' % level
+	recurse.py(12):     print('recurse({})'.format(level))
 	recurse(2)
-	recurse.py(14):     if level:
-	recurse.py(15):         recurse(level-1)
+	recurse.py(13):     if level:
+	recurse.py(14):         recurse(level - 1)
 	 --- modulename: recurse, funcname: recurse
-	recurse.py(13):     print 'recurse(%s)' % level
+	recurse.py(12):     print('recurse({})'.format(level))
 	recurse(1)
-	recurse.py(14):     if level:
-	recurse.py(15):         recurse(level-1)
+	recurse.py(13):     if level:
+	recurse.py(14):         recurse(level - 1)
 	 --- modulename: recurse, funcname: recurse
-	recurse.py(13):     print 'recurse(%s)' % level
+	recurse.py(12):     print('recurse({})'.format(level))
 	recurse(0)
-	recurse.py(14):     if level:
-	recurse.py(16):     return
-	recurse.py(16):     return
-	recurse.py(16):     return
+	recurse.py(13):     if level:
 
 .. {{{end}}}
 
@@ -387,9 +387,9 @@ This example saves the coverage results to the directory
 .. cog.out(run_script(cog.inFile, 'find coverdir2', interpreter=None, include_prefix=False))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python trace_CoverageResults.py
+	$ python3 trace_CoverageResults.py
 	
 	recurse(2)
 	recurse(1)
@@ -420,22 +420,21 @@ and *outfile* are the same, it has the effect of updating the file
 with cumulative data.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'trace_report.py'))
+.. cog.out(run_script(cog.inFile, 'trace_report.py', line_break_mode='wrap'))
 .. }}}
-.. {{{end}}}
 
-.. NOT RUNNING
-.. cog.out(run_script(cog.inFile, 'trace_report.py', break_lines_at=65))
+.. code-block:: none
 
-::
-
-	$ python trace_report.py
+	$ python3 trace_report.py
 	
 	recurse(2)
 	recurse(1)
 	recurse(0)
 	lines   cov%   module   (path)
-	    7    57%   trace_example.recurse   (.../recurse.py)
+	    7    42%   trace_example.recurse
+	(.../trace_example/recurse.py)
+
+.. {{{end}}}
 
 Options
 =======

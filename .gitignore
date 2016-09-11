@@ -61,3 +61,7 @@ dist/
 /source/shutil/config.ini
 /source/shutil/example.tar.gz
 /source/logging/logging_rotatingfile_example.out*
+/source/trace/coverdir1/coverage_report.dat
+/source/trace/coverdir1/trace.cover
+/source/trace/coverdir1/trace_example.main.cover
+/source/trace/trace_report.dat
