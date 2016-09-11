@@ -15,8 +15,8 @@ import time
 
 
 def signal_handler(num, stack):
-    print('Received signal %d in %s' %
-          (num, threading.currentThread().name))
+    print('Received signal {} in {}'.format(
+        num, threading.currentThread().name))
 
 signal.signal(signal.SIGUSR1, signal_handler)
 

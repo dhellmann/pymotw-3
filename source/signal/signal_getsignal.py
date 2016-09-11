@@ -28,4 +28,4 @@ for s, name in sorted(signals_to_names.items()):
         handler = 'SIG_DFL'
     elif handler is signal.SIG_IGN:
         handler = 'SIG_IGN'
-    print('%-10s (%2d):' % (name, s), handler)
+    print('{:<10} ({:2d}):'.format(name, s), handler)

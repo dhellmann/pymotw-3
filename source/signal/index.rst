@@ -169,9 +169,9 @@ four seconds.
 
 	$ python3 signal_alarm.py
 	
-	Before: Sun Sep 11 11:27:30 2016
-	Alarm : Sun Sep 11 11:27:32 2016
-	After : Sun Sep 11 11:27:34 2016
+	Before: Sun Sep 11 11:31:18 2016
+	Alarm : Sun Sep 11 11:31:20 2016
+	After : Sun Sep 11 11:31:22 2016
 
 .. {{{end}}}
 
@@ -252,12 +252,12 @@ The alarm does not abort the :func:`sleep` call in
 
 	$ python3 signal_threads_alarm.py
 	
-	Sun Sep 11 11:27:34 2016 Setting alarm in alarm_thread
-	Sun Sep 11 11:27:34 2016 Sleeping in alarm_thread
-	Sun Sep 11 11:27:34 2016 Waiting for alarm_thread
-	Sun Sep 11 11:27:35 2016 Alarm in MainThread
-	Sun Sep 11 11:27:37 2016 Done with sleep in alarm_thread
-	Sun Sep 11 11:27:37 2016 Exiting normally
+	Sun Sep 11 11:31:22 2016 Setting alarm in alarm_thread
+	Sun Sep 11 11:31:22 2016 Sleeping in alarm_thread
+	Sun Sep 11 11:31:22 2016 Waiting for alarm_thread
+	Sun Sep 11 11:31:23 2016 Alarm in MainThread
+	Sun Sep 11 11:31:25 2016 Done with sleep in alarm_thread
+	Sun Sep 11 11:31:25 2016 Exiting normally
 
 .. {{{end}}}
 
