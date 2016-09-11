@@ -1,6 +1,6 @@
-=============================================
- subprocess -- Spawning Additional Processes
-=============================================
+==============================================
+ subprocess --- Spawning Additional Processes
+==============================================
 
 .. module:: subprocess
     :synopsis: Spawning additional processes
@@ -17,6 +17,8 @@ make it easier to compare :mod:`subprocess` with those other modules,
 many of the examples in this section re-create the ones used for
 :mod:`os` and :mod:`popen2`.
 
+.. add info about run() here, too.
+
 The :mod:`subprocess` module defines one class, :class:`Popen`, and a
 few wrapper functions that use that class. The constructor for
 :class:`Popen` takes arguments to set up the new process so the parent
@@ -29,10 +31,10 @@ by the application code separately.
 
 .. note::
 
-    The API for working on Unix and Windows is roughly the same, but
+    The API for working on UNIX and Windows is roughly the same, but
     the underlying implementation is slightly different.  All of the
     examples shown here were tested on Mac OS X. Behavior on a
-    non-Unix OS will vary.
+    non-UNIX OS will vary.
 
 Running External Command
 ========================
@@ -228,9 +230,6 @@ the console.
 	non-zero exit status 1
 
 .. {{{end}}}
-
-
-
 
 Working with Pipes Directly
 ===========================
@@ -631,23 +630,23 @@ The sequence of events is
 
 .. seealso::
 
-    `subprocess <http://docs.python.org/lib/module-subprocess.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`subprocess`
 
-    :mod:`os`
-        Although ``subprocess`` replaces many of them, the
-        functions for working with processes found in the :mod:`os`
-        module are still widely used in existing code.
+   * :mod:`os` -- Although ``subprocess`` replaces many of them, the
+     functions for working with processes found in the :mod:`os`
+     module are still widely used in existing code.
 
-    `UNIX Signals and Process Groups <http://www.frostbytes.com/~jimf/papers/signals/signals.html>`_
-        A good description of UNIX signaling and how process groups work.
+   * `UNIX Signals and Process Groups
+     <http://www.frostbytes.com/~jimf/papers/signals/signals.html>`__
+     -- A good description of UNIX signaling and how process groups
+     work.
 
-    :mod:`signal`
-        More details about using the ``signal`` module.
+   * :mod:`signal` -- More details about using the ``signal`` module.
 
-    `Advanced Programming in the UNIX(R) Environment <http://www.amazon.com/Programming-Environment-Addison-Wesley-Professional-Computing/dp/0201433079/ref=pd_bbs_3/002-2842372-4768037?ie=UTF8&s=books&amp;qid=1182098757&sr=8-3>`_
-        Covers working with multiple processes, such as handling signals, closing duplicated
-        file descriptors, etc.
+   * `Advanced Programming in the UNIX(R) Environment
+     <http://www.amazon.com/Programming-Environment-Addison-Wesley-Professional-Computing/dp/0201433079/ref=pd_bbs_3/002-2842372-4768037?ie=UTF8&s=books&amp;qid=1182098757&sr=8-3>`__
+     -- Covers working with multiple processes, such as handling
+     signals, closing duplicated file descriptors, etc.
 
-    :mod:`pipes`
-        Unix shell command pipeline templates in the standard library.
+   * :mod:`pipes` -- Unix shell command pipeline templates in the
+     standard library.
