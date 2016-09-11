@@ -13,14 +13,14 @@ import sys
 
 def daemon():
     name = multiprocessing.current_process().name
-    print 'Starting:', name
+    print('Starting:', name)
     time.sleep(2)
-    print 'Exiting :', name
+    print('Exiting :', name)
 
 def non_daemon():
     name = multiprocessing.current_process().name
-    print 'Starting:', name
-    print 'Exiting :', name
+    print('Starting:', name)
+    print('Exiting :', name)
 
 if __name__ == '__main__':
     d = multiprocessing.Process(name='daemon',
@@ -35,5 +35,5 @@ if __name__ == '__main__':
     n.start()
 
     d.join(1)
-    print 'd.is_alive()', d.is_alive()
+    print('d.is_alive()', d.is_alive())
     n.join()

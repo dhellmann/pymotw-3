@@ -10,7 +10,7 @@ import random
 import multiprocessing
 import time
 
-class ActivePool(object):
+class ActivePool:
     def __init__(self):
         super(ActivePool, self).__init__()
         self.mgr = multiprocessing.Manager()
@@ -30,7 +30,7 @@ def worker(s, pool):
     name = multiprocessing.current_process().name
     with s:
         pool.makeActive(name)
-        print 'Now running: %s' % str(pool)
+        print('Now running: %s' % str(pool))
         time.sleep(random.random())
         pool.makeInactive(name)
 
@@ -50,4 +50,4 @@ if __name__ == '__main__':
 
     for j in jobs:
         j.join()
-        print 'Now running: %s' % str(pool)
+        print('Now running: %s' % str(pool))

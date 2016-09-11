@@ -29,13 +29,13 @@ def terminated():
 if __name__ == '__main__':
     jobs = []
     for f in [exit_error, exit_ok, return_value, raises, terminated]:
-        print 'Starting process for', f.func_name
+        print('Starting process for', f.func_name)
         j = multiprocessing.Process(target=f, name=f.func_name)
         jobs.append(j)
         j.start()
-        
+
     jobs[-1].terminate()
 
     for j in jobs:
         j.join()
-        print '%15s.exitcode = %s' % (j.name, j.exitcode)
+        print('%15s.exitcode = %s' % (j.name, j.exitcode))

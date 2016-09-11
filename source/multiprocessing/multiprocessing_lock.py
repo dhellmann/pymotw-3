@@ -12,7 +12,7 @@ import sys
 def worker_with(lock, stream):
     with lock:
         stream.write('Lock acquired via with\n')
-        
+
 def worker_no_with(lock, stream):
     lock.acquire()
     try:

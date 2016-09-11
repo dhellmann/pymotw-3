@@ -9,14 +9,14 @@
 
 import multiprocessing
 
-class MyFancyClass(object):
-    
+class MyFancyClass:
+
     def __init__(self, name):
         self.name = name
-    
+
     def do_something(self):
         proc_name = multiprocessing.current_process().name
-        print 'Doing something fancy in %s for %s!' % \
+        print('Doing something fancy in %s for %s!' % \)
             (proc_name, self.name)
 
 
@@ -30,11 +30,11 @@ if __name__ == '__main__':
 
     p = multiprocessing.Process(target=worker, args=(queue,))
     p.start()
-    
+
     queue.put(MyFancyClass('Fancy Dan'))
-    
+
     # Wait for the worker to finish
     queue.close()
     queue.join_thread()
     p.join()
-    
+

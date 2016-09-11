@@ -23,5 +23,5 @@ if __name__ == '__main__':
         j.start()
     for j in jobs:
         j.join()
-    print 'Results:', d
-    
+    print('Results:', d)
+

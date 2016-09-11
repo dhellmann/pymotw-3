@@ -14,18 +14,18 @@ def stage_1(cond):
     then notify stage_2 to continue
     """
     name = multiprocessing.current_process().name
-    print 'Starting', name
+    print('Starting', name)
     with cond:
-        print '%s done and ready for stage 2' % name
+        print('%s done and ready for stage 2' % name)
         cond.notify_all()
 
 def stage_2(cond):
     """wait for the condition telling us stage_1 is done"""
     name = multiprocessing.current_process().name
-    print 'Starting', name
+    print('Starting', name)
     with cond:
         cond.wait()
-        print '%s running' % name
+        print('%s running' % name)
 
 if __name__ == '__main__':
     condition = multiprocessing.Condition()

@@ -9,5 +9,5 @@
 
 def worker():
     """worker function"""
-    print 'Worker'
+    print('Worker')
     return

@@ -12,7 +12,7 @@ import logging
 import sys
 
 def worker():
-    print 'Doing some work'
+    print('Doing some work')
     sys.stdout.flush()
 
 if __name__ == '__main__':

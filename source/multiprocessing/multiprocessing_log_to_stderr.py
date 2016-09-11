@@ -12,7 +12,7 @@ import logging
 import sys
 
 def worker():
-    print 'Doing some work'
+    print('Doing some work')
     sys.stdout.flush()
 
 if __name__ == '__main__':
@@ -20,4 +20,4 @@ if __name__ == '__main__':
     p = multiprocessing.Process(target=worker)
     p.start()
     p.join()
-    
+
