@@ -198,7 +198,7 @@ script to exit.
 
 .. code-block:: none
 
-    $ python signal_ignore.py 
+    $ python3 signal_ignore.py 
 
     My PID: 72598
     ^C^C^C^CExiting
@@ -216,17 +216,17 @@ signal from another.
     :caption:
     :start-after: #end_pymotw_header
 
-The signal handlers were all registered in the main
-thread because this is a requirement of the :mod:`signal` module
-implementation for Python, regardless of underlying platform support
-for mixing threads and signals.  Although the receiver thread calls
-:func:`signal.pause`, it does not receive the signal.  The
-``signal.alarm(2)`` call near the end of the example prevents an
-infinite block, since the receiver thread will never exit.
+The signal handlers were all registered in the main thread because
+this is a requirement of the :mod:`signal` module implementation for
+Python, regardless of underlying platform support for mixing threads
+and signals.  Although the receiver thread calls :func:`signal.pause`,
+it does not receive the signal.  The ``signal.alarm(2)`` call near the
+end of the example prevents an infinite block, since the receiver
+thread will never exit.
 
 .. code-block:: none
 
-    $ python signal_threads.py
+    $ python3 signal_threads.py
     
     Waiting for signal in receiver
     Sending signal in sender
