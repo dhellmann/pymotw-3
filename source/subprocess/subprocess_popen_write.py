@@ -10,7 +10,7 @@
 
 import subprocess
 
-print 'write:'
+print('write:')
 proc = subprocess.Popen(['cat', '-'],
                         stdin=subprocess.PIPE,
                         )

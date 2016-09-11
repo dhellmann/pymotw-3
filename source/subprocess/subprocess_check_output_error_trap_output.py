@@ -16,9 +16,9 @@ try:
         stderr=subprocess.STDOUT,
         )
 except subprocess.CalledProcessError as err:
-    print 'ERROR:', err
+    print('ERROR:', err)
 else:
-    print 'Have %d bytes in output' % len(output)
-    print output
+    print('Have %d bytes in output' % len(output))
+    print(output)
 
-                                  
+

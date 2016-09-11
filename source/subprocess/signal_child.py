@@ -41,15 +41,15 @@ def signal_usr1(signum, frame):
     "Callback invoked when a signal is received"
     global received
     received = True
-    print 'CHILD %6s: Received USR1' % pid
+    print('CHILD %6s: Received USR1' % pid)
     sys.stdout.flush()
 
-print 'CHILD %6s: Setting up signal handler' % pid
+print('CHILD %6s: Setting up signal handler' % pid)
 sys.stdout.flush()
 signal.signal(signal.SIGUSR1, signal_usr1)
-print 'CHILD %6s: Pausing to wait for signal' % pid
+print('CHILD %6s: Pausing to wait for signal' % pid)
 sys.stdout.flush()
 time.sleep(3)
 
 if not received:
-    print 'CHILD %6s: Never received signal' % pid
+    print('CHILD %6s: Never received signal' % pid)

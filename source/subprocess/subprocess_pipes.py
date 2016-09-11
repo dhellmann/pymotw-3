@@ -25,6 +25,6 @@ cut = subprocess.Popen(['cut', '-f', '3', '-d:'],
 
 end_of_pipe = cut.stdout
 
-print 'Included files:'
+print('Included files:')
 for line in end_of_pipe:
-    print '\t', line.strip()
+    print('\t', line.strip())

@@ -10,7 +10,7 @@
 
 import subprocess
 
-print 'popen2:'
+print('popen2:')
 
 proc = subprocess.Popen(['cat', '-'],
                         stdin=subprocess.PIPE,
@@ -18,4 +18,4 @@ proc = subprocess.Popen(['cat', '-'],
                         )
 msg = 'through stdin to stdout'
 stdout_value = proc.communicate(msg)[0]
-print '\tpass through:', repr(stdout_value)
+print('\tpass through:', repr(stdout_value))
