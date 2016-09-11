@@ -18,5 +18,5 @@ proc = subprocess.Popen(
     stdout=subprocess.PIPE,
 )
 msg = 'through stdin to stdout'.encode('utf-8')
-stdout_value = proc.communicate(msg)[0]
-print('\tpass through:', repr(stdout_value))
+stdout_value = proc.communicate(msg)[0].decode('utf-8')
+print('pass through:', repr(stdout_value))

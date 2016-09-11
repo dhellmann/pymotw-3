@@ -30,4 +30,4 @@ end_of_pipe = cut.stdout
 
 print('Included files:')
 for line in end_of_pipe:
-    print('\t', line.decode('utf-8').strip())
+    print(line.decode('utf-8').strip())

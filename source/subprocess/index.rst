@@ -312,7 +312,7 @@ reading is managed internally by the :class:`Popen` instance.
 	$ python3 subprocess_popen_read.py
 	
 	read:
-		stdout: b'"to stdout"\n'
+	stdout: '"to stdout"\n'
 
 .. {{{end}}}
 
@@ -336,7 +336,7 @@ pass the data to :func:`communicate`.  This is similar to using
 	$ python3 -u subprocess_popen_write.py
 	
 	write:
-		stdin: to stdin
+	stdin: to stdin
 
 .. {{{end}}}
 
@@ -361,7 +361,7 @@ This sets up the pipe to mimic :func:`popen2`.
 	$ python3 -u subprocess_popen2.py
 	
 	popen2:
-		pass through: b'through stdin to stdout'
+	pass through: 'through stdin to stdout'
 
 .. {{{end}}}
 
@@ -388,8 +388,8 @@ Reading from *stderr* works the same as with *stdout*.  Passing
 	$ python3 -u subprocess_popen3.py
 	
 	popen3:
-		pass through: b'through stdin to stdout'
-		stderr      : b'to stderr\n'
+	pass through: 'through stdin to stdout'
+	stderr      : 'to stderr\n'
 
 .. {{{end}}}
 
@@ -415,8 +415,8 @@ works.
 	$ python3 -u subprocess_popen4.py
 	
 	popen4:
-		combined output: b'through stdin to stdout\nto stderr\n'
-		stderr value   : None
+	combined output: 'through stdin to stdout\nto stderr\n'
+	stderr value   : None
 
 .. {{{end}}}
 
@@ -437,9 +437,9 @@ the final command in the pipeline.
 
 The example reproduces the command line:
 
-::
+.. code-block:: none
 
-    cat index.rst | grep ".. include" | cut -f 3 -d:
+   $ cat index.rst | grep ".. literalinclude" | cut -f 3 -d:
 
 The pipeline reads the reStructuredText source file for this section
 and finds all of the lines that include other files, then prints the
@@ -454,25 +454,25 @@ names of the files being included.
 	$ python3 -u subprocess_pipes.py
 	
 	Included files:
-		 subprocess_os_system.py
-		 subprocess_shell_variables.py
-		 subprocess_run_check.py
-		 subprocess_run_output.py
-		 subprocess_run_output_error.py
-		 subprocess_run_output_error_trap.py
-		 subprocess_check_output_error_trap_output.py
-		 subprocess_popen_read.py
-		 subprocess_popen_write.py
-		 subprocess_popen2.py
-		 subprocess_popen3.py
-		 subprocess_popen4.py
-		 subprocess_pipes.py
-		 repeater.py
-		 interaction.py
-		 signal_child.py
-		 signal_parent.py
-		 subprocess_signal_parent_shell.py
-		 subprocess_signal_setpgrp.py
+	subprocess_os_system.py
+	subprocess_shell_variables.py
+	subprocess_run_check.py
+	subprocess_run_output.py
+	subprocess_run_output_error.py
+	subprocess_run_output_error_trap.py
+	subprocess_check_output_error_trap_output.py
+	subprocess_popen_read.py
+	subprocess_popen_write.py
+	subprocess_popen2.py
+	subprocess_popen3.py
+	subprocess_popen4.py
+	subprocess_pipes.py
+	repeater.py
+	interaction.py
+	signal_child.py
+	signal_parent.py
+	subprocess_signal_parent_shell.py
+	subprocess_signal_setpgrp.py
 
 .. {{{end}}}
 
@@ -577,10 +577,10 @@ The output is:
 	$ python3 signal_parent.py
 	
 	PARENT      : Pausing before sending signal...
-	CHILD  98085: Setting up signal handler
-	CHILD  98085: Pausing to wait for signal
+	CHILD  23387: Setting up signal handler
+	CHILD  23387: Pausing to wait for signal
 	PARENT      : Signaling child
-	CHILD  98085: Received USR1
+	CHILD  23387: Received USR1
 
 .. {{{end}}}
 
@@ -616,21 +616,21 @@ are three separate processes interacting:
 
 	$ python3 subprocess_signal_parent_shell.py
 	
-	PARENT      : Pausing before signaling 98203...
-	Shell script in process 98203
+	PARENT      : Pausing before signaling 23393...
+	Shell script in process 23393
 	+ python3 signal_child.py
-	CHILD  98204: Setting up signal handler
-	CHILD  98204: Pausing to wait for signal
-	PARENT      : Signaling child 98203
-	CHILD  98204: Never received signal
+	CHILD  23394: Setting up signal handler
+	CHILD  23394: Pausing to wait for signal
+	PARENT      : Signaling child 23393
+	CHILD  23394: Never received signal
 
 .. {{{end}}}
 
 To send signals to descendants without knowing their process id, use a
 *process group* to associate the children so they can be signaled
 together.  The process group is created with :func:`os.setpgrp`,
-setting the "session id" to the process id of the current process.
-All child processes inherit their session id from their parent, and
+which sets process group id to the process id of the current process.
+All child processes inherit their process group from their parent, and
 since it should only be set in the shell created by :class:`Popen`
 and its descendants, :func:`os.setpgrp` should not be called in the
 same process where the :class:`Popen` is created.  Instead, the
@@ -666,15 +666,15 @@ The sequence of events is
 
 	$ python3 subprocess_signal_setpgrp.py
 	
-	Calling os.setpgrp() from 98359
-	Process group is now 98359
-	PARENT      : Pausing before signaling 98359...
-	Shell script in process 98359
+	Calling os.setpgrp() from 23405
+	Process group is now 23405
+	PARENT      : Pausing before signaling 23405...
+	Shell script in process 23405
 	+ python3 signal_child.py
-	CHILD  98361: Setting up signal handler
-	CHILD  98361: Pausing to wait for signal
-	PARENT      : Signaling process group 98359
-	CHILD  98361: Received USR1
+	CHILD  23406: Setting up signal handler
+	CHILD  23406: Pausing to wait for signal
+	PARENT      : Signaling process group 23405
+	CHILD  23406: Received USR1
 
 .. {{{end}}}
 
