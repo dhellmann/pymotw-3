@@ -52,11 +52,10 @@ might be interpreted by the shell.
 .. cog.out(run_script(cog.inFile, 'subprocess_os_system.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python subprocess_os_system.py
-
-	__init__.py
+	$ python3 subprocess_os_system.py
+	
 	index.rst
 	interaction.py
 	repeater.py
@@ -95,10 +94,10 @@ before the command is run.
 .. cog.out(run_script(cog.inFile, 'subprocess_shell_variables.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python subprocess_shell_variables.py
-
+	$ python3 subprocess_shell_variables.py
+	
 	/Users/dhellmann
 
 .. {{{end}}}
@@ -123,10 +122,10 @@ which :func:`check_call` interprets as an error.
 .. cog.out(run_script(cog.inFile, 'subprocess_check_call.py', ignore_error=True, break_lines_at=69))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python subprocess_check_call.py
-
+	$ python3 subprocess_check_call.py
+	
 	ERROR: Command '['false']' returned non-zero exit status 1
 
 .. {{{end}}}
@@ -150,12 +149,11 @@ standard output is captured and returned.
 .. cog.out(run_script(cog.inFile, 'subprocess_check_output.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python subprocess_check_output.py
-
-	Have 462 bytes in output
-	__init__.py
+	$ python3 subprocess_check_output.py
+	
+	Have 450 bytes in output
 	index.rst
 	interaction.py
 	repeater.py
@@ -195,10 +193,10 @@ message to standard output is hidden.
 ..                    ignore_error=True, break_lines_at=69, line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python subprocess_check_output_error.py
-
+	$ python3 subprocess_check_output_error.py
+	
 	to stderr
 	ERROR: Command 'echo to stdout; echo to stderr 1>&2; exit 1' returned
 	non-zero exit status 1
@@ -222,10 +220,10 @@ the console.
 ..                    ignore_error=True, break_lines_at=69, line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python subprocess_check_output_error_trap_output.py
-
+	$ python3 subprocess_check_output_error_trap_output.py
+	
 	ERROR: Command 'echo to stdout; echo to stderr 1>&2; exit 1' returned
 	non-zero exit status 1
 
@@ -261,12 +259,12 @@ reading is managed internally by the :class:`Popen` instance.
 .. cog.out(run_script(cog.inFile, 'subprocess_popen_read.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python subprocess_popen_read.py
-
+	$ python3 subprocess_popen_read.py
+	
 	read:
-		stdout: '"to stdout"\n'
+		stdout: b'"to stdout"\n'
 
 .. {{{end}}}
 
@@ -285,10 +283,10 @@ pass the data to :func:`communicate`.  This is similar to using
 .. cog.out(run_script(cog.inFile, '-u subprocess_popen_write.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python -u subprocess_popen_write.py
-
+	$ python3 -u subprocess_popen_write.py
+	
 	write:
 		stdin: to stdin
 
@@ -310,12 +308,12 @@ This sets up the pipe to mimic :func:`popen2`.
 .. cog.out(run_script(cog.inFile, '-u subprocess_popen2.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python -u subprocess_popen2.py
-
+	$ python3 -u subprocess_popen2.py
+	
 	popen2:
-		pass through: 'through stdin to stdout'
+		pass through: b'through stdin to stdout'
 
 .. {{{end}}}
 
@@ -337,13 +335,13 @@ Reading from *stderr* works the same as with *stdout*.  Passing
 .. cog.out(run_script(cog.inFile, '-u subprocess_popen3.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python -u subprocess_popen3.py
-
+	$ python3 -u subprocess_popen3.py
+	
 	popen3:
-		pass through: 'through stdin to stdout'
-		stderr      : 'to stderr\n'
+		pass through: b'through stdin to stdout'
+		stderr      : b'to stderr\n'
 
 .. {{{end}}}
 
@@ -364,12 +362,12 @@ works.
 .. cog.out(run_script(cog.inFile, '-u subprocess_popen4.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python -u subprocess_popen4.py
-
+	$ python3 -u subprocess_popen4.py
+	
 	popen4:
-		combined output: 'through stdin to stdout\nto stderr\n'
+		combined output: b'through stdin to stdout\nto stderr\n'
 		stderr value   : None
 
 .. {{{end}}}
@@ -403,29 +401,29 @@ names of the files being included.
 .. cog.out(run_script(cog.inFile, '-u subprocess_pipes.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python -u subprocess_pipes.py
-
+	$ python3 -u subprocess_pipes.py
+	
 	Included files:
-		subprocess_os_system.py
-		subprocess_shell_variables.py
-		subprocess_check_call.py
-		subprocess_check_output.py
-		subprocess_check_output_error.py
-		subprocess_check_output_error_trap_output.py
-		subprocess_popen_read.py
-		subprocess_popen_write.py
-		subprocess_popen2.py
-		subprocess_popen3.py
-		subprocess_popen4.py
-		subprocess_pipes.py
-		repeater.py
-		interaction.py
-		signal_child.py
-		signal_parent.py
-		subprocess_signal_parent_shell.py
-		subprocess_signal_setsid.py
+		 subprocess_os_system.py
+		 subprocess_shell_variables.py
+		 subprocess_check_call.py
+		 subprocess_check_output.py
+		 subprocess_check_output_error.py
+		 subprocess_check_output_error_trap_output.py
+		 subprocess_popen_read.py
+		 subprocess_popen_write.py
+		 subprocess_popen2.py
+		 subprocess_popen3.py
+		 subprocess_popen4.py
+		 subprocess_pipes.py
+		 repeater.py
+		 interaction.py
+		 signal_child.py
+		 signal_parent.py
+		 subprocess_signal_parent_shell.py
+		 subprocess_signal_setsid.py
 
 .. {{{end}}}
 
@@ -470,10 +468,10 @@ output for each loop style.
 .. cog.out(run_script(cog.inFile, '-u interaction.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python -u interaction.py
-
+	$ python3 -u interaction.py
+	
 	One line at a time:
 	repeater.py: starting
 	0
@@ -525,15 +523,15 @@ The output is:
 .. cog.out(run_script(cog.inFile, 'signal_parent.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python signal_parent.py
-
+	$ python3 signal_parent.py
+	
 	PARENT      : Pausing before sending signal...
-	CHILD  11298: Setting up signal handler
-	CHILD  11298: Pausing to wait for signal
+	CHILD  37952: Setting up signal handler
+	CHILD  37952: Pausing to wait for signal
 	PARENT      : Signaling child
-	CHILD  11298: Received USR1
+	CHILD  37952: Received USR1
 
 .. {{{end}}}
 
@@ -565,17 +563,17 @@ are three separate processes interacting:
 .. cog.out(run_script(cog.inFile, 'subprocess_signal_parent_shell.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python subprocess_signal_parent_shell.py
-
-	PARENT      : Pausing before signaling 11301...
-	Shell script in process 11301
+	$ python3 subprocess_signal_parent_shell.py
+	
+	PARENT      : Pausing before signaling 37965...
+	Shell script in process 37965
 	+ python signal_child.py
-	CHILD  11302: Setting up signal handler
-	CHILD  11302: Pausing to wait for signal
-	PARENT      : Signaling child 11301
-	CHILD  11302: Never received signal
+	CHILD  37966: Setting up signal handler
+	CHILD  37966: Pausing to wait for signal
+	PARENT      : Signaling child 37965
+	CHILD  37966: Never received signal
 
 .. {{{end}}}
 
@@ -615,18 +613,18 @@ The sequence of events is
 .. cog.out(run_script(cog.inFile, 'subprocess_signal_setsid.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python subprocess_signal_setsid.py
-
-	Calling os.setsid() from 11305
-	PARENT      : Pausing before signaling 11305...
-	Shell script in process 11305
+	$ python3 subprocess_signal_setsid.py
+	
+	Calling os.setsid() from 37976
+	PARENT      : Pausing before signaling 37976...
+	Shell script in process 37976
 	+ python signal_child.py
-	CHILD  11306: Setting up signal handler
-	CHILD  11306: Pausing to wait for signal
-	PARENT      : Signaling process group 11305
-	CHILD  11306: Received USR1
+	CHILD  37977: Setting up signal handler
+	CHILD  37977: Pausing to wait for signal
+	PARENT      : Signaling process group 37976
+	CHILD  37977: Received USR1
 
 .. {{{end}}}
 

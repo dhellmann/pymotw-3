@@ -15,7 +15,7 @@ cat = subprocess.Popen(
 )
 
 grep = subprocess.Popen(
-    ['grep', '.. include::'],
+    ['grep', '.. literalinclude::'],
     stdin=cat.stdout,
     stdout=subprocess.PIPE,
 )
@@ -30,4 +30,4 @@ end_of_pipe = cut.stdout
 
 print('Included files:')
 for line in end_of_pipe:
-    print('\t', line.strip())
+    print('\t', line.decode('utf-8').strip())

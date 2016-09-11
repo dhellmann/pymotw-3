@@ -10,6 +10,7 @@ sys.stderr.flush()
 
 while True:
     next_line = sys.stdin.readline()
+    sys.stderr.flush()
     if not next_line:
         break
     sys.stdout.write(next_line)
