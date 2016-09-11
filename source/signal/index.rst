@@ -161,13 +161,19 @@ blocking indefinitely on an I/O operation or other system call.
 In this example, the call to :func:`sleep` does not last the full
 four seconds.
 
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'signal_alarm.py'))
+.. }}}
+
 .. code-block:: none
 
-    $ python signal_alarm.py
+	$ python3 signal_alarm.py
+	
+	Before: Sun Sep 11 11:27:30 2016
+	Alarm : Sun Sep 11 11:27:32 2016
+	After : Sun Sep 11 11:27:34 2016
 
-    Before: Sun Aug 17 10:51:09 2008
-    Alarm : Sun Aug 17 10:51:11 2008
-    After : Sun Aug 17 10:51:11 2008
+.. {{{end}}}
 
 
 Ignoring Signals
@@ -246,12 +252,12 @@ The alarm does not abort the :func:`sleep` call in
 
 	$ python3 signal_threads_alarm.py
 	
-	Sun Sep 11 11:25:44 2016 Setting alarm in alarm_thread
-	Sun Sep 11 11:25:44 2016 Sleeping in alarm_thread
-	Sun Sep 11 11:25:45 2016 Waiting for alarm_thread
-	Sun Sep 11 11:25:45 2016 Alarm in MainThread
-	Sun Sep 11 11:25:47 2016 Done with sleep in alarm_thread
-	Sun Sep 11 11:25:47 2016 Exiting normally
+	Sun Sep 11 11:27:34 2016 Setting alarm in alarm_thread
+	Sun Sep 11 11:27:34 2016 Sleeping in alarm_thread
+	Sun Sep 11 11:27:34 2016 Waiting for alarm_thread
+	Sun Sep 11 11:27:35 2016 Alarm in MainThread
+	Sun Sep 11 11:27:37 2016 Done with sleep in alarm_thread
+	Sun Sep 11 11:27:37 2016 Exiting normally
 
 .. {{{end}}}
 
