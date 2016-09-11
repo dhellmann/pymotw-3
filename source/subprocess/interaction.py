@@ -13,7 +13,7 @@ proc = subprocess.Popen(
     stdout=subprocess.PIPE,
 )
 for i in range(5):
-    line = ('%d\n' % i).encode('utf-8')
+    line = ('{}\n'.format(i)).encode('utf-8')
     proc.stdin.write(line)
     proc.stdin.flush()
     output = proc.stdout.readline().decode('utf-8')
@@ -30,7 +30,7 @@ proc = subprocess.Popen(
     stdout=subprocess.PIPE,
 )
 for i in range(5):
-    line = ('%d\n' % i).encode('utf-8')
+    line = ('{}\n'.format(i)).encode('utf-8')
     proc.stdin.write(line)
 
 output = proc.communicate()[0].decode('utf-8')

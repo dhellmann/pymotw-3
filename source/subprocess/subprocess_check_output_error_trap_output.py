@@ -20,5 +20,5 @@ try:
 except subprocess.CalledProcessError as err:
     print('ERROR:', err)
 else:
-    print('Have %d bytes in output' % len(output))
+    print('Have {} bytes in output'.format(len(output)))
     print(output)

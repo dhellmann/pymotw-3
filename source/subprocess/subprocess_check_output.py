@@ -12,5 +12,5 @@ exit code at the same time.
 import subprocess
 
 output = subprocess.check_output(['ls', '-1'])
-print('Have %d bytes in output' % len(output))
+print('Have {} bytes in output'.format(len(output)))
 print(output.decode('utf-8'))

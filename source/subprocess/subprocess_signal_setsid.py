@@ -25,7 +25,7 @@ script_file.flush()
 
 
 def show_setting_sid():
-    print('Calling os.setsid() from %s' % os.getpid())
+    print('Calling os.setsid() from {}'.format(os.getpid()))
     sys.stdout.flush()
     os.setsid()
 
@@ -35,10 +35,12 @@ proc = subprocess.Popen(
     close_fds=True,
     preexec_fn=show_setting_sid,
 )
-print('PARENT      : Pausing before signaling %s...' % proc.pid)
+print('PARENT      : Pausing before signaling {}...'.format(
+    proc.pid))
 sys.stdout.flush()
 time.sleep(1)
-print('PARENT      : Signaling process group %s' % proc.pid)
+print('PARENT      : Signaling process group {}'.format(
+    proc.pid))
 sys.stdout.flush()
 os.killpg(proc.pid, signal.SIGUSR1)
 time.sleep(3)
