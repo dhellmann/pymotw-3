@@ -502,17 +502,6 @@ bz2
 :class:`BZ2File` instances now support the context manager protocol,
 and do not need to be wrapped with :func:`contextlib.closing`.
 
-.. _porting-contextlib:
-
-contextlib
-----------
-
-.. index::
-   pair: porting; contextlib
-
-:func:`contextlib.nested` has been removed. Pass multiple context
-managers to the same ``with`` statement instead.
-
 .. _porting-collections:
 
 collections
@@ -548,6 +537,17 @@ files with Unicode values in them.
 Using the old :class:`RawConfigParser` is discouraged. New projects
 should use ``ConfigParser(interpolation=None)`` instead to achieve the
 same behavior.
+
+.. _porting-contextlib:
+
+contextlib
+----------
+
+.. index::
+   pair: porting; contextlib
+
+:func:`contextlib.nested` has been removed. Pass multiple context
+managers to the same ``with`` statement instead.
 
 .. _porting-csv:
 
