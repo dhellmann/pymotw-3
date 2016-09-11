@@ -96,41 +96,47 @@ signal handler was registered from C, rather than Python).
 Again, since each OS may have different signals defined, the output on
 other systems may vary.  This is from OS X:
 
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'signal_getsignal.py'))
+.. }}}
+
 .. code-block:: none
 
-    $ python signal_getsignal.py
+	$ python3 signal_getsignal.py
+	
+	SIGHUP     ( 1): SIG_DFL
+	SIGINT     ( 2): <built-in function default_int_handler>
+	SIGQUIT    ( 3): SIG_DFL
+	SIGILL     ( 4): SIG_DFL
+	SIGTRAP    ( 5): SIG_DFL
+	SIGIOT     ( 6): SIG_DFL
+	SIGEMT     ( 7): SIG_DFL
+	SIGFPE     ( 8): SIG_DFL
+	SIGKILL    ( 9): None
+	SIGBUS     (10): SIG_DFL
+	SIGSEGV    (11): SIG_DFL
+	SIGSYS     (12): SIG_DFL
+	SIGPIPE    (13): SIG_IGN
+	SIGALRM    (14): <function alarm_received at 0x100757f28>
+	SIGTERM    (15): SIG_DFL
+	SIGURG     (16): SIG_DFL
+	SIGSTOP    (17): None
+	SIGTSTP    (18): SIG_DFL
+	SIGCONT    (19): SIG_DFL
+	SIGCHLD    (20): SIG_DFL
+	SIGTTIN    (21): SIG_DFL
+	SIGTTOU    (22): SIG_DFL
+	SIGIO      (23): SIG_DFL
+	SIGXCPU    (24): SIG_DFL
+	SIGXFSZ    (25): SIG_IGN
+	SIGVTALRM  (26): SIG_DFL
+	SIGPROF    (27): SIG_DFL
+	SIGWINCH   (28): SIG_DFL
+	SIGINFO    (29): SIG_DFL
+	SIGUSR1    (30): SIG_DFL
+	SIGUSR2    (31): SIG_DFL
 
-    SIGHUP     ( 1): SIG_DFL
-    SIGINT     ( 2): <built-in function default_int_handler>
-    SIGQUIT    ( 3): SIG_DFL
-    SIGILL     ( 4): SIG_DFL
-    SIGTRAP    ( 5): SIG_DFL
-    SIGIOT     ( 6): SIG_DFL
-    SIGEMT     ( 7): SIG_DFL
-    SIGFPE     ( 8): SIG_DFL
-    SIGKILL    ( 9): None
-    SIGBUS     (10): SIG_DFL
-    SIGSEGV    (11): SIG_DFL
-    SIGSYS     (12): SIG_DFL
-    SIGPIPE    (13): SIG_IGN
-    SIGALRM    (14): <function alarm_received at 0x10045b398>
-    SIGTERM    (15): SIG_DFL
-    SIGURG     (16): SIG_DFL
-    SIGSTOP    (17): None
-    SIGTSTP    (18): SIG_DFL
-    SIGCONT    (19): SIG_DFL
-    SIGCHLD    (20): SIG_DFL
-    SIGTTIN    (21): SIG_DFL
-    SIGTTOU    (22): SIG_DFL
-    SIGIO      (23): SIG_DFL
-    SIGXCPU    (24): SIG_DFL
-    SIGXFSZ    (25): SIG_IGN
-    SIGVTALRM  (26): SIG_DFL
-    SIGPROF    (27): SIG_DFL
-    SIGWINCH   (28): SIG_DFL
-    SIGINFO    (29): SIG_DFL
-    SIGUSR1    (30): SIG_DFL
-    SIGUSR2    (31): SIG_DFL
+.. {{{end}}}
 
 
 Sending Signals
@@ -240,12 +246,12 @@ The alarm does not abort the :func:`sleep` call in
 
 	$ python3 signal_threads_alarm.py
 	
-	Sun Sep 11 11:24:52 2016 Setting alarm in alarm_thread
-	Sun Sep 11 11:24:52 2016 Sleeping in alarm_thread
-	Sun Sep 11 11:24:52 2016 Waiting for alarm_thread
-	Sun Sep 11 11:24:53 2016 Alarm in MainThread
-	Sun Sep 11 11:24:55 2016 Done with sleep in alarm_thread
-	Sun Sep 11 11:24:55 2016 Exiting normally
+	Sun Sep 11 11:25:44 2016 Setting alarm in alarm_thread
+	Sun Sep 11 11:25:44 2016 Sleeping in alarm_thread
+	Sun Sep 11 11:25:45 2016 Waiting for alarm_thread
+	Sun Sep 11 11:25:45 2016 Alarm in MainThread
+	Sun Sep 11 11:25:47 2016 Done with sleep in alarm_thread
+	Sun Sep 11 11:25:47 2016 Exiting normally
 
 .. {{{end}}}
 
