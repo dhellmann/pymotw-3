@@ -35,39 +35,39 @@ and the count for that word by :func:`count_words` during the
 reduction phase.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'multiprocessing_wordcount.py'))
+.. cog.out(run_script(cog.inFile, '-u multiprocessing_wordcount.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python multiprocessing_wordcount.py
-
-	PoolWorker-1 reading basics.rst
-	PoolWorker-1 reading index.rst
-	PoolWorker-2 reading communication.rst
-	PoolWorker-2 reading mapreduce.rst
+	$ python3 -u multiprocessing_wordcount.py
+	
+	ForkPoolWorker-1 reading basics.rst
+	ForkPoolWorker-2 reading communication.rst
+	ForkPoolWorker-3 reading index.rst
+	ForkPoolWorker-4 reading mapreduce.rst
 	
 	TOP 20 WORDS BY FREQUENCY
 	
-	process         :    81
-	multiprocessing :    43
-	worker          :    38
+	process         :    83
+	multiprocessing :    44
+	running         :    42
+	worker          :    40
+	starting        :    37
 	after           :    34
-	starting        :    33
-	running         :    32
-	processes       :    32
-	python          :    31
+	now             :    32
+	processes       :    31
 	start           :    29
 	class           :    28
-	literal         :    27
 	header          :    27
 	pymotw          :    27
+	caption         :    27
 	end             :    27
-	daemon          :    23
-	now             :    22
+	daemon          :    22
+	can             :    22
+	exiting         :    21
+	mod             :    21
 	func            :    21
-	can             :    21
 	consumer        :    20
-	mod             :    19
 
 .. {{{end}}}

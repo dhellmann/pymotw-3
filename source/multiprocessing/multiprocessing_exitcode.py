@@ -42,8 +42,8 @@ if __name__ == '__main__':
         terminated,
     ]
     for f in funcs:
-        print('Starting process for', f.func_name)
-        j = multiprocessing.Process(target=f, name=f.func_name)
+        print('Starting process for', f.__name__)
+        j = multiprocessing.Process(target=f, name=f.__name__)
         jobs.append(j)
         j.start()
 

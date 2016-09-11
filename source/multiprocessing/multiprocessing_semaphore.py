@@ -36,7 +36,8 @@ def worker(s, pool):
     name = multiprocessing.current_process().name
     with s:
         pool.makeActive(name)
-        print('Now running: %s' % str(pool))
+        print('Activating {} now running {}'.format(
+            name, pool))
         time.sleep(random.random())
         pool.makeInactive(name)
 
@@ -56,6 +57,13 @@ if __name__ == '__main__':
     for j in jobs:
         j.start()
 
-    for j in jobs:
-        j.join()
-        print('Now running: %s' % str(pool))
+    while True:
+        alive = 0
+        for j in jobs:
+            if j.is_alive():
+                alive += 1
+                j.join(timeout=0.1)
+                print('Now running {}'.format(pool))
+        if alive == 0:
+            # all done
+            break

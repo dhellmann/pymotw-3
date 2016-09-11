@@ -21,8 +21,10 @@ def file_to_words(filename):
         'in', 'is', 'it', 'of', 'or', 'py', 'rst', 'that', 'the',
         'to', 'with',
     ])
-    TR = string.maketrans(string.punctuation,
-                          ' ' * len(string.punctuation))
+    TR = str.maketrans({
+        p: ' '
+        for p in string.punctuation
+    })
 
     print('{} reading {}'.format(
         multiprocessing.current_process().name, filename))

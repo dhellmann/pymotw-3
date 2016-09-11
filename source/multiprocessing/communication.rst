@@ -23,11 +23,11 @@ then the main process waits for the worker to finish.
 .. cog.out(run_script(cog.inFile, 'multiprocessing_queue.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python multiprocessing_queue.py
-
-    Doing something fancy in Process-1 for Fancy Dan!
+	$ python3 multiprocessing_queue.py
+	
+	Doing something fancy in Process-1 for Fancy Dan!
 
 .. {{{end}}}
 
@@ -52,35 +52,39 @@ completed.
 .. cog.out(run_script(cog.inFile, '-u multiprocessing_producer_consumer.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python -u multiprocessing_producer_consumer.py
-
-    Creating 4 consumers
-    Consumer-1: 0 * 0
-    Consumer-2: 1 * 1
-    Consumer-3: 2 * 2
-    Consumer-4: 3 * 3
-    Consumer-4: 4 * 4
-    Consumer-1: 5 * 5
-    Consumer-3: 6 * 6
-    Consumer-2: 7 * 7
-    Consumer-1: 8 * 8
-    Consumer-4: 9 * 9
-    Consumer-3: Exiting
-    Consumer-2: Exiting
-    Consumer-1: Exiting
-    Consumer-4: Exiting
-    Result: 0 * 0 = 0
-    Result: 3 * 3 = 9
-    Result: 2 * 2 = 4
-    Result: 1 * 1 = 1
-    Result: 5 * 5 = 25
-    Result: 4 * 4 = 16
-    Result: 6 * 6 = 36
-    Result: 7 * 7 = 49
-    Result: 9 * 9 = 81
-    Result: 8 * 8 = 64
+	$ python3 -u multiprocessing_producer_consumer.py
+	
+	Creating 8 consumers
+	Consumer-1: 0 * 0
+	Consumer-2: 1 * 1
+	Consumer-3: 2 * 2
+	Consumer-4: 3 * 3
+	Consumer-5: 4 * 4
+	Consumer-6: 5 * 5
+	Consumer-7: 6 * 6
+	Consumer-8: 7 * 7
+	Consumer-1: 8 * 8
+	Consumer-3: 9 * 9
+	Consumer-2: Exiting
+	Consumer-4: Exiting
+	Consumer-5: Exiting
+	Consumer-6: Exiting
+	Consumer-7: Exiting
+	Consumer-8: Exiting
+	Consumer-3: Exiting
+	Consumer-1: Exiting
+	Result: 0 * 0 = 0
+	Result: 2 * 2 = 4
+	Result: 1 * 1 = 1
+	Result: 3 * 3 = 9
+	Result: 4 * 4 = 16
+	Result: 5 * 5 = 25
+	Result: 7 * 7 = 49
+	Result: 6 * 6 = 36
+	Result: 9 * 9 = 81
+	Result: 8 * 8 = 64
 
 .. {{{end}}}
 
@@ -106,16 +110,16 @@ is responsible for checking the state of the event using
 .. cog.out(run_script(cog.inFile, '-u multiprocessing_event.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python -u multiprocessing_event.py
-
-    main: waiting before calling Event.set()
-    wait_for_event: starting
-    wait_for_event_timeout: starting
-    wait_for_event_timeout: e.is_set()-> False
-    main: event is setwait_for_event: e.is_set()->
-     True
+	$ python3 -u multiprocessing_event.py
+	
+	main: waiting before calling Event.set()
+	wait_for_event: starting
+	wait_for_event_timeout: starting
+	wait_for_event_timeout: e.is_set()-> False
+	main: event is set
+	wait_for_event: e.is_set()-> True
 
 .. {{{end}}}
 
@@ -138,12 +142,12 @@ output stream with the lock.
 .. cog.out(run_script(cog.inFile, 'multiprocessing_lock.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python multiprocessing_lock.py
-
-    Lock acquired via with
-    Lock acquired directly
+	$ python3 multiprocessing_lock.py
+	
+	Lock acquired via with
+	Lock acquired directly
 
 .. {{{end}}}
 
@@ -166,16 +170,16 @@ parallel, but only after the first stage is done.
 .. cog.out(run_script(cog.inFile, 'multiprocessing_condition.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python multiprocessing_condition.py
-
-    Starting s1
-    s1 done and ready for stage 2
-    Starting stage_2[1]
-    stage_2[1] running
-    Starting stage_2[2]
-    stage_2[2] running
+	$ python3 multiprocessing_condition.py
+	
+	Starting s1
+	s1 done and ready for stage 2
+	Starting stage_2[1]
+	stage_2[1] running
+	Starting stage_2[2]
+	stage_2[2] running
 
 .. {{{end}}}
 
@@ -203,33 +207,43 @@ of the active processes to show that only three are running
 concurrently.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'multiprocessing_semaphore.py'))
+.. cog.out(run_script(cog.inFile, '-u multiprocessing_semaphore.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python multiprocessing_semaphore.py
-
-    Now running: ['0', '1', '3']
-    Now running: ['0', '1', '3']
-    Now running: ['3', '2', '5']
-    Now running: ['0', '1', '3']
-    Now running: ['1', '3', '2']
-    Now running: ['2', '6', '7']
-    Now running: ['3', '2', '6']
-    Now running: ['6', '4', '8']
-    Now running: ['4', '8', '9']
-    Now running: ['6', '7', '4']
-    Now running: ['1', '3', '2']
-    Now running: ['3', '2', '5']
-    Now running: ['6', '7', '4']
-    Now running: ['6', '7', '4']
-    Now running: []
-    Now running: []
-    Now running: []
-    Now running: []
-    Now running: []
-    Now running: []
+	$ python3 -u multiprocessing_semaphore.py
+	
+	Activating 0 now running ['0', '1', '2']
+	Activating 1 now running ['0', '1', '2']
+	Activating 2 now running ['0', '1', '2']
+	Activating 3 now running ['1', '2', '3']
+	Now running ['1', '2', '3']
+	Now running ['1', '2', '3']
+	Activating 5 now running ['1', '3', '5']
+	Now running ['1', '3', '5']
+	Now running ['1', '3', '5']
+	Now running ['1', '3', '5']
+	Now running ['1', '3', '5']
+	Activating 4 now running ['1', '5', '4']
+	Activating 6 now running ['5', '4', '6']
+	Now running ['5', '4', '6']
+	Now running ['5', '4', '6']
+	Now running ['5', '4', '6']
+	Activating 7 now running ['4', '6', '7']
+	Activating 8 now running ['4', '7', '8']
+	Now running ['4', '7', '8']
+	Now running ['4', '7', '8']
+	Activating 9 now running ['4', '8', '9']
+	Now running ['4', '8', '9']
+	Now running ['8', '9']
+	Now running ['8', '9']
+	Now running ['8', '9']
+	Now running ['8', '9']
+	Now running ['8', '9']
+	Now running ['8', '9']
+	Now running ['8', '9']
+	Now running []
 
 .. {{{end}}}
 
@@ -254,12 +268,12 @@ seen in all processes.  Dictionaries are also supported.
 ..                    break_lines_at=61))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python multiprocessing_manager_dict.py
-
-    Results: {0: 0, 1: 2, 2: 4, 3: 6, 4: 8, 5: 10, 6: 12, 7: 14, 
-    8: 16, 9: 18}
+	$ python3 multiprocessing_manager_dict.py
+	
+	Results: {0: 0, 1: 2, 2: 4, 3: 6, 4: 8, 5: 10, 6: 12, 7: 14, 
+	8: 16, 9: 18}
 
 .. {{{end}}}
 
@@ -280,12 +294,12 @@ the clients that receive the :class:`Namespace` instance.
 .. cog.out(run_script(cog.inFile, 'multiprocessing_namespaces.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python multiprocessing_namespaces.py
-
-    Before event, error: 'Namespace' object has no attribute 'value'
-    After event: This is the value
+	$ python3 multiprocessing_namespaces.py
+	
+	Before event, error: 'Namespace' object has no attribute 'value'
+	After event: This is the value
 
 .. {{{end}}}
 
@@ -302,12 +316,12 @@ To update the list, attach it to the namespace object again.
 .. cog.out(run_script(cog.inFile, 'multiprocessing_namespaces_mutable.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python multiprocessing_namespaces_mutable.py
-
-    Before event: []
-    After event : []
+	$ python3 multiprocessing_namespaces_mutable.py
+	
+	Before event: []
+	After event : []
 
 .. {{{end}}}
 
@@ -336,17 +350,21 @@ processes to ensure proper cleanup.
 .. cog.out(run_script(cog.inFile, 'multiprocessing_pool.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python multiprocessing_pool.py
-
-    Input   : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-    Built-in: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
-    Starting PoolWorker-3
-    Starting PoolWorker-1
-    Starting PoolWorker-4
-    Starting PoolWorker-2
-    Pool    : [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
+	$ python3 multiprocessing_pool.py
+	
+	Input   : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+	Built-in: <map object at 0x1010b2be0>
+	Starting ForkPoolWorker-3
+	Starting ForkPoolWorker-4
+	Starting ForkPoolWorker-5
+	Starting ForkPoolWorker-1
+	Starting ForkPoolWorker-2
+	Starting ForkPoolWorker-7
+	Starting ForkPoolWorker-6
+	Starting ForkPoolWorker-8
+	Pool    : [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
 
 .. {{{end}}}
 
@@ -369,21 +387,21 @@ complete two of them at a time.
 .. cog.out(run_script(cog.inFile, 'multiprocessing_pool_maxtasksperchild.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-    $ python multiprocessing_pool_maxtasksperchild.py
-
-    Input   : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-    Built-in: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
-    Starting PoolWorker-1
-    Starting PoolWorker-2
-    Starting PoolWorker-3
-    Starting PoolWorker-4
-    Starting PoolWorker-5
-    Starting PoolWorker-6
-    Starting PoolWorker-7
-    Starting PoolWorker-8
-    Pool    : [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
+	$ python3 multiprocessing_pool_maxtasksperchild.py
+	
+	Input   : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+	Built-in: <map object at 0x1007b21d0>
+	Starting ForkPoolWorker-1
+	Starting ForkPoolWorker-2
+	Starting ForkPoolWorker-3
+	Starting ForkPoolWorker-5
+	Starting ForkPoolWorker-7
+	Starting ForkPoolWorker-4
+	Starting ForkPoolWorker-6
+	Starting ForkPoolWorker-8
+	Pool    : [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
 
 .. {{{end}}}
 
