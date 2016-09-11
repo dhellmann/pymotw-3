@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Replacing os.system with subprocess.
 """
 #end_pymotw_header

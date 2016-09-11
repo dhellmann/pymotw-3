@@ -6,7 +6,6 @@
     :synopsis: Spawning additional processes
 
 :Purpose: Start and communicate with additional processes.
-:Python Version: 2.4 and later
 
 The :mod:`subprocess` module provides a consistent way to create and
 work with additional processes. It offers a higher-level interface
@@ -39,10 +38,10 @@ Running External Command
 ========================
 
 To run an external command without interacting with it in the same way
-as :func:`os.system`, use the :func:`call()` function.
+as :func:`os.system`, use the :func:`call` function.
 
-.. include:: subprocess_os_system.py
-    :literal:
+.. literalinclude:: subprocess_os_system.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The command line arguments are passed as a list of strings, which
@@ -84,8 +83,8 @@ Setting the *shell* argument to a true value causes :mod:`subprocess`
 to spawn an intermediate shell process which then runs the
 command.  The default is to run the command directly.
 
-.. include:: subprocess_shell_variables.py
-    :literal:
+.. literalinclude:: subprocess_shell_variables.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Using an intermediate shell means that variables, glob patterns, and
@@ -113,8 +112,8 @@ The caller is responsible for interpreting it to detect errors.  The
 exit code is checked, and if it indicates an error happened then a
 :class:`CalledProcessError` exception is raised.
 
-.. include:: subprocess_check_call.py
-   :literal:
+.. literalinclude:: subprocess_check_call.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The :command:`false` command always exits with a non-zero status code,
@@ -140,8 +139,8 @@ The standard input and output channels for the process started by
 the calling program cannot capture the output of the command.  Use
 :func:`check_output` to capture the output for later processing.
 
-.. include:: subprocess_check_output.py
-   :literal:
+.. literalinclude:: subprocess_check_output.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The ``ls -1`` command runs successfully, so the text it prints to
@@ -184,8 +183,8 @@ The next example runs a series of commands in a sub-shell.  Messages are
 sent to standard output and standard error before the commands exit
 with an error code.
 
-.. include:: subprocess_check_output_error.py
-   :literal:
+.. literalinclude:: subprocess_check_output_error.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The message to standard error is printed to the console, but the
@@ -210,8 +209,8 @@ To prevent error messages from commands run through
 :func:`check_output` from being written to the console, set the
 *stderr* parameter to the constant :const:`STDOUT`.
 
-.. include:: subprocess_check_output_error_trap_output.py
-   :literal:
+.. literalinclude:: subprocess_check_output_error_trap_output.py
+   :caption:
    :start-after: #end_pymotw_header
 
 Now the error and standard output channels are merged together so if
@@ -243,7 +242,7 @@ The functions :func:`call`, :func:`check_call`, and
 Using :class:`Popen` directly gives more control over how the command
 is run, and how its input and output streams are processed.  For
 example, by passing different arguments for *stdin*, *stdout*, and
-*stderr* it is possible to mimic the variations of :func:`os.popen()`.
+*stderr* it is possible to mimic the variations of :func:`os.popen`.
 
 One-way Communication With a Process
 ------------------------------------
@@ -251,8 +250,8 @@ One-way Communication With a Process
 To run a process and read all of its output, set the *stdout* value to
 :const:`PIPE` and call :func:`communicate`.
 
-.. include:: subprocess_popen_read.py
-    :literal:
+.. literalinclude:: subprocess_popen_read.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This is similar to the way :func:`popen` works, except that the
@@ -274,8 +273,8 @@ reading is managed internally by the :class:`Popen` instance.
 To set up a pipe to allow the calling program to write data to it, set
 *stdin* to :const:`PIPE`.
 
-.. include:: subprocess_popen_write.py
-    :literal:
+.. literalinclude:: subprocess_popen_write.py
+    :caption:
     :start-after: #end_pymotw_header
 
 To send data to the standard input channel of the process one time,
@@ -301,8 +300,8 @@ Bi-directional Communication With a Process
 To set up the :class:`Popen` instance for reading and writing at the
 same time, use a combination of the previous techniques.
 
-.. include:: subprocess_popen2.py
-    :literal:
+.. literalinclude:: subprocess_popen2.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This sets up the pipe to mimic :func:`popen2`.
@@ -326,8 +325,8 @@ Capturing Error Output
 It is also possible watch both of the streams for *stdout* and *stderr*,
 as with :func:`popen3`.
 
-.. include:: subprocess_popen3.py
-    :literal:
+.. literalinclude:: subprocess_popen3.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Reading from *stderr* works the same as with *stdout*.  Passing
@@ -354,8 +353,8 @@ Combining Regular and Error Output
 To direct the error output from the process to its standard output
 channel, use :const:`STDOUT` for *stderr* instead of :const:`PIPE`.
 
-.. include:: subprocess_popen4.py
-    :literal:
+.. literalinclude:: subprocess_popen4.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Combining the output in this way is similar to how :func:`popen4`
@@ -386,8 +385,8 @@ instances and chaining their inputs and outputs together.  The
 :const:`PIPE`.  The output is read from the :attr:`stdout` handle for
 the final command in the pipeline.
 
-.. include:: subprocess_pipes.py
-    :literal:
+.. literalinclude:: subprocess_pipes.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The example reproduces the command line:
@@ -435,7 +434,7 @@ Interacting with Another Command
 ================================
 
 All of the previous examples assume a limited amount of
-interaction. The :func:`communicate()` method reads all of the output
+interaction. The :func:`communicate` method reads all of the output
 and waits for child process to exit before returning. It is also
 possible to write to and read from the individual pipe handles used by
 the :class:`Popen` instance incrementally, as the program runs. A
@@ -448,8 +447,8 @@ line at a time until there is no more input.  It also writes a message
 to :data:`stderr` when it starts and stops, showing the lifetime of
 the child process.
 
-.. include:: repeater.py
-    :literal:
+.. literalinclude:: repeater.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The next interaction example uses the :attr:`stdin` and :attr:`stdout`
@@ -458,10 +457,10 @@ ways. In the first example, a sequence of five numbers are written to
 :attr:`stdin` of the process, and after each write the next line of
 output is read back. In the second example, the same five numbers are
 written but the output is read all at once using
-:func:`communicate()`.
+:func:`communicate`.
 
-.. include:: interaction.py
-    :literal:
+.. literalinclude:: interaction.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The ``"repeater.py: exiting"`` lines come at different points in the
@@ -509,15 +508,15 @@ do something similar with :mod:`subprocess`. The next example combines
 two scripts.  This child process sets up a signal handler for the
 :const:`USR` signal.
 
-.. include:: signal_child.py
-    :literal:
+.. literalinclude:: signal_child.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This script runs as the parent process.  It starts
 ``signal_child.py``, then sends the :const:`USR1` signal.
 
-.. include:: signal_parent.py
-    :literal:
+.. literalinclude:: signal_parent.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The output is:
@@ -549,8 +548,8 @@ when using the *shell* argument to :class:`Popen` it will be difficult
 to cause the command started in the shell to terminate by sending
 :const:`SIGINT` or :const:`SIGTERM`.
 
-.. include:: subprocess_signal_parent_shell.py
-    :literal:
+.. literalinclude:: subprocess_signal_parent_shell.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The pid used to send the signal does not match the pid of the child of
@@ -594,8 +593,8 @@ uses :func:`exec` to run the shell.  To signal the entire process
 group, use :func:`os.killpg` with the :attr:`pid` value from the
 :class:`Popen` instance.
 
-.. include:: subprocess_signal_setsid.py
-    :literal:
+.. literalinclude:: subprocess_signal_setsid.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The sequence of events is
