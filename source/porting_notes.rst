@@ -514,6 +514,18 @@ The abstract base classes formerly defined in :mod:`collections` moved
 to :mod:`collections.abc`, with backwards-compatibility imports in
 :mod:`collections`, for now (:pyissue:`11085`).
 
+.. _porting-comands:
+
+comands
+-------
+
+.. index::
+   pair: porting; comands
+   pair: porting; subprocess
+
+The functions :func:`getoutput` and :func:`getstatusoutput` have been
+moved to :mod:`subprocess` and :mod:`commands` has been deleted.
+
 .. _porting-configparser:
 
 configparser
