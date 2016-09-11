@@ -348,15 +348,21 @@ def common_cleanups(options):
     module = _get_module(options)
     sh('sed -i "" -e "s/.. include::/.. literalinclude::/g" source/%s/*.rst' % module)
     sh('sed -i "" -e "s/:literal:/:caption:/g" source/%s/*.rst' % module)
-    sh("sed -i '' -e 's|#!/usr/bin/env python$|#!/usr/bin/env python3|' source/%s/*.py" % module)
-    sh("sed -i '' -e '/__version__ = \"$Id$\"/d' source/%s/*.py" % module)
-    sh("sed -i '' -e '/__module_id__ = \'$Id$\'/d' source/%s/*.py" % module)
     sh("sed -i '' -e '/:Python Version:/d' source/%s/index.rst" % module)
     sh("sed -i '' -e 's/()`/`/g' source/%s/*.rst" % module)
+    if path('source/{}'.format(module)).glob('*.py'):
+        sh("sed -i '' -e 's|#!/usr/bin/env python$|#!/usr/bin/env python3|' source/%s/*.py" % module)
+        sh("sed -i '' -e '/__version__ = \"$Id$\"/d' source/%s/*.py" % module)
+        sh("sed -i '' -e '/__module_id__ = \'$Id$\'/d' source/%s/*.py" % module)
+    else:
+        print('*** skipping changes to *.py, no python modules found')
 
 @task
 def manual_review_cleanups(options):
     module = _get_module(options)
+    if not path('source/{}'.format(module)).glob('*.py'):
+        print('*** skipping changes to *.py, no python modules found')
+        return
     sh("sed -i '' -e 's|print \(.*\)|print(\\1)|g' source/%s/*.py" % module)
     sh("sed -i '' -e 's|print$|print()|g' source/%s/*.py" % module)
     sh("sed -i '' -e 's|(object):|:|g' source/%s/*.py" % module)
