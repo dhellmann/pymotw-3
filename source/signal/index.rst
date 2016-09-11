@@ -1,6 +1,6 @@
-======================================
- signal -- Asynchronous System Events
-======================================
+=======================================
+ signal --- Asynchronous System Events
+=======================================
 
 .. module:: signal
     :synopsis: Asynchronous system events
@@ -18,15 +18,15 @@ Signals are identified by integers and are defined in the operating
 system C headers.  Python exposes the signals appropriate for the
 platform as symbols in the :mod:`signal` module.  The examples in this
 section use :const:`SIGINT` and :const:`SIGUSR1`.  Both are typically
-defined for all Unix and Unix-like systems.
+defined for all UNIX and UNIX-like systems.
 
 .. note::
 
-    Programming with Unix signal handlers is a non-trivial
+    Programming with UNIX signal handlers is a non-trivial
     endeavor. This is an introduction, and does not include all of the
     details needed to use signals successfully on every
     platform. There is some degree of standardization across versions
-    of Unix, but there is also some variation, so consult the
+    of UNIX, but there is also some variation, so consult the
     operating system documentation if you run into trouble.
 
 Receiving Signals
@@ -45,9 +45,9 @@ the program that was interrupted by the signal.
 This example script loops indefinitely, pausing for a few seconds each
 time.  When a signal comes in, the :func:`sleep` call is interrupted
 and the signal handler ``receive_signal`` prints the signal number.
-After the signal handler returns, the loop continues.  
+After the signal handler returns, the loop continues.
 
-Send signals to the running program using :func:`os.kill` or the Unix
+Send signals to the running program using :func:`os.kill` or the UNIX
 command line program :command:`kill`.
 
 ::
@@ -251,9 +251,10 @@ The alarm does not abort the :func:`sleep` call in
 
 .. seealso::
 
-    `signal <http://docs.python.org/lib/module-signal.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`signal`
 
-    :ref:`creating-processes-with-os-fork`
-        The :func:`kill` function can be used to send signals
-        between processes.
+   * :mod:`subprocess` -- More examples of sending signals to
+     processes.
+
+   * :ref:`creating-processes-with-os-fork` -- The :func:`kill`
+     function can be used to send signals between processes.
