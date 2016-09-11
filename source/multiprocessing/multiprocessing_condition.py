@@ -17,7 +17,7 @@ def stage_1(cond):
     name = multiprocessing.current_process().name
     print('Starting', name)
     with cond:
-        print('%s done and ready for stage 2' % name)
+        print('{} done and ready for stage 2'.format(name))
         cond.notify_all()
 
 
@@ -27,7 +27,7 @@ def stage_2(cond):
     print('Starting', name)
     with cond:
         cond.wait()
-        print('%s running' % name)
+        print('{} running'.format(name))
 
 
 if __name__ == '__main__':
@@ -36,9 +36,11 @@ if __name__ == '__main__':
                                  target=stage_1,
                                  args=(condition,))
     s2_clients = [
-        multiprocessing.Process(name='stage_2[%d]' % i,
-                                target=stage_2,
-                                args=(condition,))
+        multiprocessing.Process(
+            name='stage_2[{}]'.format(i),
+            target=stage_2,
+            args=(condition,),
+        )
         for i in range(1, 3)
     ]
 

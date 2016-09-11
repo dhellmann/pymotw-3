@@ -166,9 +166,9 @@ sleep.
 
 	$ python3 multiprocessing_daemon.py
 	
-	Starting: daemon 68009
-	Starting: non-daemon 68012
-	Exiting : non-daemon 68012
+	Starting: daemon 70880
+	Starting: non-daemon 70881
+	Exiting : non-daemon 70881
 
 .. {{{end}}}
 

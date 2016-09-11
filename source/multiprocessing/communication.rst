@@ -65,26 +65,26 @@ completed.
 	Consumer-6: 5 * 5
 	Consumer-7: 6 * 6
 	Consumer-8: 7 * 7
-	Consumer-1: 8 * 8
-	Consumer-3: 9 * 9
-	Consumer-2: Exiting
+	Consumer-3: 8 * 8
+	Consumer-7: 9 * 9
 	Consumer-4: Exiting
+	Consumer-1: Exiting
+	Consumer-2: Exiting
 	Consumer-5: Exiting
 	Consumer-6: Exiting
-	Consumer-7: Exiting
 	Consumer-8: Exiting
+	Consumer-7: Exiting
 	Consumer-3: Exiting
-	Consumer-1: Exiting
-	Result: 0 * 0 = 0
+	Result: 6 * 6 = 36
 	Result: 2 * 2 = 4
-	Result: 1 * 1 = 1
 	Result: 3 * 3 = 9
+	Result: 0 * 0 = 0
+	Result: 1 * 1 = 1
+	Result: 7 * 7 = 49
 	Result: 4 * 4 = 16
 	Result: 5 * 5 = 25
-	Result: 7 * 7 = 49
-	Result: 6 * 6 = 36
-	Result: 9 * 9 = 81
 	Result: 8 * 8 = 64
+	Result: 9 * 9 = 81
 
 .. {{{end}}}
 
@@ -176,10 +176,10 @@ parallel, but only after the first stage is done.
 	
 	Starting s1
 	s1 done and ready for stage 2
-	Starting stage_2[1]
-	stage_2[1] running
 	Starting stage_2[2]
 	stage_2[2] running
+	Starting stage_2[1]
+	stage_2[1] running
 
 .. {{{end}}}
 
@@ -217,32 +217,35 @@ concurrently.
 	Activating 0 now running ['0', '1', '2']
 	Activating 1 now running ['0', '1', '2']
 	Activating 2 now running ['0', '1', '2']
-	Activating 3 now running ['1', '2', '3']
-	Now running ['1', '2', '3']
-	Now running ['1', '2', '3']
-	Activating 5 now running ['1', '3', '5']
-	Now running ['1', '3', '5']
-	Now running ['1', '3', '5']
-	Now running ['1', '3', '5']
-	Now running ['1', '3', '5']
-	Activating 4 now running ['1', '5', '4']
-	Activating 6 now running ['5', '4', '6']
-	Now running ['5', '4', '6']
-	Now running ['5', '4', '6']
-	Now running ['5', '4', '6']
-	Activating 7 now running ['4', '6', '7']
-	Activating 8 now running ['4', '7', '8']
-	Now running ['4', '7', '8']
-	Now running ['4', '7', '8']
-	Activating 9 now running ['4', '8', '9']
-	Now running ['4', '8', '9']
+	Now running ['0', '1', '2']
+	Now running ['0', '1', '2']
+	Now running ['0', '1', '2']
+	Now running ['0', '1', '2']
+	Activating 3 now running ['0', '1', '3']
+	Activating 4 now running ['1', '3', '4']
+	Activating 6 now running ['1', '4', '6']
+	Now running ['1', '4', '6']
+	Now running ['1', '4', '6']
+	Activating 5 now running ['1', '4', '5']
+	Now running ['1', '4', '5']
+	Now running ['1', '4', '5']
+	Now running ['1', '4', '5']
+	Activating 8 now running ['4', '5', '8']
+	Now running ['4', '5', '8']
+	Now running ['4', '5', '8']
+	Now running ['4', '5', '8']
+	Now running ['4', '5', '8']
+	Now running ['4', '5', '8']
+	Activating 7 now running ['5', '8', '7']
+	Now running ['5', '8', '7']
+	Activating 9 now running ['8', '7', '9']
+	Now running ['8', '7', '9']
 	Now running ['8', '9']
 	Now running ['8', '9']
-	Now running ['8', '9']
-	Now running ['8', '9']
-	Now running ['8', '9']
-	Now running ['8', '9']
-	Now running ['8', '9']
+	Now running ['9']
+	Now running ['9']
+	Now running ['9']
+	Now running ['9']
 	Now running []
 
 .. {{{end}}}
@@ -355,14 +358,14 @@ processes to ensure proper cleanup.
 	$ python3 multiprocessing_pool.py
 	
 	Input   : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-	Built-in: <map object at 0x1010b2be0>
+	Built-in: <map object at 0x1007b2be0>
 	Starting ForkPoolWorker-3
 	Starting ForkPoolWorker-4
 	Starting ForkPoolWorker-5
-	Starting ForkPoolWorker-1
-	Starting ForkPoolWorker-2
-	Starting ForkPoolWorker-7
 	Starting ForkPoolWorker-6
+	Starting ForkPoolWorker-1
+	Starting ForkPoolWorker-7
+	Starting ForkPoolWorker-2
 	Starting ForkPoolWorker-8
 	Pool    : [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
 
@@ -395,11 +398,11 @@ complete two of them at a time.
 	Built-in: <map object at 0x1007b21d0>
 	Starting ForkPoolWorker-1
 	Starting ForkPoolWorker-2
-	Starting ForkPoolWorker-3
-	Starting ForkPoolWorker-5
-	Starting ForkPoolWorker-7
 	Starting ForkPoolWorker-4
+	Starting ForkPoolWorker-5
 	Starting ForkPoolWorker-6
+	Starting ForkPoolWorker-3
+	Starting ForkPoolWorker-7
 	Starting ForkPoolWorker-8
 	Pool    : [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
 

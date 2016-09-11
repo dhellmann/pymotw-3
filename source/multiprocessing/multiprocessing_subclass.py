@@ -13,7 +13,7 @@ import multiprocessing
 class Worker(multiprocessing.Process):
 
     def run(self):
-        print('In %s' % self.name)
+        print('In {}'.format(self.name))
         return
 
 

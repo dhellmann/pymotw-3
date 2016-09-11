@@ -17,8 +17,8 @@ class MyFancyClass:
 
     def do_something(self):
         proc_name = multiprocessing.current_process().name
-        print('Doing something fancy in %s for %s!' %
-              (proc_name, self.name))
+        print('Doing something fancy in {} for {}!'.format(
+            proc_name, self.name))
 
 
 def worker(q):

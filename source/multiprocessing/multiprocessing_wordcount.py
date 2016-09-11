@@ -66,4 +66,8 @@ if __name__ == '__main__':
     top20 = word_counts[:20]
     longest = max(len(word) for word, count in top20)
     for word, count in top20:
-        print('%-*s: %5s' % (longest + 1, word, count))
+        print('{word:<{len}}: {count:5}'.format(
+            len=longest + 1,
+            word=word,
+            count=count)
+        )

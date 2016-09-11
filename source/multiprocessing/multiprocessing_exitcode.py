@@ -51,4 +51,4 @@ if __name__ == '__main__':
 
     for j in jobs:
         j.join()
-        print('%15s.exitcode = %s' % (j.name, j.exitcode))
+        print('{:>15}.exitcode = {}'.format(j.name, j.exitcode))

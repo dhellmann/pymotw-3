@@ -50,12 +50,12 @@ reduction phase.
 	TOP 20 WORDS BY FREQUENCY
 	
 	process         :    83
+	running         :    45
 	multiprocessing :    44
-	running         :    42
 	worker          :    40
 	starting        :    37
+	now             :    35
 	after           :    34
-	now             :    32
 	processes       :    31
 	start           :    29
 	class           :    28
