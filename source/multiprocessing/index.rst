@@ -6,7 +6,6 @@ multiprocessing -- Manage Processes Like Threads
     :synopsis: Manage processes like threads.
 
 :Purpose: Provides an API for managing processes.
-:Python Version: 2.6 and later
 
 The :mod:`multiprocessing` module includes an API for dividing work up
 between multiple processes based on the API for :mod:`threading`.  In
@@ -43,4 +42,4 @@ covered later.
         Google Labs presentation and paper on MapReduce.
 
     :mod:`operator`
-        Operator tools such as ``itemgetter()``.
+        Operator tools such as ``itemgetter``.

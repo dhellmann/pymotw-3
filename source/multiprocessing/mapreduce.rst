@@ -13,16 +13,16 @@ intermediate data is then collected together and partitioned based on
 a key value so that all of the related values are together.  Finally,
 the partitioned data is *reduced* to a result set.
 
-.. include:: multiprocessing_mapreduce.py
-    :literal:
+.. literalinclude:: multiprocessing_mapreduce.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The following example script uses SimpleMapReduce to counts the
 "words" in the reStructuredText source for this article, ignoring some
 of the markup.
 
-.. include:: multiprocessing_wordcount.py
-    :literal:
+.. literalinclude:: multiprocessing_wordcount.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The :func:`file_to_words` function converts each input file to a

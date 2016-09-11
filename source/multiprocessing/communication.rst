@@ -12,8 +12,8 @@ simple way to communicate between processes with
 back and forth.  Any object that can be serialized with :mod:`pickle`
 can pass through a :class:`Queue`.
 
-.. include:: multiprocessing_queue.py
-    :literal:
+.. literalinclude:: multiprocessing_queue.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This short example only passes a single message to a single worker,
@@ -40,8 +40,8 @@ the special value, it breaks out of its processing loop.  The main
 process uses the task queue's :func:`join` method to wait for all of
 the tasks to finish before processing the results.
 
-.. include:: multiprocessing_producer_consumer.py
-    :literal:
+.. literalinclude:: multiprocessing_producer_consumer.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Although the jobs enter the queue in order, their execution is
@@ -94,8 +94,8 @@ information between processes.  An event can be toggled between set
 and unset states.  Users of the event object can wait for it to change
 from unset to set, using an optional timeout value.
 
-.. include:: multiprocessing_event.py
-    :literal:
+.. literalinclude:: multiprocessing_event.py
+    :caption:
     :start-after: #end_pymotw_header
 
 When :func:`wait` times out it returns without an error.  The caller
@@ -126,8 +126,8 @@ In situations when a single resource needs to be shared between
 multiple processes, a :class:`Lock` can be used to avoid conflicting
 accesses.
 
-.. include:: multiprocessing_lock.py
-    :literal:
+.. literalinclude:: multiprocessing_lock.py
+    :caption:
     :start-after: #end_pymotw_header
 
 In this example, the messages printed to the console may be jumbled
@@ -155,8 +155,8 @@ Synchronizing Operations
 workflow so that some run in parallel but others run sequentially,
 even if they are in separate processes.
 
-.. include:: multiprocessing_condition.py
-    :literal:
+.. literalinclude:: multiprocessing_condition.py
+    :caption:
     :start-after: #end_pymotw_header
 
 In this example, two process run the second stage of a job in
@@ -190,8 +190,8 @@ simultaneous connections, or a network application might support a
 fixed number of concurrent downloads. A :class:`Semaphore` is one way
 to manage those connections.
 
-.. include:: multiprocessing_semaphore.py
-    :literal:
+.. literalinclude:: multiprocessing_semaphore.py
+    :caption:
     :start-after: #end_pymotw_header
 
 In this example, the :class:`ActivePool` class simply serves as a
@@ -242,8 +242,8 @@ list object created by a :class:`Manager`.  The :class:`Manager` is
 responsible for coordinating shared information state between all of
 its users.  
 
-.. include:: multiprocessing_manager_dict.py
-    :literal:
+.. literalinclude:: multiprocessing_manager_dict.py
+    :caption:
     :start-after: #end_pymotw_header
 
 By creating the list through the manager, it is shared and updates are
@@ -269,8 +269,8 @@ Shared Namespaces
 In addition to dictionaries and lists, a :class:`Manager` can create a
 shared :class:`Namespace`.  
 
-.. include:: multiprocessing_namespaces.py
-    :literal:
+.. literalinclude:: multiprocessing_namespaces.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Any named value added to the :class:`Namespace` is visible to all of
@@ -292,8 +292,8 @@ the clients that receive the :class:`Namespace` instance.
 It is important to know that updates to the contents of mutable
 values in the namespace are not propagated automatically.
 
-.. include:: multiprocessing_namespaces_mutable.py
-    :literal:
+.. literalinclude:: multiprocessing_namespaces_mutable.py
+    :caption:
     :start-after: #end_pymotw_header
 
 To update the list, attach it to the namespace object again.
@@ -322,8 +322,8 @@ the jobs are collected and returned as a list.  The pool arguments
 include the number of processes and a function to run when starting
 the task process (invoked once per child).
 
-.. include:: multiprocessing_pool.py
-    :literal:
+.. literalinclude:: multiprocessing_pool.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The result of the :func:`map` method is functionally equivalent to the
@@ -356,8 +356,8 @@ and passes jobs to them until there are no more jobs.  Setting the
 process after it has finished a few tasks, preventing long-running
 workers from consuming ever more system resources.
 
-.. include:: multiprocessing_pool_maxtasksperchild.py
-   :literal:
+.. literalinclude:: multiprocessing_pool_maxtasksperchild.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The pool restarts the workers when they have completed their allotted

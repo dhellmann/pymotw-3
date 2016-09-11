@@ -5,8 +5,8 @@ The simplest way to spawn a second process is to instantiate a
 :class:`Process` object with a target function and call :func:`start`
 to let it begin working.
 
-.. include:: multiprocessing_simple.py
-    :literal:
+.. literalinclude:: multiprocessing_simple.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The output includes the word "Worker" printed five times, although it
@@ -36,8 +36,8 @@ arguments to a :mod:`multiprocessing` :class:`Process` the arguments
 must be able to be serialized using :mod:`pickle`.  This example
 passes each worker a number to be printed.
 
-.. include:: multiprocessing_simpleargs.py
-    :literal:
+.. literalinclude:: multiprocessing_simpleargs.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The integer argument is now included in the message printed by each worker:
@@ -72,14 +72,14 @@ is to import the target function from a separate script.  For example,
 ``multiprocessing_import_main.py`` uses a worker function defined in a
 second module.
 
-.. include:: multiprocessing_import_main.py
-    :literal:
+.. literalinclude:: multiprocessing_import_main.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The worker function is defined in ``multiprocessing_import_worker.py``.
 
-.. include:: multiprocessing_import_worker.py
-    :literal:
+.. literalinclude:: multiprocessing_import_worker.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Calling the main program produces output similar to the first example.
@@ -109,8 +109,8 @@ value that can be changed as the process is created. Naming processes
 is useful for keeping track of them, especially in applications with
 multiple types of processes running simultaneously.
 
-.. include:: multiprocessing_names.py
-    :literal:
+.. literalinclude:: multiprocessing_names.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The debug output includes the name of the current process on each
@@ -149,8 +149,8 @@ for a service monitoring tool).
 To mark a process as a daemon, set its :attr:`daemon` attribute to
 :data:`True`. The default is for processes to not be daemons.
 
-.. include:: multiprocessing_daemon.py
-    :literal:
+.. literalinclude:: multiprocessing_daemon.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The output does not include the "Exiting" message from the daemon
@@ -184,8 +184,8 @@ Waiting for Processes
 To wait until a process has completed its work and exited, use the
 :func:`join` method.
 
-.. include:: multiprocessing_daemon_join.py
-    :literal:
+.. literalinclude:: multiprocessing_daemon_join.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Since the main process waits for the daemon to exit using
@@ -211,8 +211,8 @@ pass a timeout argument (a float representing the number of seconds to
 wait for the process to become inactive). If the process does not
 complete within the timeout period, :func:`join` returns anyway.
 
-.. include:: multiprocessing_daemon_join_timeout.py
-    :literal:
+.. literalinclude:: multiprocessing_daemon_join_timeout.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Since the timeout passed is less than the amount of time the daemon
@@ -241,8 +241,8 @@ later in this chapter), if a process appears hung or deadlocked it can
 be useful to be able to kill it forcibly.  Calling :func:`terminate`
 on a process object kills the child process.
 
-.. include:: multiprocessing_terminate.py
-    :literal:
+.. literalinclude:: multiprocessing_terminate.py
+    :caption:
     :start-after: #end_pymotw_header
 
 .. note::
@@ -284,8 +284,8 @@ the :attr:`exitcode` attribute.  The ranges allowed are listed in
    ``< 0``    the process was killed with a signal of ``-1 * exitcode``
    =========  =======
 
-.. include:: multiprocessing_exitcode.py
-    :literal:
+.. literalinclude:: multiprocessing_exitcode.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Processes that raise an exception automatically get an
@@ -334,8 +334,8 @@ There is a convenient module-level function to enable logging called
 :mod:`logging` and adds a handler so that log messages are sent to the
 standard error channel.
 
-.. include:: multiprocessing_log_to_stderr.py
-    :literal:
+.. literalinclude:: multiprocessing_log_to_stderr.py
+    :caption:
     :start-after: #end_pymotw_header
 
 By default, the logging level is set to ``NOTSET`` so no messages are
@@ -367,8 +367,8 @@ level of detail desired.
 To manipulate the logger directly (change its level setting or add
 handlers), use :func:`get_logger`.
 
-.. include:: multiprocessing_get_logger.py
-    :literal:
+.. literalinclude:: multiprocessing_get_logger.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The logger can also be configured through the :mod:`logging`
@@ -398,8 +398,8 @@ Although the simplest way to start a job in a separate process is to
 use :class:`Process` and pass a target function, it is also possible
 to use a custom subclass.
 
-.. include:: multiprocessing_subclass.py
-    :literal:
+.. literalinclude:: multiprocessing_subclass.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The derived class should override :meth:`run` to do its work.
