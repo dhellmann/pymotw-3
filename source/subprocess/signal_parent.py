@@ -9,7 +9,7 @@ import subprocess
 import time
 import sys
 
-proc = subprocess.Popen(['python', 'signal_child.py'])
+proc = subprocess.Popen(['python3', 'signal_child.py'])
 print('PARENT      : Pausing before sending signal...')
 sys.stdout.flush()
 time.sleep(1)

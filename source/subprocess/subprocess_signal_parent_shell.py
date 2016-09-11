@@ -17,7 +17,7 @@ import sys
 script = '''#!/bin/sh
 echo "Shell script in process $$"
 set -x
-python signal_child.py
+python3 signal_child.py
 '''
 script_file = tempfile.NamedTemporaryFile('wt')
 script_file.write(script)
