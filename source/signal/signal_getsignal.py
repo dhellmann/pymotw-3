@@ -10,16 +10,17 @@
 
 import signal
 
+
 def alarm_received(n, stack):
     return
 
 signal.signal(signal.SIGALRM, alarm_received)
 
-signals_to_names = dict(
-    (getattr(signal, n), n)
+signals_to_names = {
+    getattr(signal, n): n
     for n in dir(signal)
     if n.startswith('SIG') and '_' not in n
-    )
+}
 
 for s, name in sorted(signals_to_names.items()):
     handler = signal.getsignal(s)

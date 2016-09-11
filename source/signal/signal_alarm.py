@@ -11,6 +11,7 @@
 import signal
 import time
 
+
 def receive_alarm(signum, stack):
     print('Alarm :', time.ctime())
 

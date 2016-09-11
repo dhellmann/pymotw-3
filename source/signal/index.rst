@@ -50,9 +50,9 @@ After the signal handler returns, the loop continues.
 Send signals to the running program using :func:`os.kill` or the UNIX
 command line program :command:`kill`.
 
-::
+.. code-block:: none
 
-    $ python signal_signal.py 
+    $ python3 signal_signal.py 
 
     My PID is: 71387
     Waiting...
@@ -65,14 +65,14 @@ command line program :command:`kill`.
     Waiting...
     Waiting...
     Traceback (most recent call last):
-      File "signal_signal.py", line 25, in <module>
+      File "signal_signal.py", line 28, in <module>
         time.sleep(3)
     KeyboardInterrupt
 
 The previous output was produced by running ``signal_signal.py`` in
 one window, then in another window running:
 
-::
+.. code-block:: none
 
     $ kill -USR1 $pid
     $ kill -USR2 $pid
@@ -96,7 +96,7 @@ signal handler was registered from C, rather than Python).
 Again, since each OS may have different signals defined, the output on
 other systems may vary.  This is from OS X:
 
-::
+.. code-block:: none
 
     $ python signal_getsignal.py
 
@@ -155,7 +155,7 @@ blocking indefinitely on an I/O operation or other system call.
 In this example, the call to :func:`sleep` does not last the full
 four seconds.
 
-::
+.. code-block:: none
 
     $ python signal_alarm.py
 
@@ -184,7 +184,7 @@ an attempt to use ``Ctrl-C`` to kill the script from the terminal.
 Using ``kill -USR1 72598`` from another terminal eventually causes the
 script to exit.
 
-::
+.. code-block:: none
 
     $ python signal_ignore.py 
 
@@ -212,7 +212,7 @@ for mixing threads and signals.  Although the receiver thread calls
 ``signal.alarm(2)`` call near the end of the example prevents an
 infinite block, since the receiver thread will never exit.
 
-::
+.. code-block:: none
 
     $ python signal_threads.py
     
@@ -236,16 +236,16 @@ The alarm does not abort the :func:`sleep` call in
 .. cog.out(run_script(cog.inFile, 'signal_threads_alarm.py', ignore_error=True))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python signal_threads_alarm.py
-
-	Sun Nov 28 14:26:51 2010 Setting alarm in alarm_thread
-	Sun Nov 28 14:26:51 2010 Sleeping in alarm_thread
-	Sun Nov 28 14:26:52 2010 Waiting for alarm_thread
-	Sun Nov 28 14:26:54 2010 Done with sleep in alarm_thread
-	Sun Nov 28 14:26:54 2010 Alarm in MainThread
-	Sun Nov 28 14:26:54 2010 Exiting normally
+	$ python3 signal_threads_alarm.py
+	
+	Sun Sep 11 11:24:52 2016 Setting alarm in alarm_thread
+	Sun Sep 11 11:24:52 2016 Sleeping in alarm_thread
+	Sun Sep 11 11:24:52 2016 Waiting for alarm_thread
+	Sun Sep 11 11:24:53 2016 Alarm in MainThread
+	Sun Sep 11 11:24:55 2016 Done with sleep in alarm_thread
+	Sun Sep 11 11:24:55 2016 Exiting normally
 
 .. {{{end}}}
 

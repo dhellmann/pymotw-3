@@ -12,6 +12,7 @@ import signal
 import os
 import time
 
+
 def receive_signal(signum, stack):
     print('Received:', signum)
 

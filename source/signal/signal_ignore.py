@@ -12,6 +12,7 @@ import signal
 import os
 import time
 
+
 def do_exit(sig, stack):
     raise SystemExit('Exiting')
 
