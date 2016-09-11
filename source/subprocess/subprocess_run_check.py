@@ -9,6 +9,6 @@
 import subprocess
 
 try:
-    subprocess.check_call(['false'])
+    subprocess.run(['false'], check=True)
 except subprocess.CalledProcessError as err:
     print('ERROR:', err)

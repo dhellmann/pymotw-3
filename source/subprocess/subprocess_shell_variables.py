@@ -5,10 +5,9 @@
 #
 """
 """
-
 #end_pymotw_header
 
 import subprocess
 
-# Command with shell expansion
-subprocess.call('echo $HOME', shell=True)
+completed = subprocess.run('echo $HOME', shell=True)
+print('returncode:', completed.returncode)

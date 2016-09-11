@@ -5,5 +5,5 @@
 
 import subprocess
 
-# Simple command
-subprocess.call(['ls', '-1'])
+completed = subprocess.run(['ls', '-1'])
+print('returncode:', completed.returncode)

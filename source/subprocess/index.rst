@@ -7,40 +7,41 @@
 
 :Purpose: Start and communicate with additional processes.
 
-The :mod:`subprocess` module provides a consistent way to create and
-work with additional processes. It offers a higher-level interface
-than some of the other modules available in the standard libary, and
-is intended to replace functions such as :func:`os.system`,
-:func:`os.spawnv`, the variations of :func:`popen` in the :mod:`os`
-and :mod:`popen2` modules, as well as the :func:`commands` module. To
-make it easier to compare :mod:`subprocess` with those other modules,
-many of the examples in this section re-create the ones used for
-:mod:`os` and :mod:`popen2`.
+The :mod:`subprocess` module supports three APIs for working with
+processes. The :func:`run` function, added in Python 3.5, is a
+high-level API for running a process and optionally collecting its
+output. The functions :func:`call`, :func:`check_call`, and
+:func:`check_output` are the former high-level API, carried over from
+Python 2. They are still supported and widely used in existing
+programs. The class :class:`Popen` is a low-level API used to build
+the other APIs and useful for more complex process interactions. The
+constructor for :class:`Popen` takes arguments to set up the new
+process so the parent can communicate with it via pipes.  It provides
+all of the functionality of the other modules and functions it
+replaces, and more. The API is consistent for all uses, and many of
+the extra steps of overhead needed (such as closing extra file
+descriptors and ensuring the pipes are closed) are "built in" instead
+of being handled by the application code separately.
 
-.. add info about run() here, too.
-
-The :mod:`subprocess` module defines one class, :class:`Popen`, and a
-few wrapper functions that use that class. The constructor for
-:class:`Popen` takes arguments to set up the new process so the parent
-can communicate with it via pipes.  It provides all of the
-functionality of the other modules and functions it replaces, and
-more. The API is consistent for all uses, and many of the extra steps
-of overhead needed (such as closing extra file descriptors and
-ensuring the pipes are closed) are "built in" instead of being handled
-by the application code separately.
+The :mod:`subprocess` module is intended to replace functions such as
+:func:`os.system`, :func:`os.spawnv`, the variations of :func:`popen`
+in the :mod:`os` and :mod:`popen2` modules, as well as the
+:func:`commands` module. To make it easier to compare
+:mod:`subprocess` with those other modules, many of the examples in
+this section re-create the ones used for :mod:`os` and :mod:`popen2`.
 
 .. note::
 
     The API for working on UNIX and Windows is roughly the same, but
     the underlying implementation is slightly different.  All of the
     examples shown here were tested on Mac OS X. Behavior on a
-    non-UNIX OS will vary.
+    non-UNIX OS may vary.
 
 Running External Command
 ========================
 
 To run an external command without interacting with it in the same way
-as :func:`os.system`, use the :func:`call` function.
+as :func:`os.system`, use the :func:`run` function.
 
 .. literalinclude:: subprocess_os_system.py
     :caption:
@@ -48,7 +49,9 @@ as :func:`os.system`, use the :func:`call` function.
 
 The command line arguments are passed as a list of strings, which
 avoids the need for escaping quotes or other special characters that
-might be interpreted by the shell.
+might be interpreted by the shell. :func:`run` returns a
+:class:`CompletedProcess` instance, with information about the process
+like the exit code and output.
 
 .. {{{cog
 .. run_script(cog.inFile, 'rm -f *~ *.pyc', interpreter='')
@@ -64,9 +67,6 @@ might be interpreted by the shell.
 	repeater.py
 	signal_child.py
 	signal_parent.py
-	subprocess_check_call.py
-	subprocess_check_output.py
-	subprocess_check_output_error.py
 	subprocess_check_output_error_trap_output.py
 	subprocess_os_system.py
 	subprocess_pipes.py
@@ -75,9 +75,14 @@ might be interpreted by the shell.
 	subprocess_popen4.py
 	subprocess_popen_read.py
 	subprocess_popen_write.py
+	subprocess_run_check.py
+	subprocess_run_output.py
+	subprocess_run_output_error.py
+	subprocess_run_output_error_trap.py
 	subprocess_shell_variables.py
 	subprocess_signal_parent_shell.py
 	subprocess_signal_setpgrp.py
+	returncode: 0
 
 .. {{{end}}}
 
@@ -102,46 +107,59 @@ before the command is run.
 	$ python3 subprocess_shell_variables.py
 	
 	/Users/dhellmann
+	returncode: 0
 
 .. {{{end}}}
+
+.. note::
+
+  Using :func:`run` without passing ``check=True`` is equivalent to
+  using :func:`call`, which only returned the exit code from the
+  process.
 
 Error Handling
 --------------
 
-The return value from :func:`call` is the exit code of the program.
-The caller is responsible for interpreting it to detect errors.  The
-:func:`check_call` function works like :func:`call` except that the
-exit code is checked, and if it indicates an error happened then a
-:class:`CalledProcessError` exception is raised.
+The ``returncode`` attribute of the :class:`CompletedProcess` is the
+exit code of the program.  The caller is responsible for interpreting
+it to detect errors.  If the ``check`` argument to :func:`run` is
+``True``, the exit code is checked and if it indicates an error
+happened then a :class:`CalledProcessError` exception is raised.
 
-.. literalinclude:: subprocess_check_call.py
+.. literalinclude:: subprocess_run_check.py
    :caption:
    :start-after: #end_pymotw_header
 
 The :command:`false` command always exits with a non-zero status code,
-which :func:`check_call` interprets as an error.
+which :func:`run` interprets as an error.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'subprocess_check_call.py', ignore_error=True, break_lines_at=69))
+.. cog.out(run_script(cog.inFile, 'subprocess_run_check.py', ignore_error=True))
 .. }}}
 
 .. code-block:: none
 
-	$ python3 subprocess_check_call.py
+	$ python3 subprocess_run_check.py
 	
 	ERROR: Command '['false']' returned non-zero exit status 1
 
 .. {{{end}}}
 
+.. note::
+
+   Passing ``check=True`` to :func:`run` makes it equivalent to using
+   :func:`check_call`.
+
 Capturing Output
 ----------------
 
 The standard input and output channels for the process started by
-:func:`call` are bound to the parent's input and output.  That means
-the calling program cannot capture the output of the command.  Use
-:func:`check_output` to capture the output for later processing.
+:func:`run` are bound to the parent's input and output.  That means
+the calling program cannot capture the output of the command.  Pass
+:const:`PIPE` for the ``stdout`` and ``stderr`` arguments to capture
+the output for later processing.
 
-.. literalinclude:: subprocess_check_output.py
+.. literalinclude:: subprocess_run_output.py
    :caption:
    :start-after: #end_pymotw_header
 
@@ -149,22 +167,20 @@ The ``ls -1`` command runs successfully, so the text it prints to
 standard output is captured and returned.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'subprocess_check_output.py'))
+.. cog.out(run_script(cog.inFile, 'subprocess_run_output.py'))
 .. }}}
 
 .. code-block:: none
 
-	$ python3 subprocess_check_output.py
+	$ python3 subprocess_run_output.py
 	
-	Have 451 bytes in output
+	returncode: 0
+	Have 482 bytes in stdout:
 	index.rst
 	interaction.py
 	repeater.py
 	signal_child.py
 	signal_parent.py
-	subprocess_check_call.py
-	subprocess_check_output.py
-	subprocess_check_output_error.py
 	subprocess_check_output_error_trap_output.py
 	subprocess_os_system.py
 	subprocess_pipes.py
@@ -173,6 +189,10 @@ standard output is captured and returned.
 	subprocess_popen4.py
 	subprocess_popen_read.py
 	subprocess_popen_write.py
+	subprocess_run_check.py
+	subprocess_run_output.py
+	subprocess_run_output_error.py
+	subprocess_run_output_error_trap.py
 	subprocess_shell_variables.py
 	subprocess_signal_parent_shell.py
 	subprocess_signal_setpgrp.py
@@ -180,11 +200,16 @@ standard output is captured and returned.
 
 .. {{{end}}}
 
+.. note::
+
+   Passing ``check=True`` and setting ``stdout`` to :const:`PIPE` is
+   equivalent to using :func:`check_output`.
+
 The next example runs a series of commands in a sub-shell.  Messages are
 sent to standard output and standard error before the commands exit
 with an error code.
 
-.. literalinclude:: subprocess_check_output_error.py
+.. literalinclude:: subprocess_run_output_error.py
    :caption:
    :start-after: #end_pymotw_header
 
@@ -192,50 +217,73 @@ The message to standard error is printed to the console, but the
 message to standard output is hidden.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'subprocess_check_output_error.py',
-..                    ignore_error=True, break_lines_at=69, line_break_mode='wrap'))
+.. cog.out(run_script(cog.inFile, 'subprocess_run_output_error.py',
+..                    ignore_error=True, line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
 
-	$ python3 subprocess_check_output_error.py
+	$ python3 subprocess_run_output_error.py
 	
 	to stderr
-	ERROR: Command 'echo to stdout; echo to stderr 1>&2; exit 1' returned
-	non-zero exit status 1
+	ERROR: Command 'echo to stdout; echo to stderr 1>&2; exit 1'
+	returned non-zero exit status 1
 
 .. {{{end}}}
 
 To prevent error messages from commands run through
-:func:`check_output` from being written to the console, set the
-*stderr* parameter to the constant :const:`STDOUT`.
+:func:`run` from being written to the console, set the
+*stderr* parameter to the constant :const:`PIPE`.
+
+.. literalinclude:: subprocess_run_output_error_trap.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+This example does not set ``check=True`` so the output of the command
+is captured and printed.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'subprocess_run_output_error_trap.py',
+..                    ignore_error=True, line_break_mode='wrap'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 subprocess_run_output_error_trap.py
+	
+	returncode: 1
+	Have 10 bytes in stdout: 'to stdout\n'
+	Have 10 bytes in stderr: 'to stderr\n'
+
+.. {{{end}}}
+
+To capture error messages when using :func:`check_output`, set
+``stderr`` to :const:`STDOUT`, and the messages will be merged with
+the rest of the output from the command.
 
 .. literalinclude:: subprocess_check_output_error_trap_output.py
    :caption:
    :start-after: #end_pymotw_header
 
-Now the error and standard output channels are merged together so if
-the command prints error messages, they are captured and not sent to
-the console.
+The order of output may vary, depending on how buffering is applied to
+the standard output stream and how much data is being printed.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'subprocess_check_output_error_trap_output.py', 
-..                    ignore_error=True, break_lines_at=69, line_break_mode='wrap'))
+.. cog.out(run_script(cog.inFile, 'subprocess_check_output_error_trap_output.py'))
 .. }}}
 
 .. code-block:: none
 
 	$ python3 subprocess_check_output_error_trap_output.py
 	
-	ERROR: Command 'echo to stdout; echo to stderr 1>&2; exit 1' returned
-	non-zero exit status 1
+	Have 20 bytes in output: 'to stdout\nto stderr\n'
 
 .. {{{end}}}
 
 Working with Pipes Directly
 ===========================
 
-The functions :func:`call`, :func:`check_call`, and
+The functions :func:`run`, :func:`call`, :func:`check_call`, and
 :func:`check_output` are wrappers around the :class:`Popen` class.
 Using :class:`Popen` directly gives more control over how the command
 is run, and how its input and output streams are processed.  For
@@ -408,9 +456,10 @@ names of the files being included.
 	Included files:
 		 subprocess_os_system.py
 		 subprocess_shell_variables.py
-		 subprocess_check_call.py
-		 subprocess_check_output.py
-		 subprocess_check_output_error.py
+		 subprocess_run_check.py
+		 subprocess_run_output.py
+		 subprocess_run_output_error.py
+		 subprocess_run_output_error_trap.py
 		 subprocess_check_output_error_trap_output.py
 		 subprocess_popen_read.py
 		 subprocess_popen_write.py
@@ -528,10 +577,10 @@ The output is:
 	$ python3 signal_parent.py
 	
 	PARENT      : Pausing before sending signal...
-	CHILD  23450: Setting up signal handler
-	CHILD  23450: Pausing to wait for signal
+	CHILD  98085: Setting up signal handler
+	CHILD  98085: Pausing to wait for signal
 	PARENT      : Signaling child
-	CHILD  23450: Received USR1
+	CHILD  98085: Received USR1
 
 .. {{{end}}}
 
@@ -567,13 +616,13 @@ are three separate processes interacting:
 
 	$ python3 subprocess_signal_parent_shell.py
 	
-	PARENT      : Pausing before signaling 23457...
-	Shell script in process 23457
+	PARENT      : Pausing before signaling 98203...
+	Shell script in process 98203
 	+ python3 signal_child.py
-	CHILD  23458: Setting up signal handler
-	CHILD  23458: Pausing to wait for signal
-	PARENT      : Signaling child 23457
-	CHILD  23458: Never received signal
+	CHILD  98204: Setting up signal handler
+	CHILD  98204: Pausing to wait for signal
+	PARENT      : Signaling child 98203
+	CHILD  98204: Never received signal
 
 .. {{{end}}}
 
@@ -617,15 +666,15 @@ The sequence of events is
 
 	$ python3 subprocess_signal_setpgrp.py
 	
-	Calling os.setpgrp() from 23468
-	Process group is now 23468
-	PARENT      : Pausing before signaling 23468...
-	Shell script in process 23468
+	Calling os.setpgrp() from 98359
+	Process group is now 98359
+	PARENT      : Pausing before signaling 98359...
+	Shell script in process 98359
 	+ python3 signal_child.py
-	CHILD  23469: Setting up signal handler
-	CHILD  23469: Pausing to wait for signal
-	PARENT      : Signaling process group 23468
-	CHILD  23469: Received USR1
+	CHILD  98361: Setting up signal handler
+	CHILD  98361: Pausing to wait for signal
+	PARENT      : Signaling process group 98359
+	CHILD  98361: Received USR1
 
 .. {{{end}}}
 
