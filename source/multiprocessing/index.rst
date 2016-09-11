@@ -1,6 +1,6 @@
-================================================
-multiprocessing -- Manage Processes Like Threads
-================================================
+===================================================
+ multiprocessing --- Manage Processes Like Threads
+===================================================
 
 .. module:: multiprocessing
     :synopsis: Manage processes like threads.
@@ -29,17 +29,16 @@ covered later.
 
 .. seealso::
 
-    `multiprocessing <http://docs.python.org/library/multiprocessing.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`multiprocessing`
 
-    :mod:`threading`
-        High-level API for working with threads.
+   * :mod:`threading` -- High-level API for working with threads.
 
-    `MapReduce - Wikipedia <http://en.wikipedia.org/wiki/MapReduce>`_
-        Overview of MapReduce on Wikipedia.
-    
-    `MapReduce: Simplified Data Processing on Large Clusters <http://labs.google.com/papers/mapreduce.html>`_
-        Google Labs presentation and paper on MapReduce.
+   * `MapReduce - Wikipedia
+     <http://en.wikipedia.org/wiki/MapReduce>`__ -- Overview of
+     MapReduce on Wikipedia.
 
-    :mod:`operator`
-        Operator tools such as ``itemgetter``.
+   * `MapReduce: Simplified Data Processing on Large Clusters
+     <http://labs.google.com/papers/mapreduce.html>`__ -- Google Labs
+     presentation and paper on MapReduce.
+
+   * :mod:`operator` -- Operator tools such as ``itemgetter``.
