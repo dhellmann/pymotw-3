@@ -6,7 +6,6 @@
     :synopsis: Follow Program FLow
 
 :Purpose: Monitor which statements and functions are executed as a program runs to produce coverage and call-graph information.
-:Python Version: 2.3 and later
 
 The :mod:`trace` module is useful for understanding the way a program
 runs.  It watches the statements executed, produces coverage reports,
@@ -20,15 +19,15 @@ This program will be used in the examples in the rest of the section.
 It imports another module called ``recurse`` and then runs a function
 from it.
 
-.. include:: trace_example/main.py
-    :literal:
+.. literalinclude:: trace_example/main.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The :func:`recurse` function invokes itself until the level argument
 reaches ``0``.
 
-.. include:: trace_example/recurse.py
-    :literal:
+.. literalinclude:: trace_example/recurse.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Tracing Execution
@@ -87,9 +86,9 @@ The statements being executed as the program runs are printed when the
 The first part of the output shows the setup operations performed by
 :mod:`trace`.  The rest of the output shows the entry into each
 function, including the module where the function is located, and then
-the lines of the source file as they are executed.  :func:`recurse()`
+the lines of the source file as they are executed.  :func:`recurse`
 is entered three times, as expected based on the way it is called in
-:func:`main()`.
+:func:`main`.
 
 Code Coverage
 =============
@@ -119,14 +118,14 @@ to the same directory as the module, named after the module but with a
 
 Two output files are produced, ``trace_example/main.cover``:
 
-.. include:: trace_example/main.cover
-    :literal:
+.. literalinclude:: trace_example/main.cover
+    :caption:
     :start-after: #end_pymotw_header
 
 and ``trace_example/recurse.cover``:
 
-.. include:: trace_example/recurse.cover
-    :literal:
+.. literalinclude:: trace_example/recurse.cover
+    :caption:
     :start-after: #end_pymotw_header
 
 .. note:: 
@@ -201,11 +200,11 @@ Since the program ran three times, the coverage report shows values
 three times higher than the first report.  The :option:`--summary`
 option adds the percent covered information to the output.  The
 ``recurse`` module is only 87% covered.  Looking at the cover file for
-``recurse`` shows that the body of ``not_called()`` is indeed never
+``recurse`` shows that the body of ``not_called`` is indeed never
 run, indicated by the ``>>>>>>`` prefix.
 
-.. include:: coverdir1/trace_example.recurse.cover
-    :literal:
+.. literalinclude:: coverdir1/trace_example.recurse.cover
+    :caption:
     :start-after: #end_pymotw_header
 
 Calling Relationships
@@ -292,11 +291,11 @@ invoked from within a program using a :class:`Trace` object.
 before running a single function or executing a Python command to be
 traced.
 
-.. include:: trace_run.py
-    :literal:
+.. literalinclude:: trace_run.py
+    :caption:
     :start-after: #end_pymotw_header
 
-Since the example only traces into the :func:`recurse()` function, no
+Since the example only traces into the :func:`recurse` function, no
 information from ``main.py`` is included in the output.
 
 .. {{{cog
@@ -330,14 +329,14 @@ information from ``main.py`` is included in the output.
 
 .. {{{end}}}
 
-That same output can be produced with the :func:`runfunc()` method,
+That same output can be produced with the :func:`runfunc` method,
 too.
 
-.. include:: trace_runfunc.py
-    :literal:
+.. literalinclude:: trace_runfunc.py
+    :caption:
     :start-after: #end_pymotw_header
 
-:func:`runfunc()` accepts arbitrary positional and keyword arguments,
+:func:`runfunc` accepts arbitrary positional and keyword arguments,
 which are passed to the function when it is called by the tracer.
 
 .. {{{cog
@@ -375,8 +374,8 @@ Counts and coverage information can be recorded as well, just as with
 the command line interface.  The data must be saved explicitly, using
 the :class:`CoverageResults` instance from the :class:`Trace` object.
 
-.. include:: trace_CoverageResults.py
-    :literal:
+.. literalinclude:: trace_CoverageResults.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example saves the coverage results to the directory
@@ -404,14 +403,14 @@ This example saves the coverage results to the directory
 
 The output file contains
 
-.. include:: coverdir2/trace_example.recurse.cover
-    :literal:
+.. literalinclude:: coverdir2/trace_example.recurse.cover
+    :caption:
 
 To save the counts data for generating reports, use the *infile* and
 *outfile* arguments to :class:`Trace`.
 
-.. include:: trace_report.py
-    :literal:
+.. literalinclude:: trace_report.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Pass a filename to *infile* to read previously stored data, and a
