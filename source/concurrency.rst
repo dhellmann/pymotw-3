@@ -46,6 +46,7 @@ concurrent tasks.
 .. toctree::
    :maxdepth: 1
 
+   subprocess/index
    threading/index
    asyncio/index
    concurrent.futures/index
