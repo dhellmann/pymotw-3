@@ -7,6 +7,7 @@
 """
 #end_pymotw_header
 
+
 def worker():
     """worker function"""
     print('Worker')

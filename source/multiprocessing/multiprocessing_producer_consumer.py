@@ -10,6 +10,7 @@
 import multiprocessing
 import time
 
+
 class Consumer(multiprocessing.Process):
 
     def __init__(self, task_queue, result_queue):
@@ -30,16 +31,18 @@ class Consumer(multiprocessing.Process):
             answer = next_task()
             self.task_queue.task_done()
             self.result_queue.put(answer)
-        return
 
 
 class Task:
+
     def __init__(self, a, b):
         self.a = a
         self.b = b
+
     def __call__(self):
-        time.sleep(0.1) # pretend to take some time to do the work
+        time.sleep(0.1)  # pretend to take time to do the work
         return '%s * %s = %s' % (self.a, self.b, self.a * self.b)
+
     def __str__(self):
         return '%s * %s' % (self.a, self.b)
 
@@ -52,18 +55,20 @@ if __name__ == '__main__':
     # Start consumers
     num_consumers = multiprocessing.cpu_count() * 2
     print('Creating %d consumers' % num_consumers)
-    consumers = [ Consumer(tasks, results)
-                  for i in xrange(num_consumers) ]
+    consumers = [
+        Consumer(tasks, results)
+        for i in range(num_consumers)
+    ]
     for w in consumers:
         w.start()
 
     # Enqueue jobs
     num_jobs = 10
-    for i in xrange(num_jobs):
+    for i in range(num_jobs):
         tasks.put(Task(i, i))
 
     # Add a poison pill for each consumer
-    for i in xrange(num_consumers):
+    for i in range(num_consumers):
         tasks.put(None)
 
     # Wait for all of the tasks to finish

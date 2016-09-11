@@ -9,6 +9,7 @@
 
 import multiprocessing
 
+
 class MyFancyClass:
 
     def __init__(self, name):
@@ -16,8 +17,8 @@ class MyFancyClass:
 
     def do_something(self):
         proc_name = multiprocessing.current_process().name
-        print('Doing something fancy in %s for %s!' % \)
-            (proc_name, self.name)
+        print('Doing something fancy in %s for %s!' %
+              (proc_name, self.name))
 
 
 def worker(q):
@@ -37,4 +38,3 @@ if __name__ == '__main__':
     queue.close()
     queue.join_thread()
     p.join()
-

@@ -9,10 +9,11 @@
 
 import multiprocessing
 
+
 def worker(num):
     """thread worker function"""
     print('Worker:', num)
-    return
+
 
 if __name__ == '__main__':
     jobs = []

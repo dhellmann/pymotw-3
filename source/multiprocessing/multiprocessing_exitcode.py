@@ -11,24 +11,37 @@ import multiprocessing
 import sys
 import time
 
+
 def exit_error():
     sys.exit(1)
+
 
 def exit_ok():
     return
 
+
 def return_value():
     return 1
+
 
 def raises():
     raise RuntimeError('There was an error!')
 
+
 def terminated():
     time.sleep(3)
 
+
 if __name__ == '__main__':
     jobs = []
-    for f in [exit_error, exit_ok, return_value, raises, terminated]:
+    funcs = [
+        exit_error,
+        exit_ok,
+        return_value,
+        raises,
+        terminated,
+    ]
+    for f in funcs:
         print('Starting process for', f.func_name)
         j = multiprocessing.Process(target=f, name=f.func_name)
         jobs.append(j)
