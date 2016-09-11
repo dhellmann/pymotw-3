@@ -23,7 +23,7 @@ script_file = tempfile.NamedTemporaryFile('wt')
 script_file.write(script)
 script_file.flush()
 
-proc = subprocess.Popen(['sh', script_file.name], close_fds=True)
+proc = subprocess.Popen(['sh', script_file.name])
 print('PARENT      : Pausing before signaling {}...'.format(
     proc.pid))
 sys.stdout.flush()

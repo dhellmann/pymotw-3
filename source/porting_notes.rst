@@ -985,6 +985,19 @@ struct
 ``s`` string pack code, and no longer implicitly encodes string
 objects to UTF-8 (:pyissue:`10783`).
 
+.. _porting-subprocess:
+
+subprocess
+----------
+
+.. index::
+   pair: porting; subprocess
+
+The default value for the ``close_fds`` argument to
+:class:`subprocess.Popen` has changed from always being ``False``. It
+always defaults to ``True`` under UNIX. It defaults to ``True`` under
+Windows if the standard I/O stream arguments are set to ``None``,
+otherwise it defaults to ``False``.
 
 .. _porting-sys:
 

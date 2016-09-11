@@ -527,10 +527,10 @@ The output is:
 	$ python3 signal_parent.py
 	
 	PARENT      : Pausing before sending signal...
-	CHILD  93596: Setting up signal handler
-	CHILD  93596: Pausing to wait for signal
+	CHILD  96994: Setting up signal handler
+	CHILD  96994: Pausing to wait for signal
 	PARENT      : Signaling child
-	CHILD  93596: Received USR1
+	CHILD  96994: Received USR1
 
 .. {{{end}}}
 
@@ -566,13 +566,13 @@ are three separate processes interacting:
 
 	$ python3 subprocess_signal_parent_shell.py
 	
-	PARENT      : Pausing before signaling 93602...
-	Shell script in process 93602
+	PARENT      : Pausing before signaling 97000...
+	Shell script in process 97000
 	+ python signal_child.py
-	CHILD  93603: Setting up signal handler
-	CHILD  93603: Pausing to wait for signal
-	PARENT      : Signaling child 93602
-	CHILD  93603: Never received signal
+	CHILD  97001: Setting up signal handler
+	CHILD  97001: Pausing to wait for signal
+	PARENT      : Signaling child 97000
+	CHILD  97001: Never received signal
 
 .. {{{end}}}
 
@@ -616,14 +616,14 @@ The sequence of events is
 
 	$ python3 subprocess_signal_setsid.py
 	
-	Calling os.setsid() from 93613
-	PARENT      : Pausing before signaling 93613...
-	Shell script in process 93613
+	Calling os.setsid() from 97017
+	PARENT      : Pausing before signaling 97017...
+	Shell script in process 97017
 	+ python signal_child.py
-	CHILD  93614: Setting up signal handler
-	CHILD  93614: Pausing to wait for signal
-	PARENT      : Signaling process group 93613
-	CHILD  93614: Received USR1
+	CHILD  97019: Setting up signal handler
+	CHILD  97019: Pausing to wait for signal
+	PARENT      : Signaling process group 97017
+	CHILD  97019: Received USR1
 
 .. {{{end}}}
 

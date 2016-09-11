@@ -32,7 +32,6 @@ script_file.flush()
 
 proc = subprocess.Popen(
     ['sh', script_file.name],
-    close_fds=True,
     preexec_fn=show_setting_sid,
 )
 print('PARENT      : Pausing before signaling {}...'.format(
