@@ -1,11 +1,12 @@
-==============================
- trace -- Follow Program Flow
-==============================
+===============================
+ trace --- Follow Program Flow
+===============================
 
 .. module:: trace
     :synopsis: Follow Program FLow
 
-:Purpose: Monitor which statements and functions are executed as a program runs to produce coverage and call-graph information.
+:Purpose: Monitor which statements and functions are executed as a
+          program runs to produce coverage and call-graph information.
 
 The :mod:`trace` module is useful for understanding the way a program
 runs.  It watches the statements executed, produces coverage reports,
@@ -33,8 +34,8 @@ reaches ``0``.
 Tracing Execution
 =================
 
-It is easy use :mod:`trace` directly from the command line.  
-The statements being executed as the program runs are printed when the
+It is easy use :mod:`trace` directly from the command line.  The
+statements being executed as the program runs are printed when the
 :option:`--trace` option is given.
 
 .. {{{cog
@@ -128,7 +129,7 @@ and ``trace_example/recurse.cover``:
     :caption:
     :start-after: #end_pymotw_header
 
-.. note:: 
+.. note::
 
     Although the line ``def recurse(level):`` has a count of ``1``,
     that does not mean the function was only run once.  It means the
@@ -141,9 +142,9 @@ report.
 .. {{{cog
 .. (path(cog.inFile).parent / 'coverdir1').rmtree()
 .. (path(cog.inFile).parent / 'coverdir1').mkdir()
-.. cog.out(run_script(cog.inFile, '-m trace --coverdir coverdir1 --count --file coverdir1/coverage_report.dat trace_example/main.py', break_lines_at=70))
-.. cog.out(run_script(cog.inFile, '-m trace --coverdir coverdir1 --count --file coverdir1/coverage_report.dat trace_example/main.py', include_prefix=False, break_lines_at=70))
-.. cog.out(run_script(cog.inFile, '-m trace --coverdir coverdir1 --count --file coverdir1/coverage_report.dat trace_example/main.py', include_prefix=False, break_lines_at=70))
+.. cog.out(run_script(cog.inFile, '-m trace --coverdir coverdir1 --count --file coverdir1/coverage_report.dat trace_example/main.py'))
+.. cog.out(run_script(cog.inFile, '-m trace --coverdir coverdir1 --count --file coverdir1/coverage_report.dat trace_example/main.py', include_prefix=False))
+.. cog.out(run_script(cog.inFile, '-m trace --coverdir coverdir1 --count --file coverdir1/coverage_report.dat trace_example/main.py', include_prefix=False))
 .. }}}
 
 ::
@@ -180,7 +181,7 @@ To produce reports once the coverage information is recorded to the
 ``.cover`` files, use the :option:`--report` option.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, '-m trace --coverdir coverdir1 --report --summary --missing --file coverdir1/coverage_report.dat trace_example/main.py', break_lines_at=70))
+.. cog.out(run_script(cog.inFile, '-m trace --coverdir coverdir1 --report --summary --missing --file coverdir1/coverage_report.dat trace_example/main.py'))
 .. }}}
 
 ::
@@ -216,7 +217,7 @@ report on the relationships between functions that call each other.
 For a simple list of the functions called, use :option:`--listfuncs`:
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, '-m trace --listfuncs trace_example/main.py', break_lines_at=70))
+.. cog.out(run_script(cog.inFile, '-m trace --listfuncs trace_example/main.py'))
 .. }}}
 
 ::
@@ -245,7 +246,7 @@ For more details about who is doing the calling, use
 :option:`--trackcalls`.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, '-m trace --listfuncs --trackcalls trace_example/main.py', break_lines_at=70))
+.. cog.out(run_script(cog.inFile, '-m trace --listfuncs --trackcalls trace_example/main.py'))
 .. }}}
 
 ::
@@ -418,6 +419,11 @@ filename to *outfile* to write new results after tracing.  If *infile*
 and *outfile* are the same, it has the effect of updating the file
 with cumulative data.
 
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'trace_report.py'))
+.. }}}
+.. {{{end}}}
+
 .. NOT RUNNING
 .. cog.out(run_script(cog.inFile, 'trace_report.py', break_lines_at=65))
 
@@ -459,15 +465,14 @@ to control runtime behavior.
 
 .. seealso::
 
-    `trace <http://docs.python.org/lib/module-trace.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`trace`
 
-    :ref:`sys-tracing`
-        The ``sys`` module includes facilities for adding a custom
-        tracing function to the interpreter at run-time.
+   * :ref:`sys-tracing` -- The ``sys`` module includes facilities for
+     adding a custom tracing function to the interpreter at run-time.
 
-    `coverage.py <http://nedbatchelder.com/code/modules/coverage.html>`_
-        Ned Batchelder's coverage module.
+   * `coverage.py
+     <http://nedbatchelder.com/code/modules/coverage.html>`_ -- Ned
+     Batchelder's coverage module.
 
-    `figleaf <http://darcs.idyll.org/~t/projects/figleaf/doc/>`_
-        Titus Brown's coverage application.
+   * `figleaf <http://darcs.idyll.org/~t/projects/figleaf/doc/>`_ --
+     Titus Brown's coverage application.
