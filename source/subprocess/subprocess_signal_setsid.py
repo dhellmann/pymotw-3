@@ -14,6 +14,13 @@ import tempfile
 import time
 import sys
 
+
+def show_setting_sid():
+    print('Calling os.setsid() from {}'.format(os.getpid()))
+    sys.stdout.flush()
+    os.setsid()
+
+
 script = '''#!/bin/sh
 echo "Shell script in process $$"
 set -x
@@ -22,13 +29,6 @@ python signal_child.py
 script_file = tempfile.NamedTemporaryFile('wt')
 script_file.write(script)
 script_file.flush()
-
-
-def show_setting_sid():
-    print('Calling os.setsid() from {}'.format(os.getpid()))
-    sys.stdout.flush()
-    os.setsid()
-
 
 proc = subprocess.Popen(
     ['sh', script_file.name],

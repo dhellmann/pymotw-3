@@ -15,4 +15,4 @@ proc = subprocess.Popen(
     ['cat', '-'],
     stdin=subprocess.PIPE,
 )
-proc.communicate(b'\tstdin: to stdin\n')
+proc.communicate('\tstdin: to stdin\n'.encode('utf-8'))

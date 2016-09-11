@@ -18,7 +18,7 @@ proc = subprocess.Popen(
     stdout=subprocess.PIPE,
     stderr=subprocess.STDOUT,
 )
-msg = b'through stdin to stdout\n'
+msg = 'through stdin to stdout\n'.encode('utf-8')
 stdout_value, stderr_value = proc.communicate(msg)
 print('\tcombined output:', repr(stdout_value))
 print('\tstderr value   :', repr(stderr_value))
