@@ -6,7 +6,6 @@
     :synopsis: Asynchronous system events
 
 :Purpose: Asynchronous system events
-:Python Version: 1.4 and later
 
 Signals are an operating system feature that provide a means of
 notifying a program of an event, and having it handled asynchronously.
@@ -39,13 +38,13 @@ is invoked when the signal occurs.  The arguments to the signal
 handler are the signal number and the stack frame from the point in
 the program that was interrupted by the signal.
 
-.. include:: signal_signal.py
-    :literal:
+.. literalinclude:: signal_signal.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example script loops indefinitely, pausing for a few seconds each
 time.  When a signal comes in, the :func:`sleep` call is interrupted
-and the signal handler ``receive_signal()`` prints the signal number.
+and the signal handler ``receive_signal`` prints the signal number.
 After the signal handler returns, the loop continues.  
 
 Send signals to the running program using :func:`os.kill` or the Unix
@@ -84,14 +83,14 @@ Retrieving Registered Handlers
 ==============================
 
 To see what signal handlers are registered for a signal, use
-:func:`getsignal()`.  Pass the signal number as argument.  The return
+:func:`getsignal`.  Pass the signal number as argument.  The return
 value is the registered handler, or one of the special values
 :const:`SIG_IGN` (if the signal is being ignored), :const:`SIG_DFL`
 (if the default behavior is being used), or ``None`` (if the existing
 signal handler was registered from C, rather than Python).
 
-.. include:: signal_getsignal.py
-    :literal:
+.. literalinclude:: signal_getsignal.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Again, since each OS may have different signals defined, the output on
@@ -149,11 +148,11 @@ notify it after some period of time has elapsed.  As the standard
 module documentation for :mod:`os` points out, this is useful for avoiding
 blocking indefinitely on an I/O operation or other system call.
 
-.. include:: signal_alarm.py
-    :literal:
+.. literalinclude:: signal_alarm.py
+    :caption:
     :start-after: #end_pymotw_header
 
-In this example, the call to :func:`sleep()` does not last the full
+In this example, the call to :func:`sleep` does not last the full
 four seconds.
 
 ::
@@ -171,10 +170,10 @@ Ignoring Signals
 To ignore a signal, register :const:`SIG_IGN` as the handler.  This
 script replaces the default handler for :const:`SIGINT` with
 :const:`SIG_IGN`, and registers a handler for :const:`SIGUSR1`.  Then
-it uses :func:`signal.pause()` to wait for a signal to be received.
+it uses :func:`signal.pause` to wait for a signal to be received.
 
-.. include:: signal_ignore.py
-    :literal:
+.. literalinclude:: signal_ignore.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Normally :const:`SIGINT` (the signal sent by the shell to a program
@@ -201,15 +200,15 @@ thread of a process will receive signals.  The following example sets
 up a signal handler, waits for the signal in one thread, and sends the
 signal from another.
 
-.. include:: signal_threads.py
-    :literal:
+.. literalinclude:: signal_threads.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The signal handlers were all registered in the main
 thread because this is a requirement of the :mod:`signal` module
 implementation for Python, regardless of underlying platform support
 for mixing threads and signals.  Although the receiver thread calls
-:func:`signal.pause()`, it does not receive the signal.  The
+:func:`signal.pause`, it does not receive the signal.  The
 ``signal.alarm(2)`` call near the end of the example prevents an
 infinite block, since the receiver thread will never exit.
 
@@ -226,12 +225,12 @@ infinite block, since the receiver thread will never exit.
 Although alarms can be set in any thread, they are always received by
 the main thread.
 
-.. include:: signal_threads_alarm.py
-    :literal:
+.. literalinclude:: signal_threads_alarm.py
+    :caption:
     :start-after: #end_pymotw_header
 
-The alarm does not abort the :func:`sleep()` call in
-:func:`use_alarm()`.
+The alarm does not abort the :func:`sleep` call in
+:func:`use_alarm`.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'signal_threads_alarm.py', ignore_error=True))
@@ -256,5 +255,5 @@ The alarm does not abort the :func:`sleep()` call in
         Standard library documentation for this module.
 
     :ref:`creating-processes-with-os-fork`
-        The :func:`kill()` function can be used to send signals
+        The :func:`kill` function can be used to send signals
         between processes.
