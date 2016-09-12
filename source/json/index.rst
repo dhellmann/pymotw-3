@@ -13,7 +13,7 @@ converting in-memory Python objects to a serialized representation
 known as JavaScript Object Notation (JSON).  Unlike pickle, JSON has
 the benefit of having implementations in many languages (especially
 JavaScript).  It is most widely used for communicating between the web
-server and client in an AJAX application, but is also useful for other
+server and client in a REST API, but is also useful for other
 inter-application communication needs.
 
 Encoding and Decoding Simple Data Types
