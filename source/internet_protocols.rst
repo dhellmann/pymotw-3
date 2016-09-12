@@ -42,8 +42,8 @@ resource needs to be unique but does not need to convey any meaning.
 
 Python's standard library includes support for two web-based remote
 procedure call mechanisms.  The JavaScript Object Notation (JSON)
-encoding scheme used in AJAX communication is implemented in
-:mod:`json`.  It works equally well in the client or the server.
+encoding scheme used in AJAX communication and REST API is implemented
+in :mod:`json`.  It works equally well in the client or the server.
 Complete XML-RPC client and server libraries are also included in
 :mod:`xmlrpc.client` and :mod:`xmlrpc.server` respectively.
 
@@ -52,22 +52,25 @@ Complete XML-RPC client and server libraries are also included in
 
     base64/index
     webbrowser/index
+    uuid/index
     json/index
     xmlrpc.client/index
     xmlrpc.server/index
-    uuid/index
 
 ..
     urlparse/index
-    urllib/index
-    urllib2/index
-    robotparser/index
-    BaseHTTPServer/index
-    Cookie/index
+    * urllib/index
+      urllib2/index
+      robotparser/index
+    base64/index
+    * http.server/index
+      BaseHTTPServer/index
+    * http.cookies/index
+      Cookie/index
+    webbrowser/index
     uuid/index
     json/index
-    xmlrpclib/index
-    SimpleXMLRPCServer/index
+    xmlrpc.client/index
+    xmlrpc.server/index
 
-..    webbrowser/index
 ..    wsgiref/index
