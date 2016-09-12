@@ -10,7 +10,7 @@
 import json
 
 class MyDecoder(json.JSONDecoder):
-    
+
     def __init__(self):
         json.JSONDecoder.__init__(self,
                                   object_hook=self.dict_to_object)
@@ -20,12 +20,12 @@ class MyDecoder(json.JSONDecoder):
             class_name = d.pop('__class__')
             module_name = d.pop('__module__')
             module = __import__(module_name)
-            print 'MODULE:', module.__name__
+            print('MODULE:', module.__name__)
             class_ = getattr(module, class_name)
-            print 'CLASS:', class_
+            print('CLASS:', class_)
             args = dict( (key.encode('ascii'), value)
                          for key, value in d.items())
-            print 'INSTANCE ARGS:', args
+            print('INSTANCE ARGS:', args)
             inst = class_(**args)
         else:
             inst = d
@@ -37,4 +37,4 @@ encoded_object = '''
 '''
 
 myobj_instance = MyDecoder().decode(encoded_object)
-print myobj_instance
+print(myobj_instance)

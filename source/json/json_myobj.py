@@ -7,7 +7,7 @@
 """
 #end_pymotw_header
 
-class MyObj(object):
+class MyObj:
     def __init__(self, s):
         self.s = s
     def __repr__(self):

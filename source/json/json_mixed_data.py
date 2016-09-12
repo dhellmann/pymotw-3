@@ -18,20 +18,20 @@ def get_decoded_and_remainder(input_data):
 encoded_object = '[{"a": "A", "c": 3.0, "b": [2, 4]}]'
 extra_text = 'This text is not JSON.'
 
-print 'JSON first:'
+print('JSON first:')
 data = ' '.join([encoded_object, extra_text])
 obj, end, remaining = get_decoded_and_remainder(data)
 
-print 'Object              :', obj
-print 'End of parsed input :', end
-print 'Remaining text      :', repr(remaining)
+print('Object              :', obj)
+print('End of parsed input :', end)
+print('Remaining text      :', repr(remaining))
 
-print
-print 'JSON embedded:'
+print()
+print('JSON embedded:')
 try:
     data = ' '.join([extra_text, encoded_object, extra_text])
     obj, end, remaining = get_decoded_and_remainder(data)
 except ValueError, err:
-    print 'ERROR:', err
+    print('ERROR:', err)
 
-    
+
