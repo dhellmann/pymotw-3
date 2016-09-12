@@ -12,3 +12,4 @@ UNIX-specific Services
   commands/index
   pipes/index
   resource/index
+  spwd/index
