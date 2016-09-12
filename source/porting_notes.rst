@@ -679,6 +679,18 @@ and :func:`filter:` respectively).
 The function :func:`ifilterfalse` has been renamed
 :func:`filterfalse`.
 
+.. _porting-json:
+
+json
+----
+
+.. index::
+   pair: porting; json
+
+The :mod:`json` API was updated to only support :class:`str` and not
+with :class:`bytes` because the JSON specification is defined using
+Unicode.
+
 .. _porting-locale:
 
 locale
