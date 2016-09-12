@@ -52,16 +52,17 @@ Complete XML-RPC client and server libraries are also included in
 
     base64/index
     webbrowser/index
+    json/index
     xmlrpc.client/index
     xmlrpc.server/index
     uuid/index
 
 ..
     urlparse/index
-    BaseHTTPServer/index
     urllib/index
     urllib2/index
     robotparser/index
+    BaseHTTPServer/index
     Cookie/index
     uuid/index
     json/index
