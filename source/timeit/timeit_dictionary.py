@@ -19,16 +19,16 @@ def show_results(result):
     "Print results in terms of microseconds per pass and per item."
     global count, range_size
     per_pass = 1000000 * (result / count)
-    print '%.2f usec/pass' % per_pass,
+    print('%.2f usec/pass' % per_pass, end=' ')
     per_item = per_pass / range_size
-    print '%.2f usec/item' % per_item
+    print('%.2f usec/item' % per_item)
 
-print "%d items" % range_size
-print "%d iterations" % count
-print
+print("%d items" % range_size)
+print("%d iterations" % count)
+print()
 
 # Using __setitem__ without checking for existing values first
-print '__setitem__:',
+print('__setitem__:', end=' ')
 t = timeit.Timer("""
 for s, i in l:
     d[s] = i
@@ -37,7 +37,7 @@ setup_statement)
 show_results(t.timeit(number=count))
 
 # Using setdefault
-print 'setdefault :',
+print('setdefault :', end=' ')
 t = timeit.Timer("""
 for s, i in l:
     d.setdefault(s, i)
@@ -46,7 +46,7 @@ setup_statement)
 show_results(t.timeit(number=count))
 
 # Using has_key
-print 'has_key    :',
+print('has_key    :', end=' ')
 t = timeit.Timer("""
 for s, i in l:
     if not d.has_key(s):
@@ -56,7 +56,7 @@ setup_statement)
 show_results(t.timeit(number=count))
 
 # Using exceptions
-print 'KeyError   :',
+print('KeyError   :', end=' ')
 t = timeit.Timer("""
 for s, i in l:
     try:
@@ -68,7 +68,7 @@ setup_statement)
 show_results(t.timeit(number=count))
 
 # Using "in"
-print '"not in"   :',
+print('"not in"   :', end=' ')
 t = timeit.Timer("""
 for s, i in l:
     if s not in d:
