@@ -1,11 +1,12 @@
-=========================
- pyclbr -- Class Browser
-=========================
+==========================
+ pyclbr --- Class Browser
+==========================
 
 .. module:: pyclbr
     :synopsis: Class browser
 
-:Purpose: Implements an API suitable for use in a source code editor for making a class browser.
+:Purpose: Implements an API suitable for use in a source code editor
+          for making a class browser.
 
 :mod:`pyclbr` can scan Python source to find classes and stand-alone
 functions.  The information about class, method, and function names
@@ -102,12 +103,11 @@ Each :class:`Function` object has properties much like the
 
 .. seealso::
 
-    `pyclbr <http://docs.python.org/library/pyclbr.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`pyclbr`
 
-    :mod:`inspect`
-        The ``inspect`` module can discover more metadata about classes
-        and functions, but requires importing the code.
+   * :mod:`inspect` -- The ``inspect`` module can discover more
+     metadata about classes and functions, but requires importing the
+     code.
 
-    :mod:`tokenize`
-        The ``tokenize`` module parses Python source code into tokens.
+   * :mod:`tokenize` -- The ``tokenize`` module parses Python source
+     code into tokens.
