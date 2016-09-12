@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # Copyright 2007 Doug Hellmann.
 #
@@ -29,7 +29,6 @@ Time various ways to populate and check a dictionary using a long list
 of strings and integers.
 """
 
-__version__ = "$Id$"
 #end_pymotw_header
 
 import timeit

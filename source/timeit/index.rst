@@ -6,7 +6,6 @@ timeit -- Time the execution of small bits of Python code.
     :synopsis: Time the execution of small bits of Python code.
 
 :Purpose: Time the execution of small bits of Python code.
-:Python Version: 2.3 and later
 
 The :mod:`timeit` module provides a simple interface for determining
 the execution time of small bits of Python code. It uses a
@@ -22,7 +21,7 @@ constructor for :class:`Timer` takes a statement to be timed and a
 "setup" statement (used to initialize variables, for example). The
 Python statements should be strings and can include embedded newlines.
 
-The :func:`timeit()` method runs the setup statement one time, then
+The :func:`timeit` method runs the setup statement one time, then
 executes the primary statement repeatedly and returns the amount of
 time that passes. The argument to :func:`timeit` controls how many
 times to run the statement; the default is 1,000,000.
@@ -34,8 +33,8 @@ To illustrate how the various arguments to :class:`Timer` are used,
 here is a simple example that prints an identifying value when each
 statement is executed:
 
-.. include:: timeit_example.py
-    :literal:
+.. literalinclude:: timeit_example.py
+    :caption:
     :start-after: #end_pymotw_header
 
 When run, the output is:
@@ -67,12 +66,12 @@ When run, the output is:
 
 .. {{{end}}}
 
-:func:`timeit()` runs the setup statement one time, then calls the
+:func:`timeit` runs the setup statement one time, then calls the
 main statement *count* times. It returns a single floating point value
 representing the cumulative amount of time spent running the main
 statement.
 
-When :func:`repeat()` is used, it calls :func:`timeit()` several
+When :func:`repeat` is used, it calls :func:`timeit` several
 times (3 in this case) and all of the responses are returned in a
 list.
 
@@ -91,9 +90,9 @@ and storing the integers as the associated values.
    :lines: 10-16
 
 A utility function, :func:`show_results`, is defined to print the
-results in a useful format.  The :func:`timeit()` method returns the
+results in a useful format.  The :func:`timeit` method returns the
 amount of time it takes to execute the statement repeatedly. The
-output of :func:`show_results()` converts that into the amount of time
+output of :func:`show_results` converts that into the amount of time
 it takes per iteration, and then further reduces the value to the
 average amount of time it takes to store one item in the dictionary.
 
@@ -113,14 +112,14 @@ values and the dictionary.
 .. literalinclude:: timeit_dictionary.py
    :lines: 30-37
 
-The next variation uses :func:`setdefault()` to ensure that values
+The next variation uses :func:`setdefault` to ensure that values
 already in the dictionary are not overwritten.
 
 .. literalinclude:: timeit_dictionary.py
    :lines: 39-46
 
 Another way to avoid overwriting existing values is to use
-:func:`has_key()` to check the contents of the dictionary explicitly.
+:func:`has_key` to check the contents of the dictionary explicitly.
 
 .. literalinclude:: timeit_dictionary.py
    :lines: 48-56
@@ -212,8 +211,8 @@ string by enclosing it in quotes.
 It is also possible to define a function with more complex code, then
 call the function from the command line.
 
-.. include:: timeit_setitem.py
-    :literal:
+.. literalinclude:: timeit_setitem.py
+    :caption:
     :start-after: #end_pymotw_header
 
 To run the test, pass in code that imports the modules and runs the
