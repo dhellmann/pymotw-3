@@ -9,11 +9,14 @@
 
 import json
 
+
 class MyDecoder(json.JSONDecoder):
 
     def __init__(self):
-        json.JSONDecoder.__init__(self,
-                                  object_hook=self.dict_to_object)
+        json.JSONDecoder.__init__(
+            self,
+            object_hook=self.dict_to_object,
+        )
 
     def dict_to_object(self, d):
         if '__class__' in d:
@@ -23,13 +26,16 @@ class MyDecoder(json.JSONDecoder):
             print('MODULE:', module.__name__)
             class_ = getattr(module, class_name)
             print('CLASS:', class_)
-            args = dict( (key.encode('ascii'), value)
-                         for key, value in d.items())
+            args = {
+                key.encode('ascii'): value
+                for key, value in d.items()
+            }
             print('INSTANCE ARGS:', args)
             inst = class_(**args)
         else:
             inst = d
         return inst
+
 
 encoded_object = '''
 [{"s": "instance value goes here",

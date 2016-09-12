@@ -9,7 +9,7 @@
 
 import json
 
-data = [ { 'a':'A', 'b':(2, 4), 'c':3.0 } ]
+data = [{'a': 'A', 'b': (2, 4), 'c': 3.0}]
 print('DATA   :', data)
 
 data_string = json.dumps(data)
