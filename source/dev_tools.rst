@@ -94,6 +94,7 @@ pip.
     cgitb/index
     pdb/index
     profile/index
+    timeit/index
     tabnanny/index
     compileall/index
     venv/index
@@ -109,7 +110,7 @@ pip.
     cgitb/index
     pdb/index
     profile/index
-    * timeit/index
+    timeit/index
     tabnanny/index
     compileall/index
     * pyclbr/index
