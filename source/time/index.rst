@@ -138,6 +138,8 @@ The second :func:`print` call in this example shows how to use
 
 .. {{{end}}}
 
+.. _time-monotonic:
+
 Monotonic Clocks
 ================
 

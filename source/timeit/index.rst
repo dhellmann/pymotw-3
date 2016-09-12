@@ -234,8 +234,10 @@ test function.
 
 .. seealso::
 
-    `timeit <http://docs.python.org/lib/module-timeit.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`timeit`
 
-    :mod:`profile`
-        The ``profile`` module is also useful for performance analysis.
+   * :mod:`profile` -- The ``profile`` module is also useful for
+     performance analysis.
+
+   * :ref:`time-monotonic` -- Discussion of the monotonic clock from
+     the :mod:`time` module.
