@@ -7,10 +7,10 @@
 """Example source for pyclbr.
 """
 
-class Base(object):
+class Base:
     """This is the base class.
     """
-    
+
     def method1(self):
         return
 
@@ -25,20 +25,20 @@ class Sub2(Base):
 class Mixin:
     """A mixin class.
     """
-    
+
     def method2(self):
         return
 
 class MixinUser(Sub2, Mixin):
     """Overrides method1 and method2
     """
-    
+
     def method1(self):
         return
-    
+
     def method2(self):
         return
-        
+
     def method3(self):
         return
 
