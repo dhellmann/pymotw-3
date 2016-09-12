@@ -20,8 +20,8 @@ Encoding and Decoding Simple Data Types
 =======================================
 
 The encoder understands Python's native types by default
-(:class:`string`, :class:`unicode`, :class:`int`, :class:`float`,
-:class:`list`, :class:`tuple`, and :class:`dict`).
+(:class:`str`, :class:`int`, :class:`float`, :class:`list`,
+:class:`tuple`, and :class:`dict`).
 
 .. literalinclude:: json_simple_types.py
     :caption:
@@ -50,8 +50,7 @@ object.
     :caption:
     :start-after: #end_pymotw_header
 
-In particular, strings are converted to unicode objects and
-tuples become lists.
+In particular, tuples become lists.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'json_simple_types_decode.py'))
@@ -469,6 +468,55 @@ of the input.
 	ERROR: Expecting value: line 1 column 1 (char 0)
 
 .. {{{end}}}
+
+JSON at the Command Line
+========================
+
+The ``json.tool`` module implements a command line program for
+reformatting JSON data to be easier to read.
+
+.. literalinclude:: example.json
+
+The input file ``example.json`` contains a mapping with the keys out
+of alphabetical order. The first example below shows the data
+reformatted in order, and the second example uses ``--sort-keys`` to
+sort the mapping keys before printing the output.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, '-m json.tool example.json'))
+.. cog.out(run_script(cog.inFile, '-m json.tool --sort-keys example.json', include_prefix=False))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 -m json.tool example.json
+	
+	[
+	    {
+	        "a": "A",
+	        "c": 3.0,
+	        "b": [
+	            2,
+	            4
+	        ]
+	    }
+	]
+
+	$ python3 -m json.tool --sort-keys example.json
+	
+	[
+	    {
+	        "a": "A",
+	        "b": [
+	            2,
+	            4
+	        ],
+	        "c": 3.0
+	    }
+	]
+
+.. {{{end}}}
+
 
 
 .. seealso::
