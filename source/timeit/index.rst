@@ -1,6 +1,6 @@
-==========================================================
-timeit -- Time the execution of small bits of Python code.
-==========================================================
+=============================================================
+ timeit --- Time the execution of small bits of Python code.
+=============================================================
 
 .. module:: timeit
     :synopsis: Time the execution of small bits of Python code.
@@ -40,18 +40,18 @@ statement is executed:
 When run, the output is:
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'timeit_example.py'))
+.. cog.out(run_script(cog.inFile, 'timeit_example.py', line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python timeit_example.py
+	$ python3 timeit_example.py
 	
 	TIMEIT:
 	setup
 	main statement
 	main statement
-	2.86102294922e-06
+	5.360925570130348e-06
 	REPEAT:
 	setup
 	main statement
@@ -62,7 +62,8 @@ When run, the output is:
 	setup
 	main statement
 	main statement
-	[9.5367431640625e-07, 1.9073486328125e-06, 2.1457672119140625e-06]
+	[7.655937224626541e-06, 3.211002331227064e-05,
+	2.4070031940937042e-06]
 
 .. {{{end}}}
 
@@ -87,7 +88,7 @@ the main statements to build dictionaries using the strings as keys
 and storing the integers as the associated values.
 
 .. literalinclude:: timeit_dictionary.py
-   :lines: 10-16
+   :lines: 15-21
 
 A utility function, :func:`show_results`, is defined to print the
 results in a useful format.  The :func:`timeit` method returns the
@@ -97,7 +98,7 @@ it takes per iteration, and then further reduces the value to the
 average amount of time it takes to store one item in the dictionary.
 
 .. literalinclude:: timeit_dictionary.py
-   :lines: 18-28
+   :lines: 24-35
 
 To establish a baseline, the first configuration tested uses
 :func:`__setitem__`.  All of the other variations avoid overwriting
@@ -110,58 +111,51 @@ second argument is a constant established to initialize the list of
 values and the dictionary.
 
 .. literalinclude:: timeit_dictionary.py
-   :lines: 30-37
+   :lines: 37-47
 
 The next variation uses :func:`setdefault` to ensure that values
 already in the dictionary are not overwritten.
 
 .. literalinclude:: timeit_dictionary.py
-   :lines: 39-46
-
-Another way to avoid overwriting existing values is to use
-:func:`has_key` to check the contents of the dictionary explicitly.
-
-.. literalinclude:: timeit_dictionary.py
-   :lines: 48-56
+   :lines: 49-59
 
 This method adds the value only if a :class:`KeyError`
 exception is raised when looking for the
 existing value.
 
 .. literalinclude:: timeit_dictionary.py
-   :lines: 58-68
+   :lines: 61-74
 
-And the last method is the relatively new form using "``in``" to
-determine if a dictionary has a particular key.
+And the last method uses "``in``" to determine if a dictionary has a
+particular key.
 
 .. literalinclude:: timeit_dictionary.py
-   :lines: 70-
+   :lines: 76-
 
-When run, the script produces this output:
+When run, the script produces the following output.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'timeit_dictionary.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python timeit_dictionary.py
+	$ python3 timeit_dictionary.py
 	
 	1000 items
 	1000 iterations
 	
-	__setitem__: 131.44 usec/pass 0.13 usec/item
-	setdefault : 282.94 usec/pass 0.28 usec/item
-	has_key    : 202.40 usec/pass 0.20 usec/item
-	KeyError   : 142.50 usec/pass 0.14 usec/item
-	"not in"   : 104.60 usec/pass 0.10 usec/item
+	__setitem__: 76.19 usec/pass 0.08 usec/item
+	setdefault : 144.03 usec/pass 0.14 usec/item
+	KeyError   : 71.30 usec/pass 0.07 usec/item
+	"not in"   : 57.35 usec/pass 0.06 usec/item
 
 .. {{{end}}}
 
-Those times are for a MacBook Pro running Python 2.7, and will vary
-depending on what other programs are running on the system. Experiment
-with the *range_size* and *count* variables, since different
-combinations will produce different results.
+Those times are for a MacMini, and will vary depending on what
+hardware is used and what other programs are running on the
+system. Experiment with the *range_size* and *count* variables, since
+different combinations will produce different results.
 
 From the Command Line
 =====================
@@ -169,18 +163,18 @@ From the Command Line
 In addition to the programmatic interface, :mod:`timeit` provides a
 command line interface for testing modules without instrumentation.
 
-To run the module, use the :option:`-m` option to the Python
+To run the module, use the ``-m`` option to the Python
 interpreter to find the module and treat it as the main program:
 
-::
+.. code-block:: none
 
-    $ python -m timeit
+    $ python3 -m timeit
 
 For example, to get help:
 
-::
+.. code-block:: none
 
-    $ python -m timeit -h
+    $ python3 -m timeit -h
 
     Tool for measuring execution time of small code snippets.
     
@@ -191,20 +185,24 @@ For example, to get help:
     ...
 
 The *statement* argument works a little differently on the command
-line than the argument to :class:`Timer`.  Instead of one long string,
-pass each line of the instructions as a separate command line
+line than the argument to :class:`Timer`.  Instead of using one long
+string, pass each line of the instructions as a separate command line
 argument. To indent lines (such as inside a loop), embed spaces in the
 string by enclosing it in quotes.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'python -m timeit -s "d={}" "for i in range(1000):" "  d[str(i)] = i"', interpreter=None))
+.. cog.out(run_script(cog.inFile, ['-m timeit -s', '"d={}"',
+..         '"for i in range(1000):"', '"  d[str(i)] = i"']))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python -m timeit -s "d={}" "for i in range(1000):" "  d[str(i)] = i"
+	$ python3 -m timeit -s \
+	"d={}" \
+	"for i in range(1000):" \
+	"  d[str(i)] = i"
 	
-	1000 loops, best of 3: 559 usec per loop
+	1000 loops, best of 3: 300 usec per loop
 
 .. {{{end}}}
 
@@ -219,15 +217,15 @@ To run the test, pass in code that imports the modules and runs the
 test function.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'python -m timeit "import timeit_setitem; timeit_setitem.test_setitem()"', interpreter=None))
+.. cog.out(run_script(cog.inFile, ['-m timeit', '"import timeit_setitem; timeit_setitem.test_setitem()"']))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python -m timeit "import timeit_setitem; timeit_setitem.test_setitem()\
-	"
+	$ python3 -m timeit \
+	"import timeit_setitem; timeit_setitem.test_setitem()"
 	
-	1000 loops, best of 3: 804 usec per loop
+	1000 loops, best of 3: 397 usec per loop
 
 .. {{{end}}}
 

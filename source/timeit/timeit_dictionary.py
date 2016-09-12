@@ -58,19 +58,6 @@ t = timeit.Timer(
 )
 show_results(t.timeit(number=count))
 
-# Using has_key
-print('has_key    :', end=' ')
-t = timeit.Timer(
-    textwrap.dedent(
-        """
-        for s, i in l:
-            if not d.has_key(s):
-                d[s] = i
-        """),
-    setup_statement,
-)
-show_results(t.timeit(number=count))
-
 # Using exceptions
 print('KeyError   :', end=' ')
 t = timeit.Timer(
