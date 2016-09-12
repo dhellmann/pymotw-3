@@ -405,7 +405,6 @@ This example saves the coverage results to the directory
 The output file contains
 
 .. literalinclude:: coverdir2/trace_example.recurse.cover
-    :caption:
 
 To save the counts data for generating reports, use the *infile* and
 *outfile* arguments to :class:`Trace`.
