@@ -169,12 +169,10 @@ Encoding Dictionaries
 =====================
 
 The JSON format expects the keys to a dictionary to be strings.
-Trying to encode a dictionary with non-string types as keys produces
-an exception. (The exception type depends on whether the pure-Python
-version of the module is loaded, or if the C speed-ups are available,
-but it will be either :class:`TypeError` or :class:`ValueError`.)  One
-way to work around that limitation is to tell the encoder to skip over
-non-string keys using the *skipkeys* argument:
+Trying to encode a dictionary with non-string types as keys produces a
+:class:`TypeError`. One way to work around that limitation is to tell
+the encoder to skip over non-string keys using the *skipkeys*
+argument:
 
 .. literalinclude:: json_skipkeys.py
     :caption:
