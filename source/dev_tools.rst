@@ -97,6 +97,7 @@ pip.
     timeit/index
     tabnanny/index
     compileall/index
+    pyclbr/index
     venv/index
     ensurepip/index
 
@@ -113,6 +114,6 @@ pip.
     timeit/index
     tabnanny/index
     compileall/index
-    * pyclbr/index
+    pyclbr/index
     venv
     ensurepip
