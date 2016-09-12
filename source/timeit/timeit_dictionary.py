@@ -25,13 +25,13 @@ def show_results(result):
     "Print microseconds per pass and per item."
     global count, range_size
     per_pass = 1000000 * (result / count)
-    print('%.2f usec/pass' % per_pass, end=' ')
+    print('{:6.2f} usec/pass'.format(per_pass), end=' ')
     per_item = per_pass / range_size
-    print('%.2f usec/item' % per_item)
+    print('{:6.2f} usec/item'.format(per_item))
 
 
-print("%d items" % range_size)
-print("%d iterations" % count)
+print("{} items".format(range_size))
+print("{} iterations".format(count))
 print()
 
 # Using __setitem__ without checking for existing values first

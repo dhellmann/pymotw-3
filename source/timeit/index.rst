@@ -51,7 +51,7 @@ When run, the output is:
 	setup
 	main statement
 	main statement
-	5.360925570130348e-06
+	3.7070130929350853e-06
 	REPEAT:
 	setup
 	main statement
@@ -62,8 +62,8 @@ When run, the output is:
 	setup
 	main statement
 	main statement
-	[7.655937224626541e-06, 3.211002331227064e-05,
-	2.4070031940937042e-06]
+	[1.4499528333544731e-06, 1.1939555406570435e-06,
+	1.1870870366692543e-06]
 
 .. {{{end}}}
 
@@ -145,10 +145,10 @@ When run, the script produces the following output.
 	1000 items
 	1000 iterations
 	
-	__setitem__: 76.19 usec/pass 0.08 usec/item
-	setdefault : 144.03 usec/pass 0.14 usec/item
-	KeyError   : 71.30 usec/pass 0.07 usec/item
-	"not in"   : 57.35 usec/pass 0.06 usec/item
+	__setitem__:  91.79 usec/pass   0.09 usec/item
+	setdefault : 182.85 usec/pass   0.18 usec/item
+	KeyError   :  80.87 usec/pass   0.08 usec/item
+	"not in"   :  66.77 usec/pass   0.07 usec/item
 
 .. {{{end}}}
 
@@ -202,7 +202,7 @@ string by enclosing it in quotes.
 	"for i in range(1000):" \
 	"  d[str(i)] = i"
 	
-	1000 loops, best of 3: 300 usec per loop
+	1000 loops, best of 3: 306 usec per loop
 
 .. {{{end}}}
 
@@ -225,7 +225,7 @@ test function.
 	$ python3 -m timeit \
 	"import timeit_setitem; timeit_setitem.test_setitem()"
 	
-	1000 loops, best of 3: 397 usec per loop
+	1000 loops, best of 3: 401 usec per loop
 
 .. {{{end}}}
 
