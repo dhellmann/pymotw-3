@@ -42,32 +42,32 @@ their line number in the source file.
 .. cog.out(run_script(cog.inFile, 'pyclbr_readmodule.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python pyclbr_readmodule.py
-
+	$ python3 pyclbr_readmodule.py
+	
 	Class: Base
-		File: pyclbr_example.py [10]
-		Method: method1 [14]
+		File: pyclbr_example.py [11]
+		Method: method1 [15]
 	
 	Class: Sub1
-		File: pyclbr_example.py [17]
+		File: pyclbr_example.py [19]
 		Super classes: ['Base']
 	
 	Class: Sub2
-		File: pyclbr_example.py [21]
+		File: pyclbr_example.py [24]
 		Super classes: ['Base']
 	
 	Class: Mixin
-		File: pyclbr_example.py [25]
-		Method: method2 [29]
+		File: pyclbr_example.py [29]
+		Method: method2 [33]
 	
 	Class: MixinUser
-		File: pyclbr_example.py [32]
+		File: pyclbr_example.py [37]
 		Super classes: ['Sub2', 'Mixin']
-		Method: method1 [36]
-		Method: method2 [39]
-		Method: method3 [42]
+		Method: method1 [41]
+		Method: method2 [44]
+		Method: method3 [47]
 	
 
 .. {{{end}}}
@@ -91,11 +91,11 @@ Each :class:`Function` object has properties much like the
 .. cog.out(run_script(cog.inFile, 'pyclbr_readmodule_ex.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python pyclbr_readmodule_ex.py
-
-	Function: my_function [45]
+	$ python3 pyclbr_readmodule_ex.py
+	
+	Function: my_function [51]
 
 .. {{{end}}}
 
