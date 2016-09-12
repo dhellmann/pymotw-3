@@ -1,11 +1,12 @@
-====================================
- json -- JavaScript Object Notation
-====================================
+=====================================
+ json --- JavaScript Object Notation
+=====================================
 
 .. module:: json
     :synopsis: JavaScript Object Notation Serializer
 
-:Purpose: Encode Python objects as JSON strings, and decode JSON strings into Python objects.
+:Purpose: Encode Python objects as JSON strings, and decode JSON
+          strings into Python objects.
 
 The :mod:`json` module provides an API similar to :mod:`pickle` for
 converting in-memory Python objects to a serialized representation
@@ -26,8 +27,8 @@ The encoder understands Python's native types by default
     :caption:
     :start-after: #end_pymotw_header
 
-Values are encoded in a manner superficially similar to Python's :func:`repr`
-output.
+Values are encoded in a manner superficially similar to Python's
+:func:`repr` output.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'json_simple_types.py'))
@@ -472,19 +473,13 @@ of the input.
 
 .. seealso::
 
-    `json <http://docs.python.org/library/json.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`json`
 
-    `JavaScript Object Notation`_
-        JSON home, with documentation and implementations in other languages.
+   * `JavaScript Object Notation`_ -- JSON home, with documentation
+     and implementations in other languages.
 
-    `simplejson <http://code.google.com/p/simplejson/>`_
-        ``simplejson``, from Bob Ippolito, et al, is the externally
-        maintained development version of the ``json`` library included
-        with Python 2.6 and later. It maintains backwards
-        compatibility with Python 2.4 and Python 2.5.
-
-    `jsonpickle <http://code.google.com/p/jsonpickle/>`_
-        ``jsonpickle`` allows for any Python object to be serialized into JSON. 
+   * `jsonpickle <http://code.google.com/p/jsonpickle/>`_ --
+     ``jsonpickle`` allows for any Python object to be serialized into
+     JSON.
 
 .. _JavaScript Object Notation: http://json.org/
