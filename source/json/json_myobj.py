@@ -14,4 +14,4 @@ class MyObj:
         self.s = s
 
     def __repr__(self):
-        return '<MyObj(%s)>' % self.s
+        return '<MyObj({})>'.format(self.s)
