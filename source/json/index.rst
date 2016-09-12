@@ -33,12 +33,12 @@ output.
 .. cog.out(run_script(cog.inFile, 'json_simple_types.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python json_simple_types.py
-
-	DATA: [{'a': 'A', 'c': 3.0, 'b': (2, 4)}]
-	JSON: [{"a": "A", "c": 3.0, "b": [2, 4]}]
+	$ python3 json_simple_types.py
+	
+	DATA: [{'c': 3.0, 'b': (2, 4), 'a': 'A'}]
+	JSON: [{"c": 3.0, "b": [2, 4], "a": "A"}]
 
 .. {{{end}}}
 
@@ -56,15 +56,15 @@ tuples become lists.
 .. cog.out(run_script(cog.inFile, 'json_simple_types_decode.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python json_simple_types_decode.py
-
-	DATA   : [{'a': 'A', 'c': 3.0, 'b': (2, 4)}]
-	ENCODED: [{"a": "A", "c": 3.0, "b": [2, 4]}]
-	DECODED: [{'a': 'A', 'c': 3.0, 'b': [2, 4]}]
-	ORIGINAL: <type 'tuple'>
-	DECODED : <type 'list'>
+	$ python3 json_simple_types_decode.py
+	
+	DATA   : [{'c': 3.0, 'b': (2, 4), 'a': 'A'}]
+	ENCODED: [{"c": 3.0, "b": [2, 4], "a": "A"}]
+	DECODED: [{'c': 3.0, 'b': [2, 4], 'a': 'A'}]
+	ORIGINAL: <class 'tuple'>
+	DECODED : <class 'list'>
 
 .. {{{end}}}
 
@@ -88,12 +88,12 @@ possible to compare JSON output in tests.
 .. cog.out(run_script(cog.inFile, 'json_sort_keys.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python json_sort_keys.py
-
-	DATA: [{'a': 'A', 'c': 3.0, 'b': (2, 4)}]
-	JSON: [{"a": "A", "c": 3.0, "b": [2, 4]}]
+	$ python3 json_sort_keys.py
+	
+	DATA: [{'c': 3.0, 'b': (2, 4), 'a': 'A'}]
+	JSON: [{"c": 3.0, "b": [2, 4], "a": "A"}]
 	SORT: [{"a": "A", "b": [2, 4], "c": 3.0}]
 	UNSORTED MATCH: False
 	SORTED MATCH  : True
@@ -115,19 +115,19 @@ the data structure matching the indent level.
 .. cog.out(run_script(cog.inFile, 'json_indent.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python json_indent.py
-
-	DATA: [{'a': 'A', 'c': 3.0, 'b': (2, 4)}]
+	$ python3 json_indent.py
+	
+	DATA: [{'c': 3.0, 'b': (2, 4), 'a': 'A'}]
 	NORMAL: [{"a": "A", "b": [2, 4], "c": 3.0}]
 	INDENT: [
 	  {
-	    "a": "A", 
+	    "a": "A",
 	    "b": [
-	      2, 
+	      2,
 	      4
-	    ], 
+	    ],
 	    "c": 3.0
 	  }
 	]
@@ -153,14 +153,14 @@ the whitespace, a more compact output is produced.
 .. cog.out(run_script(cog.inFile, 'json_compact_encoding.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python json_compact_encoding.py
-
-	DATA: [{'a': 'A', 'c': 3.0, 'b': (2, 4)}]
+	$ python3 json_compact_encoding.py
+	
+	DATA: [{'c': 3.0, 'b': (2, 4), 'a': 'A'}]
 	repr(data)             : 35
 	dumps(data)            : 35
-	dumps(data, indent=2)  : 76
+	dumps(data, indent=2)  : 73
 	dumps(data, separators): 29
 
 .. {{{end}}}
@@ -186,15 +186,15 @@ Rather than raising an exception, the non-string key is ignored.
 .. cog.out(run_script(cog.inFile, 'json_skipkeys.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python json_skipkeys.py
-
+	$ python3 json_skipkeys.py
+	
 	First attempt
 	ERROR: keys must be a string
 	
 	Second attempt
-	[{"a": "A", "c": 3.0, "b": [2, 4]}]
+	[{"c": 3.0, "b": [2, 4], "a": "A"}]
 
 .. {{{end}}}
 
@@ -229,10 +229,10 @@ necessary.
 ..                    break_lines_at=68, line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python json_dump_default.py
-
+	$ python3 json_dump_default.py
+	
 	First attempt
 	ERROR: <MyObj(instance value goes here)> is not JSON serializable
 	
@@ -265,10 +265,10 @@ arguments to the class constructor.
 .. cog.out(run_script(cog.inFile, 'json_load_object_hook.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python json_load_object_hook.py
-
+	$ python3 json_load_object_hook.py
+	
 	MODULE: json_myobj
 	CLASS: <class 'json_myobj.MyObj'>
 	INSTANCE ARGS: {'s': 'instance value goes here'}
@@ -303,16 +303,12 @@ any size value.
 .. cog.out(run_script(cog.inFile, 'json_encoder_iterable.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python json_encoder_iterable.py
-
+	$ python3 json_encoder_iterable.py
+	
 	PART: [
 	PART: {
-	PART: "a"
-	PART: : 
-	PART: "A"
-	PART: , 
 	PART: "c"
 	PART: : 
 	PART: 3.0
@@ -322,6 +318,10 @@ any size value.
 	PART: [2
 	PART: , 4
 	PART: ]
+	PART: , 
+	PART: "a"
+	PART: : 
+	PART: "A"
 	PART: }
 	PART: ]
 
@@ -346,10 +346,10 @@ The output is the same as the previous implementation.
 ..                    break_lines_at=68, line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python json_encoder_default.py
-
+	$ python3 json_encoder_default.py
+	
 	<MyObj(internal data)>
 	default( <MyObj(internal data)> )
 	{"s": "internal data", "__module__": "json_myobj", "__class__":
@@ -371,10 +371,10 @@ And the output is the same as the earlier example.
 .. cog.out(run_script(cog.inFile, 'json_decoder_object_hook.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python json_decoder_object_hook.py
-
+	$ python3 json_decoder_object_hook.py
+	
 	MODULE: json_myobj
 	CLASS: <class 'json_myobj.MyObj'>
 	INSTANCE ARGS: {'s': 'instance value goes here'}
@@ -403,11 +403,11 @@ A socket or normal file handle would work the same way as the
 .. cog.out(run_script(cog.inFile, 'json_dump_file.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python json_dump_file.py
-
-	[{"a": "A", "c": 3.0, "b": [2, 4]}]
+	$ python3 json_dump_file.py
+	
+	[{"c": 3.0, "b": [2, 4], "a": "A"}]
 
 .. {{{end}}}
 
@@ -426,11 +426,11 @@ Just as for :func:`dump`, any file-like object can be passed to
 .. cog.out(run_script(cog.inFile, 'json_load_file.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python json_load_file.py
-
-	[{'a': 'A', 'c': 3.0, 'b': [2, 4]}]
+	$ python3 json_load_file.py
+	
+	[{'c': 3.0, 'b': [2, 4], 'a': 'A'}]
 
 .. {{{end}}}
 
@@ -455,17 +455,17 @@ of the input.
 .. cog.out(run_script(cog.inFile, 'json_mixed_data.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python json_mixed_data.py
-
+	$ python3 json_mixed_data.py
+	
 	JSON first:
-	Object              : [{'a': 'A', 'c': 3.0, 'b': [2, 4]}]
+	Object              : [{'c': 3.0, 'b': [2, 4], 'a': 'A'}]
 	End of parsed input : 35
 	Remaining text      : ' This text is not JSON.'
 	
 	JSON embedded:
-	ERROR: No JSON object could be decoded
+	ERROR: Expecting value: line 1 column 1 (char 0)
 
 .. {{{end}}}
 

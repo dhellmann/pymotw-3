@@ -7,12 +7,12 @@
 """
 #end_pymotw_header
 
+import io
 import json
-from StringIO import StringIO
 
 data = [{'a': 'A', 'b': (2, 4), 'c': 3.0}]
 
-f = StringIO()
+f = io.StringIO()
 json.dump(data, f)
 
 print(f.getvalue())

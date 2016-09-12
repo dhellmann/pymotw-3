@@ -27,7 +27,7 @@ class MyDecoder(json.JSONDecoder):
             class_ = getattr(module, class_name)
             print('CLASS:', class_)
             args = {
-                key.encode('ascii'): value
+                key: value
                 for key, value in d.items()
             }
             print('INSTANCE ARGS:', args)

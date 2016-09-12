@@ -7,8 +7,8 @@
 """
 #end_pymotw_header
 
+import io
 import json
-from StringIO import StringIO
 
-f = StringIO('[{"a": "A", "c": 3.0, "b": [2, 4]}]')
+f = io.StringIO('[{"a": "A", "c": 3.0, "b": [2, 4]}]')
 print(json.load(f))
