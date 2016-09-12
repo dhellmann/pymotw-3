@@ -6,7 +6,6 @@
     :synopsis: JavaScript Object Notation Serializer
 
 :Purpose: Encode Python objects as JSON strings, and decode JSON strings into Python objects.
-:Python Version: 2.6 and later
 
 The :mod:`json` module provides an API similar to :mod:`pickle` for
 converting in-memory Python objects to a serialized representation
@@ -23,8 +22,8 @@ The encoder understands Python's native types by default
 (:class:`string`, :class:`unicode`, :class:`int`, :class:`float`,
 :class:`list`, :class:`tuple`, and :class:`dict`).
 
-.. include:: json_simple_types.py
-    :literal:
+.. literalinclude:: json_simple_types.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Values are encoded in a manner superficially similar to Python's :func:`repr`
@@ -46,8 +45,8 @@ output.
 Encoding, then re-decoding may not give exactly the same type of
 object.
 
-.. include:: json_simple_types_decode.py
-    :literal:
+.. literalinclude:: json_simple_types_decode.py
+    :caption:
     :start-after: #end_pymotw_header
 
 In particular, strings are converted to unicode objects and
@@ -78,8 +77,8 @@ to make the output even nicer.  For example, the *sort_keys* flag
 tells the encoder to output the keys of a dictionary in sorted,
 instead of random, order.
 
-.. include:: json_sort_keys.py
-    :literal:
+.. literalinclude:: json_sort_keys.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Sorting makes it easier to scan the results by eye, and also makes it
@@ -104,8 +103,8 @@ possible to compare JSON output in tests.
 For highly-nested data structures, specify a value for *indent* so
 the output is formatted nicely as well.
 
-.. include:: json_indent.py
-    :literal:
+.. literalinclude:: json_indent.py
+    :caption:
     :start-after: #end_pymotw_header
 
 When indent is a non-negative integer, the output more closely
@@ -141,8 +140,8 @@ use in a production environment.  In fact, it is possible to adjust
 the settings for separating data in the encoded output to make it even
 more compact than the default.
 
-.. include:: json_compact_encoding.py
-    :literal:
+.. literalinclude:: json_compact_encoding.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The *separators* argument to :func:`dumps` should be a tuple
@@ -177,8 +176,8 @@ but it will be either :class:`TypeError` or :class:`ValueError`.)  One
 way to work around that limitation is to tell the encoder to skip over
 non-string keys using the *skipkeys* argument:
 
-.. include:: json_skipkeys.py
-    :literal:
+.. literalinclude:: json_skipkeys.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Rather than raising an exception, the non-string key is ignored.
@@ -208,16 +207,16 @@ encode custom classes, as well, and there are two ways to do that.
 
 Given this class to encode:
 
-.. include:: json_myobj.py
-    :literal:
+.. literalinclude:: json_myobj.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The simple way of encoding a :class:`MyObj` instance is to define a
 function to convert an unknown type to a known type.  It does not need
 to do the encoding, so it should just convert one object to another.
 
-.. include:: json_dump_default.py
-    :literal:
+.. literalinclude:: json_dump_default.py
+    :caption:
     :start-after: #end_pymotw_header
 
 In :func:`convert_to_builtin_type`, instances of classes not recognized
@@ -254,8 +253,8 @@ incoming data stream, providing a chance to convert the dictionary to
 another type of object.  The hook function should return the object
 the calling application should receive instead of the dictionary.
 
-.. include:: json_load_object_hook.py
-    :literal:
+.. literalinclude:: json_load_object_hook.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Since :mod:`json` converts string values to unicode objects, they need
@@ -293,8 +292,8 @@ The :class:`JSONEncoder` uses an iterable interface for producing
 network sockets without having to represent an entire data structure
 in memory.
 
-.. include:: json_encoder_iterable.py
-    :literal:
+.. literalinclude:: json_encoder_iterable.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The output is generated in logical units, rather than being based on
@@ -336,8 +335,8 @@ To encode arbitrary objects, override the :func:`default` method with
 an implementation similar to the one used in
 :func:`convert_to_builtin_type`.
 
-.. include:: json_encoder_default.py
-    :literal:
+.. literalinclude:: json_encoder_default.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The output is the same as the previous implementation.
@@ -362,8 +361,8 @@ Decoding text, then converting the dictionary into an object takes a
 little more work to set up than the previous implementation, but not
 much.
 
-.. include:: json_decoder_object_hook.py
-    :literal:
+.. literalinclude:: json_decoder_object_hook.py
+    :caption:
     :start-after: #end_pymotw_header
 
 And the output is the same as the earlier example.
@@ -393,8 +392,8 @@ directly to a file-like object.  The convenience functions
 :func:`load` and :func:`dump` accept references to a file-like object
 to use for reading or writing.
 
-.. include:: json_dump_file.py
-    :literal:
+.. literalinclude:: json_dump_file.py
+    :caption:
     :start-after: #end_pymotw_header
 
 A socket or normal file handle would work the same way as the
@@ -416,8 +415,8 @@ Although it is not optimized to read only part of the data at a time,
 the :func:`load` function still offers the benefit of encapsulating
 the logic of generating objects from stream input.
 
-.. include:: json_load_file.py
-    :literal:
+.. literalinclude:: json_load_file.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Just as for :func:`dump`, any file-like object can be passed to
@@ -445,8 +444,8 @@ with trailing text.  The return value is the object created by
 decoding the input data, and an index into that data indicating where
 decoding left off.
 
-.. include:: json_mixed_data.py
-    :literal:
+.. literalinclude:: json_mixed_data.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Unfortunately, this only works if the object appears at the beginning
