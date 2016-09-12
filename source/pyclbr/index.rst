@@ -6,7 +6,6 @@
     :synopsis: Class browser
 
 :Purpose: Implements an API suitable for use in a source code editor for making a class browser.
-:Python Version: 1.4 and later
 
 :mod:`pyclbr` can scan Python source to find classes and stand-alone
 functions.  The information about class, method, and function names
@@ -15,8 +14,8 @@ the code.
 
 The examples in this section use this source file as input:
 
-.. include:: pyclbr_example.py
-    :literal:
+.. literalinclude:: pyclbr_example.py
+    :caption:
     :start-after: #end_pymotw_header
 
 
@@ -28,8 +27,8 @@ The first, :func:`readmodule`, takes the name of the module as argument returns 
 mapping of class names to :class:`Class` objects containing the metadata
 about the class source.
 
-.. include:: pyclbr_readmodule.py
-    :literal:
+.. literalinclude:: pyclbr_readmodule.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The metadata for the class includes the file and line number where it
@@ -80,8 +79,8 @@ The other public function in :mod:`pyclbr` is :func:`readmodule_ex`.
 It does everything that :func:`readmodule` does, and adds functions to
 the result set.
 
-.. include:: pyclbr_readmodule_ex.py
-    :literal:
+.. literalinclude:: pyclbr_readmodule_ex.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Each :class:`Function` object has properties much like the
