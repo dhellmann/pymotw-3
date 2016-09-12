@@ -8,32 +8,29 @@ receive data.  Python's rich set of tools for working with web
 protocols makes it well suited for programming web-based applications,
 either as a client or a server.
 
-The :mod:`urlparse` module manipulates URL strings, splitting and
+The :mod:`urllib.parse` module manipulates URL strings, splitting and
 combining their components, and is useful in clients and servers.
 
-There are two client-side APIs for accessing web resources.  The
-original :mod:`urllib` and updated :mod:`urllib2` offer similar APIs
-for retrieving content remotely, but :mod:`urllib2` is easier to
-extend with new protocols and the :class:`urllib2.Request` provides a
-way to add custom headers to outgoing requests.
+The original :mod:`urllib.request` module implements an API for
+retrieving content remotely.
 
 HTTP POST requests are usually "form encoded" with :mod:`urllib`.
 Binary data sent through a POST should be encoded with :mod:`base64`
 first, to comply with the message format standard.
 
 Well-behaved clients that access many sites as a spider or crawler
-should use :mod:`robotparser` to ensure they have permission before
-placing a heavy load on the remote server.
+should use :mod:`http.robotparser` to ensure they have permission
+before placing a heavy load on the remote server.
 
 To create a custom web server with Python, without requiring any
-external frameworks, use :mod:`BaseHTTPServer` as a starting point.
-It handles the HTTP protocol, so the only customization needed is the
+external frameworks, use :mod:`http.server` as a starting point.  It
+handles the HTTP protocol, so the only customization needed is the
 application code for responding to the incoming requests.
 
 Session state in the server can be managed through cookies created and
-parsed by the :mod:`Cookie` module.  Full support for expiration,
-path, domain, and other cookie settings makes it easy to configure the
-session.
+parsed by the :mod:`http.cookies` module.  Full support for
+expiration, path, domain, and other cookie settings makes it easy to
+configure the session.
 
 The :mod:`uuid` module is used for generating identifiers for
 resources that need unique values.  UUIDs are good for automatically
