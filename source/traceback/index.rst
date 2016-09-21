@@ -66,25 +66,22 @@ the informational and traceback messages are mingled correctly:
 .. cog.out(run_script(cog.inFile, 'traceback_print_exc.py', break_lines_at=68))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python traceback_print_exc.py
-
+	$ python3 traceback_print_exc.py
+	
 	print_exc() with no exception:
-	None
+	NoneType
 	
 	print_exc():
 	Traceback (most recent call last):
 	  File "traceback_print_exc.py", line 20, in <module>
 	    produce_exception()
-	  File "/Users/dhellmann/Documents/PyMOTW/book/PyMOTW/traceback/trac
-	eback_example.py", line 16, in produce_exception
-	    produce_exception(recursion_level-1)
-	  File "/Users/dhellmann/Documents/PyMOTW/book/PyMOTW/traceback/trac
-	eback_example.py", line 16, in produce_exception
-	    produce_exception(recursion_level-1)
-	  File "/Users/dhellmann/Documents/PyMOTW/book/PyMOTW/traceback/trac
-	eback_example.py", line 18, in produce_exception
+	  File ".../traceback_example.py", line 17, in produce_exception
+	    produce_exception(recursion_level - 1)
+	  File ".../traceback_example.py", line 17, in produce_exception
+	    produce_exception(recursion_level - 1)
+	  File ".../traceback_example.py", line 19, in produce_exception
 	    raise RuntimeError()
 	RuntimeError
 	
@@ -109,21 +106,18 @@ The arguments to :func:`print_exception` are produced by :func:`sys.exc_info`.
 .. cog.out(run_script(cog.inFile, 'traceback_print_exception.py', break_lines_at=68))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python traceback_print_exception.py
-
+	$ python3 traceback_print_exception.py
+	
 	Traceback (most recent call last):
 	  File "traceback_print_exception.py", line 16, in <module>
 	    produce_exception()
-	  File "/Users/dhellmann/Documents/PyMOTW/book/PyMOTW/traceback/trac
-	eback_example.py", line 16, in produce_exception
-	    produce_exception(recursion_level-1)
-	  File "/Users/dhellmann/Documents/PyMOTW/book/PyMOTW/traceback/trac
-	eback_example.py", line 16, in produce_exception
-	    produce_exception(recursion_level-1)
-	  File "/Users/dhellmann/Documents/PyMOTW/book/PyMOTW/traceback/trac
-	eback_example.py", line 18, in produce_exception
+	  File ".../traceback_example.py", line 17, in produce_exception
+	    produce_exception(recursion_level - 1)
+	  File ".../traceback_example.py", line 17, in produce_exception
+	    produce_exception(recursion_level - 1)
+	  File ".../traceback_example.py", line 19, in produce_exception
 	    raise RuntimeError()
 	RuntimeError
 	print_exception():
@@ -145,23 +139,26 @@ traceback, are used with :func:`format_exception`.
 .. cog.out(run_script(cog.inFile, 'traceback_format_exception.py', break_lines_at=68))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python traceback_format_exception.py
-
+	$ python3 traceback_format_exception.py
+	
 	format_exception():
 	['Traceback (most recent call last):\n',
-	 '  File "traceback_format_exception.py", line 17, in <module>\n    
-	produce_exception()\n',
-	 '  File "/Users/dhellmann/Documents/PyMOTW/book/PyMOTW/traceback/tr
-	aceback_example.py", line 16, in produce_exception\n    produce_exce
-	ption(recursion_level-1)\n',
-	 '  File "/Users/dhellmann/Documents/PyMOTW/book/PyMOTW/traceback/tr
-	aceback_example.py", line 16, in produce_exception\n    produce_exce
-	ption(recursion_level-1)\n',
-	 '  File "/Users/dhellmann/Documents/PyMOTW/book/PyMOTW/traceback/tr
-	aceback_example.py", line 18, in produce_exception\n    raise Runtim
-	eError()\n',
+	 '  File "traceback_format_exception.py", line 17, in <module>\n'
+	 '    produce_exception()\n',
+	 '  File '
+	 '".../traceback_example.py", '
+	 'line 17, in produce_exception\n'
+	 '    produce_exception(recursion_level - 1)\n',
+	 '  File '
+	 '".../traceback_example.py", '
+	 'line 17, in produce_exception\n'
+	 '    produce_exception(recursion_level - 1)\n',
+	 '  File '
+	 '".../traceback_example.py", '
+	 'line 19, in produce_exception\n'
+	 '    raise RuntimeError()\n',
 	 'RuntimeError\n']
 
 .. {{{end}}}
@@ -183,17 +180,17 @@ stripped (if the source is available).
 .. cog.out(run_script(cog.inFile, 'traceback_extract_tb.py', break_lines_at=68))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python traceback_extract_tb.py
-
+	$ python3 traceback_extract_tb.py
+	
 	format_exception():
-	traceback_extract_tb.py:16 "produce_exception()" in <module>()
-	traceback_example.py   :16 "produce_exception(recursion_level-1)" in
-	 produce_exception()
-	traceback_example.py   :16 "produce_exception(recursion_level-1)" in
-	 produce_exception()
-	traceback_example.py   :18 "raise RuntimeError()" in produce_excepti
+	traceback_extract_tb.py:16 'produce_exception()' in <module>()
+	traceback_example.py   :17 'produce_exception(recursion_level - 1)' 
+	in produce_exception()
+	traceback_example.py   :17 'produce_exception(recursion_level - 1)' 
+	in produce_exception()
+	traceback_example.py   :19 'raise RuntimeError()' in produce_excepti
 	on()
 
 .. {{{end}}}
@@ -218,29 +215,26 @@ The output look like a traceback without an error message.
 .. cog.out(run_script(cog.inFile, 'traceback_print_stack.py', break_lines_at=68))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python traceback_print_stack.py
-
+	$ python3 traceback_print_stack.py
+	
 	Calling f() directly:
-	  File "traceback_print_stack.py", line 19, in <module>
+	  File "traceback_print_stack.py", line 21, in <module>
 	    f()
-	  File "traceback_print_stack.py", line 16, in f
+	  File "traceback_print_stack.py", line 17, in f
 	    traceback.print_stack(file=sys.stdout)
 	
 	Calling f() from 3 levels deep:
-	  File "traceback_print_stack.py", line 23, in <module>
+	  File "traceback_print_stack.py", line 25, in <module>
 	    call_function(f)
-	  File "/Users/dhellmann/Documents/PyMOTW/book/PyMOTW/traceback/trac
-	eback_example.py", line 22, in call_function
-	    return call_function(f, recursion_level-1)
-	  File "/Users/dhellmann/Documents/PyMOTW/book/PyMOTW/traceback/trac
-	eback_example.py", line 22, in call_function
-	    return call_function(f, recursion_level-1)
-	  File "/Users/dhellmann/Documents/PyMOTW/book/PyMOTW/traceback/trac
-	eback_example.py", line 24, in call_function
+	  File ".../traceback_example.py", line 24, in call_function
+	    return call_function(f, recursion_level - 1)
+	  File ".../traceback_example.py", line 24, in call_function
+	    return call_function(f, recursion_level - 1)
+	  File ".../traceback_example.py", line 26, in call_function
 	    return f()
-	  File "traceback_print_stack.py", line 16, in f
+	  File "traceback_print_stack.py", line 17, in f
 	    traceback.print_stack(file=sys.stdout)
 
 .. {{{end}}}
@@ -259,22 +253,26 @@ output.
 .. cog.out(run_script(cog.inFile, 'traceback_format_stack.py', break_lines_at=68))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python traceback_format_stack.py
-
-	['  File "traceback_format_stack.py", line 19, in <module>\n    form
-	atted_stack = call_function(f)\n',
-	 '  File "/Users/dhellmann/Documents/PyMOTW/book/PyMOTW/traceback/tr
-	aceback_example.py", line 22, in call_function\n    return call_func
-	tion(f, recursion_level-1)\n',
-	 '  File "/Users/dhellmann/Documents/PyMOTW/book/PyMOTW/traceback/tr
-	aceback_example.py", line 22, in call_function\n    return call_func
-	tion(f, recursion_level-1)\n',
-	 '  File "/Users/dhellmann/Documents/PyMOTW/book/PyMOTW/traceback/tr
-	aceback_example.py", line 24, in call_function\n    return f()\n',
-	 '  File "traceback_format_stack.py", line 17, in f\n    return trac
-	eback.format_stack()\n']
+	$ python3 traceback_format_stack.py
+	
+	['  File "traceback_format_stack.py", line 21, in <module>\n'
+	 '    formatted_stack = call_function(f)\n',
+	 '  File '
+	 '".../traceback_example.py", '
+	 'line 24, in call_function\n'
+	 '    return call_function(f, recursion_level - 1)\n',
+	 '  File '
+	 '".../traceback_example.py", '
+	 'line 24, in call_function\n'
+	 '    return call_function(f, recursion_level - 1)\n',
+	 '  File '
+	 '".../traceback_example.py", '
+	 'line 26, in call_function\n'
+	 '    return f()\n',
+	 '  File "traceback_format_stack.py", line 18, in f\n'
+	 '    return traceback.format_stack()\n']
 
 .. {{{end}}}
 
@@ -291,18 +289,18 @@ place in the stack frame or to limit the depth of traversal.
 .. cog.out(run_script(cog.inFile, 'traceback_extract_stack.py', break_lines_at=68))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python traceback_extract_stack.py
-
-	traceback_extract_stack.py:19 "stack = call_function(f)" in <module>
+	$ python3 traceback_extract_stack.py
+	
+	traceback_extract_stack.py:21 'stack = call_function(f)' in <module>
 	()
-	traceback_example.py      :22 "return call_function(f, recursion_lev
-	el-1)" in call_function()
-	traceback_example.py      :22 "return call_function(f, recursion_lev
-	el-1)" in call_function()
-	traceback_example.py      :24 "return f()" in call_function()
-	traceback_extract_stack.py:17 "return traceback.extract_stack()" in 
+	traceback_example.py      :24 'return call_function(f, recursion_lev
+	el - 1)' in call_function()
+	traceback_example.py      :24 'return call_function(f, recursion_lev
+	el - 1)' in call_function()
+	traceback_example.py      :26 'return f()' in call_function()
+	traceback_extract_stack.py:18 'return traceback.extract_stack()' in 
 	f()
 
 .. {{{end}}}

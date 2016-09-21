@@ -18,7 +18,7 @@ print()
 
 try:
     produce_exception()
-except Exception, err:
+except Exception as err:
     print('print_exc():')
     traceback.print_exc(file=sys.stdout)
     print()
