@@ -45,8 +45,6 @@ the front of each subsequent line are embedded in the paragraph.
 
 	$ python3 textwrap_fill.py
 	
-	No dedent:
-	
 	     The textwrap module can be used to format
 	text for output in     situations where pretty-
 	printing is desired.  It offers     programmatic
