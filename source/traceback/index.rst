@@ -50,6 +50,90 @@ The examples in this section use the module ``traceback_example.py``:
     :caption:
     :start-after: #end_pymotw_header
 
+Examining the Stack
+===================
+
+To examine the current stack, construct a :class:`StackSummary` from
+:func:`walk_stack`.
+
+.. literalinclude:: traceback_stacksummary.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The :func:`format` method produces a sequence of formatted strings
+ready to be printed.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'traceback_stacksummary.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 traceback_stacksummary.py
+	
+	Calling f() directly:
+	  File "traceback_stacksummary.py", line 18, in f
+	    traceback.walk_stack(None)
+	  File "traceback_stacksummary.py", line 24, in <module>
+	    f()
+	
+	
+	Calling f() from 3 levels deep:
+	  File "traceback_stacksummary.py", line 18, in f
+	    traceback.walk_stack(None)
+	  File ".../traceback_example.py", line 26, in call_function
+	    return f()
+	  File ".../traceback_example.py", line 24, in call_function
+	    return call_function(f, recursion_level - 1)
+	  File ".../traceback_example.py", line 24, in call_function
+	    return call_function(f, recursion_level - 1)
+	  File "traceback_stacksummary.py", line 28, in <module>
+	    call_function(f)
+	
+
+.. {{{end}}}
+
+The :class:`StackSummary` is an iterable container holding
+:class:`FrameSummary` instances.
+
+.. literalinclude:: traceback_framesummary.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Each :class:`FrameSummary` describes a frame of the stack, including
+information about where in the program source files the execution
+context is.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'traceback_framesummary.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 traceback_framesummary.py
+	
+	Calling f() directly:
+	traceback_framesummary.py :23:f:
+	    traceback.walk_stack(None)
+	traceback_framesummary.py :30:<module>:
+	    f()
+	
+	Calling f() from 3 levels deep:
+	traceback_framesummary.py :23:f:
+	    traceback.walk_stack(None)
+	.../traceback_example.py:26:call_function:
+	    return f()
+	.../traceback_example.py:24:call_function:
+	    return call_function(f, recursion_level - 1)
+	.../traceback_example.py:24:call_function:
+	    return call_function(f, recursion_level - 1)
+	traceback_framesummary.py :34:<module>:
+	    call_function(f)
+
+.. {{{end}}}
+
+
+
 TracebackException
 ==================
 
@@ -95,9 +179,8 @@ exception message.
 
 .. {{{end}}}
 
-
-Working With Exceptions
-=======================
+Low-level Exception APIs
+========================
 
 The simplest way to handle exception reporting is with
 :func:`print_exc`. It uses :func:`sys.exc_info` to obtain the
@@ -249,8 +332,8 @@ stripped (if the source is available).
 
 
 
-Working With the Stack
-======================
+Low-level Stack APIs
+====================
 
 There are a similar set of functions for performing the same
 operations with the current call stack instead of a traceback.
