@@ -190,7 +190,7 @@ new string and returned.
 .. {{{end}}}
 
 To control which lines receive the new prefix, pass a callable as the
-predicte argument to :func:`indent`. The callable will be invoked for
+``predicate`` argument to :func:`indent`. The callable will be invoked for
 each line of text in turn and the prefix will be added for lines where
 the return value is true.
 
