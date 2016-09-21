@@ -44,7 +44,9 @@ passed in as argument (or :data:`sys.stdout` by default).
 	
 	PRINT:
 	[(1, {'c': 'C', 'b': 'B', 'd': 'D', 'a': 'A'}), (2, {'k': 'K', 'i': 
-	'I', 'g': 'G', 'f': 'F', 'e': 'E', 'h': 'H', 'l': 'L', 'j': 'J'})]
+	'I', 'g': 'G', 'f': 'F', 'e': 'E', 'h': 'H', 'l': 'L', 'j': 'J'}), (
+	3, ['m', 'n']), (4, ['o', 'p', 'q']), (5, ['r', 's', 'tu', 'v', 'x',
+	 'y', 'z'])]
 	
 	PPRINT:
 	[(1, {'a': 'A', 'b': 'B', 'c': 'C', 'd': 'D'}),
@@ -56,7 +58,10 @@ passed in as argument (or :data:`sys.stdout` by default).
 	   'i': 'I',
 	   'j': 'J',
 	   'k': 'K',
-	   'l': 'L'})]
+	   'l': 'L'}),
+	 (3, ['m', 'n']),
+	 (4, ['o', 'p', 'q']),
+	 (5, ['r', 's', 'tu', 'v', 'x', 'y', 'z'])]
 
 .. {{{end}}}
 
@@ -91,7 +96,10 @@ The formatted string can then be printed or logged independently.
 	DEBUG       'i': 'I',
 	DEBUG       'j': 'J',
 	DEBUG       'k': 'K',
-	DEBUG       'l': 'L'})]
+	DEBUG       'l': 'L'}),
+	DEBUG     (3, ['m', 'n']),
+	DEBUG     (4, ['o', 'p', 'q']),
+	DEBUG     (5, ['r', 's', 'tu', 'v', 'x', 'y', 'z'])]
 
 .. {{{end}}}
 
@@ -145,8 +153,8 @@ creating a recursive reference.
 
 	$ python3 pprint_recursion.py
 	
-	id(local_data) => 4316128264
-	['a', 'b', 1, 2, <Recursion on list with id=4316128264>]
+	id(local_data) => 4324368136
+	['a', 'b', 1, 2, <Recursion on list with id=4324368136>]
 
 .. {{{end}}}
 
@@ -175,8 +183,8 @@ output are represented by ellipsis.
 
 	$ python3 pprint_depth.py
 	
-	[(...), (...)]
-	[(1, {...}), (2, {...})]
+	[(...), (...), (...), (...), (...)]
+	[(1, {...}), (2, {...}), (3, [...]), (4, [...]), (5, [...])]
 
 .. {{{end}}}
 
@@ -213,7 +221,10 @@ syntax.
 	   'i': 'I',
 	   'j': 'J',
 	   'k': 'K',
-	   'l': 'L'})]
+	   'l': 'L'}),
+	 (3, ['m', 'n']),
+	 (4, ['o', 'p', 'q']),
+	 (5, ['r', 's', 'tu', 'v', 'x', 'y', 'z'])]
 	
 	WIDTH = 5
 	[(1,
@@ -229,10 +240,76 @@ syntax.
 	   'i': 'I',
 	   'j': 'J',
 	   'k': 'K',
-	   'l': 'L'})]
+	   'l': 'L'}),
+	 (3,
+	  ['m',
+	   'n']),
+	 (4,
+	  ['o',
+	   'p',
+	   'q']),
+	 (5,
+	  ['r',
+	   's',
+	   'tu',
+	   'v',
+	   'x',
+	   'y',
+	   'z'])]
 	
 
 .. {{{end}}}
+
+The ``compact`` flag tells :func:`pprint` to try to fit more data on
+each individual line, rather than spreading complex data structures
+across lines.
+
+.. literalinclude:: pprint_compact.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+This example shows that when a data structure does not fit on a line,
+it is split up (as with the second item in the data list). When
+multiple elements can fit on a line, as with the third and fourth
+members, they are placed that way.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'pprint_compact.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 pprint_compact.py
+	
+	[(1, {'a': 'A', 'b': 'B', 'c': 'C', 'd': 'D'}),
+	 (2,
+	  {'e': 'E',
+	   'f': 'F',
+	   'g': 'G',
+	   'h': 'H',
+	   'i': 'I',
+	   'j': 'J',
+	   'k': 'K',
+	   'l': 'L'}),
+	 (3, ['m', 'n']),
+	 (4, ['o', 'p', 'q']),
+	 (5, ['r', 's', 'tu', 'v', 'x', 'y', 'z'])]
+	[(1, {'a': 'A', 'b': 'B', 'c': 'C', 'd': 'D'}),
+	 (2,
+	  {'e': 'E',
+	   'f': 'F',
+	   'g': 'G',
+	   'h': 'H',
+	   'i': 'I',
+	   'j': 'J',
+	   'k': 'K',
+	   'l': 'L'}),
+	 (3, ['m', 'n']), (4, ['o', 'p', 'q']),
+	 (5, ['r', 's', 'tu', 'v', 'x', 'y', 'z'])]
+
+.. {{{end}}}
+
+
 
 .. seealso::
 
