@@ -182,7 +182,7 @@ exception message.
 Low-level Exception APIs
 ========================
 
-The simplest way to handle exception reporting is with
+Another way to handle exception reporting is with
 :func:`print_exc`. It uses :func:`sys.exc_info` to obtain the
 exception information for the current thread, formats the results, and
 prints the text to a file handle (:data:`sys.stderr`, by default).
