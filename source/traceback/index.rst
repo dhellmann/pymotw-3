@@ -15,12 +15,17 @@ stack up from the point of a call (and without the context of an
 error), which is useful for finding out the paths being followed into
 a function.
 
-The functions in :mod:`traceback` fall into several common categories.
-There are functions for extracting raw tracebacks from the current
-runtime environment (either an exception handler for a traceback, or
-the regular stack). The extracted stack trace is a sequence of tuples
-containing the filename, line number, function name, and text of the
-source line.
+The high-level API in :mod:`traceback` uses :class:`StackSummary` and
+:class:`FrameSummary` instances to hold the representation of the
+stack. These classes can be constructed from a traceback or the
+current execution stack, and then processed in the same ways.
+
+The low-level functions in :mod:`traceback` fall into several common
+categories.  There are functions for extracting raw tracebacks from
+the current runtime environment (either an exception handler for a
+traceback, or the regular stack). The extracted stack trace is a
+sequence of tuples containing the filename, line number, function
+name, and text of the source line.
 
 Once extracted, the stack trace can be formatted using functions like
 :func:`format_exception`, :func:`format_stack`, etc. The format
@@ -44,6 +49,51 @@ The examples in this section use the module ``traceback_example.py``:
 .. literalinclude:: traceback_example.py
     :caption:
     :start-after: #end_pymotw_header
+
+TracebackException
+==================
+
+The :class:`TracebackException` class is a high-level interface for
+building a :class:`StackSummary` while processing a traceback.
+
+.. literalinclude:: traceback_tracebackexception.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The :func:`format` method produces a formatted version of the full
+traceback, while :func:`format_exception_only` shows only the
+exception message.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'traceback_tracebackexception.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 traceback_tracebackexception.py
+	
+	with no exception:
+	None
+	
+	
+	with exception:
+	Traceback (most recent call last):
+	  File "traceback_tracebackexception.py", line 22, in <module>
+	    produce_exception()
+	  File ".../traceback_example.py", line 17, in produce_exception
+	    produce_exception(recursion_level - 1)
+	  File ".../traceback_example.py", line 17, in produce_exception
+	    produce_exception(recursion_level - 1)
+	  File ".../traceback_example.py", line 19, in produce_exception
+	    raise RuntimeError()
+	RuntimeError
+	
+	
+	exception only:
+	RuntimeError
+	
+
+.. {{{end}}}
 
 
 Working With Exceptions
