@@ -176,6 +176,7 @@ output are represented by ellipsis.
 	$ python3 pprint_depth.py
 	
 	[(...), (...)]
+	[(1, {...}), (2, {...})]
 
 .. {{{end}}}
 
