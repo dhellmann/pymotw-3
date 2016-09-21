@@ -32,7 +32,7 @@ type of the data and optional count and endianness indicators.  Refer
 to the standard library documentation for a complete list of the
 supported format specifiers.
 
-In this example, the specifier calls for an integer or long value, a
+In this example, the specifier calls for an integer or long integer value, a
 two byte string, and a floating point number.  The spaces in the
 format specifier are included to separate the type indicators, and are
 ignored when the format is compiled.
