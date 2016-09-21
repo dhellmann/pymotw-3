@@ -13,6 +13,8 @@ import os
 
 from traceback_example import call_function
 
+template = '{filename:<26}:{linenum}:{funcname}:\n    {source}'
+
 
 def f():
     return traceback.extract_stack()
@@ -20,7 +22,11 @@ def f():
 
 stack = call_function(f)
 for filename, linenum, funcname, source in stack:
-    print('{:<26}:{} {!r} in {}()'.format(
-        os.path.basename(filename), linenum,
-        source, funcname)
+    if funcname != '<module>':
+        funcname = funcname + '()'
+    print(template.format(
+        filename=os.path.basename(filename),
+        linenum=linenum,
+        source=source,
+        funcname=funcname)
     )

@@ -1,6 +1,6 @@
-==========================================
- traceback -- Exceptions and Stack Traces
-==========================================
+===========================================
+ traceback --- Exceptions and Stack Traces
+===========================================
 
 .. module:: traceback
     :synopsis: Exceptions and stack traces
@@ -63,7 +63,7 @@ In this example, the file handle for :data:`sys.stdout` is substituted so
 the informational and traceback messages are mingled correctly:
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'traceback_print_exc.py', break_lines_at=68))
+.. cog.out(run_script(cog.inFile, 'traceback_print_exc.py'))
 .. }}}
 
 .. code-block:: none
@@ -103,7 +103,7 @@ which requires explicit arguments.
 The arguments to :func:`print_exception` are produced by :func:`sys.exc_info`.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'traceback_print_exception.py', break_lines_at=68))
+.. cog.out(run_script(cog.inFile, 'traceback_print_exception.py'))
 .. }}}
 
 .. code-block:: none
@@ -136,7 +136,7 @@ The same three arguments, exception type, exception value, and
 traceback, are used with :func:`format_exception`.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'traceback_format_exception.py', break_lines_at=68))
+.. cog.out(run_script(cog.inFile, 'traceback_format_exception.py', line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
@@ -145,7 +145,8 @@ traceback, are used with :func:`format_exception`.
 	
 	format_exception():
 	['Traceback (most recent call last):\n',
-	 '  File "traceback_format_exception.py", line 17, in <module>\n'
+	 '  File "traceback_format_exception.py", line 17, in
+	<module>\n'
 	 '    produce_exception()\n',
 	 '  File '
 	 '".../traceback_example.py", '
@@ -177,7 +178,7 @@ the function, and the source text from that line with whitespace
 stripped (if the source is available).
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'traceback_extract_tb.py', break_lines_at=68))
+.. cog.out(run_script(cog.inFile, 'traceback_extract_tb.py'))
 .. }}}
 
 .. code-block:: none
@@ -185,13 +186,14 @@ stripped (if the source is available).
 	$ python3 traceback_extract_tb.py
 	
 	format_exception():
-	traceback_extract_tb.py:16 'produce_exception()' in <module>()
-	traceback_example.py   :17 'produce_exception(recursion_level - 1)' 
-	in produce_exception()
-	traceback_example.py   :17 'produce_exception(recursion_level - 1)' 
-	in produce_exception()
-	traceback_example.py   :19 'raise RuntimeError()' in produce_excepti
-	on()
+	traceback_extract_tb.py:18:<module>:
+	    produce_exception()
+	traceback_example.py   :17:produce_exception():
+	    produce_exception(recursion_level - 1)
+	traceback_example.py   :17:produce_exception():
+	    produce_exception(recursion_level - 1)
+	traceback_example.py   :19:produce_exception():
+	    raise RuntimeError()
 
 .. {{{end}}}
 
@@ -212,7 +214,7 @@ exception.
 The output look like a traceback without an error message.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'traceback_print_stack.py', break_lines_at=68))
+.. cog.out(run_script(cog.inFile, 'traceback_print_stack.py'))
 .. }}}
 
 .. code-block:: none
@@ -250,7 +252,7 @@ It returns a list of strings, each of which makes up one line of the
 output.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'traceback_format_stack.py', break_lines_at=68))
+.. cog.out(run_script(cog.inFile, 'traceback_format_stack.py'))
 .. }}}
 
 .. code-block:: none
@@ -286,35 +288,34 @@ It also accepts arguments, not shown here, to start from an alternate
 place in the stack frame or to limit the depth of traversal.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'traceback_extract_stack.py', break_lines_at=68))
+.. cog.out(run_script(cog.inFile, 'traceback_extract_stack.py', line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
 
 	$ python3 traceback_extract_stack.py
 	
-	traceback_extract_stack.py:21 'stack = call_function(f)' in <module>
-	()
-	traceback_example.py      :24 'return call_function(f, recursion_lev
-	el - 1)' in call_function()
-	traceback_example.py      :24 'return call_function(f, recursion_lev
-	el - 1)' in call_function()
-	traceback_example.py      :26 'return f()' in call_function()
-	traceback_extract_stack.py:18 'return traceback.extract_stack()' in 
-	f()
+	traceback_extract_stack.py:23:<module>:
+	    stack = call_function(f)
+	traceback_example.py      :24:call_function():
+	    return call_function(f, recursion_level - 1)
+	traceback_example.py      :24:call_function():
+	    return call_function(f, recursion_level - 1)
+	traceback_example.py      :26:call_function():
+	    return f()
+	traceback_extract_stack.py:20:f():
+	    return traceback.extract_stack()
 
 .. {{{end}}}
 
 .. seealso::
 
-    `traceback <http://docs.python.org/lib/module-traceback.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`traceback`
 
-    :mod:`sys`
-        The ``sys`` module includes singletons that hold the current exception.
+   * :mod:`sys` -- The ``sys`` module includes singletons that hold
+     the current exception.
 
-    :mod:`inspect`
-        The ``inspect`` module includes other functions for probing the frames on the stack.
+   * :mod:`inspect` -- The ``inspect`` module includes other functions
+     for probing the frames on the stack.
 
-    :mod:`cgitb`
-        Another module for formatting tracebacks nicely.
+   * :mod:`cgitb` -- Another module for formatting tracebacks nicely.

@@ -19,5 +19,6 @@ except Exception as err:
     print('format_exception():')
     exc_type, exc_value, exc_tb = sys.exc_info()
     pprint(
-        traceback.format_exception(exc_type, exc_value, exc_tb)
+        traceback.format_exception(exc_type, exc_value, exc_tb),
+        width=65,
     )
