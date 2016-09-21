@@ -6,7 +6,6 @@
     :synopsis: Exceptions and stack traces
 
 :Purpose: Extract, format, and print exceptions and stack traces.
-:Python Version: 1.4 and later
 
 The :mod:`traceback` module works with the call stack to produce error
 messages. A *traceback* is a stack trace from the point of an
@@ -24,7 +23,7 @@ containing the filename, line number, function name, and text of the
 source line.
 
 Once extracted, the stack trace can be formatted using functions like
-:func:`format_exception()`, :func:`format_stack()`, etc. The format
+:func:`format_exception`, :func:`format_stack`, etc. The format
 functions return a list of strings with messages formatted to be
 printed. There are shorthand functions for printing the formatted
 values, as well.
@@ -42,8 +41,8 @@ Supporting Functions
 
 The examples in this section use the module ``traceback_example.py``:
 
-.. include:: traceback_example.py
-    :literal:
+.. literalinclude:: traceback_example.py
+    :caption:
     :start-after: #end_pymotw_header
 
 
@@ -51,12 +50,12 @@ Working With Exceptions
 =======================
 
 The simplest way to handle exception reporting is with
-:func:`print_exc()`. It uses :func:`sys.exc_info()` to obtain the
+:func:`print_exc`. It uses :func:`sys.exc_info` to obtain the
 exception information for the current thread, formats the results, and
 prints the text to a file handle (:data:`sys.stderr`, by default).
 
-.. include:: traceback_print_exc.py
-    :literal:
+.. literalinclude:: traceback_print_exc.py
+    :caption:
     :start-after: #end_pymotw_header
 
 
@@ -97,11 +96,11 @@ the informational and traceback messages are mingled correctly:
 
 .. {{{end}}}
 
-:func:`print_exc` is just a shortcut for :func:`print_exception()`,
+:func:`print_exc` is just a shortcut for :func:`print_exception`,
 which requires explicit arguments.
 
-.. include:: traceback_print_exception.py
-    :literal:
+.. literalinclude:: traceback_print_exception.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The arguments to :func:`print_exception` are produced by :func:`sys.exc_info`.
@@ -132,11 +131,11 @@ The arguments to :func:`print_exception` are produced by :func:`sys.exc_info`.
 .. {{{end}}}
 
 
-:func:`print_exception()` uses :func:`format_exception()` to prepare
+:func:`print_exception` uses :func:`format_exception` to prepare
 the text.
 
-.. include:: traceback_format_exception.py
-    :literal:
+.. literalinclude:: traceback_format_exception.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The same three arguments, exception type, exception value, and
@@ -170,8 +169,8 @@ traceback, are used with :func:`format_exception`.
 To process the traceback in some other way, such as formatting it
 differently, use :func:`extract_tb` to get the data in a usable form.
 
-.. include:: traceback_extract_tb.py
-   :literal:
+.. literalinclude:: traceback_extract_tb.py
+   :caption:
    :start-after: #end_pymotw_header
 
 The return value is a list of entries from each level of the stack
@@ -209,8 +208,8 @@ operations with the current call stack instead of a traceback.
 :func:`print_stack` prints the current stack, without generating an
 exception.
 
-.. include:: traceback_print_stack.py
-    :literal:
+.. literalinclude:: traceback_print_stack.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The output look like a traceback without an error message.
@@ -249,8 +248,8 @@ The output look like a traceback without an error message.
 :func:`format_stack` prepares the stack trace in the same way that
 :func:`format_exception` prepares the traceback.
 
-.. include:: traceback_format_stack.py
-    :literal:
+.. literalinclude:: traceback_format_stack.py
+    :caption:
     :start-after: #end_pymotw_header
 
 It returns a list of strings, each of which makes up one line of the
@@ -281,8 +280,8 @@ output.
 
 The :func:`extract_stack` function works like :func:`extract_tb`.
 
-.. include:: traceback_extract_stack.py
-    :literal:
+.. literalinclude:: traceback_extract_stack.py
+    :caption:
     :start-after: #end_pymotw_header
 
 It also accepts arguments, not shown here, to start from an alternate
