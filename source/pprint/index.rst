@@ -32,7 +32,7 @@ function.
     :start-after: #end_pymotw_header
 
 :func:`pprint` formats an object and writes it to the data stream
-passed as argument (or :data:`sys.stdout` by default).
+passed in as argument (or :data:`sys.stdout` by default).
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'pprint_pprint.py', break_lines_at=68))
