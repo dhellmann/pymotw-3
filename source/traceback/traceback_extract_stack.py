@@ -18,5 +18,5 @@ def f():
 
 stack = call_function(f)
 for filename, linenum, funcname, source in stack:
-    print '%-26s:%s "%s" in %s()' % \
-        (os.path.basename(filename), linenum, source, funcname)
+    print('%-26s:%s "%s" in %s()' % \
+          (os.path.basename(filename), linenum, source, funcname))
