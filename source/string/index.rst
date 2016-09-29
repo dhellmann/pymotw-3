@@ -24,7 +24,7 @@ string.
     :start-after: #end_pymotw_header
 
 The results are the same as calling :func:`split`, capitalizing the
-words in the resulting list, then called :func:`join` to combine the
+words in the resulting list, then calling :func:`join` to combine the
 results.
 
 .. {{{cog
