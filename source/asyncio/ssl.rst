@@ -66,6 +66,8 @@ The new version uses :func:`close`.
 Running the server in one window, and the client in another, produces
 this output.
 
+.. NOT RUNNING
+
 .. code-block:: none
 
     $ python3 asyncio_echo_server_ssl.py
@@ -77,6 +79,8 @@ this output.
     echo_::1_55235: received b'It will be sent in parts.'
     echo_::1_55235: sent b'It will be sent in parts.'
     echo_::1_55235: closing
+
+.. NOT RUNNING
 
 .. code-block:: none
 

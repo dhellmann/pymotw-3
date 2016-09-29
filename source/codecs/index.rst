@@ -712,9 +712,6 @@ This example uses :class:`PassThrough` to show that the data is
 encoded before being sent, and the response is decoded after it is
 received in the client.
 
-.. Do not re-run this example every time, since it sometimes generates
-.. errors within the thread that distracts from the unicode error.
-
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'codecs_socket.py'))
 .. }}}

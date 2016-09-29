@@ -80,6 +80,8 @@ The name returned will depend on the network settings for the current
 system, and may change if it is on a different network (such as a
 laptop attached to a wireless LAN).
 
+.. NOT RUNNING
+
 .. code-block:: none
 
 	$ python3 socket_gethostname.py

@@ -33,6 +33,8 @@ The program output is mostly the same, with appropriate updates for
 the address information.  The server shows the messages received and
 sent back to the client.
 
+.. NOT RUNNING
+
 .. code-block:: none
 
    $ python3 socket_echo_server_uds.py
@@ -52,6 +54,8 @@ sent back to the client.
 The client sends the message all at once, and receives parts of it
 back incrementally.
 
+.. NOT RUNNING
+
 .. code-block:: none
 
    $ python3 socket_echo_client_uds.py
@@ -69,6 +73,8 @@ Since the UDS socket is represented by a node on the file system,
 standard file system permissions can be used to control access to the
 server.
 
+.. NOT RUNNING
+
 .. code-block:: none
 
     $ ls -l ./uds_socket
@@ -83,6 +89,8 @@ server.
 
 Running the client as a user other than ``root`` now results in an
 error because the process does not have permission to open the socket.
+
+.. NOT RUNNING
 
 .. code-block:: none
 

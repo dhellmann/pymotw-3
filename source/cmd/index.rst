@@ -39,6 +39,8 @@ This simple example program supports the "greet" command:
 Running it interactively demonstrates how commands are dispatched and
 shows of some of the features included in :class:`Cmd`.
 
+.. NOT RUNNING
+
 .. code-block:: none
 
     $ python3 cmd_simple.py 

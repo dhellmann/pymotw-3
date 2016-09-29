@@ -30,7 +30,7 @@ Each of the paths resulting from the combinations is tested, and those
 that exist are added to :data:`sys.path`.  This output shows the
 framework version of Python installed on a Mac OS X system.
 
-.. DO NOT COG because virtualenv gives misleading output
+.. NOT RUNNING because virtualenv gives misleading output
 
 .. code-block:: none
 
@@ -112,7 +112,7 @@ it).  An application can check the setting by examining
 The user directory can also be explicitly disabled on the command line
 with ``-s``.
 
-.. CANNOT COG THIS because virtualenv forces the flag off if
+.. NOT RUNNING because virtualenv forces the flag off if
 .. no-global-site-packages.txt exists
 
 .. code-block:: none
@@ -357,7 +357,7 @@ path, but not on the site-wide path. The default ``USER_BASE``
 directory is a good location.  This example sets ``PYTHONPATH``
 explicitly to ensure the module is picked up.
 
-.. CANNOT COG because virtualenv disables user-site which in turns
+.. NOT RUNNING because virtualenv disables user-site which in turns
 .. disables usercustomize.
 
 .. code-block:: none
@@ -377,7 +377,7 @@ When the user site directory feature is disabled, :mod:`usercustomize`
 is not imported, whether it is located in the user site directory or
 elsewhere.
 
-.. CANNOT COG because virtualenv disables user-site which in turns
+.. NOT RUNNING because virtualenv disables user-site which in turns
 .. disables usercustomize.
 
 .. code-block:: none

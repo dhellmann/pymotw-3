@@ -50,6 +50,8 @@ After the signal handler returns, the loop continues.
 Send signals to the running program using :func:`os.kill` or the UNIX
 command line program :command:`kill`.
 
+.. NOT RUNNING
+
 .. code-block:: none
 
     $ python3 signal_signal.py 
@@ -71,6 +73,8 @@ command line program :command:`kill`.
 
 The previous output was produced by running ``signal_signal.py`` in
 one window, then in another window running:
+
+.. NOT RUNNING
 
 .. code-block:: none
 
@@ -196,6 +200,8 @@ an attempt to use ``Ctrl-C`` to kill the script from the terminal.
 Using ``kill -USR1 72598`` from another terminal eventually causes the
 script to exit.
 
+.. NOT RUNNING
+
 .. code-block:: none
 
     $ python3 signal_ignore.py 
@@ -223,6 +229,8 @@ and signals.  Although the receiver thread calls :func:`signal.pause`,
 it does not receive the signal.  The ``signal.alarm(2)`` call near the
 end of the example prevents an infinite block, since the receiver
 thread will never exit.
+
+.. NOT RUNNING
 
 .. code-block:: none
 

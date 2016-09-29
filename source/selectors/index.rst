@@ -78,6 +78,8 @@ they can communicate with each other.  The server output shows the
 incoming connection and data, as well as the response sent back to
 the client.
 
+.. NOT RUNNING
+
 .. code-block:: none
 
    $ python3 source/selectors/selectors_echo_server.py
@@ -95,6 +97,8 @@ the client.
 
 The client output shows the outgoing message and the response from the
 server.
+
+.. NOT RUNNING
 
 .. code-block:: none
 

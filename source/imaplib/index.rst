@@ -48,6 +48,8 @@ When run, :func:`open_connection()` reads the configuration
 information from a file in the user's home directory, then opens the
 :class:`IMAP4_SSL` connection and authenticates.
 
+.. NOT RUNNING
+
 .. code-block:: none
 
 	$ python3 imaplib_connect.py
@@ -111,6 +113,8 @@ there has been an error.  The data for :meth:`list()` is a sequence of
 strings containing *flags*, the *hierarchy delimiter*, and *mailbox
 name* for each mailbox.
 
+.. NOT RUNNING
+
 .. code-block:: none
 
 	$ python3 imaplib_list.py
@@ -134,6 +138,8 @@ this section for an example using :mod:`csv`).
 The server quotes the mailbox name if it includes spaces, but those
 quotes need to be stripped out to use the mailbox name in other calls
 back to the server later.
+
+.. NOT RUNNING
 
 .. code-block:: none
 
@@ -161,6 +167,8 @@ hierarchy.  For example, to list sub-folders of ``Example``, pass
 
 The parent and subfolder are returned.
 
+.. NOT RUNNING
+
 .. code-block:: none
 
 	$ python3 imaplib_list_subfolders.py
@@ -178,6 +186,8 @@ argument.
 
 In this case, both ``Example`` and ``Example.2016`` are included in
 the response.
+
+.. NOT RUNNING
 
 .. code-block:: none
 
@@ -220,6 +230,8 @@ The return value is the usual :class:`tuple` containing a response
 code and a list of information from the server.  In this case, the
 list contains a single string formatted with the name of the mailbox
 in quotes, then the status conditions and values in parentheses.
+
+.. NOT RUNNING
 
 .. code-block:: none
 
@@ -268,6 +280,8 @@ mailbox is selected.
 The response data contains the total number of messages in the
 mailbox.
 
+.. NOT RUNNING
+
 .. code-block:: none
 
 	$ python3 imaplib_select.py
@@ -282,6 +296,8 @@ If an invalid mailbox is specified, the response code is ``NO``.
    :start-after: #end_pymotw_header
 
 The data contains an error message describing the problem.
+
+.. NOT RUNNING
 
 .. code-block:: none
 
@@ -303,6 +319,8 @@ Message IDs are assigned by the server, and are implementation
 dependent.  The IMAP4 protocol makes a distinction between sequential
 IDs for messages at a given point in time during a transaction and UID
 identifiers for messages, but not all servers implement both.
+
+.. NOT RUNNING
 
 .. code-block:: none
 
@@ -350,6 +368,8 @@ mailboxes:
 There is only one such message in the account, and it is in the
 ``INBOX``.
 
+.. NOT RUNNING
+
 .. code-block:: none
 
 	$ python3 imaplib_search_subject.py
@@ -378,6 +398,8 @@ Search criteria can also be combined.
    :start-after: #end_pymotw_header
 
 The criteria are combined with a logical :command:`and` operation.
+
+.. NOT RUNNING
 
 .. code-block:: none
 
@@ -431,6 +453,8 @@ The return value of :meth:`fetch()` has been partially parsed so it is
 somewhat harder to work with than the return value of :meth:`list()`.
 Turning on debugging shows the complete interaction between the client
 and server to understand why this is so.
+
+.. NOT RUNNING
 
 .. code-block:: none
 
@@ -583,6 +607,8 @@ the client.
 Fetching values separately has the added benefit of making it easy to
 use :func:`ParseFlags()` to parse the flags from the response.
 
+.. NOT RUNNING
+
 .. code-block:: none
 
 	$ python3 imaplib_fetch_separately.py
@@ -663,6 +689,8 @@ The parser in the :mod:`email` module make it very easy to access and
 manipulate messages.  This example prints just a few of the headers
 for each message.
 
+.. NOT RUNNING
+
 .. code-block:: none
 
 	$ python3 imaplib_fetch_rfc822.py
@@ -684,6 +712,8 @@ timestamp for the message.
 
 The *payload* used in this example is a simple plaintext email body.
 :class:`Message` also supports MIME-encoded multi-part messages.
+
+.. NOT RUNNING
 
 .. code-block:: none
 
@@ -767,6 +797,8 @@ operate on message id ranges, just as :meth:`fetch()` does.
 This example script creates a new mailbox under ``Example`` and copies
 the read messages from ``INBOX`` into it.
 
+.. NOT RUNNING
+
 .. code-block:: none
 
 	$ python3 imaplib_archive_read.py
@@ -779,6 +811,8 @@ the read messages from ``INBOX`` into it.
 Running the same script again shows the importance to checking return
 codes.  Instead of raising an exception, the call to :meth:`create()`
 to make the new mailbox reports that the mailbox already exists.
+
+.. NOT RUNNING
 
 .. code-block:: none
 
@@ -808,6 +842,8 @@ querying the server again.
 Explicitly calling :meth:`expunge()` removes the messages, but calling
 :meth:`close()` has the same effect.  The difference is the client is
 not notified about the deletions when :meth:`close()` is called.
+
+.. NOT RUNNING
 
 .. code-block:: none
 

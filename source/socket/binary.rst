@@ -28,6 +28,8 @@ interpreted in the correct order.
 
 Running the client produces:
 
+.. NOT RUNNING
+
 .. code-block:: none
 
    $ python3 source/socket/socket_binary_client.py
@@ -36,6 +38,8 @@ Running the client produces:
    closing socket
 
 And the server shows the values it receives:
+
+.. NOT RUNNING
 
 .. code-block:: none
 

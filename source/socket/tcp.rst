@@ -64,6 +64,8 @@ they can communicate with each other.  The server output shows the
 incoming connection and data, as well as the response sent back to
 the client.
 
+.. NOT RUNNING
+
 .. code-block:: none
 
    $ python3 socket_echo_server.py
@@ -82,6 +84,8 @@ the client.
 
 The client output shows the outgoing message and the response from the
 server.
+
+.. NOT RUNNING
 
 .. code-block:: none
 
@@ -110,6 +114,8 @@ connection parameters, and returns a :class:`socket` opened with the
 first configuration that creates a successful connection.  The
 :attr:`family`, :attr:`type`, and :attr:`proto` attributes can be
 examined to determine the type of :class:`socket` being returned.
+
+.. NOT RUNNING
 
 .. code-block:: none
 
@@ -150,6 +156,8 @@ After starting the server with the argument ``hubert``, the
 :command:`netstat` command shows it listening on the address for the
 named host.
 
+.. NOT RUNNING
+
 .. code-block:: none
 
     $ host hubert.hellfly.net
@@ -168,6 +176,8 @@ Running the client on another host, passing
 ``hubert.hellfly.net`` as the host where the server is running,
 produces:
 
+.. NOT RUNNING
+
 .. code-block:: none
 
     $ hostname
@@ -182,6 +192,8 @@ produces:
     received b' repeated.'
 
 And the server output is:
+
+.. NOT RUNNING
 
 .. code-block:: none
 
@@ -215,6 +227,8 @@ To see the actual address being used by a socket, call its
 :func:`getsockname` method.  After starting the service, running
 :command:`netstat` again shows it listening for incoming connections
 on any address.
+
+.. NOT RUNNING
 
 .. code-block:: none
 

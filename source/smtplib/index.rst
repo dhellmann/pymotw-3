@@ -37,6 +37,8 @@ In this example, debugging is also turned on to show the communication
 between client and server.  Otherwise the example would produce no
 output at all.
 
+.. NOT RUNNING
+
 .. cog.out(run_script(cog.inFile, 'smtplib_sendmail.py'))
 
 .. code-block:: none
@@ -100,6 +102,8 @@ TLS-based connections. For communicating with those servers, use
 
 The ``STARTTLS`` extension does not appear in the reply to ``EHLO``
 after TLS is enabled.
+
+.. NOT RUNNING
 
 .. code-block:: none
 
@@ -207,6 +211,8 @@ available.
 
 As the last two lines of output here show, the address ``dhellmann``
 is valid but ``notthere`` is not.
+
+.. NOT RUNNING
 
 .. code-block:: none
 

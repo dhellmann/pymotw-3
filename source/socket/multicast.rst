@@ -76,6 +76,8 @@ This example shows the multicast receiver running on two different
 hosts. ``A`` has address ``192.168.1.13`` and ``B`` has address
 ``192.168.1.14``.
 
+.. NOT RUNNING
+
 .. code-block:: none
 
    [A]$ python3 socket_multicast_receiver.py
@@ -97,6 +99,8 @@ hosts. ``A`` has address ``192.168.1.13`` and ``B`` has address
    waiting to receive message
 
 The sender is running on host ``B``.
+
+.. NOT RUNNING
 
 .. code-block:: none
 

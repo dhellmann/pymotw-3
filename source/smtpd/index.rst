@@ -68,6 +68,8 @@ to send data to the test server running locally on port 1025.
 To test the programs, run ``smtpd_custom.py`` in one terminal and
 ``smtpd_senddata.py`` in another.
 
+.. NOT RUNNING
+
 .. code-block:: none
 
     $ python3 smtpd_custom.py 
@@ -79,6 +81,8 @@ To test the programs, run ``smtpd_custom.py`` in one terminal and
 
 The debug output from ``smtpd_senddata.py`` shows all of the
 communication with the server.
+
+.. NOT RUNNING
 
 .. cog.out(run_script(cog.inFile, 'smtpd_senddata.py'))
 
@@ -135,6 +139,8 @@ does not proxy the message to a real mail server).
 Using the ``smtpd_senddata.py`` client program from earlier, the output
 of the :class:`DebuggingServer` is:
 
+.. NOT RUNNING
+
 .. code-block:: none
 
    ---------- MESSAGE FOLLOWS ----------
@@ -171,6 +177,8 @@ server.
 
 It prints no output, though, so to verify that it is working look at
 the mail server logs.
+
+.. NOT RUNNING
 
 ::
 
