@@ -16,7 +16,7 @@ series, which covered Python 2.7.
 :Issue Tracker and Source: http://www.bitbucket.org/dhellmann/pymotw-3/
 
 Complete documentation for the standard library can be found on the
-Python web site at http://docs.python.org/.
+Python web site at https://docs.python.org/.
 
 Subscribe
 =========

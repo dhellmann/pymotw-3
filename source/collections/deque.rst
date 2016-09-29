@@ -193,9 +193,9 @@ added to.
 
 .. seealso::
 
-    * `WikiPedia: Deque <http://en.wikipedia.org/wiki/Deque>`_ -- A
+    * `WikiPedia: Deque <https://en.wikipedia.org/wiki/Deque>`_ -- A
       discussion of the deque data structure.
 
-    * `Deque Recipes <http://docs.python.org/lib/deque-recipes.html>`_
+    * `Deque Recipes <https://docs.python.org/3.5/library/collections.html#deque-recipes>`_
       -- Examples of using deques in algorithms from the standard
       library documentation.

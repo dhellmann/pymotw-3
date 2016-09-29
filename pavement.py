@@ -63,6 +63,14 @@ options(
         pdflatex='xelatex',
     ),
 
+    linkcheck=Bunch(
+        builder='linkcheck',
+        docroot='.',
+        builddir='build',
+        sourcedir='source',
+        warnerror=False,
+    ),
+
     website=Bunch(
         # What server hosts the website?
         server='pymotw.com',
@@ -265,6 +273,16 @@ def pdf():
     options.order('pdf', 'sphinx', add_rest=True)
     paverutils.pdf(options)
     return
+
+
+@task
+def linkcheck():
+    """Check outgoing links
+    """
+    options.order('linkcheck', 'sphinx', add_rest=True)
+    paverutils.run_sphinx(options, 'linkcheck')
+    return
+
 
 @task
 def rsyncwebsite(options):

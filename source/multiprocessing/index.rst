@@ -34,11 +34,11 @@ covered later.
    * :mod:`threading` -- High-level API for working with threads.
 
    * `MapReduce - Wikipedia
-     <http://en.wikipedia.org/wiki/MapReduce>`__ -- Overview of
+     <https://en.wikipedia.org/wiki/MapReduce>`__ -- Overview of
      MapReduce on Wikipedia.
 
    * `MapReduce: Simplified Data Processing on Large Clusters
-     <http://labs.google.com/papers/mapreduce.html>`__ -- Google Labs
+     <http://research.google.com/archive/mapreduce.html>`__ -- Google Labs
      presentation and paper on MapReduce.
 
    * :mod:`operator` -- Operator tools such as ``itemgetter``.

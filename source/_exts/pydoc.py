@@ -43,7 +43,7 @@ from docutils.parsers.rst.roles import set_classes
 
 PYTHON_VERSION = '{}.{}'.format(*(sys.version_info[:2]))
 URL_TEMPLATE = (
-    'http://docs.python.org/' +
+    'https://docs.python.org/' +
     PYTHON_VERSION +
     '/library/{}.html'
 )

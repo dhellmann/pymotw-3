@@ -200,7 +200,7 @@ whether the caller catches and ignores it or not.
       analysis features.
 
     * `Types and Members
-      <http://docs.python.org/3/library/inspect.html#types-and-members>`_
+      <https://docs.python.org/3/library/inspect.html#types-and-members>`_
       -- The descriptions of frame and code objects and their
       attributes.
 

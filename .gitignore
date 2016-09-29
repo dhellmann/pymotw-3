@@ -65,3 +65,4 @@ dist/
 /source/trace/coverdir1/trace.cover
 /source/trace/coverdir1/trace_example.main.cover
 /source/trace/trace_report.dat
+/linkcheck.log

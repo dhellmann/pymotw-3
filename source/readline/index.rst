@@ -396,7 +396,7 @@ must be called to update the screen.
    * gnureadline_ -- A statically linked version of :mod:`readline`
      available for many platforms and installable via ``pip``.
 
-   * `pyreadline <https://launchpad.net/pyreadline>`_ -- pyreadline,
+   * `pyreadline <http://ipython.org/pyreadline.html>`_ -- pyreadline,
      developed as a Python-based replacement for readline to be used
      on Windows.
 

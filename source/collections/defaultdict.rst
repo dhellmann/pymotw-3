@@ -36,8 +36,8 @@ library documentation includes several examples of using
 .. seealso::
 
     * `defaultdict examples
-      <http://docs.python.org/3.4/lib/defaultdict-examples.html>`_ --
-      Examples of using defaultdict from the standard library
+      <https://docs.python.org/3.5/library/collections.html#defaultdict-examples>`__
+      -- Examples of using defaultdict from the standard library
       documentation.
 
     * `Evolution of Default Dictionaries in Python

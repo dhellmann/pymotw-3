@@ -214,10 +214,10 @@ against timing attacks.
 
    * :mod:`pickle` -- Serialization library.
 
-   * `WikiPedia: MD5 <http://en.wikipedia.org/wiki/MD5>`_ --
+   * `WikiPedia: MD5 <https://en.wikipedia.org/wiki/MD5>`_ --
      Description of the MD5 hashing algorithm.
 
-   * `Authenticating to Amazon S3 Web Service
-     <http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?S3_Authentication.html>`__
+   * `Signing and Authenticating REST Requests (Amazon AWS)
+     <http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html>`__
      -- Instructions for authenticating to S3 using HMAC-SHA1 signed
      credentials.

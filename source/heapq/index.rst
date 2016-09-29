@@ -288,7 +288,7 @@ number of items in those sequences.
    * :pydoc:`heapq`
 
    * `WikiPedia: Heap (data structure)
-     <http://en.wikipedia.org/wiki/Heap_(data_structure)>`__ -- A
+     <https://en.wikipedia.org/wiki/Heap_(data_structure)>`__ -- A
      general description of heap data structures.
 
    * :ref:`Queue-PriorityQueue` -- A priority queue implementation

@@ -684,12 +684,12 @@ is propagated.
    * :pep:`343` -- The :command:`with` statement.
 
    * `Context Manager Types
-     <http://docs.python.org/library/stdtypes.html#typecontextmanager>`__
+     <https://docs.python.org/library/stdtypes.html#typecontextmanager>`__
      -- Description of the context manager API from the standard
      library documentation.
 
    * `With Statement Context Managers
-     <http://docs.python.org/reference/datamodel.html#context-managers>`__
+     <https://docs.python.org/reference/datamodel.html#context-managers>`__
      -- Description of the context manager API from the Python
      Reference Guide.
 

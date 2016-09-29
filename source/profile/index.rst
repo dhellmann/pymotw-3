@@ -337,7 +337,9 @@ output shows the caller, callee, number of calls, and cumulative time.
 
    * :pydoc:`profile`
 
-   * :pydoc:`pstats`
+   * `The Stats Class
+     <https://docs.python.org/3.5/library/profile.html#the-stats-class>`__
+     -- Standard library documentation for :class:`pstats.Stats`.
 
    * `Gprof2Dot <http://code.google.com/p/jrfonseca/wiki/Gprof2Dot>`__
      -- Visualization tool for profile output data.

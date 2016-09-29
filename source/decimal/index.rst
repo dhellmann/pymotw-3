@@ -416,10 +416,10 @@ it within each thread.
    * :ref:`Porting notes for decimal <porting-decimal>`
 
    * `Wikipedia: Floating Point
-     <http://en.wikipedia.org/wiki/Floating_point>`_ -- Article on
+     <https://en.wikipedia.org/wiki/Floating_point>`_ -- Article on
      floating point representations and arithmetic.
 
    * `Floating Point Arithmetic: Issues and Limitations
-     <http://docs.python.org/tutorial/floatingpoint.html>`__ --
+     <https://docs.python.org/tutorial/floatingpoint.html>`__ --
      Article from the Python tutorial describing floating point math
      representation issues.

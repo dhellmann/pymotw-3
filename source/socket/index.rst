@@ -44,7 +44,7 @@ network.
      through a URL.
 
    * `Socket Programming HOWOTO
-     <http://docs.python.org/3/howto/sockets.html>`__ -- An
+     <https://docs.python.org/3/howto/sockets.html>`__ -- An
      instructional guide by Gordon McMillan, included in the standard
      library documentation.
 

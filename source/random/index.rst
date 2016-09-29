@@ -504,9 +504,9 @@ objects.
      Simulation* Vol. 8, No. 1, January pp.3-30 1998.
 
    * `Wikipedia: Mersenne Twister
-     <http://en.wikipedia.org/wiki/Mersenne_twister>`_ -- Article
+     <https://en.wikipedia.org/wiki/Mersenne_twister>`_ -- Article
      about the pseudorandom generator algorithm used by Python.
 
    * `Wikipedia: Uniform distribution
-     <http://en.wikipedia.org/wiki/Uniform_distribution_(continuous)>`_
+     <https://en.wikipedia.org/wiki/Uniform_distribution_(continuous)>`_
      -- Article about continuous uniform distributions in statistics.

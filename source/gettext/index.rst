@@ -453,12 +453,12 @@ directly, so that multiple catalogs can be used.
      languages.
 
    * `Internationalizing Python
-     <http://www.python.org/workshops/1997-10/proceedings/loewis.html>`_
+     <http://legacy.python.org/workshops/1997-10/proceedings/loewis.html>`_
      -- A paper by Martin von Löwis about techniques for
      internationalization of Python applications.
 
    * `Django Internationalization
-     <http://docs.djangoproject.com/en/dev/topics/i18n/>`_ -- Another
+     <https://docs.djangoproject.com/en/dev/topics/i18n/>`_ -- Another
      good source of information on using gettext, including real-life
      examples.
 

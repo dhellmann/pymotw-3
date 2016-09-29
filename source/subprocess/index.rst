@@ -720,7 +720,7 @@ The sequence of events is
      module are still widely used in existing code.
 
    * `UNIX Signals and Process Groups
-     <http://www.frostbytes.com/~jimf/papers/signals/signals.html>`__
+     <http://www.cs.ucsb.edu/~almeroth/classes/W99.276/assignment1/signals.html>`__
      -- A good description of UNIX signaling and how process groups
      work.
 

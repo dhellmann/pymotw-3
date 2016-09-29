@@ -532,7 +532,7 @@ have been collected and deleted are retained.
      so they can still be garbage collected.
 
    * `Supporting Cyclic Garbage Collection
-     <http://docs.python.org/3/c-api/gcsupport.html>`__ -- Background
+     <https://docs.python.org/3/c-api/gcsupport.html>`__ -- Background
      material from Python's C API documentation.
 
    * `How does Python manage memory?

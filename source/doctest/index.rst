@@ -1128,7 +1128,7 @@ the caller.
 
    * :pydoc:`doctest`
 
-   * `The Mighty Dictionary <http://blip.tv/file/3332763>`__ --
+   * `The Mighty Dictionary <https://www.youtube.com/watch?v=C4Kc8xzcA68>`__ --
      Presentation by Brandon Rhodes at PyCon 2010 about the internal
      operations of the :class:`dict`.
 
@@ -1143,12 +1143,12 @@ the caller.
      as is processes documentation source files, so the examples are
      always accurate.
 
-   * `py.test <http://codespeak.net/py/dist/test/>`_ -- Third-party
+   * `py.test <http://doc.pytest.org/en/latest/>`_ -- Third-party
      test runner with :mod:`doctest` support.
 
    * `nose2 <https://nose2.readthedocs.io/en/latest/>`_ -- Third-party
      test runner with :mod:`doctest` support.
 
-   * `Manuel <http://packages.python.org/manuel/>`_ -- Third-party
+   * `Manuel <https://pythonhosted.org/manuel/>`_ -- Third-party
      documentation-based test runner with more advanced test case
      extraction and integration with Sphinx.

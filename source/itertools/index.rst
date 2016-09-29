@@ -923,7 +923,7 @@ of the other members of the input sequence.
    * `Clojure <http://clojure.org/>`__ -- Clojure is a dynamic
      functional language that runs on the Java Virtual Machine.
 
-   * `tee <http://unixhelp.ed.ac.uk/CGI/man-cgi?tee>`__ -- UNIX
+   * `tee <http://man7.org/linux/man-pages/man1/tee.1.html>`__ -- UNIX
      command line tool for splitting one input into multiple identical
      output streams.
 

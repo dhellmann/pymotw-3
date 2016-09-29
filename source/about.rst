@@ -3,22 +3,22 @@ About Python Module of the Week
 ===============================
 
 PyMOTW-3 is a series of articles written by `Doug Hellmann
-<https://doughellmann.com/>`_.  to demonstrate how to use the modules of
+<https://doughellmann.com/blog/>`_.  to demonstrate how to use the modules of
 the Python_ 3 standard library. It is based on the original PyMOTW_
 series, which covered Python 2.7.
 
-.. _Python: http://www.python.org/
+.. _Python: https://www.python.org/
 .. _PyMOTW: https://pymotw.com/2/
 
 See the project home page at https://pymotw.com/3/ for updates.
 
 Source code is available via git from
-http://bitbucket.org/dhellmann/pymotw-3/ or
+https://bitbucket.org/dhellmann/pymotw-3/ or
 https://pymotw.com/3/PyMOTW-3-0.0.tar.gz as a single downloadable
 archive.
 
 Complete documentation for the standard library can be found on the
-Python web site at http://docs.python.org/3/library/.
+Python web site at https://docs.python.org/3/library/.
 
 Subscribe
 =========
@@ -29,7 +29,7 @@ http://feeds.doughellmann.com/PyMOTW and `email
 <http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US>`_. Follow
 `@pymotw`_ or `@doughellmann`_ for updates as well.
 
-.. _my blog: https://doughellmann.com/
+.. _my blog: https://doughellmann.com/blog/
 .. _@pymotw: https://twitter.com/pymotw
 .. _@doughellmann: https://twitter.com/doughellmann
 
@@ -39,9 +39,9 @@ Tools
 The source text for PyMOTW-3 is reStructuredText_ and the HTML output
 is created using Sphinx_.
 
-.. _reStructuredText: http://docutils.sourceforge.net/
+.. _reStructuredText: http://docutils.sourceforge.net
 
-.. _Sphinx: http://sphinx.pocoo.org/
+.. _Sphinx: http://www.sphinx-doc.org/en/stable/
 
 The output from all the example programs has been generated with
 CPython (see below for version) and inserted into the text using cog_.
@@ -106,4 +106,4 @@ under the BSD license.
    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.. _Creative Commons Attribution, Non-commercial, Share-alike 4.0: http://creativecommons.org/licenses/by-nc-sa/4.0/us/
+.. _Creative Commons Attribution, Non-commercial, Share-alike 4.0: https://creativecommons.org/licenses/by-nc-sa/4.0/

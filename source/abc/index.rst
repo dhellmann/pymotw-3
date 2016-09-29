@@ -324,12 +324,12 @@ not defined.
     * :pep:`3141` -- A Type Hierarchy for Numbers
 
     * `Wikipedia: Strategy Pattern
-      <http://en.wikipedia.org/wiki/Strategy_pattern>`_ -- Description
+      <https://en.wikipedia.org/wiki/Strategy_pattern>`_ -- Description
       and examples of the strategy pattern, a common plug-in
       implementation pattern.
 
     * `Dynamic Code Patterns: Extending Your Applications With Plugins
-      <http://pyvideo.org/video/1789/dynamic-code-patterns-extending-your-application>`__
+      <http://pyvideo.org/pycon-us-2013/dynamic-code-patterns-extending-your-application.html>`__
       -- PyCon 2013 presentation by Doug Hellmann
 
     * :ref:`Porting notes for abc <porting-abc>`

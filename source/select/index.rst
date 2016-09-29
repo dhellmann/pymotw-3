@@ -456,7 +456,7 @@ more detail about how they work.
       :mod:`select`.
 
     * `Socket Programming HOWOTO
-      <http://docs.python.org/howto/sockets.html>`__ -- An
+      <https://docs.python.org/howto/sockets.html>`__ -- An
       instructional guide by Gordon McMillan, included in the standard
       library documentation.
 

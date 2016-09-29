@@ -198,5 +198,5 @@ buffer needs to be.
      representations of binary data.
 
    * `WikiPedia: Endianness
-     <http://en.wikipedia.org/wiki/Endianness>`_ -- Explanation of
+     <https://en.wikipedia.org/wiki/Endianness>`_ -- Explanation of
      byte order and endianness in encoding.

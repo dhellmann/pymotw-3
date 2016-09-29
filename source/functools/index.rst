@@ -703,7 +703,7 @@ class hierarchy.
     * :pydoc:`functools`
 
     * `Rich comparison methods
-      <http://docs.python.org/reference/datamodel.html#object.__lt__>`__
+      <https://docs.python.org/reference/datamodel.html#object.__lt__>`__
       -- Description of the rich comparison methods from the Python
       Reference Guide.
 

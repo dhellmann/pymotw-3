@@ -198,10 +198,10 @@ The actual output will depend on the contents of the RSS feed used.
     * :ref:`deque` from :mod:`collections`
 
     * `Queue data structures
-      <http://en.wikipedia.org/wiki/Queue_(data_structure)>`__ --
+      <https://en.wikipedia.org/wiki/Queue_(data_structure)>`__ --
       Wikipedia article explaining queues.
 
-    * `FIFO <http://en.wikipedia.org/wiki/FIFO>`__ -- Wikipedia
+    * `FIFO <https://en.wikipedia.org/wiki/FIFO>`__ -- Wikipedia
       article explaining first in, first out, data structures.
 
     * `feedparser module <https://pypi.python.org/pypi/feedparser>`__

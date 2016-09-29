@@ -1874,13 +1874,12 @@ newlines separating them.
    * `Kodos <http://kodos.sourceforge.net/>`_ -- An interactive
      regular expression testing tool by Phil Schwartz.
 
-   * `Python Regular Expression Testing Tool
-     <http://www.pythonregex.com/>`_ -- A web-based tool for testing
-     regular expressions created by David Naffziger at
-     BrandVerity.com.  Inspired by Kodos.
+   * `pythex <http://pythex.org>`_ -- A web-based tool for testing
+     regular expressions created by Gabriel Rodríguez.  Inspired by
+     Rubular.
 
    * `Wikipedia: Regular expression
-     <http://en.wikipedia.org/wiki/Regular_expressions>`__ -- General
+     <https://en.wikipedia.org/wiki/Regular_expressions>`__ -- General
      introduction to regular expression concepts and techniques.
 
    * :mod:`locale` -- Use the ``locale`` module to set the language

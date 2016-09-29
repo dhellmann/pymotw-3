@@ -271,7 +271,7 @@ Unicode, their application is limited.
    * :pydoc:`string`
 
    * `String Methods
-     <http://docs.python.org/lib/string-methods.html#string-methods>`_
+     <https://docs.python.org/3/library/stdtypes.html#string-methods>`_
      -- Methods of :class:`str` objects that replace the deprecated
      functions in :mod:`string`.
 

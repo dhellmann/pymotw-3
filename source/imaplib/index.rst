@@ -882,9 +882,6 @@ not notified about the deletions when :meth:`close()` is called.
 
     * :mod:`ConfigParser` -- Read and write configuration files.
 
-    * `What is IMAP? <http://www.imap.org/about/whatisIMAP.html>`_ --
-      imap.org description of the IMAP protocol
-
     * `University of Washington IMAP Information Center
       <http://www.washington.edu/imap/>`_ -- Good resource for IMAP
       information, along with source code.

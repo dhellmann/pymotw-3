@@ -113,5 +113,5 @@ Python implementation automatically when :mod:`bisect` is imported.
     * :pydoc:`bisect`
 
     * `WikiPedia: Insertion Sort
-      <http://en.wikipedia.org/wiki/Insertion_sort>`_ -- A description
+      <https://en.wikipedia.org/wiki/Insertion_sort>`_ -- A description
       of the insertion sort algorithm.

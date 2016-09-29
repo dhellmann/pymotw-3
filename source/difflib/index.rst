@@ -243,6 +243,6 @@ built-in types, as long as they are hashable.
    * :pydoc:`difflib`
 
    * `Pattern Matching: The Gestalt Approach
-     <http://www.ddj.com/documents/s=1103/ddj8807c/>`_ -- Discussion
-     of a similar algorithm by John W. Ratcliff and D. E. Metzener
-     published in Dr. Dobb’s Journal in July, 1988.
+     <http://www.drdobbs.com/database/pattern-matching-the-gestalt-approach/184407970>`__
+     -- Discussion of a similar algorithm by John W. Ratcliff
+     and D. E. Metzener published in Dr. Dobb’s Journal in July, 1988.

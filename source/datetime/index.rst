@@ -613,12 +613,12 @@ line shows the value in the system timezone, acquired by calling
      :class:`datetime` objects time zone-aware.
 
    * `WikiPedia: Proleptic Gregorian calendar
-     <http://en.wikipedia.org/wiki/Proleptic_Gregorian_calendar>`_ --
+     <https://en.wikipedia.org/wiki/Proleptic_Gregorian_calendar>`_ --
      A description of the Gregorian calendar system.
 
    * `ISO 8601`_ -- The standard for numeric representation of Dates
      and Time
 
-.. _ISO 8601: http://www.iso.org/iso/support/faqs/faqs_widely_used_standards/widely_used_standards_other/date_and_time_format.htm
+.. _ISO 8601: http://www.iso.org/iso/support/faqs/faqs_widely_used_standards/widely_used_standards_other/iso8601
 
 .. _pytz: http://pytz.sourceforge.net/

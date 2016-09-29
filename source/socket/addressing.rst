@@ -450,11 +450,11 @@ the original value.
 
 .. seealso::
 
-   * `Wikipedia: IPv6 <http://en.wikipedia.org/wiki/IPv6>`__ --
+   * `Wikipedia: IPv6 <https://en.wikipedia.org/wiki/IPv6>`__ --
      Article discussing Internet Protocol Version 6 (IPv6).
 
    * `Wikipedia: OSI Networking Model
-     <http://en.wikipedia.org/wiki/OSI_model>`__ -- Article describing
+     <https://en.wikipedia.org/wiki/OSI_model>`__ -- Article describing
      the seven layer model of networking implementation.
 
    * `Assigned Internet Protocol Numbers

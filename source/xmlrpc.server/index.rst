@@ -386,8 +386,3 @@ The system methods are included in the results.
      <http://www.tldp.org/HOWTO/XML-RPC-HOWTO/index.html>`_ --
      Describes how to use XML-RPC to implement clients and servers in
      a variety of languages.
-
-   * `XML-RPC Extensions`_ -- Specifies an extension to the XML-RPC
-     protocol.
-
-.. _XML-RPC Extensions: http://ontosys.com/xml-rpc/extensions.php

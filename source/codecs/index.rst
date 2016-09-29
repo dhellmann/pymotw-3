@@ -965,7 +965,7 @@ inheritance can be used for the implementation.
      in-memory representation of text in formats other than ASCII
      bytes.
 
-   * `Endianness <http://en.wikipedia.org/wiki/Endianness>`__ --
+   * `Endianness <https://en.wikipedia.org/wiki/Endianness>`__ --
      Explanation of endianness in Wikipedia.
 
    * `W3C XML Entity Definitions for Characters

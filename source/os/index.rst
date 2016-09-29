@@ -882,11 +882,6 @@ come up frequently.
 
    * :ref:`Porting notes for os <porting-os>`
 
-   * `Flow Control Issues
-     <http://docs.python.org/library/popen2.html#popen2-flow-control>`__
-     -- Standard library documentation of :func:`popen2` and how to
-     prevent deadlocks.
-
    * :mod:`signal` -- The section on the ``signal`` module goes over
      signal handling techniques in more detail.
 
@@ -902,15 +897,11 @@ come up frequently.
    * :ref:`shutil-directory-functions` -- The :mod:`shutil` module
      also includes functions for working with directory trees.
 
-   * `Unix Manual Page Introduction
-     <http://www.scit.wlv.ac.uk/cgi-bin/mansec?2+intro>`__ -- Includes
-     definitions of real and effective ids, etc.
-
    * `Speaking UNIX,
      Part 8. <http://www.ibm.com/developerworks/aix/library/au-speakingunix8/index.html>`__
      -- Learn how UNIX multitasks.
 
-   * `Unix Concepts <http://www.linuxhq.com/guides/LUG/node67.html>`__
+   * `Standard streams <https://en.wikipedia.org/wiki/Standard_streams>`__
      -- For more discussion of stdin, stdout, and stderr.
 
    * `Delve into Unix Process Creation

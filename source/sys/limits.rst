@@ -305,7 +305,7 @@ little-endian.
 .. seealso::
 
     * `Wikipedia: Endianness
-      <http://en.wikipedia.org/wiki/Byte_order>`__ -- Description of
+      <https://en.wikipedia.org/wiki/Byte_order>`__ -- Description of
       big and little endian memory systems.
 
     * :mod:`array` and :mod:`struct` -- Other modules that depend on

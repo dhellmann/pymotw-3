@@ -661,7 +661,9 @@ simplicity).
     * :mod:`zipimport` -- Implements importing Python modules from
       inside ZIP archives.
 
-    * `The Internal Structure of Python Eggs <http://pythonhosted.org//setuptools/formats.html?highlight=eggs>`_ -- setuptools documentation for the egg format
+    * `The Internal Structure of Python Eggs
+      <http://setuptools.readthedocs.io/en/latest/formats.html?highlight=egg>`_
+      -- setuptools documentation for the egg format
 
     * `Wheel <http://wheel.readthedocs.org/en/latest/>`_ --
       Documentation for ``wheel`` archive format for installable
@@ -674,5 +676,5 @@ simplicity).
     * :pep:`427` -- The Wheel Binary Package Format 1.0
 
     * `Import this, that, and the other thing: custom importers
-      <http://us.pycon.org/2010/conference/talks/?filter=core>`_ --
+      <http://pyvideo.org/pycon-us-2010/pycon-2010--import-this--that--and-the-other-thin.html>`_ --
       Brett Cannon's PyCon 2010 presentation.
