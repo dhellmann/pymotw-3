@@ -124,7 +124,7 @@ output.
 	AssertionError: True is not false
 	
 	----------------------------------------------------------------
-	Ran 3 tests in 0.001s
+	Ran 3 tests in 0.002s
 	
 	FAILED (failures=1, errors=1)
 
@@ -163,7 +163,7 @@ To make it easier to understand the nature of a test failure, the
 	AssertionError: True is not false : failure message goes here
 	
 	----------------------------------------------------------------
-	Ran 1 test in 0.001s
+	Ran 1 test in 0.000s
 	
 	FAILED (failures=1)
 
@@ -173,10 +173,9 @@ To make it easier to understand the nature of a test failure, the
 Asserting Truth
 ===============
 
-Most tests assert the truth of some condition. There are a few
-different ways to write truth-checking tests, depending on the
-perspective of the test author and the desired outcome of the code
-being tested.
+Most tests assert the truth of some condition. There are two different
+ways to write truth-checking tests, depending on the perspective of
+the test author and the desired outcome of the code being tested.
 
 .. literalinclude:: unittest_truth.py
     :caption:
@@ -198,7 +197,7 @@ value, the method :func:`assertFalse` make more sense.
 	testAssertTrue (unittest_truth.TruthTest) ... ok
 	
 	----------------------------------------------------------------
-	Ran 2 tests in 0.001s
+	Ran 2 tests in 0.000s
 	
 	OK
 
@@ -252,12 +251,156 @@ including the values being compared.
 	AssertionError: 1 == 1
 	
 	----------------------------------------------------------------
-	Ran 4 tests in 0.001s
+	Ran 4 tests in 0.003s
 	
 	FAILED (failures=2)
 
 .. {{{end}}}
 
+In addition to the generic :func:`assertEqual` and
+:func:`assertNotEqual`, there are special methods for comparing
+containers like :class:`list`, :class:`dict:`, and :class:`set`
+objects.
+
+.. literalinclude:: unittest_equality_container.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Each method reports inequality using a format that is meaningful for
+the input type, making test failures easier to understand and correct.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, '-m unittest unittest_equality_container.py',
+..         line_break_mode='wrap', ignore_error=True))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 -m unittest unittest_equality_container.py
+	
+	FFFFFFF
+	================================================================
+	FAIL: testCount
+	(unittest_equality_container.ContainerEqualityTest)
+	----------------------------------------------------------------
+	Traceback (most recent call last):
+	  File ".../unittest_equality_container.py", line 15, in
+	testCount
+	    [1, 3, 2, 3],
+	AssertionError: Element counts were not equal:
+	First has 2, Second has 1:  2
+	First has 1, Second has 2:  3
+	
+	================================================================
+	FAIL: testDict
+	(unittest_equality_container.ContainerEqualityTest)
+	----------------------------------------------------------------
+	Traceback (most recent call last):
+	  File ".../unittest_equality_container.py", line 21, in
+	testDict
+	    {'a': 1, 'b': 3},
+	AssertionError: {'b': 2, 'a': 1} != {'b': 3, 'a': 1}
+	- {'a': 1, 'b': 2}
+	?               ^
+	
+	+ {'a': 1, 'b': 3}
+	?               ^
+	
+	
+	================================================================
+	FAIL: testList
+	(unittest_equality_container.ContainerEqualityTest)
+	----------------------------------------------------------------
+	Traceback (most recent call last):
+	  File ".../unittest_equality_container.py", line 27, in
+	testList
+	    [1, 3, 2],
+	AssertionError: Lists differ: [1, 2, 3] != [1, 3, 2]
+	
+	First differing element 1:
+	2
+	3
+	
+	- [1, 2, 3]
+	+ [1, 3, 2]
+	
+	================================================================
+	FAIL: testMultiLineString
+	(unittest_equality_container.ContainerEqualityTest)
+	----------------------------------------------------------------
+	Traceback (most recent call last):
+	  File ".../unittest_equality_container.py", line 41, in
+	testMultiLineString
+	    """),
+	AssertionError: '\nThis string\nhas more than one\nline.\n' !=
+	'\nThis string has\nmore than two\nlines.\n'
+	  
+	- This string
+	+ This string has
+	?            ++++
+	- has more than one
+	? ----           --
+	+ more than two
+	?           ++
+	- line.
+	+ lines.
+	?     +
+	
+	
+	================================================================
+	FAIL: testSequence
+	(unittest_equality_container.ContainerEqualityTest)
+	----------------------------------------------------------------
+	Traceback (most recent call last):
+	  File ".../unittest_equality_container.py", line 47, in
+	testSequence
+	    [1, 3, 2],
+	AssertionError: Sequences differ: [1, 2, 3] != [1, 3, 2]
+	
+	First differing element 1:
+	2
+	3
+	
+	- [1, 2, 3]
+	+ [1, 3, 2]
+	
+	================================================================
+	FAIL: testSet
+	(unittest_equality_container.ContainerEqualityTest)
+	----------------------------------------------------------------
+	Traceback (most recent call last):
+	  File ".../unittest_equality_container.py", line 53, in testSet
+	    set([1, 3, 2, 4]),
+	AssertionError: Items in the second set but not the first:
+	4
+	
+	================================================================
+	FAIL: testTuple
+	(unittest_equality_container.ContainerEqualityTest)
+	----------------------------------------------------------------
+	Traceback (most recent call last):
+	  File ".../unittest_equality_container.py", line 59, in
+	testTuple
+	    (1, 'b'),
+	AssertionError: Tuples differ: (1, 'a') != (1, 'b')
+	
+	First differing element 1:
+	'a'
+	'b'
+	
+	- (1, 'a')
+	?      ^
+	
+	+ (1, 'b')
+	?      ^
+	
+	
+	----------------------------------------------------------------
+	Ran 7 tests in 0.005s
+	
+	FAILED (failures=7)
+
+.. {{{end}}}
 
 Almost Equal?
 =============
@@ -292,7 +435,7 @@ places to use for the test.
 	AssertionError: 1.1 != 1.0999999999999996
 	
 	----------------------------------------------------------------
-	Ran 3 tests in 0.002s
+	Ran 3 tests in 0.000s
 	
 	FAILED (failures=1)
 
@@ -329,7 +472,7 @@ The results for both are the same, but the second test using
 	testTrapLocally (unittest_exception.ExceptionTest) ... ok
 	
 	----------------------------------------------------------------
-	Ran 2 tests in 0.001s
+	Ran 2 tests in 0.000s
 	
 	OK
 
@@ -369,7 +512,7 @@ and test methods is apparent.
 	In tearDown()
 	.
 	----------------------------------------------------------------
-	Ran 1 test in 0.001s
+	Ran 1 test in 0.000s
 	
 	OK
 
