@@ -54,8 +54,8 @@ interpreter, and is not passed to the program being run.
 
 .. _sys-input-output:
 
-Input and Output Steams
-=======================
+Input and Output Streams
+========================
 
 Following the UNIX paradigm, Python programs can access three file
 descriptors by default.
