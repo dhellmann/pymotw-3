@@ -290,7 +290,7 @@ places to use for the test.
 	AssertionError: 1.1 != 1.0999999999999996
 	
 	----------------------------------------------------------------
-	Ran 3 tests in 0.003s
+	Ran 3 tests in 0.001s
 	
 	FAILED (failures=1)
 
@@ -439,7 +439,7 @@ the input type, making test failures easier to understand and correct.
 	
 	
 	----------------------------------------------------------------
-	Ran 7 tests in 0.003s
+	Ran 7 tests in 0.009s
 	
 	FAILED (failures=7)
 
@@ -646,23 +646,90 @@ only be two test cases, even though there are three failures reported.
 	AssertionError: Regex didn't match: 'd' not found in 'abc'
 	
 	----------------------------------------------------------------
-	Ran 2 tests in 0.001s
+	Ran 2 tests in 0.004s
 	
 	FAILED (failures=3)
 
 .. {{{end}}}
 
+Skipping Tests
+==============
+
+It is frequently useful to be able to skip a test if some external
+condition is not met. For example, when writing tests to check
+behavior of a library under a specific version of Python there is no
+reason to run those tests under other versions of Python. Test classes
+and methods can be decorated with :func:`skip` to always skip the
+tests. The decorators :func:`skipIf` and :func:`skipUnless` can be
+used to check a condition before skipping.
+
+.. literalinclude:: unittest_skip.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+For complex conditions that are difficult to express in a single
+expression to be passed to :func:`skipIf` or :func:`skipUnless`, a
+test case may raise :class:`SkipTest` directly to cause the test to be
+skipped.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, '-m unittest -v unittest_skip.py', line_break_mode='wrap'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 -m unittest -v unittest_skip.py
+	
+	test (unittest_skip.SkippingTest) ... skipped 'always skipped'
+	test_macos_only (unittest_skip.SkippingTest) ... ok
+	test_python2_only (unittest_skip.SkippingTest) ... skipped True
+	test_raise_skiptest (unittest_skip.SkippingTest) ... skipped
+	'skipping via exception'
+	
+	----------------------------------------------------------------
+	Ran 4 tests in 0.000s
+	
+	OK (skipped=3)
+
+.. {{{end}}}
+
+Ignoring Failing Tests
+======================
+
+Rather than deleting tests that are persistently broken, they can be
+marked with the :func:`expectedFailure` decorator so the failure is
+ignored.
+
+.. literalinclude:: unittest_expectedfailure.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+If a test that is expected to fail does in fact pass, that condition
+is treated as a special sort of failure and reported as an "unexpected
+success".
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, '-m unittest -v unittest_expectedfailure.py',
+..         ignore_error=True, line_break_mode='wrap'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 -m unittest -v unittest_expectedfailure.py
+	
+	test_always_passes (unittest_expectedfailure.Test) ...
+	unexpected success
+	test_never_passes (unittest_expectedfailure.Test) ... expected
+	failure
+	
+	----------------------------------------------------------------
+	Ran 2 tests in 0.000s
+	
+	FAILED (expected failures=1, unexpected successes=1)
+
+.. {{{end}}}
 
 
-Test Suites
-===========
-
-The standard library documentation describes how to organize test
-suites manually.  Automated test discovery is more manageable for
-large code bases, in which related tests are not all in the same
-place. Tools such as :command:`nose` and :command:`py.test` make it
-easier to manage tests when they are spread over multiple files and
-directories.
 
 .. seealso::
 
