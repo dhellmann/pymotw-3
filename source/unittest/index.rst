@@ -6,7 +6,6 @@
     :synopsis: Automated testing framework
 
 :Purpose: Automated testing framework
-:Python Version: 2.1 and later
 
 Python's :mod:`unittest` module, sometimes referred to as PyUnit, is
 based on the XUnit framework design by Kent Beck and Erich Gamma. The
@@ -23,11 +22,11 @@ test dependencies (called "fixtures"), and the test
 itself. Individual tests are created by subclassing :class:`TestCase`
 and overriding or adding appropriate methods. For example,
 
-.. include:: unittest_simple.py
-    :literal:
+.. literalinclude:: unittest_simple.py
+    :caption:
     :start-after: #end_pymotw_header
 
-In this case, the :class:`SimplisticTest` has a single :func:`test()`
+In this case, the :class:`SimplisticTest` has a single :func:`test`
 method, which would fail if True is ever False.
 
 Running Tests
@@ -100,8 +99,8 @@ Tests have 3 possible outcomes, described in :table:`Test Case Outcomes`.
 There is no explicit way to cause a test to "pass", so a test's status depends
 on the presence (or absence) of an exception. 
 
-.. include:: unittest_outcomes.py
-    :literal:
+.. literalinclude:: unittest_outcomes.py
+    :caption:
     :start-after: #end_pymotw_header
 
 When a test fails or generates an error, the traceback is included in the
@@ -140,17 +139,17 @@ output.
 
 .. {{{end}}}
 
-In the previous example, :func:`testFail()` fails and the traceback
+In the previous example, :func:`testFail` fails and the traceback
 shows the line with the failure code. It is up to the person reading
 the test output to look at the code to figure out the meaning of the
 failed test, though.
 
-.. include:: unittest_failwithmessage.py
-    :literal:
+.. literalinclude:: unittest_failwithmessage.py
+    :caption:
     :start-after: #end_pymotw_header
 
 To make it easier to understand the nature of a test failure, the
-:func:`fail*()` and :func:`assert*()` methods all accept an argument
+:func:`fail*` and :func:`assert*` methods all accept an argument
 *msg*, which can be used to produce a more detailed error message.
 
 .. {{{cog
@@ -188,14 +187,14 @@ different ways to write truth-checking tests, depending on the
 perspective of the test author and the desired outcome of the code
 being tested. 
 
-.. include:: unittest_truth.py
-    :literal:
+.. literalinclude:: unittest_truth.py
+    :caption:
     :start-after: #end_pymotw_header
 
 If the code produces a value which can be evaluated as true, the
-methods :func:`failUnless()` and :func:`assertTrue()` should be
-used. If the code produces a false value, the methods :func:`failIf()`
-and :func:`assertFalse()` make more sense.
+methods :func:`failUnless` and :func:`assertTrue` should be
+used. If the code produces a false value, the methods :func:`failIf`
+and :func:`assertFalse` make more sense.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'unittest_truth.py -v',
@@ -225,8 +224,8 @@ Testing Equality
 As a special case, :mod:`unittest` includes methods for testing the
 equality of two values.
 
-.. include:: unittest_equality.py
-    :literal:
+.. literalinclude:: unittest_equality.py
+    :caption:
     :start-after: #end_pymotw_header
 
 When they fail, these special test methods produce error messages
@@ -274,11 +273,11 @@ Almost Equal?
 =============
 
 In addition to strict equality, it is possible to test for near
-equality of floating point numbers using :func:`failIfAlmostEqual()`
-and :func:`failUnlessAlmostEqual()`.
+equality of floating point numbers using :func:`failIfAlmostEqual`
+and :func:`failUnlessAlmostEqual`.
 
-.. include:: unittest_almostequal.py
-    :literal:
+.. literalinclude:: unittest_almostequal.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The arguments are the values to be compared, and the number of decimal
@@ -319,16 +318,16 @@ for uncovering mistakes while modifying code that has existing test
 coverage. There are circumstances, however, in which the test should
 verify that some code does produce an exception. For example, if an
 invalid value is given to an attribute of an object. In such cases,
-:func:`failUnlessRaises()` or :func:`assertRaises` make the code more
+:func:`failUnlessRaises` or :func:`assertRaises` make the code more
 clear than trapping the exception in the test. Compare these two
 tests:
 
-.. include:: unittest_exception.py
-    :literal:
+.. literalinclude:: unittest_exception.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The results for both are the same, but the second test using
-:func:`failUnlessRaises()` is more succinct.
+:func:`failUnlessRaises` is more succinct.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'unittest_exception.py -v',
@@ -360,11 +359,11 @@ include database connections and temporary files (many people would
 argue that using external resources makes such tests not "unit" tests,
 but they are still tests and still useful).  :class:`TestCase`
 includes a special hook to configure and clean up any fixtures needed
-by tests. To configure the fixtures, override :func:`setUp()`. To
-clean up, override :func:`tearDown()`.
+by tests. To configure the fixtures, override :func:`setUp`. To
+clean up, override :func:`tearDown`.
 
-.. include:: unittest_fixtures.py
-    :literal:
+.. literalinclude:: unittest_fixtures.py
+    :caption:
     :start-after: #end_pymotw_header
 
 When this sample test is run, the order of execution of the fixture
