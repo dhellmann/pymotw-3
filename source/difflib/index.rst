@@ -204,7 +204,7 @@ instructions are encoded as five-element tuples including a string
 instruction (the "opcode") and two pairs of start and stop indexes
 into the sequences (denoted as ``i1``, ``i2``, ``j1``, and ``j2``).
 
-.. list-table:: get_opcodes() instructions
+.. list-table:: difflib.get_opcodes() instructions
    :header-rows: 1
 
    * - Opcode
