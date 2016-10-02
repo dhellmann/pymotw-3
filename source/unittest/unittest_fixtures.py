@@ -7,6 +7,14 @@ import random
 import unittest
 
 
+def setUpModule():
+    print('In setUpModule()')
+
+
+def tearDownModule():
+    print('In tearDownModule()')
+
+
 class FixturesTest(unittest.TestCase):
 
     @classmethod
@@ -21,7 +29,14 @@ class FixturesTest(unittest.TestCase):
 
     def setUp(self):
         print('In setUp()')
-        self.value = random.randint(1, 10)
+        # Pick a number sure to be in the range. The range is
+        # defined as not including the "stop" value, so make
+        # sure it is not included in the set of allowed values
+        # for our choice.
+        self.value = random.randint(
+            self.good_range.start,
+            self.good_range.stop - 1,
+        )
 
     def tearDown(self):
         print('In tearDown()')

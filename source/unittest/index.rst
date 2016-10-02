@@ -543,11 +543,15 @@ include database connections and temporary files (many people would
 argue that using external resources makes such tests not "unit" tests,
 but they are still tests and still useful).
 
-:class:`TestCase` includes special hooks to configure and clean up any
+:mod:`unittest` includes special hooks to configure and clean up any
 fixtures needed by tests. To establish fixtures for each individual
-test case, override :func:`setUp`. To clean them up, override
-:func:`tearDown`. To manage one set of fixtures for all instances of a
-test class, override :func:`setUpClass` and :func:`tearDownClass`.
+test case, override :func:`setUp` on the :class:`TestCase`. To clean
+them up, override :func:`tearDown`. To manage one set of fixtures for
+all instances of a test class, override the class methods
+:func:`setUpClass` and :func:`tearDownClass` for the
+:class:`TestCase`. And to handle especially expensive setup operations
+for all of the tests within a module, use the module-level functions
+:func:`setUpModule` and :func:`tearDownModule`.
 
 .. literalinclude:: unittest_fixtures.py
     :caption:
@@ -564,6 +568,7 @@ and test methods is apparent.
 
 	$ python3 -u -m unittest -v unittest_fixtures.py
 	
+	In setUpModule()
 	In setUpClass()
 	test1 (unittest_fixtures.FixturesTest) ... In setUp()
 	In test1()
@@ -574,6 +579,7 @@ and test methods is apparent.
 	In tearDown()
 	ok
 	In tearDownClass()
+	In tearDownModule()
 	
 	----------------------------------------------------------------
 	Ran 2 tests in 0.000s
