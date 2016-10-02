@@ -49,9 +49,9 @@ application.
 .. {{{end}}}
 
 Turning on debugging exposes some of the issues it has, including the
-fact that :func:`inner` takes longer than the callback duration and
-that the event loop is not being properly closed when the program
-exits.
+fact that although :func:`inner` finishes it takes more time to do so
+than the ``slow_callback_duration`` that has been set and that the
+event loop is not being properly closed when the program exits.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'asyncio_debug.py -v', line_break_mode='wrap'))
