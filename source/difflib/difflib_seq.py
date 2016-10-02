@@ -7,7 +7,6 @@
 #end_pymotw_header
 
 import difflib
-from difflib_data import *
 
 s1 = [1, 2, 3, 5, 6, 4]
 s2 = [2, 3, 5, 4, 6, 1]
