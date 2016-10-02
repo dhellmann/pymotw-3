@@ -12,7 +12,7 @@ class OutcomesTest(unittest.TestCase):
         return
 
     def testFail(self):
-        self.failIf(True)
+        self.assertFalse(True)
 
     def testError(self):
         raise RuntimeError('Test error!')

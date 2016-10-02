@@ -20,8 +20,8 @@ class ExceptionTest(unittest.TestCase):
         else:
             self.fail('Did not see ValueError')
 
-    def testFailUnlessRaises(self):
-        self.failUnlessRaises(
+    def testAssertRaises(self):
+        self.assertRaises(
             ValueError,
             raises_error,
             'a',

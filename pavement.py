@@ -1,4 +1,5 @@
 import configparser
+import functools
 import http.server
 import os
 import subprocess
@@ -117,10 +118,22 @@ def _elide_path_prefix(infile, line):
     return line
 
 
+def _truncate_lines(infile, line, c):
+    """Replace long sequences of single characters with a shorter version.
+    """
+    if set(line) == set(c) and len(line) > 64:
+        line = c * 64
+    return line
+
+
 # Replace run_script with local wrapper
 def run_script(input_file, script_name, break_lines_at=64, **kwds):
     if 'line_cleanups' not in kwds:
-        kwds['line_cleanups'] = [_elide_path_prefix]
+        kwds['line_cleanups'] = [
+            _elide_path_prefix,
+            functools.partial(_truncate_lines, c='-'),
+            functools.partial(_truncate_lines, c='='),
+        ]
     return paverutils.run_script(input_file, script_name,
                                  break_lines_at=break_lines_at,
                                  **kwds)

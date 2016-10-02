@@ -18,7 +18,7 @@ class FixturesTest(unittest.TestCase):
 
     def test(self):
         print('In test()')
-        self.failUnlessEqual(self.fixture, range(1, 10))
+        self.assertEqual(self.fixture, range(1, 10))
 
 if __name__ == '__main__':
     unittest.main()
