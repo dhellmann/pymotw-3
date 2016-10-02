@@ -90,6 +90,7 @@ pip.
 
     pydoc/index
     doctest/index
+    unittest/index
     trace/index
     traceback/index
     cgitb/index
@@ -105,7 +106,7 @@ pip.
 ..
     pydoc/index
     doctest/index
-    * unittest/index
+    unittest/index
     * unittest.mock/index
     trace/index
     traceback/index
