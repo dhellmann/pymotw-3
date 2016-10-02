@@ -124,7 +124,7 @@ output.
 	AssertionError: True is not false
 	
 	----------------------------------------------------------------
-	Ran 3 tests in 0.002s
+	Ran 3 tests in 0.001s
 	
 	FAILED (failures=1, errors=1)
 
@@ -251,11 +251,54 @@ including the values being compared.
 	AssertionError: 1 == 1
 	
 	----------------------------------------------------------------
-	Ran 4 tests in 0.003s
+	Ran 4 tests in 0.001s
 	
 	FAILED (failures=2)
 
 .. {{{end}}}
+
+Almost Equal?
+=============
+
+In addition to strict equality, it is possible to test for near
+equality of floating point numbers using :func:`failIfAlmostEqual`
+and :func:`failUnlessAlmostEqual`.
+
+.. literalinclude:: unittest_almostequal.py
+    :caption:
+    :start-after: #end_pymotw_header
+
+The arguments are the values to be compared, and the number of decimal
+places to use for the test.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, '-m unittest unittest_almostequal.py',
+..                    ignore_error=True))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 -m unittest unittest_almostequal.py
+	
+	.F.
+	================================================================
+	FAIL: testEqual (unittest_almostequal.AlmostEqualTest)
+	----------------------------------------------------------------
+	Traceback (most recent call last):
+	  File ".../unittest_almostequal.py", line 12, in testEqual
+	    self.assertEqual(1.1, 3.3 - 2.2)
+	AssertionError: 1.1 != 1.0999999999999996
+	
+	----------------------------------------------------------------
+	Ran 3 tests in 0.001s
+	
+	FAILED (failures=1)
+
+.. {{{end}}}
+
+Containers
+==========
+
 
 In addition to the generic :func:`assertEqual` and
 :func:`assertNotEqual`, there are special methods for comparing
@@ -396,50 +439,62 @@ the input type, making test failures easier to understand and correct.
 	
 	
 	----------------------------------------------------------------
-	Ran 7 tests in 0.005s
+	Ran 7 tests in 0.003s
 	
 	FAILED (failures=7)
 
 .. {{{end}}}
 
-Almost Equal?
-=============
+Use :func:`assertIn` to test container membership.
 
-In addition to strict equality, it is possible to test for near
-equality of floating point numbers using :func:`failIfAlmostEqual`
-and :func:`failUnlessAlmostEqual`.
+.. literalinclude:: unittest_in.py
+   :caption:
+   :start-after: #end_pymotw_header
 
-.. literalinclude:: unittest_almostequal.py
-    :caption:
-    :start-after: #end_pymotw_header
-
-The arguments are the values to be compared, and the number of decimal
-places to use for the test.
+Any object that supports the ``in`` operator or the container API can
+be used with :func:`assertIn`.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, '-m unittest unittest_almostequal.py',
-..                    ignore_error=True))
+.. cog.out(run_script(cog.inFile, '-m unittest unittest_in.py', ignore_error=True))
 .. }}}
 
 .. code-block:: none
 
-	$ python3 -m unittest unittest_almostequal.py
+	$ python3 -m unittest unittest_in.py
 	
-	.F.
+	FFF
 	================================================================
-	FAIL: testEqual (unittest_almostequal.AlmostEqualTest)
+	FAIL: testDict (unittest_in.ContainerMembershipTest)
 	----------------------------------------------------------------
 	Traceback (most recent call last):
-	  File ".../unittest_almostequal.py", line 12, in testEqual
-	    self.assertEqual(1.1, 3.3 - 2.2)
-	AssertionError: 1.1 != 1.0999999999999996
+	  File ".../unittest_in.py", line 12, in testDict
+	    self.assertIn(4, {1: 'a', 2: 'b', 3: 'c'})
+	AssertionError: 4 not found in {1: 'a', 2: 'b', 3: 'c'}
+	
+	================================================================
+	FAIL: testList (unittest_in.ContainerMembershipTest)
+	----------------------------------------------------------------
+	Traceback (most recent call last):
+	  File ".../unittest_in.py", line 15, in testList
+	    self.assertIn(4, [1, 2, 3])
+	AssertionError: 4 not found in [1, 2, 3]
+	
+	================================================================
+	FAIL: testSet (unittest_in.ContainerMembershipTest)
+	----------------------------------------------------------------
+	Traceback (most recent call last):
+	  File ".../unittest_in.py", line 18, in testSet
+	    self.assertIn(4, set([1, 2, 3]))
+	AssertionError: 4 not found in {1, 2, 3}
 	
 	----------------------------------------------------------------
-	Ran 3 tests in 0.000s
+	Ran 3 tests in 0.001s
 	
-	FAILED (failures=1)
+	FAILED (failures=3)
 
 .. {{{end}}}
+
+
 
 Testing for Exceptions
 ======================
