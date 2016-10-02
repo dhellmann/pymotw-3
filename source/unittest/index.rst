@@ -495,7 +495,6 @@ be used with :func:`assertIn`.
 .. {{{end}}}
 
 
-
 Testing for Exceptions
 ======================
 
@@ -537,15 +536,18 @@ The results for both are the same, but the second test using
 Test Fixtures
 =============
 
-Fixtures are outside resources needed by a test. For example, tests for one
-class may all need an instance of another class that provides
+Fixtures are outside resources needed by a test. For example, tests
+for one class may all need an instance of another class that provides
 configuration settings or another shared resource. Other test fixtures
 include database connections and temporary files (many people would
 argue that using external resources makes such tests not "unit" tests,
-but they are still tests and still useful).  :class:`TestCase`
-includes a special hook to configure and clean up any fixtures needed
-by tests. To configure the fixtures, override :func:`setUp`. To
-clean up, override :func:`tearDown`.
+but they are still tests and still useful).
+
+:class:`TestCase` includes special hooks to configure and clean up any
+fixtures needed by tests. To establish fixtures for each individual
+test case, override :func:`setUp`. To clean them up, override
+:func:`tearDown`. To manage one set of fixtures for all instances of a
+test class, override :func:`setUpClass` and :func:`tearDownClass`.
 
 .. literalinclude:: unittest_fixtures.py
     :caption:
@@ -555,19 +557,26 @@ When this sample test is run, the order of execution of the fixture
 and test methods is apparent.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, '-u -m unittest unittest_fixtures.py'))
+.. cog.out(run_script(cog.inFile, '-u -m unittest -v unittest_fixtures.py'))
 .. }}}
 
 .. code-block:: none
 
-	$ python3 -u -m unittest unittest_fixtures.py
+	$ python3 -u -m unittest -v unittest_fixtures.py
 	
-	In setUp()
-	In test()
+	In setUpClass()
+	test1 (unittest_fixtures.FixturesTest) ... In setUp()
+	In test1()
 	In tearDown()
-	.
+	ok
+	test2 (unittest_fixtures.FixturesTest) ... In setUp()
+	In test2()
+	In tearDown()
+	ok
+	In tearDownClass()
+	
 	----------------------------------------------------------------
-	Ran 1 test in 0.000s
+	Ran 2 tests in 0.000s
 	
 	OK
 
