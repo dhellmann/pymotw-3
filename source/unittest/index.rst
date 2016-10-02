@@ -1,40 +1,39 @@
-=========================================
- unittest -- Automated Testing Framework
-=========================================
+==========================================
+ unittest --- Automated Testing Framework
+==========================================
 
 .. module:: unittest
     :synopsis: Automated testing framework
 
 :Purpose: Automated testing framework
 
-Python's :mod:`unittest` module, sometimes referred to as PyUnit, is
-based on the XUnit framework design by Kent Beck and Erich Gamma. The
-same pattern is repeated in many other languages, including C, Perl,
-Java, and Smalltalk. The framework implemented by :mod:`unittest`
-supports fixtures, test suites, and a test runner to enable automated
-testing.
+Python's :mod:`unittest` module is based on the XUnit framework design
+by Kent Beck and Erich Gamma. The same pattern is repeated in many
+other languages, including C, Perl, Java, and Smalltalk. The framework
+implemented by :mod:`unittest` supports fixtures, test suites, and a
+test runner to enable automated testing.
 
 Basic Test Structure
 ====================
 
 Tests, as defined by :mod:`unittest`, have two parts: code to manage
-test dependencies (called "fixtures"), and the test
-itself. Individual tests are created by subclassing :class:`TestCase`
-and overriding or adding appropriate methods. For example,
+test dependencies (called "fixtures"), and the test itself. Individual
+tests are created by subclassing :class:`TestCase` and overriding or
+adding appropriate methods. For example,
 
 .. literalinclude:: unittest_simple.py
     :caption:
     :start-after: #end_pymotw_header
 
 In this case, the :class:`SimplisticTest` has a single :func:`test`
-method, which would fail if True is ever False.
+method, which would fail if ``True`` is ever ``False``.
 
 Running Tests
 =============
 
 The easiest way to run unittest tests is to include:
 
-::
+.. code-block:: python
 
     if __name__ == '__main__':
         unittest.main()
@@ -43,8 +42,7 @@ at the bottom of each test file, then simply run the script directly from the
 command line:
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'unittest_simple.py', 
-..                    break_lines_at=68, line_break_mode='truncate'))
+.. cog.out(run_script(cog.inFile, 'unittest_simple.py', line_break_mode='truncate'))
 .. }}}
 
 ::
@@ -59,13 +57,13 @@ command line:
 
 .. {{{end}}}
 
-This abbreviated output includes the amount of time the tests took, along with
-a status indicator for each test (the "." on the first line of output means
-that a test passed). For more detailed test results, include the -v option:
+This abbreviated output includes the amount of time the tests took,
+along with a status indicator for each test (the "." on the first line
+of output means that a test passed). For more detailed test results,
+include the -v option:
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'unittest_simple.py -v', 
-..                    break_lines_at=68, line_break_mode='truncate'))
+.. cog.out(run_script(cog.inFile, 'unittest_simple.py -v', line_break_mode='truncate'))
 .. }}}
 
 ::
@@ -96,8 +94,8 @@ Tests have 3 possible outcomes, described in :table:`Test Case Outcomes`.
   ERROR    The test raises any exception other than AssertionError.
   =======  ===========
 
-There is no explicit way to cause a test to "pass", so a test's status depends
-on the presence (or absence) of an exception. 
+There is no explicit way to cause a test to "pass", so a test's status
+depends on the presence (or absence) of an exception.
 
 .. literalinclude:: unittest_outcomes.py
     :caption:
@@ -108,7 +106,7 @@ output.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'unittest_outcomes.py', ignore_error=True, 
-..                    break_lines_at=68, line_break_mode='truncate'))
+..                    line_break_mode='truncate'))
 .. }}}
 
 ::
@@ -154,7 +152,7 @@ To make it easier to understand the nature of a test failure, the
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'unittest_failwithmessage.py -v', ignore_error=True,
-..                    break_lines_at=68, line_break_mode='truncate'))
+..                    line_break_mode='truncate'))
 .. }}}
 
 ::
@@ -185,7 +183,7 @@ Asserting Truth
 Most tests assert the truth of some condition. There are a few
 different ways to write truth-checking tests, depending on the
 perspective of the test author and the desired outcome of the code
-being tested. 
+being tested.
 
 .. literalinclude:: unittest_truth.py
     :caption:
@@ -198,7 +196,7 @@ and :func:`assertFalse` make more sense.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'unittest_truth.py -v',
-..                    break_lines_at=68, line_break_mode='truncate'))
+..                    line_break_mode='truncate'))
 .. }}}
 
 ::
@@ -233,7 +231,7 @@ including the values being compared.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'unittest_equality.py -v', ignore_error=True,
-..                    break_lines_at=68, line_break_mode='truncate'))
+..                    line_break_mode='truncate'))
 .. }}}
 
 ::
@@ -285,7 +283,7 @@ places to use for the test.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'unittest_almostequal.py',
-..                    break_lines_at=68, line_break_mode='truncate',
+..                    line_break_mode='truncate',
 ..                    ignore_error=True))
 .. }}}
 
@@ -331,7 +329,7 @@ The results for both are the same, but the second test using
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'unittest_exception.py -v',
-..                    break_lines_at=68, line_break_mode='truncate'))
+..                    line_break_mode='truncate'))
 .. }}}
 
 ::
@@ -371,7 +369,7 @@ and test methods is apparent.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '-u unittest_fixtures.py',
-..                    break_lines_at=68, line_break_mode='truncate'))
+..                    line_break_mode='truncate'))
 .. }}}
 
 ::
@@ -402,18 +400,19 @@ directories.
 
 .. seealso::
 
-    `unittest <http://docs.python.org/lib/module-unittest.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`unittest`
 
-    :mod:`doctest`
-        An alternate means of running tests embedded in docstrings or 
-        external documentation files.
+   * :mod:`doctest` -- An alternate means of running tests embedded in
+     docstrings or external documentation files.
 
-    `nose <http://somethingaboutorange.com/mrl/projects/nose/>`_
-        A more sophisticated test manager.
+   * `nose <https://nose.readthedocs.io/en/latest/>`_ -- Third-party
+     test runner with sophisticated discovery features.
 
-    `py.test <http://codespeak.net/py/dist/test/>`_
-        Third-party test runner.
+   * `py.test <http://codespeak.net/py/dist/test/>`_ -- A popular
+     third-party test runner with support for distributed execution
+     and an alternate fixture management system.
 
-    `unittest2 <http://pypi.python.org/pypi/unittest2>`_
-        Ongoing improvements to :mod:`unittest`
+   * `testrepository
+     <http://testrepository.readthedocs.io/en/latest/>`_ --
+     Third-party test runner used by the OpenStack project, with
+     support for parallel execution andtracking failures.
