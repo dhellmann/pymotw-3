@@ -198,6 +198,26 @@ types, as long as the values are hashable. It uses an algorithm to
 identify the longest contiguous matching blocks from the sequences,
 eliminating "junk" values that do not contribute to the real data.
 
+The funct :func:`get_opcodes` returns a list of instructions for
+modifying the first sequence to make it match the second. The
+instructions are encoded as five-element tuples including a string
+instruction (the "opcode") and two pairs of start and stop indexes
+into the sequences (denoted as ``i1``, ``i2``, ``j1``, and ``j2``).
+
+.. list-table:: get_opcodes() instructions
+   :header-rows: 1
+
+   * - Opcode
+     - Definition
+   * - ``'replace'``
+     - Replace ``a[i1:i2]`` with ``b[j1:j2]``.
+   * - ``'delete'``
+     - Remove ``a[i1:i2]`` entirely.
+   * - ``'insert'``
+     - Insert ``b[j1:j2]`` at ``a[i1:i1]``.
+   * - ``'equal'``
+     - The subsequences are already equal.
+
 .. literalinclude:: difflib_seq.py
     :caption:
     :start-after: #end_pymotw_header
@@ -222,15 +242,23 @@ are added and removed.
 	s1 == s2: False
 	
 	Replace [4] from s1[5:6] with [1] from s2[5:6]
-	  s1 = [1, 2, 3, 5, 6, 1]
+	  before = [1, 2, 3, 5, 6, 4]
+	   after = [1, 2, 3, 5, 6, 1] 
+	
 	s1[4:5] and s2[4:5] are the same
-	  s1 = [1, 2, 3, 5, 6, 1]
+	   after = [1, 2, 3, 5, 6, 1] 
+	
 	Insert [4] from s2[3:4] into s1 at 4
-	  s1 = [1, 2, 3, 5, 4, 6, 1]
+	  before = [1, 2, 3, 5, 6, 1]
+	   after = [1, 2, 3, 5, 4, 6, 1] 
+	
 	s1[1:4] and s2[0:3] are the same
-	  s1 = [1, 2, 3, 5, 4, 6, 1]
+	   after = [1, 2, 3, 5, 4, 6, 1] 
+	
 	Remove [1] from positions [0:1]
-	  s1 = [2, 3, 5, 4, 6, 1]
+	  before = [1, 2, 3, 5, 4, 6, 1]
+	   after = [2, 3, 5, 4, 6, 1] 
+	
 	s1 == s2: True
 
 .. {{{end}}}
