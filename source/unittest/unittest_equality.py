@@ -19,6 +19,3 @@ class EqualityTest(unittest.TestCase):
 
     def testExpectNotEqualFails(self):
         self.assertNotEqual(1, 3 - 2)
-
-if __name__ == '__main__':
-    unittest.main()

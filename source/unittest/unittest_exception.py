@@ -27,6 +27,3 @@ class ExceptionTest(unittest.TestCase):
             'a',
             b='c',
         )
-
-if __name__ == '__main__':
-    unittest.main()

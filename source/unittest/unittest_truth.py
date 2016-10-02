@@ -13,6 +13,3 @@ class TruthTest(unittest.TestCase):
 
     def testAssertFalse(self):
         self.assertFalse(False)
-
-if __name__ == '__main__':
-    unittest.main()
