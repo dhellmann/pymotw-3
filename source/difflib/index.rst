@@ -174,18 +174,18 @@ characters explicitly, but to rely on the ability of
 	B = 'abcd abcd'
 	
 	Without junk detection:
-	  i = 0
-	  j = 4
-	  k = 5
-	  A[i:i+k] = ' abcd'
-	  B[j:j+k] = ' abcd'
+	  a    = 0
+	  b    = 4
+	  size = 5
+	  A[a:a+size] = ' abcd'
+	  B[b:b+size] = ' abcd'
 	
 	Treat spaces as junk:
-	  i = 1
-	  j = 0
-	  k = 4
-	  A[i:i+k] = 'abcd'
-	  B[j:j+k] = 'abcd'
+	  a    = 1
+	  b    = 0
+	  size = 4
+	  A[a:a+size] = 'abcd'
+	  B[b:b+size] = 'abcd'
 
 .. {{{end}}}
 

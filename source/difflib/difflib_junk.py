@@ -12,13 +12,13 @@
 from difflib import SequenceMatcher
 
 
-def show_results(s):
-    i, j, k = s.find_longest_match(0, 5, 0, 9)
-    print('  i = {}'.format(i))
-    print('  j = {}'.format(j))
-    print('  k = {}'.format(k))
-    print('  A[i:i+k] = {!r}'.format(A[i:i + k]))
-    print('  B[j:j+k] = {!r}'.format(B[j:j + k]))
+def show_results(match):
+    print('  a    = {}'.format(match.a))
+    print('  b    = {}'.format(match.b))
+    print('  size = {}'.format(match.size))
+    i, j, k = match
+    print('  A[a:a+size] = {!r}'.format(A[i:i + k]))
+    print('  B[b:b+size] = {!r}'.format(B[j:j + k]))
 
 A = " abcd"
 B = "abcd abcd"
@@ -27,7 +27,11 @@ print('A = {!r}'.format(A))
 print('B = {!r}'.format(B))
 
 print('\nWithout junk detection:')
-show_results(SequenceMatcher(None, A, B))
+s1 = SequenceMatcher(None, A, B)
+match1 = s1.find_longest_match(0, len(A), 0, len(B))
+show_results(match1)
 
 print('\nTreat spaces as junk:')
-show_results(SequenceMatcher(lambda x: x == " ", A, B))
+s2 = SequenceMatcher(lambda x: x == " ", A, B)
+match2 = s2.find_longest_match(0, len(A), 0, len(B))
+show_results(match2)
