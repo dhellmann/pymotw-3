@@ -290,7 +290,7 @@ places to use for the test.
 	AssertionError: 1.1 != 1.0999999999999996
 	
 	----------------------------------------------------------------
-	Ran 3 tests in 0.001s
+	Ran 3 tests in 0.003s
 	
 	FAILED (failures=1)
 
@@ -587,6 +587,71 @@ and test methods is apparent.
 	OK
 
 .. {{{end}}}
+
+Repeating Tests with Different Inputs
+=====================================
+
+It is frequently useful to run the same test logic with different
+inputs. Rather than defining a separate test method for each small
+case, a common way of doing this is to use one test method containing
+several related assertion calls. The problem with this approach is
+that as soon as one assertion fails, the rest are skipped. A better
+solution is to use :func:`subTest` to create a context for a test
+within a test method. If the test fails, the failure is reported and
+the remaining tests continue.
+
+.. literalinclude:: unittest_subtest.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+In this example, the ``test_combined()`` method never runs the
+assertions for the patterns ``'c'`` and ``'d'``. The
+``test_with_subtest()`` method does, and correctly reports the
+additional failure. Note that the test runner still considers there to
+only be two test cases, even though there are three failures reported.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, '-m unittest -v unittest_subtest.py',
+..         line_break_mode='wrap', ignore_error=True))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 -m unittest -v unittest_subtest.py
+	
+	test_combined (unittest_subtest.SubTest) ... FAIL
+	test_with_subtest (unittest_subtest.SubTest) ... 
+	================================================================
+	FAIL: test_combined (unittest_subtest.SubTest)
+	----------------------------------------------------------------
+	Traceback (most recent call last):
+	  File ".../unittest_subtest.py", line 13, in test_combined
+	    self.assertRegex('abc', 'B')
+	AssertionError: Regex didn't match: 'B' not found in 'abc'
+	
+	================================================================
+	FAIL: test_with_subtest (unittest_subtest.SubTest) (pattern='B')
+	----------------------------------------------------------------
+	Traceback (most recent call last):
+	  File ".../unittest_subtest.py", line 21, in test_with_subtest
+	    self.assertRegex('abc', pat)
+	AssertionError: Regex didn't match: 'B' not found in 'abc'
+	
+	================================================================
+	FAIL: test_with_subtest (unittest_subtest.SubTest) (pattern='d')
+	----------------------------------------------------------------
+	Traceback (most recent call last):
+	  File ".../unittest_subtest.py", line 21, in test_with_subtest
+	    self.assertRegex('abc', pat)
+	AssertionError: Regex didn't match: 'd' not found in 'abc'
+	
+	----------------------------------------------------------------
+	Ran 2 tests in 0.001s
+	
+	FAILED (failures=3)
+
+.. {{{end}}}
+
 
 
 Test Suites
