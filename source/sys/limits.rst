@@ -10,10 +10,11 @@ controlling memory usage.
 Reference Counts
 ================
 
-Python uses *reference counting* and *garbage collection* for
-automatic memory management.  An object is automatically marked to be
-collected when its reference count drops to zero.  To examine the
-reference count of an existing object, use :func:`getrefcount`.
+The primary implementation of Python (CPython) uses *reference
+counting* and *garbage collection* for automatic memory management.
+An object is automatically marked to be collected when its reference
+count drops to zero.  To examine the reference count of an existing
+object, use :func:`getrefcount`.
 
 .. literalinclude:: sys_getrefcount.py
     :caption:
