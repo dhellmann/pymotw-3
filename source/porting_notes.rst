@@ -1090,6 +1090,38 @@ The public symbols exported from :mod:`threading` have been renamed to
 be :pep:`8` compliant. The old names are retained for backwards
 compatibility, but they will be removed in a future release.
 
+.. _porting-unittest:
+
+unittest
+--------
+
+.. index::
+   pair: porting; unittest
+
+The :class:`TestCase` methods starting with "fail" (:func:`failIf`,
+:func:`failUnless`, etc.) have been deprecated. Use the alternate form
+of the assert methods instead.
+
+Several older method aliases have been deprecated and replaced with
+preferred names. Using the deprecated names produces a warning
+(:pyissue:`9424`).
+
+.. list-table:: Deprecated unittest.TestCase Methods
+   :header-rows: 1
+
+   * - Deprecated Name
+     - Preferred Name
+   * - :func:`assert_`
+     - :func:`assertTrue`
+   * - :func:`assertEquals`
+     - :func:`assertEqual`
+   * - :func:`assertNotEquals`
+     - :func:`assertNotEqual`
+   * - :func:`assertAlmostEquals`
+     - :func:`assertAlmostEqual`
+   * - :func:`assertNotAlmostEquals`
+     - :func:`assertNotAlmostEqual`
+
 .. _porting-UserDict:
 .. _porting-UserList:
 .. _porting-UserString:
