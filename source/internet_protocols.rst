@@ -19,7 +19,7 @@ Binary data sent through a POST should be encoded with :mod:`base64`
 first, to comply with the message format standard.
 
 Well-behaved clients that access many sites as a spider or crawler
-should use :mod:`http.robotparser` to ensure they have permission
+should use :mod:`urllib.robotparser` to ensure they have permission
 before placing a heavy load on the remote server.
 
 To create a custom web server with Python, without requiring any
@@ -48,6 +48,7 @@ Complete XML-RPC client and server libraries are also included in
     :maxdepth: 1
 
     urllib.parse/index
+    urllib.robotparser/index
     base64/index
     webbrowser/index
     uuid/index
