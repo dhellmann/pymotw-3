@@ -119,7 +119,8 @@ finding a base page name from a URL, use :func:`urldefrag`.
     :caption:
     :start-after: #end_pymotw_header
 
-The return value is a tuple containing the base URL and the fragment.
+The return value is a :class:`DefragResult`, based on
+:class:`namedtuple`, containing the base URL and the fragment.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'urllib_parse_urldefrag.py'))

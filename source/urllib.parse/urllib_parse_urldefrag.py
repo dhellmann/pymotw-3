@@ -7,6 +7,6 @@ from urllib.parse import urldefrag
 
 original = 'http://netloc/path;param?query=arg#frag'
 print('original:', original)
-url, fragment = urldefrag(original)
-print('url     :', url)
-print('fragment:', fragment)
+d = urldefrag(original)
+print('url     :', d.url)
+print('fragment:', d.fragment)
