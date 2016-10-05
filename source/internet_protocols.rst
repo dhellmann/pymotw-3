@@ -47,6 +47,7 @@ Complete XML-RPC client and server libraries are also included in
 .. toctree::
     :maxdepth: 1
 
+    urllib.parse/index
     base64/index
     webbrowser/index
     uuid/index
@@ -55,7 +56,7 @@ Complete XML-RPC client and server libraries are also included in
     xmlrpc.server/index
 
 ..
-    urlparse/index
+    urllib.parse/index
     * urllib/index
       urllib2/index
       robotparser/index
