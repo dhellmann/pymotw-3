@@ -1,10 +1,8 @@
-===============================================
- robotparser -- Internet Spider Access Control
-===============================================
+=======================================================
+ urllib.robotparser --- Internet Spider Access Control
+=======================================================
 
-.. Do not use cog in this module because it requires Internet access.
-
-.. module:: robotparser
+.. module:: urllib.robotparser
     :synopsis: Internet spider access control
 
 :Purpose: Parse ``robots.txt`` file used to control Internet spiders
@@ -24,7 +22,7 @@ system for computer programs that automatically access web resources
 specify the user agent identifier for the program followed by a list
 of URLs (or URL prefixes) the agent may not access.
 
-This is the ``robots.txt`` file for ``http://www.doughellmann.com/``:
+This is the ``robots.txt`` file for ``https://pymotw.com/``:
 
 .. literalinclude:: robots.txt
     :caption:
@@ -32,8 +30,7 @@ This is the ``robots.txt`` file for ``http://www.doughellmann.com/``:
 It prevents access to some of the parts of the site that are expensive
 to compute and would overload the server if a search engine tried to
 index them.  For a more complete set of examples of ``robots.txt``,
-refer to *The Web Robots Page* (see the references list later in this
-section).
+refer to `The Web Robots Page`_.
 
 Testing Access Permissions
 ==========================
@@ -41,29 +38,35 @@ Testing Access Permissions
 Using the data presented earlier, a simple crawler can test whether it
 is allowed to download a page using :func:`RobotFileParser.can_fetch`.
 
-.. literalinclude:: robotparser_simple.py
+.. literalinclude:: urllib_robotparser_simple.py
     :caption:
     :start-after: #end_pymotw_header
 
 The URL argument to :func:`can_fetch` can be a path relative to the
 root of the site, or full URL.
 
-::
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'urllib_robotparser_simple.py'))
+.. }}}
 
-	$ python robotparser_simple.py
+.. code-block:: none
 
+	$ python3 urllib_robotparser_simple.py
+	
 	  True : /
-	  True : http://www.doughellmann.com/
+	  True : https://pymotw.com/
 	
 	  True : /PyMOTW/
-	  True : http://www.doughellmann.com/PyMOTW/
+	  True : https://pymotw.com/PyMOTW/
 	
 	 False : /admin/
-	 False : http://www.doughellmann.com/admin/
+	 False : https://pymotw.com/admin/
 	
 	 False : /downloads/PyMOTW-1.92.tar.gz
-	 False : http://www.doughellmann.com/downloads/PyMOTW-1.92.tar.gz
+	 False : https://pymotw.com/downloads/PyMOTW-1.92.tar.gz
 	
+
+.. {{{end}}}
 
 Long-lived Spiders
 ==================
@@ -75,28 +78,35 @@ the content it has downloaded already.  The age is not managed
 automatically, but there are convenience methods to make tracking it
 easier.
 
-.. literalinclude:: robotparser_longlived.py
+.. literalinclude:: urllib_robotparser_longlived.py
     :caption:
     :start-after: #end_pymotw_header
 
 This extreme example downloads a new ``robots.txt`` file if the one it
 has is more than one second old.
 
-::
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'urllib_robotparser_longlived.py'))
+.. }}}
 
-	$ python robotparser_longlived.py
+.. code-block:: none
+
+	$ python3 urllib_robotparser_longlived.py
 	
-	age: 0
+	age: 0 
 	  True : /
 	
-	age: 1
+	age: 1 
 	  True : /PyMOTW/
 	
 	age: 2 rereading robots.txt
 	 False : /admin/
 	
-	age: 1
+	age: 1 
 	 False : /downloads/PyMOTW-1.92.tar.gz
+	
+
+.. {{{end}}}
 
 A nicer version of the long-lived application might request the
 modification time for the file before downloading the entire thing.
@@ -107,10 +117,8 @@ again.
 
 .. seealso::
 
-    `robotparser <http://docs.python.org/library/robotparser.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`urllib.robotparser`
 
-    `The Web Robots Page`_
-        Description of ``robots.txt`` format.
+   * `The Web Robots Page`_ -- Description of ``robots.txt`` format.
 
 .. _The Web Robots Page: http://www.robotstxt.org/orig.html

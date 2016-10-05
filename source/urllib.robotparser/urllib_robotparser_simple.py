@@ -7,13 +7,13 @@
 """
 #end_pymotw_header
 
-import robotparser
-import urlparse
+from urllib import parse
+from urllib import robotparser
 
 AGENT_NAME = 'PyMOTW'
-URL_BASE = 'http://www.doughellmann.com/'
+URL_BASE = 'https://pymotw.com/'
 parser = robotparser.RobotFileParser()
-parser.set_url(urlparse.urljoin(URL_BASE, 'robots.txt'))
+parser.set_url(parse.urljoin(URL_BASE, 'robots.txt'))
 parser.read()
 
 PATHS = [
@@ -24,9 +24,9 @@ PATHS = [
 ]
 
 for path in PATHS:
-    print('{:6} : {}'.format(
+    print('{!r:>6} : {}'.format(
         parser.can_fetch(AGENT_NAME, path), path))
-    url = urlparse.urljoin(URL_BASE, path)
-    print('{:6} : {}'.format(
+    url = parse.urljoin(URL_BASE, path)
+    print('{!r:>6} : {}'.format(
         parser.can_fetch(AGENT_NAME, url), url))
     print()

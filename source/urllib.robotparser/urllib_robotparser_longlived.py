@@ -7,14 +7,13 @@
 """
 #end_pymotw_header
 
-import robotparser
+from urllib import robotparser
 import time
-import urlparse
 
 AGENT_NAME = 'PyMOTW'
 parser = robotparser.RobotFileParser()
 # Using the local copy
-parser.set_url('robots.txt')
+parser.set_url('file:robots.txt')
 parser.read()
 parser.modified()
 
@@ -34,7 +33,7 @@ for path in PATHS:
         parser.modified()
     else:
         print()
-    print('{:6} : {}'.format(
+    print('{!r:>6} : {}'.format(
         parser.can_fetch(AGENT_NAME, path), path))
     # Simulate a delay in processing
     time.sleep(1)
