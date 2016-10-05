@@ -277,15 +277,14 @@ slash, it is appended to the end of the path for the URL.
 Encoding Arguments
 ==================
 
-Arguments can be passed to the server by encoding them and appending them to
-the URL.
+Before arguments can be added to a URL, they need to be encoded.
 
 .. literalinclude:: urllib_parse_urlencode.py
     :caption:
     :start-after: #end_pymotw_header
 
-The query, in the list of client values, contains the encoded
-query arguments.
+Encoding replaces special characters like spaces to ensure they are
+passed to the server using a format that complies with the standard.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'urllib_parse_urlencode.py'))
@@ -300,7 +299,7 @@ query arguments.
 .. {{{end}}}
 
 To pass a sequence of values using separate occurrences of the
-variable in the query string, set *doseq* to True when calling
+variable in the query string, set ``doseq`` to ``True`` when calling
 :func:`urlencode`.
 
 .. literalinclude:: urllib_parse_urlencode_doseq.py
@@ -323,8 +322,28 @@ same name.
 
 .. {{{end}}}
 
-To decode the query string, see the :class:`FieldStorage` class from
-the :mod:`cgi` module.
+To decode the query string, use :func:`parse_qs` or :func:`parse_qsl`.
+
+.. literalinclude:: urllib_parse_parse_qs.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The return value from :func:`parse_qs` is a dictionary mapping names
+to values, while :func:`parse_qsl` returns a list of tuples containing
+a name and a value.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'urllib_parse_parse_qs.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 urllib_parse_parse_qs.py
+	
+	parse_qs : {'foo': ['foo1', 'foo2']}
+	parse_qsl: [('foo', 'foo1'), ('foo', 'foo2')]
+
+.. {{{end}}}
 
 Special characters within the query arguments that might cause parse
 problems with the URL on the server side are "quoted" when passed to
