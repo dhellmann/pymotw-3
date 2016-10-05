@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Parsing URLs
 """
+# flake8: noqa
 #end_pymotw_header
 
 from urlparse import urlsplit

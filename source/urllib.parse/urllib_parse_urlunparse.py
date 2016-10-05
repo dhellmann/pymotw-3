@@ -12,4 +12,3 @@ print('PARSED:', type(parsed), parsed)
 t = parsed[:]
 print('TUPLE :', type(t), t)
 print('NEW   :', urlunparse(t))
-
