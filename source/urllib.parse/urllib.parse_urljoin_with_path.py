@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Joining fragments into absolute URLs
 """
 #end_pymotw_header

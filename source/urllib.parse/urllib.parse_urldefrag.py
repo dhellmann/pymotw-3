@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Remove fragment portion of URL
 """
 #end_pymotw_header
