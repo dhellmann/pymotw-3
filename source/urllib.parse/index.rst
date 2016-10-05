@@ -1,14 +1,14 @@
-========================================
- urlparse -- Split URLs into Components
-========================================
+=============================================
+ urllib.parse --- Split URLs into Components
+=============================================
 
-.. module:: urlparse
+.. module:: urllib.parse
     :synopsis: Split URL into components
 
 :Purpose: Split URL into components
 
-The :mod:`urlparse` module provides functions for breaking URLs down
-into their component parts, as defined by the relevant RFCs.
+The :mod:`urllib.parse` module provides functions for breaking URLs
+down into their component parts, as defined by the relevant RFCs.
 
 Parsing
 =======
@@ -16,7 +16,7 @@ Parsing
 The return value from the :func:`urlparse` function is an object
 that acts like a :class:`tuple` with six elements.
 
-.. literalinclude:: urlparse_urlparse.py
+.. literalinclude:: urllib_parse_urlparse.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -25,13 +25,13 @@ scheme, network location, path, path segment parameters (separated
 from the path by a semicolon), query, and fragment.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'urlparse_urlparse.py', 
+.. cog.out(run_script(cog.inFile, 'urllib_parse_urlparse.py', 
 ..                    break_lines_at=68, line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python urlparse_urlparse.py
+	$ python urllib_parse_urlparse.py
 	
 	ParseResult(scheme='http', netloc='netloc', path='/path',
 	params='param', query='query=arg', fragment='frag')
@@ -45,7 +45,7 @@ indexes.  In addition to being easier to use for the programmer, the
 attribute API also offers access to several values not available in
 the :class:`tuple` API.
 
-.. literalinclude:: urlparse_urlparseattrs.py
+.. literalinclude:: urllib_parse_urlparseattrs.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -55,12 +55,12 @@ URL, and set to ``None`` when not. The *hostname* is the same value as
 integer when present and ``None`` when not.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'urlparse_urlparseattrs.py'))
+.. cog.out(run_script(cog.inFile, 'urllib_parse_urlparseattrs.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python urlparse_urlparseattrs.py
+	$ python urllib_parse_urlparseattrs.py
 	
 	scheme  : http
 	netloc  : user:pwd@NetLoc:80
@@ -80,7 +80,7 @@ The :func:`urlsplit` function is an alternative to
 split the parameters from the URL. This is useful for URLs following
 RFC 2396, which supports parameters for each segment of the path.
 
-.. literalinclude:: urlparse_urlsplit.py
+.. literalinclude:: urllib_parse_urlsplit.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -88,13 +88,13 @@ Since the parameters are not split out, the tuple API will show five
 elements instead of six, and there is no *params* attribute.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'urlparse_urlsplit.py', 
+.. cog.out(run_script(cog.inFile, 'urllib_parse_urlsplit.py', 
 ..                    break_lines_at=68, line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python urlparse_urlsplit.py
+	$ python urllib_parse_urlsplit.py
 	
 	SplitResult(scheme='http', netloc='user:pwd@NetLoc:80',
 	path='/p1;param/p2;param', query='query=arg', fragment='frag')
@@ -113,19 +113,19 @@ elements instead of six, and there is no *params* attribute.
 To simply strip the fragment identifier from a URL, such as when
 finding a base page name from a URL, use :func:`urldefrag`.
 
-.. literalinclude:: urlparse_urldefrag.py
+.. literalinclude:: urllib_parse_urldefrag.py
     :caption:
     :start-after: #end_pymotw_header
 
 The return value is a tuple containing the base URL and the fragment.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'urlparse_urldefrag.py'))
+.. cog.out(run_script(cog.inFile, 'urllib_parse_urldefrag.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python urlparse_urldefrag.py
+	$ python urllib_parse_urldefrag.py
 	
 	original: http://netloc/path;param?query=arg#frag
 	url     : http://netloc/path;param?query=arg
@@ -140,7 +140,7 @@ There are several ways to assemble the parts of a split URL back
 together into a single string. The parsed URL object has a
 :func:`geturl` method.
 
-.. literalinclude:: urlparse_geturl.py
+.. literalinclude:: urllib_parse_geturl.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -148,12 +148,12 @@ together into a single string. The parsed URL object has a
 :func:`urlparse` or :func:`urlsplit`.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'urlparse_geturl.py'))
+.. cog.out(run_script(cog.inFile, 'urllib_parse_geturl.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python urlparse_geturl.py
+	$ python urllib_parse_geturl.py
 	
 	ORIG  : http://netloc/path;param?query=arg#frag
 	PARSED: http://netloc/path;param?query=arg#frag
@@ -163,7 +163,7 @@ together into a single string. The parsed URL object has a
 A regular tuple containing strings can be combined into a URL with
 :func:`urlunparse`.
 
-.. literalinclude:: urlparse_urlunparse.py
+.. literalinclude:: urllib_parse_urlunparse.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -172,13 +172,13 @@ used as a tuple, this example explicitly creates a new tuple to show
 that :func:`urlunparse` works with normal tuples, too.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'urlparse_urlunparse.py', 
+.. cog.out(run_script(cog.inFile, 'urllib_parse_urlunparse.py', 
 ..                    break_lines_at=68, line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python urlparse_urlunparse.py
+	$ python urllib_parse_urlunparse.py
 	
 	ORIG  : http://netloc/path;param?query=arg#frag
 	PARSED: <class 'urlparse.ParseResult'> ParseResult(scheme='http',
@@ -193,7 +193,7 @@ that :func:`urlunparse` works with normal tuples, too.
 If the input URL included superfluous parts, those may be dropped from the
 reconstructed URL.
 
-.. literalinclude:: urlparse_urlunparseextra.py
+.. literalinclude:: urllib_parse_urlunparseextra.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -202,13 +202,13 @@ missing in the original URL. The new URL does not look the same as the
 original, but is equivalent according to the standard.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'urlparse_urlunparseextra.py', 
+.. cog.out(run_script(cog.inFile, 'urllib_parse_urlunparseextra.py', 
 ..                    break_lines_at=68, line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python urlparse_urlunparseextra.py
+	$ python urllib_parse_urlunparseextra.py
 	
 	ORIG  : http://netloc/path;?#
 	PARSED: <class 'urlparse.ParseResult'> ParseResult(scheme='http',
@@ -225,7 +225,7 @@ In addition to parsing URLs, :mod:`urlparse` includes
 :func:`urljoin` for constructing absolute URLs from relative
 fragments.
 
-.. literalinclude:: urlparse_urljoin.py
+.. literalinclude:: urllib_parse_urljoin.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -233,12 +233,12 @@ In the example, the relative portion of the path (``"../"``) is taken
 into account when the second URL is computed.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'urlparse_urljoin.py'))
+.. cog.out(run_script(cog.inFile, 'urllib_parse_urljoin.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python urlparse_urljoin.py
+	$ python urllib_parse_urljoin.py
 	
 	http://www.example.com/path/anotherfile.html
 	http://www.example.com/anotherfile.html
@@ -248,7 +248,7 @@ into account when the second URL is computed.
 Non-relative paths are handled in the same way as by
 :func:`os.path.join`.
 
-.. literalinclude:: urlparse_urljoin_with_path.py
+.. literalinclude:: urllib_parse_urljoin_with_path.py
    :caption:
    :start-after: #end_pymotw_header
 
@@ -257,12 +257,12 @@ resets the URL's path to the top level.  If it does not start with a
 slash, it is appended to the end of the path for the URL.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'urlparse_urljoin_with_path.py'))
+.. cog.out(run_script(cog.inFile, 'urllib_parse_urljoin_with_path.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python urlparse_urljoin_with_path.py
+	$ python urllib_parse_urljoin_with_path.py
 	
 	http://www.example.com/subpath/file.html
 	http://www.example.com/path/subpath/file.html
@@ -273,24 +273,16 @@ slash, it is appended to the end of the path for the URL.
 
 .. seealso::
 
-    `urlparse <http://docs.python.org/lib/module-urlparse.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`urllib.parse`
 
-    :mod:`urllib`
-        Retrieve the contents of a resource identified by a URL.
+   * :mod:`urllib.request` -- Retrieve the contents of a resource
+     identified by a URL.
 
-    :mod:`urllib2`
-        Alternative API for accessing remote URLs.
+   * :rfc:`1738` -- Uniform Resource Locator (URL) syntax
 
-    :rfc:`1738`
-        Uniform Resource Locator (URL) syntax
+   * :rfc:`1808` -- Relative URLs
 
-    :rfc:`1808`
-        Relative URLs
+   * :rfc:`2396` -- Uniform Resource Identifier (URI) generic syntax
 
-    :rfc:`2396`
-        Uniform Resource Identifier (URI) generic syntax
-
-    :rfc:`3986`
-        Uniform Resource Identifier (URI) syntax
+   * :rfc:`3986` -- Uniform Resource Identifier (URI) syntax
 
