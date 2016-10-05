@@ -280,8 +280,8 @@ Encoding Arguments
 Arguments can be passed to the server by encoding them and appending them to
 the URL.
 
-.. include:: urllib_parse_urlencode.py
-    :literal:
+.. literalinclude:: urllib_parse_urlencode.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The query, in the list of client values, contains the encoded
@@ -307,10 +307,10 @@ query arguments.
 
 To pass a sequence of values using separate occurrences of the
 variable in the query string, set *doseq* to True when calling
-:func:`urlencode()`.
+:func:`urlencode`.
 
-.. include:: urllib_parse_urlencode_doseq.py
-    :literal:
+.. literalinclude:: urllib_parse_urlencode_doseq.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The result is a query string with several values associated with the
@@ -329,15 +329,15 @@ the :mod:`cgi` module.
 
 Special characters within the query arguments that might cause parse
 problems with the URL on the server side are "quoted" when passed to
-:func:`urlencode()`. To quote them locally to make safe versions of
-the strings, use the :func:`quote()` or :func:`quote_plus()` functions
+:func:`urlencode`. To quote them locally to make safe versions of
+the strings, use the :func:`quote` or :func:`quote_plus` functions
 directly.
 
-.. include:: urllib_parse_quote.py
-    :literal:
+.. literalinclude:: urllib_parse_quote.py
+    :caption:
     :start-after: #end_pymotw_header
 
-The quoting implementation in :func:`quote_plus()` is more aggressive
+The quoting implementation in :func:`quote_plus` is more aggressive
 about the characters it replaces.
 
 .. {{{cog
@@ -355,11 +355,11 @@ about the characters it replaces.
 .. {{{end}}}
 
 
-To reverse the quote operations, use :func:`unquote()` or
-:func:`unquote_plus()`, as appropriate.
+To reverse the quote operations, use :func:`unquote` or
+:func:`unquote_plus`, as appropriate.
 
-.. include:: urllib_parse_unquote.py
-    :literal:
+.. literalinclude:: urllib_parse_unquote.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The encoded value is converted back to a normal string URL.
