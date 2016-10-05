@@ -7,14 +7,16 @@
 
 :Purpose: Split URL into components
 
-The :mod:`urllib.parse` module provides functions for breaking URLs
-down into their component parts, as defined by the relevant RFCs.
+The :mod:`urllib.parse` module provides functions for manipulating
+URLs and their component parts, to either break them down or build
+them up.
 
 Parsing
 =======
 
-The return value from the :func:`urlparse` function is an object
-that acts like a :class:`tuple` with six elements.
+The return value from the :func:`urlparse` function is a
+:class:`ParseResult` object that acts like a :class:`tuple` with six
+elements.
 
 .. literalinclude:: urllib_parse_urlparse.py
     :caption:
@@ -51,8 +53,8 @@ the :class:`tuple` API.
 
 The *username* and *password* are available when present in the input
 URL, and set to ``None`` when not. The *hostname* is the same value as
-*netloc*, in all lower case.  And the *port* is converted to an
-integer when present and ``None`` when not.
+*netloc*, in all lower case and with the port value stripped.  And the
+*port* is converted to an integer when present and ``None`` when not.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'urllib_parse_urlparseattrs.py'))
@@ -70,7 +72,7 @@ integer when present and ``None`` when not.
 	fragment: frag
 	username: user
 	password: pwd
-	hostname: netloc (netloc in lowercase)
+	hostname: netloc
 	port    : 80
 
 .. {{{end}}}
@@ -78,7 +80,7 @@ integer when present and ``None`` when not.
 The :func:`urlsplit` function is an alternative to
 :func:`urlparse`. It behaves a little differently, because it does not
 split the parameters from the URL. This is useful for URLs following
-RFC 2396, which supports parameters for each segment of the path.
+:rfc:`2396`, which supports parameters for each segment of the path.
 
 .. literalinclude:: urllib_parse_urlsplit.py
     :caption:
@@ -97,15 +99,15 @@ elements instead of six, and there is no *params* attribute.
 	$ python3 urllib_parse_urlsplit.py
 	
 	SplitResult(scheme='http', netloc='user:pwd@NetLoc:80',
-	path='/p1;param/p2;param', query='query=arg', fragment='frag')
+	path='/p1;para/p2;para', query='query=arg', fragment='frag')
 	scheme  : http
 	netloc  : user:pwd@NetLoc:80
-	path    : /p1;param/p2;param
+	path    : /p1;para/p2;para
 	query   : query=arg
 	fragment: frag
 	username: user
 	password: pwd
-	hostname: netloc (netloc in lowercase)
+	hostname: netloc
 	port    : 80
 
 .. {{{end}}}
