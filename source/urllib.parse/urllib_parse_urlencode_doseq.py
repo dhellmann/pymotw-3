@@ -7,10 +7,10 @@
 """
 #end_pymotw_header
 
-import urllib
+from urllib.parse import urlencode
 
 query_args = {
     'foo': ['foo1', 'foo2'],
 }
-print('Single  :', urllib.urlencode(query_args))
-print('Sequence:', urllib.urlencode(query_args, doseq=True))
+print('Single  :', urlencode(query_args))
+print('Sequence:', urlencode(query_args, doseq=True))
