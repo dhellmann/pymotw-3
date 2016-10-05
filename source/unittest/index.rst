@@ -439,7 +439,7 @@ the input type, making test failures easier to understand and correct.
 	
 	
 	----------------------------------------------------------------
-	Ran 7 tests in 0.009s
+	Ran 7 tests in 0.004s
 	
 	FAILED (failures=7)
 
@@ -570,11 +570,13 @@ and test methods is apparent.
 	
 	In setUpModule()
 	In setUpClass()
-	test1 (unittest_fixtures.FixturesTest) ... In setUp()
+	test1 (unittest_fixtures.FixturesTest) ... 
+	In setUp()
 	In test1()
 	In tearDown()
 	ok
-	test2 (unittest_fixtures.FixturesTest) ... In setUp()
+	test2 (unittest_fixtures.FixturesTest) ... 
+	In setUp()
 	In test2()
 	In tearDown()
 	ok
@@ -582,11 +584,48 @@ and test methods is apparent.
 	In tearDownModule()
 	
 	----------------------------------------------------------------
-	Ran 2 tests in 0.000s
+	Ran 2 tests in 0.001s
 	
 	OK
 
 .. {{{end}}}
+
+The ``tearDown`` methods may not all be invoked if there are errors in
+the process of cleaning up fixtures. To ensure that a fixture is
+always released correctly, use :func:`addCleanup`.
+
+.. literalinclude:: unittest_addcleanup.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+This example test creates a temporary directory and then uses
+:mod:`shutil` to clean it up when the test is done.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, '-u -m unittest -v unittest_addcleanup.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 -u -m unittest -v unittest_addcleanup.py
+	
+	test1 (unittest_addcleanup.FixturesTest) ... 
+	In test1()
+	In remove_tmpdir()
+	ok
+	test2 (unittest_addcleanup.FixturesTest) ... 
+	In test2()
+	In remove_tmpdir()
+	ok
+	
+	----------------------------------------------------------------
+	Ran 2 tests in 0.003s
+	
+	OK
+
+.. {{{end}}}
+
+
 
 Repeating Tests with Different Inputs
 =====================================
@@ -646,7 +685,7 @@ only be two test cases, even though there are three failures reported.
 	AssertionError: Regex didn't match: 'd' not found in 'abc'
 	
 	----------------------------------------------------------------
-	Ran 2 tests in 0.004s
+	Ran 2 tests in 0.001s
 	
 	FAILED (failures=3)
 
@@ -723,7 +762,7 @@ success".
 	failure
 	
 	----------------------------------------------------------------
-	Ran 2 tests in 0.000s
+	Ran 2 tests in 0.001s
 	
 	FAILED (expected failures=1, unexpected successes=1)
 

@@ -28,7 +28,8 @@ class FixturesTest(unittest.TestCase):
         del cls.good_range
 
     def setUp(self):
-        print('In setUp()')
+        super().setUp()
+        print('\nIn setUp()')
         # Pick a number sure to be in the range. The range is
         # defined as not including the "stop" value, so make
         # sure it is not included in the set of allowed values
@@ -41,6 +42,7 @@ class FixturesTest(unittest.TestCase):
     def tearDown(self):
         print('In tearDown()')
         del self.value
+        super().tearDown()
 
     def test1(self):
         print('In test1()')
