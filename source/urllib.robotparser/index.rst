@@ -8,7 +8,6 @@
     :synopsis: Internet spider access control
 
 :Purpose: Parse ``robots.txt`` file used to control Internet spiders
-:Python Version: 2.1.3 and later
 
 :mod:`robotparser` implements a parser for the ``robots.txt`` file
 format, including a function that checks if a given user agent
@@ -27,8 +26,8 @@ of URLs (or URL prefixes) the agent may not access.
 
 This is the ``robots.txt`` file for ``http://www.doughellmann.com/``:
 
-.. include:: robots.txt
-    :literal:
+.. literalinclude:: robots.txt
+    :caption:
 
 It prevents access to some of the parts of the site that are expensive
 to compute and would overload the server if a search engine tried to
@@ -42,8 +41,8 @@ Testing Access Permissions
 Using the data presented earlier, a simple crawler can test whether it
 is allowed to download a page using :func:`RobotFileParser.can_fetch`.
 
-.. include:: robotparser_simple.py
-    :literal:
+.. literalinclude:: robotparser_simple.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The URL argument to :func:`can_fetch` can be a path relative to the
@@ -76,8 +75,8 @@ the content it has downloaded already.  The age is not managed
 automatically, but there are convenience methods to make tracking it
 easier.
 
-.. include:: robotparser_longlived.py
-    :literal:
+.. literalinclude:: robotparser_longlived.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This extreme example downloads a new ``robots.txt`` file if the one it
