@@ -274,8 +274,8 @@ slash, it is appended to the end of the path for the URL.
 
 .. _urllib-urlencode:
 
-Encoding Arguments
-==================
+Encoding Query Arguments
+========================
 
 Before arguments can be added to a URL, they need to be encoded.
 
