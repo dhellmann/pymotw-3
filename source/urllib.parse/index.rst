@@ -272,6 +272,110 @@ slash, it is appended to the end of the path for the URL.
 
 .. {{{end}}}
 
+.. _urllib-urlencode:
+
+Encoding Arguments
+==================
+
+Arguments can be passed to the server by encoding them and appending them to
+the URL.
+
+.. include:: urllib_parse_urlencode.py
+    :literal:
+    :start-after: #end_pymotw_header
+
+The query, in the list of client values, contains the encoded
+query arguments.
+
+::
+
+    $ python urllib_parse_urlencode.py
+
+    Encoded: q=query+string&foo=bar
+    CLIENT VALUES:
+    client_address=('127.0.0.1', 54415) (localhost)
+    command=GET
+    path=/?q=query+string&foo=bar
+    real path=/
+    query=q=query+string&foo=bar
+    request_version=HTTP/1.0
+
+    SERVER VALUES:
+    server_version=BaseHTTP/0.3
+    sys_version=Python/2.5.1
+    protocol_version=HTTP/1.0
+
+To pass a sequence of values using separate occurrences of the
+variable in the query string, set *doseq* to True when calling
+:func:`urlencode()`.
+
+.. include:: urllib_parse_urlencode_doseq.py
+    :literal:
+    :start-after: #end_pymotw_header
+
+The result is a query string with several values associated with the
+same name.
+
+::
+
+    $ python urllib_parse_urlencode_doseq.py
+
+    Single  : foo=%5B%27foo1%27%2C+%27foo2%27%5D
+    Sequence: foo=foo1&foo=foo2
+
+
+To decode the query string, see the :class:`FieldStorage` class from
+the :mod:`cgi` module.
+
+Special characters within the query arguments that might cause parse
+problems with the URL on the server side are "quoted" when passed to
+:func:`urlencode()`. To quote them locally to make safe versions of
+the strings, use the :func:`quote()` or :func:`quote_plus()` functions
+directly.
+
+.. include:: urllib_parse_quote.py
+    :literal:
+    :start-after: #end_pymotw_header
+
+The quoting implementation in :func:`quote_plus()` is more aggressive
+about the characters it replaces.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'urllib_parse_quote.py'))
+.. }}}
+
+::
+
+	$ python urllib_parse_quote.py
+	
+	urlencode() : url=http%3A%2F%2Flocalhost%3A8080%2F%7Edhellmann%2F
+	quote()     : http%3A//localhost%3A8080/%7Edhellmann/
+	quote_plus(): http%3A%2F%2Flocalhost%3A8080%2F%7Edhellmann%2F
+
+.. {{{end}}}
+
+
+To reverse the quote operations, use :func:`unquote()` or
+:func:`unquote_plus()`, as appropriate.
+
+.. include:: urllib_parse_unquote.py
+    :literal:
+    :start-after: #end_pymotw_header
+
+The encoded value is converted back to a normal string URL.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'urllib_parse_unquote.py'))
+.. }}}
+
+::
+
+	$ python urllib_parse_unquote.py
+	
+	http://localhost:8080/~dhellmann/
+	http://localhost:8080/~dhellmann/
+
+.. {{{end}}}
 
 
 .. seealso::
