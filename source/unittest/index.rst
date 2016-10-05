@@ -261,8 +261,8 @@ Almost Equal?
 =============
 
 In addition to strict equality, it is possible to test for near
-equality of floating point numbers using :func:`failIfAlmostEqual`
-and :func:`failUnlessAlmostEqual`.
+equality of floating point numbers using :func:`assertAlmostEqual`
+and :func:`assertNotAlmostEqual`.
 
 .. literalinclude:: unittest_almostequal.py
     :caption:
