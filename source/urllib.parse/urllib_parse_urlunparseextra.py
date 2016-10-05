@@ -3,7 +3,7 @@
 """
 #end_pymotw_header
 
-from urlparse import urlparse, urlunparse
+from urllib.parse import urlparse, urlunparse
 
 original = 'http://netloc/path;?#'
 print('ORIG  :', original)

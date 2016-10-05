@@ -4,7 +4,7 @@
 # flake8: noqa
 #end_pymotw_header
 
-from urlparse import urlsplit
+from urllib.parse import urlsplit
 
 url = 'http://user:pwd@NetLoc:80/p1;param/p2;param?query=arg#frag'
 parsed = urlsplit(url)

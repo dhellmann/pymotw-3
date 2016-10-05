@@ -26,12 +26,12 @@ from the path by a semicolon), query, and fragment.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'urllib_parse_urlparse.py', 
-..                    break_lines_at=68, line_break_mode='wrap'))
+..                    line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
 
-	$ python urllib_parse_urlparse.py
+	$ python3 urllib_parse_urlparse.py
 	
 	ParseResult(scheme='http', netloc='netloc', path='/path',
 	params='param', query='query=arg', fragment='frag')
@@ -60,7 +60,7 @@ integer when present and ``None`` when not.
 
 .. code-block:: none
 
-	$ python urllib_parse_urlparseattrs.py
+	$ python3 urllib_parse_urlparseattrs.py
 	
 	scheme  : http
 	netloc  : user:pwd@NetLoc:80
@@ -89,12 +89,12 @@ elements instead of six, and there is no *params* attribute.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'urllib_parse_urlsplit.py', 
-..                    break_lines_at=68, line_break_mode='wrap'))
+..                    line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
 
-	$ python urllib_parse_urlsplit.py
+	$ python3 urllib_parse_urlsplit.py
 	
 	SplitResult(scheme='http', netloc='user:pwd@NetLoc:80',
 	path='/p1;param/p2;param', query='query=arg', fragment='frag')
@@ -125,7 +125,7 @@ The return value is a tuple containing the base URL and the fragment.
 
 .. code-block:: none
 
-	$ python urllib_parse_urldefrag.py
+	$ python3 urllib_parse_urldefrag.py
 	
 	original: http://netloc/path;param?query=arg#frag
 	url     : http://netloc/path;param?query=arg
@@ -153,7 +153,7 @@ together into a single string. The parsed URL object has a
 
 .. code-block:: none
 
-	$ python urllib_parse_geturl.py
+	$ python3 urllib_parse_geturl.py
 	
 	ORIG  : http://netloc/path;param?query=arg#frag
 	PARSED: http://netloc/path;param?query=arg#frag
@@ -173,18 +173,18 @@ that :func:`urlunparse` works with normal tuples, too.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'urllib_parse_urlunparse.py', 
-..                    break_lines_at=68, line_break_mode='wrap'))
+..                    line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
 
-	$ python urllib_parse_urlunparse.py
+	$ python3 urllib_parse_urlunparse.py
 	
 	ORIG  : http://netloc/path;param?query=arg#frag
-	PARSED: <class 'urlparse.ParseResult'> ParseResult(scheme='http',
-	netloc='netloc', path='/path', params='param', query='query=arg',
-	fragment='frag')
-	TUPLE : <type 'tuple'> ('http', 'netloc', '/path', 'param',
+	PARSED: <class 'urllib.parse.ParseResult'>
+	ParseResult(scheme='http', netloc='netloc', path='/path',
+	params='param', query='query=arg', fragment='frag')
+	TUPLE : <class 'tuple'> ('http', 'netloc', '/path', 'param',
 	'query=arg', 'frag')
 	NEW   : http://netloc/path;param?query=arg#frag
 
@@ -203,17 +203,18 @@ original, but is equivalent according to the standard.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'urllib_parse_urlunparseextra.py', 
-..                    break_lines_at=68, line_break_mode='wrap'))
+..                    line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
 
-	$ python urllib_parse_urlunparseextra.py
+	$ python3 urllib_parse_urlunparseextra.py
 	
 	ORIG  : http://netloc/path;?#
-	PARSED: <class 'urlparse.ParseResult'> ParseResult(scheme='http',
-	netloc='netloc', path='/path', params='', query='', fragment='')
-	TUPLE : <type 'tuple'> ('http', 'netloc', '/path', '', '', '')
+	PARSED: <class 'urllib.parse.ParseResult'>
+	ParseResult(scheme='http', netloc='netloc', path='/path',
+	params='', query='', fragment='')
+	TUPLE : <class 'tuple'> ('http', 'netloc', '/path', '', '', '')
 	NEW   : http://netloc/path
 
 .. {{{end}}}
@@ -238,7 +239,7 @@ into account when the second URL is computed.
 
 .. code-block:: none
 
-	$ python urllib_parse_urljoin.py
+	$ python3 urllib_parse_urljoin.py
 	
 	http://www.example.com/path/anotherfile.html
 	http://www.example.com/anotherfile.html
@@ -262,7 +263,7 @@ slash, it is appended to the end of the path for the URL.
 
 .. code-block:: none
 
-	$ python urllib_parse_urljoin_with_path.py
+	$ python3 urllib_parse_urljoin_with_path.py
 	
 	http://www.example.com/subpath/file.html
 	http://www.example.com/path/subpath/file.html

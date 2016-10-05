@@ -3,7 +3,7 @@
 """
 #end_pymotw_header
 
-from urlparse import urljoin
+from urllib.parse import urljoin
 
 print(urljoin('http://www.example.com/path/',
               '/subpath/file.html'))

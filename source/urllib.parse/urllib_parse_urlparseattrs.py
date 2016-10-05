@@ -3,7 +3,7 @@
 """
 #end_pymotw_header
 
-from urlparse import urlparse
+from urllib.parse import urlparse
 
 url = 'http://user:pwd@NetLoc:80/path;param?query=arg#frag'
 parsed = urlparse(url)
