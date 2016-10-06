@@ -5,8 +5,6 @@
 #
 """
 """
-
-__version__ = "$Id$"
 #end_pymotw_header
 
-print 'Importing submodule'
+print('Importing submodule')

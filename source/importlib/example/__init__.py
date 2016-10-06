@@ -5,8 +5,6 @@
 #
 """
 """
-
-__version__ = "$Id$"
 #end_pymotw_header
 
-print 'Importing example package'
+print('Importing example package')
