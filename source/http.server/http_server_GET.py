@@ -13,24 +13,25 @@ class GetHandler(BaseHTTPRequestHandler):
         parsed_path = parse.urlparse(self.path)
         message_parts = [
             'CLIENT VALUES:',
-            'client_address=%s (%s)' % (self.client_address,
-                                        self.address_string()),
-            'command=%s' % self.command,
-            'path=%s' % self.path,
-            'real path=%s' % parsed_path.path,
-            'query=%s' % parsed_path.query,
-            'request_version=%s' % self.request_version,
+            'client_address={} ({})'.format(
+                self.client_address,
+                self.address_string()),
+            'command={}'.format(self.command),
+            'path={}'.format(self.path),
+            'real path={}'.format(parsed_path.path),
+            'query={}'.format(parsed_path.query),
+            'request_version={}'.format(self.request_version),
             '',
             'SERVER VALUES:',
-            'server_version=%s' % self.server_version,
-            'sys_version=%s' % self.sys_version,
-            'protocol_version=%s' % self.protocol_version,
+            'server_version={}'.format(self.server_version),
+            'sys_version={}'.format(self.sys_version),
+            'protocol_version={}'.format(self.protocol_version),
             '',
             'HEADERS RECEIVED:',
         ]
         for name, value in sorted(self.headers.items()):
             message_parts.append(
-                '%s=%s' % (name, value.rstrip())
+                '{}={}'.format(name, value.rstrip())
             )
         message_parts.append('')
         message = '\r\n'.join(message_parts)

@@ -33,10 +33,10 @@ class PostHandler(BaseHTTPRequestHandler):
             write_through=True,
         )
 
-        out.write('Client: %s\n' % str(self.client_address))
-        out.write('User-agent: %s\n' %
-                  str(self.headers['user-agent']))
-        out.write('Path: %s\n' % self.path)
+        out.write('Client: {}\n'.format(self.client_address))
+        out.write('User-agent: {}\n'.format(
+            self.headers['user-agent']))
+        out.write('Path: {}\n'.format(self.path))
         out.write('Form data:\n')
 
         # Echo back information about what was posted in the form
@@ -48,13 +48,13 @@ class PostHandler(BaseHTTPRequestHandler):
                 file_len = len(file_data)
                 del file_data
                 out.write(
-                    '\tUploaded %s as "%s" (%d bytes)\n' %
-                    (field, field_item.filename, file_len)
+                    '\tUploaded {} as {!r} ({} bytes)\n'.format(
+                        field, field_item.filename, file_len)
                 )
             else:
                 # Regular form value
-                out.write('\t%s=%s\n' %
-                                 (field, form[field].value))
+                out.write('\t{}={}\n'.format(
+                    field, form[field].value))
 
         # Separate our encoding wrapper from the underlying buffer so
         # that deleting the wrapper doesn't close the socket.

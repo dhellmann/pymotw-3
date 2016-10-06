@@ -141,7 +141,7 @@ form.
     Path: /
     Form data:
         name=dhellmann
-        Uploaded datafile as "http_server_GET.py" (1563 bytes)
+        Uploaded datafile as 'http_server_GET.py' (1612 bytes)
         foo=bar
     * Connection #0 to host 127.0.0.1 left intact
 
