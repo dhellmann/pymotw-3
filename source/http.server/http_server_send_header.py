@@ -9,7 +9,6 @@
 
 from http.server import BaseHTTPRequestHandler
 import time
-from urllib import urlparse
 
 
 class GetHandler(BaseHTTPRequestHandler):
