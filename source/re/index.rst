@@ -805,7 +805,7 @@ Searching for pattern matches is the basis of the powerful
 capabilities provided by regular expressions.  Adding *groups* to a
 pattern isolates parts of the matching text, expanding those
 capabilities to create a parser.  Groups are defined by enclosing
-patterns in parentheses (``(`` and ``)``).
+patterns in parentheses.
 
 .. literalinclude:: re_groups.py
    :caption:

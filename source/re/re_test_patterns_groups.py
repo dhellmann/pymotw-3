@@ -10,7 +10,7 @@
 import re
 
 
-def test_patterns(text, patterns=[]):
+def test_patterns(text, patterns):
     """Given source text and a list of patterns, look for
     matches for each pattern within the text and print
     them to stdout.
