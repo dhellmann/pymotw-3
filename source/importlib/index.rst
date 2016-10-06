@@ -8,12 +8,13 @@
 :Purpose: The importlib module exposes the implementation of Python's
           import statement.
 
-The :mod:`importlib` module includes functions that expose part of the
-underlying implementation of Python's import mechanism for loading
-code in packages and modules. It is one access point to importing
-modules dynamically, and useful in some cases where the name of the
-module that needs to be imported is unknown when the code is written
-(for example, for plugins or extensions to an application).
+The :mod:`importlib` module includes functions that the underlying
+implementation of Python's import mechanism for loading code in
+packages and modules, all implemented in Python. It is one access
+point to importing modules dynamically, and useful in some cases where
+the name of the module that needs to be imported is unknown when the
+code is written (for example, for plugins or extensions to an
+application).
 
 Example Package
 ===============
@@ -214,18 +215,16 @@ be constrained by the package's path.
 
 .. seealso::
 
-    `imp <http://docs.python.org/library/imp.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`importlib`
         
-    :ref:`sys-imports`
-        Import hooks, the module search path, and other related
-        machinery in the :mod:`sys` module.
+   * :ref:`sys-imports` -- Import hooks, the module search path, and
+     other related machinery in the :mod:`sys` module.
 
-    :mod:`inspect`
-        Load information from a module programmatically.
+   * :mod:`inspect` -- Load information from a module
+     programmatically.
 
-    :pep:`302`
-        New import hooks.
+   * :pep:`302` -- New import hooks.
 
-    :pep:`369`
-        Post import hooks.
+   * :pep:`369` -- Post import hooks.
+
+   * :pep:`488` -- Elimination of PYO files.
