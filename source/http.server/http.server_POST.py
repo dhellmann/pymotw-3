@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Simple POST handler with BaseHTTPServer
 """
 #end_pymotw_header

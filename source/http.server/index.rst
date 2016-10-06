@@ -6,7 +6,6 @@
     :synopsis: Base classes for implementing web servers.
 
 :Purpose: BaseHTTPServer includes classes that can form the basis of a web server.
-:Python Version: 1.4 and later
 
 
 :mod:`BaseHTTPServer` uses classes from :mod:`SocketServer` to create
@@ -29,8 +28,8 @@ This example request handler illustrates how to return a response to the
 client, and some of the local attributes that can be useful in building the
 response.
 
-.. include:: BaseHTTPServer_GET.py
-    :literal:
+.. literalinclude:: BaseHTTPServer_GET.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The message text is assembled and then written to :attr:`wfile`, the
@@ -85,8 +84,8 @@ does not parse the form data automatically. The :mod:`cgi` module
 provides the :class:`FieldStorage` class which knows how to parse the
 form, if it is given the correct inputs.
 
-.. include:: BaseHTTPServer_POST.py
-    :literal:
+.. literalinclude:: BaseHTTPServer_POST.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Run the server in one window:
@@ -126,8 +125,8 @@ Threading and Forking
 processes to handle requests. To add threading or forking, create a
 new class using the appropriate mix-in from :mod:`SocketServer`.
 
-.. include:: BaseHTTPServer_threads.py
-    :literal:
+.. literalinclude:: BaseHTTPServer_threads.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Run the server in the same way as the other examples.
@@ -161,13 +160,13 @@ achieve similar results, using separate processes instead of threads.
 Handling Errors
 ===============
 
-Handle errors by calling :meth:`send_error()`, passing the
+Handle errors by calling :meth:`send_error`, passing the
 appropriate error code and an optional error message.  The entire
 response (with headers, status code, and body) is generated
 automatically.
 
-.. include:: BaseHTTPServer_errors.py
-    :literal:
+.. literalinclude:: BaseHTTPServer_errors.py
+    :caption:
     :start-after: #end_pymotw_header
 
 In this case, a 404 error is always returned.
@@ -207,8 +206,8 @@ Setting Headers
 The :mod:`send_header` method adds header data to the HTTP response.
 It takes two arguments: the name of the header and the value.
 
-.. include:: BaseHTTPServer_send_header.py
-   :literal:
+.. literalinclude:: BaseHTTPServer_send_header.py
+   :caption:
    :start-after: #end_pymotw_header
 
 This example sets the ``Last-Modified`` header to the current
