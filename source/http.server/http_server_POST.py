@@ -3,24 +3,29 @@
 """
 #end_pymotw_header
 
-from BaseHTTPServer import BaseHTTPRequestHandler
 import cgi
+from http.server import BaseHTTPRequestHandler
+
 
 class PostHandler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         # Parse the form data posted
         form = cgi.FieldStorage(
-            fp=self.rfile, 
+            fp=self.rfile,
             headers=self.headers,
-            environ={'REQUEST_METHOD':'POST',
-                     'CONTENT_TYPE':self.headers['Content-Type'],
-                     })
+            environ={
+                'REQUEST_METHOD': 'POST',
+                'CONTENT_TYPE': self.headers['Content-Type'],
+            }
+        )
 
         # Begin the response
         self.send_response(200)
         self.end_headers()
-        self.wfile.write('Client: %s\n' % str(self.client_address))
+        self.wfile.write(
+            'Client: %s\n' % str(self.client_address)
+        )
         self.wfile.write('User-agent: %s\n' %
                          str(self.headers['user-agent']))
         self.wfile.write('Path: %s\n' % self.path)
@@ -35,8 +40,9 @@ class PostHandler(BaseHTTPRequestHandler):
                 file_len = len(file_data)
                 del file_data
                 self.wfile.write(
-                    '\tUploaded %s as "%s" (%d bytes)\n' % \
-                        (field, field_item.filename, file_len))
+                    '\tUploaded %s as "%s" (%d bytes)\n' %
+                    (field, field_item.filename, file_len)
+                )
             else:
                 # Regular form value
                 self.wfile.write('\t%s=%s\n' %
@@ -44,8 +50,7 @@ class PostHandler(BaseHTTPRequestHandler):
         return
 
 if __name__ == '__main__':
-    from BaseHTTPServer import HTTPServer
+    from http.server import HTTPServer
     server = HTTPServer(('localhost', 8080), PostHandler)
     print('Starting server, use <Ctrl-C> to stop')
     server.serve_forever()
-

@@ -7,9 +7,10 @@
 
 #end_pymotw_header
 
-from BaseHTTPServer import BaseHTTPRequestHandler
-import urlparse
+from http.server import BaseHTTPRequestHandler
 import time
+from urllib import urlparse
+
 
 class GetHandler(BaseHTTPRequestHandler):
 
@@ -22,8 +23,7 @@ class GetHandler(BaseHTTPRequestHandler):
         return
 
 if __name__ == '__main__':
-    from BaseHTTPServer import HTTPServer
+    from http.server import HTTPServer
     server = HTTPServer(('localhost', 8080), GetHandler)
     print('Starting server, use <Ctrl-C> to stop')
     server.serve_forever()
-
