@@ -45,11 +45,11 @@ extensions ``.dll`` or ``.pyd``, instead of ``.so``.  The extensions
 for C modules may also change when using a debug build of the
 interpreter instead of a normal release build, since they can be
 compiled with debug information included as well.  If a C extension
-library or other module is not loading as expected, use
-:func:`get_suffixes` to print a list of the supported types for the
-current platform, and the parameters for loading them.
+library or other module is not loading as expected, use the constants
+defined in :mod:`importlib.machinery` to find the supported types for
+the current platform, and the parameters for loading them.
 
-.. literalinclude:: imp_get_suffixes.py
+.. literalinclude:: importlib_suffixes.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -57,10 +57,10 @@ The return value is a sequence of tuples containing the file
 extension, mode to use for opening the file containing the module, and
 a type code from a constant defined in the module. This table is
 incomplete, because some of the importable module or package types do
-not correspond to single files.  
+not correspond to single files.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'imp_get_suffixes.py'))
+.. cog.out(run_script(cog.inFile, 'importlib_suffixes.py'))
 .. }}}
 
 ::
