@@ -4,13 +4,13 @@
 #end_pymotw_header
 
 from http.server import BaseHTTPRequestHandler
-from urllib import urlparse
+from urllib import parse
 
 
 class GetHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
-        parsed_path = urlparse.urlparse(self.path)
+        parsed_path = parse.urlparse(self.path)
         message_parts = [
             'CLIENT VALUES:',
             'client_address=%s (%s)' % (self.client_address,
@@ -34,10 +34,11 @@ class GetHandler(BaseHTTPRequestHandler):
             )
         message_parts.append('')
         message = '\r\n'.join(message_parts)
+        self.send_header('Content-Type', 'text/plain; charset=utf-8')
         self.send_response(200)
         self.end_headers()
-        self.wfile.write(message)
-        return
+        self.wfile.write(message.encode('utf-8'))
+
 
 if __name__ == '__main__':
     from http.server import HTTPServer

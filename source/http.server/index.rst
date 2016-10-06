@@ -54,26 +54,38 @@ In a separate terminal, use :command:`curl` to access it:
 
 .. code-block:: none
 
-    $ curl -i http://localhost:8080/?foo=bar
-    
+    $ curl -v -i http://localhost:8080/?foo=bar
+
+    *   Trying 127.0.0.1...
+    * Connected to 127.0.0.1 (127.0.0.1) port 8080 (#0)
+    > GET /?foo=bar HTTP/1.1
+    > Host: 127.0.0.1:8080
+    > User-Agent: curl/7.43.0
+    > Accept: */*
+    >
+    Content-Type: text/plain; charset=utf-8
     HTTP/1.0 200 OK
-
-    Server: BaseHTTP/0.3 Python/2.5.1
-    Date: Sun, 09 Dec 2007 16:00:34 GMT
-
+    Server: BaseHTTP/0.6 Python/3.5.2
+    Date: Thu, 06 Oct 2016 20:44:11 GMT
+    
     CLIENT VALUES:
-    client_address=('127.0.0.1', 51275) (localhost)
+    client_address=('127.0.0.1', 52934) (127.0.0.1)
     command=GET
     path=/?foo=bar
     real path=/
     query=foo=bar
     request_version=HTTP/1.1
-
+    
     SERVER VALUES:
-    server_version=BaseHTTP/0.3
-    sys_version=Python/2.5.1
+    server_version=BaseHTTP/0.6
+    sys_version=Python/3.5.2
     protocol_version=HTTP/1.0
-
+    
+    HEADERS RECEIVED:
+    Accept=*/*
+    Host=127.0.0.1:8080
+    User-Agent=curl/7.43.0
+    * Connection #0 to host 127.0.0.1 left intact
 
 
 HTTP POST
