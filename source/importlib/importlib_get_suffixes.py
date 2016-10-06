@@ -19,10 +19,10 @@ module_types = { imp.PY_SOURCE:   'source',
 
 def main():
     fmt = '%10s %10s %10s'
-    print fmt % ('Extension', 'Mode', 'Type')
-    print '-' * 32
+    print(fmt % ('Extension', 'Mode', 'Type'))
+    print('-' * 32)
     for extension, mode, module_type in imp.get_suffixes():
-        print fmt % (extension, mode, module_types[module_type])
+        print(fmt % (extension, mode, module_types[module_type]))
 
 if __name__ == '__main__':
     main()
