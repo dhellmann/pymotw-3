@@ -272,6 +272,34 @@ examples.
     Starting server, use <Ctrl-C> to stop
     127.0.0.1 - - [06/Oct/2016 17:00:54] "GET / HTTP/1.1" 200 -
 
+Command Line Use
+================
+
+:mod:`http.server` includes a built-in server for serving files from
+the local file system. Start it from the command line using the ``-m``
+option for the Python interpreter.
+
+.. code-block:: none
+
+   $ python3 -m http.server 8080
+
+   Serving HTTP on 0.0.0.0 port 8080 ...
+   127.0.0.1 - - [06/Oct/2016 17:12:48] "HEAD /index.rst HTTP/1.1" 200 -
+
+The root directory of the server is the working directory where the
+server is started.
+
+.. code-block:: none
+
+   $ curl -I http://127.0.0.1:8080/index.rst
+
+   HTTP/1.0 200 OK
+   Server: SimpleHTTP/0.6 Python/3.5.2
+   Date: Thu, 06 Oct 2016 21:12:48 GMT
+   Content-type: application/octet-stream
+   Content-Length: 8285
+   Last-Modified: Thu, 06 Oct 2016 21:12:10 GMT
+
 
 .. seealso::
 
