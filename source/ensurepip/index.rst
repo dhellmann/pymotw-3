@@ -44,8 +44,11 @@ This example uses a virtual environment configured without
 .. {{{end}}}
 
 Run :mod:`ensurepip` from the command line using the ``-m`` option to
-the Python interpreter.  To ensure a recent version of :command:`pip`
-is installed, use the ``--upgrade`` option.
+the Python interpreter. By default a copy of pip that is delivered
+with the standard library is installed. This version can then be used
+to install an updated version of pip.  To ensure a recent version of
+``pip`` is installed immediately, use the ``--upgrade`` option with
+:mod:`ensurepip`.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '/tmp/demoenv/bin/python -m ensurepip --upgrade', interpreter=''))
