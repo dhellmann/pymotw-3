@@ -50,11 +50,11 @@ Then start the server:
 
     Starting server, use <Ctrl-C> to stop
 
-In a separate terminal, use :command:`curl` to access it:
+In a separate terminal, use ``curl`` to access it:
 
 .. code-block:: none
 
-    $ curl -v -i http://localhost:8080/?foo=bar
+    $ curl -v -i http://127.0.0.1:8080/?foo=bar
 
     *   Trying 127.0.0.1...
     * Connected to 127.0.0.1 (127.0.0.1) port 8080 (#0)
@@ -63,8 +63,8 @@ In a separate terminal, use :command:`curl` to access it:
     > User-Agent: curl/7.43.0
     > Accept: */*
     >
-    Content-Type: text/plain; charset=utf-8
     HTTP/1.0 200 OK
+    Content-Type: text/plain; charset=utf-8
     Server: BaseHTTP/0.6 Python/3.5.2
     Date: Thu, 06 Oct 2016 20:44:11 GMT
     
@@ -116,26 +116,42 @@ form.
 
 .. code-block:: none
     
-    $ curl http://localhost:8080/ -F name=dhellmann -F foo=bar \
+    $ curl -v http://127.0.0.1:8080/ -F name=dhellmann -F foo=bar \
     -F datafile=@http_server_GET.py
     
-    Client: ('127.0.0.1', 65029)
-    User-agent: curl/7.19.7 (universal-apple-darwin10.0) libcurl/7.19.7 
-    OpenSSL/0.9.8l zlib/1.2.3
+    *   Trying 127.0.0.1...
+    * Connected to 127.0.0.1 (127.0.0.1) port 8080 (#0)
+    > POST / HTTP/1.1
+    > Host: 127.0.0.1:8080
+    > User-Agent: curl/7.43.0
+    > Accept: */*
+    > Content-Length: 1974
+    > Expect: 100-continue
+    > Content-Type: multipart/form-data; 
+    boundary=------------------------a2b3c7485cf8def2
+    >
+    * Done waiting for 100-continue
+    HTTP/1.0 200 OK
+    Content-Type: text/plain; charset=utf-8
+    Server: BaseHTTP/0.6 Python/3.5.2
+    Date: Thu, 06 Oct 2016 20:53:48 GMT
+    
+    Client: ('127.0.0.1', 53121)
+    User-agent: curl/7.43.0
     Path: /
     Form data:
-        Uploaded datafile as "http_server_GET.py" (2580 bytes)
-        foo=bar
         name=dhellmann
-
+        Uploaded datafile as "http_server_GET.py" (1563 bytes)
+        foo=bar
+    * Connection #0 to host 127.0.0.1 left intact
 
 Threading and Forking
 =====================
 
 :class:`HTTPServer` is a simple subclass of
-:class:`SocketServer.TCPServer`, and does not use multiple threads or
+:class:`socketserver.TCPServer`, and does not use multiple threads or
 processes to handle requests. To add threading or forking, create a
-new class using the appropriate mix-in from :mod:`SocketServer`.
+new class using the appropriate mix-in from :mod:`socketserver`.
 
 .. literalinclude:: http_server_threads.py
     :caption:
@@ -154,15 +170,15 @@ process to handle it:
 
 .. code-block:: none
 
-    $ curl http://localhost:8080/
+    $ curl http://127.0.0.1:8080/
 
     Thread-1
 
-    $ curl http://localhost:8080/
+    $ curl http://127.0.0.1:8080/
 
     Thread-2
 
-    $ curl http://localhost:8080/
+    $ curl http://127.0.0.1:8080/
 
     Thread-3
 
@@ -194,23 +210,32 @@ well as the header to indicate an error code.
 
 .. code-block:: none
 
-    $ curl -i http://localhost:8080/
+    $ curl -i http://127.0.0.1:8080/
 
     HTTP/1.0 404 Not Found
-    Server: BaseHTTP/0.3 Python/2.5.1
-    Date: Sun, 09 Dec 2007 15:49:44 GMT
-    Content-Type: text/html
+    Server: BaseHTTP/0.6 Python/3.5.2
+    Date: Thu, 06 Oct 2016 20:58:08 GMT
     Connection: close
+    Content-Type: text/html;charset=utf-8
+    Content-Length: 447
+    
+    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+            "http://www.w3.org/TR/html4/strict.dtd">
+    <html>
+        <head>
+            <meta http-equiv="Content-Type"
+            content="text/html;charset=utf-8">
+            <title>Error response</title>
+        </head>
+        <body>
+            <h1>Error response</h1>
+            <p>Error code: 404</p>
+            <p>Message: Not Found.</p>
+            <p>Error code explanation: 404 - Nothing matches the 
+            given URI.</p>
+        </body>
+    </html>
 
-    <head>
-    <title>Error response</title>
-    </head>
-    <body>
-    <h1>Error response</h1>
-    <p>Error code 404.
-    <p>Message: Not Found.
-    <p>Error code explanation: 404 = Nothing matches the given URI.
-    </body>
 
 Setting Headers
 ===============
@@ -227,12 +252,13 @@ timestamp, formatted according to RFC 2822.
 
 .. code-block:: none
 
-    $ curl -i http://localhost:8080/
+    $ curl -i http://127.0.0.1:8080/
 
     HTTP/1.0 200 OK
-    Server: BaseHTTP/0.3 Python/2.7
-    Date: Sun, 10 Oct 2010 13:58:32 GMT
-    Last-Modified: Sun, 10 Oct 2010 13:58:32 -0000
+    Server: BaseHTTP/0.6 Python/3.5.2
+    Date: Thu, 06 Oct 2016 21:00:54 GMT
+    Content-Type: text/plain; charset=utf-8
+    Last-Modified: Thu, 06 Oct 2016 21:00:54 GMT
     
     Response body
 
@@ -244,6 +270,7 @@ examples.
     $ python3 http_server_send_header.py 
     
     Starting server, use <Ctrl-C> to stop
+    127.0.0.1 - - [06/Oct/2016 17:00:54] "GET / HTTP/1.1" 200 -
 
 
 .. seealso::

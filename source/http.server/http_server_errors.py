@@ -10,7 +10,7 @@ class ErrorHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         self.send_error(404)
-        return
+
 
 if __name__ == '__main__':
     from http.server import HTTPServer

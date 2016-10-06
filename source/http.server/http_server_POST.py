@@ -5,6 +5,7 @@
 
 import cgi
 from http.server import BaseHTTPRequestHandler
+import io
 
 
 class PostHandler(BaseHTTPRequestHandler):
@@ -22,14 +23,21 @@ class PostHandler(BaseHTTPRequestHandler):
 
         # Begin the response
         self.send_response(200)
+        self.send_header('Content-Type', 'text/plain; charset=utf-8')
         self.end_headers()
-        self.wfile.write(
-            'Client: %s\n' % str(self.client_address)
+
+        out = io.TextIOWrapper(
+            self.wfile,
+            encoding='utf-8',
+            line_buffering=False,
+            write_through=True,
         )
-        self.wfile.write('User-agent: %s\n' %
-                         str(self.headers['user-agent']))
-        self.wfile.write('Path: %s\n' % self.path)
-        self.wfile.write('Form data:\n')
+
+        out.write('Client: %s\n' % str(self.client_address))
+        out.write('User-agent: %s\n' %
+                  str(self.headers['user-agent']))
+        out.write('Path: %s\n' % self.path)
+        out.write('Form data:\n')
 
         # Echo back information about what was posted in the form
         for field in form.keys():
@@ -39,15 +47,19 @@ class PostHandler(BaseHTTPRequestHandler):
                 file_data = field_item.file.read()
                 file_len = len(file_data)
                 del file_data
-                self.wfile.write(
+                out.write(
                     '\tUploaded %s as "%s" (%d bytes)\n' %
                     (field, field_item.filename, file_len)
                 )
             else:
                 # Regular form value
-                self.wfile.write('\t%s=%s\n' %
+                out.write('\t%s=%s\n' %
                                  (field, form[field].value))
-        return
+
+        # Separate our encoding wrapper from the underlying buffer so
+        # that deleting the wrapper doesn't close the socket.
+        out.detach()
+
 
 if __name__ == '__main__':
     from http.server import HTTPServer

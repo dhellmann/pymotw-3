@@ -12,11 +12,11 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         self.send_response(200)
+        self.send_header('Content-Type', 'text/plain; charset=utf-8')
         self.end_headers()
         message = threading.currentThread().getName()
-        self.wfile.write(message)
-        self.wfile.write('\n')
-        return
+        self.wfile.write(message.encode('utf-8'))
+        self.wfile.write(b'\n')
 
 
 class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
