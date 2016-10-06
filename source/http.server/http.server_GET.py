@@ -33,7 +33,7 @@ from BaseHTTPServer import BaseHTTPRequestHandler
 import urlparse
 
 class GetHandler(BaseHTTPRequestHandler):
-    
+
     def do_GET(self):
         parsed_path = urlparse.urlparse(self.path)
         message_parts = [
@@ -65,6 +65,6 @@ class GetHandler(BaseHTTPRequestHandler):
 if __name__ == '__main__':
     from BaseHTTPServer import HTTPServer
     server = HTTPServer(('localhost', 8080), GetHandler)
-    print 'Starting server, use <Ctrl-C> to stop'
+    print('Starting server, use <Ctrl-C> to stop')
     server.serve_forever()
 

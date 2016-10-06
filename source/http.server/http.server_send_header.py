@@ -12,7 +12,7 @@ import urlparse
 import time
 
 class GetHandler(BaseHTTPRequestHandler):
-    
+
     def do_GET(self):
         self.send_response(200)
         self.send_header('Last-Modified',
@@ -24,6 +24,6 @@ class GetHandler(BaseHTTPRequestHandler):
 if __name__ == '__main__':
     from BaseHTTPServer import HTTPServer
     server = HTTPServer(('localhost', 8080), GetHandler)
-    print 'Starting server, use <Ctrl-C> to stop'
+    print('Starting server, use <Ctrl-C> to stop')
     server.serve_forever()
 

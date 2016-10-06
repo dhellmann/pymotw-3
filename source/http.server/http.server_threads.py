@@ -34,7 +34,7 @@ from SocketServer import ThreadingMixIn
 import threading
 
 class Handler(BaseHTTPRequestHandler):
-    
+
     def do_GET(self):
         self.send_response(200)
         self.end_headers()
@@ -48,6 +48,6 @@ class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
 
 if __name__ == '__main__':
     server = ThreadedHTTPServer(('localhost', 8080), Handler)
-    print 'Starting server, use <Ctrl-C> to stop'
+    print('Starting server, use <Ctrl-C> to stop')
     server.serve_forever()
 
