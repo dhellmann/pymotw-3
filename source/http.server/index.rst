@@ -1,14 +1,14 @@
-=============================================================
- BaseHTTPServer -- Base Classes for Implementing Web Servers
-=============================================================
+===========================================================
+ http.server --- Base Classes for Implementing Web Servers
+===========================================================
 
-.. module:: BaseHTTPServer
+.. module:: http.server
     :synopsis: Base classes for implementing web servers.
 
-:Purpose: BaseHTTPServer includes classes that can form the basis of a web server.
+:Purpose: http.server includes classes that can form the basis of a
+          web server.
 
-
-:mod:`BaseHTTPServer` uses classes from :mod:`SocketServer` to create
+:mod:`http.server` uses classes from :mod:`socketserver` to create
 base classes for making HTTP servers. :class:`HTTPServer` can be used
 directly, but the :class:`BaseHTTPRequestHandler` is intended to be
 extended to handle each protocol method (GET, POST, etc.).
@@ -28,7 +28,7 @@ This example request handler illustrates how to return a response to the
 client, and some of the local attributes that can be useful in building the
 response.
 
-.. literalinclude:: BaseHTTPServer_GET.py
+.. literalinclude:: http_server_GET.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -44,15 +44,15 @@ sample script.
 
 Then start the server:
 
-::
+.. code-block:: none
 
-    $ python BaseHTTPServer_GET.py 
+    $ python3 http_server_GET.py 
 
     Starting server, use <Ctrl-C> to stop
 
 In a separate terminal, use :command:`curl` to access it:
 
-::
+.. code-block:: none
 
     $ curl -i http://localhost:8080/?foo=bar
     
@@ -84,35 +84,35 @@ does not parse the form data automatically. The :mod:`cgi` module
 provides the :class:`FieldStorage` class which knows how to parse the
 form, if it is given the correct inputs.
 
-.. literalinclude:: BaseHTTPServer_POST.py
+.. literalinclude:: http_server_POST.py
     :caption:
     :start-after: #end_pymotw_header
 
 Run the server in one window:
 
-::
+.. code-block:: none
 
-    $ python BaseHTTPServer_POST.py 
+    $ python3 http_server_POST.py 
     
     Starting server, use <Ctrl-C> to stop
 
 The arguments to :command:`curl` can include form data to be posted to
 the server by using the ``-F`` option. The last argument, ``-F
-datafile=@BaseHTTPServer_GET.py``, posts the contents of the file
-``BaseHTTPServer_GET.py`` to illustrate reading file data from the
+datafile=@http_server_GET.py``, posts the contents of the file
+``http_server_GET.py`` to illustrate reading file data from the
 form.
 
-::
+.. code-block:: none
     
     $ curl http://localhost:8080/ -F name=dhellmann -F foo=bar \
-    -F datafile=@BaseHTTPServer_GET.py
+    -F datafile=@http_server_GET.py
     
     Client: ('127.0.0.1', 65029)
     User-agent: curl/7.19.7 (universal-apple-darwin10.0) libcurl/7.19.7 
     OpenSSL/0.9.8l zlib/1.2.3
     Path: /
     Form data:
-        Uploaded datafile as "BaseHTTPServer_GET.py" (2580 bytes)
+        Uploaded datafile as "http_server_GET.py" (2580 bytes)
         foo=bar
         name=dhellmann
 
@@ -125,22 +125,22 @@ Threading and Forking
 processes to handle requests. To add threading or forking, create a
 new class using the appropriate mix-in from :mod:`SocketServer`.
 
-.. literalinclude:: BaseHTTPServer_threads.py
+.. literalinclude:: http_server_threads.py
     :caption:
     :start-after: #end_pymotw_header
 
 Run the server in the same way as the other examples.
 
-::
+.. code-block:: none
 
-    $ python BaseHTTPServer_threads.py 
+    $ python3 http_server_threads.py 
     
     Starting server, use <Ctrl-C> to stop
 
 Each time the server receives a request, it starts a new thread or
 process to handle it:
 
-::
+.. code-block:: none
 
     $ curl http://localhost:8080/
 
@@ -165,22 +165,22 @@ appropriate error code and an optional error message.  The entire
 response (with headers, status code, and body) is generated
 automatically.
 
-.. literalinclude:: BaseHTTPServer_errors.py
+.. literalinclude:: http_server_errors.py
     :caption:
     :start-after: #end_pymotw_header
 
 In this case, a 404 error is always returned.
 
-::
+.. code-block:: none
 
-    $ python BaseHTTPServer_errors.py 
+    $ python3 http_server_errors.py 
     
     Starting server, use <Ctrl-C> to stop
 
 The error message is reported to the client using an HTML document as
 well as the header to indicate an error code.
 
-::
+.. code-block:: none
 
     $ curl -i http://localhost:8080/
 
@@ -206,14 +206,14 @@ Setting Headers
 The :mod:`send_header` method adds header data to the HTTP response.
 It takes two arguments: the name of the header and the value.
 
-.. literalinclude:: BaseHTTPServer_send_header.py
+.. literalinclude:: http_server_send_header.py
    :caption:
    :start-after: #end_pymotw_header
 
 This example sets the ``Last-Modified`` header to the current
 timestamp, formatted according to RFC 2822.
 
-::
+.. code-block:: none
 
     $ curl -i http://localhost:8080/
 
@@ -227,22 +227,19 @@ timestamp, formatted according to RFC 2822.
 The server logs the request to the terminal, like in the other
 examples.
 
-::
+.. code-block:: none
 
-    $ python BaseHTTPServer_send_header.py 
+    $ python3 http_server_send_header.py 
     
     Starting server, use <Ctrl-C> to stop
 
 
 .. seealso::
 
-    `BaseHTTPServer <http://docs.python.org/library/basehttpserver.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`http.server`
 
-    :mod:`SocketServer`
-        The ``SocketServer`` module provides the base class that handles
-        the raw socket connection.
+   * :mod:`socketserver` -- The ``socketserver`` module provides the
+     base class that handles the raw socket connection.
 
-    :rfc:`2822`
-        The "Internet Message Format" specifies a format for
-        text-based messages such as email and HTTP responses.
+   * :rfc:`2822` -- The "Internet Message Format" specifies a format
+     for text-based messages such as email and HTTP responses.
