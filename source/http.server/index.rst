@@ -108,7 +108,7 @@ Run the server in one window:
     
     Starting server, use <Ctrl-C> to stop
 
-The arguments to :command:`curl` can include form data to be posted to
+The arguments to ``curl`` can include form data to be posted to
 the server by using the ``-F`` option. The last argument, ``-F
 datafile=@http_server_GET.py``, posts the contents of the file
 ``http_server_GET.py`` to illustrate reading file data from the
