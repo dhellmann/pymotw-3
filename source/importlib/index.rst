@@ -7,7 +7,6 @@
 
 :Purpose: 
     The imp module exposes the implementation of Python's import statement.
-:Python Version: 2.2.1 and later
 
 The :mod:`imp` module includes functions that expose part of the
 underlying implementation of Python's import mechanism for loading
@@ -22,14 +21,14 @@ Example Package
 The examples in this section use a package called :mod:`example` with
 ``__init__.py``:
 
-.. include:: example/__init__.py
-    :literal:
+.. literalinclude:: example/__init__.py
+    :caption:
     :start-after: #end_pymotw_header
 
 and module called :mod:`submodule` containing:
 
-.. include:: example/submodule.py
-    :literal:
+.. literalinclude:: example/submodule.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Watch for the text from the :command:`print` statements in the sample
@@ -50,8 +49,8 @@ library or other module is not loading as expected, use
 :func:`get_suffixes` to print a list of the supported types for the
 current platform, and the parameters for loading them.
 
-.. include:: imp_get_suffixes.py
-    :literal:
+.. literalinclude:: imp_get_suffixes.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The return value is a sequence of tuples containing the file
@@ -86,8 +85,8 @@ given name. It returns an open file handle (if appropriate for the
 type), filename where the module was found, and "description" (a tuple
 such as those returned by :func:`get_suffixes`).
 
-.. include:: imp_find_module.py
-    :literal:
+.. literalinclude:: imp_find_module.py
+    :caption:
     :start-after: #end_pymotw_header
 
 :func:`find_module` does not process dotted names
@@ -116,8 +115,8 @@ the package.
 If :func:`find_module` cannot locate the module, it raises an
 :class:`ImportError`.
 
-.. include:: imp_find_module_error.py
-    :literal:
+.. literalinclude:: imp_find_module_error.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The error message includes the name of the missing module.
@@ -142,8 +141,8 @@ import it.  :func:`load_module` takes the full dotted path module name
 and the values returned by :func:`find_module` (the open file handle,
 filename, and description tuple).
 
-.. include:: imp_load_module.py
-    :literal:
+.. literalinclude:: imp_load_module.py
+    :caption:
     :start-after: #end_pymotw_header
 
 :func:`load_module` creates a new module object with the name given,
@@ -169,8 +168,8 @@ If :func:`load_module` is called for a module that has already been
 imported, the effect is like calling :func:`reload` on the existing
 module object.
 
-.. include:: imp_load_module_reload.py
-    :literal:
+.. literalinclude:: imp_load_module_reload.py
+    :caption:
     :start-after: #end_pymotw_header
 
 Instead of a creating a new module, the contents of the existing
