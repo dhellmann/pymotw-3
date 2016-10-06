@@ -1,24 +1,24 @@
-==================================
- imp -- Python's Import Mechanism
-==================================
+=========================================
+ importlib --- Python's Import Mechanism
+=========================================
 
-.. module:: imp
+.. module:: importlib
     :synopsis: Interface to module import mechanism.
 
-:Purpose: 
-    The imp module exposes the implementation of Python's import statement.
+:Purpose: The importlib module exposes the implementation of Python's
+          import statement.
 
-The :mod:`imp` module includes functions that expose part of the
+The :mod:`importlib` module includes functions that expose part of the
 underlying implementation of Python's import mechanism for loading
 code in packages and modules. It is one access point to importing
 modules dynamically, and useful in some cases where the name of the
-module that needs to be imported is unknown when the code is
-written (e.g., for plugins or extensions to an application).
+module that needs to be imported is unknown when the code is written
+(for example, for plugins or extensions to an application).
 
 Example Package
 ===============
 
-The examples in this section use a package called :mod:`example` with
+The examples in this section use a package called ``example`` with
 ``__init__.py``:
 
 .. literalinclude:: example/__init__.py
@@ -31,8 +31,8 @@ and module called :mod:`submodule` containing:
     :caption:
     :start-after: #end_pymotw_header
 
-Watch for the text from the :command:`print` statements in the sample
-output when the package or module are imported.
+Watch for the text from the :func:`print` calls in the sample output
+when the package or module are imported.
 
 Module Types
 ============
@@ -63,128 +63,152 @@ not correspond to single files.
 .. cog.out(run_script(cog.inFile, 'importlib_suffixes.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python imp_get_suffixes.py
+	$ python3 importlib_suffixes.py
 	
-	 Extension       Mode       Type
-	--------------------------------
-	       .so         rb  extension
-	 module.so         rb  extension
-	       .py          U     source
-	      .pyc         rb   compiled
+	Source:     ['.py']
+	Debug:      ['.pyc']
+	Optimized:  ['.pyc']
+	Bytecode:   ['.pyc']
+	Extension:  ['.cpython-35m-darwin.so', '.abi3.so', '.so']
 
 .. {{{end}}}
 
-Finding Modules
-===============
+Importing Modules
+=================
 
-The first step to loading a module is finding it. :func:`find_module`
-scans the import search path looking for a package or module with the
-given name. It returns an open file handle (if appropriate for the
-type), filename where the module was found, and "description" (a tuple
-such as those returned by :func:`get_suffixes`).
+The high level API in :mod:`importlib` makes it simple to import a
+module given an absolute or relative name.  When using a relative
+module name, specify the package containing the module as a separate
+argument.
 
-.. literalinclude:: imp_find_module.py
-    :caption:
-    :start-after: #end_pymotw_header
+.. literalinclude:: importlib_import_module.py
+   :caption:
+   :start-after: #end_pymotw_header
 
-:func:`find_module` does not process dotted names
-(``example.submodule``), so the caller has to take care to pass the
-correct path for any nested modules. That means that when importing
-the nested module from the package, give a path that points to the
-package directory for :func:`find_module` to locate a module within
-the package.
+The return value from :func:`import_module` is the module object that
+was created by the import.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'imp_find_module.py'))
+.. cog.out(run_script(cog.inFile, 'importlib_import_module.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python imp_find_module.py
+	$ python3 importlib_import_module.py
 	
-	Package:
-	package ./example
-	
-	Sub-module:
-	source ./example/submodule.py
+	Importing example package
+	Importing submodule
+	<module 'example.submodule' from '.../example/submodule.py'>
+	<module 'example.submodule' from '.../example/submodule.py'>
+	True
 
 .. {{{end}}}
 
-If :func:`find_module` cannot locate the module, it raises an
+If the module cannot be imported, :func:`import_module` raises
 :class:`ImportError`.
 
-.. literalinclude:: imp_find_module_error.py
-    :caption:
-    :start-after: #end_pymotw_header
+.. literalinclude:: importlib_import_module_error.py
+   :caption:
+   :start-after: #end_pymotw_header
 
 The error message includes the name of the missing module.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'imp_find_module_error.py'))
+.. cog.out(run_script(cog.inFile, 'importlib_import_module_error.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python imp_find_module_error.py
+	$ python3 importlib_import_module_error.py
 	
-	ImportError: No module named no_such_module
+	Importing example package
+	Error: No module named 'example.nosuchmodule'
 
 .. {{{end}}}
 
-Loading Modules
-===============
+To reload an existing module, use :func:`reload`.
 
-After the module is found, use :func:`load_module` to actually
-import it.  :func:`load_module` takes the full dotted path module name
-and the values returned by :func:`find_module` (the open file handle,
-filename, and description tuple).
+.. literalinclude:: importlib_reload.py
+   :caption:
+   :start-after: #end_pymotw_header
 
-.. literalinclude:: imp_load_module.py
-    :caption:
-    :start-after: #end_pymotw_header
-
-:func:`load_module` creates a new module object with the name given,
-loads the code for it, and adds it to :data:`sys.modules`.
-
-.. NOT RUNNING
-.. cog.out(run_script(cog.inFile, 'imp_load_module.py', 
-..                    break_lines_at=70, line_break_mode='wrap'))
-
-::
-
-    $ python imp_load_module.py
-    
-    Importing example package
-    Package: <module 'example' from '/Users/dhellmann/Documents/
-    PyMOTW/book/PyMOTW/imp/example/__init__.pyc'>
-    Importing submodule
-    Sub-module: <module 'example.submodule' from '/Users/dhellmann/
-    Documents/PyMOTW/book/PyMOTW/imp/example/submodule.pyc'>
-
-
-If :func:`load_module` is called for a module that has already been
-imported, the effect is like calling :func:`reload` on the existing
-module object.
-
-.. literalinclude:: imp_load_module_reload.py
-    :caption:
-    :start-after: #end_pymotw_header
-
-Instead of a creating a new module, the contents of the existing
-module are replaced.
+The return value from :func:`reload` is the new module. Depending on
+which type of loader was used, it may be the same module instance.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'imp_load_module_reload.py'))
+.. cog.out(run_script(cog.inFile, 'importlib_reload.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python imp_load_module_reload.py
+	$ python3 importlib_reload.py
 	
-	0 (not in sys.modules) Importing example package
-	1 (have in sys.modules) Importing example package
+	Importing example package
+	Importing submodule
+	<module 'example.submodule' from '.../example/submodule.py'>
+	Importing submodule
+	True
+
+.. {{{end}}}
+
+Loaders
+=======
+
+The lower-level API in :mod:`importlib` provides access to the loader
+objects, as described in :ref:`sys-imports` from the section on the
+:mod:`sys` module. To get a loader for a module, use
+:func:`find_loader`. Then to retrieve the module, use the loader's
+:func:`load_module` method.
+
+.. literalinclude:: importlib_find_loader.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+This example loads the top level of the ``example`` package.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'importlib_find_loader.py', line_break_mode='wrap'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 importlib_find_loader.py
+	
+	Loader: <_frozen_importlib_external.SourceFileLoader object at
+	0x101be0da0>
+	Importing example package
+	Module: <module 'example' from '.../example/__init__.py'>
+
+.. {{{end}}}
+
+Submodules within packages need to be loaded separately using the path
+from the package. In the following example, the package is loaded
+first and then its path is passed to :func:`find_loader` to create a
+loader capable of loading the submodule.
+
+.. literalinclude:: importlib_submodule.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Unlike with :func:`import_module`, the name of the submodule should be
+given without any relative path prefix, since the loader will already
+be constrained by the package's path.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'importlib_submodule.py', line_break_mode='wrap'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 importlib_submodule.py
+	
+	Importing example package
+	Loader: <_frozen_importlib_external.SourceFileLoader object at
+	0x1012e5390>
+	Importing submodule
+	Module: <module 'submodule' from '.../example/submodule.py'>
 
 .. {{{end}}}
 

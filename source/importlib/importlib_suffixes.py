@@ -12,9 +12,9 @@ import importlib.machinery
 
 SUFFIXES = [
     ('Source:', importlib.machinery.SOURCE_SUFFIXES),
-    ('Debug bytecode:',
+    ('Debug:',
      importlib.machinery.DEBUG_BYTECODE_SUFFIXES),
-    ('Optimized bytecode:',
+    ('Optimized:',
      importlib.machinery.OPTIMIZED_BYTECODE_SUFFIXES),
     ('Bytecode:', importlib.machinery.BYTECODE_SUFFIXES),
     ('Extension:', importlib.machinery.EXTENSION_SUFFIXES),
@@ -22,7 +22,7 @@ SUFFIXES = [
 
 
 def main():
-    tmpl = '{:<20}  {}'
+    tmpl = '{:<10}  {}'
     for name, value in SUFFIXES:
         print(tmpl.format(name, value))
 
