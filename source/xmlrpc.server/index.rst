@@ -1,6 +1,6 @@
-==========================================
- SimpleXMLRPCServer --- An XML-RPC server
-==========================================
+=====================================
+ xmlrpc.server --- An XML-RPC server
+=====================================
 
 .. module:: xmlrpc.server
     :synopsis: Implements an XML-RPC server.
