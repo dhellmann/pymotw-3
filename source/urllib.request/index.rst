@@ -368,4 +368,9 @@ directory where it should look for all of its files.
 
    * :mod:`mimetypes` -- Map filenames to mimetype.
 
-   * :mod:`mimetools` -- Tools for parsing MIME messages.
+   * `requests <https://pypi.python.org/pypi/requests>`_ --
+     Third-party HTTP library with better support for secure
+     connections and an easier to use API. The Python core development
+     team recommends most developers use ``requests``, in part because
+     it receives more frequent security updates than the standard
+     library.
