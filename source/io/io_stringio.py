@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Simple examples with StringIO module
+"""Simple examples with StringIO class
 """
 #end_pymotw_header
 
