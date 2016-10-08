@@ -17,4 +17,4 @@ request.add_header(
 
 response = urllib2.urlopen(request)
 data = response.read()
-print data
+print(data)

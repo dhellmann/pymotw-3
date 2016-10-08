@@ -14,7 +14,7 @@ from cStringIO import StringIO
 import urllib
 import urllib2
 
-class MultiPartForm(object):
+class MultiPartForm:
     """Accumulate the data to be used when posting a form."""
 
     def __init__(self):
@@ -22,7 +22,7 @@ class MultiPartForm(object):
         self.files = []
         self.boundary = mimetools.choose_boundary()
         return
-    
+
     def get_content_type(self):
         return 'multipart/form-data; boundary=%s' % self.boundary
 
@@ -42,7 +42,7 @@ class MultiPartForm(object):
                          )
         self.files.append((fieldname, filename, mimetype, body))
         return
-    
+
     def __str__(self):
         """Return a string representing the form data,
         including attached files.
@@ -53,7 +53,7 @@ class MultiPartForm(object):
         # line is separated by '\r\n'.  
         parts = []
         part_boundary = '--' + self.boundary
-        
+
         # Add the form fields
         parts.extend(
             [ part_boundary,
@@ -63,7 +63,7 @@ class MultiPartForm(object):
             ]
             for name, value in self.form_fields
             )
-        
+
         # Add the files to upload
         parts.extend([
             part_boundary,
@@ -75,7 +75,7 @@ class MultiPartForm(object):
           ]
           for field_name, filename, content_type, body in self.files
           )
-        
+
         # Flatten the list and add closing boundary marker, and
         # then return CR+LF separated data
         flattened = list(itertools.chain(*parts))
@@ -88,7 +88,7 @@ if __name__ == '__main__':
     form = MultiPartForm()
     form.add_field('firstname', 'Doug')
     form.add_field('lastname', 'Hellmann')
-    
+
     # Add a fake file
     form.add_file(
         'biography', 'bio.txt', 
@@ -104,10 +104,10 @@ if __name__ == '__main__':
     request.add_header('Content-length', len(body))
     request.add_data(body)
 
-    print
-    print 'OUTGOING DATA:'
-    print request.get_data()
+    print()
+    print('OUTGOING DATA:')
+    print(request.get_data())
 
-    print
-    print 'SERVER RESPONSE:'
-    print urllib2.urlopen(request).read()
+    print()
+    print('SERVER RESPONSE:')
+    print(urllib2.urlopen(request).read())
