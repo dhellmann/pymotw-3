@@ -1,54 +1,22 @@
 #!/usr/bin/env python3
-#
-# Copyright 2007 Doug Hellmann.
-#
-#
-#                         All Rights Reserved
-#
-# Permission to use, copy, modify, and distribute this software and
-# its documentation for any purpose and without fee is hereby
-# granted, provided that the above copyright notice appear in all
-# copies and that both that copyright notice and this permission
-# notice appear in supporting documentation, and that the name of Doug
-# Hellmann not be used in advertising or publicity pertaining to
-# distribution of the software without specific, written prior
-# permission.
-#
-# DOUG HELLMANN DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
-# INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN
-# NO EVENT SHALL DOUG HELLMANN BE LIABLE FOR ANY SPECIAL, INDIRECT OR
-# CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
-# OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
-# NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
-# CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-#
-
 """Simple examples with StringIO module
-
-See http://blog.doughellmann.com/2007/04/pymotw-stringio-and-cstringio.html
-
 """
-
 #end_pymotw_header
 
-# Find the best implementation available on this platform
-try:
-    from cStringIO import StringIO
-except:
-    from StringIO import StringIO
+import io
 
 # Writing to a buffer
-output = StringIO()
+output = io.StringIO()
 output.write('This goes into the buffer. ')
-print >>output, 'And so does this.'
+print('And so does this.', file=output)
 
 # Retrieve the value written
-print output.getvalue()
+print(output.getvalue())
 
-output.close() # discard buffer memory
+output.close()  # discard buffer memory
 
 # Initialize a read buffer
-input = StringIO('Inital value for read buffer')
+input = io.StringIO('Inital value for read buffer')
 
 # Read from the buffer
-print input.read()
+print(input.read())
