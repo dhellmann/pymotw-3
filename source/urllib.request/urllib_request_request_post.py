@@ -7,25 +7,25 @@
 """
 #end_pymotw_header
 
-import urllib
-import urllib2
+from urllib import parse
+from urllib import request
 
 query_args = {'q': 'query string', 'foo': 'bar'}
 
-request = urllib2.Request('http://localhost:8080/')
-print('Request method before data:', request.get_method())
-
-request.add_data(urllib.urlencode(query_args))
-print('Request method after data :', request.get_method())
-request.add_header(
+r = request.Request(
+    url='http://localhost:8080/',
+    data=parse.urlencode(query_args),
+)
+print('Request method :', r.get_method())
+r.add_header(
     'User-agent',
-    'PyMOTW (http://www.doughellmann.com/PyMOTW/)',
+    'PyMOTW (https://pymotw.com/)',
 )
 
 print()
 print('OUTGOING DATA:')
-print(request.get_data())
+print(r.get_data())
 
 print()
 print('SERVER RESPONSE:')
-print(urllib2.urlopen(request).read())
+print(request.urlopen(r).read())

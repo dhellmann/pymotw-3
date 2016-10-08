@@ -7,14 +7,14 @@
 """
 #end_pymotw_header
 
-import urllib2
+from urllib import request
 
-request = urllib2.Request('http://localhost:8080/')
-request.add_header(
+r = request.Request('http://localhost:8080/')
+r.add_header(
     'User-agent',
-    'PyMOTW (http://www.doughellmann.com/PyMOTW/)',
+    'PyMOTW (https://pymotw.com/)',
 )
 
-response = urllib2.urlopen(request)
-data = response.read()
+response = request.urlopen(r)
+data = response.read().decode('utf-8')
 print(data)

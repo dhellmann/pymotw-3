@@ -7,10 +7,10 @@
 """
 #end_pymotw_header
 
-import urllib
-import urllib2
+from urllib import parse
+from urllib import request
 
 query_args = {'q': 'query string', 'foo': 'bar'}
-encoded_args = urllib.urlencode(query_args)
+encoded_args = parse.urlencode(query_args).encode('utf-8')
 url = 'http://localhost:8080/'
-print(urllib2.urlopen(url, encoded_args).read())
+print(request.urlopen(url, encoded_args).read().decode('utf-8'))

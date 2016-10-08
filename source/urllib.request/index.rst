@@ -152,7 +152,7 @@ HTTP POST
 To send form-encoded data to the remote server using POST instead GET,
 pass the encoded query arguments as data to :func:`urlopen`.
 
-.. literalinclude:: urllib2_urlopen_post.py
+.. literalinclude:: urllib_request_urlopen_post.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -161,15 +161,13 @@ by name.
 
 ::
 
-    $ python urllib2_urlopen_post.py
-
-    Client: ('127.0.0.1', 55943)
-    User-agent: Python-urllib/2.6
+    $ python3 urllib_request_urlopen_post.py
+    Client: ('127.0.0.1', 58568)
+    User-agent: Python-urllib/3.5
     Path: /
     Form data:
-    	q=query string
-    	foo=bar
-
+        foo=bar
+        q=query string
 
 Adding Outgoing Headers
 =======================
@@ -182,8 +180,6 @@ control the format of data returned, specify the version of a document
 cached locally, and tell the remote server the name of the software
 client communicating with it.
 
-.. warning:: needs attention
-
 As the output from the earlier examples shows, the default
 *User-agent* header value is made up of the constant
 ``Python-urllib``, followed by the Python interpreter version. When
@@ -191,9 +187,9 @@ creating an application that will access web resources owned by
 someone else, it is courteous to include real user agent information
 in the requests, so they can identify the source of the hits more
 easily. Using a custom agent also allows them to control crawlers
-using a ``robots.txt`` file (see the :mod:`robotparser` module).
+using a ``robots.txt`` file (see the :mod:`http.robotparser` module).
 
-.. literalinclude:: urllib2_request_header.py
+.. literalinclude:: urllib_request_request_header.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -203,10 +199,9 @@ the output shows the custom value.
 
 ::
 
-    $ python urllib2_request_header.py
-
+    $ python3 urllib_request_request_header.py
     CLIENT VALUES:
-    client_address=('127.0.0.1', 55876) (localhost)
+    client_address=('127.0.0.1', 58585) (127.0.0.1)
     command=GET
     path=/
     real path=/
@@ -214,16 +209,15 @@ the output shows the custom value.
     request_version=HTTP/1.1
     
     SERVER VALUES:
-    server_version=BaseHTTP/0.3
-    sys_version=Python/2.6.2
+    server_version=BaseHTTP/0.6
+    sys_version=Python/3.5.2
     protocol_version=HTTP/1.0
     
     HEADERS RECEIVED:
-    accept-encoding=identity
-    connection=close
-    host=localhost:8080
-    user-agent=PyMOTW (http://www.doughellmann.com/PyMOTW/)
-
+    Accept-Encoding=identity
+    Connection=close
+    Host=localhost:8080
+    User-Agent=PyMOTW (https://pymotw.com/)
 
 Posting Form Data from a Request
 ================================
