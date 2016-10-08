@@ -64,9 +64,10 @@ Unicode text with multi-byte encodings requires extra processing.  The
 so that in many cases a non-ASCII file can be used without any other
 changes to the program.
 
-For testing code that depends on reading or writing data from files,
-:mod:`StringIO` provides an in-memory stream object that behaves like
-a file, but does not reside on disk.
+The :mod:`io` module provides access to the classes used to implement
+Python's file-based input and output.  For testing code that depends
+on reading or writing data from files, :mod:`io` provides an in-memory
+stream object that behaves like a file, but does not reside on disk.
 
 .. toctree::
     :maxdepth: 1
@@ -81,16 +82,4 @@ a file, but does not reside on disk.
     filecmp/index
     mmap/index
     codecs/index
-
-..
-    ospath/index
-    glob
-    fnmatch/index
-    pathlib/index
-    linecache/index
-    tempfile/index
-    shutil/index
-    filecmp/index
-    mmap/index
-    codecs/index
-    * StringIO/index (replace with io)
+    io/index
