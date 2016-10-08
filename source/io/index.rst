@@ -9,7 +9,6 @@
     :synopsis: Work with text buffers using file-like API
 
 :Purpose: Work with text buffers using file-like API
-:Python Version: 1.4 and later
 
 :class:`StringIO` provides a convenient means of working with text in
 memory using the file API (:func:`read`, :func:`write`, etc.). There
@@ -23,13 +22,13 @@ Examples
 
 Here are a few standard examples of using :class:`StringIO` buffers:
 
-.. include:: stringio_examples.py
-    :literal:
+.. literalinclude:: stringio_examples.py
+    :caption:
     :start-after: #end_pymotw_header
 
-This example uses :func:`read()`, but the :func:`readline()` and
-:func:`readlines()` methods are also available. The :class:`StringIO`
-class also provides a :func:`seek()` method for jumping
+This example uses :func:`read`, but the :func:`readline` and
+:func:`readlines` methods are also available. The :class:`StringIO`
+class also provides a :func:`seek` method for jumping
 around in a buffer while reading, which can be useful for rewinding if
 a look-ahead parsing algorithm is being used.
 

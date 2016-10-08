@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # Copyright 2007 Doug Hellmann.
 #
@@ -29,7 +29,6 @@ See http://blog.doughellmann.com/2007/04/pymotw-stringio-and-cstringio.html
 
 """
 
-__module_id__ = "$Id$"
 #end_pymotw_header
 
 # Find the best implementation available on this platform
