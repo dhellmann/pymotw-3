@@ -344,7 +344,7 @@ directory where it should look for all of its files.
 	FauxNFSHandler simulating mount:
 	  Remote path: nfs://remote_server/path/to/the
 	  Server     : remote_server
-	  Local path : tmp5ub116_e
+	  Local path : tmprucom5sb
 	  Filename   : file.txt
 	
 	READ CONTENTS: b'Contents of file.txt'
@@ -354,7 +354,7 @@ directory where it should look for all of its files.
 	  Content-type    = text/plain
 	
 	NFSFile:
-	  unmounting tmp5ub116_e
+	  unmounting tmprucom5sb
 	  when file.txt is closed
 
 .. {{{end}}}

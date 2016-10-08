@@ -48,10 +48,11 @@ class FauxNFSHandler(request.BaseHandler):
         directory_name, file_name = os.path.split(url)
         server_name = req.host
         print('FauxNFSHandler simulating mount:')
-        print('  Remote path: %s' % directory_name)
-        print('  Server     : %s' % server_name)
-        print('  Local path : %s' % os.path.basename(tempdir))
-        print('  Filename   : %s' % file_name)
+        print('  Remote path: {}'.format(directory_name))
+        print('  Server     : {}'.format(server_name))
+        print('  Local path : {}'.format(
+            os.path.basename(tempdir)))
+        print('  Filename   : {}'.format(file_name))
         local_file = os.path.join(tempdir, file_name)
         fp = NFSFile(tempdir, file_name)
         content_type = (
@@ -89,5 +90,5 @@ if __name__ == '__main__':
         print('URL          :', resp.geturl())
         print('HEADERS:')
         for name, value in sorted(resp.info().items()):
-            print('  %-15s = %s' % (name, value))
+            print('  {:<15} = {}'.format(name, value))
         resp.close()
