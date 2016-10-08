@@ -73,7 +73,36 @@ rather than :class:`str`.
 
 .. {{{end}}}
 
+Wrapping Byte Streams for Text Data
+===================================
 
+Raw byte streams such as sockets can be wrapped with a layer to handle
+string encoding and decoding, making it easier to use them with text
+data. The :class:`TextIOWrapper` class supports writing as well as
+reading.  The ``write_through`` argument disables buffering, and
+flushes all data written to the wrapper through to the underlying
+buffer immediately.
+
+.. literalinclude:: io_textiowrapper.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+This example uses a :class:`BytesIO` instance as the stream. Examples
+for :mod:`bz2`, :mod:`http.server`, and :mod:`subprocess` demonstrate
+using :class:`TextIOWrapper` with other types of file-like objects.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'io_textiowrapper.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 io_textiowrapper.py
+	
+	b'This goes into the buffer. \xc3\x81\xc3\x87\xc3\x8a'
+	Inital value for read buffer with unicode characters ÁÇÊ
+
+.. {{{end}}}
 
 .. seealso::
 
