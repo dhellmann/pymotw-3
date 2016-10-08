@@ -13,15 +13,21 @@ import tempfile
 import urllib
 import urllib2
 
-class NFSFile(file):
+
+class NFSFile:
+
     def __init__(self, tempdir, filename):
         self.tempdir = tempdir
-        file.__init__(self, filename, 'rb')
+        super().__init__(filename, 'rb')
+
     def close(self):
         print('NFSFile:')
-        print('  unmounting %s' % os.path.basename(self.tempdir))
-        print('  when %s is closed' % os.path.basename(self.name))
-        return file.close(self)
+        print('  unmounting {}'.format(
+            os.path.basename(self.tempdir)))
+        print('  when {} is closed'.format(
+            os.path.basename(self.name)))
+        return super().close()
+
 
 class FauxNFSHandler(urllib2.BaseHandler):
 
@@ -39,18 +45,21 @@ class FauxNFSHandler(urllib2.BaseHandler):
         print('  Filename   : %s' % file_name)
         local_file = os.path.join(tempdir, file_name)
         fp = NFSFile(tempdir, local_file)
-        content_type = ( mimetypes.guess_type(file_name)[0]
-                         or
-                         'application/octet-stream'
-                         )
+        content_type = (
+            mimetypes.guess_type(file_name)[0] or
+            'application/octet-stream'
+        )
         stats = os.stat(local_file)
         size = stats.st_size
-        headers = { 'Content-type': content_type,
-                    'Content-length': size,
-                  }
+        headers = {
+            'Content-type': content_type,
+            'Content-length': size,
+        }
         return urllib.addinfourl(fp, headers, req.get_full_url())
 
+
 if __name__ == '__main__':
+    # FIXME: use new class
     tempdir = tempfile.mkdtemp()
     try:
         # Populate the temporary file for the simulation
@@ -65,7 +74,7 @@ if __name__ == '__main__':
         # Open the file through a URL.
         response = urllib2.urlopen(
             'nfs://remote_server/path/to/the/file.txt'
-            )
+        )
         print()
         print('READ CONTENTS:', response.read())
         print('URL          :', response.geturl())

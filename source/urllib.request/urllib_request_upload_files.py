@@ -14,6 +14,7 @@ from cStringIO import StringIO
 import urllib
 import urllib2
 
+
 class MultiPartForm:
     """Accumulate the data to be used when posting a form."""
 
@@ -36,10 +37,10 @@ class MultiPartForm:
         """Add a file to be uploaded."""
         body = fileHandle.read()
         if mimetype is None:
-            mimetype = ( mimetypes.guess_type(filename)[0]
-                         or
-                         'application/octet-stream'
-                         )
+            mimetype = (
+                mimetypes.guess_type(filename)[0] or
+                'application/octet-stream'
+            )
         self.files.append((fieldname, filename, mimetype, body))
         return
 
@@ -50,31 +51,31 @@ class MultiPartForm:
         # Build a list of lists, each containing "lines" of the
         # request.  Each part is separated by a boundary string.
         # Once the list is built, return a string where each
-        # line is separated by '\r\n'.  
+        # line is separated by '\r\n'.
         parts = []
         part_boundary = '--' + self.boundary
 
         # Add the form fields
         parts.extend(
-            [ part_boundary,
-              'Content-Disposition: form-data; name="%s"' % name,
-              '',
-              value,
-            ]
+            [part_boundary,
+             'Content-Disposition: form-data; name="%s"' % name,
+             '',
+             value]
             for name, value in self.form_fields
-            )
+        )
 
         # Add the files to upload
-        parts.extend([
-            part_boundary,
-            'Content-Disposition: file; name="%s"; filename="%s"' % \
-               (field_name, filename),
-            'Content-Type: %s' % content_type,
-            '',
-            body,
-          ]
-          for field_name, filename, content_type, body in self.files
-          )
+        parts.extend(
+            [part_boundary,
+             ('Content-Disposition: file; '
+              'name="%s"; filename="%s"') % (field_name,
+                                             filename),
+             'Content-Type: %s' % content_type,
+             '',
+             body]
+            for field_name, filename, content_type, body
+            in self.files
+        )
 
         # Flatten the list and add closing boundary marker, and
         # then return CR+LF separated data
@@ -82,6 +83,7 @@ class MultiPartForm:
         flattened.append('--' + self.boundary + '--')
         flattened.append('')
         return '\r\n'.join(flattened)
+
 
 if __name__ == '__main__':
     # Create the form with simple fields
@@ -91,7 +93,7 @@ if __name__ == '__main__':
 
     # Add a fake file
     form.add_file(
-        'biography', 'bio.txt', 
+        'biography', 'bio.txt',
         fileHandle=StringIO('Python developer and blogger.'))
 
     # Build the request
