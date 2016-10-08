@@ -1,13 +1,14 @@
-====================================
- urllib2 -- Network Resource Access
-====================================
+============================================
+ urllib.request --- Network Resource Access
+============================================
 
-.. module:: urllib2
+.. module:: urllib.request
     :synopsis: Network Resource Access
 
-:Purpose: A library for opening URLs that can be extended by defining custom protocol handlers.
+:Purpose: A library for opening URLs that can be extended by defining
+          custom protocol handlers.
 
-The :mod:`urllib2` module provides an updated API for using Internet
+The :mod:`urllib.request` module provides an API for using Internet
 resources identified by URLs.  It is designed to be extended by
 individual applications to support new protocols or add variations to
 existing protocols (such as handling HTTP basic authentication).
@@ -17,14 +18,13 @@ HTTP GET
 
 .. note::
 
-    The test server for these examples is in
-    ``BaseHTTPServer_GET.py``, from the examples for the
-    :mod:`BaseHTTPServer` module. Start the server in one terminal
-    window, then run these examples in another.
+    The test server for these examples is in ``http_server_GET.py``,
+    from the examples for the :mod:`http.server` module. Start the
+    server in one terminal window, then run these examples in another.
 
-As with :mod:`urllib`, an HTTP GET operation is the simplest use of
-:mod:`urllib2`. Pass the URL to :func:`urlopen` to get a "file-like"
-handle to the remote data.
+An HTTP GET operation is the simplest use of
+:mod:`urllib.request`. Pass the URL to :func:`urlopen` to get a
+"file-like" handle to the remote data.
 
 .. literalinclude:: urllib2_urlopen.py
     :caption:
@@ -108,8 +108,7 @@ Encoding Arguments
 ==================
 
 Arguments can be passed to the server by encoding them with
-:func:`urllib.urlencode` and appending them to the
-URL.
+:func:`urllib.parse.urlencode` and appending them to the URL.
 
 .. literalinclude:: urllib2_http_get_args.py
     :caption:
@@ -148,10 +147,9 @@ HTTP POST
 
 .. note::
 
-    The test server for these examples is in
-    ``BaseHTTPServer_POST.py``, from the examples for the
-    :mod:`BaseHTTPServer` module. Start the server in one terminal
-    window, then run these examples in another.
+    The test server for these examples is in ``http_server_POST.py``,
+    from the examples for the :mod:`http.server` module. Start the
+    server in one terminal window, then run these examples in another.
 
 To send form-encoded data to the remote server using POST instead GET,
 pass the encoded query arguments as data to :func:`urlopen`.
@@ -186,14 +184,16 @@ control the format of data returned, specify the version of a document
 cached locally, and tell the remote server the name of the software
 client communicating with it.
 
-As the output from the earlier examples shows, the default *User-agent* header
-value is made up of the constant ``Python-urllib``, followed by the
-Python interpreter version. When creating an application that will
-access web resources owned by someone else, it is courteous to include
-real user agent information in the requests, so they can identify the
-source of the hits more easily. Using a custom agent also allows them
-to control crawlers using a ``robots.txt`` file (see the
-:mod:`robotparser` module).
+.. warning:: needs attention
+
+As the output from the earlier examples shows, the default
+*User-agent* header value is made up of the constant
+``Python-urllib``, followed by the Python interpreter version. When
+creating an application that will access web resources owned by
+someone else, it is courteous to include real user agent information
+in the requests, so they can identify the source of the hits more
+easily. Using a custom agent also allows them to control crawlers
+using a ``robots.txt`` file (see the :mod:`robotparser` module).
 
 .. literalinclude:: urllib2_request_header.py
     :caption:
@@ -267,9 +267,10 @@ automatically after the data is added.
 Uploading Files
 ===============
 
-Encoding files for upload requires a little more work than simple forms.  A complete MIME
-message needs to be constructed in the body of the request, so that the server can
-distinguish incoming form fields from uploaded files.
+Encoding files for upload requires a little more work than simple
+forms.  A complete MIME message needs to be constructed in the body of
+the request, so that the server can distinguish incoming form fields
+from uploaded files.
 
 .. literalinclude:: urllib2_upload_files.py
     :caption:
@@ -312,12 +313,12 @@ multi-part MIME message with attached files.
 Creating Custom Protocol Handlers
 =================================
 
-:mod:`urllib2` has built-in support for HTTP(S), FTP, and local file
-access. To add support for other URL types, register another protocol
-handler. For example, to support URLs pointing to arbitrary files on
-remote NFS servers, without requiring users to mount the path before
-accessing the file, create a class derived from :class:`BaseHandler`
-and with a method :func:`nfs_open`.
+:mod:`urllib.request` has built-in support for HTTP(S), FTP, and local
+file access. To add support for other URL types, register another
+protocol handler. For example, to support URLs pointing to arbitrary
+files on remote NFS servers, without requiring users to mount the path
+before accessing the file, create a class derived from
+:class:`BaseHandler` and with a method :func:`nfs_open`.
 
 The protocol-specific :func:`open` method is given a single argument, the
 :class:`Request` instance, and it should return an object with a
@@ -366,31 +367,15 @@ directory where it should look for all of its files.
 
 .. seealso::
 
-    `urllib2 <http://docs.python.org/library/urllib2.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`urllib.request`
 
-    :mod:`urllib`
-        Original URL handling library.
+   * :mod:`urllib.parse` -- Work with the URL string itself.
 
-    :mod:`urlparse`
-        Work with the URL string itself.
+   * `Form content types
+     <http://www.w3.org/TR/REC-html40/interact/forms.html#h-17.13.4>`_
+     -- W3C specification for posting files or large amounts of data
+     via HTTP forms.
 
-    `urllib2 -- The Missing Manual <http://www.voidspace.org.uk/python/articles/urllib2.shtml>`_
-        Michael Foord's write-up on using ``urllib2``.
-    
-    `Upload Scripts <http://www.voidspace.org.uk/python/cgi.shtml#upload>`_
-        Example scripts from Michael Foord that illustrate how to upload a file
-        using HTTP and then receive the data on the server.
+   * :mod:`mimetypes` -- Map filenames to mimetype.
 
-    `HTTP client to POST using multipart/form-data <http://code.activestate.com/recipes/146306/>`_
-        Python cookbook recipe showing how to encode and post data, including files,
-        over HTTP.
-
-    `Form content types <http://www.w3.org/TR/REC-html40/interact/forms.html#h-17.13.4>`_
-        W3C specification for posting files or large amounts of data via HTTP forms.
-
-    :mod:`mimetypes`
-        Map filenames to mimetype.
-    
-    :mod:`mimetools`
-        Tools for parsing MIME messages.
+   * :mod:`mimetools` -- Tools for parsing MIME messages.
