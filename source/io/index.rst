@@ -1,28 +1,31 @@
 ===============================================
- StringIO -- Text Buffers with a File-like API
+ io --- Text, Binary, and Raw Stream I/O Tools
 ===============================================
 
-.. module:: StringIO
-    :synopsis: Work with text buffers using file-like API
+.. module:: io
+    :synopsis: Implements file I/O and provides classes for working
+               with buffers using file-like API.
 
-.. module:: cStringIO
-    :synopsis: Work with text buffers using file-like API
+:Purpose: Implements file I/O and provides classes for working with
+          buffers using file-like API.
 
-:Purpose: Work with text buffers using file-like API
+The :mod:`io` module provides access to the built-in :func:`open`
+function and the classes used to implement file-based input and output
+operations. The classes are decomposed in such a way that they can be
+recombined for alternate purposes, for example to enable writing
+Unicode data to a network socket.
+
+In-memory Streams
+=================
 
 :class:`StringIO` provides a convenient means of working with text in
-memory using the file API (:func:`read`, :func:`write`, etc.). There
-are two separate implementations. The :mod:`cStringIO` version is
-written in C for speed, while :mod:`StringIO` is written in Python for
-portability. Using :mod:`cStringIO` to build large strings can offer
-performance savings over some other string concatenation techniques.
-
-Examples
-========
+memory using the file API (:func:`read`, :func:`write`, etc.). Using
+:mod:`StringIO` to build large strings can offer performance savings
+over some other string concatenation techniques.
 
 Here are a few standard examples of using :class:`StringIO` buffers:
 
-.. literalinclude:: stringio_examples.py
+.. literalinclude:: io_stringio.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -33,13 +36,13 @@ around in a buffer while reading, which can be useful for rewinding if
 a look-ahead parsing algorithm is being used.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'stringio_examples.py'))
+.. cog.out(run_script(cog.inFile, 'io_stringio.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python stringio_examples.py
-
+	$ python3 io_stringio.py
+	
 	This goes into the buffer. And so does this.
 	
 	Inital value for read buffer
@@ -49,11 +52,8 @@ a look-ahead parsing algorithm is being used.
 
 .. seealso::
 
-    `StringIO <http://docs.python.org/lib/module-StringIO.html>`_
-        Standard library documentation for this module.
+   * :pydoc:`io`
 
-    `The StringIO module ::: www.effbot.org <http://effbot.org/librarybook/stringio.htm>`_
-        effbot's examples with StringIO
-
-    `Efficient String Concatenation in Python <http://www.skymind.com/%7Eocrow/python_string/>`_
-        Examines various methods of combining strings and their relative merits.
+   * `Efficient String Concatenation in Python
+     <http://www.skymind.com/%7Eocrow/python_string/>`_ -- Examines
+     various methods of combining strings and their relative merits.
