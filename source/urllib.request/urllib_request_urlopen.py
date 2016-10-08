@@ -7,9 +7,9 @@
 """
 #end_pymotw_header
 
-import urllib2
+from urllib import request
 
-response = urllib2.urlopen('http://localhost:8080/')
+response = request.urlopen('http://localhost:8080/')
 print('RESPONSE:', response)
 print('URL     :', response.geturl())
 
@@ -19,7 +19,7 @@ print('HEADERS :')
 print('---------')
 print(headers)
 
-data = response.read()
+data = response.read().decode('utf-8')
 print('LENGTH  :', len(data))
 print('DATA    :')
 print('---------')

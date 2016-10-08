@@ -26,7 +26,7 @@ An HTTP GET operation is the simplest use of
 :mod:`urllib.request`. Pass the URL to :func:`urlopen` to get a
 "file-like" handle to the remote data.
 
-.. literalinclude:: urllib2_urlopen.py
+.. literalinclude:: urllib_request_urlopen.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -38,22 +38,22 @@ methods like :func:`read` and :func:`readlines`.
 
 ::
 
-    $ python urllib2_urlopen.py
-
-    RESPONSE: <addinfourl at 11940488 whose fp = <socket._fileobject 
-    object at 0xb573f0>>
+    $ python3 urllib_request_urlopen.py
+    RESPONSE: <http.client.HTTPResponse object at 0x101744d68>
     URL     : http://localhost:8080/
-    DATE    : Sun, 19 Jul 2009 14:01:31 GMT
+    DATE    : Sat, 08 Oct 2016 18:08:54 GMT
     HEADERS :
     ---------
-    Server: BaseHTTP/0.3 Python/2.6.2
-    Date: Sun, 19 Jul 2009 14:01:31 GMT
+    Server: BaseHTTP/0.6 Python/3.5.2
+    Date: Sat, 08 Oct 2016 18:08:54 GMT
+    Content-Type: text/plain; charset=utf-8
+    
     
     LENGTH  : 349
     DATA    :
     ---------
     CLIENT VALUES:
-    client_address=('127.0.0.1', 55836) (localhost)
+    client_address=('127.0.0.1', 58420) (127.0.0.1)
     command=GET
     path=/
     real path=/
@@ -61,16 +61,16 @@ methods like :func:`read` and :func:`readlines`.
     request_version=HTTP/1.1
     
     SERVER VALUES:
-    server_version=BaseHTTP/0.3
-    sys_version=Python/2.6.2
+    server_version=BaseHTTP/0.6
+    sys_version=Python/3.5.2
     protocol_version=HTTP/1.0
     
     HEADERS RECEIVED:
-    accept-encoding=identity
-    connection=close
-    host=localhost:8080
-    user-agent=Python-urllib/2.6
-    
+    Accept-Encoding=identity
+    Connection=close
+    Host=localhost:8080
+    User-Agent=Python-urllib/3.5
+
 
 The file-like object returned by :func:`urlopen` is iterable:
 
