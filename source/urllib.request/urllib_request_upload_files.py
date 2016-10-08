@@ -7,12 +7,12 @@
 """
 #end_pymotw_header
 
+import io
 import itertools
-import mimetools
 import mimetypes
-from cStringIO import StringIO
-import urllib
-import urllib2
+from urllib import parse
+from urllib import request
+import uuid
 
 
 class MultiPartForm:
@@ -21,16 +21,17 @@ class MultiPartForm:
     def __init__(self):
         self.form_fields = []
         self.files = []
-        self.boundary = mimetools.choose_boundary()
+        # Use a large random byte string to separate parts of the MIME
+        # data.
+        self.boundary = uuid.uuid4().hex.encode('utf-8')
         return
 
     def get_content_type(self):
-        return 'multipart/form-data; boundary=%s' % self.boundary
+        return 'multipart/form-data; boundary=%s' % self.boundary.decode('utf-8')
 
     def add_field(self, name, value):
         """Add a simple field to the form data."""
         self.form_fields.append((name, value))
-        return
 
     def add_file(self, fieldname, filename, fileHandle,
                  mimetype=None):
@@ -44,45 +45,36 @@ class MultiPartForm:
         self.files.append((fieldname, filename, mimetype, body))
         return
 
-    def __str__(self):
-        """Return a string representing the form data,
+    def __bytes__(self):
+        """Return a byte-string representing the form data,
         including attached files.
         """
-        # Build a list of lists, each containing "lines" of the
-        # request.  Each part is separated by a boundary string.
-        # Once the list is built, return a string where each
-        # line is separated by '\r\n'.
-        parts = []
-        part_boundary = '--' + self.boundary
+        buffer = io.BytesIO()
+        boundary = b'--' + self.boundary + b'\r\n'
 
         # Add the form fields
-        parts.extend(
-            [part_boundary,
-             'Content-Disposition: form-data; name="%s"' % name,
-             '',
-             value]
-            for name, value in self.form_fields
-        )
+        for name, value in self.form_fields:
+            buffer.write(boundary)
+            buffer.write(('Content-Disposition: form-data; name="%s"\r\n' % name).encode('utf-8'))
+            buffer.write(b'\r\n')
+            buffer.write(value.encode('utf-8'))
+            buffer.write(b'\r\n')
 
         # Add the files to upload
-        parts.extend(
-            [part_boundary,
-             ('Content-Disposition: file; '
-              'name="%s"; filename="%s"') % (field_name,
-                                             filename),
-             'Content-Type: %s' % content_type,
-             '',
-             body]
-            for field_name, filename, content_type, body
-            in self.files
-        )
+        for field_name, filename, content_type, body in self.files:
+            buffer.write(boundary)
+            buffer.write(b'Content-Disposition: file; ')
+            buffer.write(
+                ('name="%s"; filename="%s"\r\n' % (field_name,
+                                                   filename)).encode('utf-8')
+            )
+            buffer.write(('Content-Type: %s\r\n' % content_type).encode('utf-8'))
+            buffer.write(b'\r\n')
+            buffer.write(body)
+            buffer.write(b'\r\n')
 
-        # Flatten the list and add closing boundary marker, and
-        # then return CR+LF separated data
-        flattened = list(itertools.chain(*parts))
-        flattened.append('--' + self.boundary + '--')
-        flattened.append('')
-        return '\r\n'.join(flattened)
+        buffer.write(b'--' + self.boundary + b'--\r\n')
+        return buffer.getvalue()
 
 
 if __name__ == '__main__':
@@ -94,22 +86,26 @@ if __name__ == '__main__':
     # Add a fake file
     form.add_file(
         'biography', 'bio.txt',
-        fileHandle=StringIO('Python developer and blogger.'))
+        fileHandle=io.BytesIO(b'Python developer and blogger.'))
 
-    # Build the request
-    request = urllib2.Request('http://localhost:8080/')
-    request.add_header(
+    # Build the request, including the byte-string for the data to be
+    # posted.
+    data = bytes(form)
+    r = request.Request('http://localhost:8080/', data=data)
+    r.add_header(
         'User-agent',
-        'PyMOTW (http://www.doughellmann.com/PyMOTW/)')
-    body = str(form)
-    request.add_header('Content-type', form.get_content_type())
-    request.add_header('Content-length', len(body))
-    request.add_data(body)
+        'PyMOTW (https://pymotw.com/)',
+    )
+    r.add_header('Content-type', form.get_content_type())
+    r.add_header('Content-length', len(data))
 
     print()
     print('OUTGOING DATA:')
-    print(request.get_data())
+    for name, value in r.header_items():
+        print('{}: {}'.format(name, value))
+    print()
+    print(r.data.decode('utf-8'))
 
     print()
     print('SERVER RESPONSE:')
-    print(urllib2.urlopen(request).read())
+    print(request.urlopen(r).read().decode('utf-8'))

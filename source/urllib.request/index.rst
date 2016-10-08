@@ -256,7 +256,7 @@ forms.  A complete MIME message needs to be constructed in the body of
 the request, so that the server can distinguish incoming form fields
 from uploaded files.
 
-.. literalinclude:: urllib2_upload_files.py
+.. literalinclude:: urllib_request_upload_files.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -265,34 +265,39 @@ multi-part MIME message with attached files.
 
 ::
 
-    $ python urllib2_upload_files.py
+    $ python3 urllib_request_upload_files.py
     
     OUTGOING DATA:
-    --192.168.1.17.527.30074.1248020372.206.1
+    User-agent: PyMOTW (https://pymotw.com/)
+    Content-type: multipart/form-data; 
+        boundary=d99b5dc60871491b9d63352eb24972b4
+    Content-length: 389
+    
+    --d99b5dc60871491b9d63352eb24972b4
     Content-Disposition: form-data; name="firstname"
     
     Doug
-    --192.168.1.17.527.30074.1248020372.206.1
+    --d99b5dc60871491b9d63352eb24972b4
     Content-Disposition: form-data; name="lastname"
     
     Hellmann
-    --192.168.1.17.527.30074.1248020372.206.1
-    Content-Disposition: file; name="biography"; filename="bio.txt"
+    --d99b5dc60871491b9d63352eb24972b4
+    Content-Disposition: file; name="biography"; 
+        filename="bio.txt"
     Content-Type: text/plain
     
     Python developer and blogger.
-    --192.168.1.17.527.30074.1248020372.206.1--
+    --d99b5dc60871491b9d63352eb24972b4--
     
     
     SERVER RESPONSE:
-    Client: ('127.0.0.1', 57126)
-    User-agent: PyMOTW (http://www.doughellmann.com/PyMOTW/)
+    Client: ('127.0.0.1', 59310)
+    User-agent: PyMOTW (https://pymotw.com/)
     Path: /
     Form data:
-    	lastname=Hellmann
-    	Uploaded biography as "bio.txt" (29 bytes)
-    	firstname=Doug
-    
+        Uploaded biography as 'bio.txt' (29 bytes)
+        firstname=Doug
+        lastname=Hellmann
 
 Creating Custom Protocol Handlers
 =================================
