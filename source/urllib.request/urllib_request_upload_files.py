@@ -8,9 +8,7 @@
 #end_pymotw_header
 
 import io
-import itertools
 import mimetypes
-from urllib import parse
 from urllib import request
 import uuid
 

@@ -39,6 +39,7 @@ methods like :func:`read` and :func:`readlines`.
 .. code-block:: none
 
     $ python3 urllib_request_urlopen.py
+
     RESPONSE: <http.client.HTTPResponse object at 0x101744d68>
     URL     : http://localhost:8080/
     DATE    : Sat, 08 Oct 2016 18:08:54 GMT
@@ -84,6 +85,7 @@ printing the output.
 .. code-block:: none
 
     $ python3 urllib_request_urlopen_iterator.py
+
     CLIENT VALUES:
     client_address=('127.0.0.1', 58444) (127.0.0.1)
     command=GET
@@ -162,6 +164,7 @@ by name.
 .. code-block:: none
 
     $ python3 urllib_request_urlopen_post.py
+
     Client: ('127.0.0.1', 58568)
     User-agent: Python-urllib/3.5
     Path: /
@@ -200,6 +203,7 @@ the output shows the custom value.
 .. code-block:: none
 
     $ python3 urllib_request_request_header.py
+
     CLIENT VALUES:
     client_address=('127.0.0.1', 58585) (127.0.0.1)
     command=GET
@@ -235,6 +239,7 @@ automatically after the data is added.
 .. code-block:: none
 
     $ python3 urllib_request_request_post.py
+
     Request method : POST
     
     OUTGOING DATA:
