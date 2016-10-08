@@ -6,7 +6,6 @@
     :synopsis: Network Resource Access
 
 :Purpose: A library for opening URLs that can be extended by defining custom protocol handlers.
-:Python Version: 2.1 and later
 
 The :mod:`urllib2` module provides an updated API for using Internet
 resources identified by URLs.  It is designed to be extended by

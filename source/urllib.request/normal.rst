@@ -9,18 +9,18 @@ HTTP GET
     window, then run these examples in another.
 
 As with :mod:`urllib`, an HTTP GET operation is the simplest use of
-:mod:`urllib2`. Pass the URL to :func:`urlopen()` to get a "file-like"
+:mod:`urllib2`. Pass the URL to :func:`urlopen` to get a "file-like"
 handle to the remote data.
 
-.. include:: urllib2_urlopen.py
-    :literal:
+.. literalinclude:: urllib2_urlopen.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The example server accepts the incoming values and formats a plain
-text response to send back. The return value from :func:`urlopen()`
+text response to send back. The return value from :func:`urlopen`
 gives access to the headers from the HTTP server through the
-:func:`info()` method, and the data for the remote resource via
-methods like :func:`read()` and :func:`readlines()`.
+:func:`info` method, and the data for the remote resource via
+methods like :func:`read` and :func:`readlines`.
 
 ::
 
@@ -58,10 +58,10 @@ methods like :func:`read()` and :func:`readlines()`.
     user-agent=Python-urllib/2.6
     
 
-The file-like object returned by :func:`urlopen()` is iterable:
+The file-like object returned by :func:`urlopen` is iterable:
 
-.. include:: urllib2_urlopen_iterator.py
-    :literal:
+.. literalinclude:: urllib2_urlopen_iterator.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example strips the trailing newlines and carriage returns before
@@ -97,8 +97,8 @@ Arguments can be passed to the server by encoding them with
 :func:`urllib.urlencode` and appending them to the
 URL.
 
-.. include:: urllib2_http_get_args.py
-    :literal:
+.. literalinclude:: urllib2_http_get_args.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The list of client values returned in the example output contains the
@@ -140,10 +140,10 @@ HTTP POST
     window, then run these examples in another.
 
 To send form-encoded data to the remote server using POST instead GET,
-pass the encoded query arguments as data to :func:`urlopen()`.
+pass the encoded query arguments as data to :func:`urlopen`.
 
-.. include:: urllib2_urlopen_post.py
-    :literal:
+.. literalinclude:: urllib2_urlopen_post.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The server can decode the form data and access the individual values
@@ -164,7 +164,7 @@ by name.
 Adding Outgoing Headers
 =======================
 
-:func:`urlopen()` is a convenience function that hides some of the
+:func:`urlopen` is a convenience function that hides some of the
 details of how the request is made and handled. More precise control
 is possible by using a :class:`Request` instance directly.  For
 example, custom headers can be added to the outgoing request to
@@ -181,11 +181,11 @@ source of the hits more easily. Using a custom agent also allows them
 to control crawlers using a ``robots.txt`` file (see the
 :mod:`robotparser` module).
 
-.. include:: urllib2_request_header.py
-    :literal:
+.. literalinclude:: urllib2_request_header.py
+    :caption:
     :start-after: #end_pymotw_header
 
-After creating a :class:`Request` object, use :func:`add_header()` to
+After creating a :class:`Request` object, use :func:`add_header` to
 set the user agent value before opening the request.  The last line of
 the output shows the custom value.
 
@@ -219,8 +219,8 @@ Posting Form Data from a Request
 The outgoing data can be added to the :class:`Request` to have it
 posted to the server.
 
-.. include:: urllib2_request_post.py
-    :literal:
+.. literalinclude:: urllib2_request_post.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The HTTP method used by the :class:`Request` changes from GET to POST
@@ -246,7 +246,7 @@ automatically after the data is added.
     
 .. note::
 
-    Although the method is :func:`add_data()`, its effect is *not*
+    Although the method is :func:`add_data`, its effect is *not*
     cumulative.  Each call replaces the previous data.
 
 
@@ -257,8 +257,8 @@ Encoding files for upload requires a little more work than simple forms.  A comp
 message needs to be constructed in the body of the request, so that the server can
 distinguish incoming form fields from uploaded files.
 
-.. include:: urllib2_upload_files.py
-    :literal:
+.. literalinclude:: urllib2_upload_files.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The :class:`MultiPartForm` class can represent an arbitrary form as a
