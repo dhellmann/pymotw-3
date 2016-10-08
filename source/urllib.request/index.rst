@@ -36,7 +36,7 @@ gives access to the headers from the HTTP server through the
 :func:`info` method, and the data for the remote resource via
 methods like :func:`read` and :func:`readlines`.
 
-::
+.. code-block:: none
 
     $ python3 urllib_request_urlopen.py
     RESPONSE: <http.client.HTTPResponse object at 0x101744d68>
@@ -81,7 +81,7 @@ The file-like object returned by :func:`urlopen` is iterable:
 This example strips the trailing newlines and carriage returns before
 printing the output.
 
-::
+.. code-block:: none
 
     $ python3 urllib_request_urlopen_iterator.py
     CLIENT VALUES:
@@ -116,7 +116,7 @@ Arguments can be passed to the server by encoding them with
 The list of client values returned in the example output contains the
 encoded query arguments.
 
-::
+.. code-block:: none
 
     $ python urllib_request_http_get_args.py
     Encoded: q=query+string&foo=bar
@@ -159,7 +159,7 @@ pass the encoded query arguments as data to :func:`urlopen`.
 The server can decode the form data and access the individual values
 by name.
 
-::
+.. code-block:: none
 
     $ python3 urllib_request_urlopen_post.py
     Client: ('127.0.0.1', 58568)
@@ -197,7 +197,7 @@ After creating a :class:`Request` object, use :func:`add_header` to
 set the user agent value before opening the request.  The last line of
 the output shows the custom value.
 
-::
+.. code-block:: none
 
     $ python3 urllib_request_request_header.py
     CLIENT VALUES:
@@ -232,7 +232,7 @@ to have it posted to the server.
 The HTTP method used by the :class:`Request` changes from GET to POST
 automatically after the data is added.
 
-::
+.. code-block:: none
 
     $ python3 urllib_request_request_post.py
     Request method : POST
@@ -263,7 +263,7 @@ from uploaded files.
 The :class:`MultiPartForm` class can represent an arbitrary form as a
 multi-part MIME message with attached files.
 
-::
+.. code-block:: none
 
     $ python3 urllib_request_upload_files.py
     
@@ -339,7 +339,7 @@ directory where it should look for all of its files.
 	FauxNFSHandler simulating mount:
 	  Remote path: nfs://remote_server/path/to/the
 	  Server     : remote_server
-	  Local path : tmpki7y8vm9
+	  Local path : tmp5ub116_e
 	  Filename   : file.txt
 	
 	READ CONTENTS: b'Contents of file.txt'
@@ -349,7 +349,7 @@ directory where it should look for all of its files.
 	  Content-type    = text/plain
 	
 	NFSFile:
-	  unmounting tmpki7y8vm9
+	  unmounting tmp5ub116_e
 	  when file.txt is closed
 
 .. {{{end}}}
