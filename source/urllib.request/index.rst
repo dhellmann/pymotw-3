@@ -329,7 +329,7 @@ unmount calls. Since this is just a simulation,
 directory where it should look for all of its files.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'urllib2_nfs_handler.py'))
+.. cog.out(run_script(cog.inFile, 'urllib_request_nfs_handler.py'))
 .. }}}
 
 ::
