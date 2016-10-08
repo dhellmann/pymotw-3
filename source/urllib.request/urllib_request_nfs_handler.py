@@ -64,7 +64,8 @@ class FauxNFSHandler(request.BaseHandler):
             'Content-type': content_type,
             'Content-length': size,
         }
-        return response.addinfourl(fp, headers, req.get_full_url())
+        return response.addinfourl(fp, headers,
+                                   req.get_full_url())
 
 
 if __name__ == '__main__':
@@ -80,13 +81,13 @@ if __name__ == '__main__':
         request.install_opener(opener)
 
         # Open the file through a URL.
-        response = request.urlopen(
+        resp = request.urlopen(
             'nfs://remote_server/path/to/the/file.txt'
         )
         print()
-        print('READ CONTENTS:', response.read())
-        print('URL          :', response.geturl())
+        print('READ CONTENTS:', resp.read())
+        print('URL          :', resp.geturl())
         print('HEADERS:')
-        for name, value in sorted(response.info().items()):
+        for name, value in sorted(resp.info().items()):
             print('  %-15s = %s' % (name, value))
-        response.close()
+        resp.close()

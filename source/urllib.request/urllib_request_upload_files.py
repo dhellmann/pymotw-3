@@ -21,13 +21,14 @@ class MultiPartForm:
     def __init__(self):
         self.form_fields = []
         self.files = []
-        # Use a large random byte string to separate parts of the MIME
-        # data.
+        # Use a large random byte string to separate
+        # parts of the MIME data.
         self.boundary = uuid.uuid4().hex.encode('utf-8')
         return
 
     def get_content_type(self):
-        return 'multipart/form-data; boundary=%s' % self.boundary.decode('utf-8')
+        return 'multipart/form-data; boundary={}'.format(
+            self.boundary.decode('utf-8'))
 
     def add_field(self, name, value):
         """Add a simple field to the form data."""
@@ -45,6 +46,21 @@ class MultiPartForm:
         self.files.append((fieldname, filename, mimetype, body))
         return
 
+    @staticmethod
+    def _form_data(name):
+        return ('Content-Disposition: form-data; '
+                'name="{}"\r\n').format(name).encode('utf-8')
+
+    @staticmethod
+    def _attached_file(name, filename):
+        return ('Content-Disposition: file; '
+                'name="{}"; filename="{}"\r\n').format(
+                    name, filename).encode('utf-8')
+
+    @staticmethod
+    def _content_type(ct):
+        return 'Content-Type: {}\r\n'.format(ct).encode('utf-8')
+
     def __bytes__(self):
         """Return a byte-string representing the form data,
         including attached files.
@@ -55,20 +71,16 @@ class MultiPartForm:
         # Add the form fields
         for name, value in self.form_fields:
             buffer.write(boundary)
-            buffer.write(('Content-Disposition: form-data; name="%s"\r\n' % name).encode('utf-8'))
+            buffer.write(self._form_data(name))
             buffer.write(b'\r\n')
             buffer.write(value.encode('utf-8'))
             buffer.write(b'\r\n')
 
         # Add the files to upload
-        for field_name, filename, content_type, body in self.files:
+        for f_name, filename, f_content_type, body in self.files:
             buffer.write(boundary)
-            buffer.write(b'Content-Disposition: file; ')
-            buffer.write(
-                ('name="%s"; filename="%s"\r\n' % (field_name,
-                                                   filename)).encode('utf-8')
-            )
-            buffer.write(('Content-Type: %s\r\n' % content_type).encode('utf-8'))
+            buffer.write(self._attached_file(f_name, filename))
+            buffer.write(self._content_type(f_content_type))
             buffer.write(b'\r\n')
             buffer.write(body)
             buffer.write(b'\r\n')
@@ -88,8 +100,8 @@ if __name__ == '__main__':
         'biography', 'bio.txt',
         fileHandle=io.BytesIO(b'Python developer and blogger.'))
 
-    # Build the request, including the byte-string for the data to be
-    # posted.
+    # Build the request, including the byte-string
+    # for the data to be posted.
     data = bytes(form)
     r = request.Request('http://localhost:8080/', data=data)
     r.add_header(

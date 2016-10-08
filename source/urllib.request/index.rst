@@ -318,7 +318,7 @@ simple way to achieve that is to create an instance of
 :class:`urllib.addurlinfo`, passing the headers, URL, and open file
 handle in to the constructor.
 
-.. literalinclude:: urllib2_nfs_handler.py
+.. literalinclude:: urllib_request_nfs_handler.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -332,23 +332,24 @@ directory where it should look for all of its files.
 .. cog.out(run_script(cog.inFile, 'urllib_request_nfs_handler.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python urllib2_nfs_handler.py
-
+	$ python3 urllib_request_nfs_handler.py
+	
 	FauxNFSHandler simulating mount:
-	  Remote path: /path/to/the
+	  Remote path: nfs://remote_server/path/to/the
 	  Server     : remote_server
-	  Local path : tmpoqqoAV
+	  Local path : tmpki7y8vm9
 	  Filename   : file.txt
 	
-	READ CONTENTS: Contents of file.txt
+	READ CONTENTS: b'Contents of file.txt'
 	URL          : nfs://remote_server/path/to/the/file.txt
 	HEADERS:
 	  Content-length  = 20
 	  Content-type    = text/plain
+	
 	NFSFile:
-	  unmounting tmpoqqoAV
+	  unmounting tmpki7y8vm9
 	  when file.txt is closed
 
 .. {{{end}}}
