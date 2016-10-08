@@ -14,7 +14,7 @@ query_args = {'q': 'query string', 'foo': 'bar'}
 
 r = request.Request(
     url='http://localhost:8080/',
-    data=parse.urlencode(query_args),
+    data=parse.urlencode(query_args).encode('utf-8'),
 )
 print('Request method :', r.get_method())
 r.add_header(
@@ -24,8 +24,8 @@ r.add_header(
 
 print()
 print('OUTGOING DATA:')
-print(r.get_data())
+print(r.data)
 
 print()
 print('SERVER RESPONSE:')
-print(request.urlopen(r).read())
+print(request.urlopen(r).read().decode('utf-8'))

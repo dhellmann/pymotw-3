@@ -222,10 +222,10 @@ the output shows the custom value.
 Posting Form Data from a Request
 ================================
 
-The outgoing data can be added to the :class:`Request` to have it
-posted to the server.
+The outgoing data can be specified when building the :class:`Request`
+to have it posted to the server.
 
-.. literalinclude:: urllib2_request_post.py
+.. literalinclude:: urllib_request_request_post.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -234,27 +234,19 @@ automatically after the data is added.
 
 ::
 
-    $ python urllib2_request_post.py
-
-    Request method before data: GET
-    Request method after data : POST
+    $ python3 urllib_request_request_post.py
+    Request method : POST
     
     OUTGOING DATA:
-    q=query+string&foo=bar
+    b'q=query+string&foo=bar'
     
     SERVER RESPONSE:
-    Client: ('127.0.0.1', 56044)
-    User-agent: PyMOTW (http://www.doughellmann.com/PyMOTW/)
+    Client: ('127.0.0.1', 58613)
+    User-agent: PyMOTW (https://pymotw.com/)
     Path: /
     Form data:
-    	q=query string
-    	foo=bar
-    
-.. note::
-
-    Although the method is :func:`add_data`, its effect is *not*
-    cumulative.  Each call replaces the previous data.
-
+        foo=bar
+        q=query string
 
 Uploading Files
 ===============
