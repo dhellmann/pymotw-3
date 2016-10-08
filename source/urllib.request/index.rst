@@ -74,7 +74,7 @@ methods like :func:`read` and :func:`readlines`.
 
 The file-like object returned by :func:`urlopen` is iterable:
 
-.. literalinclude:: urllib2_urlopen_iterator.py
+.. literalinclude:: urllib_request_urlopen_iterator.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -83,10 +83,9 @@ printing the output.
 
 ::
 
-    $ python urllib2_urlopen_iterator.py
-
+    $ python3 urllib_request_urlopen_iterator.py
     CLIENT VALUES:
-    client_address=('127.0.0.1', 55840) (localhost)
+    client_address=('127.0.0.1', 58444) (127.0.0.1)
     command=GET
     path=/
     real path=/
@@ -94,15 +93,15 @@ printing the output.
     request_version=HTTP/1.1
     
     SERVER VALUES:
-    server_version=BaseHTTP/0.3
-    sys_version=Python/2.6.2
+    server_version=BaseHTTP/0.6
+    sys_version=Python/3.5.2
     protocol_version=HTTP/1.0
     
     HEADERS RECEIVED:
-    accept-encoding=identity
-    connection=close
-    host=localhost:8080
-    user-agent=Python-urllib/2.6
+    Accept-Encoding=identity
+    Connection=close
+    Host=localhost:8080
+    User-Agent=Python-urllib/3.5
 
 Encoding Arguments
 ==================

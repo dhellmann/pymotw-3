@@ -7,8 +7,8 @@
 """
 #end_pymotw_header
 
-import urllib2
+from urllib import request
 
-response = urllib2.urlopen('http://localhost:8080/')
+response = request.urlopen('http://localhost:8080/')
 for line in response:
-    print(line.rstrip())
+    print(line.decode('utf-8').rstrip())
