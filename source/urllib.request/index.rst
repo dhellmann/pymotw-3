@@ -109,7 +109,7 @@ Encoding Arguments
 Arguments can be passed to the server by encoding them with
 :func:`urllib.parse.urlencode` and appending them to the URL.
 
-.. literalinclude:: urllib2_http_get_args.py
+.. literalinclude:: urllib_request_http_get_args.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -118,11 +118,10 @@ encoded query arguments.
 
 ::
 
-    $ python urllib2_http_get_args.py
-
+    $ python urllib_request_http_get_args.py
     Encoded: q=query+string&foo=bar
     CLIENT VALUES:
-    client_address=('127.0.0.1', 55849) (localhost)
+    client_address=('127.0.0.1', 58455) (127.0.0.1)
     command=GET
     path=/?q=query+string&foo=bar
     real path=/
@@ -130,15 +129,15 @@ encoded query arguments.
     request_version=HTTP/1.1
     
     SERVER VALUES:
-    server_version=BaseHTTP/0.3
-    sys_version=Python/2.6.2
+    server_version=BaseHTTP/0.6
+    sys_version=Python/3.5.2
     protocol_version=HTTP/1.0
     
     HEADERS RECEIVED:
-    accept-encoding=identity
-    connection=close
-    host=localhost:8080
-    user-agent=Python-urllib/2.6
+    Accept-Encoding=identity
+    Connection=close
+    Host=localhost:8080
+    User-Agent=Python-urllib/3.5
 
 
 HTTP POST
