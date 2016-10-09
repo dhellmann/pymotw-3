@@ -1,14 +1,15 @@
-======================
-Cookie -- HTTP Cookies
-======================
+==============================
+ http.cookies --- HTTP Cookies
+==============================
 
-.. module:: Cookie
+.. module:: http.cookies
     :synopsis: Server-side HTTP cookie tools
 
-:Purpose: The Cookie module defines classes for parsing and creating HTTP cookie headers.
+:Purpose: Defines classes for parsing and creating HTTP cookie
+          headers.
 
-The :mod:`Cookie` module implements a parser for cookies that is
-mostly RFC 2109 compliant. The implementation is a little less
+The :mod:`http.cookies` module implements a parser for cookies that is
+mostly :rfc:`2109` compliant. The implementation is a little less
 strict than the standard because MSIE 3.0x does not support the entire
 standard.
 
@@ -19,7 +20,7 @@ Cookies are used as state management for browser-based application,
 and as such are usually set by the server to be stored and returned by
 the client. The most trivial example of creating a cookie is
 
-.. literalinclude:: Cookie_setheaders.py
+.. literalinclude:: http_cookies_setheaders.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -27,12 +28,12 @@ The output is a valid ``Set-Cookie`` header ready to be passed to the
 client as part of the HTTP response:
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'Cookie_setheaders.py'))
+.. cog.out(run_script(cog.inFile, 'http_cookies_setheaders.py'))
 .. }}}
 
 ::
 
-	$ python Cookie_setheaders.py
+	$ python http_cookies_setheaders.py
 
 	Set-Cookie: mycookie=cookie_value
 
@@ -47,7 +48,7 @@ the expiration, path, and domain. In fact, all of the RFC attributes
 for cookies can be managed through the :class:`Morsel` object
 representing the cookie value.
 
-.. literalinclude:: Cookie_Morsel.py
+.. literalinclude:: http_cookies_Morsel.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -57,13 +58,13 @@ the other sets ``expires`` to a date and time when the cookie should
 be discarded.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'Cookie_Morsel.py', 
-..                    break_lines_at=68))
+.. cog.out(run_script(cog.inFile, 'http_cookies_Morsel.py', 
+..                    line_break_mode='wrap'))
 .. }}}
 
 ::
 
-	$ python Cookie_Morsel.py
+	$ python http_cookies_Morsel.py
 
 	Set-Cookie: encoded_value_cookie="\"cookie_value\""; Comment=Value h
 	as escaped quotes
@@ -119,7 +120,7 @@ Encoded Values
 The cookie header needs values to be encoded so they can be parsed
 properly.
 
-.. literalinclude:: Cookie_coded_value.py
+.. literalinclude:: http_cookies_coded_value.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -130,12 +131,12 @@ strings. Values saved to a cookie that are not strings are converted
 automatically.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'Cookie_coded_value.py'))
+.. cog.out(run_script(cog.inFile, 'http_cookies_coded_value.py'))
 .. }}}
 
 ::
 
-	$ python Cookie_coded_value.py
+	$ python http_cookies_coded_value.py
 
 	integer
 	  Set-Cookie: integer=5
@@ -164,9 +165,9 @@ several cookie values, separated by semicolons (``;``).
 
 Depending on the web server and framework, cookies are either
 available directly from the headers or the ``HTTP_COOKIE`` environment
-variable. 
+variable.
 
-.. literalinclude:: Cookie_parse.py
+.. literalinclude:: http_cookies_parse.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -175,12 +176,12 @@ To decode them, pass the string without the header prefix to
 method.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'Cookie_parse.py'))
+.. cog.out(run_script(cog.inFile, 'http_cookies_parse.py'))
 .. }}}
 
 ::
 
-	$ python Cookie_parse.py
+	$ python http_cookies_parse.py
 
 	From constructor:
 	Set-Cookie: integer=5
@@ -200,7 +201,7 @@ JavaScript that adds cookies to a client. :class:`SimpleCookie` and
 :class:`Morsel` provide JavaScript output via the :func:`js_output`
 method.
 
-.. literalinclude:: Cookie_js_output.py
+.. literalinclude:: http_cookies_js_output.py
     :caption:
     :start-after: #end_pymotw_header
 
@@ -209,7 +210,7 @@ cookies.
 
 ::
 
-	$ python Cookie_js_output.py
+	$ python http_cookies_js_output.py
 	
     <script type="text/javascript">
     <!-- begin hiding
@@ -242,11 +243,9 @@ value.
 
 .. seealso::
 
-    `Cookie <http://docs.python.org/library/cookie.html>`_
-        The standard library documentation for this module.
+   * :pydoc:`http.cookies`
 
-    :mod:`cookielib`
-        The ``cookielib`` module, for working with cookies on the client-side.
+   * :mod:`http.cookiejar` -- The ``cookielib`` module, for working
+     with cookies on the client-side.
 
-    :rfc:`2109`
-        HTTP State Management Mechanism
+   * :rfc:`2109` -- HTTP State Management Mechanism
