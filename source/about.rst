@@ -66,6 +66,12 @@ CPython (see below for version) and inserted into the text using cog_.
   versions of the standard library. When in doubt, refer to the
   documentation for the version of Python you are using.
 
+Translations and Other Versions
+===============================
+
+`Italian <http://robyp.x10host.com/3/index.html>`__
+
+  Roberto Pauletto has started translating the Python 3 articles into Italian.
 
 .. _copyright:
 
