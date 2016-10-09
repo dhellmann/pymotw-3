@@ -1,0 +1,253 @@
+======================
+Cookie -- HTTP Cookies
+======================
+
+.. module:: Cookie
+    :synopsis: Server-side HTTP cookie tools
+
+:Purpose: The Cookie module defines classes for parsing and creating HTTP cookie headers.
+:Python Version: 2.1 and later
+
+The :mod:`Cookie` module implements a parser for cookies that is
+mostly RFC 2109 compliant. The implementation is a little less
+strict than the standard because MSIE 3.0x does not support the entire
+standard.
+
+Creating and Setting a Cookie
+=============================
+
+Cookies are used as state management for browser-based application,
+and as such are usually set by the server to be stored and returned by
+the client. The most trivial example of creating a cookie is
+
+.. include:: Cookie_setheaders.py
+    :literal:
+    :start-after: #end_pymotw_header
+
+The output is a valid ``Set-Cookie`` header ready to be passed to the
+client as part of the HTTP response:
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'Cookie_setheaders.py'))
+.. }}}
+
+::
+
+	$ python Cookie_setheaders.py
+
+	Set-Cookie: mycookie=cookie_value
+
+.. {{{end}}}
+
+
+Morsels
+=======
+
+It is also possible to control the other aspects of a cookie, such as
+the expiration, path, and domain. In fact, all of the RFC attributes
+for cookies can be managed through the :class:`Morsel` object
+representing the cookie value.
+
+.. include:: Cookie_Morsel.py
+    :literal:
+    :start-after: #end_pymotw_header
+
+This example includes two different methods for setting stored
+cookies that expire. One sets the ``max-age`` to a number of seconds,
+the other sets ``expires`` to a date and time when the cookie should
+be discarded.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'Cookie_Morsel.py', 
+..                    break_lines_at=68))
+.. }}}
+
+::
+
+	$ python Cookie_Morsel.py
+
+	Set-Cookie: encoded_value_cookie="\"cookie_value\""; Comment=Value h
+	as escaped quotes
+	Set-Cookie: expires_at_time=cookie_value; expires=Sat, 14 Feb 2009 1
+	9:30:14
+	Set-Cookie: restricted_cookie=cookie_value; Domain=PyMOTW; Path=/sub
+	/path; secure
+	Set-Cookie: with_max_age="expires in 5 minutes"; Max-Age=300
+	
+	key = restricted_cookie
+	  value = cookie_value
+	  coded_value = cookie_value
+	  domain = PyMOTW
+	  secure = True
+	  path = /sub/path
+	
+	key = with_max_age
+	  value = expires in 5 minutes
+	  coded_value = "expires in 5 minutes"
+	  max-age = 300
+	
+	key = encoded_value_cookie
+	  value = "cookie_value"
+	  coded_value = "\"cookie_value\""
+	  comment = Value has escaped quotes
+	
+	key = expires_at_time
+	  value = cookie_value
+	  coded_value = cookie_value
+	  expires = Sat, 14 Feb 2009 19:30:14
+
+.. {{{end}}}
+
+
+Both the :class:`Cookie` and :class:`Morsel` objects act like
+dictionaries. A :class:`Morsel` responds to a fixed set of keys:
+
+- expires
+- path
+- comment
+- domain
+- max-age
+- secure
+- version
+
+The keys for a :class:`Cookie` instance are the names of the
+individual cookies being stored. That information is also available
+from the key attribute of the :class:`Morsel`.
+
+Encoded Values
+==============
+
+The cookie header needs values to be encoded so they can be parsed
+properly.
+
+.. include:: Cookie_coded_value.py
+    :literal:
+    :start-after: #end_pymotw_header
+
+:attr:`Morsel.value` is always the decoded value of the cookie, while
+:attr:`Morsel.coded_value` is always the representation to be used for
+transmitting the value to the client. Both values are always
+strings. Values saved to a cookie that are not strings are converted
+automatically.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'Cookie_coded_value.py'))
+.. }}}
+
+::
+
+	$ python Cookie_coded_value.py
+
+	integer
+	  Set-Cookie: integer=5
+	  value='5'
+	  coded_value='5'
+	
+	string_with_quotes
+	  Set-Cookie: string_with_quotes="He said, \"Hello, World!\""
+	  value='He said, "Hello, World!"'
+	  coded_value='"He said, \\"Hello, World!\\""'
+	
+
+.. {{{end}}}
+
+Receiving and Parsing Cookie Headers
+====================================
+
+Once the ``Set-Cookie`` headers are received by the client, it will
+return those cookies to the server on subsequent requests using a
+``Cookie`` header. An incoming ``Cookie`` header string may contain
+several cookie values, separated by semicolons (``;``).
+
+::
+
+    Cookie: integer=5; string_with_quotes="He said, \"Hello, World!\""
+
+Depending on the web server and framework, cookies are either
+available directly from the headers or the ``HTTP_COOKIE`` environment
+variable. 
+
+.. include:: Cookie_parse.py
+    :literal:
+    :start-after: #end_pymotw_header
+
+To decode them, pass the string without the header prefix to
+:class:`SimpleCookie` when instantiating it, or use the :func:`load`
+method.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'Cookie_parse.py'))
+.. }}}
+
+::
+
+	$ python Cookie_parse.py
+
+	From constructor:
+	Set-Cookie: integer=5
+	Set-Cookie: string_with_quotes="He said, \"Hello, World!\""
+	
+	From load():
+	Set-Cookie: integer=5
+	Set-Cookie: string_with_quotes="He said, \"Hello, World!\""
+
+.. {{{end}}}
+
+Alternative Output Formats
+==========================
+
+Besides using the ``Set-Cookie`` header, servers may deliver
+JavaScript that adds cookies to a client. :class:`SimpleCookie` and
+:class:`Morsel` provide JavaScript output via the :func:`js_output`
+method.
+
+.. include:: Cookie_js_output.py
+    :literal:
+    :start-after: #end_pymotw_header
+
+The result is a complete ``script`` tag with statements to set the
+cookies.
+
+::
+
+	$ python Cookie_js_output.py
+	
+    <script type="text/javascript">
+    <!-- begin hiding
+    document.cookie = "another_cookie=\"second value\"";
+    // end hiding -->
+    </script>
+	        
+    <script type="text/javascript">
+    <!-- begin hiding
+    document.cookie = "mycookie=cookie_value";
+    // end hiding -->
+    </script>
+
+
+Deprecated Classes
+==================
+
+All of these examples have used :class:`SimpleCookie`. The
+:mod:`Cookie` module also provides two other classes,
+:class:`SerialCookie` and :class:`SmartCookie`. :class:`SerialCookie`
+can handle any values that can be pickled. :class:`SmartCookie`
+figures out whether a value needs to be unpickled or if it is a simple
+value. 
+
+.. warning::
+
+  Since both of these classes use :mod:`pickle`, they are potential
+  security holes and should not be used. It is safer to store state on
+  the server, and give the client a session key instead.
+
+.. seealso::
+
+    `Cookie <http://docs.python.org/library/cookie.html>`_
+        The standard library documentation for this module.
+
+    :mod:`cookielib`
+        The ``cookielib`` module, for working with cookies on the client-side.
+
+    :rfc:`2109`
+        HTTP State Management Mechanism
