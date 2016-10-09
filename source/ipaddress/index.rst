@@ -219,20 +219,28 @@ interface and network mask.
 	$ python3 ipaddress_interfaces.py
 	
 	IPv4Interface('10.9.0.6/24')
-	    network: 10.9.0.0/24
-	         ip: 10.9.0.6
-	  prefixlen: 10.9.0.6/24
-	    netmask: 10.9.0.6/255.255.255.0
-	   hostmask: 10.9.0.6/0.0.0.255
+	network:
+	   10.9.0.0/24
+	ip:
+	   10.9.0.6
+	prefixlen:
+	   10.9.0.6/24
+	netmask:
+	   10.9.0.6/255.255.255.0
+	hostmask:
+	   10.9.0.6/0.0.0.255
 	
 	IPv6Interface('fdfd:87b5:b475:5e3e:b1bc:e121:a8eb:14aa/64')
-	    network: fdfd:87b5:b475:5e3e::/64
-	         ip: fdfd:87b5:b475:5e3e:b1bc:e121:a8eb:14aa
-	  prefixlen: fdfd:87b5:b475:5e3e:b1bc:e121:a8eb:14aa/64
-	    netmask: fdfd:87b5:b475:5e3e:b1bc:e121:a8eb:14aa/ffff:ffff:f
-	fff:ffff::
-	   hostmask: fdfd:87b5:b475:5e3e:b1bc:e121:a8eb:14aa/::ffff:ffff
-	:ffff:ffff
+	network:
+	   fdfd:87b5:b475:5e3e::/64
+	ip:
+	   fdfd:87b5:b475:5e3e:b1bc:e121:a8eb:14aa
+	prefixlen:
+	   fdfd:87b5:b475:5e3e:b1bc:e121:a8eb:14aa/64
+	netmask:
+	   fdfd:87b5:b475:5e3e:b1bc:e121:a8eb:14aa/ffff:ffff:ffff:ffff::
+	hostmask:
+	   fdfd:87b5:b475:5e3e:b1bc:e121:a8eb:14aa/::ffff:ffff:ffff:ffff
 	
 
 .. {{{end}}}
