@@ -8,6 +8,10 @@ manage cloud services.  Python's standard library comes complete with
 modules for creating network services, as well as for accessing
 existing services remotely.
 
+The :mod:`ipaddress` module includes classes for validating,
+comparing, and otherwise operating on IPv4 and IPv6 network
+addresses.
+
 The low-level :mod:`socket` library provides direct access to the
 native C socket library, and can be used to communicate with any
 network service.  :mod:`selectors` provides a high-level interface for
@@ -25,6 +29,7 @@ the application.
 .. toctree::
    :maxdepth: 1
 
+   ipaddress/index
    socket/index
    selectors/index
    select/index
