@@ -162,6 +162,40 @@ iterating over the entire network.
 
 .. {{{end}}}
 
+In addition to the iterator protocol, networks support the ``in``
+operator to determine if an address is part of a network.
+
+.. literalinclude:: ipaddress_network_membership.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The implementation of ``in`` uses the network mask to test the
+address, so it is much more efficient than expanding the full list of
+addresses on the network.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'ipaddress_network_membership.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 ipaddress_network_membership.py
+	
+	10.9.0.6
+	is on 10.9.0.0/24
+	
+	10.7.0.31
+	is not on a known network
+	
+	fdfd:87b5:b475:5e3e:b1bc:e121:a8eb:14aa
+	is on fdfd:87b5:b475:5e3e::/64
+	
+	fe80::3840:c439:b25e:63b0
+	is not on a known network
+	
+
+.. {{{end}}}
+
 
 
 .. seealso::
