@@ -52,6 +52,7 @@ Complete XML-RPC client and server libraries are also included in
     urllib.robotparser/index
     base64/index
     http.server/index
+    http.cookies/index
     webbrowser/index
     uuid/index
     json/index
