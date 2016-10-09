@@ -143,9 +143,8 @@ automatically.
 	  value='5'
 	  coded_value='5'
 	
-	string_with_quotes
-	  Set-Cookie: string_with_quotes="He said\054 \"Hello\054 World!
-	\""
+	with_quotes
+	  Set-Cookie: with_quotes="He said\054 \"Hello\054 World!\""
 	  value='He said, "Hello, World!"'
 	  coded_value='"He said\\054 \\"Hello\\054 World!\\""'
 	
@@ -162,7 +161,7 @@ several cookie values, separated by semicolons (``;``).
 
 .. code-block:: none
 
-    Cookie: integer=5; string_with_quotes="He said, \"Hello, World!\""
+    Cookie: integer=5; with_quotes="He said, \"Hello, World!\""
 
 Depending on the web server and framework, cookies are either
 available directly from the headers or the ``HTTP_COOKIE`` environment
@@ -186,11 +185,11 @@ method.
 	
 	From constructor:
 	Set-Cookie: integer=5
-	Set-Cookie: string_with_quotes="He said, \"Hello, World!\""
+	Set-Cookie: with_quotes="He said, \"Hello, World!\""
 	
 	From load():
 	Set-Cookie: integer=5
-	Set-Cookie: string_with_quotes="He said, \"Hello, World!\""
+	Set-Cookie: with_quotes="He said, \"Hello, World!\""
 
 .. {{{end}}}
 

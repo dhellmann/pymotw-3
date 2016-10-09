@@ -13,7 +13,7 @@ from http import cookies
 
 HTTP_COOKIE = '; '.join([
     r'integer=5',
-    r'string_with_quotes="He said, \"Hello, World!\""',
+    r'with_quotes="He said, \"Hello, World!\""',
 ])
 
 print('From constructor:')
