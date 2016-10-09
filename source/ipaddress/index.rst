@@ -253,3 +253,7 @@ interface and network mask.
 
    * `An introduction to the ipaddress module
      <https://docs.python.org/3.5/howto/ipaddress.html#ipaddress-howto>`__
+
+   * `Wikipedia: IP address
+     <https://en.wikipedia.org/wiki/IP_address>`__ -- An introduction
+     to IP addresses and networks.
