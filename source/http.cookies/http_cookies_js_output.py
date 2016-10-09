@@ -9,9 +9,11 @@
 #end_pymotw_header
 
 from http import cookies
+import textwrap
 
 
 c = cookies.SimpleCookie()
 c['mycookie'] = 'cookie_value'
 c['another_cookie'] = 'second value'
-print(c.js_output())
+js_text = c.js_output()
+print(textwrap.dedent(js_text).lstrip())

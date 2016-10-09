@@ -216,19 +216,18 @@ cookies.
 
 	$ python3 http_cookies_js_output.py
 	
+	<script type="text/javascript">
+	<!-- begin hiding
+	document.cookie = "another_cookie=\"second value\"";
+	// end hiding -->
+	</script>
 	
-	        <script type="text/javascript">
-	        <!-- begin hiding
-	        document.cookie = "another_cookie=\"second value\"";
-	        // end hiding -->
-	        </script>
-	        
-	        <script type="text/javascript">
-	        <!-- begin hiding
-	        document.cookie = "mycookie=cookie_value";
-	        // end hiding -->
-	        </script>
-	        
+	<script type="text/javascript">
+	<!-- begin hiding
+	document.cookie = "mycookie=cookie_value";
+	// end hiding -->
+	</script>
+	
 
 .. {{{end}}}
 
