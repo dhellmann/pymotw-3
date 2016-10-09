@@ -21,7 +21,7 @@ def show_cookie(c):
         print('  coded_value =', morsel.coded_value)
         for name in morsel.keys():
             if morsel[name]:
-                print('  %s = %s' % (name, morsel[name]))
+                print('  {} = {}'.format(name, morsel[name]))
 
 c = cookies.SimpleCookie()
 
