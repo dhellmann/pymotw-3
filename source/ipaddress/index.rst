@@ -96,6 +96,37 @@ the addresses on the network available for hosts to use.
 
 .. {{{end}}}
 
+A network instance is iterable, and yields the addresses on the
+network.
+
+.. literalinclude:: ipaddress_network_iterate.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+This example only prints a few of the addresses, because an IPv6
+network can contain far more addresses than fit in the output.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'ipaddress_network_iterate.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 ipaddress_network_iterate.py
+	
+	IPv4Network('10.9.0.0/24')
+	10.9.0.0
+	10.9.0.1
+	10.9.0.2
+	
+	IPv6Network('fdfd:87b5:b475:5e3e::/64')
+	fdfd:87b5:b475:5e3e::
+	fdfd:87b5:b475:5e3e::1
+	fdfd:87b5:b475:5e3e::2
+	
+
+.. {{{end}}}
+
 
 
 .. seealso::
