@@ -66,8 +66,8 @@ be discarded.
 
 	$ python3 http_cookies_Morsel.py
 	
-	Set-Cookie: encoded_value_cookie="\"cookie_value\"";
-	Comment=Value has escaped quotes
+	Set-Cookie: encoded_value_cookie="\"cookie\054value\073\"";
+	Comment=Has escaped punctuation
 	Set-Cookie: expires_at_time=cookie_value; expires=Sat, 14 Feb
 	2009 19:30:14
 	Set-Cookie: restricted_cookie=cookie_value; Domain=PyMOTW;
@@ -92,9 +92,9 @@ be discarded.
 	  secure = True
 	
 	key = encoded_value_cookie
-	  value = "cookie_value"
-	  coded_value = "\"cookie_value\""
-	  comment = Value has escaped quotes
+	  value = "cookie,value;"
+	  coded_value = "\"cookie\054value\073\""
+	  comment = Has escaped punctuation
 
 .. {{{end}}}
 

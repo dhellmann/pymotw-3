@@ -27,8 +27,8 @@ c = cookies.SimpleCookie()
 
 # A cookie with a value that has to be encoded
 # to fit into the header
-c['encoded_value_cookie'] = '"cookie_value"'
-c['encoded_value_cookie']['comment'] = 'Value has escaped quotes'
+c['encoded_value_cookie'] = '"cookie,value;"'
+c['encoded_value_cookie']['comment'] = 'Has escaped punctuation'
 
 # A cookie that only applies to part of a site
 c['restricted_cookie'] = 'cookie_value'

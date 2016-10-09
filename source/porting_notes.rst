@@ -637,6 +637,19 @@ glob
 The new function :func:`escape` implements a work-around for searching
 for files with meta-characters in the name (:pyissue:`8402`).
 
+.. _porting-http.cookies:
+
+http.cookies
+------------
+
+.. index::
+   pair: porting; http.cookies
+
+In addition to escaping quotes, SimpleCookie also encodes commas and
+semi-colons in values to better reflect behavior in real browsers
+(:pyissue:`9824`).
+
+
 .. _porting-imaplib:
 
 imaplib
