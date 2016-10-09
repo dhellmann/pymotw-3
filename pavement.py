@@ -426,9 +426,12 @@ def migrate(options):
     (dest + '/__init__.py').remove()
     if source != module:
         # Rename any modules that have the old source module name to
-        # use the new source module name.
+        # use the new source module name. Since some modules are now
+        # part of packages, replace '.' with _' in the example
+        # filenames.
+        module_prefix = module.replace('.', '_')
         for srcfile in dest.glob(source + '_*.py'):
-            newname = srcfile.name.replace(source + '_', module + '_')
+            newname = srcfile.name.replace(source + '_', module_prefix + '_')
             srcfile.rename(dest + '/' + newname)
     sh('git add ' + dest)
     sh('git commit -m "%s: initial import"' % module)
