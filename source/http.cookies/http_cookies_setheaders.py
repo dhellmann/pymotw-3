@@ -8,8 +8,9 @@
 
 #end_pymotw_header
 
-import Cookie
+from http import cookies
 
-c = Cookie.SimpleCookie()
+
+c = cookies.SimpleCookie()
 c['mycookie'] = 'cookie_value'
 print(c)

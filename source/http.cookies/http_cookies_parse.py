@@ -8,19 +8,20 @@
 
 #end_pymotw_header
 
-import Cookie
+from http import cookies
+
 
 HTTP_COOKIE = '; '.join([
-        r'integer=5',
-        r'string_with_quotes="He said, \"Hello, World!\""',
-        ])
+    r'integer=5',
+    r'string_with_quotes="He said, \"Hello, World!\""',
+])
 
 print('From constructor:')
-c = Cookie.SimpleCookie(HTTP_COOKIE)
+c = cookies.SimpleCookie(HTTP_COOKIE)
 print(c)
 
 print()
 print('From load():')
-c = Cookie.SimpleCookie()
+c = cookies.SimpleCookie()
 c.load(HTTP_COOKIE)
 print(c)

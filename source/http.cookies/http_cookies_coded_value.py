@@ -8,9 +8,10 @@
 
 #end_pymotw_header
 
-import Cookie
+from http import cookies
 
-c = Cookie.SimpleCookie()
+
+c = cookies.SimpleCookie()
 c['integer'] = 5
 c['string_with_quotes'] = 'He said, "Hello, World!"'
 

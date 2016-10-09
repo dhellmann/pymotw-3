@@ -8,12 +8,13 @@
 
 #end_pymotw_header
 
-import Cookie
+from http import cookies
 import datetime
+
 
 def show_cookie(c):
     print(c)
-    for key, morsel in c.iteritems():
+    for key, morsel in c.items():
         print()
         print('key =', morsel.key)
         print('  value =', morsel.value)
@@ -22,9 +23,10 @@ def show_cookie(c):
             if morsel[name]:
                 print('  %s = %s' % (name, morsel[name]))
 
-c = Cookie.SimpleCookie()
+c = cookies.SimpleCookie()
 
-# A cookie with a value that has to be encoded to fit into the header
+# A cookie with a value that has to be encoded
+# to fit into the header
 c['encoded_value_cookie'] = '"cookie_value"'
 c['encoded_value_cookie']['comment'] = 'Value has escaped quotes'
 
@@ -36,12 +38,13 @@ c['restricted_cookie']['secure'] = True
 
 # A cookie that expires in 5 minutes
 c['with_max_age'] = 'expires in 5 minutes'
-c['with_max_age']['max-age'] = 300 # seconds
+c['with_max_age']['max-age'] = 300  # seconds
 
 # A cookie that expires at a specific time
 c['expires_at_time'] = 'cookie_value'
 time_to_live = datetime.timedelta(hours=1)
-expires = datetime.datetime(2009, 2, 14, 18, 30, 14) + time_to_live
+expires = (datetime.datetime(2009, 2, 14, 18, 30, 14) +
+           time_to_live)
 
 # Date format: Wdy, DD-Mon-YY HH:MM:SS GMT
 expires_at_time = expires.strftime('%a, %d %b %Y %H:%M:%S')

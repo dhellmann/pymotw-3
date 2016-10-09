@@ -31,10 +31,10 @@ client as part of the HTTP response:
 .. cog.out(run_script(cog.inFile, 'http_cookies_setheaders.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python http_cookies_setheaders.py
-
+	$ python3 http_cookies_setheaders.py
+	
 	Set-Cookie: mycookie=cookie_value
 
 .. {{{end}}}
@@ -62,39 +62,39 @@ be discarded.
 ..                    line_break_mode='wrap'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python http_cookies_Morsel.py
-
-	Set-Cookie: encoded_value_cookie="\"cookie_value\""; Comment=Value h
-	as escaped quotes
-	Set-Cookie: expires_at_time=cookie_value; expires=Sat, 14 Feb 2009 1
-	9:30:14
-	Set-Cookie: restricted_cookie=cookie_value; Domain=PyMOTW; Path=/sub
-	/path; secure
-	Set-Cookie: with_max_age="expires in 5 minutes"; Max-Age=300
+	$ python3 http_cookies_Morsel.py
 	
-	key = restricted_cookie
-	  value = cookie_value
-	  coded_value = cookie_value
-	  domain = PyMOTW
-	  secure = True
-	  path = /sub/path
+	Set-Cookie: encoded_value_cookie="\"cookie_value\"";
+	Comment=Value has escaped quotes
+	Set-Cookie: expires_at_time=cookie_value; expires=Sat, 14 Feb
+	2009 19:30:14
+	Set-Cookie: restricted_cookie=cookie_value; Domain=PyMOTW;
+	Path=/sub/path; Secure
+	Set-Cookie: with_max_age="expires in 5 minutes"; Max-Age=300
 	
 	key = with_max_age
 	  value = expires in 5 minutes
 	  coded_value = "expires in 5 minutes"
 	  max-age = 300
 	
-	key = encoded_value_cookie
-	  value = "cookie_value"
-	  coded_value = "\"cookie_value\""
-	  comment = Value has escaped quotes
-	
 	key = expires_at_time
 	  value = cookie_value
 	  coded_value = cookie_value
 	  expires = Sat, 14 Feb 2009 19:30:14
+	
+	key = restricted_cookie
+	  value = cookie_value
+	  coded_value = cookie_value
+	  domain = PyMOTW
+	  path = /sub/path
+	  secure = True
+	
+	key = encoded_value_cookie
+	  value = "cookie_value"
+	  coded_value = "\"cookie_value\""
+	  comment = Value has escaped quotes
 
 .. {{{end}}}
 
@@ -134,19 +134,20 @@ automatically.
 .. cog.out(run_script(cog.inFile, 'http_cookies_coded_value.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python http_cookies_coded_value.py
-
+	$ python3 http_cookies_coded_value.py
+	
 	integer
 	  Set-Cookie: integer=5
 	  value='5'
 	  coded_value='5'
 	
 	string_with_quotes
-	  Set-Cookie: string_with_quotes="He said, \"Hello, World!\""
+	  Set-Cookie: string_with_quotes="He said\054 \"Hello\054 World!
+	\""
 	  value='He said, "Hello, World!"'
-	  coded_value='"He said, \\"Hello, World!\\""'
+	  coded_value='"He said\\054 \\"Hello\\054 World!\\""'
 	
 
 .. {{{end}}}
@@ -159,7 +160,7 @@ return those cookies to the server on subsequent requests using a
 ``Cookie`` header. An incoming ``Cookie`` header string may contain
 several cookie values, separated by semicolons (``;``).
 
-::
+.. code-block:: none
 
     Cookie: integer=5; string_with_quotes="He said, \"Hello, World!\""
 
@@ -179,10 +180,10 @@ method.
 .. cog.out(run_script(cog.inFile, 'http_cookies_parse.py'))
 .. }}}
 
-::
+.. code-block:: none
 
-	$ python http_cookies_parse.py
-
+	$ python3 http_cookies_parse.py
+	
 	From constructor:
 	Set-Cookie: integer=5
 	Set-Cookie: string_with_quotes="He said, \"Hello, World!\""
@@ -208,38 +209,29 @@ method.
 The result is a complete ``script`` tag with statements to set the
 cookies.
 
-::
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'http_cookies_js_output.py'))
+.. }}}
 
-	$ python http_cookies_js_output.py
+.. code-block:: none
+
+	$ python3 http_cookies_js_output.py
 	
-    <script type="text/javascript">
-    <!-- begin hiding
-    document.cookie = "another_cookie=\"second value\"";
-    // end hiding -->
-    </script>
+	
+	        <script type="text/javascript">
+	        <!-- begin hiding
+	        document.cookie = "another_cookie=\"second value\"";
+	        // end hiding -->
+	        </script>
 	        
-    <script type="text/javascript">
-    <!-- begin hiding
-    document.cookie = "mycookie=cookie_value";
-    // end hiding -->
-    </script>
+	        <script type="text/javascript">
+	        <!-- begin hiding
+	        document.cookie = "mycookie=cookie_value";
+	        // end hiding -->
+	        </script>
+	        
 
-
-Deprecated Classes
-==================
-
-All of these examples have used :class:`SimpleCookie`. The
-:mod:`Cookie` module also provides two other classes,
-:class:`SerialCookie` and :class:`SmartCookie`. :class:`SerialCookie`
-can handle any values that can be pickled. :class:`SmartCookie`
-figures out whether a value needs to be unpickled or if it is a simple
-value. 
-
-.. warning::
-
-  Since both of these classes use :mod:`pickle`, they are potential
-  security holes and should not be used. It is safer to store state on
-  the server, and give the client a session key instead.
+.. {{{end}}}
 
 .. seealso::
 
