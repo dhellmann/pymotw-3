@@ -257,3 +257,7 @@ interface and network mask.
    * `Wikipedia: IP address
      <https://en.wikipedia.org/wiki/IP_address>`__ -- An introduction
      to IP addresses and networks.
+
+   * *Computer Networks (5th Edition)* -- By Andrew S. Tanenbaum and
+     David J. Wetherall. Published by Pearson, 2010. ISBN-10:
+     0132126958
