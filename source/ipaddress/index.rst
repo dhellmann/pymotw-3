@@ -127,6 +127,41 @@ network can contain far more addresses than fit in the output.
 
 .. {{{end}}}
 
+Iterating over the network yields addresses, but not all of them are
+valid for hosts. For example, the base address of the network and the
+broadcast address are both included. To find the addresses that can be
+used by regular hosts on the network, use the :func:`hosts` method,
+which produces a generator.
+
+.. literalinclude:: ipaddress_network_iterate_hosts.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+Comparing the output of this example with the previous example shows
+that the host addresses do not include the first values produced when
+iterating over the entire network.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'ipaddress_network_iterate_hosts.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 ipaddress_network_iterate_hosts.py
+	
+	IPv4Network('10.9.0.0/24')
+	10.9.0.1
+	10.9.0.2
+	10.9.0.3
+	
+	IPv6Network('fdfd:87b5:b475:5e3e::/64')
+	fdfd:87b5:b475:5e3e::1
+	fdfd:87b5:b475:5e3e::2
+	fdfd:87b5:b475:5e3e::3
+	
+
+.. {{{end}}}
+
 
 
 .. seealso::
