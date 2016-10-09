@@ -12,15 +12,15 @@ import Cookie
 import datetime
 
 def show_cookie(c):
-    print c
+    print(c)
     for key, morsel in c.iteritems():
-        print
-        print 'key =', morsel.key
-        print '  value =', morsel.value
-        print '  coded_value =', morsel.coded_value
+        print()
+        print('key =', morsel.key)
+        print('  value =', morsel.value)
+        print('  coded_value =', morsel.coded_value)
         for name in morsel.keys():
             if morsel[name]:
-                print '  %s = %s' % (name, morsel[name])
+                print('  %s = %s' % (name, morsel[name]))
 
 c = Cookie.SimpleCookie()
 

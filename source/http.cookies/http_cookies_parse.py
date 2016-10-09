@@ -15,12 +15,12 @@ HTTP_COOKIE = '; '.join([
         r'string_with_quotes="He said, \"Hello, World!\""',
         ])
 
-print 'From constructor:'
+print('From constructor:')
 c = Cookie.SimpleCookie(HTTP_COOKIE)
-print c
+print(c)
 
-print
-print 'From load():'
+print()
+print('From load():')
 c = Cookie.SimpleCookie()
 c.load(HTTP_COOKIE)
-print c
+print(c)
