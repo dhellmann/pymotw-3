@@ -6,7 +6,6 @@ Cookie -- HTTP Cookies
     :synopsis: Server-side HTTP cookie tools
 
 :Purpose: The Cookie module defines classes for parsing and creating HTTP cookie headers.
-:Python Version: 2.1 and later
 
 The :mod:`Cookie` module implements a parser for cookies that is
 mostly RFC 2109 compliant. The implementation is a little less
@@ -20,8 +19,8 @@ Cookies are used as state management for browser-based application,
 and as such are usually set by the server to be stored and returned by
 the client. The most trivial example of creating a cookie is
 
-.. include:: Cookie_setheaders.py
-    :literal:
+.. literalinclude:: Cookie_setheaders.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The output is a valid ``Set-Cookie`` header ready to be passed to the
@@ -48,8 +47,8 @@ the expiration, path, and domain. In fact, all of the RFC attributes
 for cookies can be managed through the :class:`Morsel` object
 representing the cookie value.
 
-.. include:: Cookie_Morsel.py
-    :literal:
+.. literalinclude:: Cookie_Morsel.py
+    :caption:
     :start-after: #end_pymotw_header
 
 This example includes two different methods for setting stored
@@ -120,8 +119,8 @@ Encoded Values
 The cookie header needs values to be encoded so they can be parsed
 properly.
 
-.. include:: Cookie_coded_value.py
-    :literal:
+.. literalinclude:: Cookie_coded_value.py
+    :caption:
     :start-after: #end_pymotw_header
 
 :attr:`Morsel.value` is always the decoded value of the cookie, while
@@ -167,8 +166,8 @@ Depending on the web server and framework, cookies are either
 available directly from the headers or the ``HTTP_COOKIE`` environment
 variable. 
 
-.. include:: Cookie_parse.py
-    :literal:
+.. literalinclude:: Cookie_parse.py
+    :caption:
     :start-after: #end_pymotw_header
 
 To decode them, pass the string without the header prefix to
@@ -201,8 +200,8 @@ JavaScript that adds cookies to a client. :class:`SimpleCookie` and
 :class:`Morsel` provide JavaScript output via the :func:`js_output`
 method.
 
-.. include:: Cookie_js_output.py
-    :literal:
+.. literalinclude:: Cookie_js_output.py
+    :caption:
     :start-after: #end_pymotw_header
 
 The result is a complete ``script`` tag with statements to set the
