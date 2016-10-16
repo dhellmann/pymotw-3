@@ -314,14 +314,13 @@ files on remote NFS servers, without requiring users to mount the path
 before accessing the file, create a class derived from
 :class:`BaseHandler` and with a method :func:`nfs_open`.
 
-The protocol-specific :func:`open` method is given a single argument, the
-:class:`Request` instance, and it should return an object with a
-:func:`read` method that can be used to read the data, an
-:func:`info` method to return the response headers, and
-:func:`geturl` to return the actual URL of the file being read. A
-simple way to achieve that is to create an instance of
-:class:`urllib.addurlinfo`, passing the headers, URL, and open file
-handle in to the constructor.
+The protocol-specific :func:`open` method is given a single argument,
+the :class:`Request` instance, and it should return an object with a
+:func:`read` method that can be used to read the data, an :func:`info`
+method to return the response headers, and :func:`geturl` to return
+the actual URL of the file being read. A simple way to achieve that is
+to create an instance of :class:`urllib.response.addinfourl`, passing
+the headers, URL, and open file handle in to the constructor.
 
 .. literalinclude:: urllib_request_nfs_handler.py
     :caption:
