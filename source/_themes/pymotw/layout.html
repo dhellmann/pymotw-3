@@ -48,22 +48,22 @@
     <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
       <a class="pure-menu-heading" href="{{ pathto(master_doc) }}">PyMOTW-3</a>
 
+      <ul id="top-menu">
+        <li class="pure-menu-selected"><a href="{{ pathto('py-modindex') }}"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+        <li class="pure-menu-selected"><a href="{{ pathto('genindex') }}"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+        <li class="pure-menu-selected">{{ twitter_link() }}</a>
+        <li class="pure-menu-selected">{{ rss_link() }}</li>
+      </ul>
+
+    </div>
+
+    <div class="pure-menu pure-menu-open pure-menu-vertical" id="breadcrumbs-menu">
       {# Always leave the UL present, even if we don't put anything in
          it, to ensure the menubar height is calculated properly. #}
       <ul id="breadcrumbs">
-      {%- if parents %}
-        <li class="pure-menu-separator"></li>
         {%- for parent in parents %}
-          <li class="pure-menu-selected"><a href="{{ parent.link|e }}"><i class="fa fa-arrow-circle-up"></i> {{ parent.title }}</a></li>
+        <li class="pure-menu-selected"><a href="{{ parent.link|e }}"><i class="fa fa-arrow-circle-up"></i> {{ parent.title }}</a></li>
         {%- endfor %}
-      {% endif %}
-      </ul>
-
-      <ul id="top-menu">
-        <li><a href="{{ pathto('py-modindex') }}"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
-        <li><a href="{{ pathto('genindex') }}"><i class="fa fa-italic fa-lg"></i> Index</a></li>
-        <li>{{ twitter_link() }}</a>
-        <li>{{ rss_link() }}</li>
       </ul>
     </div>
 

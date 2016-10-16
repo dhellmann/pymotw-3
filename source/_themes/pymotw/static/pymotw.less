@@ -79,15 +79,28 @@ a:visited:hover {
 #site-menu {
 	background: @menu-background;
 }
+#breadcrumbs-menu {
+	background: @menu-background;
+	border: 0;
+}
 
 #site-menu li {
 	background: @menu-background;
+}
+#breadcrumbs-menu li {
+	background: @menu-background;
+	border: 0;
 }
 
 #site-menu a {
 	color: @menu-foreground;
 	background-color: @menu-background;
 }
+#breadcrumbs-menu a {
+	color: @menu-foreground;
+	background-color: @menu-background;
+}
+
 /* only change the hover settings for items *in* the menu list, which
    doesn't include the site tile link on the left */
 #site-menu li a:hover {
@@ -102,10 +115,15 @@ a:visited:hover {
 #site-menu .pure-menu-heading {
 	text-transform: none;
 	font-size: 130%;
+	padding-right: 0;
 }
 
 #top-menu {
 	float: right;
+}
+
+.pure-menu li a {
+	padding: 5px 10px;
 }
 
 /* The menu in the sidebar is invisible in the default configuration
@@ -587,6 +605,11 @@ div.admonition dt {
 	}
 
 	#site-menu {
+		.hidden-phone;
+		border-bottom: none;
+	}
+
+	#breadcrumbs-menu {
 		.hidden-phone;
 		border-bottom: none;
 	}
