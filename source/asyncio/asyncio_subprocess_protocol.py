@@ -14,8 +14,8 @@ class DFProtocol(asyncio.SubprocessProtocol):
 
     FD_NAMES = ['stdin', 'stdout', 'stderr']
 
-    def __init__(self, done):
-        self.done = done
+    def __init__(self, done_future):
+        self.done = done_future
         self.buffer = bytearray()
         super().__init__()
 

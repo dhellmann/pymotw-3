@@ -72,8 +72,8 @@ client_completed = asyncio.Future()
 
 client_factory = functools.partial(
     EchoClient,
-    MESSAGES,
-    client_completed,
+    messages=MESSAGES,
+    future=client_completed,
 )
 factory_coroutine = event_loop.create_connection(
     client_factory,

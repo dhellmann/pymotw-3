@@ -20,15 +20,15 @@ event_loop = asyncio.get_event_loop()
 
 event_loop.add_signal_handler(
     signal.SIGHUP,
-    functools.partial(signal_handler, 'SIGHUP'),
+    functools.partial(signal_handler, name='SIGHUP'),
 )
 event_loop.add_signal_handler(
     signal.SIGUSR1,
-    functools.partial(signal_handler, 'SIGUSR1'),
+    functools.partial(signal_handler, name='SIGUSR1'),
 )
 event_loop.add_signal_handler(
     signal.SIGINT,
-    functools.partial(signal_handler, 'SIGINT'),
+    functools.partial(signal_handler, name='SIGINT'),
 )
 
 
