@@ -253,6 +253,9 @@ interface and network mask.
 
    * :pydoc:`ipaddress`
 
+   * :pep:`3144` -- IP Address Manipulation Library for the Python
+     Standard Library
+
    * `An introduction to the ipaddress module
      <https://docs.python.org/3.5/howto/ipaddress.html#ipaddress-howto>`__
 
