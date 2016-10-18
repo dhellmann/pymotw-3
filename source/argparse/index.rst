@@ -192,10 +192,10 @@ configuration needed for each to work.
    :caption:
    :start-after: #end_pymotw_header
 
-The ``-t`` and ``-f`` options are configured to modify the same option
-value, so they act as a Boolean switch.  The *dest* values for ``-A``
-and ``-B`` are the same so that their constant values are appended to
-the same list.
+The ``-t`` and ``-f`` options are configured to modify different
+option values, each storing either True or False.  The *dest* values
+for ``-A`` and ``-B`` are the same so that their constant values are
+appended to the same list.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'argparse_action.py -h'))
