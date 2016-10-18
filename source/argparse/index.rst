@@ -230,7 +230,8 @@ the same list.
 	
 	simple_value     = 'value'
 	constant_value   = None
-	boolean_switch   = False
+	boolean_t        = False
+	boolean_f        = True
 	collection       = []
 	const_collection = []
 
@@ -238,7 +239,8 @@ the same list.
 	
 	simple_value     = None
 	constant_value   = 'value-to-store'
-	boolean_switch   = False
+	boolean_t        = False
+	boolean_f        = True
 	collection       = []
 	const_collection = []
 
@@ -246,7 +248,8 @@ the same list.
 	
 	simple_value     = None
 	constant_value   = None
-	boolean_switch   = True
+	boolean_t        = True
+	boolean_f        = True
 	collection       = []
 	const_collection = []
 
@@ -254,7 +257,8 @@ the same list.
 	
 	simple_value     = None
 	constant_value   = None
-	boolean_switch   = False
+	boolean_t        = False
+	boolean_f        = False
 	collection       = []
 	const_collection = []
 
@@ -262,7 +266,8 @@ the same list.
 	
 	simple_value     = None
 	constant_value   = None
-	boolean_switch   = False
+	boolean_t        = False
+	boolean_f        = True
 	collection       = ['one', 'two', 'three']
 	const_collection = []
 
@@ -270,7 +275,8 @@ the same list.
 	
 	simple_value     = None
 	constant_value   = None
-	boolean_switch   = False
+	boolean_t        = False
+	boolean_f        = True
 	collection       = []
 	const_collection = ['value-2-to-append', 'value-1-to-append']
 

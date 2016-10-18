@@ -22,11 +22,11 @@ parser.add_argument('-c', action='store_const',
 
 parser.add_argument('-t', action='store_true',
                     default=False,
-                    dest='boolean_switch',
+                    dest='boolean_t',
                     help='Set a switch to true')
 parser.add_argument('-f', action='store_false',
-                    default=False,
-                    dest='boolean_switch',
+                    default=True,
+                    dest='boolean_f',
                     help='Set a switch to false')
 
 parser.add_argument('-a', action='append',
@@ -50,6 +50,7 @@ parser.add_argument('--version', action='version',
 results = parser.parse_args()
 print('simple_value     = {!r}'.format(results.simple_value))
 print('constant_value   = {!r}'.format(results.constant_value))
-print('boolean_switch   = {!r}'.format(results.boolean_switch))
+print('boolean_t        = {!r}'.format(results.boolean_t))
+print('boolean_f        = {!r}'.format(results.boolean_f))
 print('collection       = {!r}'.format(results.collection))
 print('const_collection = {!r}'.format(results.const_collection))
