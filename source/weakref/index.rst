@@ -164,8 +164,8 @@ collector through ``f``.
 
 .. {{{end}}}
 
-Using a bound method of the tracked object as the callable is another
-way to avoid having the object finalized properly.
+Using a bound method of a tracked object as the callable can also
+prevent an object from being finalized properly.
 
 .. literalinclude:: weakref_finalize_reference_method.py
    :caption:
