@@ -72,7 +72,7 @@ value.
     :caption:
     :start-after: #end_pymotw_header
 
-When the same data is manipulates using :func:`bisect_left` and
+When the same data is manipulated using :func:`bisect_left` and
 :func:`insort_left`, the results are the same sorted list but the
 insert positions are different for the duplicate values.
 
