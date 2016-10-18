@@ -953,6 +953,20 @@ shelve
 The default output format for :mod:`shelve` may create a file with a
 ``.db`` extension added to the name given to :func:`shelve.open`.
 
+.. _porting-signal:
+
+signal
+------
+
+.. index::
+   pair: porting; signal
+
+:pep:`475` means that system calls interrupted and returning with
+``EINTR`` are retried. This changes the behavior of signal handlers
+and other system calls, since now after the signal handler returns the
+interrupted call will be retried, unless the signal handler raises an
+exception. Refer to the PEP documentation for complete details.
+
 .. _porting-socket:
 
 socket

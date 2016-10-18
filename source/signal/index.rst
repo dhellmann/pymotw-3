@@ -162,8 +162,10 @@ blocking indefinitely on an I/O operation or other system call.
     :caption:
     :start-after: #end_pymotw_header
 
-In this example, the call to :func:`sleep` does not last the full
-four seconds.
+In this example, the call to :func:`sleep` is interrupted, but then
+continues after the signal is processed so the message printed after
+:func:`sleep` returns shows that the program was paused for at least
+as long as the sleep duration.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'signal_alarm.py'))
@@ -272,6 +274,8 @@ The alarm does not abort the :func:`sleep` call in
 .. seealso::
 
    * :pydoc:`signal`
+
+   * :pep:`475` -- Retry system calls failing with EINTR
 
    * :mod:`subprocess` -- More examples of sending signals to
      processes.
