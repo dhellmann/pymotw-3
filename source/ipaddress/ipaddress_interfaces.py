@@ -22,7 +22,7 @@ for ip in ADDRESSES:
     print('{!r}'.format(iface))
     print('network:\n  ', iface.network)
     print('ip:\n  ', iface.ip)
-    print('prefixlen:\n  ', iface.with_prefixlen)
+    print('IP with prefixlen:\n  ', iface.with_prefixlen)
     print('netmask:\n  ', iface.with_netmask)
     print('hostmask:\n  ', iface.with_hostmask)
     print()
