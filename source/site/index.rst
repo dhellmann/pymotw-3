@@ -187,17 +187,26 @@ issue.
 
 The path changes by :func:`addsitedir` go beyond simply appending the
 argument to :data:`sys.path`.  If the directory given to
-:func:`addsitedir()` includes any files matching the pattern
-``*.pth``, they are loaded as path configuration files.  For example,
-if ``with_pth/pymotw.pth`` contains:
+:func:`addsitedir` includes any files matching the pattern ``*.pth``,
+they are loaded as path configuration files. Given a directory
+structure like the following
+
+.. code-block:: none
+	
+	with_pth
+	├── pymotw.pth
+	└── subdir
+	    └── mymodule.py
+
+
+If ``with_pth/pymotw.pth`` contains
 
 .. literalinclude:: with_pth/pymotw.pth
-   :caption:
 
-and ``mymodule.py`` is copied to ``with_pth/subdir/mymodule.py``, then
-it can be imported by adding ``with_pth`` as a site directory, even
-though the module is not in that directory because both ``with_pth`` and
-``with_pth/subdir`` are added to the import path.
+then ``with_pth/subdir/mymodule.py`` can be imported by adding
+``with_pth`` as a site directory, even though the module is not in
+that directory because both ``with_pth`` and ``with_pth/subdir`` are
+added to the import path.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'site_addsitedir.py with_pth'))
