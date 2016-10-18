@@ -103,11 +103,6 @@ insert positions are different for the duplicate values.
 .. {{{end}}}
 
 
-In addition to the Python implementation, there is a faster C implementation
-available. If the C version is present, that implementation overrides the pure
-Python implementation automatically when :mod:`bisect` is imported.
-
-
 .. seealso::
 
     * :pydoc:`bisect`
