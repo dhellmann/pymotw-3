@@ -22,6 +22,10 @@ XPath expressions, and creating new or modifying existing documents.
    * :pydoc:`xml.etree.ElementTree` -- The standard library
      documentation for this module.
 
+   * `defusedxml <https://pypi.python.org/pypi/defusedxml>`__ -- A
+     package with fixes for various entity-expansion denial of service
+     vulnerabilities useful for working with untrusted XML data.
+
    * `ElementTree Overview
      <http://effbot.org/zone/element-index.htm>`__ -- Fredrick Lundh's
      original documentation and links to the development versions of
