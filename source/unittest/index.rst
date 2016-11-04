@@ -780,7 +780,7 @@ success".
    * `nose <https://nose.readthedocs.io/en/latest/>`_ -- Third-party
      test runner with sophisticated discovery features.
 
-   * `py.test <http://codespeak.net/py/dist/test/>`_ -- A popular
+   * `pytest <http://doc.pytest.org/en/latest/>`_ -- A popular
      third-party test runner with support for distributed execution
      and an alternate fixture management system.
 
