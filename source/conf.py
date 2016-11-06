@@ -235,6 +235,10 @@ preamble_parts = [
 % Start preamble from conf.py
 ''',
 
+# r'''
+# % From Pearson template
+# \usepackage[twoside,dvips]{geometry}
+# ''',
 
 r'''
 % Enable unicode and use Courier New to ensure the card suit
@@ -255,17 +259,45 @@ r'''
 # \doublespacing
 # ''',
 
-'''
+# Using these geometry settings with the sphinx styles causes
+# rendering issues with the footnotes overrunning the page footer.
+# Maybe a setting missing somewhere?
+
+# r'''
+# % Geometry settings from Pearson template
+# \usepackage[twoside,dvips]{geometry}
+# \geometry{%
+# paperwidth=7in,
+# paperheight=9.25in,
+# lmargin=.75in,
+# rmargin=.75in,
+# bmargin=.625in,
+# tmargin=.625in,
+# width=5.5in,
+# height=7.525in, %7.3
+# marginparwidth=0.35in,
+# headheight=0.2in,
+# headsep=.25in,
+# footskip=.025in}
+# ''',
+
+r'''
 %% Load the crop package
 % This form, with the "letter" option, uses a full letter page size
 % and draws the box around the real page.
 \usepackage[letter,center,dvips]{crop}
+
 % This form sets the width and height of the page in a way
 % that means there is no margin around the outside, and the PDF
 % shows the real page size.
 %\usepackage[width=7truein,height=9.25truein,center,dvips]{crop}
+
+% This form sets the paper size to larger than the page size
+% so the crop box shows up.
+% \special{papersize=11in,8.5in}
+
 % Draws the crop-box around the pages for margin checking
-\crop[frame]
+% \crop[frame]
 %%
 ''',
 
