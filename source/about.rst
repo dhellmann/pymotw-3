@@ -4,10 +4,9 @@ About Python Module of the Week
 
 PyMOTW-3 is a series of articles written by `Doug Hellmann
 <https://doughellmann.com/blog/>`_.  to demonstrate how to use the modules of
-the Python_ 3 standard library. It is based on the original PyMOTW_
+the Python 3 standard library. It is based on the original PyMOTW_
 series, which covered Python 2.7.
 
-.. _Python: https://www.python.org/
 .. _PyMOTW: https://pymotw.com/2/
 
 See the project home page at https://pymotw.com/3/ for updates.
