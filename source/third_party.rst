@@ -117,6 +117,27 @@ as OpenSSL.
 
 .. _cryptography: https://cryptography.io/en/latest/
 
+Concurrency with Processes, Threads, and Coroutines
+===================================================
+
+The event loop built into :mod:`asyncio` is a reference implementation
+based on the abstract API defined by the module. It is possible to
+replace the event loop with a library such as uvloop_, which gives
+better performance in exchange for adding extra application
+dependencies.
+
+The curio_ package is another concurrency package similar to asyncio
+but with a smaller API that treats everything as a coroutine and does
+not support callbacks in the way asyncio does.
+
+The Twisted_ library provides an extensible framework for Python
+programming, with special focus on event-based network programming and
+multiprotocol integration. It is mature, robust, and well-documented.
+
+.. _curio: https://github.com/dabeaz/curio
+.. _uvloop: http://uvloop.readthedocs.io
+.. _Twisted: https://twistedmatrix.com/
+
 The Internet
 ============
 

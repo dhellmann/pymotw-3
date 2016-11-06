@@ -78,10 +78,6 @@ working on.
     * `trollius <https://pypi.python.org/pypi/trollius>`__ -- A port
       of Tulip, the original version of asyncio, to Python 2.
 
-    * `Twisted <https://twistedmatrix.com/>`__ -- An extensible
-      framework for Python programming, with special focus on
-      event-based network programming and multiprotocol integration.
-
     * `The New asyncio Module in Python 3.4: Event Loops
       <http://www.drdobbs.com/open-source/the-new-asyncio-module-in-python-34-even/240168401>`__
       -- Article by Gastón Hillar in Dr. Dobb's
