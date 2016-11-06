@@ -38,4 +38,5 @@ Python and tools used.
    importing
    unix
    porting_notes
+   third_party
    about

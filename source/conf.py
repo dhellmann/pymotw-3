@@ -100,9 +100,7 @@ release = ''
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = [
-    'third_party.*',
-]
+exclude_patterns = []
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -316,9 +314,13 @@ latex_elements = {
 # (source start file, target name, title, author,
 #  documentclass [howto/manual]).
 latex_documents = [
-    ('index', 'py3_stdlib.tex',
-     'The Python 3 Standard Library By Example',
-     'Doug Hellmann', 'manual'),
+    ('index',  # startdocname
+     'py3_stdlib.tex',  # targetname
+     'The Python 3 Standard Library By Example',  # title
+     'Doug Hellmann',  # author
+     'manual',  # documentclass
+     True,  # toctree_only
+    ),
 ]
 
 latex_additional_files = [
@@ -339,9 +341,7 @@ latex_show_pagerefs = True
 latex_show_urls = 'footnote'
 
 # Documents to append as an appendix to all manuals.
-latex_appendices = [
-    'third_party',
-]
+latex_appendices = []
 
 # If false, no module index is generated.
 #latex_domain_indices = True
