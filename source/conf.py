@@ -235,11 +235,6 @@ preamble_parts = [
 % Start preamble from conf.py
 ''',
 
-# r'''
-# % From Pearson template
-# \usepackage[twoside,dvips]{geometry}
-# ''',
-
 r'''
 % Enable unicode and use Courier New to ensure the card suit
 % characters that are part of the 'random' module examples
