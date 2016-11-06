@@ -310,7 +310,7 @@ latex_elements = {
     #'papersize': 'letterpaper',
 
     # The font size ('10pt', '11pt' or '12pt').
-    #'pointsize': '10pt',
+    'pointsize': '11pt',
 
     # Use a chapter heading that does not spell out the chapter
     # number.
