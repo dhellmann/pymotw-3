@@ -294,10 +294,10 @@ r'''
 
 % This form sets the paper size to larger than the page size
 % so the crop box shows up.
-% \special{papersize=11in,8.5in}
+%\special{papersize=11in,8.5in}
 
 % Draws the crop-box around the pages for margin checking
-% \crop[frame]
+%\crop[frame]
 %%
 ''',
 
