@@ -231,6 +231,11 @@ htmlhelp_basename = 'PyMOTW-3doc'
 # -- Options for LaTeX output ------------------------------------------------
 preamble_parts = [
 
+'''
+% Start preamble from conf.py
+''',
+
+
 r'''
 % Enable unicode and use Courier New to ensure the card suit
 % characters that are part of the 'random' module examples
@@ -263,6 +268,8 @@ r'''
 \crop[frame]
 %%
 ''',
+
+'% End preamble from conf.py',
 
 ]
 
