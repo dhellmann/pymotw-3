@@ -168,6 +168,14 @@ request parsing, URL routing, and cookie handling.
 .. _Django: http://www.djangoproject.com/
 .. _Pyramid: https://trypyramid.com/
 
+Many existing libraries do not work with :mod:`asyncio` because they
+do not integrate with the event loop. A new set of libraries such as
+aiohttp_ is being created to fill this gap as part of the `aio-libs`_
+project.
+
+.. _aiohttp: http://aiohttp.readthedocs.io/
+.. _aio-libs: https://github.com/aio-libs
+
 Email
 =====
 
