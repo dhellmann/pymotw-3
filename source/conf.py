@@ -332,6 +332,8 @@ latex_documents = [
 
 latex_additional_files = [
     'images/replacement-character.png',
+    '../pearson/newphstyle.cls',
+    '../pearson/newphstyle.sty',
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
