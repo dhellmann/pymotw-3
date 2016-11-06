@@ -339,14 +339,23 @@ latex_elements = {
     'utf8extra': '',
 
     # The paper size ('letterpaper' or 'a4paper').
-    #'papersize': 'letterpaper',
+    # 'papersize': 'twoside',
+    'papersize': 'letterpaper',
+
+    # Options for documentclass directive, values from Pearson template
+    'classoptions': ',letterpaper,english',
+    # 'docclass': 'newphstyle',
+    # 'wrapperclass': 'newphstyle',
 
     # The font size ('10pt', '11pt' or '12pt').
     'pointsize': '11pt',
+    # 'pointsize': '10pt',
 
     # Use a chapter heading that does not spell out the chapter
     # number.
     'fncychap': r'\usepackage[Sonny]{fncychap}',
+    # Pearson template does not use fncychap at all?
+    # 'fncychap': '',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
