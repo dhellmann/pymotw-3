@@ -35,6 +35,7 @@ object and stops the loop when the coroutine exits by returning.
 
 	$ python3 asyncio_coroutine.py
 	
+	starting coroutine
 	entering event loop
 	in coroutine
 	closing event loop
