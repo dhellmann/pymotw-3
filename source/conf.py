@@ -119,6 +119,8 @@ exclude_patterns = []
 
 # The name of the Pygments (syntax highlighting) style to use.
 #pygments_style = 'sphinx'
+if os.environ.get('_PYGMENTS_STYLE'):
+    pygments_style = os.environ['_PYGMENTS_STYLE']
 
 # The default syntax highlighter is 'python', which assumes python 2
 # syntax. Set it to 'python3' since all of the examples are python 3.

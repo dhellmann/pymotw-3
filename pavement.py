@@ -62,6 +62,7 @@ options(
         builddir='build',
         sourcedir='source',
         pdflatex='xelatex',
+        pygments_style='bw',
     ),
 
     linkcheck=Bunch(
@@ -284,6 +285,7 @@ def pdf():
     """Generate the PDF book.
     """
     options.order('pdf', 'sphinx', add_rest=True)
+    os.environ['_PYGMENTS_STYLE'] = options.pygments_style
     paverutils.pdf(options)
     return
 
