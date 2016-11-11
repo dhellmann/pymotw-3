@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Using groupby()
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from itertools import *
 from operator import itemgetter
 

@@ -6,8 +6,8 @@
 """
 """
 
-#end_pymotw_header
 
+#end_pymotw_header
 # Set up gnureadline as readline if installed.
 try:
     import gnureadline

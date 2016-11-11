@@ -5,8 +5,8 @@
 #
 """All configuration variables.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import sysconfig
 
 print('User base directory:',

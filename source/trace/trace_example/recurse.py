@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 
 def recurse(level):
     print('recurse({})'.format(level))

@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import json
 
 encoder = json.JSONEncoder()

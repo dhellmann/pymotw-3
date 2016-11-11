@@ -5,8 +5,8 @@
 #
 """Demonstrate WeakValueDictionary.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import gc
 from pprint import pprint
 import weakref

@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import zlib
 import logging
 import socketserver

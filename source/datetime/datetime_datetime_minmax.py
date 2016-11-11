@@ -5,8 +5,8 @@
 #
 """The range of valid datetime values.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import datetime
 
 print('Earliest  :', datetime.datetime.min)

@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import imaplib
 
 from imaplib_connect import open_connection

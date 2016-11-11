@@ -5,8 +5,8 @@
 #
 """The Python interpreter version
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import sysconfig
 import sys
 

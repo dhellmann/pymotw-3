@@ -5,8 +5,8 @@
 #
 """log10 example
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import math
 
 print('{:2} {:^12} {:^10} {:^20} {:8}'.format(

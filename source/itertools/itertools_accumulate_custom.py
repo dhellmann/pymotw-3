@@ -2,8 +2,8 @@
 # encoding: utf-8
 """combine values
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from itertools import *
 
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Check access rights on a file
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import os
 
 print('Testing:', __file__)

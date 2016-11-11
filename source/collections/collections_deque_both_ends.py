@@ -5,8 +5,8 @@
 #
 """Burning a candle at both ends.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import collections
 import threading
 import time

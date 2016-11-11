@@ -26,8 +26,8 @@
 """Sample of TextCalendar output.
 
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import calendar
 
 c = calendar.HTMLCalendar(calendar.SUNDAY)

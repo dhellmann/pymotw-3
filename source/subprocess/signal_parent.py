@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Illustrate using Unix signals and subprocess.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import os
 import signal
 import subprocess

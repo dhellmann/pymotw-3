@@ -5,8 +5,8 @@
 #
 """String and binary representations of addresses.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import binascii
 import socket
 import struct

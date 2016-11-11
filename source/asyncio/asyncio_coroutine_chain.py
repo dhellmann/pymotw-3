@@ -4,8 +4,8 @@
 # Copyright (c) 2014 Doug Hellmann.  All rights reserved.
 """Starting one coroutine from within another
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import asyncio
 
 

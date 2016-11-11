@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from xmlrpc.server import SimpleXMLRPCServer
 from xmlrpc.client import Binary
 import datetime

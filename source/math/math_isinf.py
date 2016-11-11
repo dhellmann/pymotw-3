@@ -5,8 +5,8 @@
 #
 """Checking for overflow or infinite values.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import math
 
 print('{:^3} {:6} {:6} {:6}'.format(

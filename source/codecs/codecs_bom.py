@@ -5,8 +5,8 @@
 #
 """Byte-order markers
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import codecs
 from codecs_to_hex import to_hex
 

@@ -5,8 +5,8 @@
 #
 """Showing exception properties in a traceback
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import cgitb
 cgitb.enable(format='text')
 

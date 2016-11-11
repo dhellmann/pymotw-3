@@ -5,8 +5,8 @@
 #
 """Time resolution.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import datetime
 
 for m in [1, 0, 0.1, 0.6]:

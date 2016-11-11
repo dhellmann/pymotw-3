@@ -5,8 +5,8 @@
 #
 """Floating point modulo
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import math
 
 print('{:^4} {:^4} {:^5} {:^5}'.format(

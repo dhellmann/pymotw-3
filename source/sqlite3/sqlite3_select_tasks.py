@@ -5,8 +5,8 @@
 #
 """Query tasks in the database.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import sqlite3
 
 db_filename = 'todo.db'

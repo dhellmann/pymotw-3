@@ -5,8 +5,8 @@
 #
 """Simple example with urllib2.urlopen().
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from urllib import request
 
 response = request.urlopen('http://localhost:8080/')

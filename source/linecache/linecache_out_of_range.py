@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Example use of linecache module.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import linecache
 from linecache_data import *
 

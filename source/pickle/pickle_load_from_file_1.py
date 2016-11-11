@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Load pickles from a file
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import pickle
 import pprint
 import sys

@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import gettext
 
 catalogs = gettext.find('example', 'locale', all=True)

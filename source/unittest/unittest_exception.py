@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Unit tests to verify exceptions.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import unittest
 
 

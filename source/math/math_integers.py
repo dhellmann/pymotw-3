@@ -5,8 +5,8 @@
 #
 """Converting floats to ints.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import math
 
 HEADINGS = ('i', 'int', 'trunk', 'floor', 'ceil')

@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import bz2
 
 lorem = open('lorem.txt', 'rt').read().encode('utf-8')

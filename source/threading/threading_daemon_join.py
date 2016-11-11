@@ -5,8 +5,8 @@
 #
 """Joining daemon threads to prevent premature exit.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import threading
 import time
 import logging

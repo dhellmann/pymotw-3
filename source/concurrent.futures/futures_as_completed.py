@@ -6,8 +6,8 @@
 #
 """Running tasks in a managed group of threads.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from concurrent import futures
 import random
 import time

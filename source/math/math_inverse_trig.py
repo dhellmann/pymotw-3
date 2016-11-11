@@ -5,8 +5,8 @@
 #
 """Inverse trigonometric functions
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import math
 
 for r in [0, 0.5, 1]:

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Echo server example for SocketServer
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import socketserver
 
 

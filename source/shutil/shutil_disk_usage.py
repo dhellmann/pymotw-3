@@ -6,8 +6,8 @@
 #
 """How much disk space is used?
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import shutil
 
 total_b, used_b, free_b = shutil.disk_usage('.')

@@ -5,8 +5,8 @@
 #
 """Sampling from sequences
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import random
 
 with open('/usr/share/dict/words', 'rt') as f:

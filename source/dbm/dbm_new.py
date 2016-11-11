@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import dbm
 
 with dbm.open('/tmp/example.db', 'n') as db:

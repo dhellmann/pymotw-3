@@ -5,8 +5,8 @@
 #
 """Constants in the math module.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import math
 
 print('  π: {:.30f}'.format(math.pi))

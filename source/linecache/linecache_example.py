@@ -3,8 +3,8 @@
 
 See http://blog.doughellmann.com/2007/04/pymotw-linecache.html
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import linecache
 import os
 import tempfile

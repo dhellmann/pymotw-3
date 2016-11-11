@@ -6,8 +6,8 @@ Time various ways to populate and check a dictionary
 using a long list of strings and integers.
 
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import textwrap
 import timeit
 import sys

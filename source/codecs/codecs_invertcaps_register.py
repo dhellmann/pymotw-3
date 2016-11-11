@@ -5,8 +5,8 @@
 #
 """Set up the invertcaps codec.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import codecs
 
 from codecs_invertcaps_charmap import encoding_map, decoding_map

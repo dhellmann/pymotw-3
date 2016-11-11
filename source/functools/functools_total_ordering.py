@@ -5,8 +5,8 @@
 #
 """Fill in missing rich comparison methods.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import functools
 import inspect
 from pprint import pprint

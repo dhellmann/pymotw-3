@@ -5,8 +5,8 @@
 #
 """Double-ended queue with a maximum length.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import collections
 import random
 

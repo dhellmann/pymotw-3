@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from contextlib import redirect_stdout, redirect_stderr
 import io
 import sys

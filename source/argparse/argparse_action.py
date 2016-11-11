@@ -5,8 +5,8 @@
 #
 """Show the built-in argument actions.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import argparse
 
 parser = argparse.ArgumentParser()

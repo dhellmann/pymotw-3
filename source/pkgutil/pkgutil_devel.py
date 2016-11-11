@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import demopkg2
 print('demopkg2           :', demopkg2.__file__)
 

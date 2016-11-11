@@ -5,8 +5,8 @@
 #
 """Tests that modify module-level global values.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 _module_data = {}
 
 

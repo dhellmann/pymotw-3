@@ -5,8 +5,8 @@
 #
 """Show the objects with references to a given object.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import gc
 import pprint
 import queue

@@ -28,8 +28,8 @@ Print a list of the dates for the 2nd Thursday of every month
 for a year.
 
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import calendar
 
 # Show every month

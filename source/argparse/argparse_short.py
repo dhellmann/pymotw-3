@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import argparse
 
 parser = argparse.ArgumentParser(description='Short sample app')

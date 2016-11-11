@@ -5,8 +5,8 @@
 #
 """Calculate the distance to a point.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import math
 
 print('{:^8} {:^8} {:^8} {:^8} {:^8}'.format(

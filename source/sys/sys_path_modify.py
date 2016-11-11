@@ -26,8 +26,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import imp
 import os
 import sys

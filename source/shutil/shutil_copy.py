@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Copying a file
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import glob
 import os
 import shutil

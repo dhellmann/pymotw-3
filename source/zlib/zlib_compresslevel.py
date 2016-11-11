@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import zlib
 
 input_data = b'Some repeated text.\n' * 1024

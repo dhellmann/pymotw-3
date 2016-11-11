@@ -5,8 +5,8 @@
 #
 """Comparing dates and times.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import datetime
 import time
 

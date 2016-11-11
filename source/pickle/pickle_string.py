@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Pickle an object to a string.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import pickle
 import pprint
 

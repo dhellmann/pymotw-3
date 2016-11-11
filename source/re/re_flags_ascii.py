@@ -5,8 +5,8 @@
 #
 """Revert to ASCII character definitions
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import re
 
 text = u'Français złoty Österreich'

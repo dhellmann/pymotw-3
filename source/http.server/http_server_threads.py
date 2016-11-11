@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Threaded GET handler with BaseHTTPServer
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from socketserver import ThreadingMixIn
 import threading

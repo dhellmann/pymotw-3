@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import zlib
 
 data = open('lorem.txt', 'rb').read()

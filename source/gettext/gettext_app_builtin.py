@@ -6,8 +6,8 @@
 """
 """
 # flake8: noqa
-#end_pymotw_header
 
+#end_pymotw_header
 import gettext
 
 gettext.install(

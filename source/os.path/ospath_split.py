@@ -6,8 +6,8 @@
 """Separate a path into its directory and base components.
 """
 
-#end_pymotw_header
 
+#end_pymotw_header
 import os.path
 
 PATHS = [

@@ -5,8 +5,8 @@
 #
 """Control access to columns using an authorizer function.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import sqlite3
 
 db_filename = 'todo.db'

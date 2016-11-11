@@ -5,8 +5,8 @@
 #
 """Defaults for thread-local values
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import random
 import threading
 import logging

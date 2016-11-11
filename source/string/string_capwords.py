@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import string
 
 s = 'The quick brown fox jumped over the lazy dog.'

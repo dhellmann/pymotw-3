@@ -5,8 +5,8 @@
 #
 """Parent with shared options
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import argparse
 import argparse_parent_base
 

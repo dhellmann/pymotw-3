@@ -5,8 +5,8 @@
 #
 """Load package data
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import pkgutil
 
 template = pkgutil.get_data('pkgwithdata', 'templates/base.html')

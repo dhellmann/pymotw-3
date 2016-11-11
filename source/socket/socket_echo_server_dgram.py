@@ -5,8 +5,8 @@
 #
 """Datagram echo server
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import socket
 import sys
 

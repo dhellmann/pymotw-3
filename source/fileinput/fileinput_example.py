@@ -5,8 +5,8 @@
 #
 """Example for fileinput module.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import fileinput
 import sys
 import time

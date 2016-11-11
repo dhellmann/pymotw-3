@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Test for equality
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import unittest
 
 

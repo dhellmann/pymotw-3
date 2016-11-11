@@ -5,8 +5,8 @@
 """Simple GET handler with BaseHTTPServer
 """
 
-#end_pymotw_header
 
+#end_pymotw_header
 from http.server import BaseHTTPRequestHandler
 import time
 

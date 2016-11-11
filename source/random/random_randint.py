@@ -5,8 +5,8 @@
 #
 """Generating random integers.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import random
 
 print('[1, 100]:', end=' ')

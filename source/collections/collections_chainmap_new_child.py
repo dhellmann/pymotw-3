@@ -5,8 +5,8 @@
 #
 """ChainMap as a namespace stack
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import collections
 
 a = {'a': 'A', 'c': 'C'}

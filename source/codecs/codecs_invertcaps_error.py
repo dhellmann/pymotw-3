@@ -5,8 +5,8 @@
 #
 """Error handling with character map encodings.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import codecs
 from codecs_invertcaps_charmap import encoding_map
 

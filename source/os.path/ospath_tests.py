@@ -6,8 +6,8 @@
 """Test properties of a file.
 """
 
-#end_pymotw_header
 
+#end_pymotw_header
 import os.path
 
 FILENAMES = [

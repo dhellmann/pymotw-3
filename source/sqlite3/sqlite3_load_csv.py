@@ -5,8 +5,8 @@
 #
 """Load bulk data from a CSV file.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import csv
 import sqlite3
 import sys

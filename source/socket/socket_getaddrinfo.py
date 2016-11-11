@@ -5,8 +5,8 @@
 #
 """Get address info for a service
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import socket
 
 

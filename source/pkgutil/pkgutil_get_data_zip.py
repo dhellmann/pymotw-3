@@ -5,8 +5,8 @@
 #
 """Loading data from a zipfile.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import pkgutil
 import zipfile
 import sys

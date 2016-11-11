@@ -5,8 +5,8 @@
 #
 """Show the default thresholds.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import gc
 
 print(gc.get_threshold())

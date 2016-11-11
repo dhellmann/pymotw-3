@@ -4,8 +4,8 @@
 #
 """Checking exit codes from external processes
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import subprocess
 
 try:

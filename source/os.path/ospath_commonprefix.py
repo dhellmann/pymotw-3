@@ -6,8 +6,8 @@
 """Find the prefix string common to a group of paths.
 """
 
-#end_pymotw_header
 
+#end_pymotw_header
 import os.path
 
 paths = ['/one/two/three/four',

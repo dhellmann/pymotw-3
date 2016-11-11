@@ -26,8 +26,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import sys
 
 for d in sys.path:

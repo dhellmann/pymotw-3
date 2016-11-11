@@ -5,8 +5,8 @@
 #
 """Using a regular tuple
 """
-#end_pymotw_header
 
+#end_pymotw_header
 bob = ('Bob', 30, 'male')
 print('Representation:', bob)
 

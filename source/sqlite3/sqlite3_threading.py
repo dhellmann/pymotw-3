@@ -5,8 +5,8 @@
 #
 """Illustrate the effect of autocommit mode.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import sqlite3
 import sys
 import threading

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Using the os module to read and write environment variables.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import os
 
 print('Initial value:', os.environ.get('TESTVAR', None))

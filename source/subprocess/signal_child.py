@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Child process in signal example.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import os
 import signal
 import time

@@ -5,8 +5,8 @@
 #
 """Hyperbolic functions
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import math
 
 print('{:^6} {:^6} {:^6} {:^6}'.format(

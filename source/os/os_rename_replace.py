@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Renaming and replacing files
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import glob
 import os
 

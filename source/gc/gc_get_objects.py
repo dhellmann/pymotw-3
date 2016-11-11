@@ -5,8 +5,8 @@
 #
 """Examine the objects being managed.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import gc
 
 print(len(gc.get_objects()))

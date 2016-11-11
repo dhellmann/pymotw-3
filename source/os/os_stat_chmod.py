@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Change permissions on a file
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import os
 import stat
 

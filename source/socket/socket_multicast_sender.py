@@ -5,8 +5,8 @@
 #
 """Sending multicast messages.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import socket
 import struct
 import sys

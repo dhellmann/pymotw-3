@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Using filter()
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from itertools import *
 
 every_third = cycle([False, False, True])

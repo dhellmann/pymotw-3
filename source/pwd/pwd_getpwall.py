@@ -27,8 +27,8 @@
 """
 """
 
-#end_pymotw_header
 
+#end_pymotw_header
 import pwd
 import operator
 

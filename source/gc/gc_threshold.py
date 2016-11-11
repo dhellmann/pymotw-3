@@ -5,8 +5,8 @@
 #
 """Tuning the garbage collector threshold.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import gc
 import pprint
 import sys

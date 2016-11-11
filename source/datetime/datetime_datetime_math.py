@@ -5,8 +5,8 @@
 #
 """Calculations with datetime values.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import datetime
 
 today = datetime.datetime.today()

@@ -27,8 +27,8 @@
 Using glob to find files matching a pattern with a filename
 extension.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import glob
 
 for name in sorted(glob.glob('*.py')):

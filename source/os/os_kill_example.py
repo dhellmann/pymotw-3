@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Fork, then send the child process a signal.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import os
 import signal
 import time

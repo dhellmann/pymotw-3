@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Bind arguments to their name without calling a function.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import inspect
 import example
 

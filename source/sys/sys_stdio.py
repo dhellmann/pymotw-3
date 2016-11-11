@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-#end_pymotw_header
 
+#end_pymotw_header
 import sys
 
 print('STATUS: Reading from stdin', file=sys.stderr)

@@ -6,8 +6,8 @@
 #
 """Use a regular expression in a query.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import re
 import sqlite3
 

@@ -5,8 +5,8 @@
 #
 """Creating and waiting for a process
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import multiprocessing
 import multiprocessing_import_worker
 

@@ -5,8 +5,8 @@
 #
 """Generate random numbers
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import random
 
 for i in range(5):

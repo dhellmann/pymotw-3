@@ -4,8 +4,8 @@
 # Copyright (c) 2014 Doug Hellmann.  All rights reserved.
 """Collecting output from tasks in parallel
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import asyncio
 
 

@@ -25,8 +25,8 @@
 
 """Example expansion of question mark wild card.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import glob
 
 for name in sorted(glob.glob('dir/file?.txt')):

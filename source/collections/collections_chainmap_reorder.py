@@ -5,8 +5,8 @@
 #
 """Reading values from a ChainMap after reordering it
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import collections
 
 a = {'a': 'A', 'c': 'C'}

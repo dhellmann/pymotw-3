@@ -5,8 +5,8 @@
 #
 """Daemon vs. non-daemon processes.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import multiprocessing
 import time
 import sys

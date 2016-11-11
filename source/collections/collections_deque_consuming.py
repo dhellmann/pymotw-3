@@ -5,8 +5,8 @@
 #
 """Removing items from a deque.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import collections
 
 print('From the right:')

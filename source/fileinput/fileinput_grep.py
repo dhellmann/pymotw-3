@@ -5,8 +5,8 @@
 #
 """Simplistic grep implementation
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import fileinput
 import re
 import sys

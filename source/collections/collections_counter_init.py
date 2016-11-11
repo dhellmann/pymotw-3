@@ -5,8 +5,8 @@
 #
 """Initializing a Counter
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import collections
 
 print(collections.Counter(['a', 'b', 'c', 'a', 'b', 'b']))

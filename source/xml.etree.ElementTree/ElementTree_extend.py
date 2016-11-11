@@ -5,8 +5,8 @@
 #
 """Creating XML documents with lists of nodes
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from xml.etree.ElementTree import Element, tostring
 from ElementTree_pretty import prettify
 

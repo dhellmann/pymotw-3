@@ -2,8 +2,8 @@
 """Parsing URLs
 """
 # flake8: noqa
-#end_pymotw_header
 
+#end_pymotw_header
 from urllib.parse import urlsplit
 
 url = 'http://user:pwd@NetLoc:80/p1;para/p2;para?query=arg#frag'

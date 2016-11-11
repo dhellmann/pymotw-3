@@ -5,8 +5,8 @@
 #
 """Check whether user site directory is enabled.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import site
 
 status = {

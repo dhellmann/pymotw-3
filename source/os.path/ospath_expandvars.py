@@ -6,8 +6,8 @@
 """Expand shell variables in filenames.
 """
 
-#end_pymotw_header
 
+#end_pymotw_header
 import os.path
 import os
 

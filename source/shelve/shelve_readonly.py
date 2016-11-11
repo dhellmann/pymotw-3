@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Opening an existing shelf read-only.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import dbm
 import shelve
 

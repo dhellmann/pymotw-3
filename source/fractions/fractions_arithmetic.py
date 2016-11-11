@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import fractions
 
 f1 = fractions.Fraction(1, 2)

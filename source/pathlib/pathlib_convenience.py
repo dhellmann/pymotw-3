@@ -6,8 +6,8 @@
 #
 """Convenience methods for Path
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import pathlib
 
 home = pathlib.Path.home()

@@ -4,8 +4,8 @@
 #
 """Show the same currency value in different locales.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import locale
 
 sample_locales = [

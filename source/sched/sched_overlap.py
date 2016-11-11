@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Overlapping events sched example
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import sched
 import time
 

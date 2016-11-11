@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import datetime
 
 for delta in [datetime.timedelta(microseconds=1),

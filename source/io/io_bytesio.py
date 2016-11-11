@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Simple examples with BytesIO class
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import io
 
 # Writing to a buffer

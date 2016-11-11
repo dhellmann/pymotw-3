@@ -6,8 +6,8 @@
 #
 """Building paths with the operator
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import pathlib
 
 usr = pathlib.PurePosixPath('/usr')

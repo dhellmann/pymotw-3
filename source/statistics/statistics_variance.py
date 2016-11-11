@@ -3,8 +3,8 @@
 #
 """Examine the distribution of line lengths of example files
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from statistics import *
 import subprocess
 

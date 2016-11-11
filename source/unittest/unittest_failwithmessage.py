@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """A test that fails with a custom message.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import unittest
 
 

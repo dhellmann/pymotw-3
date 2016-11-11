@@ -4,8 +4,8 @@
 # Copyright (c) 2014 Doug Hellmann.  All rights reserved.
 """Communicating with a subprocess using coroutines
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import asyncio
 import asyncio.subprocess
 

@@ -5,8 +5,8 @@
 #
 """Registering your own codec search function.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import codecs
 import encodings
 

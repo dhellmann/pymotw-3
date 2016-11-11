@@ -5,8 +5,8 @@
 #
 """Disabling interpolation
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from configparser import ConfigParser
 
 parser = ConfigParser(interpolation=None)

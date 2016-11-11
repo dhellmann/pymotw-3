@@ -5,8 +5,8 @@
 #
 """Sending Unicode data over a socket.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import sys
 import socketserver
 

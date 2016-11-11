@@ -5,8 +5,8 @@
 #
 """Checking the sign of a value.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import math
 
 HEADINGS = ('f', 's', '< 0', '> 0', '= 0')

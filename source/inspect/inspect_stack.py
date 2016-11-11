@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Inspecting the call stack.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import inspect
 
 

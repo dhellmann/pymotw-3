@@ -4,8 +4,8 @@
 # Copyright (c) 2014 Doug Hellmann.  All rights reserved.
 """Scheduling a callback with call_at
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import asyncio
 import time
 

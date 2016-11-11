@@ -25,8 +25,8 @@
 
 """The asterisk as wildcard character.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import glob
 
 specials = '?*['

@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import collections
 
 Person = collections.namedtuple('Person', 'name age')

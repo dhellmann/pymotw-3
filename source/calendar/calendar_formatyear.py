@@ -26,8 +26,8 @@
 """Print entire year calendar.
 
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import calendar
 
 cal = calendar.TextCalendar(calendar.SUNDAY)

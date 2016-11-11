@@ -5,8 +5,8 @@
 #
 """Using Events to synchronize threads.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import multiprocessing
 import time
 

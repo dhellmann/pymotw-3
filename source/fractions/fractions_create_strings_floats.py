@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import fractions
 
 for s in ['0.5', '1.5', '2.0', '5e-1']:

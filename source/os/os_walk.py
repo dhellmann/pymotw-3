@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """A simple recursive directory listing.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import os
 import sys
 

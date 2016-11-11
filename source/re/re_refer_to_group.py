@@ -5,8 +5,8 @@
 #
 """Find email addresses that match the person's name
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import re
 
 address = re.compile(

@@ -5,8 +5,8 @@
 #
 """Defining tests not visible in the documentation.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import doctest_private_tests_external
 
 __test__ = {

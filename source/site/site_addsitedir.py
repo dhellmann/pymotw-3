@@ -7,8 +7,8 @@
 # flake8: noqa
 """Add site import directory containing regular python modules.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import site
 import os
 import sys

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Learn about a module
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import imp
 import inspect
 import sys

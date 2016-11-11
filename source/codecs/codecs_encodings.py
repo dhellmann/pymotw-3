@@ -5,8 +5,8 @@
 #
 """Representations of values using different encodings.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import unicodedata
 from codecs_to_hex import to_hex
 

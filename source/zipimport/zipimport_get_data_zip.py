@@ -4,8 +4,8 @@
 #
 """Retrieving the data for a module within a zip archive.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import sys
 sys.path.insert(0, 'zipimport_example.zip')
 

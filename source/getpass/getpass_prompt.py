@@ -6,8 +6,8 @@
 """Passing a prompt to getpass.
 
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import getpass
 
 p = getpass.getpass(prompt='What is your favorite color? ')

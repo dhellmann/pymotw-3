@@ -5,8 +5,8 @@
 #
 """Matching vs. searching
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import re
 
 text = 'This is some text -- with punctuation.'

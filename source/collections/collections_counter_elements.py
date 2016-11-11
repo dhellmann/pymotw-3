@@ -5,8 +5,8 @@
 #
 """Produce the elements of the counter.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import collections
 
 c = collections.Counter('extremely')

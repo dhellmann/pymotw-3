@@ -4,8 +4,8 @@
 #
 """Retrieving the source code for a module within a zip archive.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import zipimport
 
 modules = [

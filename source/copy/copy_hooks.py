@@ -6,8 +6,8 @@
 """Shallow copy example
 
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import copy
 import functools
 

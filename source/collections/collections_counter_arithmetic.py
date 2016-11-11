@@ -5,8 +5,8 @@
 #
 """Arithmetic operations with Counters
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import collections
 
 c1 = collections.Counter(['a', 'b', 'c', 'a', 'b', 'b'])

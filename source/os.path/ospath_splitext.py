@@ -6,8 +6,8 @@
 """Separate a filename into the base and extension.
 """
 
-#end_pymotw_header
 
+#end_pymotw_header
 import os.path
 
 PATHS = [

@@ -4,8 +4,8 @@
 #
 """Create a sample zipfile with modules that can be imported.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import sys
 import zipfile
 

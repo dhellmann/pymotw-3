@@ -4,8 +4,8 @@
 #
 """Searching memory mapped files with regular expressions.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import mmap
 import re
 

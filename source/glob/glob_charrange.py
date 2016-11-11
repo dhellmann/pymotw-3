@@ -25,8 +25,8 @@
 
 """Using character range in patterns.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import glob
 for name in sorted(glob.glob('dir/*[0-9].*')):
     print(name)

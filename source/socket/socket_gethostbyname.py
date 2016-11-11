@@ -5,8 +5,8 @@
 #
 """Convert hostname to IP address.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import socket
 
 HOSTS = [

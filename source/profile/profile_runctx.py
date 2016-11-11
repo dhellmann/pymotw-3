@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import profile
 from profile_fibonacci_memoized import fib, fib_seq
 

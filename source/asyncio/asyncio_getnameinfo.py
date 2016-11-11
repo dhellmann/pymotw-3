@@ -4,8 +4,8 @@
 # Copyright (c) 2014 Doug Hellmann.  All rights reserved.
 """IP addresses and port numbers to host and protocol names
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import asyncio
 import functools
 import logging

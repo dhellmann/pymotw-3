@@ -9,8 +9,8 @@ locale.py, and reformatted to move the place names out of
 comments into text which could be printed by the script.
 
 """
-#end_pymotw_header
 
+#end_pymotw_header
 
 locales = [
     ("af_ZA", "Afrikaans"),

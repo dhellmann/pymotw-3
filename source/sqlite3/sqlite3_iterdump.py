@@ -5,8 +5,8 @@
 #
 """Dumping a database
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import sqlite3
 
 schema_filename = 'todo_schema.sql'

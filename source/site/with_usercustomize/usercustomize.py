@@ -5,8 +5,8 @@
 #
 """Example usercustomize.py
 """
-#end_pymotw_header
 
+#end_pymotw_header
 print('Loading usercustomize.py')
 
 import site

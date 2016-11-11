@@ -5,8 +5,8 @@
 #
 """Local variables lead to an answer
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import cgitb
 cgitb.enable(format='text')
 

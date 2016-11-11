@@ -5,8 +5,8 @@
 #
 """The default import path from site
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import sys
 import os
 import site

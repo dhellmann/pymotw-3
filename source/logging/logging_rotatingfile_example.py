@@ -4,8 +4,8 @@
 See http://blog.doughellmann.com/2007/05/pymotw-logging.html
 
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import glob
 import logging
 import logging.handlers

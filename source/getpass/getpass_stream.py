@@ -6,8 +6,8 @@
 """Using sys.stderr for the prompt lets us redirect stdout.
 
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import getpass
 import sys
 

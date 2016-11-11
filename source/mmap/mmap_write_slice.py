@@ -4,8 +4,8 @@
 #
 """Writing to a memory mapped file using a slice assignment.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import mmap
 import shutil
 

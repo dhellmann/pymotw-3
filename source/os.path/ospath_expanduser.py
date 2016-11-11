@@ -6,8 +6,8 @@
 """Expand tilde in filenames.
 """
 
-#end_pymotw_header
 
+#end_pymotw_header
 import os.path
 
 for user in ['', 'dhellmann', 'nosuchuser']:

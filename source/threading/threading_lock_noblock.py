@@ -5,8 +5,8 @@
 #
 """Using a Lock without blocking
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import logging
 import threading
 import time

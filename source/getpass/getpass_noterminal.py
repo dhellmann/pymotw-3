@@ -6,8 +6,8 @@
 """Using read() when there is no tty for getpass() to use.
 
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import getpass
 import sys
 

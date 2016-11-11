@@ -5,8 +5,8 @@
 #
 """Dump the OPML in plain text
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from xml.etree import ElementTree
 import pprint
 

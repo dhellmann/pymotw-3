@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """More interaction between child processes.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import io
 import subprocess
 

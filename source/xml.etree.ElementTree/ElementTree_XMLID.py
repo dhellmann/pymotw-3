@@ -5,8 +5,8 @@
 #
 """Embedded XML string with ID values
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from xml.etree.ElementTree import XMLID
 
 tree, id_map = XMLID('''

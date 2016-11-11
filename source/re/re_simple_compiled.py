@@ -5,8 +5,8 @@
 #
 """Simple pattern examples.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import re
 
 # Precompile the patterns

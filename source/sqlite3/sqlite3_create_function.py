@@ -5,8 +5,8 @@
 #
 """Creating functions to run in SQL statements.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import codecs
 import sqlite3
 

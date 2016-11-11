@@ -5,8 +5,8 @@
 #
 """Installation schemes.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import sysconfig
 
 for name in sysconfig.get_scheme_names():

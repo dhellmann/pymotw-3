@@ -4,8 +4,8 @@
 #
 """Print dates in locale-specfic format.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import locale
 import time
 

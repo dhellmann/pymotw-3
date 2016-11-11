@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """A test with fixtures.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import random
 import unittest
 

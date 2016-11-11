@@ -5,8 +5,8 @@
 #
 """Show tracebacks with classes
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import cgitb
 cgitb.enable(format='text', context=12)
 

@@ -26,8 +26,8 @@
 """Show the yeardays2calendar return value.
 
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import calendar
 import pprint
 

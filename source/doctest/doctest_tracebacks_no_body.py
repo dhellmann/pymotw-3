@@ -5,8 +5,8 @@
 #
 """Expecting exceptions
 """
-#end_pymotw_header
 
+#end_pymotw_header
 
 def this_raises():
     """This function always raises an exception.

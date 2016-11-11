@@ -5,8 +5,8 @@
 #
 """Match email addresses
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import re
 
 address = re.compile('[\w\d.+-]+@([\w\d.]+\.)+(com|org|edu)')

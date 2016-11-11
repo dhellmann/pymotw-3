@@ -5,8 +5,8 @@
 #
 """Filter a list of filenames against a pattern.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import fnmatch
 import os
 import pprint

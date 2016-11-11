@@ -4,8 +4,8 @@
 # Copyright (c) 2014 Doug Hellmann.  All rights reserved.
 """TCP echo server using asyncio with a Protocol class.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import asyncio
 import logging
 import sys

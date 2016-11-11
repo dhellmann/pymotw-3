@@ -5,8 +5,8 @@
 #
 """Converting from radians to degrees.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import math
 
 INPUTS = [

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Simplistic examples of unit tests.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import unittest
 
 

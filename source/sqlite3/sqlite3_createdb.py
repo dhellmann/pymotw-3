@@ -5,8 +5,8 @@
 #
 """Creating an sqlite3 database.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import os
 import sqlite3
 

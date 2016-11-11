@@ -5,8 +5,8 @@
 #
 """Simple example using doctest
 """
-#end_pymotw_header
 
+#end_pymotw_header
 
 def my_function(a, b):
     """Returns a * b.

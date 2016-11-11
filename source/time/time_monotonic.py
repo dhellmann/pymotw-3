@@ -5,8 +5,8 @@
 #
 """The difference between monotonic and time.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import time
 
 start = time.monotonic()

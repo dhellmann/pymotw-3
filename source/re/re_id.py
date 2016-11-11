@@ -5,8 +5,8 @@
 #
 """ID-based conditional expressions
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import re
 
 address = re.compile(

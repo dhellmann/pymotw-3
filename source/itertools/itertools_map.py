@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Using map()
 """
-#end_pymotw_header
 
+#end_pymotw_header
 
 def times_two(x):
     return 2 * x

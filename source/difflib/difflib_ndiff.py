@@ -4,8 +4,8 @@
 #
 """ndiff example
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import difflib
 from difflib_data import *
 

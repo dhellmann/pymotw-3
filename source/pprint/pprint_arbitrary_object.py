@@ -4,8 +4,8 @@
 #
 """Pretty printing an arbitrary object.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from pprint import pprint
 
 

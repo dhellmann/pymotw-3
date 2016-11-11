@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Find information about the current process.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import os
 
 print('This process id:', os.getpid())

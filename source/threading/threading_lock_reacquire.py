@@ -5,8 +5,8 @@
 #
 """Normal locks cannot be acquired more than once
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import threading
 
 lock = threading.Lock()

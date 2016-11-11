@@ -5,8 +5,8 @@
 #
 """Default use of getpass.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import getpass
 
 try:

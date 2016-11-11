@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """More complete example which parses and uses the options.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import getopt
 import sys
 

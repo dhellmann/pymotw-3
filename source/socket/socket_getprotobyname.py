@@ -5,8 +5,8 @@
 #
 """Lookup the constant for a named protocol.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import socket
 
 

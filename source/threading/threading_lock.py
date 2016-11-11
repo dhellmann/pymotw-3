@@ -5,8 +5,8 @@
 #
 """Controlling access to a resource using a Lock
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import logging
 import random
 import threading

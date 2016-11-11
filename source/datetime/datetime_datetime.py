@@ -5,8 +5,8 @@
 #
 """Combining dates and times into a single object.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import datetime
 
 print('Now    :', datetime.datetime.now())

@@ -6,8 +6,8 @@
 #
 """Building paths with joinpath
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import pathlib
 
 root = pathlib.PurePosixPath('/')

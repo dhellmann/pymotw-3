@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Echo anything written to stdin on stdout.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import sys
 
 sys.stderr.write('repeater.py: starting\n')

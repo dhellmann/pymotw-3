@@ -5,8 +5,8 @@
 #
 """Datetime with timezone
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import datetime
 
 min6 = datetime.timezone(datetime.timedelta(hours=-6))

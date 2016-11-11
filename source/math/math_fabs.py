@@ -5,8 +5,8 @@
 #
 """Absolute value
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import math
 
 print(math.fabs(-1.1))

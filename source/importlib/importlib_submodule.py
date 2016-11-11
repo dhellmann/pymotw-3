@@ -2,8 +2,8 @@
 # encoding: utf-8
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import importlib
 
 pkg_loader = importlib.find_loader('example')

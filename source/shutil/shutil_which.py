@@ -6,8 +6,8 @@
 #
 """Find a program on $PATH
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import shutil
 
 print(shutil.which('virtualenv'))

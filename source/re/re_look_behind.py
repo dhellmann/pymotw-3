@@ -5,8 +5,8 @@
 #
 """Look behind assertion.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import re
 
 twitter = re.compile(

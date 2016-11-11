@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import fractions
 
 for v in [0.1, 0.5, 1.5, 2.0]:

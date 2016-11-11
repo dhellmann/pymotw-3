@@ -5,8 +5,8 @@
 #
 """Incremental compression
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import bz2
 import binascii
 import io

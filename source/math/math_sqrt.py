@@ -5,8 +5,8 @@
 #
 """Square roots
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import math
 
 print(math.sqrt(9.0))

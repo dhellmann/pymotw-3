@@ -5,8 +5,8 @@
 #
 """Regular expression grouping
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from re_test_patterns import test_patterns
 
 test_patterns(

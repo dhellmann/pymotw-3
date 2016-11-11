@@ -7,8 +7,8 @@
 Capture the output of a command and test its
 exit code at the same time.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import subprocess
 
 completed = subprocess.run(

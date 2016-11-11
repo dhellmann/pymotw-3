@@ -5,8 +5,8 @@
 #
 """Show the events encountered while processing an XML input
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from xml.etree.ElementTree import iterparse
 
 depth = 0

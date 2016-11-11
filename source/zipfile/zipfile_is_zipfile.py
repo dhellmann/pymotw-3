@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Test if a file is a zipfile.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import zipfile
 
 for filename in ['README.txt', 'example.zip',

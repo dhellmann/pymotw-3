@@ -5,8 +5,8 @@
 #
 """Using perf_counter for timing
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import hashlib
 import time
 

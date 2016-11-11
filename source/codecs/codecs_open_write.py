@@ -5,8 +5,8 @@
 #
 """Writing Unicode data to a file.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from codecs_to_hex import to_hex
 
 import codecs

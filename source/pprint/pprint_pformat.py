@@ -4,8 +4,8 @@
 #
 """Formatting with pformat
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import logging
 from pprint import pformat
 from pprint_data import data

@@ -6,8 +6,8 @@
 """
 """
 
-#end_pymotw_header
 
+#end_pymotw_header
 try:
     import gnureadline as readline
 except ImportError:

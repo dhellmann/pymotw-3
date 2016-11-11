@@ -6,8 +6,8 @@
 """
 """
 
-#end_pymotw_header
 
+#end_pymotw_header
 import linecache
 
 # Errors are even hidden if linecache cannot find the file

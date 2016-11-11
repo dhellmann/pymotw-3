@@ -5,8 +5,8 @@
 #
 """Noncapturing groups
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from re_test_patterns_groups import test_patterns
 
 test_patterns(

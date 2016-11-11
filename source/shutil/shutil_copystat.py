@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Copying the meta-data from one file to another
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import os
 import shutil
 import time

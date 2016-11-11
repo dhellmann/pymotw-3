@@ -3,8 +3,8 @@
 # Copyright 2007 Doug Hellmann.
 """Other uses for the parser.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import shlex
 
 text = """|Col 1||Col 2||Col 3|"""

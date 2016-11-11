@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Docstrings
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import inspect
 import example
 

@@ -5,8 +5,8 @@
 #
 """Look up port numbers for a service by name.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import socket
 from urllib.parse import urlparse
 

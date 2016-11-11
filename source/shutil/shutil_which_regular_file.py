@@ -6,8 +6,8 @@
 #
 """Find a configuration file
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import os
 import shutil
 

@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import argparse
 from configparser import ConfigParser
 import shlex

@@ -26,8 +26,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import sys
 
 print('Initial limit:', sys.getrecursionlimit())

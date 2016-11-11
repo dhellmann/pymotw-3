@@ -6,8 +6,8 @@
 """
 """
 
-#end_pymotw_header
 
+#end_pymotw_header
 import tempfile
 
 with tempfile.SpooledTemporaryFile(max_size=1000,

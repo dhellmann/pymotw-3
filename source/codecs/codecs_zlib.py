@@ -5,8 +5,8 @@
 #
 """Demonstrate a non-Unicode codec.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import codecs
 import io
 

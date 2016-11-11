@@ -5,8 +5,8 @@
 #
 """Translating between encodings on the fly.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from codecs_to_hex import to_hex
 
 import codecs

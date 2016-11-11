@@ -25,8 +25,8 @@
 
 """Listing files in a subdirectory.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import glob
 
 print('Named explicitly:')

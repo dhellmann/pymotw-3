@@ -6,8 +6,8 @@
 """Compute an absolute path from a relative path.
 """
 
-#end_pymotw_header
 
+#end_pymotw_header
 import os
 import os.path
 

@@ -6,8 +6,8 @@
 """Find the directory portion of a filename.
 """
 
-#end_pymotw_header
 
+#end_pymotw_header
 import os.path
 
 PATHS = [

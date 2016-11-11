@@ -5,8 +5,8 @@
 #
 """Character mapping encoder
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import codecs
 import string
 

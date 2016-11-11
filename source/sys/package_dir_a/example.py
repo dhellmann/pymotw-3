@@ -26,6 +26,6 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 DATA = 'This is example A'

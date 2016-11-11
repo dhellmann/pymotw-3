@@ -4,8 +4,8 @@
 # Copyright (c) 2016 Doug Hellmann.  All rights reserved.
 # Written for https://pymotw.com
 #
-#end_pymotw_header
 
+#end_pymotw_header
 import dis
 
 code = """

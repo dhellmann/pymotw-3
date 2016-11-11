@@ -5,8 +5,8 @@
 #
 """Creating XML documents
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from xml.etree.ElementTree import Element, SubElement, Comment
 from ElementTree_pretty import prettify
 

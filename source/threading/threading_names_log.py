@@ -5,8 +5,8 @@
 #
 """Using thread names in logs
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import logging
 import threading
 import time

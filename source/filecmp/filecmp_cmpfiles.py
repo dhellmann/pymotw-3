@@ -5,8 +5,8 @@
 #
 """Compare files in two directories.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import filecmp
 import os
 

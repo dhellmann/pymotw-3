@@ -5,8 +5,8 @@
 #
 """The paths for a scheme.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import sysconfig
 import pprint
 

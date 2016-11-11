@@ -6,8 +6,8 @@
 """
 """
 
-#end_pymotw_header
 
+#end_pymotw_header
 import tempfile
 
 with tempfile.TemporaryFile(mode='w+t') as f:

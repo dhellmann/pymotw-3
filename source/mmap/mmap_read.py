@@ -4,8 +4,8 @@
 #
 """Reading from a memory mapped file.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import mmap
 
 with open('lorem.txt', 'r') as f:

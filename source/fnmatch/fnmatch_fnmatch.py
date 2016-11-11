@@ -5,8 +5,8 @@
 #
 """Test an individual filename with a pattern.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import fnmatch
 import os
 

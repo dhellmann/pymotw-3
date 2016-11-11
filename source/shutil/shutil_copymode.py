@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Copying the permissions from one file to another
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import os
 import shutil
 import subprocess

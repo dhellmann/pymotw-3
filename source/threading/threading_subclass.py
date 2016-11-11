@@ -5,8 +5,8 @@
 #
 """Subclassing Thread to create your own thread types.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import threading
 import logging
 

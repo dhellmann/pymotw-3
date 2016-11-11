@@ -5,6 +5,6 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 print('Importing example package')

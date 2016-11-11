@@ -6,8 +6,8 @@
 """Comparing floating point values
 """
 # abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
-#end_pymotw_header
 
+#end_pymotw_header
 import math
 
 INPUTS = [

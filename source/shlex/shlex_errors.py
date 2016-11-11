@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Handling parse errors.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import shlex
 
 text = """This line is ok.

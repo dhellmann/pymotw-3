@@ -6,8 +6,8 @@
 #
 """Detecting broken process pools.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from concurrent import futures
 import os
 import signal

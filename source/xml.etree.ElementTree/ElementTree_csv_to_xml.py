@@ -5,8 +5,8 @@
 #
 """Convert CSV file of podcasts to XML
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import csv
 from xml.etree.ElementTree import (
     Element, SubElement, Comment, tostring,

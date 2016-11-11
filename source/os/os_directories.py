@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Working with directories.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import os
 
 dir_name = 'os_directories_example'

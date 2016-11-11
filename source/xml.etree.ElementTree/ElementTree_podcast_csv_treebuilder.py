@@ -5,8 +5,8 @@
 #
 """Convert XML list of podcasts to a CSV file.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import csv
 import io
 from xml.etree.ElementTree import XMLParser

@@ -6,8 +6,8 @@
 #
 """Echo server using selectors instead of select directly.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import selectors
 import socket
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Using islice()
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from itertools import *
 
 print('Stop at 5:')

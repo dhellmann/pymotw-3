@@ -5,8 +5,8 @@
 #
 """Pretty-print function for ElementTree
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from xml.etree import ElementTree
 from xml.dom import minidom
 

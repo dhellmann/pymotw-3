@@ -5,8 +5,8 @@
 #
 """Define a new aggregator function.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import sqlite3
 import collections
 

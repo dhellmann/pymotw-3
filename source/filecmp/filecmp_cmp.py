@@ -5,8 +5,8 @@
 #
 """Compare two files.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import filecmp
 
 print('common_file :', end=' ')

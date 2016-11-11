@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import decimal
 
 fmt = '{0:<25} {1:<25}'

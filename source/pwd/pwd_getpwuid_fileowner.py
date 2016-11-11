@@ -24,8 +24,8 @@
 # ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 # THIS SOFTWARE.
 #
-#end_pymotw_header
 
+#end_pymotw_header
 import pwd
 import os
 

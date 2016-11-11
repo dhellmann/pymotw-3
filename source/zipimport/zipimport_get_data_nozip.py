@@ -4,8 +4,8 @@
 #
 """Retrieving data when there is no ZIP archive involved.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import os
 import example_package
 

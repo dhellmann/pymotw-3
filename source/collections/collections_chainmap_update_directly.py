@@ -5,8 +5,8 @@
 #
 """Updating values through a ChainMap
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import collections
 
 a = {'a': 'A', 'c': 'C'}

@@ -5,8 +5,8 @@
 #
 """Basic features of time objects.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import datetime
 
 t = datetime.time(1, 2, 3)

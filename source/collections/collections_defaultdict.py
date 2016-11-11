@@ -5,8 +5,8 @@
 #
 """Initializing a defaultdict.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import collections
 
 

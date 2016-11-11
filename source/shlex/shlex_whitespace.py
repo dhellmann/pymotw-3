@@ -3,8 +3,8 @@
 # Copyright 2007 Doug Hellmann.
 """Parsing strings with shlex.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import shlex
 import sys
 

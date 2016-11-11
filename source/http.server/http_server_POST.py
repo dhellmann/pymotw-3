@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Simple POST handler with BaseHTTPServer
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import cgi
 from http.server import BaseHTTPRequestHandler
 import io

@@ -6,8 +6,8 @@
 #
 """Making archives
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import logging
 import shutil
 import sys

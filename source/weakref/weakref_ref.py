@@ -5,8 +5,8 @@
 #
 """Example using weakref.ref to manage a reference to an object.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import weakref
 
 

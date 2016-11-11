@@ -5,8 +5,8 @@
 #
 """Creating XML documents
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import io
 import sys
 from xml.etree.ElementTree import (

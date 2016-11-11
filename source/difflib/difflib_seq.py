@@ -4,8 +4,8 @@
 #
 """SequenceMatcher example
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import difflib
 
 s1 = [1, 2, 3, 5, 6, 4]

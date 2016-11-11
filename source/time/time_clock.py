@@ -5,8 +5,8 @@
 #
 """The difference between clock and time.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import hashlib
 import time
 

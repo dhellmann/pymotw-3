@@ -6,8 +6,8 @@
 #
 """Which archive formats are supported?
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import shutil
 
 for format, description in shutil.get_archive_formats():

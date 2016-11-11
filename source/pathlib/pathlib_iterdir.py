@@ -6,8 +6,8 @@
 #
 """pathlib iterdir
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import pathlib
 
 p = pathlib.Path('.')

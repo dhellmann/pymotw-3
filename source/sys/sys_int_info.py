@@ -26,8 +26,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import sys
 
 print('Number of bits used to hold each digit:',

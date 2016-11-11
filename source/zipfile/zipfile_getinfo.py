@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Retrieve all of the metadata for one member of an archive.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import zipfile
 
 with zipfile.ZipFile('example.zip') as zf:

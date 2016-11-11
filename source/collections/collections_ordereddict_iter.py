@@ -5,8 +5,8 @@
 #
 """Iterating over an OrderedDict
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import collections
 
 print('Regular dictionary:')

@@ -5,8 +5,8 @@
 #
 """Using enumerate() to find the active threads.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import random
 import threading
 import time

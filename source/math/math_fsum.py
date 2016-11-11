@@ -5,8 +5,8 @@
 #
 """Calculating accurate sums of floating point values.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import math
 
 values = [0.1] * 10

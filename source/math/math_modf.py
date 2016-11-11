@@ -5,8 +5,8 @@
 #
 """Split fractional from whole number part.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import math
 
 for i in range(6):

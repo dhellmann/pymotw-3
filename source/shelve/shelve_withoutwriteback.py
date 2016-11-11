@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Modifying an existing shelf opened with write-back enabled.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import shelve
 
 with shelve.open('test_shelf.db') as s:

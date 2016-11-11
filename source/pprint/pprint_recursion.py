@@ -4,8 +4,8 @@
 #
 """Handling recursive data structures.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from pprint import pprint
 
 local_data = ['a', 'b', 1, 2]

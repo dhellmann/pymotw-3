@@ -3,8 +3,8 @@
 # Copyright 2007 Doug Hellmann.
 """Differences between POSIX and non-POSIX parsing.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import shlex
 
 examples = [

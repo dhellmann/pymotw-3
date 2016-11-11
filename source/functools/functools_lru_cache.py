@@ -2,8 +2,8 @@
 # encoding: utf-8
 """Least-recently-used cache
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import functools
 
 

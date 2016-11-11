@@ -5,8 +5,8 @@
 #
 """Reading a configuration file.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from configparser import ConfigParser
 import glob
 

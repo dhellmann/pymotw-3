@@ -4,8 +4,8 @@
 # Copyright (c) 2014 Doug Hellmann.  All rights reserved.
 """Dealing with individual background tasks as they finish
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import asyncio
 
 

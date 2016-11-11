@@ -4,8 +4,8 @@
 # Copyright (c) 2014 Doug Hellmann.  All rights reserved.
 """Waiting for a future to be done
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import asyncio
 
 

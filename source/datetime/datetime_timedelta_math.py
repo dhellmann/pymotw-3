@@ -5,8 +5,8 @@
 #
 """Calculations with dates.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import datetime
 
 one_day = datetime.timedelta(days=1)

@@ -5,8 +5,8 @@
 #
 """Show the user base directory.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import site
 
 print('Base:', site.USER_BASE)

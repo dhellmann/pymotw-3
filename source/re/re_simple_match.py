@@ -5,8 +5,8 @@
 #
 """Match objects.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import re
 
 pattern = 'this'

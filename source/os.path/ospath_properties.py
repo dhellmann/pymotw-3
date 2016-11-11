@@ -6,8 +6,8 @@
 """Find attributes of a file other than its name.
 """
 
-#end_pymotw_header
 
+#end_pymotw_header
 import os.path
 import time
 

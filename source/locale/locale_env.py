@@ -5,8 +5,8 @@
 #
 """Example setting the locale using environment variable(s).
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import locale
 import os
 import pprint

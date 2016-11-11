@@ -4,8 +4,8 @@
 # Copyright (c) 2014 Doug Hellmann.  All rights reserved.
 """Stopping the event loop
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import asyncio
 import functools
 import logging

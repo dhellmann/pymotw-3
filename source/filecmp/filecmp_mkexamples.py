@@ -5,8 +5,8 @@
 #
 """This script creates the example directory and its contents.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import os
 
 

@@ -5,8 +5,8 @@
 #
 """Adding items to a deque.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import collections
 
 # Add to the right

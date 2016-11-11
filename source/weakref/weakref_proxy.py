@@ -5,8 +5,8 @@
 #
 """Using proxy instead of ref.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import weakref
 
 

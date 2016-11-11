@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Using tee()
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from itertools import *
 
 r = islice(count(), 5)

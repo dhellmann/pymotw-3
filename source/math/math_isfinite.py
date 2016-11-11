@@ -5,8 +5,8 @@
 #
 """Checking for overflow or infinite values.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import math
 
 for f in [0.0, 1.0, math.pi, math.e, math.inf, math.nan]:

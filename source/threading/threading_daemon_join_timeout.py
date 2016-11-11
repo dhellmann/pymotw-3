@@ -5,8 +5,8 @@
 #
 """Timing out join() for busy daemon threads
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import threading
 import time
 import logging

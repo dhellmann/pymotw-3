@@ -6,8 +6,8 @@
 #
 """Creating a directory
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import pathlib
 
 p = pathlib.Path('example_dir')

@@ -5,8 +5,8 @@
 #
 """Defining a custom type.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import pickle
 import sqlite3
 

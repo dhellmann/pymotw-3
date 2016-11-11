@@ -2,8 +2,8 @@
 """Print information about the arguments to a method.
 """
 
-#end_pymotw_header
 
+#end_pymotw_header
 import inspect
 import example
 

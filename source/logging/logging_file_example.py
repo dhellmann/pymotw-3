@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Example use of Python's logging module writing to a file.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import logging
 
 LOG_FILENAME = 'logging_example.out'

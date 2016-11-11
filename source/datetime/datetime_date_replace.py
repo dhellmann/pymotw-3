@@ -5,8 +5,8 @@
 #
 """Creating dates from existing objects.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import datetime
 
 d1 = datetime.date(2008, 3, 29)

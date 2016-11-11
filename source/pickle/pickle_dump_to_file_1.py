@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Dump some objects to a file named by the user.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import pickle
 import sys
 

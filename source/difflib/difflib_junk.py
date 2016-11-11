@@ -5,8 +5,8 @@
 
 """Using the junk filter feature.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 # This example is adapted from the source for difflib.py.
 
 from difflib import SequenceMatcher

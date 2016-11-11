@@ -5,8 +5,8 @@
 #
 """Integrating with unittest.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import doctest
 import unittest
 

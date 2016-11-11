@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Check the digests of pickles passed through a stream.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import hashlib
 import hmac
 import io

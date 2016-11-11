@@ -5,8 +5,8 @@
 #
 """Double-ended queue.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import collections
 
 d = collections.deque('abcdefg')

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Wait for a worker process.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import os
 import sys
 import time

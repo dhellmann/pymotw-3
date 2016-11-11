@@ -5,8 +5,8 @@
 #
 """Test data for all examples.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import hashlib
 
 lorem = '''Lorem ipsum dolor sit amet, consectetur adipisicing

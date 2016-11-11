@@ -3,8 +3,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from statistics import *
 
 data = [10, 20, 30, 40]

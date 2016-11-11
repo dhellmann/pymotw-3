@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """GET handler with BaseHTTPServer illustrating error handling
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from http.server import BaseHTTPRequestHandler
 
 

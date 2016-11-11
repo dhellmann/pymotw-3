@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Use several threads to download enclosures from RSS feeds.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from queue import Queue
 import threading
 import time

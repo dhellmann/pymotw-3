@@ -5,8 +5,8 @@
 #
 """Creating and waiting for a thread.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import threading
 
 

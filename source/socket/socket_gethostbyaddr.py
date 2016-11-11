@@ -5,8 +5,8 @@
 #
 """Look up a hostname from its address.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import socket
 
 hostname, aliases, addresses = socket.gethostbyaddr('10.9.0.10')

@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import base64
 
 original_data = b'This is the data, in the clear.'

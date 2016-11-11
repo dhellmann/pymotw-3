@@ -5,8 +5,8 @@
 #
 """Substitute based on patterns.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import re
 
 bold = re.compile(r'\*{2}(.*?)\*{2}')

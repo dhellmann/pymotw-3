@@ -5,8 +5,8 @@
 #
 """Manipulating the order of items in a deque.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import collections
 
 d = collections.deque(range(10))

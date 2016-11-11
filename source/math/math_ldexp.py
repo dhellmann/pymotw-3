@@ -5,8 +5,8 @@
 #
 """From mantissa, exponent pair to floating point value.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import math
 
 print('{:^7} {:^7} {:^7}'.format('m', 'e', 'x'))

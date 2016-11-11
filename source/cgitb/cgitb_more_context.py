@@ -5,8 +5,8 @@
 #
 """Control the context by passing a number on command line
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import cgitb
 import sys
 

@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from urllib.parse import quote, quote_plus, urlencode
 
 url = 'http://localhost:8080/~hellmann/'

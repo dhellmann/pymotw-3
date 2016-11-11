@@ -3,8 +3,8 @@
 # Copyright 2007 Doug Hellmann.
 """Example use of ConfigParser module.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from configparser import ConfigParser
 import os
 

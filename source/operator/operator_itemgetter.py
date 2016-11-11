@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from operator import *
 
 l = [dict(val=-1 * i) for i in range(4)]

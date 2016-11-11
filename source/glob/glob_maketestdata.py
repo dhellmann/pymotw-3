@@ -25,8 +25,8 @@
 
 """Create test data for the glob examples.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import os
 
 

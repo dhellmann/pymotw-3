@@ -5,8 +5,8 @@
 #
 """Updating counts.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import collections
 
 c = collections.Counter('abcdaab')

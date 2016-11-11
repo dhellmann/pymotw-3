@@ -6,8 +6,8 @@
 """Determine the base filename from a path.
 """
 
-#end_pymotw_header
 
+#end_pymotw_header
 import os.path
 
 PATHS = [

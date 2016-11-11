@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Retrieve all of the metadata for the contents of an archive.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import datetime
 import zipfile
 

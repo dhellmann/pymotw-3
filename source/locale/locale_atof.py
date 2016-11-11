@@ -4,8 +4,8 @@
 #
 """Converting strings to floating point numbers.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import locale
 
 sample_data = [

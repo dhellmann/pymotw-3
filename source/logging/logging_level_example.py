@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Simple logging to stderr using different levels.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import logging
 import sys
 

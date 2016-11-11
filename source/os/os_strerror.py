@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Show some of the system error messages
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import errno
 import os
 

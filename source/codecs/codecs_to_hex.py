@@ -5,8 +5,8 @@
 #
 """Format a string of bytes for output.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import binascii
 
 

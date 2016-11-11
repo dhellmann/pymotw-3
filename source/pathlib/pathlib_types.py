@@ -6,8 +6,8 @@
 #
 """pathlib types
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import itertools
 import os
 import pathlib

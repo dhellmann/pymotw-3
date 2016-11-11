@@ -5,8 +5,8 @@
 #
 """Server half of echo example.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import select
 import socket
 import sys

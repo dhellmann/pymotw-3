@@ -4,8 +4,8 @@
 #
 """Determine whether the type of a module within a ZIP archive
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import zipimport
 
 importer = zipimport.zipimporter('zipimport_example.zip')

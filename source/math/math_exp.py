@@ -5,8 +5,8 @@
 #
 """Raise e to a power.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import math
 
 x = 2

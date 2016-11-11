@@ -5,8 +5,8 @@
 #
 """Basic trigonometric functions
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import math
 
 print('{:^7} {:^7} {:^7} {:^7} {:^7}'.format(

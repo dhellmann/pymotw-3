@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from xmlrpc.server import SimpleXMLRPCServer
 
 server = SimpleXMLRPCServer(('localhost', 9000))

@@ -6,8 +6,8 @@
 """
 """
 
-#end_pymotw_header
 
+#end_pymotw_header
 import smtplib
 
 server = smtplib.SMTP('mail')

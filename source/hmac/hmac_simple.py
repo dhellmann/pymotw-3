@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Generate a simple HMAC signature.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import hmac
 
 digest_maker = hmac.new(b'secret-shared-key-goes-here')

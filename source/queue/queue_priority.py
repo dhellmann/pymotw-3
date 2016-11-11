@@ -5,8 +5,8 @@
 #
 """PriorityQueue
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import functools
 import queue
 import threading

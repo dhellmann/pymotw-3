@@ -6,8 +6,8 @@
 #
 """Importing a module from a package
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import importlib
 
 

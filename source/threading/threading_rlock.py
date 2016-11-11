@@ -5,8 +5,8 @@
 #
 """Re-entrant locks
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import threading
 
 lock = threading.RLock()

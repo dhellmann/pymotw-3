@@ -5,8 +5,8 @@
 #
 """Simple SHA1 generation.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import hashlib
 
 from hashlib_data import lorem

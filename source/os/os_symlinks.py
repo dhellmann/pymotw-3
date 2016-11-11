@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Working with symbolic links
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import os
 
 link_name = '/tmp/' + os.path.basename(__file__)

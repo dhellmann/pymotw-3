@@ -3,8 +3,8 @@
 # Copyright 2007 Doug Hellmann.
 """Including content from other files in the token stream.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import shlex
 
 text = "This text says to source quotes.txt before continuing."

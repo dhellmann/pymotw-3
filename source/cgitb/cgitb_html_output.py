@@ -5,8 +5,8 @@
 #
 """Generate a traceback with more details.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import cgitb
 cgitb.enable()
 

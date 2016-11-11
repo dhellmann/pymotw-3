@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Remove an entire tree of files.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import glob
 import pprint
 import shutil

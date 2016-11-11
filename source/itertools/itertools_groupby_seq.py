@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Grouping sequential values with groupby().
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import functools
 from itertools import *
 import operator

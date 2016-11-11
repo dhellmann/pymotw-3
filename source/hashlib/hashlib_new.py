@@ -5,8 +5,8 @@
 #
 """Naming the hash type using a string.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import argparse
 import hashlib
 import sys

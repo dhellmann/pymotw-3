@@ -5,8 +5,8 @@
 #
 """Update the status of a task
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import sqlite3
 import sys
 

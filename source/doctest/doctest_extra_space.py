@@ -9,8 +9,8 @@
 #
 """Whitespace at the end of a line can cause a mis-match.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 
 def my_function(a, b):
     """

@@ -5,8 +5,8 @@
 #
 """Client half of echo example
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import socket
 import sys
 import time

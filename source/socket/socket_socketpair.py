@@ -5,8 +5,8 @@
 #
 """Parent/child communication through a socket pair.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import socket
 import os
 

@@ -6,8 +6,8 @@
 """
 """
 
-#end_pymotw_header
 
+#end_pymotw_header
 import smtplib
 import email.utils
 from email.mime.text import MIMEText

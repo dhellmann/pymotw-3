@@ -5,8 +5,8 @@
 #
 """Using the extended interpolation syntax.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from configparser import ConfigParser, ExtendedInterpolation
 
 parser = ConfigParser(interpolation=ExtendedInterpolation())

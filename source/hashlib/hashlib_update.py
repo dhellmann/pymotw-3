@@ -6,8 +6,8 @@
 """Calling update() more than once is like calling
 it with all of the data at once.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import hashlib
 
 from hashlib_data import lorem

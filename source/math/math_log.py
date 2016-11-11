@@ -5,8 +5,8 @@
 #
 """Logarithms
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import math
 
 print(math.log(8))

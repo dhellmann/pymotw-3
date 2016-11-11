@@ -5,8 +5,8 @@
 #
 """Trivial encoder/decoder that switches capitalization.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import string
 
 

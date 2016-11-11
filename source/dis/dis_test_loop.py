@@ -6,8 +6,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import dis
 import sys
 import textwrap

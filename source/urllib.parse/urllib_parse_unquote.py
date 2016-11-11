@@ -5,8 +5,8 @@
 #
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from urllib.parse import unquote, unquote_plus
 
 print(unquote('http%3A//localhost%3A8080/%7Ehellmann/'))

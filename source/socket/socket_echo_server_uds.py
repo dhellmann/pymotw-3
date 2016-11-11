@@ -5,8 +5,8 @@
 #
 """Server half of echo example, using Unix domain sockets
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import socket
 import sys
 import os

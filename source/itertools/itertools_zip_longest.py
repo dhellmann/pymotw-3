@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Using zip()
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from itertools import *
 
 r1 = range(3)

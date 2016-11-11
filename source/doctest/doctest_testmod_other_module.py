@@ -5,8 +5,8 @@
 #
 """Run tests for another module we import.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import doctest_simple
 
 if __name__ == '__main__':

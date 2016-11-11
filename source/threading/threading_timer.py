@@ -5,8 +5,8 @@
 #
 """Starting a thread after an initial delay
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import threading
 import time
 import logging

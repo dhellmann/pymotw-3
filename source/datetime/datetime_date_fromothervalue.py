@@ -5,8 +5,8 @@
 #
 """Creating datetime.date() instances from other types of values.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import datetime
 import time
 

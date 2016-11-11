@@ -5,8 +5,8 @@
 #
 """Negative look ahead assertion.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import re
 
 address = re.compile(

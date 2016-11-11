@@ -4,8 +4,8 @@
 # Copyright (c) 2014 Doug Hellmann.  All rights reserved.
 """Running a blocking function in a process pool
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import asyncio
 import concurrent.futures
 import logging

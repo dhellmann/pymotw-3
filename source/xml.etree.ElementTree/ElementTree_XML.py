@@ -5,8 +5,8 @@
 #
 """Embedded XML string
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from xml.etree.ElementTree import XML
 
 

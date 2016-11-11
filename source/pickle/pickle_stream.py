@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import io
 import pickle
 import pprint

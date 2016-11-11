@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Writing data to a new archive with writestr().
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import time
 import zipfile
 from zipfile_infolist import print_info

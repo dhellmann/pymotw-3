@@ -6,8 +6,8 @@
 #
 """Building a new path from an existing path
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import pathlib
 
 ind = pathlib.PurePosixPath('source/pathlib/index.rst')

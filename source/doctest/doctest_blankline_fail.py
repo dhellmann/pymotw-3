@@ -5,8 +5,8 @@
 #
 """Blank lines in the input cause mis-matches.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 
 def double_space(lines):
     """Prints a list of lines double-spaced.

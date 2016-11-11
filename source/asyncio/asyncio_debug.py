@@ -4,8 +4,8 @@
 # Copyright (c) 2014 Doug Hellmann.  All rights reserved.
 """Enabling debugging
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import argparse
 import asyncio
 import functools

@@ -5,8 +5,8 @@
 #
 """Save and restore state
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import random
 import os
 import pickle

@@ -5,8 +5,8 @@
 #
 """Count the most common letters in words.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import collections
 
 c = collections.Counter()

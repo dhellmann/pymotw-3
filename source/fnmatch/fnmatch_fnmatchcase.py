@@ -6,8 +6,8 @@
 """Force a case-sensitive test of a filename with a pattern.
 """
 
-#end_pymotw_header
 
+#end_pymotw_header
 import fnmatch
 import os
 

@@ -5,8 +5,8 @@
 #
 """Receive and unpack binary data
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import binascii
 import socket
 import struct

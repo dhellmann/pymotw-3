@@ -5,8 +5,8 @@
 #
 """Repetition of patterns
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import re
 
 text = 'abbaaabbbbaaaaa'

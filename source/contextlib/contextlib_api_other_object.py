@@ -5,8 +5,8 @@
 #
 """Implementing the context manager API by hand.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 
 class WithinContext:
 

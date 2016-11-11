@@ -5,8 +5,8 @@
 #
 """Parse an OPML file and show something about the results.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from xml.etree import ElementTree
 
 with open('podcasts.opml', 'rt') as f:

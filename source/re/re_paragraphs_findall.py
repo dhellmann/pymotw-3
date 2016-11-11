@@ -5,8 +5,8 @@
 #
 """Splitting input based on a pattern.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import re
 
 text = '''Paragraph one

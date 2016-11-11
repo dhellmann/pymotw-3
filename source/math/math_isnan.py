@@ -5,8 +5,8 @@
 #
 """Testing for not-a-number.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import math
 
 x = (10.0 ** 200) * (10.0 ** 200)

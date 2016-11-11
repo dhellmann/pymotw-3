@@ -5,8 +5,8 @@
 #
 """Write and read unicode data to a file.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import bz2
 import os
 

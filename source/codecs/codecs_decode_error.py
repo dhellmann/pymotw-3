@@ -5,8 +5,8 @@
 #
 """Errors decoding Unicode data.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import codecs
 import sys
 

@@ -6,8 +6,8 @@
 #
 """Which archive formats can be extracted?
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import shutil
 
 for format, exts, description in shutil.get_unpack_formats():

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Simple GET handler with BaseHTTPServer
 """
-#end_pymotw_header
 
+#end_pymotw_header
 from http.server import BaseHTTPRequestHandler
 from urllib import parse
 

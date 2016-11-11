@@ -5,8 +5,8 @@
 #
 """Gauss Error Function
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import math
 
 print('{:^5} {:7}'.format('x', 'erfc(x)'))

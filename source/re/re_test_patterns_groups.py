@@ -5,8 +5,8 @@
 #
 """Show the groups within the matches for a pattern.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import re
 
 

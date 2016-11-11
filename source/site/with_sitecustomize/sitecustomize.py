@@ -5,8 +5,8 @@
 #
 """Example sitecustomize.py
 """
-#end_pymotw_header
 
+#end_pymotw_header
 print('Loading sitecustomize.py')
 
 import site

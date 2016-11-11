@@ -5,8 +5,8 @@
 #
 """Logging exceptions to a file, instead of displaying them.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import cgitb
 import os
 

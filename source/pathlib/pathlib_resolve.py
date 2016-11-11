@@ -6,8 +6,8 @@
 #
 """Resolving relative paths
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import pathlib
 
 usr_local = pathlib.Path('/usr/local')

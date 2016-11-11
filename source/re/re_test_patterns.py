@@ -5,8 +5,8 @@
 #
 """Show all matches for a list of patterns.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import re
 
 

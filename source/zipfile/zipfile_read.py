@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Retrieve the contents of an archive member.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import zipfile
 
 with zipfile.ZipFile('example.zip') as zf:

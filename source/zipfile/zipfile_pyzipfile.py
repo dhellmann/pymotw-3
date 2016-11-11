@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Adding Python modules to a PyZipFile.
 """
-#end_pymotw_header
 
+#end_pymotw_header
 import sys
 import zipfile
 
