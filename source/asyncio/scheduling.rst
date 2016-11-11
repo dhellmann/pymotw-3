@@ -11,8 +11,8 @@ Scheduling a Callback "Soon"
 
 If the timing of the callback does not matter, :func:`call_soon` can
 be used to schedule the call for the next iteration of the loop. Any
-extra arguments after the function are passed in when the callback is
-invoked.
+extra arguments after the function are passed to the callback when it
+is invoked.
 
 .. literalinclude:: asyncio_call_soon.py
    :caption:
