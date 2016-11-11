@@ -30,6 +30,8 @@ sys.path.insert(0, os.path.abspath('./_exts'))
 
 # -- General configuration ---------------------------------------------------
 
+building_book = bool(os.environ.get('_BUILDING_BOOK') or False)
+
 # If your documentation needs a minimal Sphinx version, state it here.
 #needs_sphinx = '1.0'
 
@@ -72,7 +74,10 @@ source_suffix = '.rst'
 #source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'index'
+if building_book:
+    master_doc = 'book'
+else:
+    master_doc = 'index'
 
 # General information about the project.
 year = datetime.date.today().year
@@ -100,7 +105,14 @@ release = ''
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = []
+if building_book:
+    exclude_patterns = [
+        'index.rst',
+    ]
+else:
+    exclude_patterns = [
+        'book.rst',
+    ]
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -359,7 +371,7 @@ latex_elements = {
 # (source start file, target name, title, author,
 #  documentclass [howto/manual]).
 latex_documents = [
-    ('index',  # startdocname
+    ('book',  # startdocname
      'py3_stdlib.tex',  # targetname
      'The Python 3 Standard Library By Example',  # title
      'Doug Hellmann',  # author
@@ -388,7 +400,11 @@ latex_show_pagerefs = True
 latex_show_urls = 'footnote'
 
 # Documents to append as an appendix to all manuals.
-latex_appendices = []
+latex_appendices = [
+    'porting_notes',
+    'third_party',
+    'about',
+]
 
 # If false, no module index is generated.
 #latex_domain_indices = True
@@ -486,3 +502,4 @@ def html_page_context(app, pagename, templatename, context, doctree):
 
 def setup(app):
     app.connect('html-page-context', html_page_context)
+    app.add_config_value('building_book', False, 'env')
