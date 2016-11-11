@@ -118,7 +118,7 @@ exclude_patterns = []
 #show_authors = False
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+#pygments_style = 'sphinx'
 
 # The default syntax highlighter is 'python', which assumes python 2
 # syntax. Set it to 'python3' since all of the examples are python 3.
