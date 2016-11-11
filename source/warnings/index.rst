@@ -364,8 +364,11 @@ the line that called the function containing the warning.  That way,
 users of a deprecated function can see where the function is called,
 instead of the implementation of the function.
 
-.. literalinclude:: warnings_warn_stacklevel.py
-   :linenos:
+.. cssclass:: with-linenos
+
+   .. literalinclude:: warnings_warn_stacklevel.py
+      :linenos:
+      :caption:
 
 In this example :func:`warn` needs to go up the stack two
 levels, one for itself and one for :func:`old_function`.

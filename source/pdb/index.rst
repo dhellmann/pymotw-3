@@ -25,8 +25,11 @@ From the Command Line
 The most straightforward way to use the debugger is to run it from the
 command line, giving it the program as input so it knows what to run.
 
-.. literalinclude:: pdb_script.py
-   :linenos: 
+.. cssclass:: with-linenos
+
+   .. literalinclude:: pdb_script.py
+      :linenos:
+      :caption:
 
 Running the debugger from the command line causes it to load the
 source file and stop execution on the first statement it finds.  In
@@ -84,8 +87,11 @@ program.  For a long-running process where the problem appears much
 later in the program execution, it will be more convenient to start
 the debugger from inside the program using :func:`set_trace`.
 
-.. literalinclude:: pdb_set_trace.py
-   :linenos:
+.. cssclass:: with-linenos
+
+   .. literalinclude:: pdb_set_trace.py
+      :linenos:
+      :caption:
 
 Line 17 of the sample script triggers the debugger at that point in
 execution, pausing it on line 18.
@@ -110,8 +116,11 @@ Debugging a failure after a program terminates is called *post-mortem*
 debugging.  :mod:`pdb` supports post-mortem debugging through the
 :func:`pm` and :func:`post_mortem` functions.
 
-.. literalinclude:: pdb_post_mortem.py
-   :linenos:
+.. cssclass:: with-linenos
+
+   .. literalinclude:: pdb_post_mortem.py
+      :linenos:
+      :caption:
 
 Here the incorrect attribute name on line 14 triggers an
 :class:`AttributeError` exception, causing execution to
@@ -286,8 +295,11 @@ local to the function being executed and global state information.
 :mod:`pdb` provides several ways to examine the contents of those
 variables.
 
-.. literalinclude:: pdb_function_arguments.py
-   :linenos:
+.. cssclass:: with-linenos
+
+   .. literalinclude:: pdb_function_arguments.py
+      :linenos:
+      :caption:
 
 The :command:`args` command (abbreviated :command:`a`) prints all of
 the arguments to the function active in the current frame.  This
@@ -367,8 +379,11 @@ For more complicated values such as nested or large data structures,
 use :command:`pp` to "pretty print" them.  This program reads several
 lines of text from a file.
 
-.. literalinclude:: pdb_pp.py
-   :linenos:
+.. cssclass:: with-linenos
+
+   .. literalinclude:: pdb_pp.py
+      :linenos:
+      :caption:
 
 Printing the variable ``lines`` with :command:`p` results in output
 that is difficult to read because it may wrap awkwardly.  :command:`pp`
@@ -474,8 +489,11 @@ In addition to navigating up and down the call stack when the program
 is paused, it is also possible to step through execution of the
 program past the point where it enters the debugger.
 
-.. literalinclude:: pdb_step.py
-   :linenos:
+.. cssclass:: with-linenos
+
+   .. literalinclude:: pdb_step.py
+      :linenos:
+      :caption:
 
 Use :command:`step` to execute the current line and then stop at the
 next execution point -- either the first statement inside a function
@@ -539,8 +557,11 @@ Stepping one line at a time in this way can become tedious if there is
 a lot of code to cover before the point where the error occurs, or if
 the same function is called repeatedly.
 
-.. literalinclude:: pdb_next.py
-   :linenos: 
+.. cssclass:: with-linenos
+
+   .. literalinclude:: pdb_next.py
+      :linenos:
+      :caption:
 
 In this example, there is nothing wrong with :func:`calc`, so stepping
 through it each time it is called in the loop in :func:`f` obscures
@@ -761,8 +782,11 @@ debugger where to stop in advance using *breakpoints*.  The debugger
 monitors the program, and when it reaches the location described by a
 breakpoint the program is paused before the line is executed.
 
-.. literalinclude:: pdb_break.py
-   :linenos:
+.. cssclass:: with-linenos
+
+   .. literalinclude:: pdb_break.py
+      :linenos:
+      :caption:
 
 There are several options to the :command:`break` command used for
 setting break points, including the line number, file, and function
@@ -825,8 +849,11 @@ function.
 To specify a breakpoint in another file, prefix the line or function
 argument with a filename.
 
-.. literalinclude:: pdb_break_remote.py
-   :linenos:
+.. cssclass:: with-linenos
+
+   .. literalinclude:: pdb_break_remote.py
+      :linenos:
+      :caption:
 
 Here a breakpoint is set for line 12 of ``pdb_break.py`` after
 starting the main program ``pdb_break_remote.py``.
@@ -1379,8 +1406,11 @@ runtime, without modifying the code.  It can skip forwards to avoid
 running some code, or backwards to run it again.  This sample program
 generates a list of numbers.
 
-.. literalinclude:: pdb_jump.py
-   :linenos: 
+.. cssclass:: with-linenos
+
+   .. literalinclude:: pdb_jump.py
+      :linenos:
+      :caption:
 
 When run without interference the output is a sequence of increasing
 numbers divisible by ``5``.
@@ -1500,8 +1530,11 @@ Illegal Jumps
 Jumping in and out of certain flow control statements is dangerous or
 undefined, and therefore, prevented by the debugger.
 
-.. literalinclude:: pdb_no_jump.py
-   :linenos: 
+.. cssclass:: with-linenos
+
+   .. literalinclude:: pdb_no_jump.py
+      :linenos:
+      :caption:
 
 :command:`jump` can be used to enter a function, but the arguments are
 not defined and the code is unlikely to work.
@@ -1614,8 +1647,11 @@ starts it over, but it can also be restarted explicitly without
 leaving the debugger and losing the current breakpoints or other
 settings.
 
-.. literalinclude:: pdb_run.py
-   :linenos: 
+.. cssclass:: with-linenos
+
+   .. literalinclude:: pdb_run.py
+      :linenos:
+      :caption:
 
 Running this program to completion within the debugger prints the name
 of the script file, since no other arguments were given on the command

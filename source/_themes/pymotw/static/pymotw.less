@@ -323,6 +323,13 @@ div.linenodiv pre {
 	font-style: italic;
 	margin-bottom: 0;
 	padding-bottom: 1em;
+	/* use the same border thickness to get the alignment right,
+       but color it based on the background */
+	/* border-left: @trim-thickness solid @source-block-background; */
+}
+
+.with-linenos .code-block-caption {
+	margin-left: 2.2em;
 }
 
 .code-block-caption .caption-text:before {
@@ -331,10 +338,22 @@ div.linenodiv pre {
 	content: "# ";
 }
 
-#todo-schema-sql .code-block-caption .caption-text:before {
-	/* insert a # before the filename in the caption to make it look like
-       a code comment */
+.sql-caption .code-block-caption .caption-text:before {
+	/* insert a -- before the filename in the caption to make it look like
+       a SQL comment */
 	content: "-- ";
+}
+
+.xml-caption .code-block-caption .caption-text:before {
+	/* insert a <!-- before the filename in the caption to make it look like
+       a SQL comment */
+	content: "<!-- ";
+}
+
+.xml-caption .code-block-caption .caption-text:after {
+	/* insert a --> after the filename in the caption to make it look like
+       a SQL comment */
+	content: " -->";
 }
 
 /* center captions for figures under their image */

@@ -95,9 +95,11 @@ in :table:`The "project" Table` and :table:`The "task" Table`.
 The *data definition language* (DDL) statements to create the tables
 are:
 
-.. literalinclude:: todo_schema.sql
-   :caption:
-   :language: sql
+.. cssclass:: sql-caption
+
+   .. literalinclude:: todo_schema.sql
+      :caption:
+      :language: sql
 
 The :func:`executescript` method of the :class:`Connection` can be
 used to run the DDL instructions to create the schema.

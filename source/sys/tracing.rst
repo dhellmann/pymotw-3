@@ -54,8 +54,11 @@ A ``call`` event is generated before every function call.  The frame
 passed to the callback can be used to find out which function is being
 called and from where.
 
-.. literalinclude:: sys_settrace_call.py
-   :linenos:
+.. cssclass:: with-linenos
+
+   .. literalinclude:: sys_settrace_call.py
+      :linenos:
+      :caption:
 
 This example ignores calls to :func:`write`, as used by :command:`print` to
 write to :const:`sys.stdout`.
@@ -88,8 +91,11 @@ The trace hook can return a new hook to be used inside the new scope
 (the *local* trace function). It is possible, for instance, to control
 tracing to only run line-by-line within certain modules or functions.
 
-.. literalinclude:: sys_settrace_line.py
-    :linenos:
+.. cssclass:: with-linenos
+
+   .. literalinclude:: sys_settrace_line.py
+      :linenos:
+      :caption:
 
 In this example, the list of functions is kept in the variable
 :py:data:`to_be_traced`, so when :func:`trace_calls` runs it can return
@@ -124,8 +130,11 @@ Another useful way to use the hooks is to keep up with which functions
 are being called, and what their return values are.  To monitor return
 values, watch for the ``return`` event.
 
-.. literalinclude:: sys_settrace_return.py
-    :linenos:
+.. cssclass:: with-linenos
+
+   .. literalinclude:: sys_settrace_return.py
+      :linenos:
+      :caption:
 
 The local trace function is used for watching return events, so
 :func:`trace_calls_and_returns` needs to return a reference to itself
@@ -157,8 +166,11 @@ a local trace function.  When an exception occurs, the trace hook is
 called with a tuple containing the type of exception, the exception
 object, and a traceback object.
 
-.. literalinclude:: sys_settrace_exception.py
-    :linenos:
+.. cssclass:: with-linenos
+
+   .. literalinclude:: sys_settrace_exception.py
+      :linenos:
+      :caption:
 
 Take care to limit where the local function is applied because some of
 the internals of formatting error messages generate, and ignore, their

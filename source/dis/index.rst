@@ -31,8 +31,11 @@ Python code source (module, class, method, function, or code object).
 A module such as ``dis_simple.py`` can be disassembled by running
 :mod:`dis` from the command line.
 
-.. literalinclude:: dis_simple.py
-   :linenos:
+.. cssclass:: with-linenos
+
+   .. literalinclude:: dis_simple.py
+      :linenos:
+      :caption:
 
 The output is organized into columns with the original source line
 number, the instruction "address" within the code object, the opcode
@@ -71,8 +74,11 @@ Disassembling Functions
 Unfortunately, disassembling an entire module does not recurse into
 functions automatically.
 
-.. literalinclude:: dis_function.py
-   :linenos:
+.. cssclass:: with-linenos
+
+   .. literalinclude:: dis_function.py
+      :linenos:
+      :caption:
 
 The results of disassembling ``dis_function.py`` show the operations
 for loading the function's code object onto the stack and then turning
@@ -184,8 +190,11 @@ Classes
 Classes can be passed to :func:`dis`, in which case all of the methods
 are disassembled in turn.
 
-.. literalinclude:: dis_class.py
-   :linenos:
+.. cssclass:: with-linenos
+
+   .. literalinclude:: dis_class.py
+      :linenos:
+      :caption:
 
 The methods are listed in alphabetical order, not the order they
 appear in the file.
@@ -309,8 +318,11 @@ passing it to :func:`distb` directly.  In this example, there is a
 :class:`DivideByZero` exception, but since the formula has two
 divisions it may not be clear which part is zero.
 
-.. literalinclude:: dis_traceback.py
-   :linenos:
+.. cssclass:: with-linenos
+
+   .. literalinclude:: dis_traceback.py
+      :linenos:
+      :caption:
 
 The bad value is easy to spot when it is loaded onto the stack in the
 disassembled version.  The bad operation is highlighted with the
@@ -375,8 +387,11 @@ each incarnation of the :class:`Dictionary` class.
 A straightforward, but slow, implementation of :class:`Dictionary`
 starts out like this:
 
-.. literalinclude:: dis_slow_loop.py
-   :linenos:
+.. cssclass:: with-linenos
+
+   .. literalinclude:: dis_slow_loop.py
+      :linenos:
+      :caption:
 
 Running the test program with this version shows the disassembled
 program and the amount of time it takes to run.
@@ -452,8 +467,11 @@ One technique to eliminate the exception setup is to pre-populate
 That means the list for the new word should always be found, and the
 value can be saved after the lookup.
 
-.. literalinclude:: dis_faster_loop.py
-   :linenos:
+.. cssclass:: with-linenos
+
+   .. literalinclude:: dis_faster_loop.py
+      :linenos:
+      :caption:
 
 The change cuts the number of opcodes in half, but only shaves the
 time down to 0.0567 seconds.  Obviously the exception handling had
@@ -494,8 +512,11 @@ The performance can be improved further by moving the lookup for
 ``self.by_letter`` outside of the loop (the value does not change,
 after all).
 
-.. literalinclude:: dis_fastest_loop.py
-   :linenos:
+.. cssclass:: with-linenos
+
+   .. literalinclude:: dis_fastest_loop.py
+      :linenos:
+      :caption:
 
 Opcodes 0-6 now find the value of ``self.by_letter`` and save it as a
 local variable ``by_letter``.  Using a local variable only takes a
@@ -544,8 +565,11 @@ is moved to C.  This is safe because the inputs are known to be
 sorted.  If that was not the case, the program would need to sort them
 first.
 
-.. literalinclude:: dis_eliminate_loop.py
-   :linenos:
+.. cssclass:: with-linenos
+
+   .. literalinclude:: dis_eliminate_loop.py
+      :linenos:
+      :caption:
 
 The :mod:`itertools` version takes only 0.0332 seconds to run, about
 60% of the run time for the original.
@@ -598,8 +622,11 @@ Disassembling compiled source also exposes some of the optimizations
 made by the compiler.  For example, literal expressions are folded
 during compilation, when possible.
 
-.. literalinclude:: dis_constant_folding.py
-   :linenos:
+.. cssclass:: with-linenos
+
+   .. literalinclude:: dis_constant_folding.py
+      :linenos:
+      :caption:
 
 None of the values in the expressions on lines 5-7 can change the way
 the operation is performed, so the result of the expressions can be

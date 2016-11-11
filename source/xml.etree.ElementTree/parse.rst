@@ -18,9 +18,11 @@ loaded at one time.
 The memory footprint of small, simple documents such as this list of
 podcasts represented as an OPML outline is not significant:
 
-.. literalinclude:: podcasts.opml
-   :caption:
-   :language: xml
+.. cssclass:: xml-caption
+
+   .. literalinclude:: podcasts.opml
+      :caption:
+      :language: xml
 
 To parse the file, pass an open file handle to :func:`parse`.
 
@@ -186,10 +188,12 @@ tree.  Each :class:`Element` has attributes for accessing data pulled
 out of the XML.  This can be illustrated with a somewhat more
 contrived example input file, ``data.xml``.
 
-.. literalinclude:: data.xml
-   :caption:
-   :language: xml
-   :linenos:
+.. cssclass:: xml-caption, with-linenos
+
+   .. literalinclude:: data.xml
+      :caption:
+      :language: xml
+      :linenos:
 
 The *attributes* of a node are available in the :attr:`attrib`
 property, which acts like a dictionary.

@@ -67,9 +67,12 @@ Identifying deadlocks can be one of the most difficult aspects of
 working with threads.  :func:`sys._current_frames` can help by showing
 exactly where a thread is stopped.
 
-.. literalinclude:: sys_current_frames.py
-   :linenos:
-   :start-after: #end_pymotw_header
+.. cssclass:: with-linenos
+
+   .. literalinclude:: sys_current_frames.py
+      :linenos:
+      :caption:
+      :start-after: #end_pymotw_header
 
 The dictionary returned by :func:`sys._current_frames` is keyed on the
 thread identifier, rather than its name.  A little work is needed to
