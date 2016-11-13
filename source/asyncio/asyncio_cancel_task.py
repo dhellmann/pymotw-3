@@ -15,20 +15,24 @@ async def task_func():
     return 'the result'
 
 
-event_loop = asyncio.get_event_loop()
-try:
+async def main(loop):
     print('creating task')
     task = event_loop.create_task(task_func())
 
     print('canceling task')
     task.cancel()
 
-    print('entering event loop')
-    event_loop.run_until_complete(task)
-    print('task: {!r}'.format(task))
-except asyncio.CancelledError:
-    print('caught error from cancelled task')
-else:
-    print('task result: {!r}'.format(task.result()))
+    print('canceled task {!r}'.format(task))
+    try:
+        await task
+    except asyncio.CancelledError:
+        print('caught error from canceled task')
+    else:
+        print('task result: {!r}'.format(task.result()))
+
+
+event_loop = asyncio.get_event_loop()
+try:
+    event_loop.run_until_complete(main(event_loop))
 finally:
     event_loop.close()

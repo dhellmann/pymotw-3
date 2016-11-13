@@ -20,8 +20,8 @@ running and the coroutine does not return.
    :caption:
    :start-after: #end_pymotw_header
 
-This example uses :func:`run_until_complete` to keep the event loop
-running until the task returns a result.
+This example waits for the task to return a result before the
+``main()`` function exits.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'asyncio_create_task.py', line_break_mode='wrap'))
@@ -32,14 +32,12 @@ running until the task returns a result.
 	$ python3 asyncio_create_task.py
 	
 	creating task
-	task: <Task pending coro=<task_func() running at
+	waiting for <Task pending coro=<task_func() running at
 	asyncio_create_task.py:12>>
-	entering event loop
 	in task_func
-	task: <Task finished coro=<task_func() done, defined at
+	task completed <Task finished coro=<task_func() done, defined at
 	asyncio_create_task.py:12> result='the result'>
 	return value: 'the result'
-	task result: 'the result'
 
 .. {{{end}}}
 
@@ -59,7 +57,7 @@ loop. The result is a :class:`CancelledError` exception from
 :func:`run_until_complete`.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'asyncio_cancel_task.py'))
+.. cog.out(run_script(cog.inFile, 'asyncio_cancel_task.py', line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
@@ -68,8 +66,9 @@ loop. The result is a :class:`CancelledError` exception from
 	
 	creating task
 	canceling task
-	entering event loop
-	caught error from cancelled task
+	canceled task <Task cancelling coro=<task_func() running at
+	asyncio_cancel_task.py:13>>
+	caught error from canceled task
 
 .. {{{end}}}
 
@@ -96,8 +95,9 @@ already done, if necessary.
 	creating task
 	in task_func, sleeping
 	in task_canceller
-	cancelled the task
-	task_func was cancelled
+	canceled the task
+	task_func was canceled
+	main() also sees task as canceled
 
 .. {{{end}}}
 

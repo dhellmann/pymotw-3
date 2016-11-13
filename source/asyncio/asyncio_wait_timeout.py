@@ -15,7 +15,7 @@ async def phase(i):
     try:
         await asyncio.sleep(0.1 * i)
     except asyncio.CancelledError:
-        print('phase {} cancelled'.format(i))
+        print('phase {} canceled'.format(i))
         raise
     else:
         print('done with phase {}'.format(i))
@@ -36,7 +36,7 @@ async def main(num_phases):
     # Cancel remaining tasks so they do not generate errors
     # as we exit without finishing them.
     if pending:
-        print('cancelling tasks')
+        print('canceling tasks')
         for t in pending:
             t.cancel()
     print('exiting main')

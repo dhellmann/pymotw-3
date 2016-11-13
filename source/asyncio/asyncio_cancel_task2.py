@@ -15,22 +15,29 @@ async def task_func():
     try:
         await asyncio.sleep(1)
     except asyncio.CancelledError:
-        print('task_func was cancelled')
+        print('task_func was canceled')
         raise
     return 'the result'
 
 
-async def task_canceller(t):
+def task_canceller(t):
     print('in task_canceller')
     t.cancel()
-    print('cancelled the task')
+    print('canceled the task')
+
+
+async def main(loop):
+    print('creating task')
+    task = loop.create_task(task_func())
+    loop.call_soon(task_canceller, task)
+    try:
+        await task
+    except asyncio.CancelledError:
+        print('main() also sees task as canceled')
 
 
 event_loop = asyncio.get_event_loop()
 try:
-    print('creating task')
-    task = event_loop.create_task(task_func())
-
-    event_loop.run_until_complete(task_canceller(task))
+    event_loop.run_until_complete(main(event_loop))
 finally:
     event_loop.close()
