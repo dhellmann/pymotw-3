@@ -9,23 +9,22 @@
 import asyncio
 
 
-def callback():
-    print('callback invoked')
+def callback(arg):
+    print('callback {} invoked'.format(arg))
 
 
-def stopper(loop):
-    print('stopper invoked')
-    loop.stop()
+async def main(loop):
+    print('registering callbacks')
+    event_loop.call_soon(callback, 1)
+    event_loop.call_soon(callback, 2)
+
+    await asyncio.sleep(0.1)
 
 
 event_loop = asyncio.get_event_loop()
 try:
-    print('registering callbacks')
-    event_loop.call_soon(callback)
-    event_loop.call_soon(stopper, event_loop)
-
     print('entering event loop')
-    event_loop.run_forever()
+    event_loop.run_until_complete(main(event_loop))
 finally:
     print('closing event loop')
     event_loop.close()

@@ -18,9 +18,7 @@ is invoked.
    :caption:
    :start-after: #end_pymotw_header
 
-The callbacks are invoked in the order they are scheduled. In this
-example, ``callback()`` is run followed by ``stopper()``, which uses
-the loop's :func:`stop` method to cause the event loop to exit.
+The callbacks are invoked in the order they are scheduled.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'asyncio_call_soon.py'))
@@ -30,10 +28,10 @@ the loop's :func:`stop` method to cause the event loop to exit.
 
 	$ python3 asyncio_call_soon.py
 	
-	registering callbacks
 	entering event loop
-	callback invoked
-	stopper invoked
+	registering callbacks
+	callback 1 invoked
+	callback 2 invoked
 	closing event loop
 
 .. {{{end}}}
@@ -63,12 +61,11 @@ that "soon" usually implies a minimal delay.
 
 	$ python3 asyncio_call_later.py
 	
-	registering callbacks
 	entering event loop
+	registering callbacks
 	callback 3 invoked
 	callback 2 invoked
 	callback 1 invoked
-	stopper invoked
 	closing event loop
 
 .. {{{end}}}
@@ -97,14 +94,13 @@ returned by :func:`time.time`.
 
 	$ python3 asyncio_call_at.py
 	
-	clock time: 1451746600.330646
-	loop  time: 856785.00372738
-	registering callbacks
 	entering event loop
-	callback 3 invoked at 856785.003883249
-	callback 2 invoked at 856785.104088092
-	callback 1 invoked at 856785.205991229
-	stopper invoked at    856785.305830442
+	clock time: 1479050248.66192
+	loop  time: 1008846.13856885
+	registering callbacks
+	callback 3 invoked at 1008846.13867956
+	callback 2 invoked at 1008846.239931555
+	callback 1 invoked at 1008846.343480996
 	closing event loop
 
 .. {{{end}}}
