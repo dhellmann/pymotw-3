@@ -42,26 +42,26 @@ async def producer(q, num_workers):
     print('producer: ending')
 
 
-event_loop = asyncio.get_event_loop()
-try:
-    num_consumers = 2
-
+async def main(loop, num_consumers):
     # Create the queue with a fixed size so the producer
     # will block until the consumers pull some items out.
     q = asyncio.Queue(maxsize=num_consumers)
 
     # Scheduled the consumer tasks.
     consumers = [
-        event_loop.create_task(consumer(i, q))
+        loop.create_task(consumer(i, q))
         for i in range(num_consumers)
     ]
 
     # Schedule the producer task.
-    prod = event_loop.create_task(producer(q, num_consumers))
+    prod = loop.create_task(producer(q, num_consumers))
 
     # Wait for all of the coroutines to finish.
-    result = event_loop.run_until_complete(
-        asyncio.wait(consumers + [prod])
-    )
+    await asyncio.wait(consumers + [prod])
+
+
+event_loop = asyncio.get_event_loop()
+try:
+    event_loop.run_until_complete(main(event_loop, 2))
 finally:
     event_loop.close()

@@ -26,19 +26,18 @@ async def manipulate_condition(condition):
 
     for i in range(1, 3):
         with await condition:
-            print('notifying {}'.format(i))
+            print('notifying {} consumers'.format(i))
             condition.notify(n=i)
         await asyncio.sleep(0.1)
 
     with await condition:
-        print('notifying remaining')
+        print('notifying remaining consumers')
         condition.notify_all()
 
     print('ending manipulate_condition')
 
 
-event_loop = asyncio.get_event_loop()
-try:
+async def main(loop):
     # Create a condition
     condition = asyncio.Condition()
 
@@ -49,15 +48,14 @@ try:
     ]
 
     # Schedule a task to manipulate the condition variable
-    event_loop.create_task(
-        manipulate_condition(condition)
-    )
+    loop.create_task(manipulate_condition(condition))
 
-    print('entering event loop')
-    result = event_loop.run_until_complete(
-        asyncio.wait(consumers),
-    )
-    print('exited event loop')
+    # Wait for the consumers to be done
+    await asyncio.wait(consumers)
+
+
+event_loop = asyncio.get_event_loop()
+try:
+    result = event_loop.run_until_complete(main(event_loop))
 finally:
-    print('closing event loop')
     event_loop.close()

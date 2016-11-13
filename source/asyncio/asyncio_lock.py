@@ -32,25 +32,23 @@ async def coro2(lock):
         lock.release()
 
 
-event_loop = asyncio.get_event_loop()
-try:
+async def main(loop):
     # Create and acquire a shared lock.
     lock = asyncio.Lock()
     print('acquiring the lock before starting coroutines')
-    event_loop.run_until_complete(lock.acquire())
+    await lock.acquire()
     print('lock acquired: {}'.format(lock.locked()))
 
     # Schedule a callback to unlock the lock.
-    event_loop.call_later(0.1, functools.partial(unlock, lock))
+    loop.call_later(0.1, functools.partial(unlock, lock))
 
     # Run the coroutines that want to use the lock.
-    print('entering event loop')
-    event_loop.run_until_complete(
-        asyncio.wait([coro1(lock),
-                      coro2(lock)]),
-    )
-    print('exited event loop')
+    print('waiting for coroutines')
+    await asyncio.wait([coro1(lock), coro2(lock)]),
 
-    print('lock status: {}'.format(lock.locked()))
+
+event_loop = asyncio.get_event_loop()
+try:
+    event_loop.run_until_complete(main(event_loop))
 finally:
     event_loop.close()

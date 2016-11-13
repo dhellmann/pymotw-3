@@ -37,16 +37,14 @@ with the ``with await`` keywords, as in :func:`coro1`.
 	
 	acquiring the lock before starting coroutines
 	lock acquired: True
-	entering event loop
-	coro2 waiting for the lock
+	waiting for coroutines
 	coro1 waiting for the lock
+	coro2 waiting for the lock
 	callback releasing lock
-	coro2 acquired lock
-	coro2 released lock
 	coro1 acquired lock
 	coro1 released lock
-	exited event loop
-	lock status: False
+	coro2 acquired lock
+	coro2 released lock
 
 .. {{{end}}}
 
@@ -75,15 +73,13 @@ hold on the event object.
 
 	$ python3 asyncio_event.py
 	
-	event state: False
-	entering event loop
+	event start state: False
 	coro2 waiting for event
 	coro1 waiting for event
 	setting event in callback
 	coro2 triggered
 	coro1 triggered
-	exited event loop
-	event state: True
+	event end state: True
 
 .. {{{end}}}
 
@@ -111,29 +107,26 @@ consumers, then all of the remaining consumers.
 
 	$ python3 asyncio_condition.py
 	
-	entering event loop
 	starting manipulate_condition
-	consumer 2 is waiting
 	consumer 3 is waiting
-	consumer 4 is waiting
 	consumer 1 is waiting
+	consumer 2 is waiting
 	consumer 0 is waiting
-	notifying 1
-	consumer 2 triggered
-	ending consumer 2
-	notifying 2
+	consumer 4 is waiting
+	notifying 1 consumers
 	consumer 3 triggered
 	ending consumer 3
-	consumer 4 triggered
-	ending consumer 4
-	notifying remaining
-	ending manipulate_condition
+	notifying 2 consumers
 	consumer 1 triggered
 	ending consumer 1
+	consumer 2 triggered
+	ending consumer 2
+	notifying remaining consumers
+	ending manipulate_condition
 	consumer 0 triggered
 	ending consumer 0
-	exited event loop
-	closing event loop
+	consumer 4 triggered
+	ending consumer 4
 
 .. {{{end}}}
 
