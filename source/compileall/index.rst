@@ -75,7 +75,7 @@ This version excludes files in the ``subdir`` subdirectory.
 
 .. {{{end}}}
 
-The *maxlevels* argument controls the depth of recursion.  For example,
+The ``maxlevels`` argument controls the depth of recursion.  For example,
 to avoid recursion entirely pass ``0``.
 
 .. literalinclude:: compileall_recursion_depth.py
@@ -113,7 +113,7 @@ a single call to :func:`compile_path`.
 
 This example replaces the default contents of :data:`sys.path` to
 avoid permission errors while running the script, but still
-illustrates the default behavior.  Note that the *maxlevels* value
+illustrates the default behavior.  Note that the ``maxlevels`` value
 defaults to ``0``.
 
 .. {{{cog

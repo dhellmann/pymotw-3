@@ -141,7 +141,7 @@ failed test, though.
 
 To make it easier to understand the nature of a test failure, the
 :func:`fail*` and :func:`assert*` methods all accept an argument
-*msg*, which can be used to produce a more detailed error message.
+``msg``, which can be used to produce a more detailed error message.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '-m unittest -v unittest_failwithmessage.py',

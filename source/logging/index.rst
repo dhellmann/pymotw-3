@@ -120,7 +120,7 @@ etc.) and the ``.5`` file is erased.
 .. note::
 
   Obviously, this example sets the log length much too small as an
-  extreme example. Set *maxBytes* to a more appropriate value in a
+  extreme example. Set ``maxBytes`` to a more appropriate value in a
   real program.
 
 Verbosity Levels

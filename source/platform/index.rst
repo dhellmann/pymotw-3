@@ -93,9 +93,9 @@ Platform
 
 The :func:`platform` function returns a string containing a general
 purpose platform identifier.  The function accepts two optional
-boolean arguments. If *aliased* is True, the names in the return value
+Boolean arguments. If ``aliased`` is True, the names in the return value
 are converted from a formal name to their more common form. When
-*terse* is true, a minimal value with some parts dropped is returned
+``terse`` is true, a minimal value with some parts dropped is returned
 instead of the full string.
 
 .. literalinclude:: platform_platform.py

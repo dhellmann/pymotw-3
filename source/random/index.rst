@@ -194,8 +194,8 @@ range.
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`randrange` supports a *step* argument, in addition to start and
-stop values, so it is fully equivalent to selecting a random value
+:func:`randrange` supports a ``step`` argument, in addition to start
+and stop values, so it is fully equivalent to selecting a random value
 from ``range(start, stop, step)``.  It is more efficient, because the
 range is not actually constructed.
 

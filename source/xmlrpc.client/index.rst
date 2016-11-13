@@ -49,7 +49,7 @@ example, to implement XML-RPC over SMTP.
    :caption:
    :start-after: #end_pymotw_header
 
-The *verbose* option gives debugging information useful for resolving
+The ``verbose`` option gives debugging information useful for resolving
 communication errors.
 
 .. code-block:: none
@@ -84,7 +84,7 @@ The server automatically detects the correct encoding.
     Ping: True
 
 
-The *allow_none* option controls whether Python's ``None`` value is
+The ``allow_none`` option controls whether Python's ``None`` value is
 automatically translated to a nil value or if it causes an error.
 
 .. literalinclude:: xmlrpc_ServerProxy_allow_none.py
@@ -215,7 +215,7 @@ or when they are received from the server.
    :start-after: #end_pymotw_header
 
 By default an internal version of :class:`DateTime` is used, but the
-*use_datetime* option turns on support for using the classes in the
+``use_datetime`` option turns on support for using the classes in the
 :mod:`datetime` module.
 
 .. code-block:: none

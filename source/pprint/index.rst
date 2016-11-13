@@ -171,9 +171,9 @@ be extraneous.
     :caption:
     :start-after: #end_pymotw_header
 
-Use the *depth* argument to control how far down into the nested data
-structure the pretty printer recurses.  Levels not included in the
-output are represented by ellipsis.
+Use the ``depth`` argument to control how far down into the nested
+data structure the pretty printer recurses.  Levels not included in
+the output are represented by ellipsis.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'pprint_depth.py'))
@@ -192,8 +192,8 @@ output are represented by ellipsis.
 Controlling Output Width
 ========================
 
-The default output width for the formatted text is 80 columns. To adjust that
-width, use the *width* argument to :func:`pprint`.
+The default output width for the formatted text is 80 columns. To
+adjust that width, use the ``width`` argument to :func:`pprint`.
 
 .. literalinclude:: pprint_width.py
     :caption:

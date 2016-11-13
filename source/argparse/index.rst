@@ -37,7 +37,7 @@ Defining Arguments
 ==================
 
 :mod:`argparse` is a complete argument processing library. Arguments
-can trigger different actions, specified by the *action* argument to
+can trigger different actions, specified by the ``action`` argument to
 :func:`add_argument()`. Supported actions include storing the argument
 (singly, or as part of a list), storing a constant value when the
 argument is encountered (including special handling for true/false
@@ -46,7 +46,7 @@ is seen, and calling a callback to use custom processing instructions.
 
 The default action is to store the argument value. If a type is
 provided, the value is converted to that type before it is stored. If
-the *dest* argument is provided, the value is saved using that name
+the ``dest`` argument is provided, the value is saved using that name
 when the command-line arguments are parsed.
 
 Parsing a Command-Line
@@ -193,7 +193,7 @@ configuration needed for each to work.
    :start-after: #end_pymotw_header
 
 The ``-t`` and ``-f`` options are configured to modify different
-option values, each storing either True or False.  The *dest* values
+option values, each storing either True or False.  The ``dest`` values
 for ``-A`` and ``-B`` are the same so that their constant values are
 appended to the same list.
 
@@ -300,10 +300,10 @@ different convention.
    :caption:
    :start-after: #end_pymotw_header
 
-Set the *prefix_chars* parameter for the :class:`ArgumentParser` to a
+Set the ``prefix_chars`` parameter for the :class:`ArgumentParser` to a
 string containing all of the characters that should be allowed to
 signify options.  It is important to understand that although
-*prefix_chars* establishes the allowed switch characters, the
+``prefix_chars`` establishes the allowed switch characters, the
 individual argument definitions specify the syntax for a given switch.
 This gives explicit control over whether options using different
 prefixes are aliases (such as might be the case for
@@ -397,7 +397,7 @@ configuration file.
 An alternative to processing the configuration file in application
 code is to tell :mod:`argparse` how to recognize an argument that
 specifies an input file containing a set of arguments to be processed
-using *fromfile_prefix_chars*.
+using ``fromfile_prefix_chars``.
 
 .. literalinclude:: argparse_fromfile_prefix_chars.py
    :caption:
@@ -431,7 +431,7 @@ Automatically Generated Help
 ----------------------------
 
 :mod:`argparse` will automatically add options to generate help, if
-configured to do so.  The *add_help* argument to
+configured to do so.  The ``add_help`` argument to
 :class:`ArgumentParser` controls the help-related options.
 
 .. literalinclude:: argparse_with_help.py
@@ -439,7 +439,7 @@ configured to do so.  The *add_help* argument to
    :start-after: #end_pymotw_header
 
 The help options (``-h`` and ``--help``) are added by default, but can
-be disabled by setting *add_help* to false.
+be disabled by setting ``add_help`` to false.
 
 .. literalinclude:: argparse_without_help.py
    :caption:
@@ -649,7 +649,7 @@ help generation is turned off in the base parser.
    :caption:
    :start-after: #end_pymotw_header
 
-Next, create another parser with *parents* set:
+Next, create another parser with ``parents`` set:
 
 .. literalinclude:: argparse_uses_parent.py
    :caption:
@@ -681,7 +681,7 @@ Conflicting Options
 The previous example pointed out that adding two argument handlers to
 a parser using the same argument name causes an exception.  The
 conflict resolution behavior can be changed by passing a
-*conflict_handler*.  The two built-in handlers are ``error`` (the
+``conflict_handler``.  The two built-in handlers are ``error`` (the
 default), and ``resolve``, which picks a handler based on the order
 they are added.
 
@@ -784,7 +784,7 @@ instead of the base parser.
    :caption:
    :start-after: #end_pymotw_header
 
-The program using the group-based parent lists it in the *parents*
+The program using the group-based parent lists it in the ``parents``
 value, just as before.
 
 .. literalinclude:: argparse_uses_parent_with_group.py
@@ -956,7 +956,7 @@ Variable Argument Lists
 -----------------------
 
 A single argument definition can be configured to consume multiple
-arguments on the command-line being parsed.  Set *nargs* to one of the
+arguments on the command-line being parsed.  Set ``nargs`` to one of the
 flag values from :table:`Flags for Variable Argument Definitions in
 argparse`, based on the number of required or expected arguments.
 
@@ -1061,7 +1061,7 @@ Argument Types
 --------------
 
 :mod:`argparse` treats all argument values as strings, unless it is
-told to convert the string to another type.  The *type* parameter to
+told to convert the string to another type.  The ``type`` parameter to
 :func:`add_argument` defines a converter function, which is used by the
 :class:`ArgumentParser` to transform the argument value from a string
 to some other type.
@@ -1071,7 +1071,7 @@ to some other type.
    :start-after: #end_pymotw_header
 
 Any callable that takes a single string argument can be passed as
-*type*, including built-in types like :func:`int`, :func:`float`, and
+``type``, including built-in types like :func:`int`, :func:`float`, and
 :func:`open`.
 
 .. {{{cog
@@ -1136,7 +1136,7 @@ where the input file does not exist, must be handled by the caller.
 .. {{{end}}}
 
 To limit an input argument to a value within a pre-defined set, use
-the *choices* parameter.
+the ``choices`` parameter.
 
 .. literalinclude:: argparse_choices.py
    :caption:
@@ -1236,12 +1236,12 @@ Custom Actions
 
 In addition to the built-in actions described earlier, custom actions
 can be defined by providing an object that implements the Action API.
-The object passed to :func:`add_argument` as *action* should take
+The object passed to :func:`add_argument` as ``action`` should take
 parameters describing the argument being defined (all the same
 arguments given to :func:`add_argument`) and return a callable object
-that takes as parameters the *parser* processing the arguments, the
-*namespace* holding the parse results, the *value* of the argument
-being acted on, and the *option_string* that triggered the action.
+that takes as parameters the ``parser`` processing the arguments, the
+``namespace`` holding the parse results, the ``value`` of the argument
+being acted on, and the ``option_string`` that triggered the action.
 
 A class :class:`Action` is provided as a convenient starting point for
 defining new actions.  The constructor handles the argument
@@ -1252,12 +1252,12 @@ subclass.
    :caption:
    :start-after: #end_pymotw_header
 
-The type of *values* depends on the value of *nargs*.  If the argument
-allows multiple values, *values* will be a list even if it only
+The type of ``values`` depends on the value of ``nargs``.  If the argument
+allows multiple values, ``values`` will be a list even if it only
 contains one item.
 
-The value of *option_string* also depends on the original argument
-specification.  For positional required arguments, *option_string* is
+The value of ``option_string`` also depends on the original argument
+specification.  For positional required arguments, ``option_string`` is
 always ``None``.
 
 .. {{{cog

@@ -36,7 +36,7 @@ partial object.
     :start-after: #end_pymotw_header
 
 At the end of the example, the first :class:`partial` created is
-invoked without passing a value for *a*, causing an exception.
+invoked without passing a value for ``a``, causing an exception.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'functools_partial.py', ignore_error=True, line_break_mode='wrap'))
@@ -571,7 +571,7 @@ This example adds up the numbers in the input sequence.
 
 .. {{{end}}}
 
-The optional *initializer* argument is placed at the front of the
+The optional ``initializer`` argument is placed at the front of the
 sequence and processed along with the other items. This can be used to
 update a previously computed value with new inputs.
 

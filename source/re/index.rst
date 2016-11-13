@@ -207,11 +207,11 @@ followed by the meta-character ``*`` is repeated zero or more times
 appear at all to match).  Replace the ``*`` with ``+`` and the pattern
 must appear at least once.  Using ``?`` means the pattern appears zero
 or one time.  For a specific number of occurrences, use ``{m}`` after
-the pattern, where *m* is the number of times the pattern should
+the pattern, where ``m`` is the number of times the pattern should
 repeat.  And finally, to allow a variable but limited number of
-repetitions, use ``{m,n}`` where *m* is the minimum number of
-repetitions and *n* is the maximum.  Leaving out *n* (``{m,}``) means
-the value appears at least *m* times, with no maximum.
+repetitions, use ``{m,n}`` where ``m`` is the minimum number of
+repetitions and ``n`` is the maximum.  Leaving out ``n`` (``{m,}``)
+means the value appears at least ``m`` times, with no maximum.
 
 .. literalinclude:: re_repetition.py
    :caption:
@@ -771,8 +771,8 @@ report a match.
 .. {{{end}}}
 
 The :func:`search` method of a compiled regular expression accepts
-optional *start* and *end* position parameters to limit the search to
-a substring of the input.
+optional ``start`` and ``end`` position parameters to limit the search
+to a substring of the input.
 
 .. literalinclude:: re_search_substring.py
    :caption:
@@ -1616,9 +1616,9 @@ different pattern based on whether or not a previous group matched.
 The email pattern can be corrected so that the angle brackets are
 required if a name is present, and not if the email address is by
 itself.  The syntax for testing to see if a group has matched is
-``(?(id)yes-expression|no-expression)``, where *id* is the group name
-or number, *yes-expression* is the pattern to use if the group has a
-value and *no-expression* is the pattern to use otherwise.
+``(?(id)yes-expression|no-expression)``, where ``id`` is the group
+name or number, ``yes-expression`` is the pattern to use if the group
+has a value and ``no-expression`` is the pattern to use otherwise.
 
 .. literalinclude:: re_id.py
    :caption:
@@ -1708,14 +1708,14 @@ literal digits.
 
 .. {{{end}}}
 
-Pass a value to *count* to limit the number of substitutions
+Pass a value to ``count`` to limit the number of substitutions
 performed.
 
 .. literalinclude:: re_sub_count.py
    :caption:
    :start-after: #end_pymotw_header
 
-Only the first substitution is made because *count* is ``1``.
+Only the first substitution is made because ``count`` is ``1``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 're_sub_count.py'))

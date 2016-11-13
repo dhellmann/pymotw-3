@@ -675,7 +675,7 @@ Isolation Levels
 :mod:`sqlite3` supports three locking modes, called *isolation
 levels*, that control the technique used to prevent incompatible changes
 between connections.  The isolation level is set by passing a string
-as the *isolation_level* argument when a connection is opened, so
+as the ``isolation_level`` argument when a connection is opened, so
 different connections can use different values.
 
 This program demonstrates the effect of different isolation levels on
@@ -806,7 +806,7 @@ fact that the other connections are blocking.
 Autocommit
 ----------
 
-The *isolation_level* parameter for the connection can also be set to
+The ``isolation_level`` parameter for the connection can also be set to
 ``None`` to enable autocommit mode.  With autocommit enabled, each
 :func:`execute` call is committed immediately when the statement
 finishes.  Autocommit mode is suited for short transactions, such as

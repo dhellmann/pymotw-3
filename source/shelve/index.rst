@@ -106,7 +106,7 @@ shelf is re-opened, the changes have not been preserved.
 .. {{{end}}}
 
 To automatically catch changes to volatile objects stored in the
-shelf, open it with writeback enabled. The *writeback* flag causes the
+shelf, open it with writeback enabled. The ``writeback`` flag causes the
 shelf to remember all of the objects retrieved from the database using
 an in-memory cache. Each cache object is also written back to the
 database when the shelf is closed.

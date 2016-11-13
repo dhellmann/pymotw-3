@@ -32,13 +32,13 @@ online documentation for the :mod:`exceptions` module, and custom warnings
 can be added by subclassing from :class:`Warning`.
 
 Warnings are processed based on *filter* settings.  A filter consists
-of five parts: the *action*, *message*, *category*, *module*, and
-*line number*.  The *message* portion of the filter is a regular
-expression that is used to match the warning text.  The *category* is
-a name of an exception class.  The *module* contains a regular
-expression to be matched against the module name generating the
-warning.  And the *line number* can be used to change the handling on
-specific occurrences of a warning. 
+of five parts: the ``action``, ``message``, ``category``, ``module``,
+and ``line number``.  The ``message`` portion of the filter is a
+regular expression that is used to match the warning text.  The
+``category`` is a name of an exception class.  The ``module`` contains
+a regular expression to be matched against the module name generating
+the warning.  And the ``line number`` can be used to change the
+handling on specific occurrences of a warning.
 
 When a warning is generated, it is compared against all of the
 registered filters. The first filter that matches controls the action
@@ -138,7 +138,7 @@ module, and line number) separated by colons (``:``). For example, if
 
 .. {{{end}}}
 
-Since the fields for *message* and *module* were left blank, they were
+Since the fields for ``message`` and ``module`` were left blank, they were
 interpreted as matching anything.
 
 Filtering with Patterns
@@ -147,7 +147,7 @@ Filtering with Patterns
 To filter on more complex rules programmatically, use
 :func:`filterwarnings`. For example, to filter based on the content
 of the message text, give a regular expression pattern as the
-*message* argument.
+``message`` argument.
 
 .. literalinclude:: warnings_filterwarnings_message.py
     :caption:
@@ -196,7 +196,7 @@ command line.
 The same pattern matching rules apply to the name of the source module
 containing the call generating the warning. Suppress all messages from the
 ``warnings_filter`` module by passing the module name as the
-pattern to the *module* argument.
+pattern to the ``module`` argument.
 
 .. literalinclude:: warnings_filterwarnings_module.py
     :caption:

@@ -218,7 +218,7 @@ To extract specific files from the archive, pass their names or
     :caption:
     :start-after: #end_pymotw_header
 
-When a *members* list is provided, only the named files are extracted.
+When a ``members`` list is provided, only the named files are extracted.
 
 .. {{{cog
 .. outdir = path(cog.inFile).dirname() / 'outdir'
@@ -270,7 +270,7 @@ Using Alternate Archive Member Names
 
 It is possible to add a file to an archive using a name other than the
 original filename by constructing a :class:`TarInfo` object with an
-alternate *arcname* and passing it to :func:`addfile`.
+alternate ``arcname`` and passing it to :func:`addfile`.
 
 .. literalinclude:: tarfile_addfile.py
     :caption:

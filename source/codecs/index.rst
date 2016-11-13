@@ -56,7 +56,7 @@ string to make it easier to read.
    :start-after: #end_pymotw_header
 
 The function uses :mod:`binascii` to get a hexadecimal representation
-of the input byte string, then insert a space between every *nbytes*
+of the input byte string, then insert a space between every ``nbytes``
 bytes before returning the value.
 
 .. {{{cog
@@ -538,9 +538,9 @@ translates the data to another encoding as the I/O occurs.
 
 This example shows reading from and writing to separate handles
 returned by :func:`EncodedFile`.  No matter whether the handle is used
-for reading or writing, the *file_encoding* always refers to the
+for reading or writing, the ``file_encoding`` always refers to the
 encoding in use by the open file handle passed as the first argument,
-and *data_encoding* value refers to the encoding in use by the data
+and ``data_encoding`` value refers to the encoding in use by the data
 passing through the :func:`read` and :func:`write` calls.
 
 .. {{{cog
@@ -636,7 +636,7 @@ Each time data is passed to the encoder or decoder its internal state
 is updated.  When the state is consistent (as defined by the codec),
 data is returned and the state resets.  Until that point, calls to
 :func:`encode` or :func:`decode` will not return any data.  When the
-last bit of data is passed in, the argument *final* should be set to
+last bit of data is passed in, the argument ``final`` should be set to
 ``True`` so the codec knows to flush any remaining buffered data.
 
 .. {{{cog

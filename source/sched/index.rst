@@ -8,14 +8,14 @@
 :Purpose: Generic event scheduler.
 
 The :mod:`sched` module implements a generic event scheduler for
-running tasks at specific times. The scheduler class uses a *time*
-function to learn the current time, and a *delay* function to wait for
+running tasks at specific times. The scheduler class uses a ``time``
+function to learn the current time, and a ``delay`` function to wait for
 a specific period of time. The actual units of time are not important,
 which makes the interface flexible enough to be used for many
 purposes.
 
-The *time* function is called without any arguments, and should return
-a number representing the current time. The *delay* function is called
+The ``time`` function is called without any arguments, and should return
+a number representing the current time. The ``delay`` function is called
 with a single integer argument, using the same scale as the time
 function, and should wait that many time units before returning. By
 default :func:`time.monotonic` and :func:`time.sleep` are used, but

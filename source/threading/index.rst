@@ -287,7 +287,7 @@ The return value of :func:`run` is ignored.
 
 .. {{{end}}}
 
-Because the *args* and *kwargs* values passed to the :class:`Thread`
+Because the ``args`` and ``kwargs`` values passed to the :class:`Thread`
 constructor are saved in private variables using names prefixed with
 ``'__'``, they are not easily accessed from a subclass.  To pass
 arguments to a custom thread type, redefine the constructor to save
@@ -448,7 +448,7 @@ to the value attribute.
 .. {{{end}}}
 
 To find out whether another thread has acquired the lock without
-holding up the current thread, pass ``False`` for the *blocking* argument
+holding up the current thread, pass ``False`` for the ``blocking`` argument
 to :func:`acquire`. In the next example, :func:`worker` tries to
 acquire the lock three separate times and counts how many attempts it
 has to make to do so. In the mean time, :func:`lock_holder` cycles

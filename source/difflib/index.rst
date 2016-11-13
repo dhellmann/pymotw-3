@@ -105,7 +105,7 @@ While the :class:`Differ` class shows all of the input lines, a
     :caption:
     :start-after: #end_pymotw_header
 
-The *lineterm* argument is used to tell :func:`unified_diff` to skip
+The ``lineterm`` argument is used to tell :func:`unified_diff` to skip
 appending newlines to the control lines it returns because the input
 lines do not include them.  Newlines are added to all of the lines
 when they are printed.  The output should look familiar to users of

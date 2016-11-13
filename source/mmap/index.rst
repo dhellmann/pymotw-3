@@ -51,7 +51,7 @@ file is extended.
 
   Windows does not support creating a zero-length mapping.
 
-An optional keyword argument, *access*, is supported by both
+An optional keyword argument, ``access``, is supported by both
 platforms. Use :const:`ACCESS_READ` for read-only access,
 :const:`ACCESS_WRITE` for write-through (assignments to the memory go
 directly to the file), or :const:`ACCESS_COPY` for copy-on-write

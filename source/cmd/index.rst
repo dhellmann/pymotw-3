@@ -48,7 +48,7 @@ shows of some of the features included in :class:`Cmd`.
     (Cmd) 
 
 The first thing to notice is the command prompt, ``(Cmd)``. The prompt
-can be configured through the attribute *prompt*. The prompt value is
+can be configured through the attribute ``prompt``. The prompt value is
 dynamic, and if a command handler changes the prompt attribute the new
 value is used to query for the next command.
 
@@ -126,7 +126,7 @@ the command:
             Greet the named person
 
 The output shows one optional argument to :command:`greet`,
-*person*. Although the argument is optional to the command, there is a
+``person``. Although the argument is optional to the command, there is a
 distinction between the command and the callback method. The method
 always takes the argument, but sometimes the value is an empty
 string. It is left up to the command handler to determine if an
@@ -406,8 +406,8 @@ a modified version of the :class:`HelloWorld` example.
     :caption:
     :start-after: #end_pymotw_header
 
-With *use_rawinput* set to False and *prompt* set to an empty string,
-the script can be called on this input file:
+With ``use_rawinput`` set to False and ``prompt`` set to an empty
+string, the script can be called on this input file:
 
 .. literalinclude:: cmd_file.txt
     :caption:

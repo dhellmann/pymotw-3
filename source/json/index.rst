@@ -73,7 +73,7 @@ Human-consumable vs. Compact Output
 
 Another benefit of JSON over :mod:`pickle` is that the results are
 human-readable.  The :func:`dumps` function accepts several arguments
-to make the output even nicer.  For example, the *sort_keys* flag
+to make the output even nicer.  For example, the ``sort_keys`` flag
 tells the encoder to output the keys of a dictionary in sorted,
 instead of random, order.
 
@@ -100,7 +100,7 @@ possible to compare JSON output in tests.
 
 .. {{{end}}}
 
-For highly-nested data structures, specify a value for *indent* so
+For highly-nested data structures, specify a value for ``indent`` so
 the output is formatted nicely as well.
 
 .. literalinclude:: json_indent.py
@@ -144,7 +144,7 @@ more compact than the default.
     :caption:
     :start-after: #end_pymotw_header
 
-The *separators* argument to :func:`dumps` should be a tuple
+The ``separators`` argument to :func:`dumps` should be a tuple
 containing the strings to separate items in a list and keys from
 values in a dictionary.  The default is ``(', ', ': ')``. By removing
 the whitespace, a more compact output is produced.
@@ -171,7 +171,7 @@ Encoding Dictionaries
 The JSON format expects the keys to a dictionary to be strings.
 Trying to encode a dictionary with non-string types as keys produces a
 :class:`TypeError`. One way to work around that limitation is to tell
-the encoder to skip over non-string keys using the *skipkeys*
+the encoder to skip over non-string keys using the ``skipkeys``
 argument:
 
 .. literalinclude:: json_skipkeys.py
@@ -242,11 +242,11 @@ necessary.
 .. {{{end}}}
 
 To decode the results and create a :func:`MyObj` instance, use the
-*object_hook* argument to :func:`loads` to tie in to the decoder so
+``object_hook`` argument to :func:`loads` to tie in to the decoder so
 the class can be imported from the module and used to create the
 instance.
 
-The *object_hook* is called for each dictionary decoded from the
+The ``object_hook`` is called for each dictionary decoded from the
 incoming data stream, providing a chance to convert the dictionary to
 another type of object.  The hook function should return the object
 the calling application should receive instead of the dictionary.
@@ -275,8 +275,8 @@ arguments to the class constructor.
 .. {{{end}}}
 
 Similar hooks are available for the built-in types integers
-(*parse_int*), floating point numbers (*parse_float*), and
-constants (*parse_constant*).
+(``parse_int``), floating point numbers (``parse_float``), and
+constants (``parse_constant``).
 
 Encoder and Decoder Classes
 ===========================

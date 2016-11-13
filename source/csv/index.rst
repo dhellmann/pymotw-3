@@ -107,7 +107,7 @@ Quoting
 
 The default quoting behavior is different for the writer, so the
 second and third columns in the previous example are not quoted. To
-add quoting, set the *quoting* arguments to one of the other quoting
+add quoting, set the ``quoting`` argument to one of the other quoting
 modes.
 
 .. code-block:: none

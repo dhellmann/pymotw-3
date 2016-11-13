@@ -68,7 +68,7 @@ When run, the output is:
 .. {{{end}}}
 
 :func:`timeit` runs the setup statement one time, then calls the
-main statement *count* times. It returns a single floating point value
+main statement ``count`` times. It returns a single floating point value
 representing the cumulative amount of time spent running the main
 statement.
 
@@ -154,7 +154,7 @@ When run, the script produces the following output.
 
 Those times are for a MacMini, and will vary depending on what
 hardware is used and what other programs are running on the
-system. Experiment with the *range_size* and *count* variables, since
+system. Experiment with the ``range_size`` and ``count`` variables, since
 different combinations will produce different results.
 
 From the Command Line
@@ -184,7 +184,7 @@ For example, to get help:
 
     ...
 
-The *statement* argument works a little differently on the command
+The ``statement`` argument works a little differently on the command
 line than the argument to :class:`Timer`.  Instead of using one long
 string, pass each line of the instructions as a separate command line
 argument. To indent lines (such as inside a loop), embed spaces in the

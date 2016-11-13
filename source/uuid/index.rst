@@ -59,8 +59,8 @@ leave the field blank to use the value returned by :func:`getnode`.
    :start-after: #end_pymotw_header
 
 The components of the UUID object returned can be accessed through
-read-only instance attributes. Some attributes, such as *hex*, *int*,
-and *urn*, are different representations of the UUID value.
+read-only instance attributes. Some attributes, such as ``hex``, ``int``,
+and ``urn``, are different representations of the UUID value.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'uuid_uuid1.py'))

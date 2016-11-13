@@ -362,8 +362,8 @@ Formatting Numbers
 ==================
 
 Numbers not related to currency are also formatted differently
-depending on the locale.  In particular, the *grouping* character used
-to separate large numbers into readable chunks changes.
+depending on the locale.  In particular, the ``grouping`` character
+used to separate large numbers into readable chunks changes.
 
 .. literalinclude:: locale_grouping.py
    :caption:

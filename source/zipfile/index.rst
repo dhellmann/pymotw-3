@@ -225,7 +225,7 @@ This time, the archive member is compressed.
 Using Alternate Archive Member Names
 ====================================
 
-Pass an *arcname* value to :func:`write` to add a file to an archive
+Pass an ``arcname`` value to :func:`write` to add a file to an archive
 using a name other than the original filename.
 
 .. literalinclude:: zipfile_write_arcname.py
@@ -269,7 +269,7 @@ directly.
     :start-after: #end_pymotw_header
 
 
-In this case, the *compress_type* argument to :class:`ZipFile` was
+In this case, the ``compress_type`` argument to :class:`ZipFile` was
 used to compress the data, since :func:`writestr` does not take
 an argument to specify the compression.
 
@@ -306,7 +306,7 @@ added to the archive.  A :class:`ZipInfo` instance can be passed to
     :start-after: #end_pymotw_header
 
 In this example, the modified time is set to the current time, the
-data is compressed, and false value for *create_system* is used.  A
+data is compressed, and false value for ``create_system`` is used.  A
 simple comment is also associated with the new file.
 
 .. {{{cog

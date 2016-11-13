@@ -87,7 +87,7 @@ like the exit code and output.
 
 .. {{{end}}}
 
-Setting the *shell* argument to a true value causes :mod:`subprocess`
+Setting the ``shell`` argument to a true value causes :mod:`subprocess`
 to spawn an intermediate shell process which then runs the
 command.  The default is to run the command directly.
 
@@ -235,7 +235,7 @@ message to standard output is hidden.
 
 To prevent error messages from commands run through
 :func:`run` from being written to the console, set the
-*stderr* parameter to the constant :const:`PIPE`.
+``stderr`` parameter to the constant :const:`PIPE`.
 
 .. literalinclude:: subprocess_run_output_error_trap.py
    :caption:
@@ -318,13 +318,13 @@ The functions :func:`run`, :func:`call`, :func:`check_call`, and
 :func:`check_output` are wrappers around the :class:`Popen` class.
 Using :class:`Popen` directly gives more control over how the command
 is run, and how its input and output streams are processed.  For
-example, by passing different arguments for *stdin*, *stdout*, and
-*stderr* it is possible to mimic the variations of :func:`os.popen`.
+example, by passing different arguments for ``stdin``, ``stdout``, and
+``stderr`` it is possible to mimic the variations of :func:`os.popen`.
 
 One-way Communication With a Process
 ------------------------------------
 
-To run a process and read all of its output, set the *stdout* value to
+To run a process and read all of its output, set the ``stdout`` value to
 :const:`PIPE` and call :func:`communicate`.
 
 .. literalinclude:: subprocess_popen_read.py
@@ -348,7 +348,7 @@ reading is managed internally by the :class:`Popen` instance.
 .. {{{end}}}
 
 To set up a pipe to allow the calling program to write data to it, set
-*stdin* to :const:`PIPE`.
+``stdin`` to :const:`PIPE`.
 
 .. literalinclude:: subprocess_popen_write.py
     :caption:
@@ -399,14 +399,14 @@ This sets up the pipe to mimic :func:`popen2`.
 Capturing Error Output
 ----------------------
 
-It is also possible watch both of the streams for *stdout* and *stderr*,
+It is also possible watch both of the streams for ``stdout`` and ``stderr``,
 as with :func:`popen3`.
 
 .. literalinclude:: subprocess_popen3.py
     :caption:
     :start-after: #end_pymotw_header
 
-Reading from *stderr* works the same as with *stdout*.  Passing
+Reading from ``stderr`` works the same as with ``stdout``.  Passing
 :const:`PIPE` tells :class:`Popen` to attach to the channel, and
 :func:`communicate` reads all of the data from it before returning.
 
@@ -428,7 +428,7 @@ Combining Regular and Error Output
 ----------------------------------
 
 To direct the error output from the process to its standard output
-channel, use :const:`STDOUT` for *stderr* instead of :const:`PIPE`.
+channel, use :const:`STDOUT` for ``stderr`` instead of :const:`PIPE`.
 
 .. literalinclude:: subprocess_popen4.py
     :caption:
@@ -458,7 +458,7 @@ Multiple commands can be connected into a *pipeline*, similar to the
 way the Unix shell works, by creating separate :class:`Popen`
 instances and chaining their inputs and outputs together.  The
 :attr:`stdout` attribute of one :class:`Popen` instance is used as the
-*stdin* argument for the next in the pipeline, instead of the constant
+``stdin`` argument for the next in the pipeline, instead of the constant
 :const:`PIPE`.  The output is read from the :attr:`stdout` handle for
 the final command in the pipeline.
 
@@ -521,9 +521,9 @@ simple echo program that reads from standard input and writes to
 standard output illustrates this technique.
 
 The script ``repeater.py`` is used as the child process in the next
-example.  It reads from *stdin* and writes the values to *stdout*, one
+example.  It reads from ``stdin`` and writes the values to ``stdout``, one
 line at a time until there is no more input.  It also writes a message
-to :data:`stderr` when it starts and stops, showing the lifetime of
+to ``stderr`` when it starts and stops, showing the lifetime of
 the child process.
 
 .. literalinclude:: repeater.py
@@ -623,7 +623,7 @@ Process Groups / Sessions
 
 If the process created by :class:`Popen` spawns sub-processes, those
 children will not receive any signals sent to the parent.  That means
-when using the *shell* argument to :class:`Popen` it will be difficult
+when using the ``shell`` argument to :class:`Popen` it will be difficult
 to cause the command started in the shell to terminate by sending
 :const:`SIGINT` or :const:`SIGTERM`.
 
@@ -666,7 +666,7 @@ All child processes inherit their process group from their parent, and
 since it should only be set in the shell created by :class:`Popen`
 and its descendants, :func:`os.setpgrp` should not be called in the
 same process where the :class:`Popen` is created.  Instead, the
-function is passed to :class:`Popen` as the *preexec_fn* argument so
+function is passed to :class:`Popen` as the ``preexec_fn`` argument so
 it is run after the :func:`fork` inside the new process, before it
 uses :func:`exec` to run the shell.  To signal the entire process
 group, use :func:`os.killpg` with the :attr:`pid` value from the

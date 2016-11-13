@@ -133,8 +133,8 @@ items from the input iterator, by index.
    :start-after: #end_pymotw_header
 
 :func:`islice` takes the same arguments as the slice operator for
-lists: *start*, *stop*, and *step*. The start and step arguments are
-optional.
+lists: ``start``, ``stop``, and ``step``. The start and step arguments
+are optional.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'itertools_islice.py'))
@@ -370,7 +370,7 @@ value each time it is accessed.
    :start-after: #end_pymotw_header
 
 The iterator returned by :func:`repeat` keeps returning data forever,
-unless the optional *times* argument is provided to limit it.
+unless the optional ``times`` argument is provided to limit it.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'itertools_repeat.py'))

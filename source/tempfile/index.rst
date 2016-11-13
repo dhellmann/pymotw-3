@@ -84,7 +84,7 @@ in order to read the data back from it.
 
 .. {{{end}}}
 
-To open the file in text mode, set *mode* to ``'w+t'`` when the file
+To open the file in text mode, set ``mode`` to ``'w+t'`` when the file
 is created.
 
 .. literalinclude:: tempfile_TemporaryFile_text.py
@@ -241,15 +241,15 @@ degree. Names are generated using the formula:
 
     dir + prefix + random + suffix
 
-All of the values except *random* can be passed as arguments to the
+All of the values except ``random`` can be passed as arguments to the
 functions for creating temporary files or directories.
 
 .. literalinclude:: tempfile_NamedTemporaryFile_args.py
     :caption:
     :start-after: #end_pymotw_header
 
-The *prefix* and *suffix* arguments are combined with a random string
-of characters to build the filename, and the *dir* argument is taken
+The ``prefix`` and ``suffix`` arguments are combined with a random string
+of characters to build the filename, and the ``dir`` argument is taken
 as-is and used as the location of the new file.
 
 .. {{{cog
@@ -270,7 +270,7 @@ as-is and used as the location of the new file.
 Temporary File Location
 =======================
 
-If an explicit destination is not given using the *dir* argument, the
+If an explicit destination is not given using the ``dir`` argument, the
 path used for the temporary files will vary based on the current
 platform and settings. The :mod:`tempfile` module includes two
 functions for querying the settings being used at runtime.

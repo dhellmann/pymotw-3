@@ -118,7 +118,8 @@ actually part of the module and the list is long.
 
 .. {{{end}}}
 
-The *predicate* argument can be used to filter the types of objects returned.
+The ``predicate`` argument can be used to filter the types of objects
+returned.
 
 .. literalinclude:: inspect_getmembers_module_class.py
     :caption:
@@ -472,7 +473,7 @@ The function arguments are available through the :data:`parameters`
 attribute of the :class:`Signature`. :data:`parameters` is an ordered
 dictionary mapping the parameter names to :class:`Parameter` instances
 describing the argument.  In this example, the first argument to the
-function, *arg1*, does not have a default value, while *arg2* does.
+function, ``arg1``, does not have a default value, while ``arg2`` does.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'inspect_signature_function.py'))
@@ -597,7 +598,7 @@ The output from this example is the "tree" of inheritance for the
 
 .. {{{end}}}
 
-If :func:`getclasstree` is called with *unique* set to a true value,
+If :func:`getclasstree` is called with ``unique`` set to a true value,
 the output is different.
 
 .. literalinclude:: inspect_getclasstree_unique.py

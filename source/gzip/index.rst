@@ -37,7 +37,7 @@ To write data into a compressed file, open the file with mode ``'w'``.
 .. {{{end}}}
 
 Different amounts of compression can be used by passing a
-*compresslevel* argument.  Valid values range from 0 to 9, inclusive.
+``compresslevel`` argument.  Valid values range from 0 to 9, inclusive.
 Lower values are faster and result in less compression.  Higher values
 are slower and compress more, up to a point.
 

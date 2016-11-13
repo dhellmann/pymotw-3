@@ -406,7 +406,7 @@ top-level of the application's code.
 
 The :func:`install` function binds :func:`gettext` to the name ``_()``
 in the ``__builtins__`` namespace.  It also adds :func:`ngettext` and
-other functions listed in *names*.
+other functions listed in ``names``.
 
 Module Localization
 -------------------

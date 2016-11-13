@@ -91,7 +91,7 @@ window.
 
 The first line of output is from the :func:`logging.info` call inside
 :func:`list_contents`. The second line is from the server logging the
-request because *logRequests* is ``True``.
+request because ``logRequests`` is ``True``.
 
 Alternate API Names
 ===================
@@ -239,7 +239,7 @@ invoked from clients.
    :start-after: #end_pymotw_header
 
 By registering the instance of :class:`ServiceRoot` with
-*allow_dotted_names* enabled, the server has permission to walk the
+``allow_dotted_names`` enabled, the server has permission to walk the
 tree of objects when a request comes in to find the named method using
 :func:`getattr`.
 
@@ -278,7 +278,7 @@ to the XML-RPC service while :func:`private()` is not. The
 a function that is part of :class:`MyService`. It first enforces the
 use of a prefix ("``prefix.``" in this case, but any string can be
 used).  Then it requires the function to have an attribute called
-*exposed* with a true value. The exposed flag is set on a function
+``exposed`` with a true value. The exposed flag is set on a function
 using a decorator for convenience.
 
 Here are a few sample client calls:

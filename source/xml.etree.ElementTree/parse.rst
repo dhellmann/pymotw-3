@@ -81,7 +81,7 @@ This example prints the entire tree, one tag at a time.
 
 To print only the groups of names and feed URLs for the podcasts,
 leaving out of all of the data in the header section by iterating over
-only the ``outline`` nodes and print the *text* and *xmlUrl*
+only the ``outline`` nodes and print the ``text`` and ``xmlUrl``
 attributes by looking up the values in the :attr:`attrib`
 dictionary.
 
@@ -158,7 +158,7 @@ level of outline nodes.
    :start-after: #end_pymotw_header
 
 All of the outline nodes nested two levels deep in the input are
-expected to have the *xmlURL* attribute referring to the podcast feed,
+expected to have the ``xmlURL`` attribute referring to the podcast feed,
 so the loop can skip checking for the attribute before using it.
 
 .. {{{cog
@@ -195,7 +195,7 @@ contrived example input file, ``data.xml``.
       :language: xml
       :linenos:
 
-The *attributes* of a node are available in the :attr:`attrib`
+The XML attributes of a node are available in the :attr:`attrib`
 property, which acts like a dictionary.
 
 .. literalinclude:: ElementTree_node_attributes.py
@@ -219,8 +219,8 @@ The node on line five of the input file has two attributes,
 
 .. {{{end}}}
 
-The text content of the nodes is available, along with the *tail* text
-that comes after the end of a close tag.
+The text content of the nodes is available, along with the *tail* text,
+which comes after the end of a close tag.
 
 .. literalinclude:: ElementTree_node_text.py
    :caption:

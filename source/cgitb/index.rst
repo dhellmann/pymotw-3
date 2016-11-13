@@ -209,7 +209,7 @@ default of five lines of context may not provide enough direction.
 When the body of the function is pushed out of the code window
 displayed, there is not enough context to understand the location of
 the error.  Using a larger context value with :mod:`cgitb` solves this
-problem.  Passing an integer as the *context* argument to
+problem.  Passing an integer as the ``context`` argument to
 :func:`enable()` controls the amount of code displayed for each line
 of the traceback.
 
@@ -345,8 +345,8 @@ custom exception types are printed as part of the error report.
    :caption:
    :start-after: #end_pymotw_header
 
-In this example, the *bad_value* property is included along with the
-standard *message* and *args* values.
+In this example, the ``bad_value`` property is included along with the
+standard ``message`` and ``args`` values.
 
 .. NOT RUNNING
 .. cog.out(run_script(cog.inFile, 'cgitb_exception_properties.py', 
@@ -437,7 +437,7 @@ Because :mod:`cgitb` was originally developed for handling exceptions
 in web applications, no discussion would be complete without
 mentioning its original HTML output format.  The earlier examples all
 shows plain text output.  To produce HTML instead, leave out the
-*format* argument (or specify ``"html"``).  Most modern web
+``format`` argument (or specify ``"html"``).  Most modern web
 applications are constructed using a framework that includes an error
 reporting facility, so the HTML form is largely obsolete.
 
@@ -447,7 +447,7 @@ Logging Tracebacks
 For many situations, printing the traceback details to standard error
 is the best resolution.  In a production system, however, logging the
 errors is even better.  The :func:`enable()` function includes an optional
-argument, *logdir*, to enable error logging.  When a directory name is
+argument, ``logdir``, to enable error logging.  When a directory name is
 provided, each exception is logged to its own file in the given
 directory.
 

@@ -159,7 +159,7 @@ back to the server later.
 
 :meth:`list()` takes arguments to specify mailboxes in part of the
 hierarchy.  For example, to list sub-folders of ``Example``, pass
-``"Example"`` as the *directory* argument.
+``"Example"`` as the ``directory`` argument.
 
 .. literalinclude:: imaplib_list_subfolders.py
    :caption:
@@ -177,7 +177,7 @@ The parent and subfolder are returned.
 	Server response: b'(\\HasChildren) "." Example'
 	Server response: b'(\\HasNoChildren) "." Example.2016'
 
-Alternately, to list folders matching a pattern pass the *pattern*
+Alternately, to list folders matching a pattern pass the ``pattern``
 argument.
 
 .. literalinclude:: imaplib_list_pattern.py
@@ -430,8 +430,8 @@ contents, or partial contents, of messages for further processing
 using the :meth:`fetch()` method.  It takes two arguments, the message
 IDs to fetch and the portion(s) of the message to retrieve.
 
-The *message_ids* argument is a comma separated list of ids (e.g.,
-``"1"``, ``"1,2"``) or ID ranges (e.g., ``1:2``).  The *message_parts*
+The ``message_ids`` argument is a comma separated list of ids (e.g.,
+``"1"``, ``"1,2"``) or ID ranges (e.g., ``1:2``).  The ``message_parts``
 argument is an IMAP list of message segment names.  As with search
 criteria for :meth:`search()`, the IMAP protocol specifies named
 message segments so clients can efficiently retrieve only the parts of
@@ -710,7 +710,7 @@ timestamp for the message.
    :caption:
    :start-after: #end_pymotw_header
 
-The *payload* used in this example is a simple plaintext email body.
+The ``payload`` used in this example is a simple plaintext email body.
 :class:`Message` also supports MIME-encoded multi-part messages.
 
 .. NOT RUNNING

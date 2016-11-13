@@ -133,7 +133,7 @@ As the field names are parsed, invalid values cause
 In situations where a :class:`namedtuple` is being created based on
 values outside of the control of the program (such as to represent
 the rows returned by a database query, where the schema is not known
-in advance), set the *rename* option to ``True`` so the invalid fields
+in advance), set the ``rename`` option to ``True`` so the invalid fields
 are renamed.
 
 .. literalinclude:: collections_namedtuple_rename.py

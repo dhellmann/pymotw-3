@@ -172,7 +172,7 @@ Unix hosts file might need to be updated if a subnet range changes.
 
 The safe way to make the change automatically is to create a new file
 based on the input and then replace the original with the edited copy.
-:mod:`fileinput` supports this automatically using the *inplace*
+:mod:`fileinput` supports this automatically using the ``inplace``
 option.
 
 .. literalinclude:: fileinput_change_subnet.py

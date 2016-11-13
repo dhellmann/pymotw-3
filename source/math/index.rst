@@ -45,15 +45,15 @@ Testing for Exceptional Values
 
 Floating point calculations can result in two types of exceptional
 values.  The first of these, ``inf`` (infinity), appears when the
-*double* used to hold a floating point value overflows from a value
-with a large absolute value.
+``double`` used to hold a floating point value overflows from a
+value with a large absolute value.
 
 .. literalinclude:: math_isinf.py
    :caption:
    :start-after: #end_pymotw_header
 
 When the exponent in this example grows large enough, the square of
-*x* no longer fits inside a *double*, and the value is recorded as
+``x`` no longer fits inside a ``double``, and the value is recorded as
 infinite.
 
 .. {{{cog
@@ -333,7 +333,7 @@ the value.
    :start-after: #end_pymotw_header
 
 :func:`frexp` uses the formula ``x = m * 2**e``, and returns the
-values *m* and *e*.
+values ``m`` and ``e``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'math_frexp.py'))
@@ -474,7 +474,7 @@ introduced into the sum unless it is calculated with :func:`fsum`.
 
 :func:`factorial` is commonly used to calculate the number of
 permutations and combinations of a series of objects.  The factorial
-of a positive integer *n*, expressed ``n!``, is defined recursively as
+of a positive integer ``n``, expressed ``n!``, is defined recursively as
 ``(n-1)! * n`` and stops with ``0! == 1``.
 
 .. literalinclude:: math_factorial.py
@@ -677,7 +677,7 @@ calculate a square root of a negative value results in a
 
 .. {{{end}}}
 
-The logarithm function finds *y* where ``x = b ** y``.  By default,
+The logarithm function finds ``y`` where ``x = b ** y``.  By default,
 :func:`log` computes the natural logarithm (the base is *e*).  If a
 second argument is provided, that value is used as the base.
 
@@ -685,7 +685,7 @@ second argument is provided, that value is used as the base.
    :caption:
    :start-after: #end_pymotw_header
 
-Logarithms where *x* is less than one yield negative results.
+Logarithms where ``x`` is less than one yield negative results.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'math_log.py'))
@@ -779,7 +779,7 @@ logarithm of ``1+x``).
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`log1p` is more accurate for values of *x* very close to zero
+:func:`log1p` is more accurate for values of ``x`` very close to zero
 because it uses an algorithm that compensates for round-off errors
 from the initial addition.
 
@@ -798,7 +798,7 @@ from the initial addition.
 
 .. {{{end}}}
 
-:func:`exp` computes the exponential function (``e**x``).  
+:func:`exp` computes the exponential function (``e**x``).
 
 .. literalinclude:: math_exp.py
    :caption:
@@ -829,7 +829,7 @@ produces more accurate results than the general-purpose equivalent
    :caption:
    :start-after: #end_pymotw_header
 
-Small values of *x* lose precision when the subtraction is performed
+Small values of ``x`` lose precision when the subtraction is performed
 separately, like with :func:`log1p`.
 
 .. {{{cog
@@ -970,8 +970,8 @@ tangent is infinite.
 
 .. {{{end}}}
 
-Given a point (*x*, *y*), the length of the hypotenuse for the
-triangle between the points [(0, 0), (*x*, 0), (*x*, *y*)] is
+Given a point ``(x, y)``, the length of the hypotenuse for the
+triangle between the points [(0, 0), (``x``, 0), (``x``, ``y``)] is
 ``(x**2 + y**2) ** 1/2``, and can be computed with :func:`hypot`.
 
 .. literalinclude:: math_hypot.py
@@ -1005,8 +1005,8 @@ The same function can be used to find the distance between two points.
    :caption:
    :start-after: #end_pymotw_header
 
-Use the difference in the *x* and *y* values to move one endpoint to
-the origin, and then pass the results to :func:`hypot`.
+Use the difference in the ``x`` and ``y`` values to move one endpoint
+to the origin, and then pass the results to :func:`hypot`.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'math_distance_2_points.py'))
@@ -1137,7 +1137,7 @@ The complimentary error function is ``1 - erf(x)``.
    :start-after: #end_pymotw_header
 
 The implementation of :func:`erfc` avoids precision errors for small
-values of *x* when subtracting from 1.
+values of ``x`` when subtracting from 1.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'math_erfc.py'))

@@ -167,7 +167,7 @@ mixed together.
     :caption:
     :start-after: #end_pymotw_header
 
-After decompressing all of the data, the *unused_data* attribute
+After decompressing all of the data, the ``unused_data`` attribute
 contains any data not used.
 
 .. {{{cog

@@ -103,7 +103,7 @@ needed by the template are provided as arguments.
     :caption:
     :start-after: #end_pymotw_header
 
-Since there is no value for *missing* in the values dictionary, a
+Since there is no value for ``missing`` in the values dictionary, a
 :class:`KeyError` is raised by :func:`substitute`. Instead of
 raising the error, :func:`safe_substitute` catches it and leaves the
 variable expression alone in the text.

@@ -115,7 +115,7 @@ Combining Dedent and Fill
 =========================
 
 Next, the dedented text can be passed through :func:`fill` with a
-few different *width* values.
+few different ``width`` values.
 
 .. literalinclude:: textwrap_fill_width.py
     :caption:

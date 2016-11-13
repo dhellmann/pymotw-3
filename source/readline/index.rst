@@ -82,8 +82,8 @@ could actually parse the input line and run the command.
 The :class:`SimpleCompleter` class keeps a list of "options" that are
 candidates for auto-completion.  The :func:`complete` method for an
 instance is designed to be registered with :mod:`readline` as the
-source of completions.  The arguments are a *text* string to complete
-and a *state* value, indicating how many times the function has been
+source of completions.  The arguments are a ``text`` string to complete
+and a ``state`` value, indicating how many times the function has been
 called with the same text.  The function is called repeatedly with the
 state incremented each time.  It should return a string if there is a
 candidate for that state value or ``None`` if there are no more

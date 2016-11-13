@@ -355,16 +355,16 @@ for ``www.python.org``.
 .. {{{end}}}
 
 :func:`getaddrinfo` takes several arguments for filtering the result
-list. The *host* and *port* values given in the example are required
-arguments.  The optional arguments are *family*, *socktype*, *proto*,
-and *flags*.  The optional values should be either ``0`` or one of the
-constants defined by :mod:`socket`.
+list. The ``host`` and ``port`` values given in the example are
+required arguments.  The optional arguments are ``family``,
+``socktype``, ``proto``, and ``flags``.  The optional values should be
+either ``0`` or one of the constants defined by :mod:`socket`.
 
 .. literalinclude:: socket_getaddrinfo_extra_args.py
    :caption:
    :start-after: #end_pymotw_header
 
-Since *flags* includes :const:`AI_CANONNAME`, the canonical name of
+Since ``flags`` includes :const:`AI_CANONNAME`, the canonical name of
 the server, which may be different from the value used for the lookup
 if the host has any aliases, is included in the results this time.
 Without the flag, the canonical name value is left empty.

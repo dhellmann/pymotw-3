@@ -17,7 +17,7 @@ HTTP GET
 ========
 
 To add support for an HTTP method in a request handler class,
-implement the method :func:`do_METHOD`, replacing *METHOD* with the
+implement the method :func:`do_METHOD`, replacing ``METHOD`` with the
 name of the HTTP method (e.g., :func:`do_GET`, :func:`do_POST`,
 etc.). For consistency, the request handler methods take no
 arguments. All of the parameters for the request are parsed by

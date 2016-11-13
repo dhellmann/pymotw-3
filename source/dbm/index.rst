@@ -29,7 +29,7 @@ dbm.gnu
 
 :mod:`dbm.gnu` is an interface to the version of the ``dbm``
 library from the GNU project.  It works the same as the other DBM
-implementations described here, with a few changes to the *flags*
+implementations described here, with a few changes to the ``flags``
 supported by :func:`open`.
 
 Besides the standard ``'r'``, ``'w'``, ``'c'``, and ``'n'`` flags,
@@ -81,7 +81,7 @@ versions of each of the sub-modules in order.
 
 .. {{{end}}}
 
-The :func:`open` function takes *flags* to control how the database
+The :func:`open` function takes ``flags`` to control how the database
 file is managed.  To create a new database when necessary, use
 ``'c'``.  Using ``'n'`` always creates a new database, overwriting an
 existing file.
@@ -130,7 +130,7 @@ are installed on the system.
 Opening an Existing Database
 ============================
 
-To open an existing database, use *flags* of either ``'r'`` (for
+To open an existing database, use ``flags`` of either ``'r'`` (for
 read-only) or ``'w'`` (for read-write).  Existing databases are
 automatically given to :func:`whichdb` to identify, so it as long as a
 file can be identified, the appropriate module is used to open it.

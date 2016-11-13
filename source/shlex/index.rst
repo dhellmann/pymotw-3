@@ -394,7 +394,7 @@ POSIX vs. Non-POSIX Parsing
 ===========================
 
 The default behavior for the parser is to use a backwards-compatible
-style that is not POSIX-compliant. For POSIX behavior, set the *posix*
+style that is not POSIX-compliant. For POSIX behavior, set the ``posix``
 argument when constructing the parser.
 
 .. literalinclude:: shlex_posix.py

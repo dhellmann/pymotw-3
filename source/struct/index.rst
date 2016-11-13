@@ -159,7 +159,7 @@ pre-allocated buffers directly.
     :caption:
     :start-after: #end_pymotw_header
 
-The *size* attribute of the :class:`Struct` tells us how big the
+The ``size`` attribute of the :class:`Struct` tells us how big the
 buffer needs to be.
 
 .. {{{cog

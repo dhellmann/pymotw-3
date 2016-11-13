@@ -51,10 +51,10 @@ the :class:`tuple` API.
     :caption:
     :start-after: #end_pymotw_header
 
-The *username* and *password* are available when present in the input
-URL, and set to ``None`` when not. The *hostname* is the same value as
-*netloc*, in all lower case and with the port value stripped.  And the
-*port* is converted to an integer when present and ``None`` when not.
+The ``username`` and ``password`` are available when present in the input
+URL, and set to ``None`` when not. The ``hostname`` is the same value as
+``netloc``, in all lower case and with the port value stripped.  And the
+``port`` is converted to an integer when present and ``None`` when not.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'urllib_parse_urlparseattrs.py'))
@@ -87,7 +87,7 @@ split the parameters from the URL. This is useful for URLs following
     :start-after: #end_pymotw_header
 
 Since the parameters are not split out, the tuple API will show five
-elements instead of six, and there is no *params* attribute.
+elements instead of six, and there is no ``params`` attribute.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'urllib_parse_urlsplit.py', 
@@ -200,7 +200,7 @@ reconstructed URL.
     :caption:
     :start-after: #end_pymotw_header
 
-In this case, *parameters*, *query*, and *fragment* are all
+In this case, ``parameters``, ``query``, and ``fragment`` are all
 missing in the original URL. The new URL does not look the same as the
 original, but is equivalent according to the standard.
 

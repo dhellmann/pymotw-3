@@ -80,8 +80,8 @@ map those identifiers back to the thread object.
 
 Since **Thread-1** does not sleep, it finishes before its status is
 checked.  Since it is no longer active, it does not appear in the
-output.  **Thread-2** acquires the lock *blocker*, then sleeps for a
-short period.  Meanwhile **Thread-3** tries to acquire *blocker* but
+output.  **Thread-2** acquires the lock ``blocker``, then sleeps for a
+short period.  Meanwhile **Thread-3** tries to acquire ``blocker`` but
 cannot because **Thread-2** already has it.
 
 .. {{{cog

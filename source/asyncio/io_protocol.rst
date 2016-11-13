@@ -147,7 +147,7 @@ and the future object is marked as done by setting a result.
 Normally the protocol class is passed to the event loop to create the
 connection. In this case, because the event loop has no facility for
 passing extra arguments to the protocol constructor, it is necessary
-to create a *partial* to wrap the client class and pass the list of
+to create a :class:`partial` to wrap the client class and pass the list of
 messages to send and the :class:`Future` instance. That new callable
 is then used in place of the class when calling
 :func:`create_connection` to establish the client connection.

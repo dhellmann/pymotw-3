@@ -406,16 +406,16 @@ The output file contains
 
 .. literalinclude:: coverdir2/trace_example.recurse.cover
 
-To save the counts data for generating reports, use the *infile* and
-*outfile* arguments to :class:`Trace`.
+To save the counts data for generating reports, use the ``infile`` and
+``outfile`` arguments to :class:`Trace`.
 
 .. literalinclude:: trace_report.py
     :caption:
     :start-after: #end_pymotw_header
 
-Pass a filename to *infile* to read previously stored data, and a
-filename to *outfile* to write new results after tracing.  If *infile*
-and *outfile* are the same, it has the effect of updating the file
+Pass a filename to ``infile`` to read previously stored data, and a
+filename to ``outfile`` to write new results after tracing.  If ``infile``
+and ``outfile`` are the same, it has the effect of updating the file
 with cumulative data.
 
 .. {{{cog
@@ -441,23 +441,23 @@ Options
 The constructor for :class:`Trace` takes several optional parameters
 to control runtime behavior.
 
-*count*
+``count``
   Boolean.  Turns on line number counting.  Defaults to True.
-*countfuncs*
+``countfuncs``
   Boolean.  Turns on list of functions called during the run.
   Defaults to False.
-*countcallers*
+``countcallers``
   Boolean.  Turns on tracking for callers and callees.  Defaults to
   False.
-*ignoremods*
+``ignoremods``
   Sequence.  List of modules or packages to ignore when tracking
   coverage.  Defaults to an empty tuple.
-*ignoredirs*
+``ignoredirs``
   Sequence.  List of directories containing modules or packages to be
   ignored.  Defaults to an empty tuple.
-*infile*
+``infile``
   Name of the file containing cached count values.  Defaults to None.
-*outfile*
+``outfile``
   Name of the file to use for storing cached count files.  Defaults to
   None, and data is not stored.
 

@@ -138,7 +138,7 @@ compressed and uncompressed data is mixed together.
     :caption:
     :start-after: #end_pymotw_header
 
-After decompressing all of the data, the *unused_data* attribute
+After decompressing all of the data, the ``unused_data`` attribute
 contains any data not used.
 
 .. {{{cog
@@ -185,7 +185,7 @@ To write data into a compressed file, open the file with mode ``'w'``.
 .. {{{end}}}
 
 
-Different compression levels can be used by passing a *compresslevel*
+Different compression levels can be used by passing a ``compresslevel``
 argument.  Valid values range from ``1`` to ``9``, inclusive.  Lower values
 are faster and result in less compression.  Higher values are slower
 and compress more, up to a point.
@@ -282,7 +282,7 @@ of the data.
     :caption:
     :start-after: #end_pymotw_header
 
-The :func:`seek()` position is relative to the *uncompressed* data, so
+The :func:`seek` position is relative to the *uncompressed* data, so
 the caller does not need to be aware that the data file is compressed.
 This allows a :class:`BZ2File` instance to be passed to a function
 expecting a regular uncompressed file.

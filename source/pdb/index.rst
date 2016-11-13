@@ -355,9 +355,9 @@ running as a command in the debugger.
 Similarly, prefixing an expression with :command:`!` passes it to the
 Python interpreter to be evaluated.  This feature can be used to
 execute arbitrary Python statements, including modifying variables.
-This example changes the value of *output* before letting the debugger
+This example changes the value of ``output`` before letting the debugger
 continue running the program.  The next statement after the call to
-:func:`set_trace` prints the value of *output*, showing the modified
+:func:`set_trace` prints the value of ``output``, showing the modified
 value.
 
 .. code-block:: none
@@ -1764,7 +1764,7 @@ alias, and its definition is printed.
 
     (Pdb)
 
-Arguments to the alias are referenced using ``%n`` where *n* is
+Arguments to the alias are referenced using ``%n`` where ``n`` is
 replaced with a number indicating the position of the argument,
 starting with ``1``.  To consume all of the arguments, use ``%*``.
 

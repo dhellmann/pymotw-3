@@ -263,8 +263,8 @@ Display Hook
 ============
 
 :data:`sys.displayhook` is invoked by the interactive interpreter each
-time the user enters an expression.  The *result* of the expression is
-passed as the only argument to the function.
+time the user enters an expression.  The result of evaluating the
+expression is passed as the only argument to the function.
 
 .. literalinclude:: sys_displayhook.py
     :caption:

@@ -296,7 +296,7 @@ file opened in binary mode or socket.
 
 The last node in the tree contains no text or sub-nodes, so it is
 written as an empty tag, ``<empty_child />``.  :func:`write` takes a
-*method* argument to control the handling for empty nodes.  
+``method`` argument to control the handling for empty nodes.
 
 .. literalinclude:: ElementTree_write_method.py
    :caption:

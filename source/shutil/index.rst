@@ -211,7 +211,7 @@ exist in advance.
     :caption:
     :start-after: #end_pymotw_header
 
-The *symlinks* argument controls whether symbolic links are copied as
+The ``symlinks`` argument controls whether symbolic links are copied as
 links or as files. The default is to copy the contents to new
 files. If the option is true, new symlinks are created within the
 destination tree.
@@ -255,10 +255,10 @@ destination tree.
 .. {{{end}}}
 
 :func:`copytree` accepts two callable arguments to control its
-behavior. The *ignore* argument is called with the name of each
+behavior. The ``ignore`` argument is called with the name of each
 directory or subdirectory being copied along with a list of the
 contents of the directory. It should return a list of items that
-should be copied. The *copy_function* argument is called to actually
+should be copied. The ``copy_function`` argument is called to actually
 copy the file.
 
 .. literalinclude:: shutil_copytree_verbose.py
@@ -386,9 +386,9 @@ returns ``None``.
 .. {{{end}}}
 
 :func:`which` takes arguments to filter based on the permissions the
-file has, and the search path to examine. The *path* argument defaults
+file has, and the search path to examine. The ``path`` argument defaults
 to ``os.environ('PATH')``, but can be any string containing directory
-names separated by :const:`os.pathsep`. The *mode* argument should be
+names separated by :const:`os.pathsep`. The ``mode`` argument should be
 a bitmask matching the permissions of the file. By default the mask
 looks for executable files, but the following example uses a readable
 bitmask and an alternate search path to find a configuration file.
@@ -452,9 +452,9 @@ Use :func:`make_archive` to create a new archive file. Its inputs are
 designed to best support archiving an entire directory and all of its
 contents, recursively. By default it uses the current working
 directory, so that all of the files and subdirectories appear at the
-top level of the archive. To change that behavior, use the *root_dir*
+top level of the archive. To change that behavior, use the ``root_dir``
 argument to move to a new relative position on the filesystem and the
-*base_dir* argument to specify a directory to add to the archive.
+``base_dir`` argument to specify a directory to add to the archive.
 
 .. literalinclude:: shutil_make_archive.py
    :caption:

@@ -373,7 +373,7 @@ processes to ensure proper cleanup.
 
 By default, :class:`Pool` creates a fixed number of worker processes
 and passes jobs to them until there are no more jobs.  Setting the
-*maxtasksperchild* parameter tells the pool to restart a worker
+``maxtasksperchild`` parameter tells the pool to restart a worker
 process after it has finished a few tasks, preventing long-running
 workers from consuming ever more system resources.
 

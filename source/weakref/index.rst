@@ -244,7 +244,7 @@ dictionary and :class:`WeakValueDictionary`:
 Any loop variables that refer to the values being cached must be
 cleared explicitly so the reference count of the object is
 decremented. Otherwise, the garbage collector would not remove the
-objects and they would remain in the cache. Similarly, the *all_refs*
+objects and they would remain in the cache. Similarly, the ``all_refs``
 variable is used to hold references to prevent them from being garbage
 collected prematurely.
 

@@ -360,7 +360,7 @@ Options as Flags
 ----------------
 
 Usually, the parser requires an explicit value for each option, but
-with the :class:`ConfigParser` parameter *allow_no_value* set to
+with the :class:`ConfigParser` parameter ``allow_no_value`` set to
 ``True`` an option can appear by itself on a line in the input file,
 and be used as a flag.
 
@@ -539,13 +539,13 @@ Before starting the option search, the section name is tested.  If the
 section does not exist, and the name is not the special value
 ``DEFAULT``, then :class:`NoSectionError` is raised.
 
-1. If the option name appears in the *vars* dictionary passed to
-   :func:`get`, the value from *vars* is returned.
+1. If the option name appears in the ``vars`` dictionary passed to
+   :func:`get`, the value from ``vars`` is returned.
 2. If the option name appears in the specified section, the value from
    that section is returned.
 3. If the option name appears in the ``DEFAULT`` section, that value
    is returned.
-4. If the option name appears in the *defaults* dictionary passed to
+4. If the option name appears in the ``defaults`` dictionary passed to
    the constructor, that value is returned.
 
 If the name is not found in any of those locations,
