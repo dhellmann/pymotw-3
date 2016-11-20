@@ -109,5 +109,6 @@ def setup(app):
         tableref,
         latex=(latex_visit_tableref, None),
         html=(html_visit_tableref, html_depart_tableref),
+        pearson=(latex_visit_tableref, None),
     )
     app.connect('builder-inited', builder_inited)

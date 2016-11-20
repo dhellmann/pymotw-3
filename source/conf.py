@@ -39,6 +39,7 @@ building_book = bool(os.environ.get('_BUILDING_BOOK') or False)
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'pearson',
     #'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.ifconfig',

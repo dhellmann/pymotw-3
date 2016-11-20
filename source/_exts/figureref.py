@@ -79,6 +79,7 @@ def setup(app):
     app.add_node(
         figureref,
         latex=(latex_visit_figureref, None),
+        pearson=(latex_visit_figureref, None),
         html=(html_visit_figureref, html_depart_figureref),
     )
     app.connect('builder-inited', builder_inited)

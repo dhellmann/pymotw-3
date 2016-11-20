@@ -57,9 +57,10 @@ options(
     ),
 
     pdf=Bunch(
-        builder='latex',
+        builder='pearson',
         docroot='.',
         builddir='build',
+        outdir='build/latex',
         sourcedir='source',
         pdflatex='xelatex',
         pygments_style='bw',
