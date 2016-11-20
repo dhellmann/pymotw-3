@@ -182,7 +182,6 @@ class PearsonLaTeXBuilder(Builder):
             chap_name_fmt = 'chap{:03d}'
 
         for chap_num, docname in enumerate(self.document_data, 1):
-            toctree_only = False
             chap_name = chap_name_fmt.format(chap_num)
             global_context['chapter_names'].append(chap_name)
             destination = FileOutput(
@@ -199,9 +198,8 @@ class PearsonLaTeXBuilder(Builder):
                 tocdepth = None
             doctree = self.assemble_doctree(
                 docname,
-                toctree_only,
+                False,  # toctree_only
                 appendices=[],
-                #appendices=((docclass != 'howto') and self.config.latex_appendices or [])
             )
             doctree['tocdepth'] = tocdepth
             self.post_process_images(doctree)
