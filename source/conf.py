@@ -372,13 +372,53 @@ latex_elements = {
 # (source start file, target name, title, author,
 #  documentclass [howto/manual]).
 latex_documents = [
-    ('book',  # startdocname
-     'py3_stdlib.tex',  # targetname
-     'The Python 3 Standard Library By Example',  # title
+    # ('book',  # startdocname
+    #  'py3_stdlib.tex',  # targetname
+    #  'The Python 3 Standard Library By Example',  # title
+    #  'Doug Hellmann',  # author
+    #  'manual',  # documentclass
+    #  True,  # toctree_only
+    # ),
+    ('text',  # startdocname
+     'chap1.tex',  # targetname
+     'Text',  # title
      'Doug Hellmann',  # author
      'manual',  # documentclass
-     True,  # toctree_only
+     False,  # toctree_only
     ),
+    ('data_structures',  # startdocname
+     'chap2.tex',  # targetname
+     'Data Structures',  # title
+     'Doug Hellmann',  # author
+     'manual',  # documentclass
+     False,  # toctree_only
+    ),
+]
+
+pearson_title = 'The Python 3 Standard Library by Example'
+pearson_author = 'Doug Hellmann'
+
+pearson_chapters = [
+    'text',
+    # 'data_structures',
+    # 'algorithm_tools',
+    # 'dates',
+    # 'numeric',
+    # 'file_access',
+    # 'persistence',
+    # 'compression',
+    # 'cryptographic',
+    # 'concurrency',
+    # 'networking',
+    # 'internet_protocols',
+    # 'email',
+    # 'frameworks',
+    # 'i18n',
+    # 'dev_tools',
+    # 'runtime_services',
+    # 'language',
+    # 'importing',
+    # 'unix',
 ]
 
 latex_additional_files = [

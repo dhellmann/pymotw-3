@@ -109,6 +109,9 @@ class PearsonLaTeXWriter(writers.Writer):
             self.builder.translator_class or PearsonLaTeXTranslator)
 
     def translate(self):
+        self.builder.info('writing')
+        self.output = ''
+        return
         transform = ShowUrlsTransform(self.document)
         transform.apply()
         visitor = self.translator_class(self.document, self.builder)
@@ -504,12 +507,13 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
         return docclass
 
     def astext(self):
-        return (HEADER % self.elements +
-                self.highlighter.get_stylesheet() +
-                u''.join(self.body) +
-                '\n' + self.elements['footer'] + '\n' +
-                self.generate_indices() +
-                FOOTER % self.elements)
+        return u''.join(self.body)
+        # return (HEADER % self.elements +
+        #         self.highlighter.get_stylesheet() +
+        #         u''.join(self.body) +
+        #         '\n' + self.elements['footer'] + '\n' +
+        #         self.generate_indices() +
+        #         FOOTER % self.elements)
 
     def hypertarget(self, id, withdoc=True, anchor=True):
         if withdoc:

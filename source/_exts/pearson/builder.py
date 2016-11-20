@@ -14,15 +14,20 @@ from docutils.frontend import OptionParser
 
 from sphinx import package_dir, addnodes
 from sphinx.util import texescape
+from sphinx.util import jsonimpl, copy_static_entry, copy_extra_entry
 from sphinx.errors import SphinxError
 from sphinx.locale import _
 from sphinx.builders import Builder
 from sphinx.environment import NoUri
+from sphinx.theming import Theme
 from sphinx.util.nodes import inline_all_toctrees
 from sphinx.util.osutil import SEP, copyfile
 from sphinx.util.console import bold, darkgreen
 
 from pearson import writer
+
+
+_package_dir = path.abspath(path.dirname(__file__))
 
 
 class PearsonLaTeXBuilder(Builder):
@@ -34,12 +39,16 @@ class PearsonLaTeXBuilder(Builder):
     supported_image_types = ['application/pdf', 'image/png', 'image/jpeg']
     usepackages = []
 
+    # Modified by init_templates()
+    theme = None
+
     def init(self):
+        self.info('loading builder from Pearson extension')
         self.docnames = []
         self.document_data = []
+        self.init_templates()
         texescape.init()
         self.check_options()
-        self.info('loading builder from Pearson extension')
 
     def check_options(self):
         if self.config.latex_toplevel_sectioning not in (None, 'part', 'chapter', 'section'):
@@ -68,24 +77,63 @@ class PearsonLaTeXBuilder(Builder):
         # ignore source path
         return self.get_target_uri(to, typ)
 
-    def init_document_data(self):
-        preliminary_document_data = [list(x) for x in self.config.latex_documents]
-        if not preliminary_document_data:
-            self.warn('no "latex_documents" config value found; no documents '
+    def get_theme_config(self):
+        return self.config.pearson_theme, self.config.pearson_theme_options
+
+    def init_templates(self):
+        Theme.init_themes(
+            self.confdir,
+            [path.join(_package_dir, 'themes')] + self.config.pearson_theme_path,
+            warn=self.warn,
+        )
+        themename, themeoptions = self.get_theme_config()
+        self.theme = Theme(themename, warn=self.warn)
+        self.theme_options = themeoptions.copy()
+        self.create_template_bridge()
+        self.templates.init(self, self.theme)
+
+    def init_chapters(self):
+        chapters = list(self.config.pearson_chapters)
+        if not chapters:
+            self.warn('no "pearson_chapters" config value found; no documents '
                       'will be written')
             return
-        # assign subdirs to titles
-        self.titles = []
-        for entry in preliminary_document_data:
-            docname = entry[0]
-            if docname not in self.env.all_docs:
-                self.warn('"latex_documents" config value references unknown '
-                          'document %s' % docname)
+
+        for chap in chapters:
+            if chap not in self.env.all_docs:
+                self.warn('"pearson_chapters" config value references unknown '
+                          'document %s' % chap)
                 continue
-            self.document_data.append(entry)
-            if docname.endswith(SEP+'index'):
-                docname = docname[:-5]
-            self.titles.append((docname, entry[2]))
+            self.document_data.append(chap)
+
+    # def init_document_data(self):
+    #     preliminary_document_data = [list(x) for x in self.config.latex_documents]
+    #     if not preliminary_document_data:
+    #         self.warn('no "latex_documents" config value found; no documents '
+    #                   'will be written')
+    #         return
+    #     # assign subdirs to titles
+    #     self.titles = []
+    #     for entry in preliminary_document_data:
+    #         docname = entry[0]
+    #         if docname not in self.env.all_docs:
+    #             self.warn('"latex_documents" config value references unknown '
+    #                       'document %s' % docname)
+    #             continue
+    #         self.document_data.append(entry)
+    #         if docname.endswith(SEP+'index'):
+    #             docname = docname[:-5]
+    #         self.titles.append((docname, entry[2]))
+
+    def _render_template(self, template_name, file_name, context):
+        self.info('writing {}'.format(file_name))
+        output = FileOutput(
+            destination_path=file_name,
+            encoding='utf-8',
+        )
+        body = self.templates.render(template_name, context)
+        output.write(body)
+        return body
 
     def write(self, *ignored):
         docwriter = writer.PearsonLaTeXWriter(self)
@@ -94,17 +142,39 @@ class PearsonLaTeXBuilder(Builder):
             components=(docwriter,),
             read_config_files=True).get_default_values()
 
-        self.init_document_data()
+        self.init_chapters()
 
-        for entry in self.document_data:
-            docname, targetname, title, author, docclass = entry[:5]
+        # Build up a context object for the templates.
+        global_context = {
+            'title': self.config.pearson_title,
+            'subtitle': self.config.pearson_subtitle,
+            'author': self.config.pearson_author,
+            'chapter_names': [],
+        }
+
+        self._render_template(
+            'half-title.tex',
+            path.join(self.outdir, 'half-title.tex'),
+            global_context,
+        )
+        self._render_template(
+            'title.tex',
+            path.join(self.outdir, 'title.tex'),
+            global_context,
+        )
+
+        chap_name_fmt = 'chap{:02d}'
+        if len(self.document_data) >= 100:
+            chap_name_fmt = 'chap{:03d}'
+
+        for chap_num, docname in enumerate(self.document_data, 1):
             toctree_only = False
-            if len(entry) > 5:
-                toctree_only = entry[5]
+            chap_name = chap_name_fmt.format(chap_num)
+            global_context['chapter_names'].append(chap_name)
             destination = FileOutput(
-                destination_path=path.join(self.outdir, targetname),
+                destination_path=path.join(self.outdir, chap_name + '.tex'),
                 encoding='utf-8')
-            self.info("processing " + targetname + "... ", nonl=1)
+            self.info('writing {} to {}.tex ... '.format(docname, chap_name), nonl=1)
             toctrees = self.env.get_doctree(docname).traverse(addnodes.toctree)
             if toctrees:
                 if toctrees[0].get('maxdepth') > 0:
@@ -114,17 +184,21 @@ class PearsonLaTeXBuilder(Builder):
             else:
                 tocdepth = None
             doctree = self.assemble_doctree(
-                docname, toctree_only,
-                appendices=((docclass != 'howto') and self.config.latex_appendices or []))
+                docname,
+                toctree_only,
+                appendices=[],
+                #appendices=((docclass != 'howto') and self.config.latex_appendices or [])
+            )
             doctree['tocdepth'] = tocdepth
             self.post_process_images(doctree)
+#            import pdb; pdb.set_trace()
             self.info("writing... ", nonl=1)
             doctree.settings = docsettings
-            doctree.settings.author = author
-            doctree.settings.title = title
+            # doctree.settings.author = author
+            # doctree.settings.title = title
             doctree.settings.contentsname = self.get_contentsname(docname)
             doctree.settings.docname = docname
-            doctree.settings.docclass = docclass
+            # doctree.settings.docclass = docclass
             docwriter.write(doctree, destination)
             self.info("done")
 
@@ -182,6 +256,17 @@ class PearsonLaTeXBuilder(Builder):
         return largetree
 
     def finish(self):
+        # then, copy over theme-supplied static files
+        if self.theme:
+            self.info(bold('copying static files...'), nonl=1)
+            ctx = {}
+            themeentries = [path.join(themepath, 'static')
+                            for themepath in self.theme.get_dirchain()[::-1]]
+            for entry in themeentries:
+                self.info(' ' + entry)
+                copy_static_entry(entry, self.outdir,
+                                  self, ctx)
+
         # copy image files
         if self.images:
             self.info(bold('copying images...'), nonl=1)
@@ -217,3 +302,8 @@ class PearsonLaTeXBuilder(Builder):
             elif not path.isfile(logotarget):
                 copyfile(path.join(self.confdir, self.config.latex_logo), logotarget)
         self.info('done')
+
+    def cleanup(self):
+        # clean up theme stuff
+        if self.theme:
+            self.theme.cleanup()
