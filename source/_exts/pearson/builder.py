@@ -13,16 +13,16 @@ from docutils.utils import new_document
 from docutils.frontend import OptionParser
 
 from sphinx import package_dir, addnodes
-from sphinx.util import texescape
-from sphinx.util import jsonimpl, copy_static_entry, copy_extra_entry
-from sphinx.errors import SphinxError
-from sphinx.locale import _
 from sphinx.builders import Builder
 from sphinx.environment import NoUri
+from sphinx.errors import SphinxError
+from sphinx.locale import _
 from sphinx.theming import Theme
+from sphinx.util import copy_static_entry
+from sphinx.util import texescape
+from sphinx.util.console import bold, darkgreen
 from sphinx.util.nodes import inline_all_toctrees
 from sphinx.util.osutil import SEP, copyfile
-from sphinx.util.console import bold, darkgreen
 
 from pearson import writer
 
@@ -105,25 +105,6 @@ class PearsonLaTeXBuilder(Builder):
                           'document %s' % chap)
                 continue
             self.document_data.append(chap)
-
-    # def init_document_data(self):
-    #     preliminary_document_data = [list(x) for x in self.config.latex_documents]
-    #     if not preliminary_document_data:
-    #         self.warn('no "latex_documents" config value found; no documents '
-    #                   'will be written')
-    #         return
-    #     # assign subdirs to titles
-    #     self.titles = []
-    #     for entry in preliminary_document_data:
-    #         docname = entry[0]
-    #         if docname not in self.env.all_docs:
-    #             self.warn('"latex_documents" config value references unknown '
-    #                       'document %s' % docname)
-    #             continue
-    #         self.document_data.append(entry)
-    #         if docname.endswith(SEP+'index'):
-    #             docname = docname[:-5]
-    #         self.titles.append((docname, entry[2]))
 
     def _render_template(self, template_name, file_name, context):
         self.info('writing {}'.format(file_name))
