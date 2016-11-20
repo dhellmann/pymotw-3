@@ -272,7 +272,7 @@ files.
      and 3.
 
    * `virtualenvwrapper
-     <https://pypi.python.org/pypi/virtualenvwrapper>` __ -- A set of
+     <https://pypi.python.org/pypi/virtualenvwrapper>`__ -- A set of
      shell wrappers for virtualenv to make it easier to manage a large
      number of environments.
 
