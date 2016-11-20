@@ -1,0 +1,115 @@
+% New commands and/or command redefinitions
+%
+% You can also place such commands in a macro file (e.g. mydefs.tex)
+% and load them in the preamble with "input mydefs"
+% Here are some examples:
+
+\newcommand{\be}{\begin{equation}}           %---- begin numbered equation
+\newcommand{\ee}{\end{equation}}             %---- end numbered equation
+\newcommand{\dst}{\everymath{\displaystyle}} %---- use displaystle in eqs.
+\newcommand{\Nuclide}[2]{${}^{#2}$#1}        %---- Nuclide macro
+\renewcommand{\SS}[1]{${}^{#1}$}             %---- superscript in text
+\newcommand{\STRUT}{\rule{0in}{3ex}}         %--- small strut
+\newcommand{\dotprod}{{\scriptscriptstyle \stackrel{\bullet}{{}}}}
+\renewcommand{\tilde}{\widetilde}
+\renewcommand{\hat}{\widehat}
+\renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}
+\renewcommand{\thefigure}{\arabic{chapter}--\arabic{figure}}
+\renewcommand{\thetable}{\arabic{chapter}--\arabic{table}}
+\newcommand{\ul}{\underline}
+\newcommand{\dul}{\underline{\underline}}
+\newcommand{\ol}{\overline}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\beas}{\begin{eqnarray*}}
+\newcommand{\eeas}{\end{eqnarray*}}
+\newcommand{\ba}{\begin{array}}
+\newcommand{\ea}{\end{array}}
+
+%%%%%%%% set chapter author commands
+\newcommand{\chapauthor}[1]{\hspace*{\fill}{\textsf{\large 
+ #1}}\\[1.5ex]}
+%%%%%%%%%%%%%%
+
+%%%%%%% set epigraph commands
+\newcommand{\epigraph}[1]{\vspace*{2ex}{\raggedleft{\textit{#1}}\\[6ex]}}
+%%%%%%%%%%%%
+
+%%%%%% set definition commands
+\newcounter{definitionctr}[chapter]
+\def\thedefinitionctr{\arabic{chapter}--\arabic{definitionctr}}
+\newcommand{\definition}[1]{\refstepcounter{definitionctr}\par\vskip2ex \indent\parbox[]{.96\textwidth}{\indent{\textbf{Definition~\thedefinitionctr.}~~#1}\par\vskip2ex}}
+%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%% create a thick line for tables
+\newcommand{\thickhline}{\noalign{\hrule height 1.5pt}} 
+%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%% define the unnumbered list
+\newenvironment{unnumlist}{\begin{list}{}% empty for no label
+{}} % empty since we don't need a counter and the standard lengths/indentations are fine
+{\end{list}} 
+%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%% define a simple command for the quote environment
+\newenvironment{italquote}{\begin{quote}{}% empty for no label
+{}\itshape} % empty since we don't need a counter and the standard lengths/indentations are fine
+{\end{quote}} 
+%%%%%%%%%%%
+
+%%%%%%%%%%% define a simple command for the quote environment
+\newenvironment{dialogue}[2]{\begin{quote}{\bfseries #1:~}% empty for no label
+{} #2} % empty since we don't need a counter & the standard lengths/indentations and text style are fine
+{\end{quote}} 
+%%%%%%%%%%%
+
+%%%%%%%%%%%%% define the multicolumn list environment
+\newcommand{\mclhead}{\bfseries} % define a multi-column list (mcl) heading
+\newlength{\mcltopsep}% define a spacing command
+\setlength{\mcltopsep}{\topsep} % 
+\newenvironment{mcl}{\par\vspace*{\mcltopsep}
+\begin{tabular}{ll}}{\end{tabular}\linebreak[4] \par\vspace*{.5\mcltopsep}}
+%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%% define some sidebar commands
+% the sidebar is created via the framed.sty package
+\definecolor{shadecolor}{gray}{0.9} % define the color to be used for the sidebar
+% define the sidebar head  ---  corrected bug 4/19/2011
+\newcommand{\sidebarhead}[1]{\noindent{\cmssbxsection #1}\hspace*{\fill}\linebreak\nopagebreak} 
+%%%%%%%%%%%%%%
+
+%%%%%%%%%%% define note, tip, and warning environments
+\newcommand{\note}[2]{\pagebreak[3]\par\vspace*{2ex} % define a new note command 
+\noindent{\sffamily\bfseries\small NOTE}\linebreak\vspace*{-1.5ex}\nopagebreak
+\rule[1.5ex]{\textwidth}{.75pt}\linebreak\nopagebreak
+{\sffamily\small  {\bfseries{\raggedright #1}\\}\nopagebreak
+\noindent{#2}}\par
+\noindent\rule[1ex]{\textwidth}{.75pt}\par\vspace*{1ex}\pagebreak[3] 
+}
+
+\newcommand{\tip}[2]{\pagebreak[3]\par\vspace*{2ex} % define a new tip command 
+\noindent{\sffamily\bfseries\small TIP}\linebreak\vspace*{-1.5ex}\nopagebreak
+\rule[1.5ex]{\textwidth}{.75pt}\linebreak\nopagebreak
+{\sffamily\small  {\bfseries{\raggedright #1}\\}\nopagebreak
+\nopagebreak
+\noindent{#2}}\par
+\noindent\rule[1ex]{\textwidth}{.75pt}\par\vspace*{1ex}\pagebreak[3]
+}
+
+\newcommand{\warning}[2]{\pagebreak[3]\par\vspace*{2ex} % define a new warning command 
+\noindent{\sffamily\bfseries\small WARNING}\linebreak\vspace*{-1.5ex}\nopagebreak
+\rule[1.5ex]{\textwidth}{.75pt}\linebreak\nopagebreak
+{\sffamily\small  {\bfseries{\raggedright #1}\\}\nopagebreak
+\noindent{#2}}\par
+\noindent\rule[1ex]{\textwidth}{.75pt}\par\vspace*{1ex}\pagebreak[3]
+}
+%%%%%%%%%%%%%%
+
+%%%%%%%%%%% define glossary command
+\newcommand{\gloss}[2]{\pagebreak[3]\par
+\noindent{\sffamily\bfseries #1}\\
+\noindent{#2}\hspace*{\fill}\\ 
+\par\pagebreak[3]}
+%%%%%%%%%%%%%%%%

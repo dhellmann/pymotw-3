@@ -266,17 +266,6 @@ class PearsonLaTeXBuilder(Builder):
         return largetree
 
     def finish(self):
-        # then, copy over theme-supplied static files
-        if self.theme:
-            self.info(bold('copying static files...'), nonl=1)
-            ctx = {}
-            themeentries = [path.join(themepath, 'static')
-                            for themepath in self.theme.get_dirchain()[::-1]]
-            for entry in themeentries:
-                self.info(' ' + entry)
-                copy_static_entry(entry, self.outdir,
-                                  self, ctx)
-
         # copy image files
         if self.images:
             self.info(bold('copying images...'), nonl=1)
@@ -291,6 +280,7 @@ class PearsonLaTeXBuilder(Builder):
         staticdirname = path.join(package_dir, 'texinputs')
         for filename in os.listdir(staticdirname):
             if not filename.startswith('.'):
+                self.info(' ' + filename, nonl=1)
                 copyfile(path.join(staticdirname, filename),
                          path.join(self.outdir, filename))
 
@@ -311,6 +301,19 @@ class PearsonLaTeXBuilder(Builder):
                 raise SphinxError('logo file %r does not exist' % self.config.latex_logo)
             elif not path.isfile(logotarget):
                 copyfile(path.join(self.confdir, self.config.latex_logo), logotarget)
+
+        # finally, copy over theme-supplied static files, some of which
+        # might override the files copied earlier
+        if self.theme:
+            self.info(bold('copying static files...'), nonl=1)
+            ctx = {}
+            themeentries = [path.join(themepath, 'static')
+                            for themepath in self.theme.get_dirchain()[::-1]]
+            for entry in themeentries:
+                self.info(' ' + entry)
+                copy_static_entry(entry, self.outdir,
+                                  self, ctx)
+
         self.info('done')
 
     def cleanup(self):
