@@ -131,7 +131,13 @@ class PearsonLaTeXBuilder(Builder):
             destination_path=file_name,
             encoding='utf-8',
         )
-        body = self.templates.render(template_name, context)
+        try:
+            body = self.templates.render(template_name, context)
+        except Exception as err:
+            self.info(bold('Failed to render template {}: {} at {}'.format(
+                template_name, err, err.lineno))
+            )
+            raise
         output.write(body)
         return body
 
