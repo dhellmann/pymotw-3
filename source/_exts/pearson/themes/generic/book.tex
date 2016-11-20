@@ -123,7 +123,7 @@ footskip=.025in}
 %%%%%%%%%  You will need to enter the file names of all your chapter files here. 
 % These lines tell the xr package what chapters need to cross-reference one another. 
 % You'll need to add your chapter file names here
-\externaldocument{samplechap,chapx-exer1,chapx-exer2,chapx-exer3} 
+{{'\externaldocument{'}}{% for chap_name in chapter_names %}{% if loop.index > 1 %},{% endif %}{{chap_name}}{% endfor %}{{'}'}}
 		
 %%%%% The front matter begins:
 \pagenumbering{roman}             % Roman numbering
