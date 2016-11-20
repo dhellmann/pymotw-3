@@ -154,7 +154,9 @@ footskip=.025in}
 %%%%%%%%%% Now we'll start on the main text for the book.  
 %% Main Text:
 \pagenumbering{arabic}		  % Arabic numbering
-\include{chap1}  % Chapter 1
+{% for chap_name in chapter_names -%}
+{{'\include{'}}{{chap_name}}{{'}'}}
+{% endfor %}
 %% \include{glossary}        % Glossary 
 %% %  just adding extra chapters for testing the TOC
 %% \include{samplechap2}  % Chapter 2

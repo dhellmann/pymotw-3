@@ -208,6 +208,12 @@ class PearsonLaTeXBuilder(Builder):
             docwriter.write(doctree, destination)
             self.info("done")
 
+        self._render_template(
+            'book.tex',
+            path.join(self.outdir, 'book.tex'),
+            global_context,
+        )
+
     def get_contentsname(self, indexfile):
         tree = self.env.get_doctree(indexfile)
         contentsname = None
