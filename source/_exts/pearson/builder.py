@@ -197,8 +197,6 @@ class PearsonLaTeXBuilder(Builder):
             )
             doctree['tocdepth'] = tocdepth
             self.post_process_images(doctree)
-#            import pdb; pdb.set_trace()
-            self.info("writing... ", nonl=1)
             doctree.settings = docsettings
             # doctree.settings.author = author
             # doctree.settings.title = title
