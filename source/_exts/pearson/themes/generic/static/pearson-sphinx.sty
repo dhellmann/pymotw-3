@@ -1,0 +1,107 @@
+%
+% sphinx.sty
+%
+% Adapted by Doug Hellmann from sphinx.sty in the Sphinx source,
+% which was adapted from the old python.sty, mostly written by Fred Drake,
+% by Georg Brandl.
+%
+
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesPackage{sphinx}[2010/01/15 LaTeX package (Sphinx markup)]
+
+% this is the \ltx@ifundefined of ltxcmds.sty, which is loaded by
+% hyperref.sty, but we need it before, and initial ltxcmds.sty
+% as in TL2009/Debian had wrong definition.
+\newcommand{\spx@ifundefined}[1]{%
+    \ifcsname #1\endcsname
+      \expandafter\ifx\csname #1\endcsname\relax
+        \expandafter\expandafter\expandafter\@firstoftwo
+      \else
+        \expandafter\expandafter\expandafter\@secondoftwo
+      \fi
+    \else
+      \expandafter\@firstoftwo
+    \fi
+}
+
+% code style definitions from pygments
+\usepackage{pygments}
+
+% Some custom font markup commands.
+\newcommand{\sphinxstrong}[1]{{\textbf{#1}}}
+% let \sphinxcode and \sphinxbfcode use straight quotes. \@noligs patched by upquote,
+% but needs protection in "moving arguments" such as for captions.
+% Use \scantokens to handle e.g. \item[{\sphinxcode{'fontenc'}}]
+\DeclareRobustCommand{\sphinxcode}[1]{{\@noligs\scantokens{\texttt{#1}\relax}}}
+\newcommand{\sphinxbfcode}[1]{\sphinxcode{\bfseries#1}}
+\newcommand{\sphinxemail}[1]{\textsf{#1}}
+\newcommand{\sphinxtablecontinued}[1]{\textsf{#1}}
+\newcommand{\sphinxtitleref}[1]{\emph{#1}}
+\newcommand{\sphinxmenuselection}[1]{\emph{#1}}
+\newcommand{\sphinxaccelerator}[1]{\underline{#1}}
+\newcommand{\sphinxcrossref}[1]{\emph{#1}}
+\newcommand{\sphinxtermref}[1]{\emph{#1}}
+
+% Redefine the Verbatim environment to allow border and background colors
+% and to handle the top caption in a non separable by pagebreak way.
+% The original environment is still used for verbatims within tables.
+\let\OriginalVerbatim=\Verbatim
+\let\endOriginalVerbatim=\endVerbatim
+
+% The title is specified from outside as macro \sphinxVerbatimTitle.
+% \sphinxVerbatimTitle is reset to empty after each use of Verbatim.
+\newcommand*\sphinxVerbatimTitle {}
+% Holder macro for labels of literal blocks. Set-up by LaTeX writer.
+\newcommand*\sphinxLiteralBlockLabel {}
+\newcommand*\sphinxSetupCaptionForVerbatim [2]
+{%
+    \needspace{\sphinxliteralblockneedspace}%
+% insert a \label via \sphinxLiteralBlockLabel
+% reset to normal the color for the literal block caption
+% the caption inserts \abovecaptionskip whitespace above itself (usually 10pt)
+% there is also \belowcaptionskip but it is usually zero, hence the \smallskip
+    \def\sphinxVerbatimTitle
+       {\py@NormalColor\captionof{#1}{\sphinxLiteralBlockLabel #2}\smallskip }%
+}
+
+% Define literal-block environment
+\RequirePackage{newfloat}
+\DeclareFloatingEnvironment{literal-block}
+\spx@ifundefined{c@chapter}
+  {\SetupFloatingEnvironment{literal-block}{within=section,placement=h}}
+  {\SetupFloatingEnvironment{literal-block}{within=chapter,placement=h}}
+\SetupFloatingEnvironment{literal-block}{name=List}
+% control caption around literal-block
+\RequirePackage{capt-of}
+\RequirePackage{needspace}
+% if the left page space is less than \literalblockneedspace, insert page-break
+\newcommand{\sphinxliteralblockneedspace}{5\baselineskip}
+\newcommand{\sphinxliteralblockwithoutcaptionneedspace}{1.5\baselineskip}
+
+% Take advantage of the already applied Pygments mark-up to insert
+% potential linebreaks for TeX processing.
+%        {, <, #, %, $, ' and ": go to next line.
+%        _, }, ^, &, >, - and ~: stay at end of broken line.
+% Use of \textquotesingle for straight quote.
+\newcommand*\sphinxbreaksatspecials {%
+    \def\PYGZus{\discretionary{\char`\_}{\sphinxafterbreak}{\char`\_}}%
+    \def\PYGZob{\discretionary{}{\sphinxafterbreak\char`\{}{\char`\{}}%
+    \def\PYGZcb{\discretionary{\char`\}}{\sphinxafterbreak}{\char`\}}}%
+    \def\PYGZca{\discretionary{\char`\^}{\sphinxafterbreak}{\char`\^}}%
+    \def\PYGZam{\discretionary{\char`\&}{\sphinxafterbreak}{\char`\&}}%
+    \def\PYGZlt{\discretionary{}{\sphinxafterbreak\char`\<}{\char`\<}}%
+    \def\PYGZgt{\discretionary{\char`\>}{\sphinxafterbreak}{\char`\>}}%
+    \def\PYGZsh{\discretionary{}{\sphinxafterbreak\char`\#}{\char`\#}}%
+    \def\PYGZpc{\discretionary{}{\sphinxafterbreak\char`\%}{\char`\%}}%
+    \def\PYGZdl{\discretionary{}{\sphinxafterbreak\char`\$}{\char`\$}}%
+    \def\PYGZhy{\discretionary{\char`\-}{\sphinxafterbreak}{\char`\-}}%
+    \def\PYGZsq{\discretionary{}{\sphinxafterbreak\textquotesingle}{\textquotesingle}}%
+    \def\PYGZdq{\discretionary{}{\sphinxafterbreak\char`\"}{\char`\"}}%
+    \def\PYGZti{\discretionary{\char`\~}{\sphinxafterbreak}{\char`\~}}%
+}
+
+% Include hyperref last.
+\RequirePackage[colorlinks,breaklinks,
+                linkcolor=InnerLinkColor,filecolor=OuterLinkColor,
+                menucolor=OuterLinkColor,urlcolor=OuterLinkColor,
+                citecolor=InnerLinkColor]{hyperref}
