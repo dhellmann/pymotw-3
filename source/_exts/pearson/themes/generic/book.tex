@@ -112,19 +112,19 @@ footskip=.025in}
                                   
 %%%%%%%%%% These lines set up the Preamble of the document. You can skip over this part.                                   
 %% Preamble:
-\input{definitions-PearsonGeneric}  % Loading the definitions needed for this book:
 \usepackage{pearson-sphinx}  % layout macros from sphinx
+\input{definitions-PearsonGeneric}  % Loading the definitions needed for this book:
 
 %%%%%%%%% Now the document begins
-
-\begin{document}
-\input{cft-definitions-PearsonGeneric} % Loading a few commands related to the tocloft package
 
 %%%%%%%%%  You will need to enter the file names of all your chapter files here. 
 % These lines tell the xr package what chapters need to cross-reference one another. 
 % You'll need to add your chapter file names here
 {{'\externaldocument{'}}{% for chap_name in chapter_names %}{% if loop.index > 1 %},{% endif %}{{chap_name}}{% endfor %}{{'}'}}
-		
+
+\begin{document}
+\input{cft-definitions-PearsonGeneric} % Loading a few commands related to the tocloft package
+
 %%%%% The front matter begins:
 \pagenumbering{roman}             % Roman numbering
 \setcounter{page}{1}                    % Starting page number (specified by the publisher)
