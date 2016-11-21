@@ -9,6 +9,11 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesPackage{sphinx}[2010/01/15 LaTeX package (Sphinx markup)]
 
+% Redefine these colors to your liking in the preamble.
+\definecolor{TitleColor}{rgb}{0.126,0.263,0.361}
+\definecolor{InnerLinkColor}{rgb}{0.208,0.374,0.486}
+\definecolor{OuterLinkColor}{rgb}{0.216,0.439,0.388}
+
 % this is the \ltx@ifundefined of ltxcmds.sty, which is loaded by
 % hyperref.sty, but we need it before, and initial ltxcmds.sty
 % as in TL2009/Debian had wrong definition.
@@ -42,11 +47,10 @@
 \newcommand{\sphinxcrossref}[1]{\emph{#1}}
 \newcommand{\sphinxtermref}[1]{\emph{#1}}
 
-% Redefine the Verbatim environment to allow border and background colors
-% and to handle the top caption in a non separable by pagebreak way.
-% The original environment is still used for verbatims within tables.
-\let\OriginalVerbatim=\Verbatim
-\let\endOriginalVerbatim=\endVerbatim
+% miscellaneous related to footnotes
+\newcommand*{\sphinxAtStartFootnote}{\mbox{ }}
+% Support large numbered footnotes in minipage (cf. admonitions)
+\def\thempfootnote{\arabic{mpfootnote}}
 
 % The title is specified from outside as macro \sphinxVerbatimTitle.
 % \sphinxVerbatimTitle is reset to empty after each use of Verbatim.
@@ -98,6 +102,27 @@
     \def\PYGZsq{\discretionary{}{\sphinxafterbreak\textquotesingle}{\textquotesingle}}%
     \def\PYGZdq{\discretionary{}{\sphinxafterbreak\char`\"}{\char`\"}}%
     \def\PYGZti{\discretionary{\char`\~}{\sphinxafterbreak}{\char`\~}}%
+}
+
+\def\sphinx@verbatim@nolig@list {\do \`}%
+% Some characters . , ; ? ! / are not pygmentized.
+% This macro makes them "active" and they will insert potential linebreaks
+\newcommand*\sphinxbreaksatpunct {%
+   \lccode`\~`\.\lowercase{\def~}{\discretionary{\char`\.}{\sphinxafterbreak}{\char`\.}}%
+   \lccode`\~`\,\lowercase{\def~}{\discretionary{\char`\,}{\sphinxafterbreak}{\char`\,}}%
+   \lccode`\~`\;\lowercase{\def~}{\discretionary{\char`\;}{\sphinxafterbreak}{\char`\;}}%
+   \lccode`\~`\:\lowercase{\def~}{\discretionary{\char`\:}{\sphinxafterbreak}{\char`\:}}%
+   \lccode`\~`\?\lowercase{\def~}{\discretionary{\char`\?}{\sphinxafterbreak}{\char`\?}}%
+   \lccode`\~`\!\lowercase{\def~}{\discretionary{\char`\!}{\sphinxafterbreak}{\char`\!}}%
+   \lccode`\~`\/\lowercase{\def~}{\discretionary{\char`\/}{\sphinxafterbreak}{\char`\/}}%
+   \catcode`\.\active
+   \catcode`\,\active
+   \catcode`\;\active
+   \catcode`\:\active
+   \catcode`\?\active
+   \catcode`\!\active
+   \catcode`\/\active
+   \lccode`\~`\~
 }
 
 % Include hyperref last.
