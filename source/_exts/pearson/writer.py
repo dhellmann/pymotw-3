@@ -1838,6 +1838,7 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
         pass
 
     def visit_literal_block(self, node):
+        print('visiting literal block {}'.format(node))
         if self.in_footnote:
             raise UnsupportedError('%s:%s: literal blocks in footnotes are '
                                    'not supported by LaTeX' %
@@ -1873,21 +1874,29 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
 
             def warner(msg):
                 self.builder.warn(msg, (self.curfilestack[-1], node.line))
-            hlcode = self.highlighter.highlight_block(code, lang, opts=opts,
-                                                      warn=warner, linenos=linenos,
-                                                      **highlight_args)
+            # hlcode = self.highlighter.highlight_block(code, lang, opts=opts,
+            #                                           warn=warner, linenos=linenos,
+            #                                           **highlight_args)
+            # Trying to "fix" the pygments output
+            # hlcode = hlcode.replace('begin{Verbatim}', 'begin{lstlisting}')
+            # hlcode = hlcode.replace('end{Verbatim}', 'end{lstlisting}')
             # workaround for Unicode issue
+            hlcode = code
             hlcode = hlcode.replace(u'€', u'@texteuro[]')
             # must use original Verbatim environment and "tabular" environment
-            if self.table:
-                hlcode = hlcode.replace('\\begin{Verbatim}',
-                                        '\\begin{OriginalVerbatim}')
-                self.table.has_problematic = True
-                self.table.has_verbatim = True
+            # if self.table:
+            #     hlcode = hlcode.replace('\\begin{Verbatim}',
+            #                             '\\begin{OriginalVerbatim}')
+            #     self.table.has_problematic = True
+            #     self.table.has_verbatim = True
             # get consistent trailer
-            hlcode = hlcode.rstrip()[:-14]  # strip \end{Verbatim}
-            self.body.append('\n' + hlcode + '\\end{%sVerbatim}\n' %
-                             (self.table and 'Original' or ''))
+            # hlcode = hlcode.rstrip()[:-14]  # strip \end{Verbatim}
+            # self.body.append('\n' + hlcode + '\\end{%sVerbatim}\n' %
+            #                  (self.table and 'Original' or ''))
+            print('hlcode {}'.format(hlcode))
+            self.body.append('\n\\begin{lstlisting}\n')
+            self.body.append(hlcode)
+            self.body.append('\end{lstlisting}')
             if ids:
                 self.body.append('\\let\\sphinxLiteralBlockLabel\empty\n')
             raise nodes.SkipNode
