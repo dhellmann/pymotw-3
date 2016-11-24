@@ -44,7 +44,7 @@ options(
         docroot='.',
         builddir='build',
         sourcedir='source',
-        warnerror=True,
+#        warnerror=True,
     ),
 
     # Some of the files include [[[ as part of a nested list data

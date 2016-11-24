@@ -97,19 +97,48 @@ will not be removed.
 
 Input like
 
-.. code-block:: none
+.. only:: pearson
 
-  ␣Line one.
-  ␣␣␣Line two.
-  ␣Line three.
+  .. raw:: latex
+
+     \lstset{showspaces=true}
+
+  .. literalinclude:: textwrap_undedented.txt
+
+  .. raw:: latex
+
+     \lstset{showspaces=false}
+
+.. only:: html
+
+  .. code-block:: none
+
+    ␣Line one.
+    ␣␣␣Line two.
+    ␣Line three.
 
 becomes
 
-.. code-block:: none
+.. only:: pearson
 
-  Line one.
-  ␣␣Line two.
-  Line three.
+  .. raw:: latex
+
+     \lstset{showspaces=true}
+
+  .. literalinclude:: textwrap_dedented.txt
+
+  .. raw:: latex
+
+     \lstset{showspaces=false}
+
+
+.. only:: html
+
+  .. code-block:: none
+
+    Line one.
+    ␣␣Line two.
+    Line three.
 
 Combining Dedent and Fill
 =========================
