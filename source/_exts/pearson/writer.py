@@ -976,77 +976,48 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
         self.restrict_footnote(node)
 
     def depart_table(self, node):
-        if self.table.rowcount > 30:
-            self.table.longtable = True
         self.popbody()
-        if not self.table.longtable and self.table.caption is not None:
-            self.body.append('\n\n\\begin{threeparttable}\n'
-                             '\\capstart\\caption{')
+        # Start the table
+        self.body.append('\n\\begin{table}[t]\n')
+        self.body.append('\\begin{center}\n')
+        self.body.append('\\begin{threeparttable}\n')
+
+        # Add the caption, if any
+        if self.table.caption:
+            self.body.append('\\caption{')
             for caption in self.table.caption:
                 self.body.append(caption)
             self.body.append('}')
-            for id in self.pop_hyperlink_ids('table'):
-                self.body.append(self.hypertarget(id, anchor=False))
-            if node['ids']:
-                self.body.append(self.hypertarget(node['ids'][0], anchor=False))
-        if self.table.longtable:
-            self.body.append('\n\\begin{longtable}')
-            endmacro = '\\end{longtable}\n\n'
-        elif self.table.has_verbatim:
-            self.body.append('\n\\noindent\\begin{tabular}')
-            endmacro = '\\end{tabular}\n\n'
-        elif self.table.has_problematic and not self.table.colspec:
-            # if the user has given us tabularcolumns, accept them and use
-            # tabulary nevertheless
-            self.body.append('\n\\noindent\\begin{tabular}')
-            endmacro = '\\end{tabular}\n\n'
-        else:
-            self.body.append('\n\\noindent\\begin{tabulary}{\\linewidth}')
-            endmacro = '\\end{tabulary}\n\n'
+
+        # Add hyperlink target(s), if any
+        for id in self.pop_hyperlink_ids('table'):
+            self.body.append(self.hypertarget(id, anchor=False))
+        if node['ids']:
+            self.body.append(self.hypertarget(node['ids'][0], anchor=False))
+
+        # Formatting from Pearson template
+        self.body.append('\\vspace{1.5ex}\n')
+        self.body.append('{\\small \\begin{tabular}')
+
+        # Column specifier
         if self.table.colspec:
-            self.body.append(self.table.colspec)
+            self.body.append(self.table.colspec.rstrip())
         else:
-            if self.table.has_problematic:
-                colwidth = 0.95 / self.table.colcount
-                colspec = ('p{%.3f\\linewidth}|' % colwidth) * \
-                    self.table.colcount
-                self.body.append('{|' + colspec + '}\n')
-            elif self.table.longtable:
-                self.body.append('{|' + ('l|' * self.table.colcount) + '}\n')
-            else:
-                self.body.append('{|' + ('L|' * self.table.colcount) + '}\n')
-        if self.table.longtable and self.table.caption is not None:
-            self.body.append(u'\\caption{')
-            for caption in self.table.caption:
-                self.body.append(caption)
-            self.body.append('}')
-            for id in self.pop_hyperlink_ids('table'):
-                self.body.append(self.hypertarget(id, anchor=False))
-            if node['ids']:
-                self.body.append(self.hypertarget(node['ids'][0], anchor=False))
-            self.body.append(u'\\\\\n')
-        if self.table.longtable:
-            self.body.append('\\hline\n')
-            self.body.extend(self.tableheaders)
-            self.body.append('\\endfirsthead\n\n')
-            self.body.append('\\multicolumn{%s}{c}%%\n' % self.table.colcount)
-            self.body.append(r'{{\tablecontinued{\tablename\ \thetable{} -- %s}}} \\'
-                             % _('continued from previous page'))
-            self.body.append('\n\\hline\n')
-            self.body.extend(self.tableheaders)
-            self.body.append('\\endhead\n\n')
-            self.body.append(r'\hline \multicolumn{%s}{|r|}{{\tablecontinued{%s}}} \\ \hline'
-                             % (self.table.colcount,
-                                _('Continued on next page')))
-            self.body.append('\n\\endfoot\n\n')
-            self.body.append('\\endlastfoot\n\n')
-        else:
-            self.body.append('\\hline\n')
-            self.body.extend(self.tableheaders)
+            # Default to left-justified (Pearson template defaults to
+            # centered?)
+            self.body.append('{|' + ('l|' * self.table.colcount) + '}')
+
+        # Use thick lines and make the first row background grey
+        self.body.append('\\thickhline\n')
+        self.body.append('\\rowcolor[gray]{.9}\n')
+
+        # Headings
+        self.body.extend(self.tableheaders)
         self.body.extend(self.tablebody)
-        self.body.append(endmacro)
-        if not self.table.longtable and self.table.caption is not None:
-            self.body.append('\\end{threeparttable}\n\n')
+        self.body.extend('\end{tabular} }\n')  # the } is for the "small" block
+        self.body.extend('\end{threeparttable}\n')
+        self.body.extend('\end{center}\n')
+        self.body.extend('\end{table}\n')
         self.unrestrict_footnote(node)
         self.table = None
         self.tablebody = None
@@ -1090,7 +1061,7 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
                 del self.remember_multirowcol[key]
 
     def depart_row(self, node):
-        self.body.append('\\\\\n')
+        self.body.append('\\\\')
         if any(self.remember_multirow.values()):
             linestart = 1
             col = self.table.colcount
@@ -1106,66 +1077,20 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
                 linerange = str(linestart) + '-' + str(col)
                 self.body.append('\\cline{' + linerange + '}')
         else:
-            self.body.append('\\hline')
+            self.body.append('\\hline\n')
         self.table.rowcount += 1
 
     def visit_entry(self, node):
-        if self.table.col == 0:
-            while self.remember_multirow.get(self.table.col + 1, 0):
-                self.table.col += 1
-                self.remember_multirow[self.table.col] -= 1
-                if self.remember_multirowcol.get(self.table.col, 0):
-                    extracols = self.remember_multirowcol[self.table.col]
-                    self.body.append('\\multicolumn{')
-                    self.body.append(str(extracols + 1))
-                    self.body.append('}{|l|}{}\\relax ')
-                    self.table.col += extracols
-                self.body.append('&')
-        else:
+        if self.table.col != 0:
             self.body.append('&')
         self.table.col += 1
         context = ''
-        if 'morecols' in node:
-            self.body.append('\\multicolumn{')
-            self.body.append(str(node.get('morecols') + 1))
-            if self.table.col == 1:
-                self.body.append('}{|l|}{\\relax ')
-            else:
-                self.body.append('}{l|}{\\relax ')
-            context += '\\unskip}\\relax '
-        if 'morerows' in node:
-            self.body.append('\\multirow{')
-            self.body.append(str(node.get('morerows') + 1))
-            self.body.append('}{*}{\\relax ')
-            context += '\\unskip}\\relax '
-            self.remember_multirow[self.table.col] = node.get('morerows')
-        if 'morecols' in node:
-            if 'morerows' in node:
-                self.remember_multirowcol[self.table.col] = node.get('morecols')
-            self.table.col += node.get('morecols')
-        if (('morecols' in node or 'morerows' in node) and
-           (len(node) > 2 or len(node.astext().split('\n')) > 2)):
-            self.in_merged_cell = 1
-            self.literal_whitespace += 1
-            self.body.append('\\eqparbox{%d}{\\vspace{.5\\baselineskip}\n' % id(node))
-            self.pushbody([])
-            context += '}'
         if isinstance(node.parent.parent, nodes.thead):
             if len(node) == 1 and isinstance(node[0], nodes.paragraph) and node.astext() == '':
                 pass
             else:
-                self.body.append('\\textsf{\\relax ')
-                context += '\\unskip}\\relax '
-        while self.remember_multirow.get(self.table.col + 1, 0):
-            self.table.col += 1
-            self.remember_multirow[self.table.col] -= 1
-            context += '&'
-            if self.remember_multirowcol.get(self.table.col, 0):
-                extracols = self.remember_multirowcol[self.table.col]
-                context += '\\multicolumn{'
-                context += str(extracols + 1)
-                context += '}{l|}{}\\relax '
-                self.table.col += extracols
+                self.body.append(' \\textbf{\\textsf ')
+                context += '} '
         if len(node.traverse(nodes.paragraph)) >= 2:
             self.table.has_problematic = True
         self.context.append(context)
