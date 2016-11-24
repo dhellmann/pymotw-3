@@ -459,6 +459,7 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
         self.handled_abbrs = set()
         self.next_hyperlink_ids = {}
         self.next_section_ids = set()
+        self.literal_block_caption = []
 
     def pushbody(self, newbody):
         self.bodystack.append(self.body)
@@ -1412,7 +1413,9 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
     def visit_caption(self, node):
         self.in_caption += 1
         if self.in_container_literal_block:
-            self.body.append('\\sphinxSetupCaptionForVerbatim{literal-block}{')
+            # Track the caption body separately
+            self.literal_block_caption = []
+            self.pushbody(self.literal_block_caption)
         elif self.in_minipage and isinstance(node.parent, nodes.figure):
             self.body.append('\\captionof{figure}{')
         elif self.table and node.parent.tagname == 'figure':
@@ -1421,7 +1424,8 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
             self.body.append('\\caption{')
 
     def depart_caption(self, node):
-        self.body.append('}')
+        # Go back to treating input as part of the regular text
+        self.popbody()
         self.in_caption -= 1
 
     def visit_legend(self, node):
@@ -1778,9 +1782,6 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
             if node['ids']:
                 # suppress with anchor=False \phantomsection insertion
                 ids += self.hypertarget(node['ids'][0], anchor=False)
-            # LaTeX code will insert \phantomsection prior to \label
-            if ids:
-                self.body.append('\n\\def\\sphinxLiteralBlockLabel{' + ids + '}')
             code = node.astext()
             lang = self.hlsettingstack[-1][0]
             linenos = code.count('\n') >= self.hlsettingstack[-1][1] - 1
@@ -1799,31 +1800,32 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
 
             def warner(msg):
                 self.builder.warn(msg, (self.curfilestack[-1], node.line))
+            hlcode = code
             # hlcode = self.highlighter.highlight_block(code, lang, opts=opts,
             #                                           warn=warner, linenos=linenos,
             #                                           **highlight_args)
-            # Trying to "fix" the pygments output
-            # hlcode = hlcode.replace('begin{Verbatim}', 'begin{lstlisting}')
-            # hlcode = hlcode.replace('end{Verbatim}', 'end{lstlisting}')
-            # workaround for Unicode issue
-            hlcode = code
-            hlcode = hlcode.replace(u'€', u'@texteuro[]')
-            # must use original Verbatim environment and "tabular" environment
-            # if self.table:
-            #     hlcode = hlcode.replace('\\begin{Verbatim}',
-            #                             '\\begin{OriginalVerbatim}')
-            #     self.table.has_problematic = True
-            #     self.table.has_verbatim = True
-            # get consistent trailer
+            # # Trying to "fix" the pygments output by removing the first line
+            # # with the begin{Verbatim} instruction
+            # hlcode = '\n'.join(hlcode.split('\n')[1:])
             # hlcode = hlcode.rstrip()[:-14]  # strip \end{Verbatim}
-            # self.body.append('\n' + hlcode + '\\end{%sVerbatim}\n' %
-            #                  (self.table and 'Original' or ''))
+            # workaround for Unicode issue
+            hlcode = hlcode.replace(u'€', u'@texteuro[]')
             print('hlcode {}'.format(hlcode))
-            self.body.append('\n\\begin{lstlisting}\n')
+
+            self.body.append('\n\\begin{lstlisting}')
+            caption = ''.join(self.literal_block_caption)
+            self.body.append('[')
+            parts = []
+            if caption:
+                parts.append('caption={%s}' % caption)
+                self.literal_block_caption = []  # clear the caption so it isn't repeated
+            if ids:
+                parts.append('label={%s}' % ids[0])
+            parts.append('frame=tb')
+            self.body.append(','.join(parts))
+            self.body.append(']\n')
             self.body.append(hlcode)
             self.body.append('\end{lstlisting}')
-            if ids:
-                self.body.append('\\let\\sphinxLiteralBlockLabel\empty\n')
             raise nodes.SkipNode
 
     def depart_literal_block(self, node):
@@ -1984,15 +1986,11 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
             if node['ids']:
                 # suppress with anchor=False \phantomsection insertion
                 ids += self.hypertarget(node['ids'][0], anchor=False)
-            # define label for use in caption.
-            if ids:
-                self.body.append('\n\\def\\sphinxLiteralBlockLabel{' + ids + '}\n')
 
     def depart_container(self, node):
         if node.get('literal_block'):
             self.in_container_literal_block -= 1
-            self.body.append('\\let\\sphinxVerbatimTitle\\empty\n')
-            self.body.append('\\let\\sphinxLiteralBlockLabel\\empty\n')
+            self.body.append('\n')
 
     def visit_decoration(self, node):
         pass
