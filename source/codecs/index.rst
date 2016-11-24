@@ -5,12 +5,10 @@
 .. module:: codecs
     :synopsis: String encoding and decoding.
 
-:Purpose: Encoders and decoders for converting text between different
-          representations.
-
 The :mod:`codecs` module provides stream and file interfaces for
-transcoding data.  It is most commonly used to work with Unicode text,
-but other encodings are also available for other purposes.
+transcoding text data between different representations.  It is most
+commonly used to work with Unicode text, but other encodings are also
+available for other purposes.
 
 Unicode Primer
 ==============

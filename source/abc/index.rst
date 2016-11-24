@@ -5,11 +5,6 @@
 .. module:: abc
    :synopsis: Abstract Base Classes
 
-:Purpose: Define and use abstract base classes for interface verification.
-
-Why use Abstract Base Classes?
-==============================
-
 Abstract base classes are a form of interface checking more strict
 than individual :func:`hasattr` checks for particular methods.  By
 defining an abstract base class, a common API can be established for a

@@ -5,8 +5,6 @@
 .. module:: gettext
     :synopsis: Message Catalogs
 
-:Purpose: Message catalog API for internationalization.
-
 The :mod:`gettext` module provides a pure-Python implementation
 compatible with the GNU **gettext** library for message translation
 and catalog management.  The tools available with the Python source

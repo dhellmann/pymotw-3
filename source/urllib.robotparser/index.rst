@@ -5,8 +5,6 @@
 .. module:: urllib.robotparser
     :synopsis: Internet spider access control
 
-:Purpose: Parse ``robots.txt`` file used to control Internet spiders
-
 :mod:`robotparser` implements a parser for the ``robots.txt`` file
 format, including a function that checks if a given user agent
 can access a resource.  It is intended for use in well-behaved spiders,

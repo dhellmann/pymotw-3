@@ -5,8 +5,6 @@
 .. module:: socket
     :synopsis: Network communication
 
-:Purpose: Provides access to network communication
-
 The :mod:`socket` module exposes the low-level C API for communicating
 over a network using the BSD socket interface.  It includes the
 :class:`socket` class, for handling the actual data channel, and also

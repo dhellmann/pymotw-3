@@ -5,8 +5,6 @@
 .. module:: shlex
     :synopsis: Lexical analysis of shell-style syntaxes.
 
-:Purpose: Lexical analysis of shell-style syntaxes.
-
 The :mod:`shlex` module implements a class for parsing simple
 shell-like syntaxes. It can be used for writing a domain-specific
 language, or for parsing quoted strings (a task that is more complex

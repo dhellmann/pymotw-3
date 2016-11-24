@@ -5,10 +5,6 @@
 .. module:: hmac
     :synopsis: Cryptographic signature and verification of messages.
 
-:Purpose:
-    The hmac module implements keyed-hashing for message authentication, as
-    described in RFC 2104.
-
 The HMAC algorithm can be used to verify the integrity of information
 passed between applications or stored in a potentially vulnerable
 location. The basic idea is to generate a cryptographic hash of the

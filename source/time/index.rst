@@ -5,8 +5,6 @@
 .. module:: time
     :synopsis: Clock time
 
-:Purpose: Functions for manipulating clock time.
-
 The :mod:`time` module provides access to several different types of
 clocks, each useful for different purposes. The standard system calls
 like :func:`time` report the system "wall clock" time. The

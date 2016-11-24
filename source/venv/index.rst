@@ -5,8 +5,6 @@
 .. module:: venv
     :synopsis: Create isolated installation and execution contexts.
 
-:Purpose: Create isolated installation and execution contexts.
-
 Python virtual environments, managed by :mod:`venv`, are set up for
 installing packages and running programs in a way that isolates them
 from other packages installed on the rest of the system. Because each

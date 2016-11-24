@@ -5,10 +5,9 @@
 .. module:: threading
     :synopsis: Manage concurrent operations
 
-:Purpose: Manage several threads of execution.
-
-Using threads allows a program to run multiple operations concurrently
-in the same process space.
+The :mod:`threading` module provides APIs for managing several threads
+of execution, which allows a program to run multiple operations
+concurrently in the same process space.
 
 Thread Objects
 ==============

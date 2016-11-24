@@ -5,9 +5,6 @@
 .. module:: urllib.request
     :synopsis: Network Resource Access
 
-:Purpose: A library for opening URLs that can be extended by defining
-          custom protocol handlers.
-
 The :mod:`urllib.request` module provides an API for using Internet
 resources identified by URLs.  It is designed to be extended by
 individual applications to support new protocols or add variations to

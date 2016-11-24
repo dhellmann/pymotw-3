@@ -5,14 +5,12 @@
 .. module:: multiprocessing
     :synopsis: Manage processes like threads.
 
-:Purpose: Provides an API for managing processes.
-
 The :mod:`multiprocessing` module includes an API for dividing work up
 between multiple processes based on the API for :mod:`threading`.  In
 some cases :mod:`multiprocessing` is a drop-in replacement, and can be
 used instead of :mod:`threading` to take advantage of multiple CPU
 cores to avoid computational bottlenecks associated with Python's
-global interpreter lock.  
+global interpreter lock.
 
 Due to the similarity, the first few examples here are modified from
 the :mod:`threading` examples.  Features provided by

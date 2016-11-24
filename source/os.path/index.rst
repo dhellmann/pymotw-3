@@ -5,8 +5,6 @@
 .. module:: os.path
     :synopsis: Platform-independent manipulation of filenames.
 
-:Purpose: Parse, build, test, and otherwise work on filenames and paths.
-
 Writing code to work with files on multiple platforms is easy using
 the functions included in the :mod:`os.path` module. Even programs not
 intended to be ported between platforms should use :mod:`os.path` for

@@ -5,8 +5,6 @@
 .. module:: statistics
    :synopsis: Statistical Calculations
 
-:Purpose: Implementations of common statistical calculations.
-
 The :mod:`statistics` module implements many common statistical
 formulas for efficient calculations using Python's various numerical
 types (:class:`int`, :class:`float`, :class:`Decimal`, and

@@ -5,8 +5,6 @@
 .. module:: random
     :synopsis: Pseudorandom number generators
 
-:Purpose: Implements several types of pseudorandom number generators.
-
 The :mod:`random` module provides a fast pseudorandom number generator
 based on the *Mersenne Twister* algorithm.  Originally developed to
 produce inputs for Monte Carlo simulations, Mersenne Twister generates

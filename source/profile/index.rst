@@ -5,8 +5,6 @@
 .. module:: profile
     :synopsis: Performance analysis of Python programs.
 
-:Purpose: Performance analysis of Python programs.
-
 The :mod:`profile` module provides APIs for collecting and analyzing
 statistics about how Python source consumes processor resources.
 

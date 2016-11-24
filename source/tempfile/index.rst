@@ -5,8 +5,6 @@
 .. module:: tempfile
     :synopsis: Temporary file system objects
 
-:Purpose: Create temporary file system objects.
-
 Creating temporary files with unique names securely, so they cannot be
 guessed by someone wanting to break the application or steal the data,
 is challenging. The :mod:`tempfile` module provides several functions

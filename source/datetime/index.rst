@@ -5,11 +5,8 @@
 .. module:: datetime
     :synopsis: Date and time value manipulation.
 
-:Purpose: The datetime module includes functions and classes for doing
-          date and time parsing, formatting, and arithmetic.
-
-:mod:`datetime` contains functions and classes for working with dates
-and times, separately and together.
+:mod:`datetime` contains functions and classes for date and time
+parsing, formatting, and arithmetic.
 
 Times
 =====

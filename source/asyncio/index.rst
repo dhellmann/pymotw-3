@@ -5,8 +5,6 @@
 .. module:: asyncio
    :synopsis: Asynchronous I/O, event loop, and concurrency tools
 
-:Purpose: An asynchronous I/O and concurrency framework.
-
 The :mod:`asyncio` module provides tools for building concurrent
 applications using coroutines. While the :mod:`threading` module
 implements concurrency through application threads and

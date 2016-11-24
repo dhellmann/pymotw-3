@@ -5,8 +5,6 @@
 .. module:: os
     :synopsis: Portable access to operating system specific features.
 
-:Purpose: Portable access to operating system specific features.
-
 The :mod:`os` module provides a wrapper for platform specific modules
 such as :mod:`posix`, :mod:`nt`, and :mod:`mac`. The API for functions
 available on all platforms should be the same, so using the :mod:`os`

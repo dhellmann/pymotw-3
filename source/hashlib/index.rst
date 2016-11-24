@@ -5,8 +5,6 @@
 .. module:: hashlib
     :synopsis: Cryptographic hashes and message digests
 
-:Purpose: Cryptographic hashes and message digests
-
 The :mod:`hashlib` module defines an API for accessing different
 cryptographic hashing algorithms. To work with a specific hash
 algorithm, use the appropriate constructor function or :func:`new` to

@@ -5,9 +5,9 @@
 .. module:: pathlib
     :synopsis: Treat filesystem paths as objects.
 
-:Purpose: Parse, build, test, and otherwise work on filenames and
-          paths using an object-oriented API instead of low-level
-          string operations.
+The :mod:`pathlib` module provides an object-oriented API for parsing,
+building, testing, and otherwise work on filenames and paths, instead
+of using low-level string operations.
 
 Path Representations
 ====================

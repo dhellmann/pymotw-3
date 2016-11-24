@@ -5,8 +5,6 @@
 .. module:: zlib
     :synopsis: GNU zlib compression library
 
-:Purpose: Low-level access to GNU zlib compression library
-
 The :mod:`zlib` module provides a lower-level interface to many of the
 functions in the :mod:`zlib` compression library from the GNU project.
 

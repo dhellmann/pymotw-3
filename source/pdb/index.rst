@@ -5,8 +5,6 @@
 .. module:: pdb
     :synopsis: Interactive Debugger
 
-:Purpose: Python's Interactive Debugger
-
 :mod:`pdb` implements an interactive debugging environment for Python
 programs.  It includes features to pause a program, look at the values
 of variables, and watch program execution step-by-step, so you can

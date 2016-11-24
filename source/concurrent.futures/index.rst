@@ -5,8 +5,6 @@
 .. module:: concurrent.futures
    :synopsis: Managing Pools of Concurrent Tasks
 
-:Purpose: Easily manage tasks running concurrently and in parallel.
-
 The :mod:`concurrent.futures` modules provides interfaces for running
 tasks using pools of thread or process workers. The APIs are the same,
 so applications can switch between threads and processes with minimal

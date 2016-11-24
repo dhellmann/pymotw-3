@@ -5,8 +5,6 @@
 .. module:: xmlrpc.server
     :synopsis: Implements an XML-RPC server.
 
-:Purpose: Implements an XML-RPC server.
-
 The :mod:`xmlrpc.server` module contains classes for creating
 cross-platform, language-independent servers using the XML-RPC
 protocol. Client libraries exist for many other languages besides

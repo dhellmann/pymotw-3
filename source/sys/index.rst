@@ -5,8 +5,6 @@
 .. module:: sys
     :synopsis: System-specific configuration
 
-:Purpose: Provides system-specific configuration and operations.
-
 The :mod:`sys` module includes a collection of services for probing or
 changing the configuration of the interpreter at runtime and resources
 for interacting with the operating environment outside of the current

@@ -5,8 +5,6 @@
 .. module:: subprocess
     :synopsis: Spawning additional processes
 
-:Purpose: Start and communicate with additional processes.
-
 The :mod:`subprocess` module supports three APIs for working with
 processes. The :func:`run` function, added in Python 3.5, is a
 high-level API for running a process and optionally collecting its

@@ -5,10 +5,6 @@
 .. module:: shelve
     :synopsis: Persistent storage of objects
 
-:Purpose: The shelve module implements persistent storage for
-          arbitrary Python objects that can be pickled, using a
-          dictionary-like API.
-
 The :mod:`shelve` module can be used as a simple persistent storage
 option for Python objects when a relational database is not
 required. The shelf is accessed by keys, just as with a

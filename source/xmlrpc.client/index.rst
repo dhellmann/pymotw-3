@@ -5,8 +5,6 @@
 .. module:: xmlrpc.client
     :synopsis: Client library for XML-RPC
 
-:Purpose: Client-side library for XML-RPC communication.
-
 XML-RPC is a lightweight remote procedure call protocol built on top
 of HTTP and XML.  The :mod:`xmlrpclib` module lets a Python program
 communicate with an XML-RPC server written in any language.

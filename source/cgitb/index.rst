@@ -5,13 +5,13 @@
 .. module:: cgitb
     :synopsis: Mis-named module that provides extended traceback information.
 
-:Purpose: cgitb provides more detailed traceback information than :mod:`traceback`.
-
 :mod:`cgitb` is a valuable debugging tool in the standard library.  It
 was originally designed for showing errors and debugging information
 in web applications and was later updated to include plain-text output
 as well, but unfortunately was never renamed.  This has led to
-obscurity, and the module is not used as often as it could be.
+obscurity, and the module is not used as often as it could be, even
+though it includes more detailed traceback information than
+:mod:`traceback`.
 
 Standard Traceback Dumps
 ========================

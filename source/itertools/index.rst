@@ -5,15 +5,12 @@
 .. module:: itertools
     :synopsis: Iterator functions for efficient looping
 
-:Purpose:
-    The itertools module includes a set of functions for working with
-    sequence data sets.
-
-The functions provided by :mod:`itertools` are inspired by similar
-features of functional programming languages such as Clojure, Haskell,
-APL, and SML. They are intended to be fast and use memory efficiently,
-and also to be hooked together to express more complicated
-iteration-based algorithms.
+The :mod:`itertools` module includes a set of functions for working
+with sequence data sets.  The functions provided are inspired by
+similar features of functional programming languages such as Clojure,
+Haskell, APL, and SML. They are intended to be fast and use memory
+efficiently, and also to be hooked together to express more
+complicated iteration-based algorithms.
 
 Iterator-based code offers better memory consumption characteristics
 than code that uses lists.  Since data is not produced from the

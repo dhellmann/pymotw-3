@@ -5,8 +5,6 @@
 .. module:: doctest
     :synopsis: Write automated tests as part of the documentation for a module.
 
-:Purpose: Write automated tests as part of the documentation for a module.
-
 :mod:`doctest` tests source code by running examples embedded in the
 documentation and verifying that they produce the expected results.
 It works by parsing the help text to find examples, running them, then

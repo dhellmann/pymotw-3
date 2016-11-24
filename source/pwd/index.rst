@@ -5,8 +5,6 @@
 .. module:: pwd
     :synopsis: UNIX Password Database
 
-:Purpose: Read user data from UNIX password database.
-
 The :mod:`pwd` module can be used to read user information from the
 UNIX password database (usually ``/etc/passwd``).  The read-only
 interface returns tuple-like objects with named attributes for the

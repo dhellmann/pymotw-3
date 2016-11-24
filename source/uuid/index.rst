@@ -5,9 +5,8 @@
 .. module:: uuid
     :synopsis: Universally unique identifiers
 
-:Purpose: The :mod:`uuid` module implements Universally Unique Identifiers as described in RFC 4122.
-
-:rfc:`4122` defines a system for creating universally unique
+The :mod:`uuid` module implements Universally Unique Identifiers as
+described in :rfc:`4122`, which defines a system for creating unique
 identifiers for resources in a way that does not require a central
 registrar. UUID values are 128 bits long and, as the reference guide
 says, "can guarantee uniqueness across space and time." They are

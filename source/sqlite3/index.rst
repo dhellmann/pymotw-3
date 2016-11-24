@@ -5,8 +5,6 @@
 .. module:: sqlite3
     :synopsis: Embedded relational database
 
-:Purpose: Implements an embedded relational database with SQL support.
-
 The :mod:`sqlite3` module provides a DB-API 2.0 compliant interface to
 SQLite, an in-process relational database.  SQLite is designed to be
 embedded in applications, instead of using a separate database server

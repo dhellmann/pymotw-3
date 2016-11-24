@@ -5,13 +5,11 @@
 .. module:: unittest
     :synopsis: Automated testing framework
 
-:Purpose: Automated testing framework
-
-Python's :mod:`unittest` module is based on the XUnit framework design
-by Kent Beck and Erich Gamma. The same pattern is repeated in many
-other languages, including C, Perl, Java, and Smalltalk. The framework
-implemented by :mod:`unittest` supports fixtures, test suites, and a
-test runner to enable automated testing.
+The automated testing framework in :mod:`unittest` is based on the
+XUnit framework design by Kent Beck and Erich Gamma. The same pattern
+is repeated in many other languages, including C, Perl, Java, and
+Smalltalk. The framework implemented by :mod:`unittest` supports
+fixtures, test suites, and a test runner to enable automated testing.
 
 Basic Test Structure
 ====================

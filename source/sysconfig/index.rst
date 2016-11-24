@@ -5,8 +5,6 @@
 .. module:: sysconfig
     :synopsis: Interpreter Compile-time Configuration
 
-:Purpose: Access the configuration settings used to build Python.
-
 The features of :mod:`sysconfig` have been extracted from
 :mod:`distutils` to create a stand-alone module.  It includes
 functions for determining the settings used to compile and install the

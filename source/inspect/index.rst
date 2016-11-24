@@ -5,10 +5,6 @@
 .. module:: inspect
     :synopsis: Inspect live objects
 
-:Purpose:
-    The inspect module provides functions for introspecting on live
-    objects and their source code.
-
 The :mod:`inspect` module provides functions for learning about live
 objects, including modules, classes, instances, functions, and
 methods. The functions in this module can be used to retrieve the

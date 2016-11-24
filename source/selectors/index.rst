@@ -5,9 +5,6 @@
 .. module:: selectors
    :synopsis: I/O Multiplexing Abstractions
 
-:Purpose: Provide platform-independent abstractions for I/O
-          multiplexing based on the ``select`` module.
-
 The :mod:`selectors` module provides a platform-independent
 abstraction layer on top of the platform-specific I/O monitoring
 functions in :mod:`select`.

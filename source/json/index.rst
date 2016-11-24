@@ -5,9 +5,6 @@
 .. module:: json
     :synopsis: JavaScript Object Notation Serializer
 
-:Purpose: Encode Python objects as JSON strings, and decode JSON
-          strings into Python objects.
-
 The :mod:`json` module provides an API similar to :mod:`pickle` for
 converting in-memory Python objects to a serialized representation
 known as JavaScript Object Notation (JSON).  Unlike pickle, JSON has

@@ -5,8 +5,6 @@
 .. module:: socketserver
     :synopsis: Creating network servers.
 
-:Purpose: Creating network servers.
-
 The :mod:`socketserver` module is a framework for creating network
 servers. It defines classes for handling synchronous network requests
 (the server request handler blocks until the request is completed)

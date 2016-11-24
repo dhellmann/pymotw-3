@@ -5,8 +5,6 @@
 .. module:: traceback
     :synopsis: Exceptions and stack traces
 
-:Purpose: Extract, format, and print exceptions and stack traces.
-
 The :mod:`traceback` module works with the call stack to produce error
 messages. A *traceback* is a stack trace from the point of an
 exception handler down the call chain to the point where the exception

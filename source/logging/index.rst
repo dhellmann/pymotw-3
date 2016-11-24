@@ -5,8 +5,6 @@
 .. module:: logging
     :synopsis: Report status, error, and informational messages.
 
-:Purpose: Report status, error, and informational messages.
-
 The :mod:`logging` module defines a standard API for reporting errors
 and status information from applications and libraries. The key
 benefit of having the logging API provided by a standard library

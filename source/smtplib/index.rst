@@ -5,8 +5,6 @@
 .. module:: smtplib
     :synopsis: Simple mail transfer protocol client.
 
-:Purpose: Interact with SMTP servers, including sending email.
-
 :mod:`smtplib` includes the class :class:`SMTP`, which can be used to
 communicate with mail servers to send mail.
 

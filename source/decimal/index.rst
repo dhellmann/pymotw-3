@@ -5,8 +5,6 @@
 .. module:: decimal
     :synopsis: Fixed and floating point math
 
-:Purpose: Decimal arithmetic using fixed and floating point numbers
-
 The :mod:`decimal` module implements fixed and floating point
 arithmetic using the model familiar to most people, rather than the
 IEEE floating point version implemented by most computer hardware and

@@ -5,8 +5,6 @@
 .. module:: functools
     :synopsis: Tools for working with functions.
 
-:Purpose: Functions that operate on other functions.
-
 The :mod:`functools` module provides tools for adapting or extending
 functions and other callable objects, without completely rewriting
 them.

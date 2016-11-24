@@ -5,8 +5,6 @@
 .. module:: webbrowser
     :synopsis: Displays web pages
 
-:Purpose: Use the `webbrowser` module to display web pages to your users.
-
 The :mod:`webbrowser` module includes functions to open URLs in interactive
 browser applications. The module includes a registry of available
 browsers, in case multiple options are available on the system. It can

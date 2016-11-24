@@ -5,8 +5,6 @@
 .. module:: csv
     :synopsis: Read and write comma separated value files.
 
-:Purpose: Read and write comma separated value files.
-
 The :mod:`csv` module can be used to work with data exported from
 spreadsheets and databases into text files formatted with fields and
 records, commonly referred to as *comma-separated value* (CSV) format

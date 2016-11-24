@@ -5,8 +5,6 @@
 .. module:: operator
     :synopsis: Functional interface to built-in operators
 
-:Purpose: Functional interface to built-in operators.
-
 Programming using iterators occasionally requires creating small
 functions for simple expressions. Sometimes, these can be implemented
 as :command:`lambda` functions, but for some operations new functions

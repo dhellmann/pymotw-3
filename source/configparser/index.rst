@@ -5,15 +5,14 @@
 .. module:: configparser
     :synopsis: Read/write configuration files similar to Windows INI files
 
-:Purpose: Read/write configuration files similar to Windows INI files
-
 Use the :mod:`configparser` module to manage user-editable
-configuration files for an application. The contents of the
-configuration files can be organized into groups and several option
-value types are supported, including integers, floating point values,
-and Booleans.  Option values can be combined using Python formatting
-strings, to build longer values such as URLs from shorter values like
-host names and port numbers.
+configuration files for an application using a format similar to
+Windows INI files. The contents of the configuration files can be
+organized into groups and several option value types are supported,
+including integers, floating point values, and Booleans.  Option
+values can be combined using Python formatting strings, to build
+longer values such as URLs from shorter values like host names and
+port numbers.
 
 Configuration File Format
 =========================

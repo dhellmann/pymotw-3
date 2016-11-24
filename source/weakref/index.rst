@@ -5,10 +5,6 @@
 .. module:: weakref
     :synopsis: Impermanent references to objects
 
-:Purpose: Refer to an "expensive" object, but allow its memory to be
-          reclaimed by the garbage collector if there are no other
-          non-weak references.
-
 The :mod:`weakref` module supports weak references to objects. A
 normal reference increments the reference count on the object and
 prevents it from being garbage collected. This is not always

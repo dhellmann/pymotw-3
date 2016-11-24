@@ -5,10 +5,8 @@
 .. module:: fnmatch
     :synopsis: Compare filenames with Unix-style glob patterns.
 
-:Purpose: Handle Unix-style filename comparisons.
-
 The :mod:`fnmatch` module is used to compare filenames against
-glob-style patterns such as used by Unix shells.
+glob-style patterns such as used by UNIX shells.
 
 Simple Matching
 ===============

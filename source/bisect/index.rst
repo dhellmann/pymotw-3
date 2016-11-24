@@ -6,9 +6,6 @@
     :synopsis: Maintains a list in sorted order without having to call
                sort each time an item is added to the list.
 
-:Purpose: Maintains a list in sorted order without having to call sort
-          each time an item is added to the list.
-
 The :mod:`bisect` module implements an algorithm for inserting
 elements into a list while maintaining the list in sorted order.
 

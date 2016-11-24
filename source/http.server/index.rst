@@ -5,9 +5,6 @@
 .. module:: http.server
     :synopsis: Base classes for implementing web servers.
 
-:Purpose: http.server includes classes that can form the basis of a
-          web server.
-
 :mod:`http.server` uses classes from :mod:`socketserver` to create
 base classes for making HTTP servers. :class:`HTTPServer` can be used
 directly, but the :class:`BaseHTTPRequestHandler` is intended to be

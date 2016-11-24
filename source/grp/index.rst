@@ -5,8 +5,6 @@
 .. module:: grp
     :synopsis: UNIX Group Database
 
-:Purpose: Read group data from UNIX group database.
-
 The :mod:`grp` module can be used to read information about UNIX
 groups from the group database (usually ``/etc/group``).  The
 read-only interface returns tuple-like objects with named attributes

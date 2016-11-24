@@ -5,8 +5,6 @@
 .. module:: pydoc
     :synopsis: Online help for modules
 
-:Purpose: Generates help for Python modules and classes from the code.
-
 The :mod:`pydoc` module imports a Python module and uses the contents
 to generate help text at runtime. The output includes docstrings for
 any objects that have them, and all of the classes, methods, and

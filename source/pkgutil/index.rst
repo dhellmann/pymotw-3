@@ -5,9 +5,6 @@
 .. module:: pkgutil
     :synopsis: Package utilities
 
-:Purpose: Add to the module search path for a specific package and
-          work with resources included in a package.
-
 The :mod:`pkgutil` module includes functions for changing the import
 rules for Python packages and for loading non-code resources from
 files distributed within a package.

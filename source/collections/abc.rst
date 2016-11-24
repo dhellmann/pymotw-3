@@ -5,8 +5,6 @@
 .. module:: collections.abc
     :synopsis: Abstract base classes for container data types.
 
-:Purpose: Abstract base classes for container data types.
-
 The :mod:`collections.abc` module contains abstract base classes that
 define the APIs for container data structures built into Python and
 provided by the :mod:`collections` module.

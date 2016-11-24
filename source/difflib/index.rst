@@ -5,8 +5,6 @@
 .. module:: difflib
     :synopsis: Compare sequences, especially lines of text.
 
-:Purpose: Compare sequences, especially lines of text.
-
 The :mod:`difflib` module contains tools for computing and working
 with differences between sequences.  It is especially useful for
 comparing text, and includes functions that produce reports using

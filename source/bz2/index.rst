@@ -5,8 +5,6 @@
 .. module:: bz2
     :synopsis: bzip2 compression
 
-:Purpose: bzip2 compression
-
 The :mod:`bz2` module is an interface for the bzip2 library, used to
 compress data for storage or transmission.  There are three APIs
 provided:

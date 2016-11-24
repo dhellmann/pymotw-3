@@ -5,9 +5,6 @@
 .. module:: dis
     :synopsis: Python Bytecode Disassembler
 
-:Purpose: Convert code objects to a human-readable representation of
-          the bytecodes for analysis.
-
 The :mod:`dis` module includes functions for working with Python
 bytecode by "disassembling" it into a more human-readable form.
 Reviewing the bytecodes being executed by the interpreter is a good

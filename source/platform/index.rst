@@ -5,9 +5,6 @@
 .. module:: platform
     :synopsis: System version information
 
-:Purpose: Probe the underlying platform's hardware, operating system,
-          and interpreter version information.
-
 Although Python is often used as a cross-platform language, it is
 occasionally necessary to know what sort of system a program is
 running on. Build tools need that information, but an application

@@ -5,8 +5,6 @@
 .. module:: glob
     :synopsis: Use UNIX shell rules to find filenames matching a pattern.
 
-:Purpose: Use UNIX shell rules to find filenames matching a pattern.
-
 Even though the :mod:`glob` API is small, the module packs a lot of
 power. It is useful in any situation where a program needs to look for
 a list of files on the file system with names matching a pattern. To

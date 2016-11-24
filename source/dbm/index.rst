@@ -5,8 +5,6 @@
 .. module:: dbm
     :synopsis: Unix Key-Value Databases
 
-:Purpose: dbm provides a generic dictionary-like interface to DBM-style, string-keyed databases
-
 :mod:`dbm` is a front-end for DBM-style databases that use simple
 string values as keys to access records containing strings.  It uses
 :func:`whichdb` to identify databases, then opens them with the

@@ -5,12 +5,10 @@
 .. module:: string
     :synopsis: Contains constants and classes for working with text.
 
-:Purpose: Contains constants and classes for working with text.
-
 The :mod:`string` module dates from the earliest versions of
 Python. Many of the functions previously implemented in the module
-have been moved to methods of :class:`str` objects. The :mod:`string`
-module retains several useful constants and classes for working with
+have been moved to methods of :class:`str` objects, but the module
+retains several useful constants and classes for working with
 :class:`str` objects, and this discussion will concentrate on them.
 
 Functions

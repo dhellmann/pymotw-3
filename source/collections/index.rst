@@ -5,8 +5,6 @@
 .. module:: collections
     :synopsis: Container data types.
 
-:Purpose: Container data types.
-
 The :mod:`collections` module includes container data types beyond the
 built-in types :class:`list`, :class:`dict`, and :class:`tuple`.
 

@@ -5,12 +5,10 @@
 .. module:: math
     :synopsis: Mathematical functions
 
-:Purpose: Provides functions for specialized mathematical operations.
-
-The :mod:`math` module implements many of the IEEE functions that
-would normally be found in the native platform C libraries for complex
-mathematical operations using floating point values, including
-logarithms and trigonometric operations.
+The :mod:`math` module implements many of the specialized IEEE
+functions that would normally be found in the native platform C
+libraries for complex mathematical operations using floating point
+values, including logarithms and trigonometric operations.
 
 Special Constants
 =================

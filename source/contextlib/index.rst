@@ -5,8 +5,6 @@
 .. module:: contextlib
     :synopsis: Utilities for creating and working with context managers.
 
-:Purpose: Utilities for creating and working with context managers.
-
 The :mod:`contextlib` module contains utilities for working with
 context managers and the :command:`with` statement.
 

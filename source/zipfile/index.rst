@@ -5,10 +5,8 @@
 .. module:: zipfile
     :synopsis: ZIP archive access
 
-:Purpose: Read and write ZIP archive files.
-
-The :mod:`zipfile` module can be used to manipulate ZIP archive files,
-the format popularized by the PC program PKZIP.
+The :mod:`zipfile` module can be used to read and write ZIP archive
+files, the format popularized by the PC program PKZIP.
 
 Testing ZIP Files
 =================

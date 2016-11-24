@@ -7,8 +7,6 @@
 .. module:: getpass
     :synopsis: Prompt for a password securely
 
-:Purpose: Prompt the user for a value, usually a password, without echoing what they type to the console.
-
 Many programs that interact with the user via the terminal need to ask
 the user for password values without showing what the user types on
 the screen.  The :mod:`getpass` module provides a portable way to

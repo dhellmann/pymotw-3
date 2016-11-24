@@ -5,8 +5,6 @@
 .. module:: array
     :synopsis: Manage sequences of fixed-type data efficiently.
 
-:Purpose: Manage sequences of fixed-type numerical data efficiently.
-
 The :mod:`array` module defines a sequence data structure that looks
 very much like a :class:`list`, except that all of the members have to
 be of the same primitive type. The types supported are all numeric or

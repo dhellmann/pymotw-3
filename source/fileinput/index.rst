@@ -5,8 +5,6 @@
 .. module:: fileinput
     :synopsis: Process lines from input streams.
 
-:Purpose: Create command-line filter programs to process lines from input streams.
-
 The :mod:`fileinput` module is a framework for creating command-line
 programs for processing text files as a filter.
 

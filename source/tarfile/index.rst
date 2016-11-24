@@ -5,13 +5,11 @@
 .. module:: tarfile
     :synopsis: Tar archive access
 
-:Purpose: Tar archive access.
-
-The :mod:`tarfile` module provides read and write access to UNIX tar
-archives, including compressed files.  In addition to the POSIX
-standards, several GNU tar extensions are supported.  UNIX special
-file types such as hard and soft links, and device nodes are also
-handled.
+The :mod:`tarfile` module provides read and write access to UNIX
+``tar`` archives, including compressed files.  In addition to the
+POSIX standards, several GNU tar extensions are supported.  UNIX
+special file types such as hard and soft links, and device nodes are
+also handled.
 
 .. note::
 

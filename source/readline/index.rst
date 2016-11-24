@@ -5,12 +5,10 @@
 .. module:: readline
     :synopsis: The GNU readline library
 
-:Purpose: Provides an interface to the GNU readline library for
-          interacting with the user at a command prompt.
-
-The :mod:`readline` module can be used to enhance interactive command
-line programs to make them easier to use.  It is primarily used to
-provide command line text completion, or "tab completion".
+The :mod:`readline` module provides an interface to the GNU readline
+library. It can be used to enhance interactive command line programs
+to make them easier to use, for example by adding command line text
+completion, or "tab completion".
 
 .. note::
 

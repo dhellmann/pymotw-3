@@ -5,8 +5,6 @@
 .. module:: re
     :synopsis: Searching within and changing text using formal patterns.
 
-:Purpose: Searching within and changing text using formal patterns.
-
 *Regular expressions* are text matching patterns described with a
 formal syntax.  The patterns are interpreted as a set of instructions,
 which are then executed with a string as input to produce a matching

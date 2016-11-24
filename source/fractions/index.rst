@@ -5,8 +5,6 @@
 .. module:: fractions
     :synopsis: Implements a class for working with rational numbers.
 
-:Purpose: Implements a class for working with rational numbers.
-
 The :class:`Fraction` class implements numerical operations for
 rational numbers based on the API defined by :class:`Rational` in
 the :mod:`numbers` module.

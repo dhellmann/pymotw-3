@@ -7,8 +7,6 @@
 .. module:: zipimport
     :synopsis: Load Python code from ZIP archives.
 
-:Purpose: Import Python modules saved as members of ZIP archives.
-
 The :mod:`zipimport` module implements the :class:`zipimporter` class,
 which can be used to find and load Python modules inside ZIP
 archives. The :class:`zipimporter` supports the "import hooks" API

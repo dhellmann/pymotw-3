@@ -7,8 +7,6 @@
 .. module:: cmd
     :synopsis: Create line-oriented command processors.
 
-:Purpose: Create line-oriented command processors.
-
 The :mod:`cmd` module contains one public class, :class:`Cmd`,
 designed to be used as a base class for interactive shells and other
 command interpreters. By default it uses :mod:`readline` for

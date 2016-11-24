@@ -5,8 +5,6 @@
 .. module:: textwrap
     :synopsis: Formatting text paragraphs
 
-:Purpose: Formatting text by adjusting where line breaks occur in a paragraph.
-
 The :mod:`textwrap` module can be used to format text for output in
 situations where pretty-printing is desired. It offers programmatic
 functionality similar to the paragraph wrapping or filling features

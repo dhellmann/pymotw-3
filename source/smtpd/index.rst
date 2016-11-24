@@ -5,11 +5,9 @@
 .. module:: smtpd
     :synopsis: Includes classes for implementing SMTP servers.
 
-:Purpose: Includes classes for implementing SMTP servers.
-
-The :mod:`smtpd` module includes classes for building simple mail
-transport protocol servers.  It is the server-side of the protocol
-used by :mod:`smtplib`.
+The :mod:`smtpd` module includes classes for building Simple Mail
+Transport Protocol (SMTP) servers.  It is the server-side of the
+protocol used by :mod:`smtplib`.
 
 Mail Server Base Class
 ======================

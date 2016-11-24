@@ -5,9 +5,6 @@
 .. module:: importlib
     :synopsis: Interface to module import mechanism.
 
-:Purpose: The importlib module exposes the implementation of Python's
-          import statement.
-
 The :mod:`importlib` module includes functions that the underlying
 implementation of Python's import mechanism for loading code in
 packages and modules, all implemented in Python. It is one access

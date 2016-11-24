@@ -5,8 +5,6 @@
 .. module:: queue
     :synopsis: Thread-safe FIFO implementation
 
-:Purpose: Provides a thread-safe FIFO implementation
-
 The :mod:`queue` module provides a first-in, first-out (FIFO) data
 structure suitable for multi-threaded programming. It can be used to
 pass messages or other data between producer and consumer threads

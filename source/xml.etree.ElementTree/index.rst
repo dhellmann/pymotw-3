@@ -5,8 +5,6 @@
 .. module:: xml.etree.ElementTree
     :synopsis: XML Manipulation API
 
-:Purpose: Generate and parse XML documents
-
 The ElementTree library includes tools for parsing XML using
 event-based and document-based APIs, searching parsed documents with
 XPath expressions, and creating new or modifying existing documents.

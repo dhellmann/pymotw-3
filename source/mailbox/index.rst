@@ -5,8 +5,6 @@
 .. module:: mailbox
     :synopsis: Access and manipulate email archives.
 
-:Purpose: Work with email messages in various local file formats.
-
 The :mod:`mailbox` module defines a common API for accessing email
 messages stored in local disk formats, including:
 

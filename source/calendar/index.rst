@@ -5,9 +5,6 @@
 .. module:: calendar
     :synopsis: Classes for working with year, month, and week-oriented values.
 
-:Purpose: The calendar module implements classes for working with
-          dates to manage year/month/week oriented values.
-
 The :mod:`calendar` module defines the :class:`Calendar` class, which
 encapsulates calculations for values such as the dates of the weeks in
 a given month or year. In addition, the :class:`TextCalendar` and

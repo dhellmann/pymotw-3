@@ -5,8 +5,6 @@
 .. module:: pickle
     :synopsis: Object serialization
 
-:Purpose: Object serialization
-
 The :mod:`pickle` module implements an algorithm for turning an
 arbitrary Python object into a series of bytes.  This process is also
 called *serializing* the object. The byte stream representing the

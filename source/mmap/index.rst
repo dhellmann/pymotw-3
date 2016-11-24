@@ -5,8 +5,6 @@
 .. module:: mmap
     :synopsis: Memory-map files
 
-:Purpose: Memory-map files instead of reading the contents directly.
-
 Memory-mapping a file uses the operating system virtual memory system
 to access the data on the file system directly, instead of using normal
 I/O functions.  Memory-mapping typically improves I/O performance

@@ -5,8 +5,6 @@
 .. module:: atexit
     :synopsis: Register shutdown callbacks
 
-:Purpose: Register function(s) to be called when a program is closing down.
-
 The :mod:`atexit` module provides an interface to register
 functions to be called when a program closes down normally.
 

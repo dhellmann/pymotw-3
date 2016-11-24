@@ -5,8 +5,6 @@
 .. module:: ensurepip
     :synopsis: Install the Python Package Installer, pip
 
-:Purpose: Install pip, the Python package installer.
-
 While Python is the "Batteries Included" programming language and
 comes with a wide variety of modules in the standard library, there
 are even more libraries, frameworks, and tools available to be

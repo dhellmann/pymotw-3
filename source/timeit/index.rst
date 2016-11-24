@@ -5,8 +5,6 @@
 .. module:: timeit
     :synopsis: Time the execution of small bits of Python code.
 
-:Purpose: Time the execution of small bits of Python code.
-
 The :mod:`timeit` module provides a simple interface for determining
 the execution time of small bits of Python code. It uses a
 platform-specific time function to provide the most accurate time

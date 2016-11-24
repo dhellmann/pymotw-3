@@ -5,9 +5,6 @@
 .. module:: trace
     :synopsis: Follow Program Flow
 
-:Purpose: Monitor which statements and functions are executed as a
-          program runs to produce coverage and call-graph information.
-
 The :mod:`trace` module is useful for understanding the way a program
 runs.  It watches the statements executed, produces coverage reports,
 and helps investigate the relationships between functions that call
