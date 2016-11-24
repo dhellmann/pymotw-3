@@ -164,6 +164,7 @@ class PearsonLaTeXBuilder(Builder):
             'subtitle': self.config.pearson_subtitle,
             'author': self.config.pearson_author,
             'chapter_names': [],
+            'appendices': self.config.latex_appendices,
         }
 
         self._render_template(

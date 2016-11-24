@@ -181,40 +181,19 @@ footskip=.025in}
 {% for chap_name in chapter_names -%}
 {{'\include{'}}{{chap_name}}{{'}'}}
 {% endfor %}
-%% \include{glossary}        % Glossary 
-%% %  just adding extra chapters for testing the TOC
-%% \include{samplechap2}  % Chapter 2
-%% \include{glossary}        % Glossary 
-%% \include{samplechap3}  % Chapter 3
-%% \include{glossary}        % Glossary 
-%% \include{part2}            % Part II
-%% \include{samplechap4}  % Chapter 4
-%% \include{glossary}        % Glossary 
-%% \include{samplechap5}  % Chapter 5
-%% \include{glossary}        % Glossary 
-%% \include{samplechap6}  % Chapter 6
-%% \include{glossary}        % Glossary 
-%% \include{samplechap7}  % Chapter 7
-%% \include{glossary}        % Glossary 
-%% \include{part3}            % Part III
-%% \include{samplechap8}  % Chapter 8
-%% \include{glossary}        % Glossary 
-%% \include{samplechap9}  % Chapter 9
-%% \include{glossary}        % Glossary 
-%% \include{samplechap10}  % Chapter 10
-%% \include{glossary}        % Glossary 
 
-% Repeat this command for each part, chapter, or glossary file.
-%
 %%%%% End main text
 
 
 %%%%%%%%%% Back matter starts
 %
 % If your book contains appendices, you will need to add those here. 
-%\appendix               % Change to appendix numbering 
-%\include{AppA}      % And add this line for each appendix file
-%\include{AppB}
+{% if appendices %}
+\appendix               % Change to appendix numbering 
+{% for appendix in appendices -%}
+{{'\include{'}}{{appendix}}{{'}'}}
+{% endfor %}
+{% endif %}
 
 \cleardoublepage
 \bibliographystyle{ieeetr-hacked}  % Your production editor and copy editor may want you to
