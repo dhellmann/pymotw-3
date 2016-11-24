@@ -1767,7 +1767,7 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
         pass
 
     def visit_literal_block(self, node):
-        print('visiting literal block {}'.format(node))
+        # print('visiting literal block {}'.format(node))
         if self.in_footnote:
             raise UnsupportedError('%s:%s: literal blocks in footnotes are '
                                    'not supported by LaTeX' %
@@ -1810,7 +1810,7 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
             # hlcode = hlcode.rstrip()[:-14]  # strip \end{Verbatim}
             # workaround for Unicode issue
             hlcode = hlcode.replace(u'€', u'@texteuro[]')
-            print('hlcode {}'.format(hlcode))
+            # print('hlcode {}'.format(hlcode))
 
             self.body.append('\n\\begin{lstlisting}')
             caption = ''.join(self.literal_block_caption)
