@@ -94,12 +94,22 @@ footskip=.025in}
 
 %% Use latin modern typewriter with lstlisting
 %% https://www.sharelatex.com/learn/Font_typefaces
-\usepackage{lmodern}
-\lstset{basicstyle=\small\fontfamily{lmtt}\selectfont,xleftmargin=5ex,framerule=0.5pt}
+%% \usepackage{lmodern}
+%% \lstset{basicstyle=\small\fontfamily{lmtt}\selectfont,xleftmargin=5ex,framerule=0.5pt}
 
 %% Use latin modern sans serif with lstlisting
 %% \usepackage{lmodern}
 %% \lstset{basicstyle=\small\fontfamily{lmss}\selectfont,xleftmargin=5ex,framerule=0.5pt}
+
+%% http://nepsweb.co.uk/docs/progfonts.pdf
+%% \usepackage[scaled]{DejaVuSansMono}
+%% \usepackage[T1]{fontenc}
+%% \lstset{basicstyle=\small\fontfamily{DejaVuSansMono}\selectfont,xleftmargin=5ex,framerule=0.5pt}
+
+%% http://nepsweb.co.uk/docs/progfonts.pdf
+\usepackage[scaled]{beramono}
+\usepackage[T1]{fontenc}
+\lstset{basicstyle=\small\fontfamily{fvm}\selectfont,xleftmargin=5ex,framerule=0.5pt}
 
 \usepackage[stable,bottom]{footmisc} % to stabilize the footnote environment and to ensure footnotes
 							  % appear at the bottom of the page, even if a figure or table 
