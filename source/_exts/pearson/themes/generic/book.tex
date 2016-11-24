@@ -85,8 +85,20 @@ footskip=.025in}
 % The listings package isn't included in the template folder because 
 %       it is part of any up-to-date TeX installation
 \usepackage{listings}  % for setting attractive computer code
-\lstset{basicstyle=\sffamily\small,xleftmargin=5ex,framerule=0.5pt} % setting the code in small sans serif font and
-										 % setting	the margin for the code.  Nov 2015: setting the rules to be 0.5pt
+
+%% Original lstset instructions from Generic template
+%%\lstset{basicstyle=\small\sffamily,xleftmargin=5ex,framerule=0.5pt} % setting the code in small font (dhellmann changed \sffamily to lmtt) and
+%%\lstset{basicstyle=\small\fontfamily{lmtt}\selectfont,xleftmargin=5ex,framerule=0.5pt} % setting the code in small font (dhellmann changed \sffamily to lmtt) and
+
+%% Use latin modern typewriter with lstlisting
+%% https://www.sharelatex.com/learn/Font_typefaces
+\usepackage{lmodern}
+\lstset{basicstyle=\small\fontfamily{lmtt}\selectfont,xleftmargin=5ex,framerule=0.5pt}
+
+%% Use latin modern sans serif with lstlisting
+%% \usepackage{lmodern}
+%% \lstset{basicstyle=\small\fontfamily{lmss}\selectfont,xleftmargin=5ex,framerule=0.5pt}
+
 \usepackage[stable,bottom]{footmisc} % to stabilize the footnote environment and to ensure footnotes
 							  % appear at the bottom of the page, even if a figure or table 
 							  % appears at the bottom						  
