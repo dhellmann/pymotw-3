@@ -89,6 +89,14 @@
 \noindent\rule[1ex]{\textwidth}{.75pt}\par\vspace*{1ex}\pagebreak[3] 
 }
 
+\newcommand{\notenoheader}[1]{\pagebreak[3]\par\vspace*{2ex} % define a note command without a header
+\noindent{\sffamily\bfseries\small NOTE}\linebreak\vspace*{-1.5ex}\nopagebreak
+\rule[1.5ex]{\textwidth}{.75pt}\linebreak\nopagebreak
+{\sffamily\small
+\noindent{#1}}\par
+\noindent\rule[1ex]{\textwidth}{.75pt}\par\vspace*{1ex}\pagebreak[3] 
+}
+
 \newcommand{\tip}[2]{\pagebreak[3]\par\vspace*{2ex} % define a new tip command 
 \noindent{\sffamily\bfseries\small TIP}\linebreak\vspace*{-1.5ex}\nopagebreak
 \rule[1.5ex]{\textwidth}{.75pt}\linebreak\nopagebreak
@@ -104,6 +112,14 @@
 {\sffamily\small  {\bfseries{\raggedright #1}\\}\nopagebreak
 \noindent{#2}}\par
 \noindent\rule[1ex]{\textwidth}{.75pt}\par\vspace*{1ex}\pagebreak[3]
+}
+
+\newcommand{\warningnoheader}[1]{\pagebreak[3]\par\vspace*{2ex} % define a warning command without a header
+\noindent{\sffamily\bfseries\small WARNING}\linebreak\vspace*{-1.5ex}\nopagebreak
+\rule[1.5ex]{\textwidth}{.75pt}\linebreak\nopagebreak
+{\sffamily\small
+\noindent{#1}}\par
+\noindent\rule[1ex]{\textwidth}{.75pt}\par\vspace*{1ex}\pagebreak[3] 
 }
 %%%%%%%%%%%%%%
 

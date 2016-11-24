@@ -1435,14 +1435,14 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
         self.body.append('}')
 
     def visit_admonition(self, node):
-        self.body.append('\n\\tip{Note}{')
+        self.body.append('\n\\tip{}{')
 
     def depart_admonition(self, node):
         self.body.append('}')
 
     def _make_visit_admonition(name):
         def visit_admonition(self, node):
-            self.body.append(u'\n\\tip{%s}{' % admonitionlabels[name])
+            self.body.append(u'\n\\%snoheader{' % name)
         return visit_admonition
 
     def _depart_named_admonition(self, node):
