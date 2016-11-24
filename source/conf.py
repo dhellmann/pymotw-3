@@ -400,7 +400,7 @@ pearson_author = 'Doug Hellmann'
 
 pearson_chapters = [
     'text',
-    # 'data_structures',
+    'data_structures',
     # 'algorithm_tools',
     # 'dates',
     # 'numeric',

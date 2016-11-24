@@ -1357,54 +1357,17 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
             ids += self.hypertarget(id, anchor=False)
         if node['ids']:
             ids += self.hypertarget(node['ids'][0], anchor=False)
-        self.restrict_footnote(node)
         if (len(node.children) and
            isinstance(node.children[0], nodes.image) and
            node.children[0]['ids']):
             ids += self.hypertarget(node.children[0]['ids'][0], anchor=False)
-        if self.table:
-            # TODO: support align option
-            if 'width' in node:
-                length = self.latex_image_length(node['width'], figure=True)
-                self.body.append('\\begin{sphinxfigure-in-table}[%s]\n\\centering\n' % length)
-            else:
-                self.body.append('\\begin{sphinxfigure-in-table}\n\\centering\n')
-            if any(isinstance(child, nodes.caption) for child in node):
-                self.body.append('\\capstart')
-            self.context.append(ids + '\\end{sphinxfigure-in-table}\\relax\n')
-        elif node.get('align', '') in ('left', 'right'):
-            if 'width' in node:
-                length = self.latex_image_length(node['width'], figure=True)
-            elif 'width' in node[0]:
-                length = self.latex_image_length(node[0]['width'], figure=True)
-            else:
-                length = '0pt'
-            self.body.append('\\begin{wrapfigure}{%s}{%s}\n\\centering' %
-                             (node['align'] == 'right' and 'r' or 'l', length))
-            self.context.append(ids + '\\end{wrapfigure}\n')
-        elif self.in_minipage:
-            if ('align' not in node.attributes or
-                    node.attributes['align'] == 'center'):
-                self.body.append('\n\\begin{center}')
-                self.context.append('\\end{center}\n')
-            else:
-                self.body.append('\n\\begin{flush%s}' % node.attributes['align'])
-                self.context.append('\\end{flush%s}\n' % node.attributes['align'])
-        else:
-            if ('align' not in node.attributes or
-                    node.attributes['align'] == 'center'):
-                # centering does not add vertical space like center.
-                align = '\n\\centering'
-                align_end = ''
-            else:
-                # TODO non vertical space for other alignments.
-                align = '\\begin{flush%s}' % node.attributes['align']
-                align_end = '\\end{flush%s}' % node.attributes['align']
-            self.body.append('\\begin{figure}[%s]%s\n' % (
-                self.elements['figure_align'], align))
-            if any(isinstance(child, nodes.caption) for child in node):
-                self.body.append('\\capstart\n')
-            self.context.append(ids + align_end + '\\end{figure}\n')
+        self.restrict_footnote(node)
+
+        self.body.append('\\begin{figure}[tb]\\begin{center}\n')
+        # The context is added to the body in depart_figure()
+        if ids:
+            self.context.append(ids)
+        self.context.append('\\end{center}\\end{figure}\n')
 
     def depart_figure(self, node):
         self.body.append(self.context.pop())
@@ -1425,7 +1388,10 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
 
     def depart_caption(self, node):
         # Go back to treating input as part of the regular text
-        self.popbody()
+        if self.in_container_literal_block:
+            self.popbody()
+        else:
+            self.body.append('}')
         self.in_caption -= 1
 
     def visit_legend(self, node):
