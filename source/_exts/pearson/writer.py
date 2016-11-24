@@ -605,7 +605,6 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
             self.first_document = 0
         elif self.first_document == 0:
             # ... and all others are the appendices
-            self.body.append(u'\n\\appendix\n')
             self.first_document = -1
         if 'docname' in node:
             self.body.append(self.hypertarget(':doc'))

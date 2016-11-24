@@ -444,7 +444,7 @@ latex_show_urls = 'footnote'
 latex_appendices = [
     'porting_notes',
     'third_party',
-    'about',
+#    'about',  # FIXME: Move a version of this to "frontmatter" when that is implemented
 ]
 
 # If false, no module index is generated.

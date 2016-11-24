@@ -164,7 +164,7 @@ class PearsonLaTeXBuilder(Builder):
             'subtitle': self.config.pearson_subtitle,
             'author': self.config.pearson_author,
             'chapter_names': [],
-            'appendices': self.config.latex_appendices,
+            'appendices': [],
         }
 
         self._render_template(
@@ -178,17 +178,12 @@ class PearsonLaTeXBuilder(Builder):
             global_context,
         )
 
-        chap_name_fmt = 'chap{:02d}'
-        if len(self.document_data) >= 100:
-            chap_name_fmt = 'chap{:03d}'
-
-        for chap_num, docname in enumerate(self.document_data, 1):
-            chap_name = chap_name_fmt.format(chap_num)
-            global_context['chapter_names'].append(chap_name)
+        def process_doc(name_fmt, num, docname):
+            name = name_fmt.format(num)
             destination = FileOutput(
-                destination_path=path.join(self.outdir, chap_name + '.tex'),
+                destination_path=path.join(self.outdir, name + '.tex'),
                 encoding='utf-8')
-            self.info('writing {} to {}.tex ... '.format(docname, chap_name), nonl=1)
+            self.info('writing {} to {}.tex ... '.format(docname, name), nonl=1)
             toctrees = self.env.get_doctree(docname).traverse(addnodes.toctree)
             if toctrees:
                 if toctrees[0].get('maxdepth') > 0:
@@ -212,7 +207,31 @@ class PearsonLaTeXBuilder(Builder):
             # doctree.settings.docclass = docclass
             docwriter.write(doctree, destination)
             self.info("done")
+            return name
 
+        # First generate the chapters
+        chap_name_fmt = 'chap{:02d}'
+        if len(self.document_data) >= 100:
+            chap_name_fmt = 'chap{:03d}'
+
+        for chap_num, docname in enumerate(self.document_data, 1):
+            name = process_doc(chap_name_fmt, chap_num, docname)
+            global_context['chapter_names'].append(name)
+
+        # Then any appendices
+        app_name_fmt = 'app{:02d}'
+        if len(self.config.latex_appendices) >= 100:
+            app_name_fmt = 'app{:03d}'
+
+        for app_num, docname in enumerate(self.config.latex_appendices, 1):
+            name = process_doc(app_name_fmt, app_num, docname)
+            global_context['appendices'].append(name)
+
+        # Finally the main book template
+        global_context['external_docs'] = (
+            global_context['chapter_names'] +
+            global_context['appendices']
+        )
         self._render_template(
             'book.tex',
             path.join(self.outdir, 'book.tex'),

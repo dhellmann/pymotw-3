@@ -144,7 +144,7 @@ footskip=.025in}
 %%%%%%%%%  You will need to enter the file names of all your chapter files here. 
 % These lines tell the xr package what chapters need to cross-reference one another. 
 % You'll need to add your chapter file names here
-{{'\externaldocument{'}}{% for chap_name in chapter_names %}{% if loop.index > 1 %},{% endif %}{{chap_name}}{% endfor %}{{'}'}}
+{{'\externaldocument{'}}{% for name in external_docs %}{% if loop.index > 1 %},{% endif %}{{name}}{% endfor %}{{'}'}}
 
 \begin{document}
 \input{cft-definitions-PearsonGeneric} % Loading a few commands related to the tocloft package
@@ -199,11 +199,11 @@ footskip=.025in}
 \bibliographystyle{ieeetr-hacked}  % Your production editor and copy editor may want you to
                                                           % use a different bibliography style file. 
                                                           % You can input that style file here.  
-\bibliography{samplebib}  % Loading the bibliography file.  
+%%\bibliography{samplebib}  % Loading the bibliography file.  
 \nocite{*}  % \nocite is used because no citations appear in this sample text
 
 \cleardoublepage
-\include{index}  % If your book will include an index created outside of LaTeX, you'll likely receive a .rtf file, and you'll need to manually alter it to LaTeX, like this sample. 
+%%\include{index}  % If your book will include an index created outside of LaTeX, you'll likely receive a .rtf file, and you'll need to manually alter it to LaTeX, like this sample. 
 % \printindex   % If your book will include a LaTeX-generated index, you'll include it with this line. 
 %
 %%%%%%% Back matter ends
