@@ -403,6 +403,7 @@ pearson_theme_options = {
     # 'isbn_10': 'isbn10',
     # 'printer_info': 'printer info',
     # 'first_printing': 'first printing',
+    'foreword_doc': 'foreword',
 }
 
 pearson_chapters = [
@@ -428,7 +429,9 @@ pearson_chapters = [
     'unix',
 ]
 
-latex_additional_files = []
+latex_additional_files = [
+    '_book/foreword.tex',
+]
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.

@@ -167,10 +167,11 @@ footskip=.025in}
 \tableofcontents                  % Make the Table of Contents 
 \cleardoublepage                
 \parskip 0in                         % Reset to zero interpar spacing
-%%\include{foreword}               % Add foreword
-%%\include{preface}                 % Add preface 
-%%\include{ack}                        % Add acknowledgements 
-%%\include{author}                   % Add about the author page
+{% for frontmatter in [foreword_doc, preface_doc, acknowledgements_doc, about_doc] -%}
+{% if frontmatter %}
+{{'\include{'}}{{frontmatter}}{{'}'}}
+{% endif %}
+{% endfor %}
 \cleardoublepage                  
 %%%%%%%The front matter ends
 
