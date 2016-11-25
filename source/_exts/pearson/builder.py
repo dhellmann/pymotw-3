@@ -166,6 +166,7 @@ class PearsonLaTeXBuilder(Builder):
             'chapter_names': [],
             'appendices': [],
             'output_base': self.config.pearson_output_base,
+            'pdflatex': self.config.pearson_pdflatex,
         }
 
         self._render_template(

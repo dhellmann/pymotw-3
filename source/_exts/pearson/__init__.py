@@ -16,6 +16,7 @@ def setup(app):
     app.add_config_value('pearson_theme_options', {}, 'env')
     app.add_config_value('pearson_author', '', 'env')
     app.add_config_value('pearson_output_base', 'book', 'env')
+    app.add_config_value('pearson_pdflatex', 'xelatex', 'env')
 
     app.add_builder(builder.PearsonLaTeXBuilder)
 
