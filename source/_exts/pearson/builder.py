@@ -117,7 +117,7 @@ class PearsonLaTeXBuilder(Builder):
 
         self.init_chapters()
 
-        def process_doc(name_fmt, num, docname):
+        def process_doc(name_fmt, num, docname, doctype):
             name = name_fmt.format(num)
             destination = FileOutput(
                 destination_path=path.join(self.outdir, name + '.tex'),
@@ -143,6 +143,7 @@ class PearsonLaTeXBuilder(Builder):
             # doctree.settings.title = title
             doctree.settings.contentsname = self.get_contentsname(docname)
             doctree.settings.docname = docname
+            doctree.settings.doctype = doctype
             # doctree.settings.docclass = docclass
             docwriter.write(doctree, destination)
             self.info("done")
@@ -163,7 +164,7 @@ class PearsonLaTeXBuilder(Builder):
             chap_name_fmt = 'chap{:03d}'
 
         for chap_num, docname in enumerate(self.document_data, 1):
-            name = process_doc(chap_name_fmt, chap_num, docname)
+            name = process_doc(chap_name_fmt, chap_num, docname, 'chapter')
             global_context['chapter_names'].append(name)
 
         # Then any appendices
@@ -172,7 +173,7 @@ class PearsonLaTeXBuilder(Builder):
             app_name_fmt = 'app{:03d}'
 
         for app_num, docname in enumerate(self.config.latex_appendices, 1):
-            name = process_doc(app_name_fmt, app_num, docname)
+            name = process_doc(app_name_fmt, app_num, docname, 'startappendix')
             global_context['appendices'].append(name)
 
         # Finally the templates pages

@@ -513,6 +513,23 @@
 \let\oldappendix\appendix
 \def\appendix{\oldappendix\def\addchaptertoloe{}}
 
+%% Base the Appendix on Chapter, but don't put ``Chapter'' in the TOC.
+\def\startappendix{\clearpage \thispagestyle{plain} \global\@topnum\z@
+\@afterindentfalse \secdef\@startappendix\@schapter} 
+\def\@startappendix[#1]#2{\ifnum \c@secnumdepth >\m@ne
+ \refstepcounter{chapter}
+ \typeout{\@chapapp\space\thechapter.}
+ \addcontentsline{toc}{chapter}{\protect
+ \numberline{Appendix~\thechapter}{#1}}\else
+ \addcontentsline{toc}{chapter}{{#1}}\fi
+ \chaptermark{#1}
+ \addchaptertoloe
+ \addtocontents{lof}{\protect\addvspace{10pt}}
+\addtocontents{lot}{\protect\addvspace{10pt}} \if@twocolumn
+\@topnewpage[\@makechapterhead{#2}] 
+ \else \@makechapterhead{#2}
+ \@afterheading \fi} 
+
 %------------------------- chapter -----------------------------------
 \def\addchaptertoloe{%
 	\addtocontents{loe}{\protect\addvspace{14pt}}%
@@ -539,7 +556,6 @@
 \def\@schapter#1{\if@twocolumn \@topnewpage[\@makeschapterhead{#1}]
  \else \@makeschapterhead{#1}\chaptersmark{#1}
  \@afterheading\fi\addcontentsline{toc}{chapter}{{#1}}}
-
 
 
 \def\@makechapterhead#1{\vspace*{-20pt}{\parindent0pt\raggedright
