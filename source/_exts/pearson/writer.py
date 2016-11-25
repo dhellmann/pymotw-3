@@ -1746,6 +1746,8 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
             hlcode = hlcode.replace(u'€', u'@texteuro[]')
             # print('hlcode {}'.format(hlcode))
 
+            if node.get('linenos'):
+                self.body.append('\n\\lstset{numbers=left,numberstyle=\\tiny}\n')
             self.body.append('\n\\begin{lstlisting}')
             caption = ''.join(self.literal_block_caption)
             self.body.append('[')
@@ -1760,6 +1762,8 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
             self.body.append(']\n')
             self.body.append(hlcode)
             self.body.append('\end{lstlisting}')
+            if node.get('linenos'):
+                self.body.append('\n\\lstset{numbers=none}\n')
             raise nodes.SkipNode
 
     def depart_literal_block(self, node):
