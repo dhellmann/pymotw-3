@@ -889,10 +889,10 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
         pass
 
     def visit_seealso(self, node):
-        self.body.append(u'\n\n\\sphinxstrong{%s:}\n\n' % admonitionlabels['seealso'])
+        self.body.append('\n\\tip{Related Reading}{')
 
     def depart_seealso(self, node):
-        self.body.append("\n\n")
+        self.body.append('}')
 
     def visit_rubric(self, node):
         if len(node.children) == 1 and node.children[0].astext() in \
