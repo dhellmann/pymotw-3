@@ -9,14 +9,9 @@ def setup(app):
     # Define a list option with the names of the files making up the
     # chapters.
     app.add_config_value('pearson_chapters', [], 'env')
-    app.add_config_value('pearson_title', 'The Book', 'env')
-    app.add_config_value('pearson_subtitle', '', 'env')
     app.add_config_value('pearson_theme_path', [], 'env')
     app.add_config_value('pearson_theme', 'generic', 'env')
     app.add_config_value('pearson_theme_options', {}, 'env')
-    app.add_config_value('pearson_author', '', 'env')
-    app.add_config_value('pearson_output_base', 'book', 'env')
-    app.add_config_value('pearson_pdflatex', 'xelatex', 'env')
 
     app.add_builder(builder.PearsonLaTeXBuilder)
 

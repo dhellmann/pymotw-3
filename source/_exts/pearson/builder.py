@@ -159,15 +159,10 @@ class PearsonLaTeXBuilder(Builder):
         )
 
         # Build up a context object for the templates.
-        global_context = self.theme.get_options({})
+        global_context = self.theme.get_options(self.config.pearson_theme_options)
         global_context.update({
-            'title': self.config.pearson_title,
-            'subtitle': self.config.pearson_subtitle,
-            'author': self.config.pearson_author,
             'chapter_names': [],
             'appendices': [],
-            'output_base': self.config.pearson_output_base,
-            'pdflatex': self.config.pearson_pdflatex,
         })
 
         self._render_template(
@@ -237,7 +232,7 @@ class PearsonLaTeXBuilder(Builder):
         )
         self._render_template(
             'book.tex',
-            path.join(self.outdir, self.config.pearson_output_base + '.tex'),
+            path.join(self.outdir, global_context['output_base'] + '.tex'),
             global_context,
         )
         self._render_template(
