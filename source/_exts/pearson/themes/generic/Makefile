@@ -15,6 +15,7 @@ LATEX = latex
 PDFLATEX = {{pdflatex}}
 MAKEINDEX = makeindex
 
+default: clean all
 all: $(ALLPDF)
 all-pdf: $(ALLPDF)
 all-dvi: $(ALLDVI)
