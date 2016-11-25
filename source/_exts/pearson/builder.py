@@ -308,15 +308,6 @@ class PearsonLaTeXBuilder(Builder):
                          path.join(self.outdir, dest))
             self.info()
 
-        # copy TeX support files from texinputs
-        # self.info(bold('copying TeX support files...'))
-        # staticdirname = path.join(package_dir, 'texinputs')
-        # for filename in os.listdir(staticdirname):
-        #     if not filename.startswith('.'):
-        #         self.info(' ' + filename, nonl=1)
-        #         copyfile(path.join(staticdirname, filename),
-        #                  path.join(self.outdir, filename))
-
         # copy additional files
         if self.config.latex_additional_files:
             self.info(bold('copying additional files...'), nonl=1)
