@@ -751,7 +751,7 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
 
             self.restrict_footnote(node)
             if self.next_section_ids:
-                for id in self.next_section_ids:
+                for id in sorted(self.next_section_ids):
                     self.context[-1] += self.hypertarget(id, anchor=False)
                 self.next_section_ids.clear()
 
@@ -957,7 +957,7 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
             self.body.append('}')
 
         # Add hyperlink target(s), if any
-        for id in self.pop_hyperlink_ids('table'):
+        for id in sorted(self.pop_hyperlink_ids('table')):
             self.body.append(self.hypertarget(id, anchor=False))
         if node['ids']:
             self.body.append(self.hypertarget(node['ids'][0], anchor=False))
@@ -1319,7 +1319,7 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
 
     def visit_figure(self, node):
         ids = ''
-        for id in self.pop_hyperlink_ids('figure'):
+        for id in sorted(self.pop_hyperlink_ids('figure')):
             ids += self.hypertarget(id, anchor=False)
         if node['ids']:
             ids += self.hypertarget(node['ids'][0], anchor=False)
@@ -1450,7 +1450,7 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
             return
         if node.get('refid'):
             add_target(node['refid'])
-        for id in node['ids']:
+        for id in sorted(node['ids']):
             add_target(id)
 
     def depart_target(self, node):
@@ -1506,7 +1506,7 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
 
     def visit_reference(self, node):
         if not self.in_title:
-            for id in node.get('ids'):
+            for id in sorted(node.get('ids')):
                 anchor = not self.in_caption
                 self.body += self.hypertarget(id, anchor=anchor)
         uri = node.get('refuri', '')
@@ -1709,7 +1709,7 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
             self.body.append('\\begin{alltt}\n')
         else:
             ids = ''
-            for id in self.pop_hyperlink_ids('code-block'):
+            for id in sorted(self.pop_hyperlink_ids('code-block')):
                 ids += self.hypertarget(id, anchor=False)
             if node['ids']:
                 # suppress with anchor=False \phantomsection insertion
@@ -1913,7 +1913,7 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
         if node.get('literal_block'):
             self.in_container_literal_block += 1
             ids = ''
-            for id in self.pop_hyperlink_ids('code-block'):
+            for id in sorted(self.pop_hyperlink_ids('code-block')):
                 ids += self.hypertarget(id, anchor=False)
             if node['ids']:
                 # suppress with anchor=False \phantomsection insertion
