@@ -35,12 +35,41 @@ volume.  The discussion of each module is followed by a list of
 suggested sources for more information and further reading, including
 online resources, RFC standards documents, and related books.
 
-The current transition from Python 2 to Python 3 is well under way.
-All of the source code for the examples has been updated from the
-original online versions and tested with Python 3.5, the current
-release of the 3.x series at the time of publication. For examples
-that work with Python 2, refer to the older edition of the book,
-called \textit{The Python Standard Library By Example}.
+\section*{Python 3 versus 2}
+
+The Python community is currently undergoing a transition from Python
+version 2 to Python version 3. As the major version number change
+implies, there are many incompatibilities between Python 2 and 3, and
+not just in the language. Quite a few of the standard library modules
+have been renamed or otherwise reorganized in the new version.
+
+The Python development community recognized that those
+incompatibilities would require an extended transition period, while
+the ecosystem of Python libraries and tools was updated to work with
+Python 3.  Although many projects still rely on Python 2, it is only
+receiving security updates and is scheduled to be completely
+deprecated by 2020. All new feature work is happening in the Python 3
+releases.
+
+It can be challenging, though not impossible, to write programs that
+work with both versions. Doing so frequently requires examining the
+version of Python under which a program is running and using different
+module names for imports or different arguments to classes or
+functions. There are tools, outside of the standard library, to make
+the process simpler. To keep the examples in this book as concise as
+possible, while still relying only on the standard library, they are
+focused on Python 3.  All of the examples have been tested under
+Python 3.5, the current release of the 3.x series at the time they
+were written, and may not work with Python 2 without modification.
+For examples designed to work with Python 2, refer to the Python 2
+edition of the book, called \textit{The Python Standard Library By
+  Example}.
+
+Again, in an effort to maintain clear and concise descriptions for
+each example, the differences between Python 2 and 3 are not
+highlighted in each chapter. The Porting Notes appendix summarizes
+some of the biggest differences, and is organized to be useful as an
+aid when porting from Python 2 to 3.
 
 \section*{How This Book Is Organized}
 
