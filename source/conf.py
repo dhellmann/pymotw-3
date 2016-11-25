@@ -422,11 +422,7 @@ pearson_chapters = [
     'unix',
 ]
 
-latex_additional_files = [
-    'images/replacement-character.png',
-    '../pearson/newphstyle.cls',
-    '../pearson/newphstyle.sty',
-]
+latex_additional_files = []
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.
