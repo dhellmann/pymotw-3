@@ -667,3 +667,9 @@ page \thepage \space undefined}}%
 \renewcommand{\cleardoublepage}{\clearpage\if@twoside \ifodd\c@page\else
 \hbox{}\thispagestyle{empty}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
 
+%% move these definitions from index.tex in the template so they are not repeated
+
+\newcommand\see[2]{\emph{\seename} #1}
+\newcommand\also[2]{\emph{See also} #1}
+\newcommand\seename{See}
+\newcommand\seealso[2]{\emph{See also} #1}

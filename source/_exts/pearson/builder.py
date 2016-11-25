@@ -233,25 +233,27 @@ class PearsonLaTeXBuilder(Builder):
         translator = writer.PearsonLaTeXTranslator(random_doc, self)
 
         def generate(indexname, content, collapsed):
+            ret = []
             index_command = self.index_commands.get(indexname, 'theindex')
             ret.append('\\begin{%s}\n' % index_command)
-            ret.append('\\def\\bigletter#1{{\\Large\\sffamily#1}'
-                       '\\nopagebreak\\vspace{1mm}}\n')
+            ret.append('\\footnotesize\n')
+
             for i, (letter, entries) in enumerate(content):
                 if i > 0:
-                    ret.append('\\indexspace\n')
-                ret.append('\\bigletter{%s}\n' %
+                    ret.append('\n  \\indexspace\n')
+                ret.append('{\\sffamily\\bfseries{%s}}\\nopagebreak\n\n' % 
                            text_type(letter).translate(texescape.tex_escape_map))
                 for entry in entries:
                     if not entry[3]:
                         continue
-                    ret.append('\\item {\\texttt{%s}}' % translator.encode(entry[0]))
+                    ret.append('  \\item {\\texttt{%s}}' % translator.encode(entry[0]))
                     if entry[4]:
                         # add "extra" info
                         ret.append(' \\emph{(%s)}' % translator.encode(entry[4]))
                     ret.append(', \\pageref{%s:%s}\n' %
                                (entry[2], translator.idescape(entry[3])))
             ret.append('\\end{%s}\n' % index_command)
+            return ret
 
         indices = []
 
@@ -260,7 +262,6 @@ class PearsonLaTeXBuilder(Builder):
         if indices_config:
             for domain in itervalues(self.env.domains):
                 for indexcls in domain.indices:
-                    ret = []
                     indexname = '%s-%s' % (domain.name, indexcls.name)
                     if isinstance(indices_config, list):
                         if indexname not in indices_config:
@@ -272,10 +273,8 @@ class PearsonLaTeXBuilder(Builder):
                     content, collapsed = indexcls(domain).generate(docnames)
                     if not content:
                         continue
-                    ret.append(u'\\renewcommand{\\indexname}{%s}\n' %
-                               indexcls.localname)
-                    generate(indexname, content, collapsed)
-                    indices.append((indexname, ''.join(ret)))
+                    results = generate(indexname, content, collapsed)
+                    indices.append((indexname, ''.join(results)))
 
         return indices
 
