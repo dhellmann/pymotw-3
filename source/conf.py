@@ -398,6 +398,10 @@ latex_documents = [
 pearson_title = 'The Python 3 Standard Library by Example'
 pearson_author = 'Doug Hellmann'
 pearson_output_base = 'py3_stdlib'
+# isbn_13 = ''
+# isbn_10 = ''
+# printer_info = ''
+# first_printing = ''
 
 pearson_chapters = [
     'text',

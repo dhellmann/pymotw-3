@@ -159,7 +159,8 @@ class PearsonLaTeXBuilder(Builder):
         )
 
         # Build up a context object for the templates.
-        global_context = {
+        global_context = self.theme.get_options({})
+        global_context.update({
             'title': self.config.pearson_title,
             'subtitle': self.config.pearson_subtitle,
             'author': self.config.pearson_author,
@@ -167,7 +168,7 @@ class PearsonLaTeXBuilder(Builder):
             'appendices': [],
             'output_base': self.config.pearson_output_base,
             'pdflatex': self.config.pearson_pdflatex,
-        }
+        })
 
         self._render_template(
             'half-title.tex',
@@ -237,6 +238,11 @@ class PearsonLaTeXBuilder(Builder):
         self._render_template(
             'book.tex',
             path.join(self.outdir, self.config.pearson_output_base + '.tex'),
+            global_context,
+        )
+        self._render_template(
+            'CIP.tex',
+            path.join(self.outdir, 'CIP.tex'),
             global_context,
         )
         self._render_template(
