@@ -161,7 +161,7 @@ footskip=.025in}
                                                        % creates this page and just adds it into the final PDF. 
 \include{title}                               % The title page
 \include{CIP}                                % The cataloging-in-publication page
-%%\include{dedication}                      % The dedication page
+{% if dedication_doc %}{{'\include{'}}{{dedication_doc}}{{'}'}}{% endif %}
 \cleardoublepage
 \parskip .5ex                       % Add space between Contents items
 \tableofcontents                  % Make the Table of Contents 
