@@ -165,6 +165,7 @@ class PearsonLaTeXBuilder(Builder):
             'author': self.config.pearson_author,
             'chapter_names': [],
             'appendices': [],
+            'output_base': self.config.pearson_output_base,
         }
 
         self._render_template(
@@ -227,14 +228,19 @@ class PearsonLaTeXBuilder(Builder):
             name = process_doc(app_name_fmt, app_num, docname)
             global_context['appendices'].append(name)
 
-        # Finally the main book template
+        # Finally the main book template and Makefile for building the PDF
         global_context['external_docs'] = (
             global_context['chapter_names'] +
             global_context['appendices']
         )
         self._render_template(
             'book.tex',
-            path.join(self.outdir, 'book.tex'),
+            path.join(self.outdir, self.config.pearson_output_base + '.tex'),
+            global_context,
+        )
+        self._render_template(
+            'Makefile',
+            path.join(self.outdir, 'Makefile'),
             global_context,
         )
 

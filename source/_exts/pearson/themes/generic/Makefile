@@ -1,6 +1,6 @@
 # Makefile for Sphinx LaTeX output
 
-ALLDOCS = book
+ALLDOCS = {{output_base}}
 ALLPDF = $(addsuffix .pdf,$(ALLDOCS))
 ALLDVI = $(addsuffix .dvi,$(ALLDOCS))
 
@@ -15,7 +15,6 @@ LATEX = latex
 PDFLATEX = pdflatex
 MAKEINDEX = makeindex
 
-default: book.pdf
 all: $(ALLPDF)
 all-pdf: $(ALLPDF)
 all-dvi: $(ALLDVI)
