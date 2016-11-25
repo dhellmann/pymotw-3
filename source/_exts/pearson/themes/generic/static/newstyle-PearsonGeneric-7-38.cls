@@ -655,6 +655,14 @@ page \thepage \space undefined}}%
  \thispagestyle{plain}\parindent\z@
  \parskip\z@ plus .3pt\relax\let\item\@idxitem}
 
+%% based on theindex, above
+\def\moduleindex{\@restonecoltrue\if@twocolumn\@restonecolfalse\fi
+\columnseprule \z@
+\columnsep 35pt\twocolumn[\@makeschapterhead{Module Index}]
+  \chaptersmark{Module  Index}%
+ \addcontentsline{toc}{chapter}{MODULE INDEX}
+ \thispagestyle{plain}\parindent\z@
+ \parskip\z@ plus .3pt\relax\let\item\@idxitem}
 
 \renewcommand{\cleardoublepage}{\clearpage\if@twoside \ifodd\c@page\else
 \hbox{}\thispagestyle{empty}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}

@@ -7,7 +7,7 @@ from os import path
 import textwrap
 import warnings
 
-from six import iteritems
+from six import iteritems, itervalues, text_type
 from docutils import nodes
 from docutils.io import FileOutput
 from docutils.utils import new_document
@@ -116,6 +116,7 @@ class PearsonLaTeXBuilder(Builder):
             read_config_files=True).get_default_values()
 
         self.init_chapters()
+        self.processed_docs = {}
 
         def process_doc(name_fmt, num, docname, doctype):
             name = name_fmt.format(num)
@@ -145,6 +146,7 @@ class PearsonLaTeXBuilder(Builder):
             doctree.settings.docname = docname
             doctree.settings.doctype = doctype
             # doctree.settings.docclass = docclass
+            self.processed_docs[docname] = doctree
             docwriter.write(doctree, destination)
             self.info("done")
             return name
@@ -156,6 +158,7 @@ class PearsonLaTeXBuilder(Builder):
         global_context.update({
             'chapter_names': [],
             'appendices': [],
+            'indices': [],
         })
 
         # First generate the chapters
@@ -175,6 +178,18 @@ class PearsonLaTeXBuilder(Builder):
         for app_num, docname in enumerate(self.config.latex_appendices, 1):
             name = process_doc(app_name_fmt, app_num, docname, 'startappendix')
             global_context['appendices'].append(name)
+
+        # Then any index files
+        indices = self.generate_indices(list(sorted(self.env.all_docs.keys())))
+        for name, body in indices:
+            global_context['indices'].append(name)
+            file_name = path.join(self.outdir, name + '.tex')
+            self.info('writing {}'.format(file_name))
+            output = FileOutput(
+                destination_path=file_name,
+                encoding='utf-8',
+            )
+            output.write(body)
 
         # Finally the templates pages
         global_context['external_docs'] = (
@@ -205,6 +220,64 @@ class PearsonLaTeXBuilder(Builder):
                 )
                 raise
             output.write(body)
+
+    index_commands = {
+        'py-modindex': 'moduleindex',
+    }
+
+    def generate_indices(self, docnames):
+        docwriter = writer.PearsonLaTeXWriter(self)
+        # To construct a translator we need a processed document, so
+        # just pick the first one we've procssed.
+        random_doc = self.processed_docs[self.config.pearson_chapters[0]]
+        translator = writer.PearsonLaTeXTranslator(random_doc, self)
+
+        def generate(indexname, content, collapsed):
+            index_command = self.index_commands.get(indexname, 'theindex')
+            ret.append('\\begin{%s}\n' % index_command)
+            ret.append('\\def\\bigletter#1{{\\Large\\sffamily#1}'
+                       '\\nopagebreak\\vspace{1mm}}\n')
+            for i, (letter, entries) in enumerate(content):
+                if i > 0:
+                    ret.append('\\indexspace\n')
+                ret.append('\\bigletter{%s}\n' %
+                           text_type(letter).translate(texescape.tex_escape_map))
+                for entry in entries:
+                    if not entry[3]:
+                        continue
+                    ret.append('\\item {\\texttt{%s}}' % translator.encode(entry[0]))
+                    if entry[4]:
+                        # add "extra" info
+                        ret.append(' \\emph{(%s)}' % translator.encode(entry[4]))
+                    ret.append(', \\pageref{%s:%s}\n' %
+                               (entry[2], translator.idescape(entry[3])))
+            ret.append('\\end{%s}\n' % index_command)
+
+        indices = []
+
+        # latex_domain_indices can be False/True or a list of index names
+        indices_config = self.config.latex_domain_indices
+        if indices_config:
+            for domain in itervalues(self.env.domains):
+                for indexcls in domain.indices:
+                    ret = []
+                    indexname = '%s-%s' % (domain.name, indexcls.name)
+                    if isinstance(indices_config, list):
+                        if indexname not in indices_config:
+                            continue
+                    # deprecated config value
+                    if indexname == 'py-modindex' and \
+                       not self.config.latex_use_modindex:
+                        continue
+                    content, collapsed = indexcls(domain).generate(docnames)
+                    if not content:
+                        continue
+                    ret.append(u'\\renewcommand{\\indexname}{%s}\n' %
+                               indexcls.localname)
+                    generate(indexname, content, collapsed)
+                    indices.append((indexname, ''.join(ret)))
+
+        return indices
 
     def get_contentsname(self, indexfile):
         tree = self.env.get_doctree(indexfile)

@@ -195,6 +195,10 @@ footskip=.025in}
 {% endfor %}
 {% endif %}
 
+{% for index in indices -%}
+{{'\include{'}}{{index}}{{'}'}}
+{% endfor %}
+
 \cleardoublepage
 \bibliographystyle{ieeetr-hacked}  % Your production editor and copy editor may want you to
                                                           % use a different bibliography style file. 
