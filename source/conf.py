@@ -407,6 +407,7 @@ pearson_theme_options = {
     'preface_doc': 'preface',
     'acknowledgements_doc': 'acknowledgements',
     'about_doc': 'author',
+    'intro_doc': 'introduction',
 }
 
 pearson_chapters = [
@@ -438,6 +439,7 @@ latex_additional_files = [
     '_book/acknowledgements.tex',
     '_book/author.tex',
     '_book/AuthorPhoto.jpg',
+    '_book/introduction.tex',
 ]
 
 # The name of an image file (relative to this directory) to place at the top of

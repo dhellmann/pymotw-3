@@ -167,7 +167,7 @@ footskip=.025in}
 \tableofcontents                  % Make the Table of Contents 
 \cleardoublepage                
 \parskip 0in                         % Reset to zero interpar spacing
-{% for frontmatter in [foreword_doc, preface_doc, acknowledgements_doc, about_doc] -%}
+{% for frontmatter in [foreword_doc, preface_doc, acknowledgements_doc, about_doc, intro_doc] -%}
 {% if frontmatter %}
 {{'\include{'}}{{frontmatter}}{{'}'}}
 {% endif %}
