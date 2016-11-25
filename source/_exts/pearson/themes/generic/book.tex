@@ -123,7 +123,7 @@ footskip=.025in}
 \captionsetup[figure]{labelfont={sf,bf,small},font={sf,bf,small}}
 \captionsetup[lstlisting]{labelfont={sf,bf,small},font={sf,bf,small}}
 \usepackage{tocloft-hacked-PearsonGeneric} % to allow manipulation of the TOC
-
+%%\usepackage{shorttoc}
 
 %%%%%%%% Determine your indexing plan.
 %
@@ -162,9 +162,18 @@ footskip=.025in}
 \include{title}                               % The title page
 \include{CIP}                                % The cataloging-in-publication page
 {% if dedication_doc %}{{'\include{'}}{{dedication_doc}}{{'}'}}{% endif %}
+
+%% Trying for a table of contents that only includes the chapter
+%% titles, using shorttoc, but it causes duplicate entries for itself
+%% and for the actual table of contents.
+%%
+%% \cleardoublepage
+%% \shorttableofcontents{Contents At a Glance}{0}
+
 \cleardoublepage
 \parskip .5ex                       % Add space between Contents items
 \tableofcontents                  % Make the Table of Contents 
+
 \cleardoublepage                
 \parskip 0in                         % Reset to zero interpar spacing
 {% for frontmatter in [foreword_doc, preface_doc, acknowledgements_doc, about_doc, intro_doc] -%}
@@ -172,6 +181,7 @@ footskip=.025in}
 {{'\include{'}}{{frontmatter}}{{'}'}}
 {% endif %}
 {% endfor %}
+
 \cleardoublepage                  
 %%%%%%%The front matter ends
 
