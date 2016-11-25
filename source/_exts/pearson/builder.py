@@ -108,22 +108,6 @@ class PearsonLaTeXBuilder(Builder):
                 continue
             self.document_data.append(chap)
 
-    def _render_template(self, template_name, file_name, context):
-        self.info('writing {}'.format(file_name))
-        output = FileOutput(
-            destination_path=file_name,
-            encoding='utf-8',
-        )
-        try:
-            body = self.templates.render(template_name, context)
-        except Exception as err:
-            self.info(bold('Failed to render template {}: {} at {}'.format(
-                template_name, err, err.lineno))
-            )
-            raise
-        output.write(body)
-        return body
-
     def _write_pygments_stylesheet(self, file_name):
         self.info('writing {}'.format(file_name))
         output = FileOutput(
@@ -158,24 +142,6 @@ class PearsonLaTeXBuilder(Builder):
             path.join(self.outdir, 'pygments.sty'),
         )
 
-        # Build up a context object for the templates.
-        global_context = self.theme.get_options(self.config.pearson_theme_options)
-        global_context.update({
-            'chapter_names': [],
-            'appendices': [],
-        })
-
-        self._render_template(
-            'half-title.tex',
-            path.join(self.outdir, 'half-title.tex'),
-            global_context,
-        )
-        self._render_template(
-            'title.tex',
-            path.join(self.outdir, 'title.tex'),
-            global_context,
-        )
-
         def process_doc(name_fmt, num, docname):
             name = name_fmt.format(num)
             destination = FileOutput(
@@ -207,6 +173,15 @@ class PearsonLaTeXBuilder(Builder):
             self.info("done")
             return name
 
+        # Build the template context before rendering the
+        # non-templated files so we can include those file names in a
+        # context parameter.
+        global_context = self.theme.get_options(self.config.pearson_theme_options)
+        global_context.update({
+            'chapter_names': [],
+            'appendices': [],
+        })
+
         # First generate the chapters
         chap_name_fmt = 'chap{:02d}'
         if len(self.document_data) >= 100:
@@ -225,26 +200,35 @@ class PearsonLaTeXBuilder(Builder):
             name = process_doc(app_name_fmt, app_num, docname)
             global_context['appendices'].append(name)
 
-        # Finally the main book template and Makefile for building the PDF
+        # Finally the templates pages
         global_context['external_docs'] = (
             global_context['chapter_names'] +
             global_context['appendices']
         )
-        self._render_template(
-            'book.tex',
-            path.join(self.outdir, global_context['output_base'] + '.tex'),
-            global_context,
-        )
-        self._render_template(
-            'CIP.tex',
-            path.join(self.outdir, 'CIP.tex'),
-            global_context,
-        )
-        self._render_template(
-            'Makefile',
-            path.join(self.outdir, 'Makefile'),
-            global_context,
-        )
+
+        templated_pages = [
+            ('half-title.tex', 'half-title.tex'),
+            ('title.tex', 'title.tex'),
+            ('book.tex', global_context['output_base'] + '.tex'),
+            ('CIP.tex', 'CIP.tex'),
+            ('Makefile', 'Makefile'),
+        ]
+
+        for template_name, outname in templated_pages:
+            file_name = path.join(self.outdir, outname)
+            self.info('writing {}'.format(file_name))
+            output = FileOutput(
+                destination_path=file_name,
+                encoding='utf-8',
+            )
+            try:
+                body = self.templates.render(template_name, global_context)
+            except Exception as err:
+                self.info(bold('Failed to render template {}: {} at {}'.format(
+                    template_name, err, err.lineno))
+                )
+                raise
+            output.write(body)
 
     def get_contentsname(self, indexfile):
         tree = self.env.get_doctree(indexfile)
