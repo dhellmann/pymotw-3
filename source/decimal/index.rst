@@ -324,14 +324,14 @@ Local Context
 -------------
 
 The context can be applied to a block of code using the
-:command:`with` statement.
+``with`` statement.
 
 .. literalinclude:: decimal_context_manager.py
     :caption:
     :start-after: #end_pymotw_header
 
 The :class:`Context` supports the context manager API used by
-:command:`with`, so the settings only apply within the block.
+``with``, so the settings only apply within the block.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'decimal_context_manager.py'))

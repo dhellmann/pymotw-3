@@ -153,13 +153,13 @@ variables, and control how the debugger executes the program.  The
 interactive debugger uses :mod:`readline` to accept commands, and
 supports tab completion for commands, filenames, and function names.
 Entering a blank line re-runs the previous command again, unless it
-was a :command:`list` operation.
+was a ``list`` operation.
 
 Navigating the Execution Stack
 ------------------------------
 
-At any point while the debugger is running use :command:`where`
-(abbreviated :command:`w`) to find out exactly what line is being
+At any point while the debugger is running use ``where``
+(abbreviated ``w``) to find out exactly what line is being
 executed and where on the call stack the program is.  In this case,
 the module ``pdb_set_trace.py`` line 18 in the :func:`go` method.
 
@@ -175,8 +175,8 @@ the module ``pdb_set_trace.py`` line 18 in the :func:`go` method.
     -> print(i)
     (Pdb)
 
-To add more context around the current location, use :command:`list`
-(:command:`l`).
+To add more context around the current location, use ``list``
+(``l``).
 
 .. code-block:: none
 
@@ -195,7 +195,7 @@ To add more context around the current location, use :command:`list`
     (Pdb)
 
 The default is to list 11 lines around the current line (five before
-and five after).  Using :command:`list` with a single numerical
+and five after).  Using ``list`` with a single numerical
 argument lists 11 lines around that line instead of the current line.
 
 .. code-block:: none
@@ -213,7 +213,7 @@ argument lists 11 lines around that line instead of the current line.
      18  ->          print(i)
      19          return
 
-If :command:`list` receives two arguments, it interprets them as the
+If ``list`` receives two arguments, it interprets them as the
 first and last lines to include in its output.
 
 .. code-block:: none
@@ -233,11 +233,11 @@ first and last lines to include in its output.
      18  ->          print(i)
      19          return
 
-The :command:`longlist` (``ll``) command prints the source for the
+The ``longlist`` (``ll``) command prints the source for the
 current function or frame, without having to determine the line
 numbers in advance. The command is "longlist" because for long
 functions it may produce considerably more output than the default for
-:command:`list`.
+``list``.
 
 .. code-block:: none
 
@@ -248,7 +248,7 @@ functions it may produce considerably more output than the default for
      18  ->          print(i)
      19          return
 
-The :command:`source` command loads and prints the full source for an
+The ``source`` command loads and prints the full source for an
 arbitrary class, function, or module.
 
 .. code-block:: none
@@ -265,12 +265,12 @@ arbitrary class, function, or module.
      18              print(i)
      19          return
 
-Move between frames within the current call stack using :command:`up`
-and down.  :command:`up` (abbreviated :command:`u`) moves towards
-older frames on the stack.  :command:`down` (abbreviated :command:`d`)
+Move between frames within the current call stack using ``up``
+and ``down``.  ``up`` (abbreviated ``u``) moves towards
+older frames on the stack.  ``down`` (abbreviated ``d``)
 moves towards newer frames. Each time you move up or down the stack,
 the debugger prints the current location in the same format as
-produced by :command:`where`.
+produced by ``where``.
 
 .. code-block:: none
 
@@ -282,7 +282,7 @@ produced by :command:`where`.
     > .../pdb_set_trace.py(18)go()
     -> print(i)
 
-Pass a numerical argument to either :command:`up` or :command:`down`
+Pass a numerical argument to either ``up`` or ``down``
 to move that many steps up or down the stack at one time.
 
 Examining Variables on the Stack
@@ -299,10 +299,10 @@ variables.
       :linenos:
       :caption:
 
-The :command:`args` command (abbreviated :command:`a`) prints all of
+The ``args`` command (abbreviated ``a``) prints all of
 the arguments to the function active in the current frame.  This
 example also uses a recursive function to show what a deeper stack
-looks like when printed by :command:`where`.
+looks like when printed by ``where``.
 
 .. code-block:: none
 
@@ -337,7 +337,7 @@ looks like when printed by :command:`where`.
     n = 1
     output = to be printed
 
-The :command:`p` command evaluates an expression given as argument and
+The ``p`` command evaluates an expression given as argument and
 prints the result.  Python's ``print()`` function is also available,
 but it is passed through to the interpreter to be executed rather than
 running as a command in the debugger.
@@ -350,7 +350,7 @@ running as a command in the debugger.
     (Pdb) print(n)
     1
 
-Similarly, prefixing an expression with :command:`!` passes it to the
+Similarly, prefixing an expression with ``!`` passes it to the
 Python interpreter to be evaluated.  This feature can be used to
 execute arbitrary Python statements, including modifying variables.
 This example changes the value of ``output`` before letting the debugger
@@ -374,7 +374,7 @@ value.
     changed value
 
 For more complicated values such as nested or large data structures,
-use :command:`pp` to "pretty print" them.  This program reads several
+use ``pp`` to "pretty print" them.  This program reads several
 lines of text from a file.
 
 .. cssclass:: with-linenos
@@ -383,8 +383,8 @@ lines of text from a file.
       :linenos:
       :caption:
 
-Printing the variable ``lines`` with :command:`p` results in output
-that is difficult to read because it may wrap awkwardly.  :command:`pp`
+Printing the variable ``lines`` with ``p`` results in output
+that is difficult to read because it may wrap awkwardly.  ``pp``
 uses :mod:`pprint` to format the value for clean printing.
 
 .. code-block:: none
@@ -493,7 +493,7 @@ program past the point where it enters the debugger.
       :linenos:
       :caption:
 
-Use :command:`step` to execute the current line and then stop at the
+Use ``step`` to execute the current line and then stop at the
 next execution point -- either the first statement inside a function
 being called or the next line of the current function.
 
@@ -505,7 +505,7 @@ being called or the next line of the current function.
     -> f(5)
 
 The interpreter pauses after the call to :func:`set_trace` and gives
-control to the debugger.  The first :command:`step` causes the
+control to the debugger.  The first ``step`` causes the
 execution to enter :func:`f`.
 
 
@@ -516,7 +516,7 @@ execution to enter :func:`f`.
     > .../pdb_step.py(10)f()
     -> def f(n):
 
-One more :command:`step` moves execution to the first line of
+One more ``step`` moves execution to the first line of
 :func:`f` and starts the loop.
 
 .. code-block:: none
@@ -615,7 +615,7 @@ are executed.
     (Pdb)
 
 
-The :command:`next` command is like :command:`step`, but does not
+The ``next`` command is like ``step``, but does not
 enter functions called from the statement being executed.  In effect,
 it steps all the way through the function call to the next statement
 in the current function in a single operation.
@@ -634,10 +634,10 @@ in the current function in a single operation.
 
     (Pdb) 
 
-The :command:`until` command is like :command:`next`, except it
+The ``until`` command is like ``next``, except it
 explicitly continues until execution reaches a line in the same
 function with a line number higher than the current value.  That
-means, for example, that :command:`until` can be used to step past the
+means, for example, that ``until`` can be used to step past the
 end of a loop.
 
 .. code-block:: none
@@ -674,13 +674,13 @@ end of a loop.
 
     (Pdb)
 
-Before the :command:`until` command was run, the current line was 18,
-the last line of the loop.  After :command:`until` ran, execution was
+Before the ``until`` command was run, the current line was 18,
+the last line of the loop.  After ``until`` ran, execution was
 on line 19, and the loop had been exhausted.
 
 To let execution run until a specific line, pass the line number to
-the :command:`until` command. Unlike when setting a breakpoint, the
-line number passed to :command:`until` must be higher than the current
+the ``until`` command. Unlike when setting a breakpoint, the
+line number passed to ``until`` must be higher than the current
 line number, so it is most useful for navigating within a function for
 skipping over long blocks.
 
@@ -734,7 +734,7 @@ skipping over long blocks.
 
     (Pdb)
 
-The :command:`return` command is another short-cut for bypassing parts
+The ``return`` command is another short-cut for bypassing parts
 of a function.  It continues executing until the function is about to
 execute a ``return`` statement, and then it pauses, providing time
 to look at the return value before the function returns.
@@ -769,8 +769,8 @@ to look at the return value before the function returns.
 Breakpoints
 ===========
 
-As programs grow longer, even using :command:`next` and
-:command:`until` will become slow and cumbersome.  Instead of stepping
+As programs grow longer, even using ``next`` and
+``until`` will become slow and cumbersome.  Instead of stepping
 through the program by hand, a better solution is to let it run
 normally until it reaches a point where the debugger should interrupt
 it.  :func:`set_trace` can start the debugger, but that only works if
@@ -786,7 +786,7 @@ breakpoint the program is paused before the line is executed.
       :linenos:
       :caption:
 
-There are several options to the :command:`break` command used for
+There are several options to the ``break`` command used for
 setting break points, including the line number, file, and function
 where processing should pause.  To set a breakpoint on a specific line
 of the current file, use ``break lineno``:
@@ -810,7 +810,7 @@ of the current file, use ``break lineno``:
 
     (Pdb) 
 
-The command :command:`continue` tells the debugger to keep running
+The command ``continue`` tells the debugger to keep running
 the program until the next breakpoint.  In this case, it runs through
 the first iteration of the ``for`` loop in :func:`f` and stops inside
 :func:`calc` during the second iteration.
@@ -878,7 +878,7 @@ starting the main program ``pdb_break_remote.py``.
 The filename can be a full path to the source file, or a relative path
 to a file available on ``sys.path``.
 
-To list the breakpoints currently set, use :command:`break` without
+To list the breakpoints currently set, use ``break`` without
 any arguments.  The output includes the file and line number of each
 break point, as well as information about how many times it has been
 encountered.
@@ -924,7 +924,7 @@ Managing Breakpoints
 As each new breakpoint is added, it is assigned a numerical
 identifier.  These ID numbers are used to enable, disable, and remove
 the breakpoints interactively.  Turning off a breakpoint with
-:command:`disable` tells the debugger not to stop when that line is
+``disable`` tells the debugger not to stop when that line is
 reached.  The breakpoint is remembered, but ignored.
 
 .. code-block:: none
@@ -964,7 +964,7 @@ reached.  The breakpoint is remembered, but ignored.
 The next debugging session sets two breakpoints in the program, then
 disables one.  The program is run until the remaining breakpoint is
 encountered, and then the other breakpoint is turned back on with
-:command:`enable` before execution continues.
+``enable`` before execution continues.
 
 .. code-block:: none
 
@@ -1042,10 +1042,10 @@ encountered, and then the other breakpoint is turned back on with
 
     (Pdb)
 
-The lines prefixed with ``B`` in the output from :command:`list` show
+The lines prefixed with ``B`` in the output from ``list`` show
 where the breakpoints are set in the program (lines 8 and 18).
 
-Use :command:`clear` to delete a breakpoint entirely.
+Use ``clear`` to delete a breakpoint entirely.
 
 .. code-block:: none
 
@@ -1139,7 +1139,7 @@ the conditions are met.  Using conditional breakpoints gives finer
 control over how the debugger pauses the program than enabling and
 disabling breakpoints by hand.  Conditional breakpoints can be set in
 two ways.  The first is to specify the condition when the breakpoint
-is set using :command:`break`.
+is set using ``break``.
 
 .. code-block:: none
 
@@ -1169,7 +1169,7 @@ the stack frame where the breakpoint is defined.  If the expression
 evaluates as true, execution stops at the breakpoint.
 
 A condition can also be applied to an existing breakpoint using the
-:command:`condition` command.  The arguments are the breakpoint id and
+``condition`` command.  The arguments are the breakpoint id and
 the expression.
 
 .. code-block:: none
@@ -1200,7 +1200,7 @@ Ignoring Breakpoints
 Programs that loop or use a large number of recursive calls to the
 same function are often easier to debug by "skipping ahead" in the
 execution, instead of watching every call or breakpoint.  The
-:command:`ignore` command tells the debugger to pass over a breakpoint
+``ignore`` command tells the debugger to pass over a breakpoint
 without stopping.  Each time processing encounters the breakpoint, it
 decrements the ignore counter.  When the counter is zero, the
 breakpoint is re-activated.
@@ -1280,9 +1280,9 @@ Triggering Actions on a Breakpoint
 ----------------------------------
 
 In addition to the purely interactive mode, :mod:`pdb` supports basic
-scripting.  Using :command:`commands`, a series of interpreter
+scripting.  Using ``commands``, a series of interpreter
 commands, including Python statements, can be executed when a specific
-breakpoint is encountered.  After running :command:`commands` with the
+breakpoint is encountered.  After running ``commands`` with the
 breakpoint number as argument, the debugger prompt changes to
 ``(com)``.  Enter commands one a time, and finish the list with
 ``end`` to save the script and return to the main debugger prompt.
@@ -1330,8 +1330,8 @@ Watching Data Change
 --------------------
 
 It is also possible to watch as values change during the course of
-program execution without scripting explicit :command:`print` commands
-by using the :command:`display` command.
+program execution without scripting explicit ``print`` commands
+by using the ``display`` command.
 
 .. code-block:: none
 
@@ -1363,7 +1363,7 @@ by using the :command:`display` command.
 
 Each time execution stops in the frame, the expression is evaluated
 and if it changes then the result is printed along with the old
-value. The :command:`display` command with no argument prints a list
+value. The ``display`` command with no argument prints a list
 of the displays active for the current frame.
 
 .. code-block:: none
@@ -1381,7 +1381,7 @@ of the displays active for the current frame.
 
     (Pdb)
 
-Remove a display expression with :command:`undisplay`.
+Remove a display expression with ``undisplay``.
 
 .. code-block:: none
 
@@ -1399,7 +1399,7 @@ Remove a display expression with :command:`undisplay`.
 Changing Execution Flow
 =======================
 
-The :command:`jump` command alters the flow of the program at
+The ``jump`` command alters the flow of the program at
 runtime, without modifying the code.  It can skip forwards to avoid
 running some code, or backwards to run it again.  This sample program
 generates a list of numbers.
@@ -1534,7 +1534,7 @@ undefined, and therefore, prevented by the debugger.
       :linenos:
       :caption:
 
-:command:`jump` can be used to enter a function, but the arguments are
+``jump`` can be used to enter a function, but the arguments are
 not defined and the code is unlikely to work.
 
 .. code-block:: none
@@ -1557,8 +1557,8 @@ not defined and the code is unlikely to work.
 
     (Pdb) 
 
-:command:`jump` will not enter the middle of a block such as a
-:command:`for` loop or :command:`try:except` statement.
+``jump`` will not enter the middle of a block such as a
+``for`` loop or ``try:except`` statement.
 
 .. code-block:: none
 
@@ -1578,8 +1578,8 @@ not defined and the code is unlikely to work.
 
     (Pdb) 
 
-The code in a :command:`finally` block must all be executed, so
-:command:`jump` will not leave the block.
+The code in a ``finally`` block must all be executed, so
+``jump`` will not leave the block.
 
 .. code-block:: none
 
@@ -1670,8 +1670,8 @@ line.
     
     (Pdb)
 
-The program can be restarted using :command:`run`.  Arguments passed
-to :command:`run` are parsed with :mod:`shlex` and passed to the
+The program can be restarted using ``run``.  Arguments passed
+to ``run`` are parsed with :mod:`shlex` and passed to the
 program as though they were command line arguments, so the program can
 be restarted with different settings.
 
@@ -1692,7 +1692,7 @@ be restarted with different settings.
 
     (Pdb) 
 
-:command:`run` can also be used at any other point in processing to
+``run`` can also be used at any other point in processing to
 restart the program.
 
 .. code-block:: none
@@ -1720,7 +1720,7 @@ restart the program.
 Customizing the Debugger with Aliases
 =====================================
 
-Avoid typing complex commands repeatedly by using :command:`alias` to
+Avoid typing complex commands repeatedly by using ``alias`` to
 define a shortcut.  Alias expansion is applied to the first word of
 each command.  The body of the alias can consist of any command that
 is legal to type at the debugger prompt, including other debugger
@@ -1748,7 +1748,7 @@ definitions, so one alias can even invoke another.
     (Pdb) pl
     dict_keys(['output', 'n'])
 
-Running :command:`alias` without any arguments shows the list of
+Running ``alias`` without any arguments shows the list of
 defined aliases.  A single argument is assumed to be the name of an
 alias, and its definition is printed.
 
@@ -1786,7 +1786,7 @@ starting with ``1``.  To consume all of the arguments, use ``%*``.
         *implementation dependent* and not covered by any backwards
         compatibility guarantees.
 
-Clear the definition of an alias with :command:`unalias`.
+Clear the definition of an alias with ``unalias``.
 
 .. code-block:: none
 
@@ -1847,7 +1847,7 @@ particular project.
 
 Any configuration commands that can be typed at the debugger prompt
 can be saved in one of the start-up files. Some commands that control
-the execution (:command:`continue`, :command:`next`, etc.)  can as
+the execution (``continue``, ``next``, etc.)  can as
 well.
 
 .. code-block:: none
@@ -1874,7 +1874,7 @@ well.
     -> if n > 0:
     (Pdb)
 
-Especially useful is :command:`run`, which means the command
+Especially useful is ``run``, which means the command
 line arguments for a debugging session can be set in ``./.pdbrc`` so
 they are consistent across several runs.
 
@@ -1908,6 +1908,6 @@ they are consistent across several runs.
 
     * :mod:`shlex` -- Shell command line parsing.
 
-    * :pyissue:`26053` -- If the output of :command:`run` does not
+    * :pyissue:`26053` -- If the output of ``run`` does not
       match the values presented here, refer to this bug for details
       about a regression in pdb output between 2.7 and 3.5.

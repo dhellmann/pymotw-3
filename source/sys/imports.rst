@@ -273,7 +273,7 @@ The shelf is added to the import path the first time an import occurs
 after the path is modified. The finder recognizes the shelf and
 returns a loader, which is used for all imports from that shelf. The
 initial package-level import creates a new module object and then uses
-:command:`exec` to run the source loaded from the shelf. It uses the
+``exec`` to run the source loaded from the shelf. It uses the
 new module as the namespace so that names defined in the source are
 preserved as module-level attributes.
 

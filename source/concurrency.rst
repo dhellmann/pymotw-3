@@ -32,7 +32,7 @@ that instead of a :class:`Thread` class it provides a
 without shared memory, but :mod:`multiprocessing` provides features
 for sharing data and passing messages between them so that in many
 cases converting from threads to processes is as simple as changing a
-few :command:`import` statements.
+few ``import`` statements.
 
 :mod:`asyncio` provides a framework for concurrency and asynchronous
 I/O management using either a class-based protocol system or

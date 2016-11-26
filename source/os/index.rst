@@ -428,7 +428,7 @@ The values do not change because when it is not running as root, a
 process cannot change its effective owner value. Any attempt to set
 the effective user id or group id to anything other than that of the
 current user causes an :class:`OSError`.  Running the same script
-using :command:`sudo` so that it starts out with root privileges is a
+using ``sudo`` so that it starts out with root privileges is a
 different story.
 
 .. Don't use cog here because sudo sometimes asks for a password.

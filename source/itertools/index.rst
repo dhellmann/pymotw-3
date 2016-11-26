@@ -160,7 +160,7 @@ to 2) based on a single original input.
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`tee` has semantics similar to the UNIX :command:`tee` utility,
+:func:`tee` has semantics similar to the UNIX ``tee`` utility,
 which repeats the values it reads from its input and writes them to a
 named file and standard output.  The iterators returned by :func:`tee`
 can be used to feed the same set of data into multiple algorithms to

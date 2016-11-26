@@ -211,7 +211,7 @@ The :class:`shlex` class includes several configuration properties
 that control its behavior. The :attr:`source` property enables a
 feature for code (or configuration) re-use by allowing one token
 stream to include another. This is similar to the Bourne shell
-:command:`source` operator, hence the name.
+``source`` operator, hence the name.
 
 .. literalinclude:: shlex_source.py
     :caption:
@@ -352,7 +352,7 @@ from the first quote. The :attr:`token` attribute contains the buffer
 of text not already included in a valid token. The
 :func:`error_leader()` method produces a message prefix in a style
 similar to Unix compilers, which enables editors such as
-:command:`emacs` to parse the error and take the user directly to the
+``emacs`` to parse the error and take the user directly to the
 invalid line.
 
 .. literalinclude:: shlex_errors.py

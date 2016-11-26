@@ -60,12 +60,12 @@ value is used to query for the next command.
    ======================
    EOF  greet
 
-The :command:`help` command is built into :class:`Cmd`. With no
-arguments, :command:`help` shows the list of commands available. If
+The ``help`` command is built into :class:`Cmd`. With no
+arguments, ``help`` shows the list of commands available. If
 the input includes a command name, the output is more verbose and
 restricted to details of that command, when available.
 
-If the command is :command:`greet`, :func:`do_greet` is invoked to
+If the command is ``greet``, :func:`do_greet` is invoked to
 handle it:
 
 .. code-block:: none
@@ -96,7 +96,7 @@ Command Arguments
 =================
 
 This example includes a few enhancements to eliminate
-some of the annoyances and add help for the :command:`greet` command.
+some of the annoyances and add help for the ``greet`` command.
 
 .. literalinclude:: cmd_arguments.py
     :caption:
@@ -123,7 +123,7 @@ the command:
     greet [person]
             Greet the named person
 
-The output shows one optional argument to :command:`greet`,
+The output shows one optional argument to ``greet``,
 ``person``. Although the argument is optional to the command, there is a
 distinction between the command and the callback method. The method
 always takes the argument, but sometimes the value is an empty
@@ -152,7 +152,7 @@ something to be desired. Since it comes from the docstring, it retains
 the indentation from the source file. The source could be changed to
 remove the extra white-space, but that would leave the application
 code looking poorly formatted. A better solution is to implement a
-help handler for the :command:`greet` command, named
+help handler for the ``greet`` command, named
 :func:`help_greet`. The help handler is called to produce help text
 for the named command.
 
@@ -327,7 +327,7 @@ Running Shell Commands
 
 To supplement the standard command processing, :class:`Cmd` includes
 two special command prefixes. A question mark (``?``) is equivalent to
-the built-in :command:`help` command, and can be used in the same
+the built-in ``help`` command, and can be used in the same
 way. An exclamation point (``!``) maps to :func:`do_shell`, and is
 intended for "shelling out" to run other commands, as in this example.
 
@@ -335,7 +335,7 @@ intended for "shelling out" to run other commands, as in this example.
     :caption:
     :start-after: #end_pymotw_header
 
-This :command:`echo` command implementation replaces the string
+This ``echo`` command implementation replaces the string
 ``$out`` in its argument with the output from the previous shell
 command.
 

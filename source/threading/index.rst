@@ -99,7 +99,7 @@ correspond to the unnamed thread :data:`w2`.
 
 .. {{{end}}}
 
-Most programs do not use :command:`print` to debug. The
+Most programs do not use ``print`` to debug. The
 :mod:`logging` module supports embedding the thread name in every log
 message using the formatter code ``%(threadName)s``. Including thread
 names in log messages makes it possible to trace those messages back to
@@ -546,7 +546,7 @@ Locks as Context Managers
 -------------------------
 
 Locks implement the context manager API and are compatible with the
-:command:`with` statement.  Using :command:`with` removes the need to
+``with`` statement.  Using ``with`` removes the need to
 explicitly acquire and release the lock.
 
 .. literalinclude:: threading_lock_with.py
@@ -585,7 +585,7 @@ other threads that they can continue.
     :caption:
     :start-after: #end_pymotw_header
 
-The threads use :command:`with` to acquire the lock associated with
+The threads use ``with`` to acquire the lock associated with
 the :class:`Condition`. Using the :func:`acquire` and
 :func:`release` methods explicitly also works.
 

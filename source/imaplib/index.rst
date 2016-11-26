@@ -395,7 +395,7 @@ Search criteria can also be combined.
    :caption:
    :start-after: #end_pymotw_header
 
-The criteria are combined with a logical :command:`and` operation.
+The criteria are combined with a logical ``and`` operation.
 
 .. NOT RUNNING
 

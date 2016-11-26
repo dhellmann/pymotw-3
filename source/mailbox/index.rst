@@ -107,7 +107,7 @@ Removing Messages from an mbox Mailbox
 --------------------------------------
 
 To remove an existing message from an mbox file, either use its key with
-:meth:`remove` or use :command:`del`.
+:meth:`remove` or use ``del``.
 
 .. literalinclude:: mailbox_mbox_remove.py
     :caption:
@@ -282,7 +282,7 @@ Removing Messages from a Maildir Mailbox
 ----------------------------------------
 
 To remove an existing message from a Maildir mailbox, either pass its
-key to :meth:`remove` or use :command:`del`.
+key to :meth:`remove` or use ``del``.
 
 .. literalinclude:: mailbox_maildir_remove.py
     :caption:

@@ -17,7 +17,7 @@ Creating Environments
 =====================
 
 The command line interface to :mod:`venv` depends on how Python was
-compiled and installed. The :command:`pyvenv` command is the simplest
+compiled and installed. The ``pyvenv`` command is the simplest
 interface
 
 .. {{{cog
@@ -32,7 +32,7 @@ interface
 
 .. {{{end}}}
 
-If :command:`pyvenv` is not installed or not on the shell search path,
+If ``pyvenv`` is not installed or not on the shell search path,
 it is possible to run the :mod:`venv` module using the interpreter's
 ``-m`` option. The following command has the same effect as the
 previous example.
@@ -96,7 +96,7 @@ convenient.
 
 On platforms that support them, symbolic links are used rather than
 copying the executables like the Python interpreter. In this
-environment, :command:`pip` is installed as a local copy but the
+environment, ``pip`` is installed as a local copy but the
 interpreter is a symlink.
 
 Finally, the environment includes a ``pyvenv.cfg`` file with settings
@@ -120,9 +120,9 @@ environment.
    :caption:
    :language: none
 
-A virtual environment is more useful with tools like :command:`pip`
+A virtual environment is more useful with tools like ``pip``
 and :mod:`setuptools` available to install other packages, so
-:command:`pyvenv` installs them by default. To create a bare
+``pyvenv`` installs them by default. To create a bare
 environment without these tools, pass ``--without-pip`` on the command
 line.
 

@@ -46,7 +46,7 @@ and the signal handler ``receive_signal`` prints the signal number.
 After the signal handler returns, the loop continues.
 
 Send signals to the running program using :func:`os.kill` or the UNIX
-command line program :command:`kill`.
+command line program ``kill``.
 
 .. NOT RUNNING
 

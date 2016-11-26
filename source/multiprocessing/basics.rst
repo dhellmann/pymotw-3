@@ -176,7 +176,7 @@ The daemon process is terminated automatically before the main program
 exits, which avoids leaving orphaned processes running.  This can be
 verified by looking for the process id value printed when the program
 runs, and then checking for that process with a command like
-:command:`ps`.
+``ps``.
 
 Waiting for Processes
 =====================

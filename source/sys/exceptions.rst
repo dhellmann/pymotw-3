@@ -22,7 +22,7 @@ errors.
     :caption:
     :start-after: #end_pymotw_header
 
-Since there is no :command:`try:except` block around the line where
+Since there is no ``try:except`` block around the line where
 the exception is raised the following call to :func:`print` is not
 run, even though the except hook is set.
 

@@ -18,7 +18,7 @@ default arguments. The resulting object is itself callable and can be
 treated as though it is the original function.  It takes all of the
 same arguments as the original, and can be invoked with extra
 positional or named arguments as well.  A :class:`partial` can be used
-instead of a :command:`lambda` to provide default arguments to a
+instead of a ``lambda`` to provide default arguments to a
 function, while leaving some arguments unspecified.
 
 Partial Objects
