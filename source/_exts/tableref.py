@@ -78,7 +78,11 @@ def _role(typ, rawtext, text, lineno, inliner,
 
 
 def latex_visit_tableref(self, node):
-    self.body.append(r'Table ~\ref{table:%s}' % node['refuri'])
+    if node['ids']:
+        id = node['ids'][0]
+    else:
+        id = 'table:' + node['refuri']
+    self.body.append(r'Table~\ref{%s}' % self.idescape(id))
     raise nodes.SkipNode
 
 

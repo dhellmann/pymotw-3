@@ -49,7 +49,8 @@ def _role(typ, rawtext, text, lineno, inliner,
 
 
 def latex_visit_figureref(self, node):
-    self.body.append(r'Figure ~\ref{figure:%s}' % node['refuri'])
+    id = 'figure:' + node['refuri']
+    self.body.append(r'Figure~\ref{%s}' % self.idescape(id))
     raise nodes.SkipNode
 
 
@@ -58,7 +59,7 @@ def latex_depart_figureref(self, node):
 
 
 def html_visit_figureref(self, node):
-    self.body.append(r'The figure below')
+    self.body.append(r'the figure')
     raise nodes.SkipNode
 
 

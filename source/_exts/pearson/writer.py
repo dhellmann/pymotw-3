@@ -963,6 +963,9 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
             self.body.append(self.hypertarget(id, anchor=False))
         if node['ids']:
             self.body.append(self.hypertarget(node['ids'][0], anchor=False))
+        if self.table.caption:
+            self.body.append(self.hypertarget('table:%s' % self.table.caption[0],
+                                              withdoc=False, anchor=False))
 
         # Formatting from Pearson template
         self.body.append('\\vspace{1.5ex}\n')
@@ -1321,6 +1324,8 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
 
     def visit_figure(self, node):
         ids = ''
+        if node.get('refuri'):
+            ids += self.hypertarget(node['refuri'], withdoc=False, anchor=False)
         for id in sorted(self.pop_hyperlink_ids('figure')):
             ids += self.hypertarget(id, anchor=False)
         if node['ids']:
@@ -1329,16 +1334,25 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
            isinstance(node.children[0], nodes.image) and
            node.children[0]['ids']):
             ids += self.hypertarget(node.children[0]['ids'][0], anchor=False)
+        for c in node.children:
+            if isinstance(c, nodes.caption):
+                caption = c.astext()
+                node.caption = caption
+                ids += self.hypertarget('figure:%s' % caption,
+                                        withdoc=False,
+                                        anchor=False)
+                break
         self.restrict_footnote(node)
 
-        self.body.append('\\begin{figure}[tb]\\begin{center}\n')
+        self.body.append('\\begin{figure}[tb]\\begin{center}')
         # The context is added to the body in depart_figure()
         if ids:
             self.context.append(ids)
         self.context.append('\\end{center}\\end{figure}\n')
 
     def depart_figure(self, node):
-        self.body.append(self.context.pop())
+        self.body.extend(self.context)
+        self.context = []
         self.unrestrict_footnote(node)
 
     def visit_caption(self, node):
