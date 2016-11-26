@@ -60,7 +60,7 @@ called and from where.
       :linenos:
       :caption:
 
-This example ignores calls to :func:`write`, as used by :command:`print` to
+This example ignores calls to :func:`write`, as used by ``print`` to
 write to :const:`sys.stdout`.
 
 .. {{{cog

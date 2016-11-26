@@ -8,7 +8,7 @@
 :Purpose: Utilities for creating and working with context managers.
 
 The :mod:`contextlib` module contains utilities for working with
-context managers and the :command:`with` statement.
+context managers and the ``with`` statement.
 
 Context Manager API
 ===================
@@ -23,19 +23,19 @@ reading or writing is done.
    :caption:
    :start-after: #end_pymotw_header
 
-A context manager is enabled by the :command:`with` statement, and the
+A context manager is enabled by the ``with`` statement, and the
 API involves two methods.  The :func:`__enter__` method is run when
-execution flow enters the code block inside the :command:`with`.  It
+execution flow enters the code block inside the ``with``.  It
 returns an object to be used within the context.  When execution flow
-leaves the :command:`with` block, the :func:`__exit__` method of the
+leaves the ``with`` block, the :func:`__exit__` method of the
 context manager is called to clean up any resources being used.
 
 .. literalinclude:: contextlib_api.py
    :caption:
    :start-after: #end_pymotw_header
 
-Combining a context manager and the :command:`with` statement is a
-more compact way of writing a :command:`try:finally` block, since the
+Combining a context manager and the ``with`` statement is a
+more compact way of writing a ``try:finally`` block, since the
 context manager's :func:`__exit__` method is always called, even if an
 exception is raised.
 
@@ -55,8 +55,8 @@ exception is raised.
 .. {{{end}}}
 
 The :func:`__enter__` method can return any object to be associated
-with a name specified in the :command:`as` clause of the
-:command:`with` statement.  In this example, the :class:`Context`
+with a name specified in the ``as`` clause of the
+``with`` statement.  In this example, the :class:`Context`
 returns an object that uses the open context.
 
 .. literalinclude:: contextlib_api_other_object.py
@@ -65,7 +65,7 @@ returns an object that uses the open context.
 
 The value associated with the variable :data:`c` is the object
 returned by :func:`__enter__`, which is not necessarily the
-:class:`Context` instance created in the :command:`with` statement.
+:class:`Context` instance created in the ``with`` statement.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'contextlib_api_other_object.py'))
@@ -85,7 +85,7 @@ returned by :func:`__enter__`, which is not necessarily the
 .. {{{end}}}
 
 The :func:`__exit__` method receives arguments containing details of
-any exception raised in the :command:`with` block.  
+any exception raised in the ``with`` block.  
 
 .. literalinclude:: contextlib_api_error.py
    :caption:
@@ -137,8 +137,8 @@ context managers.
 
 One difference with using the context manager as a decorator is that
 the value returned by :func:`__enter__` is not available inside the
-function being decorated, unlike when using :command:`with` and
-:command:`as`. Arguments passed to the decorated function are
+function being decorated, unlike when using ``with`` and
+``as``. Arguments passed to the decorated function are
 available in the usual way.
 
 .. {{{cog
@@ -180,8 +180,8 @@ function into a context manager.
 
 The generator should initialize the context, yield exactly one time,
 then clean up the context. The value yielded, if any, is bound to the
-variable in the :command:`as` clause of the :command:`with`
-statement. Exceptions from within the :command:`with` block are
+variable in the ``as`` clause of the ``with``
+statement. Exceptions from within the ``with`` block are
 re-raised inside the generator, so they can be handled there.
 
 .. {{{cog
@@ -276,7 +276,7 @@ context manager API. To ensure that a handle is closed, use
     :caption:
     :start-after: #end_pymotw_header
 
-The handle is closed whether there is an error in the :command:`with`
+The handle is closed whether there is an error in the ``with``
 block or not.
 
 .. {{{cog
@@ -407,7 +407,7 @@ An :class:`ExitStack` instance maintains a stack data structure of
 cleanup callbacks. The callbacks are populated explicitly within the
 context, and any registered callbacks are called in the reverse order
 when control flow exits the context. The result is like having multple
-nested :command:`with` statements, except they are established
+nested ``with`` statements, except they are established
 dynamically.
 
 Stacking Context Managers
@@ -443,7 +443,7 @@ to be invoked as the stack is undone.
 .. {{{end}}}
 
 The context managers given to :class:`ExitStack` are treated as though
-they are in a series of nested :command:`with` statements. Errors that
+they are in a series of nested ``with`` statements. Errors that
 happen anywhere within the context propagate through the normal error
 handling of the context managers. These context manager classes
 illustrate the way errors propagate.
@@ -681,7 +681,7 @@ is propagated.
 
    * :pydoc:`contextlib`
 
-   * :pep:`343` -- The :command:`with` statement.
+   * :pep:`343` -- The ``with`` statement.
 
    * `Context Manager Types
      <https://docs.python.org/library/stdtypes.html#typecontextmanager>`__

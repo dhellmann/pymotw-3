@@ -131,7 +131,7 @@ happened then a :class:`CalledProcessError` exception is raised.
    :caption:
    :start-after: #end_pymotw_header
 
-The :command:`false` command always exits with a non-zero status code,
+The ``false`` command always exits with a non-zero status code,
 which :func:`run` interprets as an error.
 
 .. {{{cog

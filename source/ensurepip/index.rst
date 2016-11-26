@@ -11,7 +11,7 @@ While Python is the "Batteries Included" programming language and
 comes with a wide variety of modules in the standard library, there
 are even more libraries, frameworks, and tools available to be
 installed from the `Python Package Index`_. To install those packages,
-a developer needs the installer tool :command:`pip`. Installing a tool
+a developer needs the installer tool ``pip``. Installing a tool
 meant to install tools presents an interesting bootstrapping issue,
 which :mod:`ensurepip` solves.
 
@@ -19,7 +19,7 @@ Installing ``pip``
 ==================
 
 This example uses a virtual environment configured without
-:command:`pip` installed.
+``pip`` installed.
 
 .. {{{cog
 .. run_script(cog.inFile, 'rm -rf /tmp/demoenv', interpreter='')

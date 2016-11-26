@@ -108,8 +108,8 @@ used to run the DDL instructions to create the schema.
    :caption:
    :start-after: #end_pymotw_header
 
-After the tables are created, a few :command:`insert` statements
-create a sample project and related tasks.  The :command:`sqlite3`
+After the tables are created, a few ``insert`` statements
+create a sample project and related tasks.  The ``sqlite3``
 command line program can be used to examine the contents of the
 database.
 
@@ -152,7 +152,7 @@ Querying is a two step process.  First, run the query with the
 cursor's :func:`execute` method to tell the database engine what data
 to collect.  Then, use :func:`fetchall` to retrieve the results.  The
 return value is a sequence of tuples containing the values for the
-columns included in the :command:`select` clause of the query.
+columns included in the ``select`` clause of the query.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'sqlite3_select_tasks.py'))
@@ -262,7 +262,7 @@ the column index or name.
 This version of the ``sqlite3_select_variations.py`` example has been
 re-written using :class:`Row` instances instead of tuples.  The row
 from the project table is still printed by accessing the column values
-through position, but the :command:`print` statement for tasks uses
+through position, but the ``print`` statement for tasks uses
 keyword lookup instead, so it does not matter that the order of the
 columns in the query has been changed.
 
@@ -364,15 +364,15 @@ since they are given special treatment by the query parser.
 
 .. {{{end}}}
 
-Query parameters can be used with :command:`select`,
-:command:`insert`, and :command:`update` statements.  They can appear
+Query parameters can be used with ``select``,
+``insert``, and ``update`` statements.  They can appear
 in any part of the query where a literal value is legal.
 
 .. literalinclude:: sqlite3_argument_update.py
    :caption:
    :start-after: #end_pymotw_header
 
-This :command:`update` statement uses two named parameters.  The
+This ``update`` statement uses two named parameters.  The
 :data:`id` value is used to find the right row to modify, and the
 :data:`status` value is written to the table.
 
@@ -534,7 +534,7 @@ Determining Types for Columns
 There are two sources for types information about the data for a
 query.  The original table declaration can be used to identify the
 type of a real column, as shown earlier.  A type specifier can also be
-included in the :command:`select` clause of the query itself using the
+included in the ``select`` clause of the query itself using the
 form ``as "name [type]"``.
 
 .. literalinclude:: sqlite3_custom_type_column.py
@@ -584,8 +584,8 @@ connection without effecting any other users until the results are
 Preserving Changes
 ------------------
 
-Changes to the database, either through :command:`insert` or
-:command:`update` statements, need to be saved by explicitly calling
+Changes to the database, either through ``insert`` or
+``update`` statements, need to be saved by explicitly calling
 :func:`commit`.  This requirement gives an application an opportunity
 to make several related changes together, so they are stored
 *atomically* instead of incrementally, and avoids a situation where
@@ -919,7 +919,7 @@ Using Python Functions in SQL
 =============================
 
 SQL syntax supports calling functions during queries, either in
-the column list or :command:`where` clause of the :command:`select`
+the column list or ``where`` clause of the ``select``
 statement.  This feature makes it possible to process data before
 returning it from the query, and can be used to convert between
 different formats, perform calculations that would be clumsy in pure

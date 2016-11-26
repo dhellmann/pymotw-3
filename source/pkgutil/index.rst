@@ -38,7 +38,7 @@ package import path.
 
 An example package called :mod:`demopkg` includes two files,
 ``__init__.py`` and ``shared.py``.  The ``__init__.py`` file in
-``demopkg1`` contains :command:`print` statements to show the search
+``demopkg1`` contains ``print`` statements to show the search
 path before and after it is modified, to highlight the difference.
 
 .. literalinclude:: demopkg1/__init__.py
@@ -142,7 +142,7 @@ necessarily correct and other tools on the system are likely to depend
 on the installed package.
 
 A completely separate copy of the package could be configured in a
-development environment using :command:`virtualenv` or :mod:`venv`,
+development environment using ``virtualenv`` or :mod:`venv`,
 but for small modifications the overhead of setting up a virtual
 environment with all of the dependencies may be excessive.
 

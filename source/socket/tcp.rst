@@ -153,7 +153,7 @@ server can be tested.
    :start-after: #end_pymotw_header
 
 After starting the server with the argument ``hubert``, the
-:command:`netstat` command shows it listening on the address for the
+``netstat`` command shows it listening on the address for the
 named host.
 
 .. NOT RUNNING
@@ -225,7 +225,7 @@ string (``''``) instead of doing the conversion.
 
 To see the actual address being used by a socket, call its
 :func:`getsockname` method.  After starting the service, running
-:command:`netstat` again shows it listening for incoming connections
+``netstat`` again shows it listening for incoming connections
 on any address.
 
 .. NOT RUNNING

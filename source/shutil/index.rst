@@ -337,7 +337,7 @@ To move a file or directory from one place to another, use
     :caption:
     :start-after: #end_pymotw_header
 
-The semantics are similar to those of the Unix command :command:`mv`. If the
+The semantics are similar to those of the Unix command ``mv``. If the
 source and destination are within the same file system, the source is
 renamed.  Otherwise the source is copied to the destination and then
 the source is removed.

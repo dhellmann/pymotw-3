@@ -436,7 +436,7 @@ Running ``bz2_server.py`` produces:
     * :pydoc:`bz2`
 
     * `bzip2.org <http://www.bzip.org/>`_ -- The home page for
-      :command:`bzip2`.
+      ``bzip2``.
 
     * :mod:`zlib` -- The ``zlib`` module for GNU zip compression.
 

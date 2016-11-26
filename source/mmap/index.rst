@@ -166,7 +166,7 @@ them.
    :start-after: #end_pymotw_header
 
 Because the pattern includes two groups, the return value from
-:func:`findall` is a sequence of tuples. The :command:`print`
+:func:`findall` is a sequence of tuples. The ``print``
 statement pulls out the matching sentence and replaces newlines with
 spaces so each result prints on a single line.
 

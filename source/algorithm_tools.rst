@@ -24,8 +24,8 @@ item lookup.
 
 And no matter what style is used in a program, :mod:`contextlib` makes
 resource management easier, more reliable, and more concise.
-Combining context managers and the :command:`with` statement reduces
-the number of :command:`try:finally` blocks and indentation levels
+Combining context managers and the ``with`` statement reduces
+the number of ``try:finally`` blocks and indentation levels
 needed, while ensuring that files, sockets, database transactions, and
 other resources are closed and released at the right time.
 

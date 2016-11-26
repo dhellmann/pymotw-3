@@ -22,7 +22,7 @@ simplicity and familiarity make it a popular choice.
 Interactive programs should use :mod:`readline` to give the user a
 command prompt.  It includes tools for managing history,
 auto-completing parts of commands, and interactive editing with
-:command:`emacs` and :command:`vi` key-bindings.  To securely prompt
+``emacs`` and ``vi`` key-bindings.  To securely prompt
 the user for a password or other secret value, without echoing the
 value to the screen as it is typed, use :mod:`getpass`.
 
@@ -55,7 +55,7 @@ line-by-line filter that reads data, modifies it, and writes it back
 out.  Reading from files is simple enough, but there may not be an
 easier way to create a filter application than by using the
 :mod:`fileinput` module.  Its API is a line iterator that yields each
-input line, so the main body of the program is a simple :command:`for`
+input line, so the main body of the program is a simple ``for``
 loop.  The module handles parsing command line arguments for filenames
 to be processed, or falling back to reading directly from standard
 input, so tools built on :mod:`fileinput` can be run directly on a

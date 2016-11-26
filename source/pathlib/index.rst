@@ -627,7 +627,7 @@ look up the name associated with the IDs.
 
 .. {{{end}}}
 
-The :func:`touch` method works like the UNIX command :command:`touch`
+The :func:`touch` method works like the UNIX command ``touch``
 to create a file or update an existing file's modification time and
 permissions.
 

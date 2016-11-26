@@ -77,7 +77,7 @@ other operating systems there is a hard-coded table of values.
   * `Platform values
     <https://docs.python.org/3/library/sys.html#sys.platform>`_ --
     Hard-coded values of :const:`sys.platform` for systems without
-    :command:`uname`.
+    ``uname``.
 
 Interpreter Implementation
 ==========================

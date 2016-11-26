@@ -9,7 +9,7 @@
 
 Programming using iterators occasionally requires creating small
 functions for simple expressions. Sometimes, these can be implemented
-as :command:`lambda` functions, but for some operations new functions
+as ``lambda`` functions, but for some operations new functions
 are not needed at all.  The :mod:`operator` module defines functions
 that correspond to built-in operations for arithmetic, comparison, and
 other operations corresponding to standard object APIs.
@@ -25,11 +25,11 @@ comparing objects to see if they are identical.
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`not_` includes the trailing underscore because :command:`not`
+:func:`not_` includes the trailing underscore because ``not``
 is a Python keyword.  :func:`truth` applies the same logic used when
-testing an expression in an :command:`if` statement or converting an
+testing an expression in an ``if`` statement or converting an
 expression to a :class:`bool`.  :func:`is_` implements the same check
-used by the :command:`is` keyword, and :func:`is_not` does the same
+used by the ``is`` keyword, and :func:`is_not` does the same
 test and returns the opposite answer.
 
 .. {{{cog
@@ -229,7 +229,7 @@ concept of *getters*. These are callable objects constructed at
 runtime to retrieve attributes of objects or contents from
 sequences. Getters are especially useful when working with iterators
 or generator sequences, where they are intended to incur less overhead
-than a :command:`lambda` or Python function.
+than a ``lambda`` or Python function.
 
 .. literalinclude:: operator_attrgetter.py
    :caption:

@@ -38,7 +38,7 @@ Configuring
 There are two ways to configure the underlying readline library, using
 a configuration file or the :func:`parse_and_bind` function.
 Configuration options include the key-binding to invoke completion,
-editing modes (:command:`vi` or :command:`emacs`), and many other
+editing modes (``vi`` or ``emacs``), and many other
 values.  Refer to the documentation for the GNU readline library for
 details.
 
@@ -46,7 +46,7 @@ The easiest way to enable tab-completion is through a call to
 :func:`parse_and_bind`.  Other options can be set at the same time.
 This example changes the editing controls to use "vi" mode instead of
 the default of "emacs".  To edit the current input line, press ``ESC``
-then use normal :command:`vi` navigation keys such as ``j``, ``k``,
+then use normal ``vi`` navigation keys such as ``j``, ``k``,
 ``l``, and ``h``.
 
 .. literalinclude:: readline_parse_and_bind.py
@@ -150,7 +150,7 @@ and the log reflects the different arguments to :func:`complete`:
     complete('l', 1) => None
 
 Pressing RETURN now causes :func:`input` to return the value, and the
-:command:`while` loop cycles.
+``while`` loop cycles.
 
 .. code-block:: none
 
