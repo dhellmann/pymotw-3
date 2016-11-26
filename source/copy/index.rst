@@ -162,7 +162,7 @@ returns the copied object when it is done.
    "root" -> "a";
    "root" -> "b";
 
-There are several cycles in the graph shown in :figure:`copy_example`,
+There are several cycles in the graph shown in :figure:`Deep copy for an Object Graph With Cycles`,
 but handling the recursion with the memo dictionary prevents the
 traversal from causing a stack overflow error.  When the *root* node
 is copied, the output is:

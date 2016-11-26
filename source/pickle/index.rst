@@ -258,7 +258,7 @@ Circular References
 
 The pickle protocol automatically handles circular references between
 objects, so complex data structures do not need any special handling.
-Consider the directed graph in :figure:`pickle_example`.  It includes
+Consider the directed graph in :figure:`Pickling a Data Structure With Cycles`.  It includes
 several cycles, yet the correct structure can be pickled and then
 reloaded.
 
