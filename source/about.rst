@@ -13,7 +13,7 @@ See the project home page at https://pymotw.com/3/ for updates.
 
 Source code is available via git from
 https://bitbucket.org/dhellmann/pymotw-3/ or
-https://pymotw.com/3/PyMOTW-3-0.0.tar.gz as a single downloadable
+https://pymotw.com/3/PyMOTW-3-1.0.tar.gz as a single downloadable
 archive.
 
 Complete documentation for the standard library can be found on the
