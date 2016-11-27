@@ -36,7 +36,8 @@ class GetHandler(BaseHTTPRequestHandler):
         message_parts.append('')
         message = '\r\n'.join(message_parts)
         self.send_response(200)
-        self.send_header('Content-Type', 'text/plain; charset=utf-8')
+        self.send_header('Content-Type',
+                         'text/plain; charset=utf-8')
         self.end_headers()
         self.wfile.write(message.encode('utf-8'))
 

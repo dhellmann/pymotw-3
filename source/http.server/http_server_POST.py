@@ -23,7 +23,8 @@ class PostHandler(BaseHTTPRequestHandler):
 
         # Begin the response
         self.send_response(200)
-        self.send_header('Content-Type', 'text/plain; charset=utf-8')
+        self.send_header('Content-Type',
+                         'text/plain; charset=utf-8')
         self.end_headers()
 
         out = io.TextIOWrapper(
@@ -56,8 +57,9 @@ class PostHandler(BaseHTTPRequestHandler):
                 out.write('\t{}={}\n'.format(
                     field, form[field].value))
 
-        # Separate our encoding wrapper from the underlying buffer so
-        # that deleting the wrapper doesn't close the socket.
+        # Separate our encoding wrapper from the underlying
+        # buffer so that deleting the wrapper doesn't close
+        # the socket.
         out.detach()
 
 
