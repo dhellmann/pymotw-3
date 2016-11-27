@@ -12,7 +12,8 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         self.send_response(200)
-        self.send_header('Content-Type', 'text/plain; charset=utf-8')
+        self.send_header('Content-Type',
+                         'text/plain; charset=utf-8')
         self.end_headers()
         message = threading.currentThread().getName()
         self.wfile.write(message.encode('utf-8'))
