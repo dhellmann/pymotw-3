@@ -13,13 +13,13 @@ class SkippingTest(unittest.TestCase):
     def test(self):
         self.assertTrue(False)
 
-    @unittest.skipIf('only runs on python 2',
-                     sys.version_info[0] > 2)
+    @unittest.skipIf(sys.version_info[0] > 2,
+                     'only runs on python 2')
     def test_python2_only(self):
         self.assertTrue(False)
 
-    @unittest.skipUnless('only runs on macOS',
-                         sys.platform == 'Darwin')
+    @unittest.skipUnless(sys.platform == 'Darwin',
+                         'only runs on macOS')
     def test_macos_only(self):
         self.assertTrue(True)
 

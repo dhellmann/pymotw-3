@@ -720,15 +720,17 @@ skipped.
 	$ python3 -m unittest -v unittest_skip.py
 	
 	test (unittest_skip.SkippingTest) ... skipped 'always skipped'
-	test_macos_only (unittest_skip.SkippingTest) ... ok
-	test_python2_only (unittest_skip.SkippingTest) ... skipped True
+	test_macos_only (unittest_skip.SkippingTest) ... skipped 'only
+	runs on macOS'
+	test_python2_only (unittest_skip.SkippingTest) ... skipped 'only
+	runs on python 2'
 	test_raise_skiptest (unittest_skip.SkippingTest) ... skipped
 	'skipping via exception'
 	
 	----------------------------------------------------------------
 	Ran 4 tests in 0.000s
 	
-	OK (skipped=3)
+	OK (skipped=4)
 
 .. {{{end}}}
 
