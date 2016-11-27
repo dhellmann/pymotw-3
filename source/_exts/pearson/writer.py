@@ -951,6 +951,25 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
         self.body.append('\\begin{center}\n')
         self.body.append('\\begin{threeparttable}\n')
 
+        def find_colspec(node):
+            for c in node.children:
+                if isinstance(c, nodes.colspec):
+                    yield c
+                else:
+                    yield from find_colspec(c)
+
+        # Work out the widths requested for the columns, if any, and
+        # then decide if we need to set those widths or let LaTeX
+        # produce a best-fit.
+        widths = []
+        for c in find_colspec(node):
+            widths.append(c['colwidth'])
+        total_width = sum(widths)
+        diff_widths = len(set(widths))
+        widest = max(widths)
+        # Are we trying to specify the widths to fit within the page?
+        need_to_set_widths = total_width == 100 and diff_widths != 1
+
         # Add the caption, if any
         if self.table.caption:
             self.body.append('\\caption{')
@@ -972,12 +991,24 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
         self.body.append('{\\small \\begin{tabular}')
 
         # Column specifier
-        if self.table.colspec:
-            self.body.append(self.table.colspec.rstrip())
+        if need_to_set_widths:
+            # If we're setting the widths, that means we had enough
+            # info to specify how wide each column should be. Assume
+            # that one of those widths is set to the max to hold a
+            # paragraph of description for shorter values in the other
+            # columns.
+            colspec = '{ | '
+            for w in widths:
+                if w != widest:
+                    colspec += 'l | '
+                else:
+                    colspec += 'p{\\dimexpr 0.%d\\linewidth-2\\tabcolsep} | ' % w
+            colspec += '}'
         else:
             # Default to left-justified (Pearson template defaults to
             # centered?)
-            self.body.append('{|' + ('l|' * self.table.colcount) + '}')
+            colspec = '{|' + ('l|' * self.table.colcount) + '}'
+        self.body.append(colspec)
 
         # Use thick lines and make the first row background grey
         self.body.append('\\thickhline\n')
