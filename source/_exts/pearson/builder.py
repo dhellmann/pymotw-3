@@ -2,6 +2,7 @@
 """LaTeX builder using Pearson style templates.
 """
 
+import copy
 import os
 from os import path
 import textwrap
@@ -70,10 +71,9 @@ class PearsonLaTeXBuilder(Builder):
         return 'all documents'  # for now
 
     def get_target_uri(self, docname, typ=None):
-        if docname not in self.docnames:
-            raise NoUri
-        else:
-            return '%' + docname
+        # NOTE: Assume that we always have access to all documents,
+        # and return a value target.
+        return '%' + docname
 
     def get_relative_uri(self, from_, to, typ=None):
         # ignore source path
@@ -118,6 +118,35 @@ class PearsonLaTeXBuilder(Builder):
         self.init_chapters()
         self.processed_docs = {}
 
+        # Build the template context before rendering the
+        # non-templated files so we can include those file names in a
+        # context parameter.
+        global_context = self.theme.get_options(self.config.pearson_theme_options)
+        global_context.update({
+            'chapter_names': [],
+            'appendices': [],
+            'indices': [],
+        })
+
+        # HACK:
+        # Compute the full document and use it to process
+        # cross-references, which we then save to use when processing
+        # individual chapters.
+        toctrees = self.env.get_doctree(global_context['input_base']).traverse(addnodes.toctree)
+        if toctrees:
+            if toctrees[0].get('maxdepth') > 0:
+                tocdepth = toctrees[0].get('maxdepth')
+            else:
+                tocdepth = None
+        else:
+            tocdepth = None
+        doctree = self.assemble_doctree(
+            global_context['input_base'],
+            True,  # toctree_only
+            appendices=self.config.latex_appendices,
+        )
+        std_domain_data = copy.deepcopy(self.env.domains['std'].data)
+
         def process_doc(name_fmt, num, docname, doctype):
             name = name_fmt.format(num)
             destination = FileOutput(
@@ -132,6 +161,10 @@ class PearsonLaTeXBuilder(Builder):
                     tocdepth = None
             else:
                 tocdepth = None
+            # HACK:
+            # Stuff the full domain data back into the domain so the
+            # xref data is present.
+            self.env.domains['std'].data = copy.deepcopy(std_domain_data)
             doctree = self.assemble_doctree(
                 docname,
                 False,  # toctree_only
@@ -150,16 +183,6 @@ class PearsonLaTeXBuilder(Builder):
             docwriter.write(doctree, destination)
             self.info("done")
             return name
-
-        # Build the template context before rendering the
-        # non-templated files so we can include those file names in a
-        # context parameter.
-        global_context = self.theme.get_options(self.config.pearson_theme_options)
-        global_context.update({
-            'chapter_names': [],
-            'appendices': [],
-            'indices': [],
-        })
 
         # First generate the chapters
         chap_name_fmt = 'chap{:02d}'
