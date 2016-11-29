@@ -57,9 +57,9 @@ class PostHandler(BaseHTTPRequestHandler):
                 out.write('\t{}={}\n'.format(
                     field, form[field].value))
 
-        # Separate our encoding wrapper from the underlying
+        # Detatch our encoding wrapper from the underlying
         # buffer so that deleting the wrapper doesn't close
-        # the socket.
+        # the socket, which is still being used by the server.
         out.detach()
 
 
