@@ -43,7 +43,7 @@ completely received, and given these arguments:
 
 *data*
 
-  The full RFC 2822 message body.
+  The full RFC 5322 message body.
 
 The default implementation of :func:`process_message` raises
 :class:`NotImplementedError`.  The next example defines a subclass
@@ -198,5 +198,8 @@ the mail server logs.
 
    * :mod:`asyncore` -- Base module for writing asynchronous servers.
 
-   * :rfc:`2822` -- Defines the email message format.
+   * :rfc:`2822` -- *Internet Message Format*, defines the email
+     message format.
+
+   * :rfc:`5322` -- Replacement for RFC 2822.
 
