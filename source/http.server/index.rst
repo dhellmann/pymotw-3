@@ -248,7 +248,7 @@ It takes two arguments: the name of the header and the value.
    :start-after: #end_pymotw_header
 
 This example sets the ``Last-Modified`` header to the current
-timestamp, formatted according to RFC 2822.
+timestamp, formatted according to RFC 7231.
 
 .. code-block:: none
 
@@ -308,5 +308,6 @@ server is started.
    * :mod:`socketserver` -- The ``socketserver`` module provides the
      base class that handles the raw socket connection.
 
-   * :rfc:`2822` -- The "Internet Message Format" specifies a format
-     for text-based messages such as email and HTTP responses.
+   * :rfc:`7231` -- "Hypertext Transfer Protocol (HTTP/1.1): Semantics
+     and Content" includes a specification for the format of HTTP
+     headers and dates.
