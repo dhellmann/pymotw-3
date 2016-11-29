@@ -888,6 +888,8 @@ not notified about the deletions when :meth:`close()` is called.
 
     * :rfc:`2822` -- Internet Message Format
 
+    * :rfc:`5322` -- Replacement for RFC 2822.
+
     * `IMAP Backup Script`_ -- A script to backup email from an IMAP
       server.
 

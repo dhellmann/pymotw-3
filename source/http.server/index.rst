@@ -84,6 +84,11 @@ In a separate terminal, use ``curl`` to access it:
     User-Agent=curl/7.43.0
     * Connection #0 to host 127.0.0.1 left intact
 
+.. note::
+
+  The output produced by different versions of ``curl`` may vary. If
+  running the examples produces different output, check the version
+  number reported by ``curl``.
 
 HTTP POST
 =========
@@ -245,7 +250,7 @@ It takes two arguments: the name of the header and the value.
    :start-after: #end_pymotw_header
 
 This example sets the ``Last-Modified`` header to the current
-timestamp, formatted according to RFC 2822.
+timestamp, formatted according to RFC 7231.
 
 .. code-block:: none
 
@@ -305,5 +310,6 @@ server is started.
    * :mod:`socketserver` -- The ``socketserver`` module provides the
      base class that handles the raw socket connection.
 
-   * :rfc:`2822` -- The "Internet Message Format" specifies a format
-     for text-based messages such as email and HTTP responses.
+   * :rfc:`7231` -- "Hypertext Transfer Protocol (HTTP/1.1): Semantics
+     and Content" includes a specification for the format of HTTP
+     headers and dates.
