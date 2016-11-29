@@ -87,6 +87,11 @@ In a separate terminal, use ``curl`` to access it:
     User-Agent=curl/7.43.0
     * Connection #0 to host 127.0.0.1 left intact
 
+.. note::
+
+  The output produced by different versions of ``curl`` may vary. If
+  running the examples produces different output, check the version
+  number reported by ``curl``.
 
 HTTP POST
 =========
