@@ -14,14 +14,13 @@ import email.parser
 import imaplib_connect
 
 
-email_parser = email.parser.BytesFeedParser()
-
 with imaplib_connect.open_connection() as c:
     c.select('INBOX', readonly=True)
 
     typ, msg_data = c.fetch('1', '(RFC822)')
     for response_part in msg_data:
         if isinstance(response_part, tuple):
+            email_parser = email.parser.BytesFeedParser()
             email_parser.feed(response_part[1])
             msg = email_parser.close()
             for header in ['subject', 'to', 'from']:
