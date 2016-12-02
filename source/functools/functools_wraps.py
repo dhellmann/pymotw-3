@@ -28,8 +28,7 @@ def simple_decorator(f):
     def decorated(a='decorated defaults', b=1):
         print('  decorated:', (a, b))
         print('  ', end=' ')
-        f(a, b=b)
-        return
+        return f(a, b=b)
     return decorated
 
 
