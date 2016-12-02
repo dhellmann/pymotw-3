@@ -105,12 +105,12 @@ values to be modified.
 	$ python3 functools_update_wrapper.py
 	
 	myfunc:
-	  object: <function myfunc at 0x1007a6a60>
+	  object: <function myfunc at 0x1018a6a60>
 	  __name__: myfunc
 	  __doc__ 'Docstring for myfunc().'
 	
 	raw wrapper:
-	  object: functools.partial(<function myfunc at 0x1007a6a60>,
+	  object: functools.partial(<function myfunc at 0x1018a6a60>,
 	b=4)
 	  __name__: (no __name__)
 	  __doc__ 'partial(func, *args, **keywords) - new function with
@@ -122,7 +122,7 @@ values to be modified.
 	  update: ('__dict__',)
 	
 	updated wrapper:
-	  object: functools.partial(<function myfunc at 0x1007a6a60>,
+	  object: functools.partial(<function myfunc at 0x1018a6a60>,
 	b=4)
 	  __name__: myfunc
 	  __doc__ 'Docstring for myfunc().'
@@ -151,18 +151,18 @@ This example creates partials from an instance of a class with a
 	$ python3 functools_callable.py
 	
 	instance:
-	  object: <__main__.MyClass object at 0x1007b1cf8>
+	  object: <__main__.MyClass object at 0x1011b1cf8>
 	  __name__: (no __name__)
 	  __doc__ 'Demonstration class for functools'
-	  called object with: (<__main__.MyClass object at 0x1007b1cf8>,
+	  called object with: (<__main__.MyClass object at 0x1011b1cf8>,
 	'e goes here', 6)
 	
 	instance wrapper:
 	  object: functools.partial(<__main__.MyClass object at
-	0x1007b1cf8>, f=8, e='default for e')
+	0x1011b1cf8>, f=8, e='default for e')
 	  __name__: (no __name__)
 	  __doc__ 'Demonstration class for functools'
-	  called object with: (<__main__.MyClass object at 0x1007b1cf8>,
+	  called object with: (<__main__.MyClass object at 0x1011b1cf8>,
 	'default for e', 8)
 
 .. {{{end}}}
@@ -232,7 +232,7 @@ properties of the original "bare" function.
 	$ python3 functools_wraps.py
 	
 	myfunc:
-	  object: <function myfunc at 0x101041b70>
+	  object: <function myfunc at 0x101241b70>
 	  __name__: myfunc
 	  __doc__ 'myfunc() is not complicated'
 	
@@ -240,7 +240,7 @@ properties of the original "bare" function.
 	  myfunc: ('unwrapped, passing b', 3)
 	
 	wrapped_myfunc:
-	  object: <function myfunc at 0x1010e62f0>
+	  object: <function myfunc at 0x1012e62f0>
 	  __name__: myfunc
 	  __doc__ 'myfunc() is not complicated'
 	
@@ -250,7 +250,7 @@ properties of the original "bare" function.
 	     myfunc: ('args to wrapped', 4)
 	
 	decorated_myfunc:
-	  object: <function decorated_myfunc at 0x1010e6400>
+	  object: <function decorated_myfunc at 0x1012e6400>
 	  __name__: decorated_myfunc
 	  __doc__ None
 	
@@ -303,12 +303,12 @@ rest of the methods that work by using the comparisons provided.
 	
 	Methods:
 	
-	[('__eq__', <function MyObject.__eq__ at 0x1014a9488>),
-	 ('__ge__', <function _ge_from_gt at 0x1010e2510>),
-	 ('__gt__', <function MyObject.__gt__ at 0x1014a9510>),
-	 ('__init__', <function MyObject.__init__ at 0x1014a9400>),
-	 ('__le__', <function _le_from_gt at 0x1010e2598>),
-	 ('__lt__', <function _lt_from_gt at 0x1010e2488>)]
+	[('__eq__', <function MyObject.__eq__ at 0x10139a488>),
+	 ('__ge__', <function _ge_from_gt at 0x1012e2510>),
+	 ('__gt__', <function MyObject.__gt__ at 0x10139a510>),
+	 ('__init__', <function MyObject.__init__ at 0x10139a400>),
+	 ('__le__', <function _le_from_gt at 0x1012e2598>),
+	 ('__lt__', <function _lt_from_gt at 0x1012e2488>)]
 	
 	Comparisons:
 	
@@ -370,15 +370,15 @@ keys are created, the sequence is sorted by comparing the keys.
 	$ python3 functools_cmp_to_key.py
 	
 	key_wrapper(MyObject(5)) -> <functools.KeyWrapper object at
-	0x1010c5590>
+	0x1011c5530>
 	key_wrapper(MyObject(4)) -> <functools.KeyWrapper object at
-	0x1010c5570>
+	0x1011c5510>
 	key_wrapper(MyObject(3)) -> <functools.KeyWrapper object at
-	0x1010c5550>
+	0x1011c54f0>
 	key_wrapper(MyObject(2)) -> <functools.KeyWrapper object at
-	0x1010c5530>
+	0x1011c5390>
 	key_wrapper(MyObject(1)) -> <functools.KeyWrapper object at
-	0x1010c5510>
+	0x1011c5710>
 	comparing MyObject(4) and MyObject(5)
 	comparing MyObject(3) and MyObject(4)
 	comparing MyObject(2) and MyObject(3)
