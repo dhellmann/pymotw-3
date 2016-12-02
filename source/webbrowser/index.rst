@@ -98,3 +98,7 @@ the command line as well as from within your Python program.
 .. seealso::
 
    * :pydoc:`webbrowser`
+
+   * `What the What? <https://github.com/dhellmann/whatthewhat>`_ --
+     Runs your Python program and then launches a Google search for
+     any exception message produced.
