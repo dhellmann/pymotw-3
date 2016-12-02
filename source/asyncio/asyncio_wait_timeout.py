@@ -7,7 +7,6 @@
 
 #end_pymotw_header
 import asyncio
-import functools
 
 
 async def phase(i):
