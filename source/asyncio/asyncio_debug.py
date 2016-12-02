@@ -8,7 +8,6 @@
 #end_pymotw_header
 import argparse
 import asyncio
-import functools
 import logging
 import sys
 import time
