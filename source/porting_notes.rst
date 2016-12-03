@@ -44,10 +44,33 @@ New Modules
 ===========
 
 Python 3 includes a number of new modules, providing features not
-present in Python 2.
+present in Python 2. Some of the new modules covered in this text
+are
 
 :mod:`asyncio`
-  Asynchronous I/O, event loop, and other concurrency tools.
+  Asynchronous I/O, event loop, and other concurrency tools
+
+:mod:`concurrent.futures`
+  Managing Pools of Concurrent Tasks
+
+:mod:`ensurepip`
+  Install the Python Package Installer, pip
+
+:mod:`enum`
+  Defines enumeration type
+
+:mod:`ipaddress`
+  Classes for working with Internet Protocol (IP) addresses
+
+:mod:`selectors`
+  I/O Multiplexing Abstractions
+
+:mod:`statistics`
+  Statistical Calculations
+
+:mod:`venv`
+  Create isolated installation and execution contexts
+
 
 Renamed Modules
 ===============
