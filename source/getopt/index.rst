@@ -32,7 +32,7 @@ Supported option syntax includes short and long form options:
 Function Arguments
 ==================
 
-The :func:`getopt` function takes three arguments:
+The ``getopt()`` function takes three arguments:
 
 * The first parameter is the sequence of arguments to be parsed. This
   usually comes from ``sys.argv[1:]`` (ignoring the program name in
@@ -61,7 +61,7 @@ definition string is ``"ab:c:"``.
    :caption:
    :start-after: #end_pymotw_header
 
-The program passes a list of simulated option values to :func:`getopt`
+The program passes a list of simulated option values to ``getopt()``
 to show the way they are processed.
 
 .. {{{cog
@@ -90,7 +90,7 @@ the long-argument sequence should be ``[ 'noarg', 'witharg=' ]``.
    :start-after: #end_pymotw_header
 
 Since this sample program does not take any short from options, the
-second argument to :func:`getopt` is an empty string.
+second argument to ``getopt()`` is an empty string.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'getopt_long.py'))
@@ -311,7 +311,7 @@ becomes clear.
 Ending Argument Processing
 ==========================
 
-If :func:`getopt` encounters "``--``" in the input arguments, it stops
+If ``getopt()`` encounters "``--``" in the input arguments, it stops
 processing the remaining arguments as options.  This feature can be
 used to pass argument values that look like options, such as filenames
 that start with a dash ("``-``").
