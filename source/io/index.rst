@@ -31,7 +31,7 @@ Here are a few standard examples of using :class:`StringIO` buffers:
     :caption:
     :start-after: #end_pymotw_header
 
-This example uses :func:`read`, but the :func:`readline` and
+This example uses :func:`read`, but the ``readline()`` and
 :func:`readlines` methods are also available. The :class:`StringIO`
 class also provides a :func:`seek` method for jumping
 around in a buffer while reading, which can be useful for rewinding if
