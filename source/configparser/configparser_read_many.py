@@ -13,8 +13,7 @@ import glob
 parser = ConfigParser()
 
 candidates = ['does_not_exist.ini', 'also-does-not-exist.ini',
-              'simple.ini', 'multisection.ini',
-              ]
+              'simple.ini', 'multisection.ini']
 
 found = parser.read(candidates)
 
