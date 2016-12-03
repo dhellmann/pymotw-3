@@ -11,7 +11,7 @@ The :mod:`warnings` module is used to report non-fatal conditions or
 recoverable errors.  A common example of a warning is the
 :class:`DeprecationWarning` generated when a feature of the standard
 library has been superseded by a new class, interface, or module.  Use
-:mod:`warnings` to report conditions that may need user attention, but
+``warnings`` to report conditions that may need user attention, but
 are not fatal.
 
 Defining a set of classes that conform to a common API can be a
@@ -23,7 +23,7 @@ default behavior.  Abstract base classes from the :mod:`abc` module
 formalize an API by explicitly marking the methods a class must
 provide in a way that prevents the class from being instantiated if it
 is not completely implemented.  For example, many of Python's
-container types have abstract base classes defined in :mod:`abc` or
+container types have abstract base classes defined in ``abc`` or
 :mod:`collections`.
 
 The :mod:`dis` module can be used to disassemble the byte-code version
