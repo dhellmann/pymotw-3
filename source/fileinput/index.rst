@@ -21,7 +21,7 @@ list of filenames and
 * Open each file.
 * Read each line of the file.
 * Figure out if the line refers to an mp3 file.
-* If it does, extract the information from the mp3 file needed for the RSS feed.
+* If it does, add a new item to the RSS feed.
 * Print the output.
 
 All of this file handling could have been coded by hand. It is not
@@ -167,6 +167,7 @@ a file where it is, rather than making a new file.  For example, a
 Unix hosts file might need to be updated if a subnet range changes.
 
 .. literalinclude:: etc_hosts
+   :caption: etc_hosts.txt before modifications
 
 The safe way to make the change automatically is to create a new file
 based on the input and then replace the original with the edited copy.
@@ -197,6 +198,7 @@ The updated file has the changed IP addresses of all of the servers on
 the ``10.16.0.0/16`` network.
 
 .. literalinclude:: etc_hosts.txt
+   :caption: etc_hosts.txt after modifications
 
 Before processing begins, a backup file is created using the original
 name plus ``.bak``.  

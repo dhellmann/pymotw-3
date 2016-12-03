@@ -176,7 +176,7 @@ and the screen:
     Prompt ("stop" to quit): st
 
 
-.. warning::
+.. note::
 
     If a completer function raises an exception, it is ignored
     silently and ``readline`` assumes there are no matching

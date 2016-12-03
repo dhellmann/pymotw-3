@@ -12,13 +12,14 @@ a specific period of time. The actual units of time are not important,
 which makes the interface flexible enough to be used for many
 purposes.
 
-The ``time`` function is called without any arguments, and should return
-a number representing the current time. The ``delay`` function is called
-with a single integer argument, using the same scale as the time
-function, and should wait that many time units before returning. By
-default :func:`time.monotonic` and :func:`time.sleep` are used, but
-the examples in this section use :func:`time.time` , which also meets
-the requirements, because it makes the output easier to understand.
+The ``time`` function is called without any arguments, and should
+return a number representing the current time. The ``delay`` function
+is called with a single integer argument, using the same scale as the
+time function, and should wait that many time units before
+returning. By default ``monotonic()`` and ``sleep()`` from :mod:`time`
+are used, but the examples in this section use ``time.time()`` , which
+also meets the requirements, because it makes the output easier to
+understand.
 
 To support multi-threaded applications, the delay function is called
 with argument 0 after each event is generated, to ensure that other
