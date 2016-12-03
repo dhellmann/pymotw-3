@@ -25,7 +25,7 @@ and send a message.  The mail server host name and port can be passed
 to the constructor, or :func:`connect` can be invoked explicitly.
 Once connected, call :func:`sendmail` with the envelope parameters and
 body of the message.  The message text should be fully formed and
-comply with RFC 2882, since ``smtplib`` does not modify the
+comply with RFC 5322, since ``smtplib`` does not modify the
 contents or headers at all.  That means the ``From`` and ``To``
 headers need to be added by the caller.
 
@@ -242,7 +242,7 @@ is valid but ``notthere`` is not.
    * :rfc:`822` -- "Standard for the Format of ARPA Internet Text
      Messages", the original email message format specification.
 
-   * :rfc:`2822` -- "Internet Message Format", updates to the email
+   * :rfc:`5322` -- "Internet Message Format", updates to the email
      message format.
 
    * :mod:`email` -- Standard library module for building and parsing

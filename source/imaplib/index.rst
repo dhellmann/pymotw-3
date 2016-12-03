@@ -678,7 +678,7 @@ Whole Messages
 
 As illustrated earlier, the client can ask the server for individual
 parts of the message separately.  It is also possible to retrieve the
-entire message as an RFC 2822 formatted mail message and parse it
+entire message as an RFC 822 formatted mail message and parse it
 with classes from the :mod:`email` module.
 
 .. literalinclude:: imaplib_fetch_rfc822.py
@@ -874,7 +874,7 @@ not notified about the deletions when :meth:`close()` is called.
 
     * :pydoc:`imaplib`
 
-    * :mod:`rfc822` -- The ``rfc822`` module includes an RFC 822 / RFC 2822 parser.
+    * :mod:`rfc822` -- The ``rfc822`` module includes an RFC 822 / RFC 5322 parser.
 
     * :mod:`email` -- The ``email`` module for parsing email messages.
 
@@ -888,9 +888,7 @@ not notified about the deletions when :meth:`close()` is called.
 
     * :rfc:`3501` -- Internet Message Access Protocol
 
-    * :rfc:`2822` -- Internet Message Format
-
-    * :rfc:`5322` -- Replacement for RFC 2822.
+    * :rfc:`5322` -- Internet Message Format
 
     * `IMAP Backup Script`_ -- A script to backup email from an IMAP
       server.
