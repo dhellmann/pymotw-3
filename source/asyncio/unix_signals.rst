@@ -3,7 +3,7 @@
 ========================
 
 UNIX system event notifications normally interrupt an application,
-triggering their handler. When used with :mod:`asyncio`, signal
+triggering their handler. When used with ``asyncio``, signal
 handler callbacks are interleaved with the other coroutines and
 callbacks managed by the event loop. This results in fewer interrupted
 functions, and the resulting need to provide safe-guards for cleaning

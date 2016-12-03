@@ -5,7 +5,7 @@
 .. module:: random
     :synopsis: Pseudorandom number generators
 
-The :mod:`random` module provides a fast pseudorandom number generator
+The ``random`` module provides a fast pseudorandom number generator
 based on the *Mersenne Twister* algorithm.  Originally developed to
 produce inputs for Monte Carlo simulations, Mersenne Twister generates
 numbers with nearly uniform distribution and a large period, making it
@@ -75,7 +75,7 @@ for producing unique values or variations, but there are times when
 having the same data set available to be processed in different ways is
 useful.  One technique is to use a program to generate random values
 and save them to be processed by a separate step.  That may not be
-practical for large amounts of data, though, so :mod:`random` includes
+practical for large amounts of data, though, so ``random`` includes
 the :func:`seed` function for initializing the pseudorandom generator
 so that it produces an expected set of values.
 
@@ -215,7 +215,7 @@ Picking Random Items
 
 One common use for random number generators is to select a random item
 from a sequence of enumerated values, even if those values are not
-numbers.  :mod:`random` includes the :func:`choice` function for
+numbers.  ``random`` includes the :func:`choice` function for
 making a random selection from a sequence.  This example simulates
 flipping a coin 10,000 times to count how many times it comes up heads
 and how many times tails.
@@ -339,7 +339,7 @@ efficiently as possible.
 Multiple Simultaneous Generators
 ================================
 
-In addition to module-level functions, :mod:`random` includes a
+In addition to module-level functions, ``random`` includes a
 :class:`Random` class to manage the internal state for several random
 number generators.  All of the functions described earlier are available
 as methods of the :class:`Random` instances, and each instance can be
@@ -382,7 +382,7 @@ SystemRandom
 
 Some operating systems provide a random number generator that has
 access to more sources of entropy that can be introduced into the
-generator.  :mod:`random` exposes this feature through the
+generator.  ``random`` exposes this feature through the
 :class:`SystemRandom` class, which has the same API as :class:`Random`
 but uses :func:`os.urandom` to generate the values that form the basis
 of all of the other algorithms.
@@ -424,7 +424,7 @@ Non-uniform Distributions
 
 While the uniform distribution of the values produced by
 :func:`random` is useful for a lot of purposes, other distributions
-more accurately model specific situations.  The :mod:`random` module
+more accurately model specific situations.  The ``random`` module
 includes functions to produce values in those distributions, too.
 They are listed here, but not covered in detail because their uses
 tend to be specialized and require more complex examples.
@@ -435,7 +435,7 @@ Normal
 The *normal* distribution is commonly used for non-uniform continuous
 values such as grades, heights, weights, etc.  The curve produced by
 the distribution has a distinctive shape which has lead to it being
-nicknamed a "bell curve."  :mod:`random` includes two functions for
+nicknamed a "bell curve."  ``random`` includes two functions for
 generating values with a normal distribution, :func:`normalvariate`
 and the slightly faster :func:`gauss` (the normal distribution is also
 called the Gaussian distribution).

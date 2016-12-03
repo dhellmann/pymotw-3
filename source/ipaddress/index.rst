@@ -6,7 +6,7 @@
    :synopsis: Classes for working with Internet Protocol (IP)
               addresses.
 
-The :mod:`ipaddress` module includes classes for working with IPv4 and
+The ``ipaddress`` module includes classes for working with IPv4 and
 IPv6 network addresses. The classes support validation, finding
 addresses and hosts on a network, and other common operations.
 

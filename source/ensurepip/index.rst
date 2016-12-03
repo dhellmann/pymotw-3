@@ -11,7 +11,7 @@ are even more libraries, frameworks, and tools available to be
 installed from the `Python Package Index`_. To install those packages,
 a developer needs the installer tool ``pip``. Installing a tool
 meant to install tools presents an interesting bootstrapping issue,
-which :mod:`ensurepip` solves.
+which ``ensurepip`` solves.
 
 Installing ``pip``
 ==================
@@ -41,12 +41,12 @@ This example uses a virtual environment configured without
 
 .. {{{end}}}
 
-Run :mod:`ensurepip` from the command line using the ``-m`` option to
+Run ``ensurepip`` from the command line using the ``-m`` option to
 the Python interpreter. By default a copy of pip that is delivered
 with the standard library is installed. This version can then be used
 to install an updated version of pip.  To ensure a recent version of
 ``pip`` is installed immediately, use the ``--upgrade`` option with
-:mod:`ensurepip`.
+``ensurepip``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '/tmp/demoenv/bin/python -m ensurepip --upgrade', interpreter=''))

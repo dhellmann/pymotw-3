@@ -5,7 +5,7 @@
 .. module:: trace
     :synopsis: Follow Program Flow
 
-The :mod:`trace` module is useful for understanding the way a program
+The ``trace`` module is useful for understanding the way a program
 runs.  It watches the statements executed, produces coverage reports,
 and helps investigate the relationships between functions that call
 each other.
@@ -31,7 +31,7 @@ reaches ``0``.
 Tracing Execution
 =================
 
-It is easy use :mod:`trace` directly from the command line.  The
+It is easy use ``trace`` directly from the command line.  The
 statements being executed as the program runs are printed when the
 ``--trace`` option is given. This example also ignores the location of
 the Python standard library to avoid tracing into :mod:`importlib` and
@@ -82,7 +82,7 @@ that clutter up the output in this simple example.
 .. {{{end}}}
 
 The first part of the output shows the setup operations performed by
-:mod:`trace`.  The rest of the output shows the entry into each
+``trace``.  The rest of the output shows the entry into each
 function, including the module where the function is located, and then
 the lines of the source file as they are executed.  :func:`recurse`
 is entered three times, as expected based on the way it is called in
@@ -91,7 +91,7 @@ is entered three times, as expected based on the way it is called in
 Code Coverage
 =============
 
-Running :mod:`trace` from the command line with the ``--count``
+Running ``trace`` from the command line with the ``--count``
 option will produce code coverage report information, detailing which
 lines are run and which are skipped.  Since a complex program is
 usually made up of multiple files, a separate coverage report is
@@ -211,7 +211,7 @@ run, indicated by the ``>>>>>>`` prefix.
 Calling Relationships
 =====================
 
-In addition to coverage information, :mod:`trace` will collect and
+In addition to coverage information, ``trace`` will collect and
 report on the relationships between functions that call each other.
 
 For a simple list of the functions called, use ``--listfuncs``.
@@ -289,7 +289,7 @@ For more details about who is doing the calling, use ``--trackcalls``.
 Programming Interface
 =====================
 
-For more control over the :mod:`trace` interface, it can be
+For more control over the ``trace`` interface, it can be
 invoked from within a program using a :class:`Trace` object.
 :class:`Trace` supports setting up fixtures and other dependencies
 before running a single function or executing a Python command to be

@@ -7,7 +7,7 @@
 
 Creating temporary files with unique names securely, so they cannot be
 guessed by someone wanting to break the application or steal the data,
-is challenging. The :mod:`tempfile` module provides several functions
+is challenging. The ``tempfile`` module provides several functions
 for creating temporary file system resources securely.
 :func:`TemporaryFile` opens and returns an unnamed file,
 :func:`NamedTemporaryFile` opens and returns a named file,
@@ -270,7 +270,7 @@ Temporary File Location
 
 If an explicit destination is not given using the ``dir`` argument, the
 path used for the temporary files will vary based on the current
-platform and settings. The :mod:`tempfile` module includes two
+platform and settings. The ``tempfile`` module includes two
 functions for querying the settings being used at runtime.
 
 .. literalinclude:: tempfile_settings.py

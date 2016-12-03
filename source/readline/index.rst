@@ -5,14 +5,14 @@
 .. module:: readline
     :synopsis: The GNU readline library
 
-The :mod:`readline` module provides an interface to the GNU readline
+The ``readline`` module provides an interface to the GNU readline
 library. It can be used to enhance interactive command line programs
 to make them easier to use, for example by adding command line text
 completion, or "tab completion".
 
 .. note::
 
-    Because :mod:`readline` interacts with the console content,
+    Because ``readline`` interacts with the console content,
     printing debug messages makes it difficult to see what it
     happening in the sample code versus what readline is doing for
     free.  The following examples use the :mod:`logging` module to
@@ -21,7 +21,7 @@ completion, or "tab completion".
 
 .. note::
 
-   The GNU libraries needed for :mod:`readline` are not available on
+   The GNU libraries needed for ``readline`` are not available on
    all platforms by default.  If your system does not include them,
    you may need to recompile the Python interpreter to enable the
    module, after installing the dependencies. A stand-alone version of
@@ -79,7 +79,7 @@ could actually parse the input line and run the command.
 
 The :class:`SimpleCompleter` class keeps a list of "options" that are
 candidates for auto-completion.  The :func:`complete` method for an
-instance is designed to be registered with :mod:`readline` as the
+instance is designed to be registered with ``readline`` as the
 source of completions.  The arguments are a ``text`` string to complete
 and a ``state`` value, indicating how many times the function has been
 called with the same text.  The function is called repeatedly with the
@@ -179,7 +179,7 @@ and the screen:
 .. warning::
 
     If a completer function raises an exception, it is ignored
-    silently and :mod:`readline` assumes there are no matching
+    silently and ``readline`` assumes there are no matching
     completions.
 
 
@@ -189,7 +189,7 @@ Accessing the Completion Buffer
 The completion algorithm in :class:`SimpleCompleter` is simplistic
 because it only looks at the text argument passed to the function, but
 does not use any more of readline's internal state.  It is also
-possible to use :mod:`readline` functions to manipulate the text of
+possible to use ``readline`` functions to manipulate the text of
 the input buffer.
 
 .. literalinclude:: readline_buffer.py
@@ -288,7 +288,7 @@ but the portion after ``list``.
 Input History
 =============
 
-:mod:`readline` tracks the input history automatically.  There are two
+``readline`` tracks the input history automatically.  There are two
 different sets of functions for working with the history.  The history
 for the current session can be accessed with
 :func:`get_current_history_length` and :func:`get_history_item`.  That
@@ -391,7 +391,7 @@ must be called to update the screen.
      <http://sandbox.effbot.org/librarybook/readline.htm>`_ --
      Effbot's guide to the readline module.
 
-   * gnureadline_ -- A statically linked version of :mod:`readline`
+   * gnureadline_ -- A statically linked version of ``readline``
      available for many platforms and installable via ``pip``.
 
    * `pyreadline <http://ipython.org/pyreadline.html>`_ -- pyreadline,

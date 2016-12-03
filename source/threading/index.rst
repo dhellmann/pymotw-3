@@ -5,7 +5,7 @@
 .. module:: threading
     :synopsis: Manage concurrent operations
 
-The :mod:`threading` module provides APIs for managing several threads
+The ``threading`` module provides APIs for managing several threads
 of execution, which allows a program to run multiple operations
 concurrently in the same process space.
 
@@ -322,7 +322,7 @@ Timer Threads
 =============
 
 One example of a reason to subclass :class:`Thread` is provided by
-:class:`Timer`, also included in :mod:`threading`. A :class:`Timer`
+:class:`Timer`, also included in ``threading``. A :class:`Timer`
 starts its work after a delay, and can be canceled at any point within
 that delay time period.
 

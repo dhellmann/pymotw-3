@@ -5,7 +5,7 @@
 .. module:: resource
     :synopsis: System resource management
 
-The functions in :mod:`resource` probe the current system resources
+The functions in ``resource`` probe the current system resources
 consumed by a process, and place limits on them to control how much
 load a program can impose on a system.
 
@@ -20,7 +20,7 @@ system.
 .. note::
 
   Not all of the resource values gathered are displayed here.  Refer
-  to the standard library documentation for :mod:`resource` for a more
+  to the standard library documentation for ``resource`` for a more
   complete list.
 
 .. literalinclude:: resource_getrusage.py

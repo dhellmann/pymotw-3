@@ -5,7 +5,7 @@
 .. module:: sysconfig
     :synopsis: Interpreter Compile-time Configuration
 
-The features of :mod:`sysconfig` have been extracted from
+The features of ``sysconfig`` have been extracted from
 :mod:`distutils` to create a stand-alone module.  It includes
 functions for determining the settings used to compile and install the
 current interpreter.
@@ -21,7 +21,7 @@ configuration variable names to values.
    :caption:
    :start-after: #end_pymotw_header
 
-The level of detail available through the :mod:`sysconfig` API depends
+The level of detail available through the ``sysconfig`` API depends
 on the platform where a program is running.  On POSIX systems such as
 Linux and OS X, the ``Makefile`` used to build the interpreter and
 ``config.h`` header file generated for the build are parsed and all of
@@ -120,7 +120,7 @@ instead of raising an exception.
 Installation Paths
 ==================
 
-:mod:`sysconfig` is primarily meant to be used by installation and
+``sysconfig`` is primarily meant to be used by installation and
 packaging tools.  As a result, while it provides access to general
 configuration settings such as the interpreter version, it is focused
 on the information needed to locate parts of the Python distribution
@@ -334,7 +334,7 @@ number included in the platform string.
 
 As a convenience, the interpreter version from
 :data:`sys.version_info` is also available through
-:func:`get_python_version` in :mod:`sysconfig`.
+:func:`get_python_version` in ``sysconfig``.
 
 .. literalinclude:: sysconfig_get_python_version.py
    :caption:
@@ -366,7 +366,7 @@ building a version-specific path.
 
    * :pydoc:`sysconfig`
 
-   * :mod:`distutils` -- :mod:`sysconfig` used to be part of the
+   * :mod:`distutils` -- ``sysconfig`` used to be part of the
      ``distutils`` package.
 
    * :mod:`site` -- The ``site`` module describes the paths searched

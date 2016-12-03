@@ -5,14 +5,14 @@
 .. module:: glob
     :synopsis: Use UNIX shell rules to find filenames matching a pattern.
 
-Even though the :mod:`glob` API is small, the module packs a lot of
+Even though the ``glob`` API is small, the module packs a lot of
 power. It is useful in any situation where a program needs to look for
 a list of files on the file system with names matching a pattern. To
 create a list of filenames that all have a certain extension, prefix,
-or any common string in the middle, use :mod:`glob` instead of writing
+or any common string in the middle, use ``glob`` instead of writing
 custom code to scan the directory contents.
 
-The pattern rules for :mod:`glob` are not the same as the regular
+The pattern rules for ``glob`` are not the same as the regular
 expressions used by the :mod:`re` module. Instead, they follow
 standard UNIX path expansion rules. There are only a few special
 characters used to implement two different wild-cards and character
@@ -184,10 +184,10 @@ Escaping Meta-characters
 ========================
 
 Sometimes it is necessary to search for files with names containing
-the special meta-characters :mod:`glob` uses for its patterns. The
+the special meta-characters ``glob`` uses for its patterns. The
 :func:`escape` function builds a suitable pattern with the special
 characters "escaped" so they are not expanded or interpreted as
-special by :mod:`glob`.
+special by ``glob``.
 
 .. literalinclude:: glob_escape.py
    :caption:

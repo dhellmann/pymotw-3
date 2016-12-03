@@ -5,7 +5,7 @@
 .. module:: importlib
     :synopsis: Interface to module import mechanism.
 
-The :mod:`importlib` module includes functions that the underlying
+The ``importlib`` module includes functions that the underlying
 implementation of Python's import mechanism for loading code in
 packages and modules, all implemented in Python. It is one access
 point to importing modules dynamically, and useful in some cases where
@@ -76,7 +76,7 @@ not correspond to single files.
 Importing Modules
 =================
 
-The high level API in :mod:`importlib` makes it simple to import a
+The high level API in ``importlib`` makes it simple to import a
 module given an absolute or relative name.  When using a relative
 module name, specify the package containing the module as a separate
 argument.
@@ -154,7 +154,7 @@ which type of loader was used, it may be the same module instance.
 Loaders
 =======
 
-The lower-level API in :mod:`importlib` provides access to the loader
+The lower-level API in ``importlib`` provides access to the loader
 objects, as described in :ref:`sys-imports` from the section on the
 :mod:`sys` module. To get a loader for a module, use
 :func:`find_loader`. Then to retrieve the module, use the loader's

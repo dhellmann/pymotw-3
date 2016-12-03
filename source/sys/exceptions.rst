@@ -4,7 +4,7 @@
 Exception Handling
 ==================
 
-:mod:`sys` includes features for trapping and working with exceptions.
+``sys`` includes features for trapping and working with exceptions.
 
 .. _sys-unhandled-exceptions:
 
@@ -88,7 +88,7 @@ Previous Interactive Exception
 
 In the interactive interpreter, there is only one thread of
 interaction.  Unhandled exceptions in that thread are saved to three
-variables in :mod:`sys` (:const:`last_type`, :const:`last_value`, and
+variables in ``sys`` (:const:`last_type`, :const:`last_value`, and
 :const:`last_traceback`) to make it easy to retrieve them for
 debugging.  Using the postmortem debugger in :mod:`pdb` avoids any
 need to use the values directly.

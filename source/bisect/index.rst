@@ -6,7 +6,7 @@
     :synopsis: Maintains a list in sorted order without having to call
                sort each time an item is added to the list.
 
-The :mod:`bisect` module implements an algorithm for inserting
+The ``bisect`` module implements an algorithm for inserting
 elements into a list while maintaining the list in sorted order.
 
 Inserting in Sorted Order
@@ -58,7 +58,7 @@ Handling Duplicates
 ===================
 
 The result set shown previously includes a repeated value,
-``77``. The :mod:`bisect` module provides two ways to handle repeats. New
+``77``. The ``bisect`` module provides two ways to handle repeats. New
 values can be inserted to the left of existing values, or to the
 right. The :func:`insort` function is actually an alias for
 :func:`insort_right`, which inserts after the existing value. The

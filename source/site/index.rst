@@ -5,13 +5,13 @@
 .. module:: site
     :synopsis: Site-wide configuration
 
-The :mod:`site` module handles site-specific configuration, especially
+The ``site`` module handles site-specific configuration, especially
 the import path.
 
 Import Path
 ===========
 
-:mod:`site` is automatically imported each time the interpreter starts
+``site`` is automatically imported each time the interpreter starts
 up.  On import, it extends :data:`sys.path` with site-specific names
 constructed by combining the prefix values :data:`sys.prefix` and
 :data:`sys.exec_prefix` with several suffixes.  The prefix values used
@@ -53,7 +53,7 @@ framework version of Python installed on a Mac OS X system.
 User Directories
 ================
 
-In addition to the global site-packages paths, :mod:`site` is
+In addition to the global site-packages paths, ``site`` is
 responsible for adding the user-specific locations to the import path.
 The user-specific paths are all based on the :data:`USER_BASE`
 directory, which usually located in a part of the file system owned
@@ -283,7 +283,7 @@ because ``a.pth`` is read before ``b.pth``.
 Customizing Site Configuration
 ==============================
 
-The :mod:`site` module is also responsible for loading site-wide
+The ``site`` module is also responsible for loading site-wide
 customization defined by the local site owner in a
 :mod:`sitecustomize` module.  Uses for :mod:`sitecustomize` include
 extending the import path and enabling coverage,

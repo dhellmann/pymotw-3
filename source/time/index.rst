@@ -5,7 +5,7 @@
 .. module:: time
     :synopsis: Clock time
 
-The :mod:`time` module provides access to several different types of
+The ``time`` module provides access to several different types of
 clocks, each useful for different purposes. The standard system calls
 like :func:`time` report the system "wall clock" time. The
 :func:`monotonic` clock can be used to measure elapsed time in a
@@ -88,7 +88,7 @@ clocks are implemented using the same underlying system call.
 Wall Clock Time
 ===============
 
-One of the core functions of the :mod:`time` module is :func:`time`,
+One of the core functions of the ``time`` module is :func:`time`,
 which returns the number of seconds since the start of the "epoch" as
 a floating point value.
 
@@ -279,7 +279,7 @@ Time Components
 
 Storing times as elapsed seconds is useful in some situations, but
 there are times when a program needs to have access to the individual
-fields of a date (year, month, etc.). The :mod:`time` module defines
+fields of a date (year, month, etc.). The ``time`` module defines
 :class:`struct_time` for holding date and time values with components
 broken out so they are easy to access. There are several functions
 that work with :class:`struct_time` values instead of floats.
@@ -393,7 +393,7 @@ The two functions :func:`strptime` and :func:`strftime` convert
 between :class:`struct_time` and string representations of time
 values. There is a long list of formatting instructions available to
 support input and output in different styles. The complete list is
-documented in the library documentation for the :mod:`time` module.
+documented in the library documentation for the ``time`` module.
 
 This example converts the current time from a string to a
 :class:`struct_time` instance and back to a string.

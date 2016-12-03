@@ -7,7 +7,7 @@
 
 The :mod:`collections.abc` module contains abstract base classes that
 define the APIs for container data structures built into Python and
-provided by the :mod:`collections` module.
+provided by the ``collections`` module.
 
 .. list-table:: Abstract Base Classes
    :header-rows: 1

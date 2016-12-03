@@ -5,7 +5,7 @@
 .. module:: pyclbr
     :synopsis: Class browser
 
-:mod:`pyclbr` can scan Python source to find classes and stand-alone
+``pyclbr`` can scan Python source to find classes and stand-alone
 functions.  The information about class, method, and function names
 and line numbers is gathered using :mod:`tokenize` *without* importing
 the code.
@@ -20,7 +20,7 @@ The examples in this section use this source file as input:
 Scanning for Classes
 ====================
 
-There are two public functions exposed by :mod:`pyclbr`.
+There are two public functions exposed by ``pyclbr``.
 The first, :func:`readmodule`, takes the name of the module as argument returns a
 mapping of class names to :class:`Class` objects containing the metadata
 about the class source.
@@ -73,7 +73,7 @@ their line number in the source file.
 Scanning for Functions
 ======================
 
-The other public function in :mod:`pyclbr` is :func:`readmodule_ex`.
+The other public function in ``pyclbr`` is :func:`readmodule_ex`.
 It does everything that :func:`readmodule` does, and adds functions to
 the result set.
 

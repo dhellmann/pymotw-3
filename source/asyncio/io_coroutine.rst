@@ -4,7 +4,7 @@
 
 This section examines alternate versions of the two sample programs
 implementing a simple echo server and client, using coroutines and the
-:mod:`asyncio` streams API instead of the protocol and transport class
+``asyncio`` streams API instead of the protocol and transport class
 abstractions. The examples operate at a lower abstraction level than
 the :class:`Protocol` API discussed previously, but the events being
 processed are similar.
@@ -13,7 +13,7 @@ Echo Server
 ===========
 
 The server starts by importing the modules it needs to set up
-:mod:`asyncio` and :mod:`logging`, and then it creates an event loop
+``asyncio`` and :mod:`logging`, and then it creates an event loop
 object.
 
 .. literalinclude:: asyncio_echo_server_coroutine.py
@@ -90,7 +90,7 @@ Echo Client
 
 Constructing a client using a coroutine is very similar to
 constructing a server.  The code again starts by importing the modules
-it needs to set up :mod:`asyncio` and :mod:`logging`, and then
+it needs to set up ``asyncio`` and :mod:`logging`, and then
 creating an event loop object.
 
 .. literalinclude:: asyncio_echo_client_coroutine.py

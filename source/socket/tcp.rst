@@ -213,7 +213,7 @@ And the server output is:
 Many servers have more than one network interface, and therefore more
 than one IP address.  Rather than running separate copies of a service
 bound to each IP address, use the special address :const:`INADDR_ANY`
-to listen on all addresses at the same time.  Although :mod:`socket`
+to listen on all addresses at the same time.  Although ``socket``
 defines a constant for :const:`INADDR_ANY`, it is an integer value and
 must be converted to a dotted-notation string address before it can be
 passed to :func:`bind`.  As a shortcut, use "``0.0.0.0``" or an empty

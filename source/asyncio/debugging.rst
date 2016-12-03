@@ -3,7 +3,7 @@
 ========================
 
 There are several useful debugging features built into
-:mod:`asyncio`.
+``asyncio``.
 
 First, the event loop uses :mod:`logging` to emit status messages as
 it runs. Some of these are available if logging is enabled in an
@@ -11,14 +11,14 @@ application. Others can be turned on by telling the loop to emit more
 debugging messages.  Call :func:`set_debug` passing a boolean value
 indicating whether or not debugging should be enabled.
 
-Because applications built on :mod:`asyncio` are highly sensitive to
+Because applications built on ``asyncio`` are highly sensitive to
 greedy coroutines failing to yield control, there is support for
 detecting slow callbacks built into the event loop. Turn it on by
 enabling debugging, and control the definition of "slow" by setting
 the ``slow_callback_duration`` property of the loop to the number of
 seconds after which a warning should be emitted.
 
-Finally, if an application using :mod:`asyncio` exits without cleaning
+Finally, if an application using ``asyncio`` exits without cleaning
 up some of the coroutines or other resources, that may mean there is a
 logic error preventing some of the application code from
 running. Enabling :class:`ResourceWarning` warnings causes these cases

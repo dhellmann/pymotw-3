@@ -5,7 +5,7 @@
 .. module:: copy
     :synopsis: Duplicating objects.
 
-The :mod:`copy` module includes two functions, :func:`copy` and
+The ``copy`` module includes two functions, :func:`copy` and
 :func:`deepcopy`, for duplicating existing objects.
 
 Shallow Copies

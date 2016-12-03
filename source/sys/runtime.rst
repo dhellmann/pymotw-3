@@ -4,7 +4,7 @@
 Runtime Environment
 ===================
 
-:mod:`sys` provides low-level APIs for interacting with the system
+``sys`` provides low-level APIs for interacting with the system
 outside of an application, by accepting command line arguments,
 accessing user input, and passing messages and status values to the
 user.

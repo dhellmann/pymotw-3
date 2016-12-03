@@ -5,7 +5,7 @@
 .. module:: pprint
     :synopsis: Pretty-print data structures
 
-:mod:`pprint` contains a "pretty printer" for producing aesthetically
+``pprint`` contains a "pretty printer" for producing aesthetically
 pleasing views of data structures.  The formatter produces
 representations of data structures that can be parsed correctly by the
 interpreter, and are also easy for a human to read. The output is kept

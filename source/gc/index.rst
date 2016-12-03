@@ -5,7 +5,7 @@
 .. module:: gc
     :synopsis: Garbage Collector
 
-:mod:`gc` exposes the underlying memory management mechanism of
+``gc`` exposes the underlying memory management mechanism of
 Python, the automatic garbage collector.  The module includes
 functions for controlling how the collector operates and to examine
 the objects known to the system, either pending collection or stuck in
@@ -14,7 +14,7 @@ reference cycles and unable to be freed.
 Tracing References
 ==================
 
-With :mod:`gc` the incoming and outgoing references between objects
+With ``gc`` the incoming and outgoing references between objects
 can be used to find cycles in complex data structures.  If a data
 structure is known to have a cycle, custom code can be used to examine
 its properties.  If the cycle is in unknown code, the
@@ -340,7 +340,7 @@ A smaller threshold causes the sweeps to run more frequently.
 Debugging
 =========
 
-Debugging memory leaks can be challenging.  :mod:`gc` includes several
+Debugging memory leaks can be challenging.  ``gc`` includes several
 options to expose the inner workings to make the job easier.  The
 options are bit-flags meant to be combined and passed to
 :func:`set_debug` to configure the garbage collector while the program
@@ -440,7 +440,7 @@ and cannot be freed.
 
 If seeing the objects that cannot be collected is not enough
 information to understand where data is being retained, enable
-:const:`DEBUG_SAVEALL` to cause :mod:`gc` to preserve all objects it
+:const:`DEBUG_SAVEALL` to cause ``gc`` to preserve all objects it
 finds without any references in the :obj:`garbage` list.
 
 .. literalinclude:: gc_debug_saveall.py

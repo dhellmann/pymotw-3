@@ -5,7 +5,7 @@
 It is frequently necessary to work with other programs and processes,
 to take advantage of existing code without rewriting it or to access
 libraries or features not available from within Python. As with
-network I/O, :mod:`asyncio` includes two abstractions for starting
+network I/O, ``asyncio`` includes two abstractions for starting
 another program and then interacting with it.
 
 Using the Protocol Abstraction with Subprocesses

@@ -17,7 +17,7 @@ the classes at the same time is difficult or not possible.
 How ABCs Work
 =============
 
-:mod:`abc` works by marking methods of the base class as abstract, and
+``abc`` works by marking methods of the base class as abstract, and
 then registering concrete classes as implementations of the abstract
 base.  If an application or library requires a particular API,
 :func:`issubclass` or :func:`isinstance` can be used to check an
@@ -96,7 +96,7 @@ recognize :class:`SubclassImplementation` as implementing the abstract
 
 A side effect of using direct subclassing is it is possible to find
 all of the implementations of a plug-in by asking the base class for
-the list of known classes derived from it (this is not an :mod:`abc`
+the list of known classes derived from it (this is not an ``abc``
 feature, all classes can do this).
 
 .. literalinclude:: abc_find_subclasses.py

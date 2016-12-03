@@ -5,7 +5,7 @@
 .. module:: mailbox
     :synopsis: Access and manipulate email archives.
 
-The :mod:`mailbox` module defines a common API for accessing email
+The ``mailbox`` module defines a common API for accessing email
 messages stored in local disk formats, including:
 
 - Maildir
@@ -470,7 +470,7 @@ The ``F`` flag added by the previous example is lost when
 Other Formats
 =============
 
-:mod:`mailbox` supports a few other formats, but none are as
+``mailbox`` supports a few other formats, but none are as
 popular as mbox or Maildir.  MH is another multi-file mailbox format
 used by some mail handlers.  Babyl and MMDF are single-file formats
 with different message separators than mbox.  The single-file formats

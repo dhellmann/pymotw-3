@@ -8,7 +8,7 @@ divide a job up among several workers to run in parallel.  Effective
 use of multiple processes usually requires some communication between
 them, so that work can be divided and results can be aggregated.  A
 simple way to communicate between processes with
-:mod:`multiprocessing` is to use a :class:`Queue` to pass messages
+``multiprocessing`` is to use a :class:`Queue` to pass messages
 back and forth.  Any object that can be serialized with :mod:`pickle`
 can pass through a :class:`Queue`.
 

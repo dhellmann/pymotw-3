@@ -8,7 +8,7 @@
 Programming using iterators occasionally requires creating small
 functions for simple expressions. Sometimes, these can be implemented
 as ``lambda`` functions, but for some operations new functions
-are not needed at all.  The :mod:`operator` module defines functions
+are not needed at all.  The ``operator`` module defines functions
 that correspond to built-in operations for arithmetic, comparison, and
 other operations corresponding to standard object APIs.
 
@@ -222,7 +222,7 @@ the standard library documentation for complete details.
 Attribute and Item "Getters"
 ============================
 
-One of the most unusual features of the :mod:`operator` module is the
+One of the most unusual features of the ``operator`` module is the
 concept of *getters*. These are callable objects constructed at
 runtime to retrieve attributes of objects or contents from
 sequences. Getters are especially useful when working with iterators
@@ -281,7 +281,7 @@ Item getters work with mappings as well as sequences.
 Combining Operators and Custom Classes
 ======================================
 
-The functions in the :mod:`operator` module work via the standard
+The functions in the ``operator`` module work via the standard
 Python interfaces for their operations, so they work with user-defined
 classes as well as the built-in types.
 

@@ -5,7 +5,7 @@
 .. module:: pkgutil
     :synopsis: Package utilities
 
-The :mod:`pkgutil` module includes functions for changing the import
+The ``pkgutil`` module includes functions for changing the import
 rules for Python packages and for loading non-code resources from
 files distributed within a package.
 
@@ -143,7 +143,7 @@ development environment using ``virtualenv`` or :mod:`venv`,
 but for small modifications the overhead of setting up a virtual
 environment with all of the dependencies may be excessive.
 
-Another option is to use :mod:`pkgutil` to modify the module search
+Another option is to use ``pkgutil`` to modify the module search
 path for modules that belong to the package under development. In this
 case, however, the path must be reversed so development version
 overrides the installed version.
@@ -163,7 +163,7 @@ and ``demopkg2/__init__.py`` contains
    :start-after: #end_pymotw_header
 
 :func:`reverse` is used to ensure that any directories added to the
-search path by :mod:`pkgutil` are scanned for imports *before* the
+search path by ``pkgutil`` are scanned for imports *before* the
 default location.
 
 This program imports :mod:`demopkg2.overloaded` and calls :func:`func`:
@@ -503,7 +503,7 @@ archive importer in :mod:`zipfile`.
 This example uses :func:`PyZipFile.writepy` to create a ZIP archive
 containing a copy of the :mod:`pkgwithdata` package, including a
 renamed version of the template file.  It then adds the ZIP archive to
-the import path before using :mod:`pkgutil` to load the template and
+the import path before using ``pkgutil`` to load the template and
 print it.  Refer to the discussion of :mod:`zipfile` for more details
 about using :func:`writepy`.
 

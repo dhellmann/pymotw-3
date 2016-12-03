@@ -4,7 +4,7 @@
 Interpreter Settings
 ====================
 
-:mod:`sys` contains attributes and functions for accessing
+``sys`` contains attributes and functions for accessing
 compile-time or runtime configuration settings for the interpreter.
 
 .. _sys-build-time-info:

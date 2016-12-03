@@ -5,7 +5,7 @@
 .. module:: atexit
     :synopsis: Register shutdown callbacks
 
-The :mod:`atexit` module provides an interface to register
+The ``atexit`` module provides an interface to register
 functions to be called when a program closes down normally.
 
 Registering Exit Callbacks
@@ -51,7 +51,7 @@ function can be registered for each resource.
 The exit functions are called in the reverse of the order in which
 they are registered. This method allows modules to be cleaned up in
 the reverse order from which they are imported (and therefore register
-their :mod:`atexit` functions), which should reduce dependency
+their ``atexit`` functions), which should reduce dependency
 conflicts.
 
 .. {{{cog
@@ -153,7 +153,7 @@ be used even when the sequence of registrations might not be known.
 When Are atexit Callbacks Not Called?
 =====================================
 
-The callbacks registered with :mod:`atexit` are not invoked if any of
+The callbacks registered with ``atexit`` are not invoked if any of
 these conditions is met:
 
 * The program dies because of a signal.
@@ -171,7 +171,7 @@ child, pauses, then kills it.
     :caption:
     :start-after: # end_pymotw_header
 
-The child sets up an :mod:`atexit` callback, and then sleeps until the
+The child sets up an ``atexit`` callback, and then sleeps until the
 signal arrives.
 
 .. literalinclude:: atexit_signal_child.py
@@ -198,7 +198,7 @@ When run, this is the output.
 The child does not print the message embedded in :func:`not_called()`.
 
 If a program uses :func:`os._exit`, it can avoid having the
-:mod:`atexit` callbacks invoked.
+``atexit`` callbacks invoked.
 
 .. literalinclude:: atexit_os_exit.py
     :caption:
@@ -248,7 +248,7 @@ invoked.
 Handling Exceptions
 ===================
 
-Tracebacks for exceptions raised in :mod:`atexit` callbacks are
+Tracebacks for exceptions raised in ``atexit`` callbacks are
 printed to the console and the last exception raised is re-raised to
 be the final error message of the program.
 

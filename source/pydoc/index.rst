@@ -5,7 +5,7 @@
 .. module:: pydoc
     :synopsis: Online help for modules
 
-The :mod:`pydoc` module imports a Python module and uses the contents
+The ``pydoc`` module imports a Python module and uses the contents
 to generate help text at runtime. The output includes docstrings for
 any objects that have them, and all of the classes, methods, and
 functions of the module are described.
@@ -59,7 +59,7 @@ is configured.
 HTML Help
 =========
 
-:mod:`pydoc` will also generate HTML output, either writing a static
+``pydoc`` will also generate HTML output, either writing a static
 file to a local directory or starting a web server to browse
 documentation online.
 
@@ -85,7 +85,7 @@ server.
 Interactive Help
 ================
 
-:mod:`pydoc` also adds a function :func:`help` to the ``__builtins__``
+``pydoc`` also adds a function :func:`help` to the ``__builtins__``
 so the same information can be accessed from the Python interpreter
 prompt.
 

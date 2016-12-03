@@ -5,15 +5,15 @@
 .. module:: asyncio
    :synopsis: Asynchronous I/O, event loop, and concurrency tools
 
-The :mod:`asyncio` module provides tools for building concurrent
+The ``asyncio`` module provides tools for building concurrent
 applications using coroutines. While the :mod:`threading` module
 implements concurrency through application threads and
 :mod:`multiprocessing` implements concurrency using system processes,
-:mod:`asyncio` uses a single-threaded, single-process approach in
+``asyncio`` uses a single-threaded, single-process approach in
 which parts of an application cooperate to switch tasks explicitly at
 optimal times. Most often this context switching occurs when the
 program would otherwise block waiting to read or write data, but
-:mod:`asyncio` also includes support for scheduling code to run at a
+``asyncio`` also includes support for scheduling code to run at a
 specific future time, to enable one coroutine to wait for another to
 complete, for handling system signals, and for recognizing other
 events that may be reasons for an application to change what it is
@@ -39,7 +39,7 @@ working on.
 
 .. note::
 
-   :mod:`asyncio` is still a *provisional* module. The API may change
+   ``asyncio`` is still a *provisional* module. The API may change
    in backwards-incompatible ways, and the entire module may be
    removed, though that is much less likely.
 

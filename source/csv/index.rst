@@ -5,7 +5,7 @@
 .. module:: csv
     :synopsis: Read and write comma separated value files.
 
-The :mod:`csv` module can be used to work with data exported from
+The ``csv`` module can be used to work with data exported from
 spreadsheets and databases into text files formatted with fields and
 records, commonly referred to as *comma-separated value* (CSV) format
 because commas are often used to separate the fields in a record.
@@ -156,11 +156,11 @@ Dialects
 
 There is no well-defined standard for comma-separated value files, so
 the parser needs to be flexible.  This flexibility means there are
-many parameters to control how :mod:`csv` parses or writes data.
+many parameters to control how ``csv`` parses or writes data.
 Rather than passing each of these parameters to the reader and writer
 separately, they are grouped together into a *dialect* object.
 
-Dialect classes can be registered by name, so that callers of the :mod:`csv`
+Dialect classes can be registered by name, so that callers of the ``csv``
 module do not need to know the parameter settings in advance.  The
 complete list of registered dialects can be retrieved with
 :func:`list_dialects`.
@@ -376,7 +376,7 @@ demonstrated by the "escaped" dialect in the example.
 Using Field Names
 =================
 
-In addition to working with sequences of data, the :mod:`csv` module
+In addition to working with sequences of data, the ``csv`` module
 includes classes for working with rows as dictionaries so that the
 fields can be named. The :class:`DictReader` and :class:`DictWriter`
 classes translate rows to dictionaries instead of lists. Keys for the

@@ -5,7 +5,7 @@
 .. module:: profile
     :synopsis: Performance analysis of Python programs.
 
-The :mod:`profile` module provides APIs for collecting and analyzing
+The ``profile`` module provides APIs for collecting and analyzing
 statistics about how Python source consumes processor resources.
 
 .. note::
@@ -17,7 +17,7 @@ statistics about how Python source consumes processor resources.
 Running the Profiler
 ====================
 
-The most basic starting point in the :mod:`profile` module is
+The most basic starting point in the ``profile`` module is
 :func:`run`.  It takes a string statement as argument, and creates a
 report of the time spent executing different lines of code while
 running the statement.
@@ -173,7 +173,7 @@ pstats: Saving and Working With Statistics
 .. module:: pstats
     :synopsis: Manipulate and analyze profile statistics.
 
-The standard report created by the :mod:`profile` functions is not
+The standard report created by the ``profile`` functions is not
 very flexible.  However, custom reports can be produced by saving the
 raw profiling data from :func:`run` and :func:`runctx` and processing
 it separately with the :class:`pstats.Stats` class.

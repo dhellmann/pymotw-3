@@ -4,7 +4,7 @@
  Memory Management and Limits
 ==============================
 
-:mod:`sys` includes several functions for understanding and
+``sys`` includes several functions for understanding and
 controlling memory usage.
 
 Reference Counts
@@ -169,7 +169,7 @@ program has an opportunity to handle the situation.
 Maximum Values
 ==============
 
-Along with the runtime configurable values, :mod:`sys` includes
+Along with the runtime configurable values, ``sys`` includes
 variables defining the maximum values for types that vary from system
 to system.
 

@@ -5,7 +5,7 @@
 .. module:: urllib.parse
     :synopsis: Split URL into components
 
-The :mod:`urllib.parse` module provides functions for manipulating
+The ``urllib.parse`` module provides functions for manipulating
 URLs and their component parts, to either break them down or build
 them up.
 

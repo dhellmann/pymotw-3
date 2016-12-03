@@ -5,7 +5,7 @@
 .. module:: array
     :synopsis: Manage sequences of fixed-type data efficiently.
 
-The :mod:`array` module defines a sequence data structure that looks
+The ``array`` module defines a sequence data structure that looks
 very much like a :class:`list`, except that all of the members have to
 be of the same primitive type. The types supported are all numeric or
 other fixed-size primitive types such as bytes.
@@ -54,7 +54,7 @@ other fixed-size primitive types such as bytes.
      - double float
      - 8
 
-Refer to the standard library documentation for :mod:`array` for a
+Refer to the standard library documentation for ``array`` for a
 complete list of type codes.
 
 Initialization

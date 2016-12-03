@@ -5,7 +5,7 @@
 .. module:: enum
    :synopsis: Defines enumeration type
 
-The :mod:`enum` module defines an enumeration type with iteration and
+The ``enum`` module defines an enumeration type with iteration and
 comparison capabilities. It can be used to create well-defined symbols
 for values, instead of using literal integers or strings.
 
@@ -326,5 +326,5 @@ dictionaries rather than tuples.
    * :pep:`435` -- Adding an Enum type to the Python standard library
 
    * `flufl.enum <http://pythonhosted.org/flufl.enum/>`_ -- The
-     original inspiration for :mod:`enum`, by Barry Warsaw.
+     original inspiration for ``enum``, by Barry Warsaw.
 

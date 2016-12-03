@@ -5,7 +5,7 @@
 .. module:: smtplib
     :synopsis: Simple mail transfer protocol client.
 
-:mod:`smtplib` includes the class :class:`SMTP`, which can be used to
+``smtplib`` includes the class :class:`SMTP`, which can be used to
 communicate with mail servers to send mail.
 
 .. note::
@@ -23,7 +23,7 @@ and send a message.  The mail server host name and port can be passed
 to the constructor, or :func:`connect` can be invoked explicitly.
 Once connected, call :func:`sendmail` with the envelope parameters and
 body of the message.  The message text should be fully formed and
-comply with RFC 2882, since :mod:`smtplib` does not modify the
+comply with RFC 2882, since ``smtplib`` does not modify the
 contents or headers at all.  That means the ``From`` and ``To``
 headers need to be added by the caller.
 

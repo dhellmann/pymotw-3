@@ -5,7 +5,7 @@
 .. module:: shlex
     :synopsis: Lexical analysis of shell-style syntaxes.
 
-The :mod:`shlex` module implements a class for parsing simple
+The ``shlex`` module implements a class for parsing simple
 shell-like syntaxes. It can be used for writing a domain-specific
 language, or for parsing quoted strings (a task that is more complex
 than it seems on the surface).
@@ -26,7 +26,7 @@ the parts of the text outside the quotes to separate them from the
 text inside the quotes, or vice versa. That would be unnecessarily
 complex and prone to errors resulting from edge cases like apostrophes
 or even typos. A better solution is to use a true parser, such as the
-one provided by the :mod:`shlex` module. Here is a simple example that
+one provided by the ``shlex`` module. Here is a simple example that
 prints the tokens identified in the input file using the
 :class:`shlex` class.
 

@@ -5,7 +5,7 @@
 .. module:: zipfile
     :synopsis: ZIP archive access
 
-The :mod:`zipfile` module can be used to read and write ZIP archive
+The ``zipfile`` module can be used to read and write ZIP archive
 files, the format popularized by the PC program PKZIP.
 
 Testing ZIP Files
@@ -460,7 +460,7 @@ each ``.py`` file it finds.
 Limitations
 ===========
 
-The :mod:`zipfile` module does not support ZIP files with appended
+The ``zipfile`` module does not support ZIP files with appended
 comments, or multi-disk archives. It does support ZIP files larger
 than 4 GB that use the ZIP64 extensions.
 

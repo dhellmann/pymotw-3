@@ -5,7 +5,7 @@
 .. module:: compileall
     :synopsis: Byte-compile Source Files
 
-The :mod:`compileall` module finds Python source files and compiles
+The ``compileall`` module finds Python source files and compiles
 them to the byte-code representation, saving the results in ``.pyc``.
 
 Compiling One Directory
@@ -169,7 +169,7 @@ or a relative path.
 From the Command Line
 =====================
 
-It is also possible to invoke :mod:`compileall` from the command line,
+It is also possible to invoke ``compileall`` from the command line,
 so it can be integrated with a build system via a Makefile.  For
 example:
 

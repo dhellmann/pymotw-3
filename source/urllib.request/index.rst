@@ -5,7 +5,7 @@
 .. module:: urllib.request
     :synopsis: Network Resource Access
 
-The :mod:`urllib.request` module provides an API for using Internet
+The ``urllib.request`` module provides an API for using Internet
 resources identified by URLs.  It is designed to be extended by
 individual applications to support new protocols or add variations to
 existing protocols (such as handling HTTP basic authentication).
@@ -20,7 +20,7 @@ HTTP GET
     server in one terminal window, then run these examples in another.
 
 An HTTP GET operation is the simplest use of
-:mod:`urllib.request`. Pass the URL to :func:`urlopen` to get a
+``urllib.request``. Pass the URL to :func:`urlopen` to get a
 "file-like" handle to the remote data.
 
 .. literalinclude:: urllib_request_urlopen.py
@@ -304,7 +304,7 @@ multi-part MIME message with attached files.
 Creating Custom Protocol Handlers
 =================================
 
-:mod:`urllib.request` has built-in support for HTTP(S), FTP, and local
+``urllib.request`` has built-in support for HTTP(S), FTP, and local
 file access. To add support for other URL types, register another
 protocol handler. For example, to support URLs pointing to arbitrary
 files on remote NFS servers, without requiring users to mount the path

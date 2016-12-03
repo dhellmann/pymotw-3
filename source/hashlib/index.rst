@@ -5,7 +5,7 @@
 .. module:: hashlib
     :synopsis: Cryptographic hashes and message digests
 
-The :mod:`hashlib` module defines an API for accessing different
+The ``hashlib`` module defines an API for accessing different
 cryptographic hashing algorithms. To work with a specific hash
 algorithm, use the appropriate constructor function or :func:`new` to
 create a hash object. From there, the objects use the same API, no
@@ -14,7 +14,7 @@ matter what algorithm is being used.
 Hash Algorithms
 ===============
 
-Since :mod:`hashlib` is "backed" by OpenSSL, all of the algorithms
+Since ``hashlib`` is "backed" by OpenSSL, all of the algorithms
 provided by that library are available, including:
 
  * md5

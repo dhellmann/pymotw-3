@@ -5,7 +5,7 @@
 .. module:: socketserver
     :synopsis: Creating network servers.
 
-The :mod:`socketserver` module is a framework for creating network
+The ``socketserver`` module is a framework for creating network
 servers. It defines classes for handling synchronous network requests
 (the server request handler blocks until the request is completed)
 over TCP, UDP, UNIX streams, and UNIX datagrams. It also provides
@@ -26,7 +26,7 @@ Server Types
 ============
 
 There are five different server classes defined in
-:mod:`socketserver`.  :class:`BaseServer` defines the API, and is not
+``socketserver``.  :class:`BaseServer` defines the API, and is not
 intended to be instantiated and used directly. :class:`TCPServer` uses
 TCP/IP sockets to communicate. :class:`UDPServer` uses datagram
 sockets. :class:`UnixStreamServer` and :class:`UnixDatagramServer` use
@@ -260,7 +260,7 @@ from the server:
     * :mod:`asyncio` -- Asynchronous I/O, event loop, and concurrency tools
 
     * :mod:`SimpleXMLRPCServer` -- XML-RPC server built using
-      :mod:`socketserver`.
+      ``socketserver``.
 
     * *Unix Network Programming, Volume 1: The Sockets Networking API, 3/E*
       By W. Richard Stevens, Bill Fenner, and Andrew

@@ -6,13 +6,13 @@
     :synopsis: Scan Python source code looking for suspicious indentation.
 
 Consistent use of indentation is important in a langauge like Python,
-where white-space is significant.  The :mod:`tabnanny` module provides
+where white-space is significant.  The ``tabnanny`` module provides
 a scanner to report on "ambiguous" use of indentation.
 
 Running from the Command Line
 =============================
 
-The simplest way to use :mod:`tabnanny` is to run it from the command
+The simplest way to use ``tabnanny`` is to run it from the command
 line, passing the names of files to check.  If you pass directory
 names, the directories are scanned recursively to find ``.py`` files to
 check.

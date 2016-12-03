@@ -5,7 +5,7 @@
 .. module:: datetime
     :synopsis: Date and time value manipulation.
 
-:mod:`datetime` contains functions and classes for date and time
+``datetime`` contains functions and classes for date and time
 parsing, formatting, and arithmetic.
 
 Times
@@ -204,7 +204,7 @@ timedeltas
 ==========
 
 Future and past dates can be calculated using basic arithmetic on two
-:mod:`datetime` objects, or by combining a :class:`datetime` with a
+``datetime`` objects, or by combining a :class:`datetime` with a
 :class:`timedelta`.  Subtracting dates produces a :class:`timedelta`,
 and a :class:`timedelta` can be added or subtracted from a date to
 produce another date. The internal values for a :class:`timedelta` are
@@ -547,12 +547,12 @@ PM January 13, 2016 in the US/Eastern time zone.
 Time Zones
 ==========
 
-Within :mod:`datetime`, time zones are represented by subclasses of
+Within ``datetime``, time zones are represented by subclasses of
 :class:`tzinfo`. Since :class:`tzinfo` is an abstract base class,
 applications need to define a subclass and provide appropriate
 implementations for a few methods to make it useful.
 
-:mod:`datetime` does include a somewhat naive implementation in the
+``datetime`` does include a somewhat naive implementation in the
 class :class:`timezone` that uses a fixed offset from UTC, and does
 not support different offset values on different days of the year,
 such as where daylight savings time applies, or where the offset from

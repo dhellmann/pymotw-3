@@ -5,7 +5,7 @@
 .. module:: math
     :synopsis: Mathematical functions
 
-The :mod:`math` module implements many of the specialized IEEE
+The ``math`` module implements many of the specialized IEEE
 functions that would normally be found in the native platform C
 libraries for complex mathematical operations using floating point
 values, including logarithms and trigonometric operations.
@@ -13,7 +13,7 @@ values, including logarithms and trigonometric operations.
 Special Constants
 =================
 
-Many math operations depend on special constants.  :mod:`math`
+Many math operations depend on special constants.  ``math``
 includes values for π (pi), e, nan (not a number), and infinity.
 
 .. literalinclude:: math_constants.py
@@ -255,7 +255,7 @@ only close to itself.
 Converting Floating Point Values to Integers
 ============================================
 
-The :mod:`math` module includes three functions for converting
+The ``math`` module includes three functions for converting
 floating point values to whole numbers.  Each takes a different
 approach, and will be useful in different circumstances.
 
@@ -442,7 +442,7 @@ Commonly Used Calculations
 Representing precise values in binary floating point memory is
 challenging.  Some values cannot be represented exactly, and the more
 often a value is manipulated through repeated calculations, the more
-likely a representation error will be introduced.  :mod:`math`
+likely a representation error will be introduced.  ``math``
 includes a function for computing the sum of a series of floating
 point numbers using an efficient algorithm that minimizes such errors.
 
@@ -657,7 +657,7 @@ is a separate function for computing them.
    :start-after: #end_pymotw_header
 
 Computing the square roots of negative numbers requires *complex
-numbers*, which are not handled by :mod:`math`.  Any attempt to
+numbers*, which are not handled by ``math``.  Any attempt to
 calculate a square root of a negative value results in a
 :class:`ValueError`.
 
@@ -1023,7 +1023,7 @@ to the origin, and then pass the results to :func:`hypot`.
 
 .. {{{end}}}
 
-:mod:`math` also defines inverse trigonometric functions.
+``math`` also defines inverse trigonometric functions.
 
 .. literalinclude:: math_inverse_trig.py
    :caption:

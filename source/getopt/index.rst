@@ -5,7 +5,7 @@
 .. module:: getopt
     :synopsis: Command line option parsing
 
-The :mod:`getopt` module is the original command line option parser
+The ``getopt`` module is the original command line option parser
 that supports the conventions established by the UNIX function
 :func:`getopt`. It parses an argument sequence, such as
 :data:`sys.argv` and returns a sequence of tuples containing (option,
@@ -24,7 +24,7 @@ Supported option syntax includes short and long form options:
 
 .. note::
 
-   :mod:`getopt` is not deprecated, but :mod:`argparse` is more
+   ``getopt`` is not deprecated, but :mod:`argparse` is more
    actively maintained and should be used for new development.
 
 Function Arguments
@@ -336,4 +336,4 @@ that start with a dash ("``-``").
     * :pydoc:`getopt`
 
     * :mod:`argparse` -- The ``argparse`` module replaces
-      :mod:`getopt` for newer applications.
+      ``getopt`` for newer applications.

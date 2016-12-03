@@ -5,7 +5,7 @@
 .. module:: contextlib
     :synopsis: Utilities for creating and working with context managers.
 
-The :mod:`contextlib` module contains utilities for working with
+The ``contextlib`` module contains utilities for working with
 context managers and the ``with`` statement.
 
 Context Manager API
@@ -264,7 +264,7 @@ Closing Open Handles
 
 The :class:`file` class supports the context manager API directly, but
 some other objects that represent open handles do not. The example
-given in the standard library documentation for :mod:`contextlib` is
+given in the standard library documentation for ``contextlib`` is
 the object returned from :func:`urllib.urlopen`.  There are other
 legacy classes that use a :func:`close` method but do not support the
 context manager API. To ensure that a handle is closed, use

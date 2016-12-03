@@ -5,7 +5,7 @@
 .. module:: base64
     :synopsis: Encode binary data with ASCII characters.
 
-The :mod:`base64` module contains functions for translating binary
+The ``base64`` module contains functions for translating binary
 data into a subset of ASCII suitable for transmission using plaintext
 protocols. The base64, base32, base16, and base85 encodings convert 8
 bit bytes to values that fit inside the ASCII range of printable

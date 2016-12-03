@@ -5,7 +5,7 @@
 .. module:: shelve
     :synopsis: Persistent storage of objects
 
-The :mod:`shelve` module can be used as a simple persistent storage
+The ``shelve`` module can be used as a simple persistent storage
 option for Python objects when a relational database is not
 required. The shelf is accessed by keys, just as with a
 dictionary. The values are pickled and written to a database created
@@ -14,7 +14,7 @@ and managed by :mod:`dbm`.
 Creating a new Shelf
 ====================
 
-The simplest way to use :mod:`shelve` is via the :class:`DbfilenameShelf`
+The simplest way to use ``shelve`` is via the :class:`DbfilenameShelf`
 class. It uses :mod:`dbm` to store the data. The class can be used
 directly, or by calling :func:`shelve.open()`:
 
@@ -48,7 +48,7 @@ Running both sample scripts produces:
 The :mod:`dbm` module does not support multiple applications writing
 to the same database at the same time, but it does support concurrent
 read-only clients. If a client will not be modifying the shelf, tell
-:mod:`shelve` to open the database read-only by passing ``flag='r'``.
+``shelve`` to open the database read-only by passing ``flag='r'``.
 
 .. literalinclude:: shelve_readonly.py
    :caption:

@@ -5,7 +5,7 @@
 .. module:: socket
     :synopsis: Network communication
 
-The :mod:`socket` module exposes the low-level C API for communicating
+The ``socket`` module exposes the low-level C API for communicating
 over a network using the BSD socket interface.  It includes the
 :class:`socket` class, for handling the actual data channel, and also
 includes functions for network-related tasks such as converting a

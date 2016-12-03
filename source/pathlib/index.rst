@@ -5,14 +5,14 @@
 .. module:: pathlib
     :synopsis: Treat filesystem paths as objects.
 
-The :mod:`pathlib` module provides an object-oriented API for parsing,
+The ``pathlib`` module provides an object-oriented API for parsing,
 building, testing, and otherwise work on filenames and paths, instead
 of using low-level string operations.
 
 Path Representations
 ====================
 
-:mod:`pathlib` includes classes for managing filesystem paths
+``pathlib`` includes classes for managing filesystem paths
 formatted using either the POSIX standard or Microsoft Windows
 syntax. It includes so called "pure" classes, which operate on strings
 but do not interact with an actual filesystem, and "concrete" classes,

@@ -5,7 +5,7 @@
 .. module:: decimal
     :synopsis: Fixed and floating point math
 
-The :mod:`decimal` module implements fixed and floating point
+The ``decimal`` module implements fixed and floating point
 arithmetic using the model familiar to most people, rather than the
 IEEE floating point version implemented by most computer hardware and
 familiar to programmers.  A :class:`Decimal` instance can represent
@@ -166,7 +166,7 @@ Context
 =======
 
 So far, all of the examples have used the default behaviors of the
-:mod:`decimal` module. It is possible to override settings such as the
+``decimal`` module. It is possible to override settings such as the
 precision maintained, how rounding is performed, error handling,
 etc. by using a *context*.  Contexts can be applied for all
 :class:`Decimal` instances in a thread or locally within a small code

@@ -5,7 +5,7 @@
 .. module:: dbm
     :synopsis: Unix Key-Value Databases
 
-:mod:`dbm` is a front-end for DBM-style databases that use simple
+``dbm`` is a front-end for DBM-style databases that use simple
 string values as keys to access records containing strings.  It uses
 :func:`whichdb` to identify databases, then opens them with the
 appropriate module.  It is used as a back-end for :mod:`shelve`, which

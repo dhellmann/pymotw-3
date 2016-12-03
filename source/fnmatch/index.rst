@@ -5,7 +5,7 @@
 .. module:: fnmatch
     :synopsis: Compare filenames with Unix-style glob patterns.
 
-The :mod:`fnmatch` module is used to compare filenames against
+The ``fnmatch`` module is used to compare filenames against
 glob-style patterns such as used by UNIX shells.
 
 Simple Matching
@@ -110,7 +110,7 @@ example source files associated with this section.
 Translating Patterns
 ====================
 
-Internally, :mod:`fnmatch` converts the glob pattern to a regular
+Internally, ``fnmatch`` converts the glob pattern to a regular
 expression and uses the :mod:`re` module to compare the name and
 pattern. The :func:`translate` function is the public API for
 converting glob patterns to regular expressions.
@@ -138,7 +138,7 @@ Some of the characters are escaped to make a valid expression.
 
    * :pydoc:`fnmatch`
 
-   * :mod:`glob` -- The glob module combines :mod:`fnmatch` matching
+   * :mod:`glob` -- The glob module combines ``fnmatch`` matching
      with ``os.listdir()`` to produce lists of files and directories
      matching patterns.
 

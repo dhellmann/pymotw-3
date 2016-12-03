@@ -6,7 +6,7 @@
     :synopsis: Implements file I/O and provides classes for working
                with buffers using file-like API.
 
-The :mod:`io` module provides access to the built-in :func:`open`
+The ``io`` module provides access to the built-in :func:`open`
 function and the classes used to implement file-based input and output
 operations. The classes are decomposed in such a way that they can be
 recombined for alternate purposes, for example to enable writing

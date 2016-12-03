@@ -5,7 +5,7 @@
 .. module:: venv
     :synopsis: Create isolated installation and execution contexts.
 
-Python virtual environments, managed by :mod:`venv`, are set up for
+Python virtual environments, managed by ``venv``, are set up for
 installing packages and running programs in a way that isolates them
 from other packages installed on the rest of the system. Because each
 environment has its own interpreter executable and directory for
@@ -16,7 +16,7 @@ computer.
 Creating Environments
 =====================
 
-The command line interface to :mod:`venv` depends on how Python was
+The command line interface to ``venv`` depends on how Python was
 compiled and installed. The ``pyvenv`` command is the simplest
 interface
 
@@ -33,7 +33,7 @@ interface
 .. {{{end}}}
 
 If ``pyvenv`` is not installed or not on the shell search path,
-it is possible to run the :mod:`venv` module using the interpreter's
+it is possible to run the ``venv`` module using the interpreter's
 ``-m`` option. The following command has the same effect as the
 previous example.
 
@@ -102,7 +102,7 @@ interpreter is a symlink.
 Finally, the environment includes a ``pyvenv.cfg`` file with settings
 describing how the environment is configured and should behave. The
 ``home`` variable points to the location of the Python interpreter
-where :mod:`venv` was run to create the
+where ``venv`` was run to create the
 environment. ``include-system-site-packages`` is a boolean indicating
 whether or not the packages installed outside of the virtual
 environment, at the system level, should be visible inside the virtual

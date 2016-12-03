@@ -5,7 +5,7 @@
 .. module:: traceback
     :synopsis: Exceptions and stack traces
 
-The :mod:`traceback` module works with the call stack to produce error
+The ``traceback`` module works with the call stack to produce error
 messages. A *traceback* is a stack trace from the point of an
 exception handler down the call chain to the point where the exception
 was raised. Tracebacks also can be accessed from the current call
@@ -13,12 +13,12 @@ stack up from the point of a call (and without the context of an
 error), which is useful for finding out the paths being followed into
 a function.
 
-The high-level API in :mod:`traceback` uses :class:`StackSummary` and
+The high-level API in ``traceback`` uses :class:`StackSummary` and
 :class:`FrameSummary` instances to hold the representation of the
 stack. These classes can be constructed from a traceback or the
 current execution stack, and then processed in the same ways.
 
-The low-level functions in :mod:`traceback` fall into several common
+The low-level functions in ``traceback`` fall into several common
 categories.  There are functions for extracting raw tracebacks from
 the current runtime environment (either an exception handler for a
 traceback, or the regular stack). The extracted stack trace is a
@@ -31,7 +31,7 @@ functions return a list of strings with messages formatted to be
 printed. There are shorthand functions for printing the formatted
 values, as well.
 
-Although the functions in :mod:`traceback` mimic the behavior of the
+Although the functions in ``traceback`` mimic the behavior of the
 interactive interpreter by default, they also are useful for handling
 exceptions in situations where dumping the full stack trace to the console
 is not desirable. For example, a web application may need to format

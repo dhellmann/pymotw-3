@@ -4,7 +4,7 @@
 
 Applications use the network to communicate with servers for domain
 name service (DNS) operations like converting between hostnames and IP
-addresses. :mod:`asyncio` has convenience methods on the event loop to
+addresses. ``asyncio`` has convenience methods on the event loop to
 take care of those operations in the background, to avoid blocking
 during the queries.
 

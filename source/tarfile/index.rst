@@ -5,7 +5,7 @@
 .. module:: tarfile
     :synopsis: Tar archive access
 
-The :mod:`tarfile` module provides read and write access to UNIX
+The ``tarfile`` module provides read and write access to UNIX
 ``tar`` archives, including compressed files.  In addition to the
 POSIX standards, several GNU tar extensions are supported.  UNIX
 special file types such as hard and soft links, and device nodes are
@@ -13,7 +13,7 @@ also handled.
 
 .. note::
 
-  Although :mod:`tarfile` implements a UNIX format, it can be used to
+  Although ``tarfile`` implements a UNIX format, it can be used to
   create and read tar archives under Microsoft Windows, too.
 
 Testing Tar Files
@@ -355,7 +355,7 @@ The resulting archive ends up with two members:
 Working with Compressed Archives
 ================================
 
-Besides regular tar archive files, the :mod:`tarfile` module can work
+Besides regular tar archive files, the ``tarfile`` module can work
 with archives compressed via the gzip or bzip2 protocols.  To open a
 compressed archive, modify the mode string passed to :func:`open` to
 include ``":gz"`` or ``":bz2"``, depending on the desired compression
@@ -366,7 +366,7 @@ method.
     :start-after: #end_pymotw_header
 
 When opening an existing archive for reading, specify ``"r:*"`` to
-have :mod:`tarfile` determine the compression method to use
+have ``tarfile`` determine the compression method to use
 automatically.
 
 .. {{{cog
