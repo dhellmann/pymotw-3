@@ -188,8 +188,8 @@ options.
 
 .. note::
 
-   The GNU libraries needed for :mod:`readline` are not available on
-   all platforms by default. In those cases, tab completion may not
+   The GNU libraries needed for ``readline`` are not available on all
+   platforms by default. In those cases, tab completion may not
    work. See :mod:`readline` for tips on installing the necessary
    libraries if your Python installation does not have them.
 

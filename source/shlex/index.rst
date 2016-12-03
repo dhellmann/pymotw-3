@@ -30,7 +30,7 @@ complex and prone to errors resulting from edge cases like apostrophes
 or even typos. A better solution is to use a true parser, such as the
 one provided by the ``shlex`` module. Here is a simple example that
 prints the tokens identified in the input file using the
-:class:`shlex` class.
+``shlex`` class.
 
 .. literalinclude:: shlex_example.py
     :caption:
@@ -209,7 +209,7 @@ The result is a list.
 Including Other Sources of Tokens
 =================================
 
-The :class:`shlex` class includes several configuration properties
+The ``shlex`` class includes several configuration properties
 that control its behavior. The :attr:`source` property enables a
 feature for code (or configuration) re-use by allowing one token
 stream to include another. This is similar to the Bourne shell
@@ -264,7 +264,7 @@ added to the list of characters that are included in words (otherwise
 .. {{{end}}}
 
 The source feature uses a method called :func:`sourcehook()` to load
-the additional input source, so a subclass of :class:`shlex` can
+the additional input source, so a subclass of ``shlex`` can
 provide an alternate implementation that loads data from locations
 other than files.
 
