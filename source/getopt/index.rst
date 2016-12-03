@@ -9,7 +9,7 @@
 
 The ``getopt`` module is the original command line option parser
 that supports the conventions established by the Unix function
-:func:`getopt`. It parses an argument sequence, such as
+``getopt``. It parses an argument sequence, such as
 :data:`sys.argv` and returns a sequence of tuples containing (option,
 argument) pairs and a sequence of non-option arguments.
 

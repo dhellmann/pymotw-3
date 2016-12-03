@@ -17,7 +17,7 @@ handle such password prompts securely.
 Example
 =======
 
-The :func:`getpass()` function prints a prompt, then reads input from
+The ``getpass()`` function prints a prompt, then reads input from
 the user until they press return. The input is returned as a string to
 the caller.
 
@@ -56,7 +56,7 @@ give better security.
     What is your favorite color?
     Auuuuugh!
 
-By default, :func:`getpass()` uses :data:`sys.stdout` to print the
+By default, ``getpass()`` uses :data:`sys.stdout` to print the
 prompt string. For a program that may produce useful output on
 ``sys.stdout``, it is frequently better to send the prompt to another
 stream such as :data:`sys.stderr`.
@@ -78,7 +78,7 @@ value entered by the user is still not echoed back to the screen.
 Using getpass Without a Terminal
 ================================
 
-Under Unix, :func:`getpass()` always requires a tty it can control via
+Under Unix, ``getpass()`` always requires a tty it can control via
 :mod:`termios`, so input echoing can be disabled. This means values
 will not be read from a non-terminal stream redirected to standard
 input. Instead, ``getpass`` tries to get to the tty for a process,
