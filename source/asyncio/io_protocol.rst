@@ -23,7 +23,7 @@ object.
 
 .. literalinclude:: asyncio_echo_server_protocol.py
    :caption:
-   :lines: 8-14,44-51
+   :lines: 9-14,44-51
 
 It then defines a subclass of :class:`asyncio.Protocol` to handle
 client communication. The protocol object's methods are invoked based
@@ -105,7 +105,7 @@ creating an event loop object.
 
 .. literalinclude:: asyncio_echo_client_protocol.py
    :caption:
-   :lines: 8-20,62-69
+   :lines: 9-20,62-69
 
 The client protocol class defines the same methods as the server, with
 different implementations. The class constructor accepts two

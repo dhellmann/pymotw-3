@@ -129,7 +129,7 @@ communication channel.
 
 .. literalinclude:: hmac_pickle.py
    :caption:
-   :lines: 5-31
+   :lines: 6-31
 
 Next, create a :mod:`BytesIO` buffer to represent the socket or
 pipe. The example uses a naive, but easy to parse, format for the data
