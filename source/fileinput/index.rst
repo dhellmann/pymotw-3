@@ -23,7 +23,7 @@ list of filenames and
 * Open each file.
 * Read each line of the file.
 * Figure out if the line refers to an mp3 file.
-* If it does, extract the information from the mp3 file needed for the RSS feed.
+* If it does, add a new item to the RSS feed.
 * Print the output.
 
 All of this file handling could have been coded by hand. It is not
