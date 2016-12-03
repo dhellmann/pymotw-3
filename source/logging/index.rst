@@ -245,7 +245,7 @@ Integration with the warnings Module
 ====================================
 
 The logging module integrates with :mod:`warnings` through
-:func:`captureWarnings`, which configures :mod:`warnings` to send
+:func:`captureWarnings`, which configures ``warnings`` to send
 messages through the logging system instead of outputting them
 directly.
 
