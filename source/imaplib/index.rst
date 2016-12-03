@@ -85,7 +85,7 @@ exception.
 Example Configuration
 =====================
 
-The example account has several in a hierarchy:
+The example account has several mailboxes in a hierarchy:
 
 - INBOX
 - Deleted Messages
@@ -803,8 +803,7 @@ the read messages from ``INBOX`` into it.
 
 	$ python3 imaplib_archive_read.py
 	
-	CREATED Example.Today: [b'[ALREADYEXISTS] Mailbox already exists
-	']
+	CREATED Example.Today: [b'Completed']
 	COPYING: 2
 	COPIED: b'1'
 
@@ -896,6 +895,10 @@ not notified about the deletions when :meth:`close()` is called.
     * `IMAPClient <http://imapclient.freshfoo.com/>`_ -- A
       higher-level client for talking to IMAP servers, written by
       Menno Smits.
+
+    * `offlineimap <http://www.offlineimap.org>`_ -- A Python
+      application for keeping a local set of mailboxes in sync with an
+      IMAP server.
 
     * :ref:`Porting notes for imaplib <porting-imaplib>`
 
