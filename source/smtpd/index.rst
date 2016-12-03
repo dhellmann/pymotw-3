@@ -25,23 +25,23 @@ delivered.  The method :func:`process_message` is provided as a hook
 to be overridden by a derived class.  It is called when the message is
 completely received, and given these arguments:
 
-*peer*
+``peer``
 
   The client's address, a tuple containing IP and incoming port.
 
-*mailfrom*
+``mailfrom``
 
   The "from" information out of the message envelope, given to the
   server by the client when the message is delivered.  This does not
   necessarily match the ``From`` header in all cases.
-  
-*rcpttos*
+
+``rcpttos``
 
   The list of recipients from the message envelope.  Again, this does
   not always match the ``To`` header, especially if a recipient is being
   blind carbon copied.
 
-*data*
+``data``
 
   The full RFC 5322 message body.
 
