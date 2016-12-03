@@ -11,7 +11,7 @@ glob-style patterns such as used by UNIX shells.
 Simple Matching
 ===============
 
-:func:`fnmatch` compares a single filename against a pattern and
+``fnmatch()`` compares a single filename against a pattern and
 returns a boolean, indicating whether or not they match. The comparison
 is case-sensitive when the operating system uses a case-sensitive
 file system.

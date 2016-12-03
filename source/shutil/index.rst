@@ -77,7 +77,7 @@ to show the effect.
 
 .. {{{end}}}
 
-The :func:`copy` function interprets the output name like the Unix
+The ``copy()`` function interprets the output name like the Unix
 command line tool ``cp``. If the named destination refers to a
 directory instead of a file, a new file is created in the directory
 using the base name of the source.
@@ -103,7 +103,7 @@ The permissions of the file are copied along with the contents.
 .. {{{end}}}
 
 
-:func:`copy2` works like :func:`copy`, but includes the access and
+:func:`copy2` works like ``copy()``, but includes the access and
 modification times in the metadata copied to the new file.
 
 .. literalinclude:: shutil_copy2.py

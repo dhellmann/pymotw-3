@@ -15,7 +15,7 @@ accessed directly by both the kernel and the user application.
 Memory-mapped files can be treated as mutable strings or file-like
 objects, depending on the need. A mapped file supports the expected
 file API methods, such as :func:`close`, :func:`flush`, :func:`read`,
-:func:`readline`, :func:`seek`, :func:`tell`, and :func:`write`. It
+``readline()``, :func:`seek`, :func:`tell`, and :func:`write`. It
 also supports the string API, with features such as slicing and
 methods like :func:`find`.
 
