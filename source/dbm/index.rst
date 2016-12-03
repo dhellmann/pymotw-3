@@ -46,7 +46,7 @@ Besides the standard ``'r'``, ``'w'``, ``'c'``, and ``'n'`` flags,
 dbm.ndbm
 --------
 
-The :mod:`dbm.ndbm` module provides an interface to the UNIX ndbm
+The :mod:`dbm.ndbm` module provides an interface to the Unix ndbm
 implementations of the dbm format, depending on how the module was
 configured during compilation.  The module attribute ``library``
 identifies the name of the library ``configure`` was able to find when

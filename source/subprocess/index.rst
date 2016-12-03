@@ -32,10 +32,10 @@ this section re-create the ones used for :mod:`os` and :mod:`popen2`.
 
 .. note::
 
-    The API for working on UNIX and Windows is roughly the same, but
+    The API for working on Unix and Windows is roughly the same, but
     the underlying implementation is slightly different.  All of the
     examples shown here were tested on Mac OS X. Behavior on a
-    non-UNIX OS may vary.
+    non-Unix OS may vary.
 
 Running External Command
 ========================
@@ -293,7 +293,7 @@ both the standard output and error streams.
    :caption:
    :start-after: #end_pymotw_header
 
-The name :const:`DEVNULL` comes from the UNIX special device file,
+The name :const:`DEVNULL` comes from the Unix special device file,
 ``/dev/null``, which responds with end-of-file when opened for reading
 and receives but ignores any amount of input when writing.
 
@@ -721,7 +721,7 @@ The sequence of events is
 
    * `UNIX Signals and Process Groups
      <http://www.cs.ucsb.edu/~almeroth/classes/W99.276/assignment1/signals.html>`__
-     -- A good description of UNIX signaling and how process groups
+     -- A good description of Unix signaling and how process groups
      work.
 
    * :mod:`signal` -- More details about using the ``signal`` module.

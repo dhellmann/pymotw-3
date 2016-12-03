@@ -98,7 +98,7 @@ a floating point value.
     :caption:
     :start-after: #end_pymotw_header
 
-The epoch is the start of measurement for time, which for UNIX systems
+The epoch is the start of measurement for time, which for Unix systems
 is 0:00 on January 1, 1970. Although the value is always a float,
 actual precision is platform-dependent.
 

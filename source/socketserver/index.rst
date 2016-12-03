@@ -10,7 +10,7 @@
 The ``socketserver`` module is a framework for creating network
 servers. It defines classes for handling synchronous network requests
 (the server request handler blocks until the request is completed)
-over TCP, UDP, UNIX streams, and UNIX datagrams. It also provides
+over TCP, UDP, Unix streams, and Unix datagrams. It also provides
 mix-in classes for easily converting servers to use a separate thread
 or process for each request.
 
@@ -32,7 +32,7 @@ There are five different server classes defined in
 intended to be instantiated and used directly. :class:`TCPServer` uses
 TCP/IP sockets to communicate. :class:`UDPServer` uses datagram
 sockets. :class:`UnixStreamServer` and :class:`UnixDatagramServer` use
-UNIX-domain sockets and are only available on UNIX platforms.
+Unix-domain sockets and are only available on Unix platforms.
 
 Server Objects
 ==============

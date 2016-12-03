@@ -30,7 +30,7 @@ of Lorem Ipsum. For reference, the text of the file is
 .. note::
 
   There are differences in the arguments and behaviors for
-  :func:`mmap` between UNIX and Windows, which are not fully discussed
+  :func:`mmap` between Unix and Windows, which are not fully discussed
   here. For more details, refer to the standard library documentation.
 
 Reading

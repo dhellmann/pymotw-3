@@ -57,7 +57,7 @@ interpreter, and is not passed to the program being run.
 Input and Output Streams
 ========================
 
-Following the UNIX paradigm, Python programs can access three file
+Following the Unix paradigm, Python programs can access three file
 descriptors by default.
 
 .. literalinclude:: sys_stdio.py

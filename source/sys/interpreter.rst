@@ -56,7 +56,7 @@ as :const:`sys.platform`.
     :caption:
     :start-after: #end_pymotw_header
 
-For most UNIX systems, the value comes from combining the output of
+For most Unix systems, the value comes from combining the output of
 ``uname -s`` with the first part of the version in ``uname -r``. For
 other operating systems there is a hard-coded table of values.
 

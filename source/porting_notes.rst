@@ -1034,7 +1034,7 @@ subprocess
 
 The default value for the ``close_fds`` argument to
 :class:`subprocess.Popen` has changed from always being ``False``. It
-always defaults to ``True`` under UNIX. It defaults to ``True`` under
+always defaults to ``True`` under Unix. It defaults to ``True`` under
 Windows if the standard I/O stream arguments are set to ``None``,
 otherwise it defaults to ``False``.
 
@@ -1179,7 +1179,7 @@ uuid
    pair: porting; uuid
 
 :func:`uuid.getnode` now uses the ``PATH`` environment variable to
-find programs that can report the MAC address of the host under UNIX
+find programs that can report the MAC address of the host under Unix
 (:pyissue:`19855`). It falls back to looking in ``/sbin`` and
 ``/usr/sbin`` if no program is found on the search path. This search
 behavior may give different results than with earlier versions of

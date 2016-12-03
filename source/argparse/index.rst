@@ -290,7 +290,7 @@ appended to the same list.
 Option Prefixes
 ---------------
 
-The default syntax for options is based on the UNIX convention of
+The default syntax for options is based on the Unix convention of
 signifying command-line switches using a dash prefix ("``-``").
 ``argparse`` supports other prefixes, so a program can conform to
 the local platform default (i.e., use "``/``" on Windows) or follow a
