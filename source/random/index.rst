@@ -16,7 +16,7 @@ suited for a wide range of applications.
 Generating Random Numbers
 =========================
 
-The :func:`random` function returns the next random floating point
+The ``random()`` function returns the next random floating point
 value from the generated sequence.  All of the return values fall
 within the range ``0 <= n < 1.0``.
 
@@ -52,7 +52,7 @@ instead.
    :start-after: #end_pymotw_header
 
 Pass minimum and maximum values, and :func:`uniform` adjusts the
-return values from :func:`random` using the formula ``min + (max -
+return values from ``random()`` using the formula ``min + (max -
 min) * random()``.
 
 .. {{{cog
@@ -71,7 +71,7 @@ min) * random()``.
 Seeding
 =======
 
-:func:`random` produces different values each time it is called and
+``random()`` produces different values each time it is called and
 has a very large period before it repeats any numbers.  This is useful
 for producing unique values or variations, but there are times when
 having the same data set available to be processed in different ways is
@@ -114,7 +114,7 @@ Saving State
 ============
 
 The internal state of the pseudorandom algorithm used by
-:func:`random` can be saved and used to control the numbers produced
+``random()`` can be saved and used to control the numbers produced
 in subsequent runs.  Restoring the previous state before continuing
 reduces the likelihood of repeating values or sequences of values from
 the earlier input.  The :func:`getstate` function returns data that
@@ -162,7 +162,7 @@ causes the generator to produce the same values again.
 Random Integers
 ===============
 
-:func:`random` generates floating point numbers.  It is possible to
+``random()`` generates floating point numbers.  It is possible to
 convert the results to integers, but using :func:`randint` to generate
 integers directly is more convenient.
 
@@ -425,7 +425,7 @@ Non-uniform Distributions
 =========================
 
 While the uniform distribution of the values produced by
-:func:`random` is useful for a lot of purposes, other distributions
+``random()`` is useful for a lot of purposes, other distributions
 more accurately model specific situations.  The ``random`` module
 includes functions to produce values in those distributions, too.
 They are listed here, but not covered in detail because their uses
