@@ -14,8 +14,8 @@ and times, separately and together.
 Times
 =====
 
-Time values are represented with the :class:`time` class. A
-:class:`time` instance has attributes for :attr:`hour`,
+Time values are represented with the ``time`` class. A
+``time`` instance has attributes for :attr:`hour`,
 :attr:`minute`, :attr:`second`, and :attr:`microsecond` and can also
 include time zone information.
 
@@ -23,7 +23,7 @@ include time zone information.
     :caption:
     :start-after: #end_pymotw_header
 
-The arguments to initialize a :class:`time` instance are optional, but
+The arguments to initialize a ``time`` instance are optional, but
 the default of ``0`` is unlikely to be correct.
 
 .. {{{cog
@@ -43,7 +43,7 @@ the default of ``0`` is unlikely to be correct.
 
 .. {{{end}}}
 
-A :class:`time` instance only holds values of time, and not a date
+A ``time`` instance only holds values of time, and not a date
 associated with the time.
 
 .. literalinclude:: datetime_time_minmax.py
@@ -67,7 +67,7 @@ range of times in a single day.
 
 .. {{{end}}}
 
-The resolution for :class:`time` is limited to whole microseconds.
+The resolution for ``time`` is limited to whole microseconds.
 
 .. literalinclude:: datetime_time_resolution.py
     :caption:
@@ -94,7 +94,7 @@ Floating point values for microseconds cause a :class:`TypeError`.
 Dates
 =====
 
-Calendar date values are represented with the :class:`date`
+Calendar date values are represented with the ``date``
 class. Instances have attributes for :attr:`year`, :attr:`month`, and
 :attr:`day`. It is easy to create a date representing the current date
 using the :func:`today` class method.
@@ -158,7 +158,7 @@ This example illustrates the different value types used by
 
 .. {{{end}}}
 
-As with :class:`time`, the range of date values supported can be
+As with ``time``, the range of date values supported can be
 determined using the :attr:`min` and :attr:`max` attributes.
 
 .. literalinclude:: datetime_date_minmax.py
@@ -181,8 +181,8 @@ The resolution for dates is whole days.
 
 .. {{{end}}}
 
-Another way to create new :class:`date` instances uses the
-:func:`replace` method of an existing :class:`date`.
+Another way to create new ``date`` instances uses the
+:func:`replace` method of an existing ``date``.
 
 .. literalinclude:: datetime_date_replace.py
     :caption:
@@ -207,7 +207,7 @@ timedeltas
 ==========
 
 Future and past dates can be calculated using basic arithmetic on two
-``datetime`` objects, or by combining a :class:`datetime` with a
+``datetime`` objects, or by combining a ``datetime`` with a
 :class:`timedelta`.  Subtracting dates produces a :class:`timedelta`,
 and a :class:`timedelta` can be added or subtracted from a date to
 produce another date. The internal values for a :class:`timedelta` are
@@ -360,17 +360,17 @@ All comparison operators are supported.
 Combining Dates and Times
 =========================
 
-Use the :class:`datetime` class to hold values consisting of both date
-and time components. As with :class:`date`, there are several
-convenient class methods to make creating :class:`datetime` instances
+Use the ``datetime`` class to hold values consisting of both date
+and time components. As with ``date``, there are several
+convenient class methods to make creating ``datetime`` instances
 from other common values.
 
 .. literalinclude:: datetime_datetime.py
     :caption:
     :start-after: #end_pymotw_header
 
-As might be expected, the :class:`datetime` instance has all of the
-attributes of both a :class:`date` and a :class:`time` object.
+As might be expected, the ``datetime`` instance has all of the
+attributes of both a ``date`` and a ``time`` object.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'datetime_datetime.py'))
@@ -393,7 +393,7 @@ attributes of both a :class:`date` and a :class:`time` object.
 
 .. {{{end}}}
 
-Just as with :class:`date`, :class:`datetime` provides convenient
+Just as with ``date``, ``datetime`` provides convenient
 class methods for creating new instances. It also includes
 :func:`fromordinal` and :func:`fromtimestamp`.
 
@@ -401,8 +401,8 @@ class methods for creating new instances. It also includes
     :caption:
     :start-after: #end_pymotw_header
 
-:func:`combine` creates :class:`datetime` instances from one
-:class:`date` and one :class:`time` instance.
+:func:`combine` creates ``datetime`` instances from one
+``date`` and one ``time`` instance.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'datetime_datetime_combine.py'))
@@ -430,7 +430,7 @@ can be generated using :func:`strftime`.
     :start-after: #end_pymotw_header
 
 Use :func:`datetime.strptime` to convert formatted strings to
-:class:`datetime` instances.
+``datetime`` instances.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'datetime_datetime_strptime.py'))
@@ -610,7 +610,7 @@ line shows the value in the system timezone, acquired by calling
      features.
 
    * pytz_ -- World Time Zone database and classes for making
-     :class:`datetime` objects time zone-aware.
+     ``datetime`` objects time zone-aware.
 
    * `WikiPedia: Proleptic Gregorian calendar
      <https://en.wikipedia.org/wiki/Proleptic_Gregorian_calendar>`_ --
