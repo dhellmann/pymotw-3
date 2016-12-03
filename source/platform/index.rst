@@ -18,7 +18,7 @@ system can define a portable representation of network interfaces,
 aliases, IP addresses, etc. But when the time comes to edit the
 configuration files, it must know more about the host so it can use
 the correct operating system configuration commands and files.  The
-:mod:`platform` module includes the tools for learning about the
+``platform`` module includes the tools for learning about the
 interpreter, operating system, and hardware platform where a program
 is running.
 

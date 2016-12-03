@@ -12,7 +12,7 @@
 Path Representations
 ====================
 
-:mod:`pathlib` includes classes for managing filesystem paths
+``pathlib`` includes classes for managing filesystem paths
 formatted using either the POSIX standard or Microsoft Windows
 syntax. It includes so called "pure" classes, which operate on strings
 but do not interact with an actual filesystem, and "concrete" classes,

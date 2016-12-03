@@ -8,14 +8,14 @@
 :Purpose: Provide platform-independent abstractions for I/O
           multiplexing based on the ``select`` module.
 
-The :mod:`selectors` module provides a platform-independent
+The ``selectors`` module provides a platform-independent
 abstraction layer on top of the platform-specific I/O monitoring
 functions in :mod:`select`.
 
 Operating Model
 ===============
 
-The APIs in :mod:`selectors` are event-based, similar to :func:`poll`
+The APIs in ``selectors`` are event-based, similar to :func:`poll`
 from :mod:`select`. A selector object provides methods for specifying
 what events to look for on a socket, and then lets the caller wait for
 events in a platform-independent way.

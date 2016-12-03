@@ -5,7 +5,7 @@
 Linear control flow between a series of coroutines is easy to manage
 with the built-in language keyword ``await``. More complicated
 structures allowing one coroutine to wait for several others to
-complete in parallel are also possible using tools in :mod:`asyncio`.
+complete in parallel are also possible using tools in ``asyncio``.
 
 Waiting for Multiple Coroutines
 ===============================

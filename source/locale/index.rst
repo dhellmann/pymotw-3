@@ -7,7 +7,7 @@
 
 :Purpose: Format and parse values that depend on location or language.
 
-The :mod:`locale` module is part of Python's internationalization and
+The ``locale`` module is part of Python's internationalization and
 localization support library. It provides a standard way to handle
 operations that may depend on the language or location of a user. For
 example, it handles formatting numbers as currency, comparing strings
@@ -26,7 +26,7 @@ for sorting, and working with dates. It does not cover translation
   it starts up or when a web request is received and not change it.
 
 This section covers some of the high-level functions in the
-:mod:`locale` module. There are others which are lower level
+``locale`` module. There are others which are lower level
 (:func:`format_string`) or which relate to managing the locale for an
 application (:func:`resetlocale`).
 
@@ -420,7 +420,7 @@ to always be a ``.``.
 Parsing Numbers
 ===============
 
-Besides generating output in different formats, the :mod:`locale`
+Besides generating output in different formats, the ``locale``
 module helps with parsing input. It includes :func:`atoi` and
 :func:`atof` functions for converting the strings to integer and
 floating point values based on the locale's numerical formatting

@@ -7,7 +7,7 @@
 
 :Purpose: Convert between strings and binary data.
 
-The :mod:`struct` module includes functions for converting between
+The ``struct`` module includes functions for converting between
 strings of bytes and native Python data types such as numbers and
 strings.
 

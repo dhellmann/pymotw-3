@@ -7,14 +7,14 @@
 
 :Purpose: Portable access to operating system specific features.
 
-The :mod:`os` module provides a wrapper for platform specific modules
+The ``os`` module provides a wrapper for platform specific modules
 such as :mod:`posix`, :mod:`nt`, and :mod:`mac`. The API for functions
-available on all platforms should be the same, so using the :mod:`os`
+available on all platforms should be the same, so using the ``os``
 module offers some measure of portability. Not all functions are
 available on every platform, however. Many of the process management
 functions described in this summary are not available for Windows.
 
-The Python documentation for the :mod:`os` module is subtitled
+The Python documentation for the ``os`` module is subtitled
 "Miscellaneous operating system interfaces". The module consists
 mostly of functions for creating and managing running processes or
 file system content (files and directories), with a few other bits of
@@ -381,7 +381,7 @@ moved to a new fileystem or if the destination already exists.
 Detecting and Changing the Process Owner
 ========================================
 
-The first set of functions provided by :mod:`os` are used for
+The first set of functions provided by ``os`` are used for
 determining and changing the process owner ids. These are most
 frequently used by authors of daemons or special system programs that
 need to change permission level rather than running as ``root``. This
@@ -468,7 +468,7 @@ Managing the Process Environment
 ================================
 
 Another feature of the operating system exposed to a program though
-the :mod:`os` module is the environment. Variables set in the
+the ``os`` module is the environment. Variables set in the
 environment are visible as strings that can be read through
 :data:`os.environ` or :func:`getenv`. Environment variables are
 commonly used for configuration values such as search paths, file
@@ -643,7 +643,7 @@ Creating Processes with os.fork()
 =================================
 
 The POSIX functions :func:`fork` and :func:`exec` (available under Mac
-OS X, Linux, and other UNIX variants) are exposed via the :mod:`os`
+OS X, Linux, and other UNIX variants) are exposed via the ``os``
 module. Entire books have been written about reliably using these
 functions, so check the library or bookstore for more details than are
 presented here in this introduction.

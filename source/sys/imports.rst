@@ -8,7 +8,7 @@ Most Python programs end up as a combination of several modules with a
 main application importing them. Whether using the features of the
 standard library or organizing custom code in separate files to make
 it easier to maintain, understanding and managing the dependencies for
-a program is an important aspect of development. :mod:`sys` includes
+a program is an important aspect of development. ``sys`` includes
 information about the modules available to an application, either as
 built-ins or after being imported.  It also defines hooks for
 overriding the standard import behavior for special cases.

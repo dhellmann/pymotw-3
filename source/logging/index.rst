@@ -7,7 +7,7 @@
 
 :Purpose: Report status, error, and informational messages.
 
-The :mod:`logging` module defines a standard API for reporting errors
+The ``logging`` module defines a standard API for reporting errors
 and status information from applications and libraries. The key
 benefit of having the logging API provided by a standard library
 module is that all Python modules can participate in logging, so an
@@ -29,10 +29,10 @@ Logging in Applications vs. Libraries
 =====================================
 
 Application developers and library authors can both use
-:mod:`logging`, but each audience has different considerations to keep
+``logging``, but each audience has different considerations to keep
 in mind.
 
-Application developers configure the :mod:`logging` module, directing
+Application developers configure the ``logging`` module, directing
 the messages to appropriate output channels.  It is possible to log
 messages with different verbosity levels or to different
 destinations. Handlers for writing log messages to files, HTTP
@@ -41,7 +41,7 @@ logging mechanisms are all included, and it is possible to create
 custom log destination classes for special requirements not handled by
 any of the built-in classes.
 
-Developers of libraries can also use :mod:`logging` and have even less
+Developers of libraries can also use ``logging`` and have even less
 work to do.  Simply create a logger instance for each context, using
 an appropriate name, and then log messages using the standard levels.
 As long as a library uses the logging API with consistent naming and
@@ -126,12 +126,12 @@ etc.) and the ``.5`` file is erased.
 Verbosity Levels
 ================
 
-Another useful feature of the :mod:`logging` API is the ability to
+Another useful feature of the ``logging`` API is the ability to
 produce different messages at different *log levels*. This means code
 can be instrumented with debug messages, for example, and the log
 level can be set so that those debug messages are not written on a
 production system.  :table:`Logging Levels` lists the logging levels
-defined by :mod:`logging`.
+defined by ``logging``.
 
 .. table:: Logging Levels
 
@@ -276,7 +276,7 @@ the :const:`WARNING` level.
 
 .. seealso::
 
-   * :pydoc:`logging` -- The documentation for :mod:`logging` is
+   * :pydoc:`logging` -- The documentation for ``logging`` is
      extensive, and includes tutorials and reference material that
      goes beyond the exmaples presented here.
 
@@ -291,4 +291,4 @@ the :const:`WARNING` level.
    * `Logging Cookbook
      <https://docs.python.org/3.5/howto/logging-cookbook.html>`__ --
      Part of the standard library documentation, with examples of
-     using :mod:`logging` for different tasks.
+     using ``logging`` for different tasks.

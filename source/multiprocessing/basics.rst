@@ -32,7 +32,7 @@ because each process is competing for access to the output stream.
 
 It usually more useful to be able to spawn a process with arguments to
 tell it what work to do.  Unlike with :mod:`threading`, in order to pass
-arguments to a :mod:`multiprocessing` :class:`Process` the arguments
+arguments to a ``multiprocessing`` :class:`Process` the arguments
 must be able to be serialized using :mod:`pickle`.  This example
 passes each worker a number to be printed.
 
@@ -61,9 +61,9 @@ The integer argument is now included in the message printed by each worker:
 Importable Target Functions
 ===========================
 
-One difference between the :mod:`threading` and :mod:`multiprocessing`
+One difference between the :mod:`threading` and ``multiprocessing``
 examples is the extra protection for ``__main__`` used in the
-:mod:`multiprocessing` examples.  Due to the way the new processes are
+``multiprocessing`` examples.  Due to the way the new processes are
 started, the child process needs to be able to import the script
 containing the target function.  Wrapping the main part of the
 application in a check for ``__main__`` ensures that it is not run
@@ -328,7 +328,7 @@ Logging
 =======
 
 When debugging concurrency issues, it can be useful to have access to
-the internals of the objects provided by :mod:`multiprocessing`.
+the internals of the objects provided by ``multiprocessing``.
 There is a convenient module-level function to enable logging called
 :func:`log_to_stderr`.  It sets up a logger object using
 :mod:`logging` and adds a handler so that log messages are sent to the

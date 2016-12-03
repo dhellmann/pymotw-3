@@ -7,9 +7,9 @@
 
 :Purpose: Contains constants and classes for working with text.
 
-The :mod:`string` module dates from the earliest versions of
+The ``string`` module dates from the earliest versions of
 Python. Many of the functions previously implemented in the module
-have been moved to methods of :class:`str` objects. The :mod:`string`
+have been moved to methods of :class:`str` objects. The ``string``
 module retains several useful constants and classes for working with
 :class:`str` objects, and this discussion will concentrate on them.
 
@@ -222,7 +222,7 @@ needed.
 Constants
 =========
 
-The :mod:`string` module includes a number of constants related to
+The ``string`` module includes a number of constants related to
 ASCII and numerical character sets.
 
 .. literalinclude:: string_constants.py
@@ -273,7 +273,7 @@ Unicode, their application is limited.
    * `String Methods
      <https://docs.python.org/3/library/stdtypes.html#string-methods>`_
      -- Methods of :class:`str` objects that replace the deprecated
-     functions in :mod:`string`.
+     functions in ``string``.
 
    * :pep:`292` -- Simpler String Substitutions
 

@@ -8,7 +8,7 @@
 :Purpose: Encode Python objects as JSON strings, and decode JSON
           strings into Python objects.
 
-The :mod:`json` module provides an API similar to :mod:`pickle` for
+The ``json`` module provides an API similar to :mod:`pickle` for
 converting in-memory Python objects to a serialized representation
 known as JavaScript Object Notation (JSON).  Unlike pickle, JSON has
 the benefit of having implementations in many languages (especially
@@ -200,7 +200,7 @@ Working with Custom Types
 =========================
 
 All of the examples so far have used Pythons built-in types because
-those are supported by :mod:`json` natively.  It is common to need to
+those are supported by ``json`` natively.  It is common to need to
 encode custom classes, as well, and there are two ways to do that.
 
 Given this class to encode:
@@ -218,7 +218,7 @@ to do the encoding, so it should just convert one object to another.
     :start-after: #end_pymotw_header
 
 In :func:`convert_to_builtin_type`, instances of classes not recognized
-by :mod:`json` are converted to dictionaries with enough information
+by ``json`` are converted to dictionaries with enough information
 to re-create the object if a program has access to the Python modules
 necessary.
 
@@ -255,7 +255,7 @@ the calling application should receive instead of the dictionary.
     :caption:
     :start-after: #end_pymotw_header
 
-Since :mod:`json` converts string values to unicode objects, they need
+Since ``json`` converts string values to unicode objects, they need
 to be re-encoded as ASCII strings before they can be used as keyword
 arguments to the class constructor.
 
@@ -281,7 +281,7 @@ constants (``parse_constant``).
 Encoder and Decoder Classes
 ===========================
 
-Besides the convenience functions already covered, the :mod:`json`
+Besides the convenience functions already covered, the ``json``
 module provides classes for encoding and decoding.  Using the classes
 directly gives access to extra APIs for customizing their behavior.
 

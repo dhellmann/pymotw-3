@@ -7,7 +7,7 @@
 
 :Purpose: Read/write configuration files similar to Windows INI files
 
-Use the :mod:`configparser` module to manage user-editable
+Use the ``configparser`` module to manage user-editable
 configuration files for an application. The contents of the
 configuration files can be organized into groups and several option
 value types are supported, including integers, floating point values,
@@ -18,7 +18,7 @@ host names and port numbers.
 Configuration File Format
 =========================
 
-The file format used by :mod:`configparser` is similar to the format
+The file format used by ``configparser`` is similar to the format
 used by older versions of Microsoft Windows.  It consists of one or
 more named *sections*, each of which can contain individual *options*
 with names and values.

@@ -323,7 +323,7 @@ Timer Threads
 =============
 
 One example of a reason to subclass :class:`Thread` is provided by
-:class:`Timer`, also included in :mod:`threading`. A :class:`Timer`
+:class:`Timer`, also included in ``threading``. A :class:`Timer`
 starts its work after a delay, and can be canceled at any point within
 that delay time period.
 

@@ -5,7 +5,7 @@
 Up to this point the examples have all avoided mingling concurrency
 and I/O operations to focus on one concept at a time. However,
 switching contexts when I/O blocks is one of the primary use cases for
-:mod:`asyncio`. Building on the concurrency concepts already
+``asyncio``. Building on the concurrency concepts already
 introduced, this section examines two sample programs implementing a
 simple echo server and client, similar to the examples used in the
 :mod:`socket` and :mod:`socketserver` sections. A client can connect
@@ -18,7 +18,7 @@ Echo Server
 ===========
 
 The server starts by importing the modules it needs to set up
-:mod:`asyncio` and :mod:`logging`, and then it creates an event loop
+``asyncio`` and :mod:`logging`, and then it creates an event loop
 object.
 
 .. literalinclude:: asyncio_echo_server_protocol.py
@@ -100,7 +100,7 @@ Echo Client
 
 Constructing a client using a protocol class is very similar to
 constructing a server.  The code again starts by importing the modules
-it needs to set up :mod:`asyncio` and :mod:`logging`, and then
+it needs to set up ``asyncio`` and :mod:`logging`, and then
 creating an event loop object.
 
 .. literalinclude:: asyncio_echo_client_protocol.py

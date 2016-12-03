@@ -7,7 +7,7 @@
 
 :Purpose: Compare files and directories on the file system.
 
-The :mod:`filecmp` module includes functions and a class for comparing
+The ``filecmp`` module includes functions and a class for comparing
 files and directories on the file system.
 
 Example Data

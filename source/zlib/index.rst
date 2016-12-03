@@ -7,13 +7,13 @@
 
 :Purpose: Low-level access to GNU zlib compression library
 
-The :mod:`zlib` module provides a lower-level interface to many of the
-functions in the :mod:`zlib` compression library from the GNU project.
+The ``zlib`` module provides a lower-level interface to many of the
+functions in the ``zlib`` compression library from the GNU project.
 
 Working with Data in Memory
 ===========================
 
-The simplest way to work with :mod:`zlib` requires holding all of the
+The simplest way to work with ``zlib`` requires holding all of the
 data to be compressed or decompressed in memory.
 
 .. literalinclude:: zlib_memory.py
@@ -68,7 +68,7 @@ takes up more memory than the uncompressed version.
 
 .. {{{end}}}
 
-:mod:`zlib` supports several different compression levels, allowing a
+``zlib`` supports several different compression levels, allowing a
 balance between computational cost and the amount of space
 reduction. The default compression level,
 :data:`zlib.Z_DEFAULT_COMPRESSION` is ``-1`` and corresponds to a
@@ -186,7 +186,7 @@ contains any data not used.
 Checksums
 =========
 
-In addition to compression and decompression functions, :mod:`zlib`
+In addition to compression and decompression functions, ``zlib``
 includes two functions for computing checksums of data,
 :func:`adler32` and :func:`crc32`.  Neither checksum is
 cryptographically secure, and they are only intended for use for data

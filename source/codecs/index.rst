@@ -8,7 +8,7 @@
 :Purpose: Encoders and decoders for converting text between different
           representations.
 
-The :mod:`codecs` module provides stream and file interfaces for
+The ``codecs`` module provides stream and file interfaces for
 transcoding data.  It is most commonly used to work with Unicode text,
 but other encodings are also available for other purposes.
 
@@ -145,10 +145,10 @@ and encoded from the internal values to a specific representation as
 it is written.  A program can explicitly encode and decode data, but
 depending on the encoding used it can be non-trivial to determine
 whether enough bytes have been read in order to fully decode the data.
-:mod:`codecs` provides classes that manage the data encoding and
+``codecs`` provides classes that manage the data encoding and
 decoding, so applications do not have to do that work.
 
-The simplest interface provided by :mod:`codecs` is an alternative to
+The simplest interface provided by ``codecs`` is an alternative to
 the built-in :func:`open` function.  The new version works just like
 the built-in, but adds two new arguments to specify the encoding and
 desired error handling technique.
@@ -193,7 +193,7 @@ Reading the data with :func:`open` is straightforward, with one catch:
 the encoding must be known in advance, in order to set up the decoder
 correctly.  Some data formats, such as XML, specify the encoding as
 part of the file, but usually it is up to the application to manage.
-:mod:`codecs` simply takes the encoding as an argument and assumes it
+``codecs`` simply takes the encoding as an argument and assumes it
 is correct.
 
 .. literalinclude:: codecs_open_read.py
@@ -243,7 +243,7 @@ to know in advance what byte order to use for a given set of data, so
 the multi-byte encodings include a *byte-order marker* (BOM) as the
 first few bytes of encoded output.  For example, UTF-16 is defined in
 such a way that 0xFFFE and 0xFEFF are not valid characters, and can be
-used to indicate the byte order.  :mod:`codecs` defines constants for
+used to indicate the byte order.  ``codecs`` defines constants for
 the byte order markers used by UTF-16 and UTF-32.
 
 .. literalinclude:: codecs_bom.py
@@ -276,7 +276,7 @@ current system's native byte order.
 .. {{{end}}}
 
 Byte ordering is detected and handled automatically by the decoders in
-:mod:`codecs`, but an explicit ordering can be specified when
+``codecs``, but an explicit ordering can be specified when
 encoding.
 
 .. literalinclude:: codecs_bom_create_file.py
@@ -337,7 +337,7 @@ characters can be represented in all encodings, so if the wrong
 encoding is used while writing then an error will be generated and
 data may be lost.
 
-:mod:`codecs` uses the same five error handling options that are
+``codecs`` uses the same five error handling options that are
 provided by the :func:`encode` method of :class:`str` and the
 :func:`decode` method of :class:`bytes`, listed in :table:`Codec Error
 Handling Modes`.
@@ -562,7 +562,7 @@ Non-Unicode Encodings
 =====================
 
 Although most of the earlier examples use Unicode encodings,
-:mod:`codecs` can be used for many other data translations.  For
+``codecs`` can be used for many other data translations.  For
 example, Python includes codecs for working with base-64, bzip2,
 ROT-13, ZIP, and other data formats.
 
@@ -588,7 +588,7 @@ a Unicode string and the output will also be a Unicode string.
 
 .. {{{end}}}
 
-Using :mod:`codecs` to wrap a data stream provides a simpler interface
+Using ``codecs`` to wrap a data stream provides a simpler interface
 than working directly with :mod:`zlib`.
 
 .. literalinclude:: codecs_zlib.py
@@ -600,7 +600,7 @@ portion of the data through the stream interface using
 :func:`readline` or :func:`read` because they need to find the end of
 a compressed segment to expand it.  If a program cannot hold the
 entire uncompressed data set in memory, use the incremental access
-features of the compression library, instead of :mod:`codecs`.
+features of the compression library, instead of ``codecs``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'codecs_zlib.py'))
@@ -736,7 +736,7 @@ Defining a Custom Encoding
 Since Python comes with a large number of standard codecs already, it
 is unlikely that an application will need to define a custom encoder
 or decoder.  When it is necessary, though, there are several base
-classes in :mod:`codecs` to make the process easier.
+classes in ``codecs`` to make the process easier.
 
 The first step is to understand the nature of the transformation
 described by the encoding.  These examples will use an "invertcaps"
@@ -766,7 +766,7 @@ also the case with ``ROT-13``).
 
 Although it is easy to understand, this implementation is not
 efficient, especially for very large text strings.  Fortunately,
-:mod:`codecs` includes some helper functions for creating *character
+``codecs`` includes some helper functions for creating *character
 map* based codecs such as invertcaps.  A character map encoding is
 made up of two dictionaries.  The *encoding map* converts character
 values from the input string to byte values in the output and the
@@ -829,7 +829,7 @@ the strict error handling mode raises an exception.
 After the encoding and decoding maps are defined, a few
 additional classes need to be set up, and the encoding should be
 registered.  :func:`register` adds a search function to the registry
-so that when a user wants to use the encoding :mod:`codecs` can locate
+so that when a user wants to use the encoding ``codecs`` can locate
 it.  The search function must take a single string argument with the
 name of the encoding, and return a :class:`CodecInfo` object if it
 knows the encoding, or ``None`` if it does not.
@@ -840,7 +840,7 @@ knows the encoding, or ``None`` if it does not.
 
 Multiple search functions can be registered, and each will be called
 in turn until one returns a :class:`CodecInfo` or the list is
-exhausted.  The internal search function registered by :mod:`codecs`
+exhausted.  The internal search function registered by ``codecs``
 knows how to load the standard codecs such as UTF-8 from
 :mod:`encodings`, so those names will never be passed to custom search
 functions.
@@ -862,9 +862,9 @@ functions.
 .. {{{end}}}
 
 The :class:`CodecInfo` instance returned by the search function tells
-:mod:`codecs` how to encode and decode using all of the different
+``codecs`` how to encode and decode using all of the different
 mechanisms supported: stateless, incremental, and stream.
-:mod:`codecs` includes base classes to help with setting up a character
+``codecs`` includes base classes to help with setting up a character
 map encoding.  This example puts all of the pieces together to
 register a search function that returns a :class:`CodecInfo` instance
 configured for the invertcaps codec.

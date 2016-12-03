@@ -9,7 +9,7 @@
 
 :Purpose: Client library for IMAP4 communication.
 
-:mod:`imaplib` implements a client for communicating with Internet
+``imaplib`` implements a client for communicating with Internet
 Message Access Protocol (IMAP) version 4 servers.  The IMAP protocol
 defines a set of commands sent to the server and the responses
 delivered back to the client.  Most of the commands are available as

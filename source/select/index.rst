@@ -7,7 +7,7 @@ select --- Wait for I/O Efficiently
 
 :Purpose: Wait for notification that an input or output channel is ready.
 
-The :mod:`select` module provides access to platform-specific I/O
+The ``select`` module provides access to platform-specific I/O
 monitoring functions.  The most portable interface is the POSIX
 function :func:`select`, which is available on UNIX and Windows.  The
 module also includes :func:`poll`, a UNIX-only API, and several
@@ -16,9 +16,9 @@ options that only work with specific variants of UNIX.
 .. note::
 
    The new :mod:`selectors` module provides a higher-level interface
-   built on top of the APIs in :mod:`select`. It is easier to build
+   built on top of the APIs in ``select``. It is easier to build
    portable code using :mod:`selectors`, so use that module unless the
-   low-level APIs provided by :mod:`select` are somehow required.
+   low-level APIs provided by ``select`` are somehow required.
 
 Using select()
 ==============
@@ -442,7 +442,7 @@ sockets), this is the output.
 Platform-specific Options
 =========================
 
-Less portable options provided by :mod:`select` are :class:`epoll`,
+Less portable options provided by ``select`` are :class:`epoll`,
 the *edge polling* API supported by Linux; :class:`kqueue`, which uses
 BSD's *kernel queue*; and :class:`kevent`, BSD's *kernel event*
 interface.  Refer to the operating system library documentation for
@@ -453,7 +453,7 @@ more detail about how they work.
     * :pydoc:`select`
 
     * :mod:`selectors` -- Higher-level abstraction on top of
-      :mod:`select`.
+      ``select``.
 
     * `Socket Programming HOWOTO
       <https://docs.python.org/howto/sockets.html>`__ -- An

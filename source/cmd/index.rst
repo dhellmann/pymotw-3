@@ -9,7 +9,7 @@
 
 :Purpose: Create line-oriented command processors.
 
-The :mod:`cmd` module contains one public class, :class:`Cmd`,
+The ``cmd`` module contains one public class, :class:`Cmd`,
 designed to be used as a base class for interactive shells and other
 command interpreters. By default it uses :mod:`readline` for
 interactive prompt handling, command line editing, and command
@@ -18,7 +18,7 @@ completion.
 Processing Commands
 ===================
 
-A command interpreter created with :mod:`cmd` uses a loop to read all
+A command interpreter created with ``cmd`` uses a loop to read all
 lines from its input, parse them, and then dispatch the command to an
 appropriate *command handler*. Input lines are parsed into two parts:
 the command, and any other text on the line. If the user enters ``foo

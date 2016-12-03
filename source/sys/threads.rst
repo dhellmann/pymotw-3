@@ -4,7 +4,7 @@
  Low-level Thread Support
 ==========================
 
-:mod:`sys` includes low-level functions for controlling and debugging
+``sys`` includes low-level functions for controlling and debugging
 thread behavior.
 
 Switch Interval

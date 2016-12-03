@@ -8,7 +8,7 @@
 :Purpose: Defines classes for parsing and creating HTTP cookie
           headers.
 
-The :mod:`http.cookies` module implements a parser for cookies that is
+The ``http.cookies`` module implements a parser for cookies that is
 mostly :rfc:`2109` compliant. The implementation is a little less
 strict than the standard because MSIE 3.0x does not support the entire
 standard.

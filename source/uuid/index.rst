@@ -5,7 +5,7 @@
 .. module:: uuid
     :synopsis: Universally unique identifiers
 
-:Purpose: The :mod:`uuid` module implements Universally Unique Identifiers as described in RFC 4122.
+:Purpose: The ``uuid`` module implements Universally Unique Identifiers as described in RFC 4122.
 
 :rfc:`4122` defines a system for creating universally unique
 identifiers for resources in a way that does not require a central
@@ -28,7 +28,7 @@ UUID 1 - IEEE 802 MAC Address
 =============================
 
 UUID version 1 values are computed using the MAC address of the host.
-The :mod:`uuid` module uses :func:`getnode` to retrieve the MAC value
+The ``uuid`` module uses :func:`getnode` to retrieve the MAC value
 of the current system.
 
 .. literalinclude:: uuid_getnode.py
@@ -231,7 +231,7 @@ find them in log files. To add greater differentiation in UUIDs, use
    :start-after: #end_pymotw_header
 
 The source of randomness depends on which C libraries are available
-when :mod:`uuid` is imported.  If ``libuuid`` (or ``uuid.dll``) can be
+when ``uuid`` is imported.  If ``libuuid`` (or ``uuid.dll``) can be
 loaded and it contains a function for generating random values, it is
 used.  Otherwise :func:`os.urandom` or the :mod:`random` module are
 used.

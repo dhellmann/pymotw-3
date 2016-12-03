@@ -7,7 +7,7 @@
 
 :Purpose: Message catalog API for internationalization.
 
-The :mod:`gettext` module provides a pure-Python implementation
+The ``gettext`` module provides a pure-Python implementation
 compatible with the GNU **gettext** library for message translation
 and catalog management.  The tools available with the Python source
 distribution enable you to extract messages from a set of source
@@ -75,7 +75,7 @@ detail, starting with the code modifications needed.
 Creating Message Catalogs from Source Code
 ==========================================
 
-:mod:`gettext` works by looking up literal strings in a database of
+``gettext`` works by looking up literal strings in a database of
 translations, and pulling out the appropriate translated string.  The
 usual pattern is to bind the appropriate lookup function to the name
 "``_``" (a single underscore character) so that the code is not
@@ -174,7 +174,7 @@ The catalog is built from the ``.po`` file using ``msgformat``.
 .. {{{end}}}
 
 The domain in ``gettext_example.py`` is ``example_domain``, but the
-file is called ``example.pot``. To have :mod:`gettext` find the right
+file is called ``example.pot``. To have ``gettext`` find the right
 translation file, the names need to match.
 
 .. literalinclude:: gettext_example_corrected.py
@@ -203,7 +203,7 @@ Finding Message Catalogs at Runtime
 As described earlier, the *locale directory* containing the message
 catalogs is organized based on the language with catalogs named for
 the *domain* of the program.  Different operating systems define their
-own default value, but :mod:`gettext` does not know all of these
+own default value, but ``gettext`` does not know all of these
 defaults.  It uses a default locale directory of ``sys.prefix +
 '/share/locale'``, but most of the time it is safer to always
 explicitly give a ``localedir`` value than to depend on this default
@@ -299,7 +299,7 @@ Plural Values
 =============
 
 While simple message substitution will handle most translation needs,
-:mod:`gettext` treats pluralization as a special case.  Depending on
+``gettext`` treats pluralization as a special case.  Depending on
 the language, the difference between the singular and plural forms of
 a message may vary only by the ending of a single word, or the entire
 sentence structure may be different.  There may also be different
@@ -389,7 +389,7 @@ translation strings.
 Application vs. Module Localization
 ===================================
 
-The scope of a translation effort defines how :mod:`gettext` is
+The scope of a translation effort defines how ``gettext`` is
 installed and used with a body of code.
 
 Application Localization
@@ -427,7 +427,7 @@ The earlier examples all use a single translation for the duration of
 the program.  Some situations, especially web applications, need to
 use different message catalogs at different times, without exiting and
 resetting the environment.  For those cases, the class-based API
-provided in :mod:`gettext` will be more convenient.  The API calls are
+provided in ``gettext`` will be more convenient.  The API calls are
 essentially the same as the global calls described in this section,
 but the message catalog object is exposed and can be manipulated
 directly, so that multiple catalogs can be used.

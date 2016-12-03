@@ -16,7 +16,7 @@ if a signal is received in the middle.
 
 Signals are identified by integers and are defined in the operating
 system C headers.  Python exposes the signals appropriate for the
-platform as symbols in the :mod:`signal` module.  The examples in this
+platform as symbols in the ``signal`` module.  The examples in this
 section use :const:`SIGINT` and :const:`SIGUSR1`.  Both are typically
 defined for all UNIX and UNIX-like systems.
 
@@ -225,7 +225,7 @@ signal from another.
     :start-after: #end_pymotw_header
 
 The signal handlers were all registered in the main thread because
-this is a requirement of the :mod:`signal` module implementation for
+this is a requirement of the ``signal`` module implementation for
 Python, regardless of underlying platform support for mixing threads
 and signals.  Although the receiver thread calls :func:`signal.pause`,
 it does not receive the signal.  The ``signal.alarm(2)`` call near the

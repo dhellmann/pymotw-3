@@ -7,7 +7,7 @@
 
 :Purpose: cgitb provides more detailed traceback information than :mod:`traceback`.
 
-:mod:`cgitb` is a valuable debugging tool in the standard library.  It
+``cgitb`` is a valuable debugging tool in the standard library.  It
 was originally designed for showing errors and debugging information
 in web applications and was later updated to include plain-text output
 as well, but unfortunately was never renamed.  This has led to
@@ -50,7 +50,7 @@ Enabling Detailed Tracebacks
 ============================
 
 While the basic traceback includes enough information to spot the
-error, enabling :mod:`cgitb` gives more detail.  :mod:`cgitb`
+error, enabling ``cgitb`` gives more detail.  ``cgitb``
 replaces :data:`sys.excepthook` with a function that gives extended
 tracebacks.
 
@@ -195,7 +195,7 @@ useful for debugging) and the original form of a traceback dump.
 Local Variables in Tracebacks
 =============================
 
-The code in :mod:`cgitb` that examines the variables used in the stack
+The code in ``cgitb`` that examines the variables used in the stack
 frame leading to the error is smart enough to evaluate object
 attributes to display them, too.
 
@@ -208,7 +208,7 @@ whitespace, or other code that makes it very long, then having the
 default of five lines of context may not provide enough direction.
 When the body of the function is pushed out of the code window
 displayed, there is not enough context to understand the location of
-the error.  Using a larger context value with :mod:`cgitb` solves this
+the error.  Using a larger context value with ``cgitb`` solves this
 problem.  Passing an integer as the ``context`` argument to
 :func:`enable()` controls the amount of code displayed for each line
 of the traceback.
@@ -337,7 +337,7 @@ error-prone code.
 Exception Properties
 ====================
 
-In addition to the local variables from each stack frame, :mod:`cgitb`
+In addition to the local variables from each stack frame, ``cgitb``
 shows all properties of the exception object.  Extra properties on
 custom exception types are printed as part of the error report.
 
@@ -433,7 +433,7 @@ standard ``message`` and ``args`` values.
 HTML Output
 ===========
 
-Because :mod:`cgitb` was originally developed for handling exceptions
+Because ``cgitb`` was originally developed for handling exceptions
 in web applications, no discussion would be complete without
 mentioning its original HTML output format.  The earlier examples all
 shows plain text output.  To produce HTML instead, leave out the

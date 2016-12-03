@@ -7,7 +7,7 @@
 
 :Purpose: Object serialization
 
-The :mod:`pickle` module implements an algorithm for turning an
+The ``pickle`` module implements an algorithm for turning an
 arbitrary Python object into a series of bytes.  This process is also
 called *serializing* the object. The byte stream representing the
 object can then be transmitted or stored, and later reconstructed to
@@ -15,9 +15,9 @@ create a new object with the same characteristics.
 
 .. warning::
 
-    The documentation for :mod:`pickle` makes clear that it offers no
+    The documentation for ``pickle`` makes clear that it offers no
     security guarantees. In fact, unpickling data can execute
-    arbitrary code.  Be careful using :mod:`pickle` for inter-process
+    arbitrary code.  Be careful using ``pickle`` for inter-process
     communication or data storage, and do not trust data that cannot
     be verified as secure.  See the :mod:`hmac` module for an example
     of a secure way to verify the source of a pickled data source.
@@ -82,7 +82,7 @@ the original.
 Working with Streams
 ====================
 
-In addition to :func:`dumps` and :func:`loads`, :mod:`pickle` provides
+In addition to :func:`dumps` and :func:`loads`, ``pickle`` provides
 convenience functions for working with file-like streams. It is
 possible to write multiple objects to a stream, and then read them
 from the stream without knowing in advance how many objects are

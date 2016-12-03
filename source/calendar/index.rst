@@ -8,7 +8,7 @@
 :Purpose: The calendar module implements classes for working with
           dates to manage year/month/week oriented values.
 
-The :mod:`calendar` module defines the :class:`Calendar` class, which
+The ``calendar`` module defines the :class:`Calendar` class, which
 encapsulates calculations for values such as the dates of the weeks in
 a given month or year. In addition, the :class:`TextCalendar` and
 :class:`HTMLCalendar` classes can produce pre-formatted output.
@@ -55,7 +55,7 @@ cell has a class attribute corresponding to the day of the week, so
 the HTML can be styled through CSS.
 
 To produce output in a format other than one of the available
-defaults, use :mod:`calendar` to calculate the dates and organize the
+defaults, use ``calendar`` to calculate the dates and organize the
 values into week and month ranges, then iterate over the result.  The
 :func:`weekheader`, :func:`monthcalendar`, and
 :func:`yeardays2calendar` methods of :class:`Calendar` are especially

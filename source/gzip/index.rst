@@ -7,7 +7,7 @@
 
 :Purpose: Read and write gzip files.
 
-The :mod:`gzip` module provides a file-like interface to GNU zip
+The ``gzip`` module provides a file-like interface to GNU zip
 files, using :mod:`zlib` to compress and uncompress the data.
 
 Writing Compressed Files

@@ -7,7 +7,7 @@
 
 :Purpose: Time the execution of small bits of Python code.
 
-The :mod:`timeit` module provides a simple interface for determining
+The ``timeit`` module provides a simple interface for determining
 the execution time of small bits of Python code. It uses a
 platform-specific time function to provide the most accurate time
 calculation possible and reduces the impact of start-up or shutdown
@@ -16,7 +16,7 @@ costs on the time calculation by executing the code repeatedly.
 Module Contents
 ===============
 
-:mod:`timeit` defines a single public class, :class:`Timer`. The
+``timeit`` defines a single public class, :class:`Timer`. The
 constructor for :class:`Timer` takes a statement to be timed and a
 "setup" statement (used to initialize variables, for example). The
 Python statements should be strings and can include embedded newlines.
@@ -160,7 +160,7 @@ different combinations will produce different results.
 From the Command Line
 =====================
 
-In addition to the programmatic interface, :mod:`timeit` provides a
+In addition to the programmatic interface, ``timeit`` provides a
 command line interface for testing modules without instrumentation.
 
 To run the module, use the ``-m`` option to the Python

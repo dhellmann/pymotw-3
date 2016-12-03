@@ -7,14 +7,14 @@
 
 :Purpose: Write automated tests as part of the documentation for a module.
 
-:mod:`doctest` tests source code by running examples embedded in the
+``doctest`` tests source code by running examples embedded in the
 documentation and verifying that they produce the expected results.
 It works by parsing the help text to find examples, running them, then
 comparing the output text against the expected value.  Many developers
-find :mod:`doctest` easier to use than :mod:`unittest` because, in its
+find ``doctest`` easier to use than :mod:`unittest` because, in its
 simplest form, there is no API to learn before using it.  However, as
 the examples become more complex the lack of fixture management can
-make writing :mod:`doctest` tests more cumbersome than using
+make writing ``doctest`` tests more cumbersome than using
 :mod:`unittest`.
 
 Getting Started
@@ -29,7 +29,7 @@ given:
    :caption:
    :start-after: #end_pymotw_header
 
-To run the tests, use :mod:`doctest` as the main program via the
+To run the tests, use ``doctest`` as the main program via the
 ``-m`` option.  Usually no output is produced while the tests are
 running, so the next example includes the ``-v`` option to make the
 output more verbose.
@@ -63,7 +63,7 @@ output more verbose.
 .. {{{end}}}
 
 Examples cannot usually stand on their own as explanations of a
-function, so :mod:`doctest` also allows for surrounding text.  It
+function, so ``doctest`` also allows for surrounding text.  It
 looks for lines beginning with the interpreter prompt (``>>>``) to
 find the beginning of a test case, and the case is ended by a blank
 line or by the next interpreter prompt.  Intervening text is ignored,
@@ -74,7 +74,7 @@ and can have any format as long as it does not look like a test case.
    :start-after: #end_pymotw_header
 
 The surrounding text in the updated docstring makes it more useful to
-a human reader.  Because it is ignored by :mod:`doctest`, the results
+a human reader.  Because it is ignored by ``doctest``, the results
 are the same.
 
 .. {{{cog
@@ -163,7 +163,7 @@ into a different part of memory.
 
 When the tests include values that are likely to change in
 unpredictable ways, and where the actual value is not important to the
-test results, use the :const:`ELLIPSIS` option to tell :mod:`doctest`
+test results, use the :const:`ELLIPSIS` option to tell ``doctest``
 to ignore portions of the verification value.
 
 .. literalinclude:: doctest_ellipsis.py
@@ -171,7 +171,7 @@ to ignore portions of the verification value.
    :start-after: #end_pymotw_header
 
 The "``#doctest: +ELLIPSIS``" comment after the call to
-:func:`unpredictable` tells :mod:`doctest` to turn on the
+:func:`unpredictable` tells ``doctest`` to turn on the
 :const:`ELLIPSIS` option for that test.  The ``...`` replaces the
 memory address in the object id, so that portion of the expected value
 is ignored and the actual output matches and the test passes.
@@ -292,7 +292,7 @@ were treated the same as other output.
    :caption:
    :start-after: #end_pymotw_header
 
-:mod:`doctest` makes a special effort to recognize tracebacks, and
+``doctest`` makes a special effort to recognize tracebacks, and
 ignore the parts that might change from system to system.  
 
 .. {{{cog
@@ -330,7 +330,7 @@ omitted.
    :caption:
    :start-after: #end_pymotw_header
 
-When :mod:`doctest` sees a traceback header line (either "``Traceback
+When ``doctest`` sees a traceback header line (either "``Traceback
 (most recent call last):``" or "``Traceback (innermost last):``", to
 support different versions of Python), it skips ahead to find the
 exception type and message, ignoring the intervening lines entirely.
@@ -370,7 +370,7 @@ Working Around Whitespace
 
 In real world applications, output usually includes whitespace such as
 blank lines, tabs, and extra spacing to make it more readable.  Blank
-lines, in particular, cause issues with :mod:`doctest` because they
+lines, in particular, cause issues with ``doctest`` because they
 are used to delimit tests.
 
 .. literalinclude:: doctest_blankline_fail.py
@@ -427,7 +427,7 @@ with the string ``<BLANKLINE>``.
    :caption:
    :start-after: #end_pymotw_header
 
-:mod:`doctest` replaces actual blank lines with the same literal
+``doctest`` replaces actual blank lines with the same literal
 before performing the comparison, so now the actual and expected
 values match and the test passes.
 
@@ -561,7 +561,7 @@ also available, for output where those formats are more readable.
 
 
 There are cases where it is beneficial to add extra whitespace in the
-sample output for the test, and have :mod:`doctest` ignore it.  For
+sample output for the test, and have ``doctest`` ignore it.  For
 example, data structures can be easier to read when spread across
 several lines, even if their representation would fit on a single
 line.
@@ -633,7 +633,7 @@ Test Locations
 All of the tests in the examples so far have been written in the
 docstrings of the functions they are testing.  That is convenient for
 users who examine the docstrings for help using the function
-(especially with :mod:`pydoc`), but :mod:`doctest` looks for tests in
+(especially with :mod:`pydoc`), but ``doctest`` looks for tests in
 other places, too.  The obvious location for additional tests is in
 the docstrings elsewhere in the module.
 
@@ -687,7 +687,7 @@ tests.
 
 There are cases where tests exist for a module that should be included
 with the source code but not in the help text for a module, so they
-need to be placed somewhere other than the docstrings.  :mod:`doctest`
+need to be placed somewhere other than the docstrings.  ``doctest``
 also looks for a module-level variable called ``__test__`` and uses it
 to locate other tests.  The value of ``__test__`` should be a dictionary that maps
 test set names (as strings) to strings, modules, classes, or
@@ -699,7 +699,7 @@ functions.
 
 If the value associated with a key is a string, it is treated as a
 docstring and scanned for tests.  If the value is a class or function,
-:mod:`doctest` searches them recursively for docstrings, which are
+``doctest`` searches them recursively for docstrings, which are
 then scanned for tests.  In this example, the module
 :mod:`doctest_private_tests_external` has a single test in its
 docstring.
@@ -708,7 +708,7 @@ docstring.
    :caption:
    :start-after: #end_pymotw_header
 
-After scanning the example file, :mod:`doctest` finds a total of five tests to run.
+After scanning the example file, ``doctest`` finds a total of five tests to run.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '-m doctest -v doctest_private_tests.py'))
@@ -760,7 +760,7 @@ External Documentation
 ======================
 
 Mixing tests in with regular code is not the only way to use
-:mod:`doctest`.  Examples embedded in external project documentation
+``doctest``.  Examples embedded in external project documentation
 files, such as reStructuredText files, can be used as well.
 
 .. literalinclude:: doctest_in_help.py
@@ -769,7 +769,7 @@ files, such as reStructuredText files, can be used as well.
 
 The help for this sample module is saved to a separate file,
 ``doctest_in_help.txt``.  The examples illustrating how to use the
-module are included with the help text, and :mod:`doctest` can be used
+module are included with the help text, and ``doctest`` can be used
 to find and run them.
 
 .. literalinclude:: doctest_in_help.txt
@@ -819,10 +819,10 @@ with the Python source modules.
 
 .. {{{end}}}
 
-Normally :mod:`doctest` sets up the test execution environment to
+Normally ``doctest`` sets up the test execution environment to
 include the members of the module being tested, so the tests do not
 need to import the module explicitly.  In this case, however, the
-tests are not defined in a Python module, and :mod:`doctest` does not
+tests are not defined in a Python module, and ``doctest`` does not
 know how to set up the global namespace, so the examples need to do
 the import work themselves.  All of the tests in a given file share
 the same execution context, so importing the module once at the top of
@@ -832,14 +832,14 @@ Running Tests
 =============
 
 The previous examples all use the command line test runner built into
-:mod:`doctest`.  It is easy and convenient for a single module, but
+``doctest``.  It is easy and convenient for a single module, but
 will quickly become tedious as a package spreads out into multiple
 files.  There are several alternative approaches.
 
 By Module
 ---------
 
-The instructions to run :mod:`doctest` against the source can be
+The instructions to run ``doctest`` against the source can be
 included at the bottom of modules.
 
 .. literalinclude:: doctest_testmod.py
@@ -930,7 +930,7 @@ test program.
    :start-after: #end_pymotw_header
 
 Both :func:`testmod` and :func:`testfile` include optional parameters
-to control the behavior of the tests through the :mod:`doctest`
+to control the behavior of the tests through the ``doctest``
 options.  Refer to the standard library documentation for more details
 about those features -- most of the time they are not needed.
 
@@ -977,9 +977,9 @@ about those features -- most of the time they are not needed.
 Unittest Suite
 --------------
 
-When both :mod:`unittest` and :mod:`doctest` are used for testing the
+When both :mod:`unittest` and ``doctest`` are used for testing the
 same code in different situations, the :mod:`unittest` integration in
-:mod:`doctest` can be used to run the tests together.  Two classes,
+``doctest`` can be used to run the tests together.  Two classes,
 :class:`DocTestSuite` and :class:`DocFileSuite` create test suites
 compatible with the test-runner API of :mod:`unittest`.
 
@@ -1014,7 +1014,7 @@ instead of being reported individually.
 Test Context
 ============
 
-The execution context created by :mod:`doctest` as it runs tests
+The execution context created by ``doctest`` as it runs tests
 contains a copy of the module-level globals for the test module.  Each
 test source (function, class, module) has its own set of global
 values to isolate the tests from each other somewhat, so they are
@@ -1144,10 +1144,10 @@ the caller.
      always accurate.
 
    * `py.test <http://doc.pytest.org/en/latest/>`_ -- Third-party
-     test runner with :mod:`doctest` support.
+     test runner with ``doctest`` support.
 
    * `nose2 <https://nose2.readthedocs.io/en/latest/>`_ -- Third-party
-     test runner with :mod:`doctest` support.
+     test runner with ``doctest`` support.
 
    * `Manuel <https://pythonhosted.org/manuel/>`_ -- Third-party
      documentation-based test runner with more advanced test case

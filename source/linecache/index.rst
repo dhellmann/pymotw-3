@@ -9,7 +9,7 @@
           modules, holding a cache of the results to make reading many
           lines from the same file more efficient.
 
-The :mod:`linecache` module is used within other parts of the Python
+The ``linecache`` module is used within other parts of the Python
 standard library when dealing with Python source files. The
 implementation of the cache holds the contents of files, parsed into
 separate lines, in memory. The API returns the requested line(s) by
@@ -30,7 +30,7 @@ This text produced by a Lorem Ipsum generator is used as sample input.
 Reading Specific Lines
 ======================
 
-The line numbers of files read by the :mod:`linecache` module start
+The line numbers of files read by the ``linecache`` module start
 with 1, but normally lists start indexing the array from 0.
 
 .. literalinclude:: linecache_getline.py
@@ -127,7 +127,7 @@ The module never raises an exception when the caller tries to read data.
 Reading Python Source Files
 ===========================
 
-Since :mod:`linecache` is used so heavily when producing tracebacks,
+Since ``linecache`` is used so heavily when producing tracebacks,
 one of its key features is the ability to find Python source modules
 in the import path by specifying the base name of the module.
 
@@ -135,7 +135,7 @@ in the import path by specifying the base name of the module.
     :caption:
     :start-after: #end_pymotw_header
 
-The cache population code in :mod:`linecache` searches
+The cache population code in ``linecache`` searches
 :data:`sys.path` for the named module if it cannot find a file with
 that name in the current directory.  This example looks for
 ``linecache.py``.  Since there is no copy in the current directory,

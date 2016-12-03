@@ -7,7 +7,7 @@
 
 :Purpose: High-level file operations.
 
-The :mod:`shutil` module includes high-level file operations such as
+The ``shutil`` module includes high-level file operations such as
 copying and archiving.
 
 Copying Files
@@ -201,7 +201,7 @@ with :func:`copystat`.
 Working With Directory Trees
 ============================
 
-:mod:`shutil` includes three functions for working with directory
+``shutil`` includes three functions for working with directory
 trees. To copy a directory from one place to another, use
 :func:`copytree`. It recurses through the source directory tree,
 copying files to the destination. The destination directory must not
@@ -421,7 +421,7 @@ Archives
 Python's standard library includes many modules for managing archive
 files such as :mod:`tarfile` and :mod:`zipfile`. There are also
 several higher-level functions for creating and extracting archives in
-:mod:`shutil`. :func:`get_archive_formats` returns a sequence of names
+``shutil``. :func:`get_archive_formats` returns a sequence of names
 and descriptions for formats supported on the current system.
 
 .. literalinclude:: shutil_get_archive_formats.py
@@ -461,7 +461,7 @@ argument to move to a new relative position on the filesystem and the
    :start-after: #end_pymotw_header
 
 This example starts within the source directory for the examples for
-:mod:`shutil` and moves up one level in the file system, then adds the
+``shutil`` and moves up one level in the file system, then adds the
 ``shutil`` directory to a tar archive compressed with gzip. The
 :mod:`logging` module is configured to show messages from
 :func:`make_archive` about what it is doing.
@@ -505,7 +505,7 @@ This example starts within the source directory for the examples for
 
 .. {{{end}}}
 
-:mod:`shutil` maintains a registry of formats that can be unpacked on
+``shutil`` maintains a registry of formats that can be unpacked on
 the current system, accessible via :func:`get_unpack_formats`.
 
 .. literalinclude:: shutil_get_unpack_formats.py

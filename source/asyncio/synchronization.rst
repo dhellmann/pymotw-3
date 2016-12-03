@@ -2,11 +2,11 @@
  Synchronization Primitives
 ============================
 
-Although :mod:`asyncio` applications usually run as a single-threaded
+Although ``asyncio`` applications usually run as a single-threaded
 process, they are still built as concurrent applications. Each
 coroutine or task may execute in an unpredictable order, based on
 delays and interrupts from I/O and other external events. To support
-safe concurrency, :mod:`asyncio` includes implementations of some of
+safe concurrency, ``asyncio`` includes implementations of some of
 the same low-level primitives found in the :mod:`threading` and
 :mod:`multiprocessing` modules.
 

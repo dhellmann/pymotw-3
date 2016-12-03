@@ -8,7 +8,7 @@
 :Purpose: Convert code objects to a human-readable representation of
           the bytecodes for analysis.
 
-The :mod:`dis` module includes functions for working with Python
+The ``dis`` module includes functions for working with Python
 bytecode by "disassembling" it into a more human-readable form.
 Reviewing the bytecodes being executed by the interpreter is a good
 way to hand-tune tight loops and perform other kinds of optimizations.
@@ -29,7 +29,7 @@ Basic Disassembly
 The function :func:`dis` prints the disassembled representation of a
 Python code source (module, class, method, function, or code object).
 A module such as ``dis_simple.py`` can be disassembled by running
-:mod:`dis` from the command line.
+``dis`` from the command line.
 
 .. cssclass:: with-linenos
 
@@ -230,7 +230,7 @@ Source Code
 ===========
 
 It is often more convenient to work with the source code for a program
-than with the code objects themselves. The functions in :mod:`dis`
+than with the code objects themselves. The functions in ``dis``
 accept string arguments containing source code, and convert them to
 code objects before producing the disassembly or other output.
 
@@ -369,7 +369,7 @@ stack.
 Performance Analysis of Loops
 =============================
 
-Besides debugging errors, :mod:`dis` can also help identify
+Besides debugging errors, ``dis`` can also help identify
 performance issues. Examining the disassembled code is especially
 useful with tight loops where the number of Python instructions is low
 but they translate to an inefficient set of bytecodes.  The

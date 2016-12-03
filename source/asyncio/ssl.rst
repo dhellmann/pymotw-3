@@ -2,7 +2,7 @@
  Using SSL
 ===========
 
-:mod:`asyncio` has built-in support for enabling SSL communication on
+``asyncio`` has built-in support for enabling SSL communication on
 sockets. Passing an :class:`SSLContext` instance to the coroutines
 that create server or client connections enables the support and
 ensures that the SSL protocol setup is taken care of before the socket

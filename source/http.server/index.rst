@@ -8,7 +8,7 @@
 :Purpose: http.server includes classes that can form the basis of a
           web server.
 
-:mod:`http.server` uses classes from :mod:`socketserver` to create
+``http.server`` uses classes from :mod:`socketserver` to create
 base classes for making HTTP servers. :class:`HTTPServer` can be used
 directly, but the :class:`BaseHTTPRequestHandler` is intended to be
 extended to handle each protocol method (GET, POST, etc.).
@@ -280,7 +280,7 @@ examples.
 Command Line Use
 ================
 
-:mod:`http.server` includes a built-in server for serving files from
+``http.server`` includes a built-in server for serving files from
 the local file system. Start it from the command line using the ``-m``
 option for the Python interpreter.
 

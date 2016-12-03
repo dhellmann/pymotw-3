@@ -49,7 +49,7 @@ signature for it.
 Alternate Digest Types
 ======================
 
-Although the default cryptographic algorithm for :mod:`hmac` is MD5,
+Although the default cryptographic algorithm for ``hmac`` is MD5,
 that is not the most secure method to use. MD5 hashes have some
 weaknesses, such as collisions (where two different messages produce
 the same hash). The SHA-1 algorithm is considered to be stronger, and
@@ -67,7 +67,7 @@ authenticated is small, such as a timestamp or HTTP POST, the entire
 body of the message can be passed to :func:`new` instead of using the
 :func:`update` method. The last argument is the digest module to be
 used. The default is :const:`hashlib.md5`. This example passes
-``'sha1'``, causing :mod:`hmac` to use :const:`hashlib.sha1`
+``'sha1'``, causing ``hmac`` to use :const:`hashlib.sha1`
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'hmac_sha.py'))

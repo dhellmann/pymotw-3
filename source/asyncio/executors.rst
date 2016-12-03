@@ -5,9 +5,9 @@
 =================================================
 
 A lot of existing libraries are not ready to be used with
-:mod:`asyncio` natively. They may block, or depend on concurrency
+``asyncio`` natively. They may block, or depend on concurrency
 features not available through the module. It is still possible to use
-those libraries in an application based on :mod:`asyncio` by using an
+those libraries in an application based on ``asyncio`` by using an
 *executor* from :mod:`concurrent.futures` to run the code either in a
 separate thread or a separate process.
 

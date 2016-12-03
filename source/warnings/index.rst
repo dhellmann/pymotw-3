@@ -7,7 +7,7 @@
 
 :Purpose: Deliver non-fatal alerts to the user about issues encountered when running a program.
 
-The :mod:`warnings` module was introduced by :pep:`230` as a way to warn
+The ``warnings`` module was introduced by :pep:`230` as a way to warn
 programmers about changes in language or library features in
 anticipation of backwards incompatible changes coming with Python 3.0.
 It can also be used to report recoverable configuration errors or
@@ -17,11 +17,11 @@ warnings sent to the console may be lost.
 
 Since warnings are not fatal, a program may encounter the same
 warn-able situation many times in the course of running. The
-:mod:`warnings` module suppresses repeated messages from the same
+``warnings`` module suppresses repeated messages from the same
 source to cut down on the annoyance of seeing the same warning over
 and over.  The output can be controlled on a case-by-case
 basis, using the command line options to the interpreter or by calling
-functions found in :mod:`warnings`.
+functions found in ``warnings``.
 
 Categories and Filtering
 ========================
@@ -95,7 +95,7 @@ behavior can be changed with a filter.
     :start-after: #end_pymotw_header
 
 In this example, the :func:`simplefilter` function adds an entry to
-the internal filter list to tell the :mod:`warnings` module to raise
+the internal filter list to tell the ``warnings`` module to raise
 an exception when a :class:`UserWarning` warning is issued.
 
 .. {{{cog
@@ -301,7 +301,7 @@ Alternate Message Delivery Functions
 
 Normally warnings are printed to :data:`sys.stderr`.  Change that
 behavior by replacing the :func:`showwarning` function inside the
-:mod:`warnings` module. For example, to send warnings to a log file
+``warnings`` module. For example, to send warnings to a log file
 instead of standard error, replace :func:`showwarning` with a
 function that logs the warning.
 

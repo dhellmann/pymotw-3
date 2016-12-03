@@ -55,14 +55,14 @@ data to several hosts).
 
 .. note::
 
-  Python's :mod:`socket` module supports other socket types but they
+  Python's ``socket`` module supports other socket types but they
   are less commonly used, so are not covered here.  Refer to the
   standard library documentation for more details.
 
 Looking up Hosts on the Network
 ===============================
 
-:mod:`socket` includes functions to interface with the domain name
+``socket`` includes functions to interface with the domain name
 services on the network so a program can convert the host name of a
 server into its numerical network address.  Applications do not need
 to convert addresses explicitly before using them to connect to a
@@ -287,7 +287,7 @@ The number assigned to a transport protocol can be retrieved with
    :start-after: #end_pymotw_header
 
 The values for protocol numbers are standardized, and defined as
-constants in :mod:`socket` with the prefix ``IPPROTO_``.
+constants in ``socket`` with the prefix ``IPPROTO_``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'socket_getprotobyname.py'))
@@ -358,7 +358,7 @@ for ``www.python.org``.
 list. The ``host`` and ``port`` values given in the example are
 required arguments.  The optional arguments are ``family``,
 ``socktype``, ``proto``, and ``flags``.  The optional values should be
-either ``0`` or one of the constants defined by :mod:`socket`.
+either ``0`` or one of the constants defined by ``socket``.
 
 .. literalinclude:: socket_getaddrinfo_extra_args.py
    :caption:

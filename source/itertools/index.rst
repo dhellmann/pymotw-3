@@ -9,7 +9,7 @@
     The itertools module includes a set of functions for working with
     sequence data sets.
 
-The functions provided by :mod:`itertools` are inspired by similar
+The functions provided by ``itertools`` are inspired by similar
 features of functional programming languages such as Clojure, Haskell,
 APL, and SML. They are intended to be fast and use memory efficiently,
 and also to be hooked together to express more complicated
@@ -22,7 +22,7 @@ stored in memory at the same time.  This "lazy" processing model uses
 less memory, which can reduce swapping and other side-effects of large
 data sets, improving performance.
 
-In addition to the functions defined in :mod:`itertools`, the examples
+In addition to the functions defined in ``itertools``, the examples
 in this section also rely on some of the built-in functions for
 iteration.
 

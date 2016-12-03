@@ -7,7 +7,7 @@
 
 :Purpose: Compare sequences, especially lines of text.
 
-The :mod:`difflib` module contains tools for computing and working
+The ``difflib`` module contains tools for computing and working
 with differences between sequences.  It is especially useful for
 comparing text, and includes functions that produce reports using
 several common difference formats.

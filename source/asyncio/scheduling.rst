@@ -3,7 +3,7 @@
 =======================================
 
 In addition to managing coroutines and I/O callbacks, the
-:mod:`asyncio` event loop can schedule calls to regular functions
+``asyncio`` event loop can schedule calls to regular functions
 based on the timer value kept in the loop.
 
 Scheduling a Callback "Soon"

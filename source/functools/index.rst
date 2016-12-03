@@ -7,14 +7,14 @@
 
 :Purpose: Functions that operate on other functions.
 
-The :mod:`functools` module provides tools for adapting or extending
+The ``functools`` module provides tools for adapting or extending
 functions and other callable objects, without completely rewriting
 them.
 
 Decorators
 ==========
 
-The primary tool supplied by the :mod:`functools` module is the class
+The primary tool supplied by the ``functools`` module is the class
 :class:`partial`, which can be used to "wrap" a callable object with
 default arguments. The resulting object is itself callable and can be
 treated as though it is the original function.  It takes all of the
@@ -220,7 +220,7 @@ properties of the original "bare" function.
     :caption:
     :start-after: #end_pymotw_header
 
-:mod:`functools` provides a decorator, :func:`wraps`, that applies
+``functools`` provides a decorator, :func:`wraps`, that applies
 :func:`update_wrapper` to the decorated function.
 
 .. {{{cog
@@ -271,7 +271,7 @@ introduced the *rich comparison* methods API (:func:`__lt__`,
 :func:`__le__`, :func:`__eq__`, :func:`__ne__`, :func:`__gt__`, and
 :func:`__ge__`), which perform a single comparison operation and return
 a boolean value.  Python 3 deprecated :func:`__cmp__` in favor of
-these new methods and :mod:`functools` provides tools to make it
+these new methods and ``functools`` provides tools to make it
 easier to write classes that comply with the new comparison
 requirements in Python 3.
 
@@ -357,7 +357,7 @@ information as the key function is being called.
 The output shows that :func:`sorted` starts by calling
 :func:`get_key_wrapper` for each item in the sequence to produce a
 key.  The keys returned by :func:`cmp_to_key` are instances of a class
-defined in :mod:`functools` that implements the rich comparison API
+defined in ``functools`` that implements the rich comparison API
 using the old-style comparison function passed in.  After all of the
 keys are created, the sequence is sorted by comparing the keys.
 
@@ -606,7 +606,7 @@ perform slightly different operation based on the type of an argument,
 especially when dealing with the difference between a list of items
 and a single item. It is simple enough to check the type of an
 argument directly, but in cases where the behavioral difference can be
-isolated into separate functions :mod:`functools` provides the
+isolated into separate functions ``functools`` provides the
 :func:`singledispatch` decorator to register a set of *generic
 functions* for automatic switching based on the type of the first
 argument to a function.

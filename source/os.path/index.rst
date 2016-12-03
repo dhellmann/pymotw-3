@@ -8,14 +8,14 @@
 :Purpose: Parse, build, test, and otherwise work on filenames and paths.
 
 Writing code to work with files on multiple platforms is easy using
-the functions included in the :mod:`os.path` module. Even programs not
-intended to be ported between platforms should use :mod:`os.path` for
+the functions included in the ``os.path`` module. Even programs not
+intended to be ported between platforms should use ``os.path`` for
 reliable filename parsing.
 
 Parsing Paths
 =============
 
-The first set of functions in :mod:`os.path` can be used to parse
+The first set of functions in ``os.path`` can be used to parse
 strings representing filenames into their component parts. It is
 important to realize that these functions do not depend on the paths
 actually existing; they operate solely on the strings.
@@ -333,7 +333,7 @@ tree.
 File Times
 ==========
 
-Besides working with paths, :mod:`os.path` includes functions for
+Besides working with paths, ``os.path`` includes functions for
 retrieving file properties, similar to the ones returned by
 :func:`os.stat`:
 
@@ -368,7 +368,7 @@ Testing Files
 
 When a program encounters a path name, it often needs to know whether
 the path refers to a file, directory, or symlink and whether it
-exists.  :mod:`os.path` includes functions for testing all of these
+exists.  ``os.path`` includes functions for testing all of these
 conditions.
 
 .. literalinclude:: ospath_tests.py

@@ -7,7 +7,7 @@
 
 :Purpose: Start and communicate with additional processes.
 
-The :mod:`subprocess` module supports three APIs for working with
+The ``subprocess`` module supports three APIs for working with
 processes. The :func:`run` function, added in Python 3.5, is a
 high-level API for running a process and optionally collecting its
 output. The functions :func:`call`, :func:`check_call`, and
@@ -23,11 +23,11 @@ the extra steps of overhead needed (such as closing extra file
 descriptors and ensuring the pipes are closed) are "built in" instead
 of being handled by the application code separately.
 
-The :mod:`subprocess` module is intended to replace functions such as
+The ``subprocess`` module is intended to replace functions such as
 :func:`os.system`, :func:`os.spawnv`, the variations of :func:`popen`
 in the :mod:`os` and :mod:`popen2` modules, as well as the
 :func:`commands` module. To make it easier to compare
-:mod:`subprocess` with those other modules, many of the examples in
+``subprocess`` with those other modules, many of the examples in
 this section re-create the ones used for :mod:`os` and :mod:`popen2`.
 
 .. note::
@@ -87,7 +87,7 @@ like the exit code and output.
 
 .. {{{end}}}
 
-Setting the ``shell`` argument to a true value causes :mod:`subprocess`
+Setting the ``shell`` argument to a true value causes ``subprocess``
 to spawn an intermediate shell process which then runs the
 command.  The default is to run the command directly.
 
@@ -583,7 +583,7 @@ The process management examples for the :mod:`os` module include a
 demonstration of signaling between processes using :func:`os.fork` and
 :func:`os.kill`. Since each :class:`Popen` instance provides a *pid*
 attribute with the process id of the child process, it is possible to
-do something similar with :mod:`subprocess`. The next example combines
+do something similar with ``subprocess``. The next example combines
 two scripts.  This child process sets up a signal handler for the
 :const:`USR` signal.
 

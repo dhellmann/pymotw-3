@@ -7,10 +7,10 @@
 
 :Purpose: Command-line option and argument parsing.
 
-The :mod:`argparse` module includes tools for building command line
+The ``argparse`` module includes tools for building command line
 argument and option processors. It was added to Python 2.7 as a
 replacement for :mod:`optparse`.  The implementation of
-:mod:`argparse` supports features that would not have been easy to add
+``argparse`` supports features that would not have been easy to add
 to :mod:`optparse`, and that would have required
 backwards-incompatible API changes, so a new module was brought into
 the library instead. :mod:`optparse` is now deprecated.
@@ -18,7 +18,7 @@ the library instead. :mod:`optparse` is now deprecated.
 Setting Up a Parser
 ===================
 
-The first step when using :mod:`argparse` is to create a parser object
+The first step when using ``argparse`` is to create a parser object
 and tell it what arguments to expect.  The parser can then be used to
 process the command-line arguments when the program runs.  The
 constructor for the parser class (:class:`ArgumentParser`) takes
@@ -36,7 +36,7 @@ the program and other global behaviors or settings.
 Defining Arguments
 ==================
 
-:mod:`argparse` is a complete argument processing library. Arguments
+``argparse`` is a complete argument processing library. Arguments
 can trigger different actions, specified by the ``action`` argument to
 :func:`add_argument()`. Supported actions include storing the argument
 (singly, or as part of a list), storing a constant value when the
@@ -114,7 +114,7 @@ The results are similar.
 
 .. {{{end}}}
 
-:mod:`argparse` is a full command-line argument parser tool, and
+``argparse`` is a full command-line argument parser tool, and
 handles both optional and required arguments.
 
 .. literalinclude:: argparse_arguments.py
@@ -292,7 +292,7 @@ Option Prefixes
 
 The default syntax for options is based on the UNIX convention of
 signifying command-line switches using a dash prefix ("``-``").
-:mod:`argparse` supports other prefixes, so a program can conform to
+``argparse`` supports other prefixes, so a program can conform to
 the local platform default (i.e., use "``/``" on Windows) or follow a
 different convention.
 
@@ -365,7 +365,7 @@ Sources of Arguments
 In the examples so far, the list of arguments given to the parser has
 come from a list passed in explicitly, or were taken implicitly from
 :data:`sys.argv`.  Passing the list explicitly is useful
-when using :mod:`argparse` to process command-line-like instructions
+when using ``argparse`` to process command-line-like instructions
 that do not come from the command-line (such as in a configuration
 file).
 
@@ -395,7 +395,7 @@ configuration file.
 .. {{{end}}}
 
 An alternative to processing the configuration file in application
-code is to tell :mod:`argparse` how to recognize an argument that
+code is to tell ``argparse`` how to recognize an argument that
 specifies an input file containing a set of arguments to be processed
 using ``fromfile_prefix_chars``.
 
@@ -430,7 +430,7 @@ Help Output
 Automatically Generated Help
 ----------------------------
 
-:mod:`argparse` will automatically add options to generate help, if
+``argparse`` will automatically add options to generate help, if
 configured to do so.  The ``add_help`` argument to
 :class:`ArgumentParser` controls the help-related options.
 
@@ -446,7 +446,7 @@ be disabled by setting ``add_help`` to false.
    :start-after: #end_pymotw_header
 
 Although ``-h`` and ``--help`` are defacto standard option names for
-requesting help, some applications or uses of :mod:`argparse` either
+requesting help, some applications or uses of ``argparse`` either
 do not need to provide help or need to use those option names for
 other purposes.
 
@@ -624,7 +624,7 @@ associated with the option is printed.
 Parser Organization
 ===================
 
-:mod:`argparse` includes several features for organizing argument
+``argparse`` includes several features for organizing argument
 parsers, to make implementation easier or to improve the usability of
 the help output.
 
@@ -738,7 +738,7 @@ Now both options can be used together.
 Argument Groups
 ---------------
 
-:mod:`argparse` combines the argument definitions into "groups."  By
+``argparse`` combines the argument definitions into "groups."  By
 default, it uses two groups, with one for options and another for
 required position-based arguments.
 
@@ -823,7 +823,7 @@ instead of :func:`add_argument_group`.
    :caption:
    :start-after: #end_pymotw_header
 
-:mod:`argparse` enforces the mutual exclusivity, so that only one of
+``argparse`` enforces the mutual exclusivity, so that only one of
 the options from the group can be given.
 
 .. {{{cog
@@ -949,7 +949,7 @@ Advanced Argument Processing
 
 The examples so far have shown simple Boolean flags, options with
 string or numerical arguments, and positional arguments.
-:mod:`argparse` also supports sophisticated argument specification for
+``argparse`` also supports sophisticated argument specification for
 variable-length argument list, enumerations, and constant values.
 
 Variable Argument Lists
@@ -1060,7 +1060,7 @@ accurate syntax diagram as part of the command help text.
 Argument Types
 --------------
 
-:mod:`argparse` treats all argument values as strings, unless it is
+``argparse`` treats all argument values as strings, unless it is
 told to convert the string to another type.  The ``type`` parameter to
 :func:`add_argument` defines a converter function, which is used by the
 :class:`ArgumentParser` to transform the argument value from a string
@@ -1098,7 +1098,7 @@ Any callable that takes a single string argument can be passed as
 
 .. {{{end}}}
 
-If the type conversion fails, :mod:`argparse` raises an exception.
+If the type conversion fails, ``argparse`` raises an exception.
 :class:`TypeError` and :class:`ValueError` exceptions are trapped
 automatically and converted to a simple error message for the user.
 Other exceptions, such as the :class:`IOError` in the next example

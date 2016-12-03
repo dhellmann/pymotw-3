@@ -13,7 +13,7 @@ off the next time it is awakened.
 Starting a Coroutine
 ====================
 
-There are a few different ways to have the :mod:`asyncio` event loop
+There are a few different ways to have the ``asyncio`` event loop
 start a coroutine. The simplest is to use :func:`run_until_complete`,
 passing the coroutine to it directly.
 
@@ -107,14 +107,14 @@ Generators Instead of Coroutines
 ================================
 
 Coroutine functions are a key component of the design of
-:mod:`asyncio`. They provide a language construct for stopping the
+``asyncio``. They provide a language construct for stopping the
 execution of part of a program, preserving the state of that call, and
 re-entering the state at a later time, which are all important
 capabilities for a concurrency framework.
 
 Python 3.5 introduced new language features to define such coroutines
 natively using ``async def`` and to yield control using ``await``, and
-the examples for :mod:`asyncio` take advantage of the new
+the examples for ``asyncio`` take advantage of the new
 feature. Earlier versions of Python 3 can use generator functions
 wrapped with the :func:`asyncio.coroutine` decorator and ``yield
 from`` to achieve the same effect.

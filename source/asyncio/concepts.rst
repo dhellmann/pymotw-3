@@ -5,12 +5,12 @@
 Most programs using other concurrency models are written linearly, and
 rely on the underlying threading or process management of the language
 runtime or operating system to change context as appropriate.  An
-application based on :mod:`asyncio` requires the application code to
+application based on ``asyncio`` requires the application code to
 explicitly handle context changes, and using the techniques for doing
 that correctly depends on understanding several inter-related
 concepts.
 
-The framework provided by :mod:`asyncio` is centered on an *event
+The framework provided by ``asyncio`` is centered on an *event
 loop*, a first class object responsible for efficiently handling I/O
 events, system events, and application context changes. Several loop
 implementations are provided, to take advantage of operating system
@@ -36,7 +36,7 @@ Python's *coroutines*, special functions that give up control to the
 caller without losing their state. Coroutines are similar to generator
 functions, and in fact generators can be used to implement coroutines
 in versions of Python earlier than 3.5 without native support for
-coroutine objects. :mod:`asyncio` also provides a class-based
+coroutine objects. ``asyncio`` also provides a class-based
 abstraction layer for *protocols* and *transports* for writing code
 using callbacks instead of writing coroutines directly. In both the
 class-based and coroutine models, explicitly changing context by
@@ -47,7 +47,7 @@ A *future* is a data structure representing the result of work that
 has not been completed yet. The event loop can watch for a
 :class:`Future` object to be set to done, allowing one part of an
 application to wait for another part to finish some work. Besides
-futures, :mod:`asyncio` includes other concurrency primitives such as
+futures, ``asyncio`` includes other concurrency primitives such as
 locks and semaphores.
 
 A :class:`Task` is a subclass of :class:`Future` that knows how to

@@ -7,7 +7,7 @@
 
 :Purpose: Python's Interactive Debugger
 
-:mod:`pdb` implements an interactive debugging environment for Python
+``pdb`` implements an interactive debugging environment for Python
 programs.  It includes features to pause a program, look at the values
 of variables, and watch program execution step-by-step, so you can
 understand what the program actually does and find bugs in the logic.
@@ -15,7 +15,7 @@ understand what the program actually does and find bugs in the logic.
 Starting the Debugger
 =====================
 
-The first step to using :mod:`pdb` is causing the interpreter to enter
+The first step to using ``pdb`` is causing the interpreter to enter
 the debugger at the right time.  There are a few different ways to do
 that, depending on the starting conditions and what is being debugged.
 
@@ -46,7 +46,7 @@ this case, it stops before evaluating the definition of the class
 
 .. note::
 
-    Normally :mod:`pdb` includes the full path to each module in the
+    Normally ``pdb`` includes the full path to each module in the
     output when printing a filename.  In order to maintain clear
     examples, the path in the sample output in this section has been
     replaced with ellipsis (``...``).
@@ -113,7 +113,7 @@ After a Failure
 ---------------
 
 Debugging a failure after a program terminates is called *post-mortem*
-debugging.  :mod:`pdb` supports post-mortem debugging through the
+debugging.  ``pdb`` supports post-mortem debugging through the
 :func:`pm` and :func:`post_mortem` functions.
 
 .. cssclass:: with-linenos
@@ -292,7 +292,7 @@ Examining Variables on the Stack
 
 Each frame on the stack maintains a set of variables, including values
 local to the function being executed and global state information.
-:mod:`pdb` provides several ways to examine the contents of those
+``pdb`` provides several ways to examine the contents of those
 variables.
 
 .. cssclass:: with-linenos
@@ -1281,7 +1281,7 @@ breakpoint immediately.
 Triggering Actions on a Breakpoint
 ----------------------------------
 
-In addition to the purely interactive mode, :mod:`pdb` supports basic
+In addition to the purely interactive mode, ``pdb`` supports basic
 scripting.  Using ``commands``, a series of interpreter
 commands, including Python statements, can be executed when a specific
 breakpoint is encountered.  After running ``commands`` with the
@@ -1805,10 +1805,10 @@ Saving Configuration Settings
 
 Debugging a program involves a lot of repetition: running the code,
 observing the output, adjusting the code or inputs, and running it
-again.  :mod:`pdb` attempts to cut down on the amount of repetition
+again.  ``pdb`` attempts to cut down on the amount of repetition
 needed to control the debugging experience, to let you concentrate on
 the code instead of the debugger.  To help reduce the number of times
-you issue the same commands to the debugger, :mod:`pdb` can read a
+you issue the same commands to the debugger, ``pdb`` can read a
 saved configuration from text files interpreted as it starts.
 
 The file ``~/.pdbrc`` is read first, allowing global personal

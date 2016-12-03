@@ -7,7 +7,7 @@
 
 :Purpose: Easily manage tasks running concurrently and in parallel.
 
-The :mod:`concurrent.futures` modules provides interfaces for running
+The ``concurrent.futures`` modules provides interfaces for running
 tasks using pools of thread or process workers. The APIs are the same,
 so applications can switch between threads and processes with minimal
 changes.
@@ -346,7 +346,7 @@ results are processed, rather than when the new task is submitted.
    * :pydoc:`concurrent.futures`
 
    * :pep:`3148` -- The proposal for creating the
-     :mod:`concurrent.futures` feature set.
+     ``concurrent.futures`` feature set.
 
    * :ref:`asyncio-executors`
 

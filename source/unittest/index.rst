@@ -7,16 +7,16 @@
 
 :Purpose: Automated testing framework
 
-Python's :mod:`unittest` module is based on the XUnit framework design
+Python's ``unittest`` module is based on the XUnit framework design
 by Kent Beck and Erich Gamma. The same pattern is repeated in many
 other languages, including C, Perl, Java, and Smalltalk. The framework
-implemented by :mod:`unittest` supports fixtures, test suites, and a
+implemented by ``unittest`` supports fixtures, test suites, and a
 test runner to enable automated testing.
 
 Basic Test Structure
 ====================
 
-Tests, as defined by :mod:`unittest`, have two parts: code to manage
+Tests, as defined by ``unittest``, have two parts: code to manage
 test dependencies (called "fixtures"), and the test itself. Individual
 tests are created by subclassing :class:`TestCase` and overriding or
 adding appropriate methods. For example,
@@ -207,7 +207,7 @@ value, the method :func:`assertFalse` make more sense.
 Testing Equality
 ================
 
-As a special case, :mod:`unittest` includes methods for testing the
+As a special case, ``unittest`` includes methods for testing the
 equality of two values.
 
 .. literalinclude:: unittest_equality.py
@@ -543,7 +543,7 @@ include database connections and temporary files (many people would
 argue that using external resources makes such tests not "unit" tests,
 but they are still tests and still useful).
 
-:mod:`unittest` includes special hooks to configure and clean up any
+``unittest`` includes special hooks to configure and clean up any
 fixtures needed by tests. To establish fixtures for each individual
 test case, override :func:`setUp` on the :class:`TestCase`. To clean
 them up, override :func:`tearDown`. To manage one set of fixtures for

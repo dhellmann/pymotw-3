@@ -7,7 +7,7 @@
 
 :Purpose: Implements an embedded relational database with SQL support.
 
-The :mod:`sqlite3` module provides a DB-API 2.0 compliant interface to
+The ``sqlite3`` module provides a DB-API 2.0 compliant interface to
 SQLite, an in-process relational database.  SQLite is designed to be
 embedded in applications, instead of using a separate database server
 program such as MySQL, PostgreSQL, or Oracle.  It is fast, rigorously
@@ -212,7 +212,7 @@ whether null values are accepted.
    :caption:
    :start-after: #end_pymotw_header
 
-Because :mod:`sqlite3` does not enforce type or size constraints on
+Because ``sqlite3`` does not enforce type or size constraints on
 data inserted into a database, only the column name value is filled
 in.
 
@@ -250,7 +250,7 @@ depending on the query results is less likely to break.
 
 :class:`Connection` objects have a :data:`row_factory` property that
 allows the calling code to control the type of object created to
-represent each row in the query result set.  :mod:`sqlite3` also
+represent each row in the query result set.  ``sqlite3`` also
 includes a :class:`Row` class intended to be used as a row factory.
 Column values can be accessed through :class:`Row` instances by using
 the column index or name.
@@ -437,7 +437,7 @@ Defining New Column Types
 
 SQLite has native support for integer, floating point, and text
 columns.  Data of these types is converted automatically by
-:mod:`sqlite3` from Python's representation to a value that can be
+``sqlite3`` from Python's representation to a value that can be
 stored in the database, and back again, as needed.  Integer values are
 loaded from the database into :class:`int` or :class:`long` variables,
 depending on the size of the value.  Text is saved and retrieved as
@@ -445,7 +445,7 @@ depending on the size of the value.  Text is saved and retrieved as
 :class:`Connection` has been changed.
 
 Although SQLite only supports a few data types internally,
-:mod:`sqlite3` includes facilities for defining custom types to allow
+``sqlite3`` includes facilities for defining custom types to allow
 a Python application to store any type of data in a column.
 Conversion for types beyond those supported by default is enabled in
 the database connection using the :data:`detect_types` flag.  Use
@@ -456,7 +456,7 @@ type when the table was defined.
    :caption:
    :start-after: #end_pymotw_header
 
-:mod:`sqlite3` provides converters for date and timestamp columns,
+``sqlite3`` provides converters for date and timestamp columns,
 using the classes :class:`date` and :class:`datetime` from the
 :mod:`datetime` module to represent the values in Python.  Both
 date-related converters are enabled automatically when type-detection
@@ -672,7 +672,7 @@ longer present.
 Isolation Levels
 ================
 
-:mod:`sqlite3` supports three locking modes, called *isolation
+``sqlite3`` supports three locking modes, called *isolation
 levels*, that control the technique used to prevent incompatible changes
 between connections.  The isolation level is set by passing a string
 as the ``isolation_level`` argument when a connection is opened, so
@@ -1035,7 +1035,7 @@ summarizes it in some way.  Examples of built-in aggregation functions
 are :func:`avg` (average), :func:`min`, :func:`max`, and
 :func:`count`.
 
-The API for aggregators used by :mod:`sqlite3` is defined in terms of
+The API for aggregators used by ``sqlite3`` is defined in terms of
 a class with two methods.  The :func:`step` method is called once for
 each data value as the query is processed.  The :func:`finalize`
 method is called one time at the end of the query and should return
@@ -1174,7 +1174,7 @@ raise an exception.
 .. {{{end}}}
 
 The possible action codes are available as constants in
-:mod:`sqlite3`, with names prefixed ``SQLITE_``.  Each type of SQL
+``sqlite3``, with names prefixed ``SQLITE_``.  Each type of SQL
 statement can be flagged, and access to individual columns can be
 controlled as well.
 

@@ -11,7 +11,7 @@
 
 Many programs that interact with the user via the terminal need to ask
 the user for password values without showing what the user types on
-the screen.  The :mod:`getpass` module provides a portable way to
+the screen.  The ``getpass`` module provides a portable way to
 handle such password prompts securely.
 
 Example
@@ -81,7 +81,7 @@ Using getpass Without a Terminal
 Under Unix, :func:`getpass()` always requires a tty it can control via
 :mod:`termios`, so input echoing can be disabled. This means values
 will not be read from a non-terminal stream redirected to standard
-input. Instead, :mod:`getpass` tries to get to the tty for a process,
+input. Instead, ``getpass`` tries to get to the tty for a process,
 and no error is raised if they can access it.
 
 .. code-block:: none

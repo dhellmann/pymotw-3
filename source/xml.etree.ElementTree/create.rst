@@ -3,7 +3,7 @@
 Building Documents With Element Nodes
 =====================================
 
-In addition to its parsing capabilities, :mod:`xml.etree.ElementTree`
+In addition to its parsing capabilities, ``xml.etree.ElementTree``
 also supports creating well-formed XML documents from :class:`Element`
 objects constructed in an application.  The :class:`Element` class
 used when a document is parsed also knows how to generate a serialized

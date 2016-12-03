@@ -7,7 +7,7 @@
 
 :Purpose: Provides a thread-safe FIFO implementation
 
-The :mod:`queue` module provides a first-in, first-out (FIFO) data
+The ``queue`` module provides a first-in, first-out (FIFO) data
 structure suitable for multi-threaded programming. It can be used to
 pass messages or other data between producer and consumer threads
 safely. Locking is handled for the caller, so many threads can work
@@ -121,7 +121,7 @@ program reads one or more RSS feeds, queues up the enclosures for the
 five most recent episodes from each feed to be downloaded, and
 processes several downloads in parallel using threads. It does not
 have enough error handling for production use, but the skeleton
-implementation provides an example of using the :mod:`queue` module.
+implementation provides an example of using the ``queue`` module.
 
 First, some operating parameters are established. Normally these would
 come from user inputs (preferences, a database, etc.). The example

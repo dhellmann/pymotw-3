@@ -9,7 +9,7 @@
     The inspect module provides functions for introspecting on live
     objects and their source code.
 
-The :mod:`inspect` module provides functions for learning about live
+The ``inspect`` module provides functions for learning about live
 objects, including modules, classes, instances, functions, and
 methods. The functions in this module can be used to retrieve the
 original source code for a function, look at the arguments to a method
@@ -84,7 +84,7 @@ using :func:`getmembers`. The arguments are an object to scan (a
 module, class, or instance) and an optional predicate function that is
 used to filter the objects returned. The return value is a list of
 tuples with two values: the name of the member, and the type of the
-member. The :mod:`inspect` module includes several such predicate
+member. The ``inspect`` module includes several such predicate
 functions with names like :func:`ismodule`, :func:`isclass`, etc.
 
 The types of members that might be returned depend on the type of
@@ -564,7 +564,7 @@ defaults.
 Class Hierarchies
 =================
 
-:mod:`inspect` includes two methods for working directly with class
+``inspect`` includes two methods for working directly with class
 hierarchies. The first, :func:`getclasstree`, creates a tree-like
 data structure based on the classes it is given and their base
 classes. Each element in the list returned is either a tuple with a
@@ -669,7 +669,7 @@ in the search order, because :class:`B` is derived from :class:`A`.
 The Stack and Frames
 ====================
 
-In addition to introspection of code objects, :mod:`inspect` includes
+In addition to introspection of code objects, ``inspect`` includes
 functions for inspecting the runtime environment while a program is
 being executed. Most of these functions work with the call stack, and operate
 on "call frames." Each frame record in the stack is a six element
@@ -783,7 +783,7 @@ documentation for :func:`trace`, :func:`getouterframes`, and
 Command Line Interface
 ======================
 
-The :mod:`inspect` module also includes a command line interface for
+The ``inspect`` module also includes a command line interface for
 getting details about objects without having to write out the calls in
 a separate Python program. The input is a module name and optional
 object from within the module.  The default output is the source code

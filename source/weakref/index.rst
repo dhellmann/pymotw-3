@@ -9,7 +9,7 @@
           reclaimed by the garbage collector if there are no other
           non-weak references.
 
-The :mod:`weakref` module supports weak references to objects. A
+The ``weakref`` module supports weak references to objects. A
 normal reference increments the reference count on the object and
 prevents it from being garbage collected. This is not always
 desirable, either when a circular reference might be present or when
@@ -302,7 +302,7 @@ references for the keys instead of the values in the dictionary.
 
 .. warning::
 
-    The library documentation for :mod:`weakref` contains this
+    The library documentation for ``weakref`` contains this
     warning:
 
     Caution: Because a :class:`WeakValueDictionary` is built on top of

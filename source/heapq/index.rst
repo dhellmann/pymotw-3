@@ -19,7 +19,7 @@ removing items.
 
 A max-heap ensures that the parent is larger than or equal to both of
 its children. A min-heap requires that the parent be less than or
-equal to its children. Python's :mod:`heapq` module implements a
+equal to its children. Python's ``heapq`` module implements a
 min-heap.
 
 Example Data
@@ -215,7 +215,7 @@ heap, such as a queue of jobs ordered by priority.
 Data Extremes From a Heap
 =========================
 
-:mod:`heapq` also includes two functions to examine an iterable to find
+``heapq`` also includes two functions to examine an iterable to find
 a range of the largest or smallest values it contains. 
 
 .. literalinclude:: heapq_extremes.py

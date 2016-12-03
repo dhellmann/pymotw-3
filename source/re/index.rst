@@ -30,22 +30,22 @@ and Python, support regular expressions through extension libraries.
 There are multiple open source implementations of regular expressions,
 each sharing a common core syntax but with different extensions or
 modifications to their advanced features.  The syntax used in Python's
-:mod:`re` module is based on the syntax used for regular expressions
+``re`` module is based on the syntax used for regular expressions
 in Perl, with a few Python-specific enhancements.
 
 .. note::
 
     Although the formal definition of "regular expression" is limited
     to expressions that describe regular languages, some of the
-    extensions supported by :mod:`re` go beyond describing regular
+    extensions supported by ``re`` go beyond describing regular
     languages.  The term "regular expression" is used here in a more
     general sense to mean any expression that can be evaluated by
-    Python's :mod:`re` module.
+    Python's ``re`` module.
 
 Finding Patterns in Text
 ========================
 
-The most common use for :mod:`re` is to search for patterns in text.
+The most common use for ``re`` is to search for patterns in text.
 The :func:`search` function takes the pattern and text to scan, and
 returns a :class:`Match` object when the pattern is found.  If the
 pattern is not found, :func:`search` returns ``None``.
@@ -79,7 +79,7 @@ string showing where the text matched by the pattern occurs.
 Compiling Expressions
 =====================
 
-:mod:`re` includes module-level functions for working with regular
+``re`` includes module-level functions for working with regular
 expressions as text strings, but it is more efficient to *compile* the
 expressions a program uses frequently.  The :func:`compile` function
 converts an expression string into a :class:`RegexObject`.
@@ -170,7 +170,7 @@ logical locations within the input, and can be expressed in compact
 forms that do not require every literal character be present in the
 pattern.  All of these features are used by combining literal text
 values with *meta-characters* that are part of the regular expression
-pattern syntax implemented by :mod:`re`.
+pattern syntax implemented by ``re``.
 
 .. literalinclude:: re_test_patterns.py
    :caption:
@@ -263,7 +263,7 @@ There are more matches for ``ab*`` and ``ab?`` than ``ab+``.
 
 .. {{{end}}}
 
-Normally, when processing a repetition instruction, :mod:`re` will
+Normally, when processing a repetition instruction, ``re`` will
 consume as much of the input as possible while matching the pattern.
 This so-called *greedy* behavior may result in fewer individual
 matches, or the matches may include more of the input text than
@@ -510,7 +510,7 @@ Escape Codes
 ------------
 
 An even more compact representation uses escape codes for several
-pre-defined character sets.  The escape codes recognized by :mod:`re`
+pre-defined character sets.  The escape codes recognized by ``re``
 are listed in :table:`Regular Expression Escape Codes`.
 
 .. table:: Regular Expression Escape Codes
@@ -715,7 +715,7 @@ Constraining the Search
 
 In situations where it is known in advance that only a subset of the
 full input should be searched, the regular expression match can be
-further constrained by telling :mod:`re` to limit the search range.
+further constrained by telling ``re`` to limit the search range.
 For example, if the pattern must appear at the front of the input,
 then using :func:`match` instead of :func:`search` will anchor the
 search without having to explicitly include an anchor in the search
@@ -1215,7 +1215,7 @@ compiling the pattern or when calling the module-level functions
 The other escape sequences (``\W``, ``\b``, ``\B``, ``\d``, ``\D``,
 ``\s``, and ``\S``) are also processed differently for ASCII text.
 Instead of consulting the Unicode database to find the properties of
-each character, :mod:`re` assumes the members of the character set
+each character, ``re`` assumes the members of the character set
 identified by the escape sequence based on their ASCII definition.
 
 .. {{{cog
@@ -1659,7 +1659,7 @@ literal patterns, otherwise it consumes any blank space.
 Modifying Strings with Patterns
 ===============================
 
-In addition to searching through text, :mod:`re` also supports
+In addition to searching through text, ``re`` also supports
 modifying text using regular expressions as the search mechanism, and
 the replacements can reference groups matched in the pattern as part of
 the substitution text.  Use :func:`sub` to replace all occurrences of a

@@ -7,7 +7,7 @@
 
 :Purpose: Create command-line filter programs to process lines from input streams.
 
-The :mod:`fileinput` module is a framework for creating command-line
+The ``fileinput`` module is a framework for creating command-line
 programs for processing text files as a filter.
 
 Converting M3U files to RSS
@@ -28,7 +28,7 @@ list of filenames and
 
 All of this file handling could have been coded by hand. It is not
 that complicated and, with some testing, even the error handling would
-be right. But :mod:`fileinput` handles all of the details, so the
+be right. But ``fileinput`` handles all of the details, so the
 program is simplified.
 
 .. literalinclude:: fileinput_example.py
@@ -89,7 +89,7 @@ Progress Metadata
 
 In the previous example, the filename and line number being processed were
 not important. Other tools, such as grep-like searching, might need
-that information. :mod:`fileinput` includes functions for accessing
+that information. ``fileinput`` includes functions for accessing
 all of the metadata about the current line (:func:`filename`,
 :func:`filelineno`, and :func:`lineno`).
 
@@ -172,7 +172,7 @@ Unix hosts file might need to be updated if a subnet range changes.
 
 The safe way to make the change automatically is to create a new file
 based on the input and then replace the original with the edited copy.
-:mod:`fileinput` supports this automatically using the ``inplace``
+``fileinput`` supports this automatically using the ``inplace``
 option.
 
 .. literalinclude:: fileinput_change_subnet.py
@@ -180,7 +180,7 @@ option.
    :start-after: #end_pymotw_header
 
 Although the script uses :func:`print`, no output is produced because
-:mod:`fileinput` redirects standard output to the file being
+``fileinput`` redirects standard output to the file being
 overwritten.
 
 .. {{{cog

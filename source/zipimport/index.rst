@@ -9,12 +9,12 @@
 
 :Purpose: Import Python modules saved as members of ZIP archives.
 
-The :mod:`zipimport` module implements the :class:`zipimporter` class,
+The ``zipimport`` module implements the :class:`zipimporter` class,
 which can be used to find and load Python modules inside ZIP
 archives. The :class:`zipimporter` supports the "import hooks" API
 specified in PEP 302; this is how Python Eggs work.
 
-It is not usually necessary to use the :mod:`zipimport` module
+It is not usually necessary to use the ``zipimport`` module
 directly, since it is possible to import directly from a ZIP archive
 as long as that archive appears in :data:`sys.path`. However, it is
 instructive to study how the importer API can be used, to learn the
@@ -355,7 +355,7 @@ be decoded to a unicode string before printing.
 .. {{{end}}}
 
 The ``__loader__`` is not set for modules not imported via
-:mod:`zipimport`.
+``zipimport``.
 
 .. seealso::
 

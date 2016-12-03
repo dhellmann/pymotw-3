@@ -7,7 +7,7 @@
 
 :Purpose: Use the `webbrowser` module to display web pages to your users.
 
-The :mod:`webbrowser` module includes functions to open URLs in interactive
+The ``webbrowser`` module includes functions to open URLs in interactive
 browser applications. The module includes a registry of available
 browsers, in case multiple options are available on the system. It can
 also be controlled with the ``BROWSER`` environment variable.
@@ -72,14 +72,14 @@ available, no matter what other browsers are registered.
 
     $ BROWSER=lynx python3 webbrowser_open.py 
 
-If none of the names in ``BROWSER`` work, :mod:`webbrowser` falls back
+If none of the names in ``BROWSER`` work, ``webbrowser`` falls back
 to its default behavior.
 
 
 Command Line Interface
 ======================
 
-All of the features of the :mod:`webbrowser` module are available via
+All of the features of the ``webbrowser`` module are available via
 the command line as well as from within your Python program.
 
 .. {{{cog

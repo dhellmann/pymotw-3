@@ -7,7 +7,7 @@
 
 :Purpose: Generic event scheduler.
 
-The :mod:`sched` module implements a generic event scheduler for
+The ``sched`` module implements a generic event scheduler for
 running tasks at specific times. The scheduler class uses a ``time``
 function to learn the current time, and a ``delay`` function to wait for
 a specific period of time. The actual units of time are not important,

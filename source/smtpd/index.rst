@@ -7,7 +7,7 @@
 
 :Purpose: Includes classes for implementing SMTP servers.
 
-The :mod:`smtpd` module includes classes for building simple mail
+The ``smtpd`` module includes classes for building simple mail
 transport protocol servers.  It is the server-side of the protocol
 used by :mod:`smtplib`.
 
@@ -127,7 +127,7 @@ Debugging Server
 ================
 
 The previous example shows the arguments to :func:`process_message`,
-but :mod:`smtpd` also includes a server specifically designed for more
+but ``smtpd`` also includes a server specifically designed for more
 complete debugging, called :class:`DebuggingServer`.  It prints the
 entire incoming message to the console and then stops processing (it
 does not proxy the message to a real mail server).
@@ -164,7 +164,7 @@ as argument to the constructor.
 
 .. warning::
 
-    The standard library documentation for :mod:`smtpd` says, "running
+    The standard library documentation for ``smtpd`` says, "running
     this has a good chance to make you into an open relay, so please
     be careful."
 
