@@ -20,10 +20,10 @@ events in a platform-independent way.
 Registering interest in an event creates a :class:`SelectorKey`, which
 holds the socket, information about the events of interest, and
 optional application data.  The owner of the selector calls its
-:func:`select` method to learn about events. The return value is a
+``select()`` method to learn about events. The return value is a
 sequence of key objects and a bitmask indicating what events have
 occurred. A program using a selector should repeatedly call
-:func:`select`, then handle the events appropriately.
+``select()``, then handle the events appropriately.
 
 Echo Server
 ===========
