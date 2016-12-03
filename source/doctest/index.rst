@@ -1004,7 +1004,6 @@ instead of being reported individually.
 	Doctest: doctest_in_help.txt ... ok
 	
 	----------------------------------------------------------------
-	------
 	Ran 2 tests in 0.002s
 	
 	OK
