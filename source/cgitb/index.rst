@@ -36,11 +36,11 @@ This sample program has a subtle error in :func:`func2()`.
 	$ python3 cgitb_basic_traceback.py
 	
 	Traceback (most recent call last):
-	  File "cgitb_basic_traceback.py", line 19, in <module>
+	  File "cgitb_basic_traceback.py", line 18, in <module>
 	    func1(1, 5)
-	  File "cgitb_basic_traceback.py", line 17, in func1
+	  File "cgitb_basic_traceback.py", line 16, in func1
 	    return func2(a, c)
-	  File "cgitb_basic_traceback.py", line 12, in func2
+	  File "cgitb_basic_traceback.py", line 11, in func2
 	    return a / divisor
 	ZeroDivisionError: division by zero
 
@@ -70,24 +70,24 @@ Having access to the variables involved in the error stack can help
 find a logical error that occurs somewhere higher in the stack than
 the line where the actual exception is generated.
 
-.. NOT RUNNING
+.. {{{cog
 .. cog.out(run_script(cog.inFile, 'cgitb_local_vars.py', ignore_error=True,
 ..                    line_break_mode='fill'))
+.. }}}
 
 .. code-block:: none
 
 	$ python3 cgitb_local_vars.py
 	
 	ZeroDivisionError
-	Python 3.4.3: /Users/dhellmann/Envs/pymotw34/bin/python3
-	Sun Aug 23 16:55:43 2015
+	Python 3.5.2: .../bin/python3
+	Sat Dec  3 16:19:25 2016
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
 	occurred.
 	
-	 /Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/cgitb
-	 /cgitb_local_vars.py in <module>()
+	 .../cgitb_local_vars.py in <module>()
 	   18 def func1(a, b):
 	   19     c = b - 5
 	   20     return func2(a, c)
@@ -95,8 +95,7 @@ the line where the actual exception is generated.
 	   22 func1(1, 5)
 	func1 = <function func1>
 	
-	 /Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/cgitb
-	 /cgitb_local_vars.py in func1(a=1, b=5)
+	 .../cgitb_local_vars.py in func1(a=1, b=5)
 	   18 def func1(a, b):
 	   19     c = b - 5
 	   20     return func2(a, c)
@@ -106,8 +105,7 @@ the line where the actual exception is generated.
 	a = 1
 	c = 0
 	
-	 /Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/cgitb
-	 /cgitb_local_vars.py in func2(a=1, divisor=0)
+	 .../cgitb_local_vars.py in func2(a=1, divisor=0)
 	   13 
 	   14 def func2(a, divisor):
 	   15     return a / divisor
@@ -181,6 +179,10 @@ the line where the actual exception is generated.
 	  File "cgitb_local_vars.py", line 15, in func2
 	    return a / divisor
 	ZeroDivisionError: division by zero
+	
+	
+
+.. {{{end}}}
 
 
 In the case of this code with a :class:`ZeroDivisionError`, it is
@@ -216,24 +218,24 @@ of the traceback.
 This output show that ``self.a`` and ``self.b`` are involved in the
 error-prone code.
 
-.. NOT RUNNING
+.. {{{cog
 .. cog.out(run_script(cog.inFile, 'cgitb_with_classes.py',
 ..                    ignore_error=True, line_break_mode='fill'))
+.. }}}
 
 .. code-block:: none
 
 	$ python3 cgitb_with_classes.py
 	
 	ZeroDivisionError
-	Python 3.4.3: /Users/dhellmann/Envs/pymotw34/bin/python3
-	Sun Aug 23 16:55:44 2015
+	Python 3.5.2: .../bin/python3
+	Sat Dec  3 16:19:25 2016
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
 	occurred.
 	
-	 /Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/cgitb
-	 /cgitb_with_classes.py in <module>()
+	 .../cgitb_with_classes.py in <module>()
 	   21         self.a = a
 	   22         self.b = b
 	   23         self.c = self.a * self.b
@@ -249,9 +251,8 @@ error-prone code.
 	o undefined
 	BrokenClass = <class '__main__.BrokenClass'>
 	
-	 /Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/cgitb
-	 /cgitb_with_classes.py in __init__(self=<__main__.BrokenClass
-	 object>, a=1, b=0)
+	 .../cgitb_with_classes.py in
+	 __init__(self=<__main__.BrokenClass object>, a=1, b=0)
 	   21         self.a = a
 	   22         self.b = b
 	   23         self.c = self.a * self.b
@@ -332,6 +333,10 @@ error-prone code.
 	  File "cgitb_with_classes.py", line 29, in __init__
 	    self.d = self.a / self.b
 	ZeroDivisionError: division by zero
+	
+	
+
+.. {{{end}}}
 
 
 Exception Properties
@@ -348,24 +353,24 @@ custom exception types are printed as part of the error report.
 In this example, the ``bad_value`` property is included along with the
 standard ``message`` and ``args`` values.
 
-.. NOT RUNNING
-.. cog.out(run_script(cog.inFile, 'cgitb_exception_properties.py', 
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'cgitb_exception_properties.py',
 ..                    ignore_error=True, line_break_mode='fill'))
+.. }}}
 
 .. code-block:: none
 
 	$ python3 cgitb_exception_properties.py
 	
 	MyException
-	Python 3.4.3: /Users/dhellmann/Envs/pymotw34/bin/python3
-	Sun Aug 23 16:55:44 2015
+	Python 3.5.2: .../bin/python3
+	Sat Dec  3 16:19:25 2016
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
 	occurred.
 	
-	 /Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/cgitb
-	 /cgitb_exception_properties.py in <module>()
+	 .../cgitb_exception_properties.py in <module>()
 	   19         self.bad_value = bad_value
 	   20         Exception.__init__(self, message)
 	   21         return
@@ -428,6 +433,10 @@ standard ``message`` and ``args`` values.
 	  File "cgitb_exception_properties.py", line 23, in <module>
 	    raise MyException('Normal message', bad_value=99)
 	MyException: Normal message
+	
+	
+
+.. {{{end}}}
 
 
 HTML Output
@@ -473,17 +482,17 @@ describing where to go to find the error log.
 	$ python3 cgitb_log_exception.py
 	
 	<p>A problem occurred in a Python script.
-	.../LOGS/tmpc180s1m1.txt contains the description of this error.
+	.../LOGS/tmpswtsoit0.txt contains the description of this error.
 
 	$ ls LOGS
 	
-	tmpc180s1m1.txt
+	tmpswtsoit0.txt
 
 	$ cat LOGS/*.txt
 	
 	ZeroDivisionError
 	Python 3.5.2: .../bin/python3
-	Sat Aug 20 18:34:18 2016
+	Sat Dec  3 16:19:25 2016
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they

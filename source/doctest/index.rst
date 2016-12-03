@@ -976,10 +976,10 @@ Unittest Suite
 --------------
 
 When both :mod:`unittest` and ``doctest`` are used for testing the
-same code in different situations, the :mod:`unittest` integration in
+same code in different situations, the ``unittest`` integration in
 ``doctest`` can be used to run the tests together.  Two classes,
 :class:`DocTestSuite` and :class:`DocFileSuite` create test suites
-compatible with the test-runner API of :mod:`unittest`.
+compatible with the test-runner API of ``unittest``.
 
 .. literalinclude:: doctest_unittest.py
    :caption:
@@ -1002,7 +1002,6 @@ instead of being reported individually.
 	Doctest: doctest_in_help.txt ... ok
 	
 	----------------------------------------------------------------
-	------
 	Ran 2 tests in 0.002s
 	
 	OK
