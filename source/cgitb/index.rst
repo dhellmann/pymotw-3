@@ -36,11 +36,11 @@ This sample program has a subtle error in :func:`func2()`.
 	$ python3 cgitb_basic_traceback.py
 	
 	Traceback (most recent call last):
-	  File "cgitb_basic_traceback.py", line 19, in <module>
+	  File "cgitb_basic_traceback.py", line 18, in <module>
 	    func1(1, 5)
-	  File "cgitb_basic_traceback.py", line 17, in func1
+	  File "cgitb_basic_traceback.py", line 16, in func1
 	    return func2(a, c)
-	  File "cgitb_basic_traceback.py", line 12, in func2
+	  File "cgitb_basic_traceback.py", line 11, in func2
 	    return a / divisor
 	ZeroDivisionError: division by zero
 
@@ -473,17 +473,17 @@ describing where to go to find the error log.
 	$ python3 cgitb_log_exception.py
 	
 	<p>A problem occurred in a Python script.
-	.../LOGS/tmpc180s1m1.txt contains the description of this error.
+	.../LOGS/tmpsak3or9f.txt contains the description of this error.
 
 	$ ls LOGS
 	
-	tmpc180s1m1.txt
+	tmpsak3or9f.txt
 
 	$ cat LOGS/*.txt
 	
 	ZeroDivisionError
 	Python 3.5.2: .../bin/python3
-	Sat Aug 20 18:34:18 2016
+	Sat Dec  3 16:15:20 2016
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they

@@ -7,7 +7,6 @@
 """
 
 #end_pymotw_header
-
 def func2(a, divisor):
     return a / divisor
 
