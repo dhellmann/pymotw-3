@@ -7,13 +7,13 @@
 
 The ``time`` module provides access to several different types of
 clocks, each useful for different purposes. The standard system calls
-like :func:`time` report the system "wall clock" time. The
+like ``time()`` report the system "wall clock" time. The
 :func:`monotonic` clock can be used to measure elapsed time in a
 long-running process because it is guaranteed never to move backwards,
 even if the system time is changed. For performance testing,
 :func:`perf_counter` provides access to the clock with the highest
 available resolution to make short time measurements more
-accurate. The CPU time is available through :func:`time`, and
+accurate. The CPU time is available through ``time()``, and
 :func:`process_time` returns the combined processor time and system
 time.
 
@@ -88,7 +88,7 @@ clocks are implemented using the same underlying system call.
 Wall Clock Time
 ===============
 
-One of the core functions of the ``time`` module is :func:`time`,
+One of the core functions of the ``time`` module is ``time()``,
 which returns the number of seconds since the start of the "epoch" as
 a floating point value.
 
@@ -141,9 +141,9 @@ The second :func:`print` call in this example shows how to use
 Monotonic Clocks
 ================
 
-Because :func:`time` looks at the system clock, and the system clock
+Because ``time()`` looks at the system clock, and the system clock
 can be changed by the user or system services for synchronizing clocks
-across multiple computers, calling :func:`time` repeatedly may produce
+across multiple computers, calling ``time()`` repeatedly may produce
 values that go forwards and backwards. This can result in unexpected
 behavior when trying to measure durations or otherwise use those times
 for computation. Avoid those situations by using :func:`monotonic`,
@@ -175,7 +175,7 @@ values. In this example the duration of the sleep is measured using
 Processor Clock Time
 ====================
 
-While :func:`time` returns a wall clock time, :func:`clock` returns
+While ``time()`` returns a wall clock time, :func:`clock` returns
 processor clock time.  The values returned from :func:`clock` reflect
 the actual time used by the program as it runs.
 
@@ -184,7 +184,7 @@ the actual time used by the program as it runs.
     :start-after: #end_pymotw_header
 
 In this example, the formatted :func:`ctime` is printed along with
-the floating point values from :func:`time`, and :func:`clock` for
+the floating point values from ``time()``, and :func:`clock` for
 each iteration through the loop.
 
 .. note::
@@ -217,7 +217,7 @@ anything.
     :start-after: #end_pymotw_header
 
 In this example, the loop does very little work by going to sleep
-after each iteration. The :func:`time` value increases even while
+after each iteration. The ``time()`` value increases even while
 the application is asleep, but the :func:`clock` value does not.
 
 .. {{{cog
