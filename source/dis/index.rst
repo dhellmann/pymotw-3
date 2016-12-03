@@ -26,7 +26,7 @@ where thread control may switch.
 Basic Disassembly
 =================
 
-The function :func:`dis` prints the disassembled representation of a
+The function ``dis()`` prints the disassembled representation of a
 Python code source (module, class, method, function, or code object).
 A module such as ``dis_simple.py`` can be disassembled by running
 ``dis`` from the command line.
@@ -121,7 +121,7 @@ it into a function (:const:`LOAD_CONST`, :const:`MAKE_FUNCTION`), but
 .. {{{end}}}
 
 To see inside the function, the function itself must be passed to
-:func:`dis`.
+``dis()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'dis_function.py', line_break_mode='wrap'))
@@ -187,7 +187,7 @@ string, or other code object, ready to be printed.
 Classes
 =======
 
-Classes can be passed to :func:`dis`, in which case all of the methods
+Classes can be passed to ``dis()``, in which case all of the methods
 are disassembled in turn.
 
 .. cssclass:: with-linenos
@@ -283,9 +283,9 @@ Using Disassembly to Debug
 
 Sometimes when debugging an exception it can be useful to see which
 bytecode caused a problem.  There are a couple of ways to disassemble
-the code around an error.  The first is by using :func:`dis` in the
+the code around an error.  The first is by using ``dis()`` in the
 interactive interpreter to report about the last exception.  If no
-argument is passed to :func:`dis`, then it looks for an exception and
+argument is passed to ``dis()``, then it looks for an exception and
 shows the disassembly of the top of the stack that caused it.
 
 .. code-block:: none
