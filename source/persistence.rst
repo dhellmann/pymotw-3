@@ -14,7 +14,7 @@ Two modules convert objects into a format that can be transmitted or
 stored (a process known as *serializing*).  It is most common to use
 :mod:`pickle` for persistence, since it is integrated with some of the
 other standard library modules that actually store the serialized
-data, such as :mod:`shelve`.  :mod:`json` is more frequently used for
+data, such as ``shelve``.  ``json`` is more frequently used for
 web-based applications, however, since it integrates better with
 existing web service storage tools.
 
@@ -30,7 +30,7 @@ The most straightforward way to take advantage of the DBM format is
 dictionary-like API.  Objects saved to the database are automatically
 pickled and saved without any extra work by the caller.
 
-One drawback of :mod:`shelve`, though, is that when using the default
+One drawback of ``shelve``, though, is that when using the default
 interface there is no way to predict which DBM format will be used,
 since it selects one based on the libraries available on the system
 where the database is created.  The format does not matter if an
@@ -40,7 +40,7 @@ of the classes in the module to ensure a specific format is selected.
 
 For web applications that work with data in JSON already, using
 :mod:`json` and :mod:`dbm` provides another persistence mechanism.
-Using :mod:`dbm` directly is a little more work than :mod:`shelve`
+Using :mod:`dbm` directly is a little more work than ``shelve``
 because the DBM database keys and values must be strings, and the
 objects will not be re-created automatically when the value is
 accessed in the database.
@@ -50,14 +50,14 @@ most Python distributions for storing data in more complex
 arrangements than key/value pairs.  It stores its database in memory
 or in a local file, and all access is from within the same process so
 there is no network communication lag.  The compact nature of
-:mod:`sqlite3` makes it especially well suited for embedding in
+``sqlite3`` makes it especially well suited for embedding in
 desktop applications or development versions of web apps.
 
 There are also modules for parsing more formally defined formats,
 useful for exchanging data between Python programs and applications
 written in other languages.  :mod:`xml.etree.ElementTree` can parse
 XML documents, and provides several operating modes for different
-applications.  Besides the parsing tools, :mod:`ElementTree` includes
+applications.  Besides the parsing tools, ``ElementTree`` includes
 an interface for creating well-formed XML documents from objects in
 memory.  The :mod:`csv` module can read and write tabular data in
 formats produced by spreadsheets or database applications, making it
