@@ -169,6 +169,7 @@ a file where it is, rather than making a new file.  For example, a
 Unix hosts file might need to be updated if a subnet range changes.
 
 .. literalinclude:: etc_hosts
+   :caption: etc_hosts.txt before modifications
 
 The safe way to make the change automatically is to create a new file
 based on the input and then replace the original with the edited copy.
@@ -199,6 +200,7 @@ The updated file has the changed IP addresses of all of the servers on
 the ``10.16.0.0/16`` network.
 
 .. literalinclude:: etc_hosts.txt
+   :caption: etc_hosts.txt after modifications
 
 Before processing begins, a backup file is created using the original
 name plus ``.bak``.  
