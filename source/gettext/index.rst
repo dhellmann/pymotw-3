@@ -402,7 +402,7 @@ top-level of the application's code.
     :caption:
     :start-after: #end_pymotw_header
 
-The :func:`install` function binds :func:`gettext` to the name ``_()``
+The :func:`install` function binds ``gettext()`` to the name ``_()``
 in the ``__builtins__`` namespace.  It also adds :func:`ngettext` and
 other functions listed in ``names``.
 
