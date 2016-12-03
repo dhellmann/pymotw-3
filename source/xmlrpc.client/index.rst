@@ -115,7 +115,7 @@ The simple types are
 
 .. code-block:: none
 
-	$ python3 xmlrpc_types.py
+    $ python3 xmlrpc_types.py
 
     boolean     : True
                   <class 'bool'>
