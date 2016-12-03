@@ -17,7 +17,7 @@ Use these modules for compressing a single file or data source.
 
 The standard library also includes modules to manage *archive*
 formats, for combining several files into a single file that can be
-managed as a unit.  :mod:`tarfile` reads and writes the UNIX tape
+managed as a unit.  :mod:`tarfile` reads and writes the Unix tape
 archive format, an old standard still widely used today because of its
 flexibility.  :mod:`zipfile` works with archives based on the format
 popularized by the PC program PKZIP, originally used under MS-DOS and

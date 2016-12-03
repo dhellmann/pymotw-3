@@ -1,11 +1,11 @@
 =============================
- grp --- UNIX Group Database
+ grp --- Unix Group Database
 =============================
 
 .. module:: grp
-    :synopsis: UNIX Group Database
+    :synopsis: Unix Group Database
 
-The ``grp`` module can be used to read information about UNIX
+The ``grp`` module can be used to read information about Unix
 groups from the group database (usually ``/etc/group``).  The
 read-only interface returns tuple-like objects with named attributes
 for the standard fields of a group record.

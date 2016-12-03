@@ -24,7 +24,7 @@ The :class:`Differ` class works on sequences of text lines and
 produces human-readable *deltas*, or change instructions, including
 differences within individual lines.  The default output produced by
 :class:`Differ` is similar to the ``diff`` command line tool
-under UNIX.  It includes the original input values from both lists,
+under Unix.  It includes the original input values from both lists,
 including common values, and markup data to indicate what changes were
 made.
 

@@ -215,7 +215,7 @@ installed. Try passing different filenames on the command line to
 .. {{{end}}}
 
 
-On UNIX-like systems, file permissions can be changed using
+On Unix-like systems, file permissions can be changed using
 :func:`chmod`, passing the mode as an integer. Mode values can be
 constructed using constants defined in the :mod:`stat` module.  This
 example toggles the user's execute permission bit:
@@ -641,7 +641,7 @@ Creating Processes with os.fork()
 =================================
 
 The POSIX functions :func:`fork` and :func:`exec` (available under Mac
-OS X, Linux, and other UNIX variants) are exposed via the ``os``
+OS X, Linux, and other Unix variants) are exposed via the ``os``
 module. Entire books have been written about reliably using these
 functions, so check the library or bookstore for more details than are
 presented here in this introduction.
@@ -904,7 +904,7 @@ come up frequently.
 
    * `Delve into Unix Process Creation
      <http://www.ibm.com/developerworks/aix/library/au-unixprocess.html>`__
-     -- Explains the life cycle of a UNIX process.
+     -- Explains the life cycle of a Unix process.
 
    * *Advanced Programming in the UNIX(R) Environment* By W. Richard
      Stevens and Stephen A. Rago.  Published by Addison-Wesley

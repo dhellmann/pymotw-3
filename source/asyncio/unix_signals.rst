@@ -1,8 +1,8 @@
 ========================
- Receiving UNIX Signals
+ Receiving Unix Signals
 ========================
 
-UNIX system event notifications normally interrupt an application,
+Unix system event notifications normally interrupt an application,
 triggering their handler. When used with ``asyncio``, signal
 handler callbacks are interleaved with the other coroutines and
 callbacks managed by the event loop. This results in fewer interrupted

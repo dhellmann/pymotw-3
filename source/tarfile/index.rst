@@ -5,15 +5,15 @@
 .. module:: tarfile
     :synopsis: Tar archive access
 
-The ``tarfile`` module provides read and write access to UNIX
-``tar`` archives, including compressed files.  In addition to the
-POSIX standards, several GNU tar extensions are supported.  UNIX
-special file types such as hard and soft links, and device nodes are
-also handled.
+The ``tarfile`` module provides read and write access to Unix tar
+archives, including compressed files.  In addition to the POSIX
+standards, several GNU tar extensions are supported.  Unix special
+file types such as hard and soft links, and device nodes are also
+handled.
 
 .. note::
 
-  Although ``tarfile`` implements a UNIX format, it can be used to
+  Although ``tarfile`` implements a Unix format, it can be used to
   create and read tar archives under Microsoft Windows, too.
 
 Testing Tar Files

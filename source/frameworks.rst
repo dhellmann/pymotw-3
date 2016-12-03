@@ -50,7 +50,7 @@ failure.  The :mod:`logging` module includes a full-featured API that
 manages log files, supports multiple threads, and even interfaces with
 remote logging daemons for centralized logging.
 
-One of the most common patterns for programs in UNIX environments is a
+One of the most common patterns for programs in Unix environments is a
 line-by-line filter that reads data, modifies it, and writes it back
 out.  Reading from files is simple enough, but there may not be an
 easier way to create a filter application than by using the

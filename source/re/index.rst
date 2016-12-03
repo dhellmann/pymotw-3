@@ -19,7 +19,7 @@ parser.
 Regular expressions are typically used in applications that involve a
 lot of text processing.  For example, they are commonly used as search
 patterns in text editing programs used by developers, including vi,
-emacs, and modern IDEs.  They are also an integral part of UNIX
+emacs, and modern IDEs.  They are also an integral part of Unix
 command line utilities such as sed, grep, and awk.  Many programming
 languages include support for regular expressions in the language
 syntax (Perl, Ruby, Awk, and Tcl).  Other languages, such as C, C++,

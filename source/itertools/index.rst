@@ -160,7 +160,7 @@ to 2) based on a single original input.
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`tee` has semantics similar to the UNIX ``tee`` utility,
+:func:`tee` has semantics similar to the Unix ``tee`` utility,
 which repeats the values it reads from its input and writes them to a
 named file and standard output.  The iterators returned by :func:`tee`
 can be used to feed the same set of data into multiple algorithms to
@@ -920,7 +920,7 @@ of the other members of the input sequence.
    * `Clojure <http://clojure.org/>`__ -- Clojure is a dynamic
      functional language that runs on the Java Virtual Machine.
 
-   * `tee <http://man7.org/linux/man-pages/man1/tee.1.html>`__ -- UNIX
+   * `tee <http://man7.org/linux/man-pages/man1/tee.1.html>`__ -- Unix
      command line tool for splitting one input into multiple identical
      output streams.
 

@@ -11,7 +11,7 @@ another program and then interacting with it.
 Using the Protocol Abstraction with Subprocesses
 ================================================
 
-This example uses a coroutine to launch a process to run the UNIX
+This example uses a coroutine to launch a process to run the Unix
 command ``df`` to find the free space on local disks. It uses
 :func:`subprocess_exec` to launch the process and tie it to a protocol
 class that knows how to read the ``df`` command output and parse
@@ -196,7 +196,7 @@ Sending Data to a Subprocess
 Both of the previous examples used only a single communication channel
 to read data from a second process. It is often necessary to send data
 into a command for processing. This example defines a coroutine to
-execute the UNIX command ``tr`` for translating characters in its
+execute the Unix command ``tr`` for translating characters in its
 input stream. In this case, ``tr`` is used to convert lower-case
 letters to upper-case letters.
 

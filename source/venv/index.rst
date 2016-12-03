@@ -66,7 +66,7 @@ packages.
 .. {{{end}}}
 
 The default ``bin`` directory contains "activation" scripts for
-several UNIX shell variants. These can be used to install the virtual
+several Unix shell variants. These can be used to install the virtual
 environment on the shell's search path to ensure the shell picks up
 programs installed in the environment. It's not necessary to activate
 an environment to use programs installed into it, but it can be more

@@ -16,15 +16,15 @@ Signals are identified by integers and are defined in the operating
 system C headers.  Python exposes the signals appropriate for the
 platform as symbols in the ``signal`` module.  The examples in this
 section use :const:`SIGINT` and :const:`SIGUSR1`.  Both are typically
-defined for all UNIX and UNIX-like systems.
+defined for all Unix and Unix-like systems.
 
 .. note::
 
-    Programming with UNIX signal handlers is a non-trivial
+    Programming with Unix signal handlers is a non-trivial
     endeavor. This is an introduction, and does not include all of the
     details needed to use signals successfully on every
     platform. There is some degree of standardization across versions
-    of UNIX, but there is also some variation, so consult the
+    of Unix, but there is also some variation, so consult the
     operating system documentation if you run into trouble.
 
 Receiving Signals
@@ -45,7 +45,7 @@ time.  When a signal comes in, the :func:`sleep` call is interrupted
 and the signal handler ``receive_signal`` prints the signal number.
 After the signal handler returns, the loop continues.
 
-Send signals to the running program using :func:`os.kill` or the UNIX
+Send signals to the running program using :func:`os.kill` or the Unix
 command line program ``kill``.
 
 .. NOT RUNNING

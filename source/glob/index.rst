@@ -3,7 +3,7 @@
 ====================================
 
 .. module:: glob
-    :synopsis: Use UNIX shell rules to find filenames matching a pattern.
+    :synopsis: Use Unix shell rules to find filenames matching a pattern.
 
 Even though the ``glob`` API is small, the module packs a lot of
 power. It is useful in any situation where a program needs to look for
@@ -14,7 +14,7 @@ custom code to scan the directory contents.
 
 The pattern rules for ``glob`` are not the same as the regular
 expressions used by the :mod:`re` module. Instead, they follow
-standard UNIX path expansion rules. There are only a few special
+standard Unix path expansion rules. There are only a few special
 characters used to implement two different wild-cards and character
 ranges. The patterns rules are applied to segments of the filename
 (stopping at the path separator, ``/``). Paths in the pattern can be

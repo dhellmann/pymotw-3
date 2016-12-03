@@ -1,12 +1,12 @@
 ================================
- pwd --- UNIX Password Database
+ pwd --- Unix Password Database
 ================================
 
 .. module:: pwd
-    :synopsis: UNIX Password Database
+    :synopsis: Unix Password Database
 
 The ``pwd`` module can be used to read user information from the
-UNIX password database (usually ``/etc/passwd``).  The read-only
+Unix password database (usually ``/etc/passwd``).  The read-only
 interface returns tuple-like objects with named attributes for the
 standard fields of a password record.
 
@@ -155,5 +155,5 @@ user currently running a process:
     * :mod:`spwd` -- Secure password database access for systems using
       shadow passwords.
 
-    * :mod:`grp` -- The :mod:`grp` module reads UNIX group
+    * :mod:`grp` -- The :mod:`grp` module reads Unix group
       information.

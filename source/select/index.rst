@@ -7,9 +7,9 @@ select --- Wait for I/O Efficiently
 
 The ``select`` module provides access to platform-specific I/O
 monitoring functions.  The most portable interface is the POSIX
-function :func:`select`, which is available on UNIX and Windows.  The
-module also includes :func:`poll`, a UNIX-only API, and several
-options that only work with specific variants of UNIX.
+function :func:`select`, which is available on Unix and Windows.  The
+module also includes :func:`poll`, a Unix-only API, and several
+options that only work with specific variants of Unix.
 
 .. note::
 
@@ -33,7 +33,7 @@ the interpreter.
 
 .. note::
 
-   Using Python's file objects with :func:`select` works for UNIX, but
+   Using Python's file objects with :func:`select` works for Unix, but
    is not supported under Windows.
 
 The echo server example from the :mod:`socket` section can be extended

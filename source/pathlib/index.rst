@@ -627,7 +627,7 @@ look up the name associated with the IDs.
 
 .. {{{end}}}
 
-The :func:`touch` method works like the UNIX command ``touch``
+The :func:`touch` method works like the Unix command ``touch``
 to create a file or update an existing file's modification time and
 permissions.
 
@@ -663,7 +663,7 @@ subsequent runs.
 Permissions
 ===========
 
-On UNIX-like systems, file permissions can be changed using
+On Unix-like systems, file permissions can be changed using
 :func:`chmod`, passing the mode as an integer. Mode values can be
 constructed using constants defined in the :mod:`stat` module.  This
 example toggles the user's execute permission bit.
@@ -767,7 +767,7 @@ socket, or other file system object.
 
    * :mod:`os.path` -- Platform-independent manipulation of filenames
 
-   * :mod:`glob` -- UNIX shell pattern matching for filenames
+   * :mod:`glob` -- Unix shell pattern matching for filenames
 
    * :pep:`428` -- The pathlib module
 
