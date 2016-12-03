@@ -18,7 +18,7 @@ with imaplib_connect.open_connection() as c:
         raise RuntimeError(response)
     msg_ids = ','.join(response.decode('utf-8').split(' '))
 
-    # Create a new mailbox, "Archive.Today"
+    # Create a new mailbox, "Example.Today"
     typ, create_response = c.create('Example.Today')
     print('CREATED Example.Today:', create_response)
 

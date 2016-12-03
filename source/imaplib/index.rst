@@ -83,7 +83,7 @@ exception.
 Example Configuration
 =====================
 
-The example account has several in a hierarchy:
+The example account has several mailboxes in a hierarchy:
 
 - INBOX
 - Deleted Messages
@@ -676,7 +676,7 @@ Whole Messages
 
 As illustrated earlier, the client can ask the server for individual
 parts of the message separately.  It is also possible to retrieve the
-entire message as an RFC 2822 formatted mail message and parse it
+entire message as an RFC 822 formatted mail message and parse it
 with classes from the :mod:`email` module.
 
 .. literalinclude:: imaplib_fetch_rfc822.py
@@ -801,8 +801,7 @@ the read messages from ``INBOX`` into it.
 
 	$ python3 imaplib_archive_read.py
 	
-	CREATED Example.Today: [b'[ALREADYEXISTS] Mailbox already exists
-	']
+	CREATED Example.Today: [b'Completed']
 	COPYING: 2
 	COPIED: b'1'
 
@@ -872,7 +871,7 @@ not notified about the deletions when :meth:`close()` is called.
 
     * :pydoc:`imaplib`
 
-    * :mod:`rfc822` -- The ``rfc822`` module includes an RFC 822 / RFC 2822 parser.
+    * :mod:`rfc822` -- The ``rfc822`` module includes an RFC 822 / RFC 5322 parser.
 
     * :mod:`email` -- The ``email`` module for parsing email messages.
 
@@ -886,9 +885,7 @@ not notified about the deletions when :meth:`close()` is called.
 
     * :rfc:`3501` -- Internet Message Access Protocol
 
-    * :rfc:`2822` -- Internet Message Format
-
-    * :rfc:`5322` -- Replacement for RFC 2822.
+    * :rfc:`5322` -- Internet Message Format
 
     * `IMAP Backup Script`_ -- A script to backup email from an IMAP
       server.
@@ -896,6 +893,10 @@ not notified about the deletions when :meth:`close()` is called.
     * `IMAPClient <http://imapclient.freshfoo.com/>`_ -- A
       higher-level client for talking to IMAP servers, written by
       Menno Smits.
+
+    * `offlineimap <http://www.offlineimap.org>`_ -- A Python
+      application for keeping a local set of mailboxes in sync with an
+      IMAP server.
 
     * :ref:`Porting notes for imaplib <porting-imaplib>`
 
