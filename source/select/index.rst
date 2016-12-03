@@ -9,7 +9,7 @@ select --- Wait for I/O Efficiently
 
 The ``select`` module provides access to platform-specific I/O
 monitoring functions.  The most portable interface is the POSIX
-function :func:`select`, which is available on Unix and Windows.  The
+function ``select()``, which is available on Unix and Windows.  The
 module also includes :func:`poll`, a Unix-only API, and several
 options that only work with specific variants of Unix.
 
@@ -23,11 +23,11 @@ options that only work with specific variants of Unix.
 Using select()
 ==============
 
-Python's :func:`select` function is a direct interface to the
+Python's ``select()`` function is a direct interface to the
 underlying operating system implementation.  It monitors sockets, open
 files, and pipes (anything with a :func:`fileno` method that returns a
 valid file descriptor) until they become readable or writable or a
-communication error occurs.  :func:`select` makes it easier to monitor
+communication error occurs.  ``select()`` makes it easier to monitor
 multiple connections at the same time, and is more efficient than
 writing a polling loop in Python using socket timeouts, because the
 monitoring happens in the operating system network layer, instead of
@@ -35,26 +35,26 @@ the interpreter.
 
 .. note::
 
-   Using Python's file objects with :func:`select` works for Unix, but
+   Using Python's file objects with ``select()`` works for Unix, but
    is not supported under Windows.
 
 The echo server example from the :mod:`socket` section can be extended
 to watch for more than one connection at a time by using
-:func:`select`.  The new version starts out by creating a non-blocking
+``select()``.  The new version starts out by creating a non-blocking
 TCP/IP socket and configuring it to listen on an address.
 
 .. literalinclude:: select_echo_server.py
    :caption:
    :lines: 10-26
 
-The arguments to :func:`select` are three lists containing
+The arguments to ``select()`` are three lists containing
 communication channels to monitor.  The first is a list of the objects
 to be checked for incoming data to be read, the second contains
 objects that will receive outgoing data when there is room in their
 buffer, and the third those that may have an error (usually a
 combination of the input and output channel objects).  The next step
 in the server is to set up the lists containing input sources and
-output destinations to be passed to :func:`select`.
+output destinations to be passed to ``select()``.
 
 .. literalinclude:: select_echo_server.py
    :lines: 28-32
@@ -68,13 +68,13 @@ to act as a buffer for the data to be sent through it.
 .. literalinclude:: select_echo_server.py
    :lines: 34-35
 
-The main portion of the server program loops, calling :func:`select` to
+The main portion of the server program loops, calling ``select()`` to
 block and wait for network activity.
 
 .. literalinclude:: select_echo_server.py
    :lines: 37-44
 
-:func:`select` returns three new lists, containing subsets of the
+``select()`` returns three new lists, containing subsets of the
 contents of the lists passed in.  All of the sockets in the
 :data:`readable` list have incoming data buffered and available to be
 read.  All of the sockets in the :data:`writable` list have free space
@@ -108,7 +108,7 @@ disconnected, and the stream is ready to be closed.
 There are fewer cases for the writable connections.  If there is data
 in the queue for a connection, the next message is sent.  Otherwise,
 the connection is removed from the list of output connections so that
-the next time through the loop :func:`select` does not indicate that
+the next time through the loop ``select()`` does not indicate that
 the socket is ready to send data.
 
 .. literalinclude:: select_echo_server.py
@@ -120,7 +120,7 @@ Finally, if there is an error with a socket, it is closed.
    :lines: 102-
 
 The example client program uses two sockets to demonstrate how the
-server with :func:`select` manages multiple connections at the same
+server with ``select()`` manages multiple connections at the same
 time.  The client starts by connecting each TCP/IP socket to the
 server.
 
@@ -201,16 +201,16 @@ sockets.
 Non-blocking I/O With Timeouts
 ==============================
 
-:func:`select` also takes an optional fourth parameter, which is the
+``select()`` also takes an optional fourth parameter, which is the
 number of seconds to wait before breaking off monitoring if no
 channels have become active.  Using a timeout value lets a main
-program call :func:`select` as part of a larger processing loop,
+program call ``select()`` as part of a larger processing loop,
 taking other actions in between checking for network input.
 
-When the timeout expires, :func:`select` returns three empty lists.
+When the timeout expires, ``select()`` returns three empty lists.
 Updating the server example to use a timeout requires adding the extra
-argument to the :func:`select` call and handling the empty lists after
-:func:`select` returns.
+argument to the ``select()`` call and handling the empty lists after
+``select()`` returns.
 
 .. literalinclude:: select_echo_server_timeout.py
    :caption:
@@ -272,7 +272,7 @@ And this is the client output:
 Using poll()
 ============
 
-The :func:`poll` function provides similar features to :func:`select`,
+The :func:`poll` function provides similar features to ``select()``,
 but the underlying implementation is more efficient.  The trade-off is
 that :func:`poll` is not supported under Windows, so programs using
 :func:`poll` are less portable.
@@ -327,7 +327,7 @@ connections or data triggers an event.
 Since :func:`poll` returns a list of tuples containing the file
 descriptor for the socket and the event flag, a mapping from file
 descriptor numbers to objects is needed to retrieve the
-:class:`socket` to read or write from it.
+``socket`` to read or write from it.
 
 .. literalinclude:: select_poll_echo_server.py
    :lines: 47-50
@@ -339,7 +339,7 @@ in the event.
 .. literalinclude:: select_poll_echo_server.py
    :lines: 52-62
 
-As with :func:`select`, when the main server socket is "readable,"
+As with ``select()``, when the main server socket is "readable,"
 that really means there is a pending connection from a client.  The
 new connection is registered with the :data:`READ_ONLY` flags to watch
 for new data to come through it.
@@ -376,7 +376,7 @@ clients that disappear.
    :lines: 102-108
 
 The handling for writable sockets looks like the version used in the
-example for :func:`select`, except that :func:`modify` is used to
+example for ``select()``, except that :func:`modify` is used to
 change the flags for the socket in the poller, instead of removing it
 from the output list.
 
