@@ -15,7 +15,10 @@ functions of the module are described.
 Plain Text Help
 ===============
 
-Running:
+Running ``pydoc`` as a command line program and passing the name of a
+module produces help text for the module and its contents on the
+console, using a pager program if one is configured. For example, to
+see the help text for the :mod:`atexit` module, run ``pydoc atexit``.
 
 .. code-block:: none
 
@@ -54,9 +57,6 @@ Running:
     
     FILE
         (built-in)
-
-Produces plaintext help on the console, using a pager program if one
-is configured.
 
 HTML Help
 =========
