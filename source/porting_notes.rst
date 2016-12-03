@@ -44,10 +44,33 @@ New Modules
 ===========
 
 Python 3 includes a number of new modules, providing features not
-present in Python 2.
+present in Python 2. Some of the new modules covered in this text
+are
 
 :mod:`asyncio`
-  Asynchronous I/O, event loop, and other concurrency tools.
+  Asynchronous I/O, event loop, and other concurrency tools
+
+:mod:`concurrent.futures`
+  Managing Pools of Concurrent Tasks
+
+:mod:`ensurepip`
+  Install the Python Package Installer, pip
+
+:mod:`enum`
+  Defines enumeration type
+
+:mod:`ipaddress`
+  Classes for working with Internet Protocol (IP) addresses
+
+:mod:`selectors`
+  I/O Multiplexing Abstractions
+
+:mod:`statistics`
+  Statistical Calculations
+
+:mod:`venv`
+  Create isolated installation and execution contexts
+
 
 Renamed Modules
 ===============
@@ -177,21 +200,6 @@ compiler
 
 The :mod:`compiler` module has been removed. See :mod:`ast` instead.
 
-.. _porting-decimal:
-
-decimal
--------
-
-.. index::
-   pair: porting; decimal
-
-Python 3.3 incorporated a C implementation of :mod:`decimal` based on
-``libmpdec``. This change improved performance, but also includes some
-API changes and behavior differences from the pure-Python
-implementation. See `the Python 3.3 release notes
-<https://docs.python.org/3.3/whatsnew/3.3.html#decimal>`__ for
-details.
-
 dircache
 --------
 
@@ -301,21 +309,6 @@ thread
 
 The :mod:`thread` module has been removed.  Use the higher-level API
 in :mod:`threading` instead.
-
-.. _porting-time:
-
-time
-----
-
-.. index::
-   pair: porting; time
-
-:func:`time.asctime` and :func:`time.ctime` have been reimplemented to
-not use the system functions of the same time to allow larger years to
-be used. :func:`time.ctime` now supports years from 1900 through
-:data:`maxint`, although for values higher than ``9999`` the output
-string is longer than the standard 24 characters to allow for the
-extra year digits (:pyissue:`8013`).
 
 user
 ----
@@ -588,6 +581,21 @@ Prior to Python 3.5, a :class:`datetime.time` object representing
 midnight evaluated to ``False`` when converted to a Boolean. This
 behavior has been removed in Python 3.5 (:pyissue:`13936`).
 
+.. _porting-decimal:
+
+decimal
+-------
+
+.. index::
+   pair: porting; decimal
+
+Python 3.3 incorporated a C implementation of :mod:`decimal` based on
+``libmpdec``. This change improved performance, but also includes some
+API changes and behavior differences from the pure-Python
+implementation. See `the Python 3.3 release notes
+<https://docs.python.org/3.3/whatsnew/3.3.html#decimal>`__ for
+details.
+
 .. _porting-fractions:
 
 fractions
@@ -838,25 +846,6 @@ The ``print`` command alias has been removed so that it does not
 shadow the ``print()`` function (:pyissue:`18764`). The ``p`` shortcut
 is retained.
 
-.. _porting-platform:
-
-platform
---------
-
-.. index::
-   pair: porting; platform
-
-:func:`platform.popen` has been deprecated. Use :func:`subprocess.popen`
-instead (:pyissue:`11377`).
-
-:func:`platform.uname` now returns a :class:`namedtuple`.
-
-Because Linux distributions do not have a consistent way to describe
-themselves, the functions for getting the descriptions
-(:func:`platform.dist` and :func:`platform.linux_distribution`) are
-deprecated and scheduled to be removed in Python 3.7
-(:pyissue:`1322`).
-
 .. _porting-pickle:
 
 pickle
@@ -917,6 +906,25 @@ pipes
    pair: porting; pipes
 
 :func:`pipes.quote` has moved to :mod:`shlex` (:pyissue:`9723`).
+
+.. _porting-platform:
+
+platform
+--------
+
+.. index::
+   pair: porting; platform
+
+:func:`platform.popen` has been deprecated. Use :func:`subprocess.popen`
+instead (:pyissue:`11377`).
+
+:func:`platform.uname` now returns a :class:`namedtuple`.
+
+Because Linux distributions do not have a consistent way to describe
+themselves, the functions for getting the descriptions
+(:func:`platform.dist` and :func:`platform.linux_distribution`) are
+deprecated and scheduled to be removed in Python 3.7
+(:pyissue:`1322`).
 
 .. _porting-random:
 
@@ -1116,6 +1124,21 @@ converted to standard classes, which allow subclassing
 The public symbols exported from :mod:`threading` have been renamed to
 be :pep:`8` compliant. The old names are retained for backwards
 compatibility, but they will be removed in a future release.
+
+.. _porting-time:
+
+time
+----
+
+.. index::
+   pair: porting; time
+
+:func:`time.asctime` and :func:`time.ctime` have been reimplemented to
+not use the system functions of the same time to allow larger years to
+be used. :func:`time.ctime` now supports years from 1900 through
+:data:`maxint`, although for values higher than ``9999`` the output
+string is longer than the standard 24 characters to allow for the
+extra year digits (:pyissue:`8013`).
 
 .. _porting-unittest:
 
