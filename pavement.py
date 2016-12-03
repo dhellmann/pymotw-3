@@ -375,6 +375,7 @@ def push(options):
 
 @task
 def publish(options):
+    raise SystemExit('wrong branch')
     deploy(options)
     push(options)
 
