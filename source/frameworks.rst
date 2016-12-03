@@ -34,7 +34,7 @@ implement the processing callbacks for the individual commands.
 :mod:`shlex` is a parser for shell-style syntax, with lines made up of
 tokens separated by white-space.  It is smart about quotes and escape
 sequences, so text with embedded spaces is treated as a single token.
-:mod:`shlex` works well as the tokenizer for domain-specific languages
+``shlex`` works well as the tokenizer for domain-specific languages
 such as configuration files or programming languages.
 
 It is easy to manage application configuration files with
@@ -55,11 +55,11 @@ line-by-line filter that reads data, modifies it, and writes it back
 out.  Reading from files is simple enough, but there may not be an
 easier way to create a filter application than by using the
 :mod:`fileinput` module.  Its API is a line iterator that yields each
-input line, so the main body of the program is a simple ``for``
-loop.  The module handles parsing command line arguments for filenames
-to be processed, or falling back to reading directly from standard
-input, so tools built on :mod:`fileinput` can be run directly on a
-file or as part of a pipeline.
+input line, so the main body of the program is a simple ``for`` loop.
+The module handles parsing command line arguments for filenames to be
+processed, or falling back to reading directly from standard input, so
+tools built on ``fileinput`` can be run directly on a file or as part
+of a pipeline.
 
 Use :mod:`atexit` to schedule functions to be run as the interpreter is
 shutting down a program.  Registering exit callbacks is useful for
