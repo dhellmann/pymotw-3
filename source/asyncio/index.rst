@@ -103,6 +103,10 @@ working on.
       <http://www.dabeaz.com/coroutines/>`__ -- PyCon 2009 tutorial by
       David Beazley
 
+    * `How the heck does async/await work in Python 3.5?
+      <http://www.snarky.ca/how-the-heck-does-async-await-work-in-python-3-5>`__
+      -- blog post by Brett Cannon
+
     * *Unix Network Programming, Volume 1: The Sockets Networking API, 3/E*
       By W. Richard Stevens, Bill Fenner, and Andrew
       M. Rudoff. Published by Addison-Wesley Professional, 2004.
