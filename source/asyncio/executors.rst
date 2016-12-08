@@ -60,9 +60,9 @@ to call multiple copies of the function with different arguments.
 	  Thread-3          blocks(4): running
 	  Thread-2          blocks(5): running
 	  Thread-1          blocks(3): done
-	  Thread-3          blocks(4): done
 	  Thread-2          blocks(5): done
-	MainThread run_blocking_tasks: results: [25, 9, 16, 4, 1, 0]
+	  Thread-3          blocks(4): done
+	MainThread run_blocking_tasks: results: [16, 4, 1, 0, 25, 9]
 	MainThread run_blocking_tasks: exiting
 
 .. {{{end}}}
@@ -92,23 +92,23 @@ demonstrate that the tasks are in fact running in separate processes.
 
 	$ python3 asyncio_executor_process.py
 	
-	PID 29894 run_blocking_tasks: starting
-	PID 29894 run_blocking_tasks: creating executor tasks
-	PID 29894 run_blocking_tasks: waiting for executor tasks
-	PID 29895          blocks(0): running
-	PID 29896          blocks(1): running
-	PID 29897          blocks(2): running
-	PID 29896          blocks(1): done
-	PID 29895          blocks(0): done
-	PID 29897          blocks(2): done
-	PID 29896          blocks(3): running
-	PID 29895          blocks(4): running
-	PID 29897          blocks(5): running
-	PID 29896          blocks(3): done
-	PID 29897          blocks(5): done
-	PID 29895          blocks(4): done
-	PID 29894 run_blocking_tasks: results: [1, 25, 4, 16, 0, 9]
-	PID 29894 run_blocking_tasks: exiting
+	PID 16429 run_blocking_tasks: starting
+	PID 16429 run_blocking_tasks: creating executor tasks
+	PID 16429 run_blocking_tasks: waiting for executor tasks
+	PID 16430          blocks(0): running
+	PID 16431          blocks(1): running
+	PID 16432          blocks(2): running
+	PID 16430          blocks(0): done
+	PID 16432          blocks(2): done
+	PID 16431          blocks(1): done
+	PID 16430          blocks(3): running
+	PID 16432          blocks(4): running
+	PID 16431          blocks(5): running
+	PID 16431          blocks(5): done
+	PID 16432          blocks(4): done
+	PID 16430          blocks(3): done
+	PID 16429 run_blocking_tasks: results: [4, 0, 16, 1, 9, 25]
+	PID 16429 run_blocking_tasks: exiting
 
 .. {{{end}}}
 
