@@ -21,7 +21,7 @@ TARGETS = [
 
 async def main(loop, targets):
     for target in targets:
-        info = await event_loop.getaddrinfo(
+        info = await loop.getaddrinfo(
             *target,
             proto=socket.IPPROTO_TCP,
         )

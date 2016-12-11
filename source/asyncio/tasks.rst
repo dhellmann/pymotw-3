@@ -67,7 +67,7 @@ loop. The result is a :class:`CancelledError` exception from
 	creating task
 	canceling task
 	canceled task <Task cancelling coro=<task_func() running at
-	asyncio_cancel_task.py:13>>
+	asyncio_cancel_task.py:12>>
 	caught error from canceled task
 
 .. {{{end}}}
