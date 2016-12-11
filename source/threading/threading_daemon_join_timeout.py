@@ -35,6 +35,6 @@ t = threading.Thread(name='non-daemon', target=non_daemon)
 d.start()
 t.start()
 
-d.join(1)
+d.join(0.1)
 print('d.isAlive()', d.isAlive())
 t.join()

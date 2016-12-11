@@ -215,8 +215,7 @@ returns.
 	(daemon    ) Starting
 	(non-daemon) Starting
 	(non-daemon) Exiting
-	(daemon    ) Exiting
-	d.isAlive() False
+	d.isAlive() True
 
 .. {{{end}}}
 
