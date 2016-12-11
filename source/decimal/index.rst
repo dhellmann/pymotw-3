@@ -32,8 +32,9 @@ representation.
 
 The floating point value of ``0.1`` is not represented as an exact
 value in binary, so the representation as a :class:`float` is
-different from the :class:`Decimal` value.  It is truncated to 25
-characters in this output.
+different from the :class:`Decimal` value.  The full string
+representation is truncated to 25 characters in the last line of this
+output.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'decimal_create.py'))
@@ -78,6 +79,49 @@ then turned back into a :class:`Decimal` instance later.
 	Decimal: -0.11
 
 .. {{{end}}}
+
+Formatting
+==========
+
+``Decimal`` responds to Python's `string formatting protocol`_, using
+the same syntax and options as other numerical types.
+
+.. _string formatting protocol: https://docs.python.org/3.5/library/string.html#formatspec
+
+.. literalinclude:: decimal_format.py
+   :caption:
+   :start-after: #end_pymotw_header
+
+The format strings can control the width of the output, the precision
+(number of significant digits), and how to pad the value to fill the
+width.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'decimal_format.py'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3 decimal_format.py
+	
+	Precision:
+	1
+	1.1
+	1.10
+	1.10000000000000009
+	
+	Width and precision combined:
+	  1.1     1
+	 1.10   1.1
+	 1.10   1.1
+	
+	Zero padding:
+	00001
+	001.1
+	01.10
+
+.. {{{end}}}
+
 
 
 Arithmetic
