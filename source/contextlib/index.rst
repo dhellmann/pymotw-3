@@ -75,7 +75,7 @@ returned by :func:`__enter__`, which is not necessarily the
 	
 	Context.__init__()
 	Context.__enter__()
-	WithinContext.__init__(<__main__.Context object at 0x1007b1978>)
+	WithinContext.__init__(<__main__.Context object at 0x1007b1c50>)
 	WithinContext.do_something()
 	Context.__exit__()
 	WithinContext.__del__
@@ -107,16 +107,16 @@ re-raised after :func:`__exit__` returns.
 	__exit__()
 	  exc_type = <class 'RuntimeError'>
 	  exc_val  = error message handled
-	  exc_tb   = <traceback object at 0x101bbeb88>
+	  exc_tb   = <traceback object at 0x10115cc88>
 	
 	__init__(False)
 	__enter__()
 	__exit__()
 	  exc_type = <class 'RuntimeError'>
 	  exc_val  = error message propagated
-	  exc_tb   = <traceback object at 0x101bbeb88>
+	  exc_tb   = <traceback object at 0x10115cc88>
 	Traceback (most recent call last):
-	  File "contextlib_api_error.py", line 34, in <module>
+	  File "contextlib_api_error.py", line 33, in <module>
 	    raise RuntimeError('error message propagated')
 	RuntimeError: error message propagated
 
@@ -496,6 +496,7 @@ any other context managers.
 	  PassError(2): entering
 	  PassError(2): exiting
 	  HandleError(1): exiting False
+	  outside of stack, any errors were handled
 	
 	Error at the end of the context stack:
 	  HandleError(1): entering
@@ -505,6 +506,7 @@ any other context managers.
 	  HandleError(2): handling exception RuntimeError('from 3',)
 	  HandleError(2): exiting True
 	  HandleError(1): exiting False
+	  outside of stack, any errors were handled
 	
 	Error in the middle of the context stack:
 	  HandleError(1): entering
@@ -517,6 +519,7 @@ any other context managers.
 	  PassError(2): exiting
 	  HandleError(1): handling exception RuntimeError('from 3',)
 	  HandleError(1): exiting True
+	  outside of stack, any errors were handled
 	
 	Error ignored:
 	  PassError(1): entering

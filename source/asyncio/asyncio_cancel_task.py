@@ -16,7 +16,7 @@ async def task_func():
 
 async def main(loop):
     print('creating task')
-    task = event_loop.create_task(task_func())
+    task = loop.create_task(task_func())
 
     print('canceling task')
     task.cancel()

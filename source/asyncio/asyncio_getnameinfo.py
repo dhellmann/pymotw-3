@@ -20,7 +20,7 @@ TARGETS = [
 
 async def main(loop, targets):
     for target in targets:
-        info = await event_loop.getnameinfo(target)
+        info = await loop.getnameinfo(target)
         print('{:15}: {} {}'.format(target[0], *info))
 
 

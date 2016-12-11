@@ -15,8 +15,8 @@ def callback(arg):
 
 async def main(loop):
     print('registering callbacks')
-    event_loop.call_soon(callback, 1)
-    event_loop.call_soon(callback, 2)
+    loop.call_soon(callback, 1)
+    loop.call_soon(callback, 2)
 
     await asyncio.sleep(0.1)
 

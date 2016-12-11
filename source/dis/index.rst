@@ -445,6 +445,7 @@ program and the amount of time it takes to run.
 	        >>   85 POP_BLOCK
 	        >>   86 LOAD_CONST               0 (None)
 	             89 RETURN_VALUE
+
 	TIME: 0.0568
 
 The previous output shows ``dis_slow_loop.py`` taking 0.0568 seconds
@@ -503,6 +504,7 @@ some overhead, but not a significant amount.
 	        >>   40 POP_BLOCK
 	        >>   41 LOAD_CONST               0 (None)
 	             44 RETURN_VALUE
+
 	TIME: 0.0567
 
 The performance can be improved further by moving the lookup for
@@ -553,6 +555,7 @@ is down to 0.0473 seconds.
 	        >>   46 POP_BLOCK
 	        >>   47 LOAD_CONST               0 (None)
 	             50 RETURN_VALUE
+
 	TIME: 0.0473
 
 A further optimization, suggested by Brandon Rhodes, is to eliminate
@@ -609,6 +612,7 @@ The :mod:`itertools` version takes only 0.0332 seconds to run, about
 	             49 STORE_ATTR               4 (by_letter)
 	             52 LOAD_CONST               0 (None)
 	             55 RETURN_VALUE
+
 	TIME: 0.0332
 
 
