@@ -39,23 +39,24 @@ async def run_blocking_tasks(executor):
     log.info('exiting')
 
 
-# Configure logging to show the name of the thread where the log
-# message originates.
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(threadName)10s %(name)18s: %(message)s',
-    stream=sys.stderr,
-)
-
-# Create a limited thread pool.
-executor = concurrent.futures.ThreadPoolExecutor(
-    max_workers=3,
-)
-
-event_loop = asyncio.get_event_loop()
-try:
-    event_loop.run_until_complete(
-        run_blocking_tasks(executor)
+if __name__ == '__main__':
+    # Configure logging to show the name of the thread
+    # where the log message originates.
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(threadName)10s %(name)18s: %(message)s',
+        stream=sys.stderr,
     )
-finally:
-    event_loop.close()
+
+    # Create a limited thread pool.
+    executor = concurrent.futures.ThreadPoolExecutor(
+        max_workers=3,
+    )
+
+    event_loop = asyncio.get_event_loop()
+    try:
+        event_loop.run_until_complete(
+            run_blocking_tasks(executor)
+        )
+    finally:
+        event_loop.close()

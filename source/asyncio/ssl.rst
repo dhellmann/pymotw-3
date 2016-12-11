@@ -39,14 +39,14 @@ Similar changes are needed in the client. The old version uses
 :func:`open_connection` to create the socket connected to the server.
 
 .. literalinclude:: asyncio_echo_client_coroutine.py
-   :lines: 27-28
+   :lines: 26
 
 An :class:`SSLContext` is needed again to secure the client-side of
 the socket. Client identity is not being enforced, so only the
 certificate needs to be loaded.
 
 .. literalinclude:: asyncio_echo_client_ssl.py
-   :lines: 27-34,37-38
+   :lines: 26-33,36-37
 
 One other small changes is needed in the client. Because the SSL
 connection does not support sending an end-of-file (EOF), the client
@@ -56,12 +56,12 @@ done.
 The old version of the client send loop uses :func:`write_eof`.
 
 .. literalinclude:: asyncio_echo_client_coroutine.py
-   :lines: 29-37
+   :lines: 28-36
 
 The new version uses :func:`close`.
 
 .. literalinclude:: asyncio_echo_client_ssl.py
-   :lines: 40-50
+   :lines: 39-49
 
 Running the server in one window, and the client in another, produces
 this output.

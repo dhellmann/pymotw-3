@@ -6,7 +6,6 @@ source/glob/dir
 /source/bz2/example.bz2
 /source/bz2/lines.bz2
 /source/cgitb/LOGS
-/source/difflib/output.diff
 .tox
 /source/csv/testout.csv
 /source/csv/testout_quoted.csv
@@ -14,7 +13,6 @@ source/glob/dir
 dist/
 /blog_posts/
 /source/random/state.dat
-/source/gettext/locale/*/LC_MESSAGES/*.mo
 /source/mailbox/example.mbox
 /source/mailbox/Example
 /source/filecmp/example

@@ -193,7 +193,6 @@ html_last_updated_fmt = '%b %d, %Y'
 # Custom sidebar templates, maps document names to template names.
 no_toc_sidebars = [
     'sidebar_book.html',
-    'sidebar_ads.html',
 ]
 html_sidebars = {
     'index': ['sidebar_subscribe.html'] + no_toc_sidebars,
@@ -204,7 +203,6 @@ html_sidebars = {
         'sidebar_lastupdated.html',
         'sidebar_nav.html',
         'sidebar_book.html',
-        'sidebar_ads.html',
         'sidebar_examples.html',
     ],
 }
