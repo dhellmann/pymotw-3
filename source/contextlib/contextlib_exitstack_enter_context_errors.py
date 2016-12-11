@@ -14,6 +14,7 @@ def variable_stack(contexts):
     with contextlib.ExitStack() as stack:
         for c in contexts:
             stack.enter_context(c)
+    print('  outside of stack, any errors were handled')
 
 
 print('No errors:')
