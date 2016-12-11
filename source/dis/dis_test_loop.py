@@ -18,7 +18,7 @@ module = __import__(module_name)
 Dictionary = module.Dictionary
 
 dis.dis(Dictionary.load_data)
-print
+print()
 t = timeit.Timer(
     'd = Dictionary(words)',
     textwrap.dedent("""
