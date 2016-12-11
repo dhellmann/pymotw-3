@@ -7,7 +7,6 @@
 """
 
 #end_pymotw_header
-
 class Context:
 
     def __init__(self):
