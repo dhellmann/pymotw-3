@@ -18,30 +18,34 @@ computer.
 Creating Environments
 =====================
 
-The command line interface to ``venv`` depends on how Python was
-compiled and installed. The ``pyvenv`` command is the simplest
-interface
+The primary command line interface to ``venv`` relies on Python's
+ability to run a "main" function in a module using the ``-m`` option.
 
 .. {{{cog
+.. INTERP='/Library/Frameworks/Python.framework/Versions/3.5/bin/python3'
+.. def _elide_framework(infile, line):
+..     line = line.replace('/Library/Frameworks/Python.framework/Versions/3.5/bin/', '')
+..     return line
+.. CLEAN=[_elide_framework]
+.. run_script(cog.inFile, 'rm -f pyvenv.cfg', interpreter='')
 .. run_script(cog.inFile, 'rm -rf /tmp/demoenv', interpreter='')
-.. cog.out(run_script(cog.inFile, 'pyvenv /tmp/demoenv', interpreter=''))
+.. cog.out(run_script(cog.inFile, '-m venv /tmp/demoenv', interpreter=INTERP, line_cleanups=CLEAN))
 .. }}}
 
 .. code-block:: none
 
-	$ pyvenv /tmp/demoenv
+	$ python3 -m venv /tmp/demoenv
 	
 
 .. {{{end}}}
 
-If ``pyvenv`` is not installed or not on the shell search path,
-it is possible to run the ``venv`` module using the interpreter's
-``-m`` option. The following command has the same effect as the
-previous example.
+A separate ``pyvenv`` command line application may be installed,
+depending on how the Python interpreter was built and packaged. The
+following command has the same effect as the previous example.
 
 .. code-block:: none
 
-	$ python3 -m venv /tmp/demoenv
+	$ pyvenv /tmp/demoenv
 
 Contents of a Virtual Environment
 =================================
@@ -92,7 +96,6 @@ convenient.
 	pip3.5*
 	python@
 	python3@
-	python3.5@
 
 .. {{{end}}}
 
@@ -142,8 +145,9 @@ create two virtual environments.
 .. # Remove previous run.
 .. run_script(cog.inFile, 'rm -rf /tmp/sphinx1', interpreter='')
 .. run_script(cog.inFile, 'rm -rf /tmp/sphinx2', interpreter='')
-.. cog.out(run_script(cog.inFile, 'pyvenv /tmp/sphinx1', interpreter=''))
-.. cog.out(run_script(cog.inFile, 'pyvenv /tmp/sphinx2', interpreter='', include_prefix=False))
+.. cog.out(run_script(cog.inFile, '-m venv /tmp/sphinx1', interpreter=INTERP, line_cleanups=CLEAN))
+.. cog.out(run_script(cog.inFile, '-m venv /tmp/sphinx2', interpreter=INTERP, line_cleanups=CLEAN,
+..                    include_prefix=False))
 .. # Upgrade pip to avoid warnings.
 .. run_script(cog.inFile, '/tmp/sphinx1/bin/pip install -U pip', interpreter='')
 .. run_script(cog.inFile, '/tmp/sphinx2/bin/pip install -U pip', interpreter='')
@@ -151,10 +155,10 @@ create two virtual environments.
 
 .. code-block:: none
 
-	$ pyvenv /tmp/sphinx1
+	$ python3 -m venv /tmp/sphinx1
 	
 
-	$ pyvenv /tmp/sphinx2
+	$ python3 -m venv /tmp/sphinx2
 	
 
 .. {{{end}}}
@@ -189,19 +193,16 @@ The install the versions of the tools to test.
 	Collecting sphinx-rtd-theme<2.0,>=0.1 (from Sphinx==1.3.6)
 	  Using cached sphinx_rtd_theme-0.1.9-py3-none-any.whl
 	Collecting docutils>=0.11 (from Sphinx==1.3.6)
+	  Using cached docutils-0.13.1-py3-none-any.whl
 	Collecting MarkupSafe (from Jinja2>=2.3->Sphinx==1.3.6)
-	  Using cached MarkupSafe-0.23.tar.gz
 	Collecting pytz>=0a (from babel!=2.0,>=1.3->Sphinx==1.3.6)
-	  Using cached pytz-2016.6.1-py2.py3-none-any.whl
+	  Using cached pytz-2016.10-py2.py3-none-any.whl
 	Installing collected packages: MarkupSafe, Jinja2, Pygments,
 	pytz, babel, snowballstemmer, alabaster, six, sphinx-rtd-theme,
 	docutils, Sphinx
-	  Running setup.py install for MarkupSafe: started
-	    Running setup.py install for MarkupSafe: finished with
-	status 'done'
 	Successfully installed Jinja2-2.8 MarkupSafe-0.23 Pygments-2.1.3
-	Sphinx-1.3.6 alabaster-0.7.9 babel-2.3.4 docutils-0.12
-	pytz-2016.6.1 six-1.10.0 snowballstemmer-1.2.1 sphinx-rtd-
+	Sphinx-1.3.6 alabaster-0.7.9 babel-2.3.4 docutils-0.13.1
+	pytz-2016.10 six-1.10.0 snowballstemmer-1.2.1 sphinx-rtd-
 	theme-0.1.9
 
 	$ /tmp/sphinx2/bin/pip install Sphinx==1.4.4
@@ -223,19 +224,16 @@ The install the versions of the tools to test.
 	Collecting six>=1.4 (from Sphinx==1.4.4)
 	  Using cached six-1.10.0-py2.py3-none-any.whl
 	Collecting docutils>=0.11 (from Sphinx==1.4.4)
+	  Using cached docutils-0.13.1-py3-none-any.whl
 	Collecting MarkupSafe (from Jinja2>=2.3->Sphinx==1.4.4)
-	  Using cached MarkupSafe-0.23.tar.gz
 	Collecting pytz>=0a (from babel!=2.0,>=1.3->Sphinx==1.4.4)
-	  Using cached pytz-2016.6.1-py2.py3-none-any.whl
+	  Using cached pytz-2016.10-py2.py3-none-any.whl
 	Installing collected packages: MarkupSafe, Jinja2, imagesize,
 	Pygments, pytz, babel, snowballstemmer, alabaster, six,
 	docutils, Sphinx
-	  Running setup.py install for MarkupSafe: started
-	    Running setup.py install for MarkupSafe: finished with
-	status 'done'
 	Successfully installed Jinja2-2.8 MarkupSafe-0.23 Pygments-2.1.3
-	Sphinx-1.4.4 alabaster-0.7.9 babel-2.3.4 docutils-0.12
-	imagesize-0.7.1 pytz-2016.6.1 six-1.10.0 snowballstemmer-1.2.1
+	Sphinx-1.4.4 alabaster-0.7.9 babel-2.3.4 docutils-0.13.1
+	imagesize-0.7.1 pytz-2016.10 six-1.10.0 snowballstemmer-1.2.1
 
 .. {{{end}}}
 
