@@ -30,20 +30,17 @@ Inspecting Modules
 ==================
 
 The first kind of introspection probes live objects to learn about
-them. For example, it is possible to discover the classes and
-functions in a module, the methods of a class, etc.
+them. Use :func:`getmembers` to discover the member attributes of
+object.  The types of members that might be returned depend on the
+type of object scanned. Modules can contain classes and functions;
+classes can contain methods and attributes; and so on.
 
-To probe live objects to determine their components, use
-:func:`getmembers`. The arguments are an object to scan (a module,
+The arguments to :func:`getmembers` are an object to scan (a module,
 class, or instance) and an optional predicate function that is used to
 filter the objects returned. The return value is a list of tuples with
 two values: the name of the member, and the type of the member. The
 ``inspect`` module includes several such predicate functions with
 names like :func:`ismodule`, :func:`isclass`, etc.
-
-The types of members that might be returned depend on the type of
-object scanned. Modules can contain classes and functions; classes can
-contain methods and attributes; and so on.
 
 .. literalinclude:: inspect_getmembers_module.py
     :caption:
