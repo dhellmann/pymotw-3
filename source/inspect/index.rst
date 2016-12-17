@@ -66,9 +66,9 @@ actually part of the module and the list is long.
 	
 	A : <class 'example.A'>
 	B : <class 'example.B'>
-	instance_of_a : <example.A object at 0x1013b1358>
+	instance_of_a : <example.A object at 0x1011814a8>
 	module_level_function : <function module_level_function at
-	0x101395620>
+	0x10118bc80>
 
 .. {{{end}}}
 
@@ -125,12 +125,12 @@ methods, slots, and other members of the class.
 	objects>,
 	                '__doc__': 'The A class.',
 	                '__init__': <function A.__init__ at
-	0x10146ae18>,
+	0x1014a8510>,
 	                '__module__': 'example',
 	                '__weakref__': <attribute '__weakref__' of 'A'
 	objects>,
 	                'get_name': <function A.get_name at
-	0x10146aea0>})),
+	0x1014a8598>})),
 	 ('__dir__', <method '__dir__' of 'object' objects>),
 	 ('__doc__', 'The A class.'),
 	 ('__eq__', <slot wrapper '__eq__' of 'object' objects>),
@@ -140,13 +140,13 @@ methods, slots, and other members of the class.
 	  <slot wrapper '__getattribute__' of 'object' objects>),
 	 ('__gt__', <slot wrapper '__gt__' of 'object' objects>),
 	 ('__hash__', <slot wrapper '__hash__' of 'object' objects>),
-	 ('__init__', <function A.__init__ at 0x10146ae18>),
+	 ('__init__', <function A.__init__ at 0x1014a8510>),
 	 ('__le__', <slot wrapper '__le__' of 'object' objects>),
 	 ('__lt__', <slot wrapper '__lt__' of 'object' objects>),
 	 ('__module__', 'example'),
 	 ('__ne__', <slot wrapper '__ne__' of 'object' objects>),
 	 ('__new__',
-	  <built-in method __new__ of type object at 0x100229960>),
+	  <built-in method __new__ of type object at 0x10022bb20>),
 	 ('__reduce__', <method '__reduce__' of 'object' objects>),
 	 ('__reduce_ex__', <method '__reduce_ex__' of 'object'
 	objects>),
@@ -157,9 +157,9 @@ methods, slots, and other members of the class.
 	 ('__str__', <slot wrapper '__str__' of 'object' objects>),
 	 ('__subclasshook__',
 	  <built-in method __subclasshook__ of type object at
-	0x10070e278>),
+	0x10044d128>),
 	 ('__weakref__', <attribute '__weakref__' of 'A' objects>),
-	 ('get_name', <function A.get_name at 0x10146aea0>)]
+	 ('get_name', <function A.get_name at 0x1014a8598>)]
 
 .. {{{end}}}
 
@@ -181,8 +181,8 @@ Only unbound methods are returned now.
 
 	$ python3 inspect_getmembers_class_methods.py
 	
-	[('__init__', <function A.__init__ at 0x101b77e18>),
-	 ('get_name', <function A.get_name at 0x101b77ea0>)]
+	[('__init__', <function A.__init__ at 0x10129d510>),
+	 ('get_name', <function A.get_name at 0x10129d598>)]
 
 .. {{{end}}}
 
@@ -205,9 +205,9 @@ identified as being methods of :class:`B`.
 
 	$ python3 inspect_getmembers_class_methods_b.py
 	
-	[('__init__', <function A.__init__ at 0x101497e18>),
-	 ('do_something', <function B.do_something at 0x101497f28>),
-	 ('get_name', <function B.get_name at 0x101491048>)]
+	[('__init__', <function A.__init__ at 0x10148e510>),
+	 ('do_something', <function B.do_something at 0x10148e620>),
+	 ('get_name', <function B.get_name at 0x10148e6a8>)]
 
 .. {{{end}}}
 
@@ -232,9 +232,9 @@ The predicate :func:`ismethod` recognizes two bound methods from
 	$ python3 inspect_getmembers_instance.py
 	
 	[('__init__', <bound method A.__init__ of <example.A object at 0
-	x1018b21d0>>),
+	x101ab1ba8>>),
 	 ('get_name', <bound method A.get_name of <example.A object at 0
-	x1018b21d0>>)]
+	x101ab1ba8>>)]
 
 .. {{{end}}}
 
@@ -625,45 +625,57 @@ The Stack and Frames
 
 In addition to introspection of code objects, ``inspect`` includes
 functions for inspecting the runtime environment while a program is
-being executed. Most of these functions work with the call stack, and operate
-on "call frames." Each frame record in the stack is a six element
-tuple containing the frame object, the filename where the code exists,
-the line number in that file for the current line being run, the
-function name being called, a list of lines of context from the source
-file, and the index into that list of the current line. Typically such
-information is used to build tracebacks when exceptions are raised. It
-can also be useful for logging or when debugging programs, since the
-stack frames can be interrogated to discover the argument values
-passed into the functions.
+being executed. Most of these functions work with the call stack, and
+operate on "call frames." Frame objects hold the current execution
+context, including references to the code being run, the operation
+being executed, as well as the values of local and global variables.
+Typically such information is used to build tracebacks when exceptions
+are raised. It can also be useful for logging or when debugging
+programs, since the stack frames can be interrogated to discover the
+argument values passed into the functions.
 
 :func:`currentframe` returns the frame at the top of the stack (for
-the current function). :func:`getargvalues` returns a tuple with
-argument names, the names of the variable arguments, and a dictionary
-with local values from the frame. Combining them shows the arguments
-to functions and local variables at different points in the call
-stack.
+the current function).
 
-.. literalinclude:: inspect_getargvalues.py
+.. literalinclude:: inspect_currentframe.py
     :caption:
     :start-after: #end_pymotw_header
 
-The value for :data:`local_variable` is included in the frame's local
-variables even though it is not an argument to the function.
+The values of the arguments to ``recurse()`` are included in the
+frame's dictionary of local variables.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'inspect_getargvalues.py', break_lines_at=55))
+.. cog.out(run_script(cog.inFile, 'inspect_currentframe.py', line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
 
-	$ python3 inspect_getargvalues.py
+	$ python3 inspect_currentframe.py
 	
-	2 ArgInfo(args=['limit'], varargs=None, keywords=None, 
-	locals={'local_variable': '..', 'limit': 2})
-	1 ArgInfo(args=['limit'], varargs=None, keywords=None, 
-	locals={'local_variable': '.', 'limit': 1})
-	0 ArgInfo(args=['limit'], varargs=None, keywords=None, 
-	locals={'local_variable': '', 'limit': 0})
+	line 14 of inspect_currentframe.py
+	locals:
+	{'frame': <frame object at 0x1010c7b88>,
+	 'keyword': 'changed value of argument',
+	 'kwonly': 'must be named',
+	 'limit': 2,
+	 'local_variable': '..'}
+	
+	line 14 of inspect_currentframe.py
+	locals:
+	{'frame': <frame object at 0x1011018c8>,
+	 'keyword': 'changed value of argument',
+	 'kwonly': 'must be named',
+	 'limit': 1,
+	 'local_variable': '.'}
+	
+	line 14 of inspect_currentframe.py
+	locals:
+	{'frame': <frame object at 0x101104e28>,
+	 'keyword': 'changed value of argument',
+	 'kwonly': 'must be named',
+	 'limit': 0,
+	 'local_variable': ''}
+	
 
 .. {{{end}}}
 
@@ -688,43 +700,40 @@ The last part of the output represents the main program, outside of the
 
 	$ python3 inspect_stack.py
 	
-	inspect_stack.py[10]
+	inspect_stack.py[11]
 	  -> for level in inspect.stack():
-	ArgInfo(args=[], varargs=None, keywords=None,
-	locals={'src_index': 0, 'frame': <frame object at 0x100435a48>,
-	'line_num': 10, 'func': 'show_stack', 'level':
-	FrameInfo(frame=<frame object at 0x100435a48>,
-	filename='inspect_stack.py', lineno=10, function='show_stack',
-	code_context=['    for level in inspect.stack():\n'], index=0),
-	'src_code': ['    for level in inspect.stack():\n'], 'filename':
-	'inspect_stack.py'})
+	{'level': FrameInfo(frame=<frame object at 0x10147e5d0>,
+	filename='inspect_stack.py', lineno=11, function='show_stack',
+	code_context=['    for level in inspect.stack():\n'], index=0)}
 	
-	inspect_stack.py[25]
+	inspect_stack.py[24]
 	  -> show_stack()
-	ArgInfo(args=['limit'], varargs=None, keywords=None,
-	locals={'local_variable': '', 'limit': 0})
+	{'limit': 0, 'local_variable': ''}
 	
-	inspect_stack.py[27]
+	inspect_stack.py[26]
 	  -> recurse(limit - 1)
-	ArgInfo(args=['limit'], varargs=None, keywords=None,
-	locals={'local_variable': '.', 'limit': 1})
+	{'limit': 1, 'local_variable': '.'}
 	
-	inspect_stack.py[27]
+	inspect_stack.py[26]
 	  -> recurse(limit - 1)
-	ArgInfo(args=['limit'], varargs=None, keywords=None,
-	locals={'local_variable': '..', 'limit': 2})
+	{'limit': 2, 'local_variable': '..'}
 	
-	inspect_stack.py[31]
+	inspect_stack.py[30]
 	  -> recurse(2)
-	ArgInfo(args=[], varargs=None, keywords=None,
-	locals={'__cached__': None, '__package__': None, '__builtins__':
-	<module 'builtins' (built-in)>, 'show_stack': <function
-	show_stack at 0x101857f28>, 'recurse': <function recurse at
-	0x101c83620>, '__name__': '__main__', '__loader__':
-	<_frozen_importlib_external.SourceFileLoader object at
-	0x1018aa828>, '__file__': 'inspect_stack.py', 'inspect': <module
-	'inspect' from '.../lib/python3.5/inspect.py'>, '__doc__':
-	'Inspecting the call stack.\n', '__spec__': None})
+	{'__builtins__': <module 'builtins' (built-in)>,
+	 '__cached__': None,
+	 '__doc__': 'Inspecting the call stack.\n',
+	 '__file__': 'inspect_stack.py',
+	 '__loader__': <_frozen_importlib_external.SourceFileLoader
+	object at 0x1007a97f0>,
+	 '__name__': '__main__',
+	 '__package__': None,
+	 '__spec__': None,
+	 'inspect': <module 'inspect' from
+	'.../lib/python3.5/inspect.py'>,
+	 'pprint': <module 'pprint' from '.../lib/python3.5/pprint.py'>,
+	 'recurse': <function recurse at 0x1014aa400>,
+	 'show_stack': <function show_stack at 0x1007a6a60>}
 	
 
 .. {{{end}}}
@@ -758,7 +767,7 @@ to be printed instead of the source.
 	Origin: .../example.py
 	Cached: .../__pycache__/example.cpython-35.pyc
 	Loader: <_frozen_importlib_external.SourceFileLoader object at 0
-	x101d25668>
+	x101518860>
 	
 	
 
