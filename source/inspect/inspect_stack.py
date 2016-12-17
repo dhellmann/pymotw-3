@@ -4,18 +4,17 @@
 
 #end_pymotw_header
 import inspect
+import pprint
 
 
 def show_stack():
     for level in inspect.stack():
-        (frame, filename, line_num,
-         func, src_code, src_index) = level
         print('{}[{}]\n  -> {}'.format(
-            filename,
-            line_num,
-            src_code[src_index].strip(),
+            level.frame.f_code.co_filename,
+            level.lineno,
+            level.code_context[level.index].strip(),
         ))
-        print(inspect.getargvalues(frame))
+        pprint.pprint(level.frame.f_locals)
         print()
 
 
