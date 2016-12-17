@@ -623,7 +623,7 @@ The Stack and Frames
 In addition to introspection of code objects, ``inspect`` includes
 functions for inspecting the runtime environment while a program is
 being executed. Most of these functions work with the call stack, and
-operate on "call frames." Frame objects hold the current execution
+operate on *call frames*. Frame objects hold the current execution
 context, including references to the code being run, the operation
 being executed, as well as the values of local and global variables.
 Typically such information is used to build tracebacks when exceptions
