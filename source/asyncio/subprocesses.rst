@@ -122,15 +122,15 @@ can be used to manipulate the subprocess or communicate with it.
 In this example, ``df`` does not need any input other than its command
 line arguments, so the next step is to read all of the output. With
 the :class:`Protocol` there is no control over how much data is read
-at a time. This example uses :func:`readline` but it could also call
-:func:`read` directly to read data that is not line-oriented. The
+at a time. This example uses ``readline()`` but it could also call
+``read()`` directly to read data that is not line-oriented. The
 output of the command is buffered, as with the protocol example, so it
 can be parsed later.
 
 .. literalinclude:: asyncio_subprocess_coroutine.py
    :lines: 44-50
 
-The :func:`readline` method returns an empty byte string when there is
+The ``readline()`` method returns an empty byte string when there is
 no more output because the program has finished. To ensure the process
 is cleaned up properly, the next step is to wait for the process to
 exit fully.
