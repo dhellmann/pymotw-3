@@ -100,7 +100,7 @@ If the DNS configuration of the current system includes one or more
 domains in the search, the name argument does not need to be a fully
 qualified name (i.e., it does not need to include the domain name as
 well as the base hostname).  If the name cannot be found, an exception
-of type :class:`socket.error` is raised.
+of type ``socket.error`` is raised.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'socket_gethostbyname.py', line_break_mode='wrap'))
@@ -390,8 +390,8 @@ Without the flag, the canonical name value is left empty.
 IP Address Representations
 ==========================
 
-Network programs written in C use the data type :class:`struct
-sockaddr` to represent IP addresses as binary values (instead of the
+Network programs written in C use the data type ``struct
+sockaddr`` to represent IP addresses as binary values (instead of the
 string addresses usually found in Python programs).  To convert IPv4
 addresses between the Python representation and the C representation,
 use :func:`inet_aton` and :func:`inet_ntoa`.

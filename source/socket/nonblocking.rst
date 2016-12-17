@@ -2,7 +2,7 @@
  Non-blocking Communication and Timeouts
 =========================================
 
-By default, a :class:`socket` is configured so that sending or
+By default, a ``socket`` is configured so that sending or
 receiving data *blocks*, stopping program execution until the socket
 is ready.  Calls to :func:`send` wait for buffer space to be available
 for the outgoing data, and calls to :func:`recv` wait for the other
@@ -20,10 +20,10 @@ Use the :func:`setblocking` method to change the blocking flag for a
 socket.  The default value is ``1``, which means to block.  Passing a
 value of ``0`` turns off blocking.  If the socket is has blocking
 turned off and it is not ready for the operation, then
-:class:`socket.error` is raised.
+``socket.error`` is raised.
 
 A compromise solution is to set a timeout value for socket operations.
-Use :func:`settimeout` to change the timeout of a :class:`socket` to a
+Use :func:`settimeout` to change the timeout of a ``socket`` to a
 floating point value representing the number of seconds to block
 before deciding the socket is not ready for the operation.  When the
 timeout expires, a :class:`timeout` exception is raised.

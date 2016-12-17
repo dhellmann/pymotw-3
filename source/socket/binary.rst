@@ -19,7 +19,7 @@ When sending multi-byte binary data between two systems, it is
 important to ensure that both sides of the connection know what order
 the bytes are in and how to assemble them back into the correct order
 for the local architecture.  The server program uses the same
-:class:`Struct` specifier to unpack the bytes it receives so they are
+``Struct`` specifier to unpack the bytes it receives so they are
 interpreted in the correct order.
 
 .. literalinclude:: socket_binary_server.py

@@ -42,7 +42,7 @@ even in the event of an error.
 Echo Client
 ===========
 
-The client program sets up its :class:`socket` differently from the
+The client program sets up its ``socket`` differently from the
 way a server does.  Instead of binding to a port and listening, it
 uses :func:`connect` to attach the socket directly to the remote
 address.
@@ -52,7 +52,7 @@ address.
    :start-after: #end_pymotw_header
 
 After the connection is established, data can be sent through the
-:class:`socket` with :func:`sendall` and received with :func:`recv`,
+``socket`` with :func:`sendall` and received with :func:`recv`,
 just as in the server. When the entire message is sent and a copy
 received, the socket is closed to free up the port.
 
@@ -110,10 +110,10 @@ and derives the best address to use for the connection.
    :start-after: #end_pymotw_header
 
 :func:`create_connection` uses :func:`getaddrinfo` to find candidate
-connection parameters, and returns a :class:`socket` opened with the
+connection parameters, and returns a ``socket`` opened with the
 first configuration that creates a successful connection.  The
 :attr:`family`, :attr:`type`, and :attr:`proto` attributes can be
-examined to determine the type of :class:`socket` being returned.
+examined to determine the type of ``socket`` being returned.
 
 .. NOT RUNNING
 
