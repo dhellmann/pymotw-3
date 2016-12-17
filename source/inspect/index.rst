@@ -740,8 +740,8 @@ The last part of the output represents the main program, outside of the
 
 There are other functions for building lists of frames in different
 contexts, such as when an exception is being processed. See the
-documentation for :func:`trace`, :func:`getouterframes`, and
-:func:`getinnerframes` for more details.
+documentation for ``trace()``, ``getouterframes()``, and
+``getinnerframes()`` for more details.
 
 Command Line Interface
 ======================
