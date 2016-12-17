@@ -31,7 +31,7 @@ because each process is competing for access to the output stream.
 
 
 It usually more useful to be able to spawn a process with arguments to
-tell it what work to do.  Unlike with :mod:`threading`, in order to pass
+tell it what work to do.  Unlike with ``threading``, in order to pass
 arguments to a ``multiprocessing`` :class:`Process` the arguments
 must be able to be serialized using :mod:`pickle`.  This example
 passes each worker a number to be printed.
@@ -61,7 +61,7 @@ The integer argument is now included in the message printed by each worker:
 Importable Target Functions
 ===========================
 
-One difference between the :mod:`threading` and ``multiprocessing``
+One difference between the ``threading`` and ``multiprocessing``
 examples is the extra protection for ``__main__`` used in the
 ``multiprocessing`` examples.  Due to the way the new processes are
 started, the child process needs to be able to import the script
@@ -371,7 +371,7 @@ handlers), use :func:`get_logger`.
     :caption:
     :start-after: #end_pymotw_header
 
-The logger can also be configured through the :mod:`logging`
+The logger can also be configured through the ``logging``
 configuration file API, using the name ``multiprocessing``.
 
 .. {{{cog
