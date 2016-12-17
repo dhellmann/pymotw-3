@@ -26,66 +26,20 @@ The rest of the examples for this section use this example file,
     :caption:
     :start-after: #!/usr/bin/env python3
 
-Module Information
+Inspecting Modules
 ==================
 
 The first kind of introspection probes live objects to learn about
 them. For example, it is possible to discover the classes and
 functions in a module, the methods of a class, etc.
 
-To determine how the interpreter will treat and load a file as a
-module, use :func:`getmoduleinfo`. Pass a filename as the only
-argument, and the return value is a :class:`tuple` including the
-module base name, the suffix of the file, the mode that will be used
-for reading the file, and the module type as defined in the :mod:`imp`
-module. It is important to note that the function looks only at the
-file's name, and does not actually check if the file exists or try to
-read the file.
-
-.. literalinclude:: inspect_getmoduleinfo.py
-    :caption:
-    :start-after: #end_pymotw_header
-
-Here are a few sample runs:
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, 'inspect_getmoduleinfo.py example.py'))
-.. cog.out(run_script(cog.inFile, 'inspect_getmoduleinfo.py readme.txt', include_prefix=False))
-.. cog.out(run_script(cog.inFile, 'inspect_getmoduleinfo.py notthere.pyc', include_prefix=False))
-.. }}}
-
-.. code-block:: none
-
-	$ python3 inspect_getmoduleinfo.py example.py
-	
-	NAME   : example
-	SUFFIX : .py
-	MODE   : r 
-	MTYPE  : source
-
-	$ python3 inspect_getmoduleinfo.py readme.txt
-	
-	Could not determine module type of readme.txt
-
-	$ python3 inspect_getmoduleinfo.py notthere.pyc
-	
-	NAME   : notthere
-	SUFFIX : .pyc
-	MODE   : rb (read-binary)
-	MTYPE  : compiled
-
-.. {{{end}}}
-
-Inspecting Modules
-==================
-
-It is possible to probe live objects to determine their components
-using :func:`getmembers`. The arguments are an object to scan (a
-module, class, or instance) and an optional predicate function that is
-used to filter the objects returned. The return value is a list of
-tuples with two values: the name of the member, and the type of the
-member. The ``inspect`` module includes several such predicate
-functions with names like :func:`ismodule`, :func:`isclass`, etc.
+To probe live objects to determine their components, use
+:func:`getmembers`. The arguments are an object to scan (a module,
+class, or instance) and an optional predicate function that is used to
+filter the objects returned. The return value is a list of tuples with
+two values: the name of the member, and the type of the member. The
+``inspect`` module includes several such predicate functions with
+names like :func:`ismodule`, :func:`isclass`, etc.
 
 The types of members that might be returned depend on the type of
 object scanned. Modules can contain classes and functions; classes can
