@@ -1,4 +1,3 @@
--f /Users/dhellmann/.pip/wheelhouse
 alabaster==0.7.9
 Babel==2.3.4
 cogapp==2.5
