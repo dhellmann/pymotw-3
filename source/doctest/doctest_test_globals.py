@@ -5,9 +5,7 @@
 #
 """Show the globals exposed in a test.
 """
-
 #end_pymotw_header
-
 class TestGlobals:
 
     def one(self):

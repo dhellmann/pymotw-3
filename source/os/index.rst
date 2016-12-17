@@ -75,40 +75,40 @@ This example shows a recursive directory listing.
 	$ python3 os_walk.py ../zipimport
 	
 	../zipimport
-		__init__.py
-		__pycache__/
-		example_package/
-		index.rst
-		zipimport_example.zip
-		zipimport_find_module.py
-		zipimport_get_code.py
-		zipimport_get_data.py
-		zipimport_get_data_nozip.py
-		zipimport_get_data_zip.py
-		zipimport_get_source.py
-		zipimport_is_package.py
-		zipimport_load_module.py
-		zipimport_make_example.py
+	  __init__.py
+	  __pycache__/
+	  example_package/
+	  index.rst
+	  zipimport_example.zip
+	  zipimport_find_module.py
+	  zipimport_get_code.py
+	  zipimport_get_data.py
+	  zipimport_get_data_nozip.py
+	  zipimport_get_data_zip.py
+	  zipimport_get_source.py
+	  zipimport_is_package.py
+	  zipimport_load_module.py
+	  zipimport_make_example.py
 	
 	../zipimport/__pycache__
-		__init__.cpython-35.pyc
-		zipimport_find_module.cpython-35.pyc
-		zipimport_get_code.cpython-35.pyc
-		zipimport_get_data.cpython-35.pyc
-		zipimport_get_data_nozip.cpython-35.pyc
-		zipimport_get_data_zip.cpython-35.pyc
-		zipimport_get_source.cpython-35.pyc
-		zipimport_is_package.cpython-35.pyc
-		zipimport_load_module.cpython-35.pyc
-		zipimport_make_example.cpython-35.pyc
+	  __init__.cpython-35.pyc
+	  zipimport_find_module.cpython-35.pyc
+	  zipimport_get_code.cpython-35.pyc
+	  zipimport_get_data.cpython-35.pyc
+	  zipimport_get_data_nozip.cpython-35.pyc
+	  zipimport_get_data_zip.cpython-35.pyc
+	  zipimport_get_source.cpython-35.pyc
+	  zipimport_is_package.cpython-35.pyc
+	  zipimport_load_module.cpython-35.pyc
+	  zipimport_make_example.cpython-35.pyc
 	
 	../zipimport/example_package
-		README.txt
-		__init__.py
-		__pycache__/
+	  README.txt
+	  __init__.py
+	  __pycache__/
 	
 	../zipimport/example_package/__pycache__
-		__init__.cpython-35.pyc
+	  __init__.cpython-35.pyc
 	
 
 .. {{{end}}}
@@ -193,24 +193,24 @@ installed. Try passing different filenames on the command line to
 	$ python3 os_stat.py
 	
 	os.stat(os_stat.py):
-		Size: 593
-		Permissions: 0o100644
-		Owner: 527
-		Device: 16777218
-		Created      : Sat Aug 20 17:51:31 2016
-		Last modified: Sun Jul 31 16:03:22 2016
-		Last accessed: Sat Aug 20 18:34:56 2016
+	  Size: 593
+	  Permissions: 0o100644
+	  Owner: 527
+	  Device: 16777218
+	  Created      : Sat Dec 17 12:03:26 2016
+	  Last modified: Sat Dec 17 12:03:26 2016
+	  Last accessed: Sat Dec 17 12:03:32 2016
 
 	$ python3 os_stat.py index.rst
 	
 	os.stat(index.rst):
-		Size: 26884
-		Permissions: 0o100644
-		Owner: 527
-		Device: 16777218
-		Created      : Sat Aug 20 18:12:55 2016
-		Last modified: Sat Aug 20 18:12:55 2016
-		Last accessed: Sat Aug 20 18:34:55 2016
+	  Size: 26932
+	  Permissions: 0o100644
+	  Owner: 527
+	  Device: 16777218
+	  Created      : Sat Dec 17 12:03:21 2016
+	  Last modified: Sat Dec 17 12:03:21 2016
+	  Last accessed: Sat Dec 17 12:03:31 2016
 
 .. {{{end}}}
 
@@ -629,9 +629,9 @@ accomplish the same thing.
 	$ python3 -u os_system_background.py
 	
 	Calling...
-	Sat Aug 20 18:34:57 EDT 2016
+	Sat Dec 17 12:03:32 EST 2016
 	Sleeping...
-	Sat Aug 20 18:35:00 EDT 2016
+	Sat Dec 17 12:03:35 EST 2016
 
 .. {{{end}}}
 
@@ -664,7 +664,7 @@ example is run, but it will look something like:
 
 	$ python3 -u os_fork_example.py
 	
-	Child process id: 68542
+	Child process id: 23559
 	I am the child
 
 .. {{{end}}}
@@ -702,8 +702,8 @@ the parent time to send the signal.
 	PARENT: Pausing before sending signal...
 	CHILD: Setting up signal handler
 	CHILD: Pausing to wait for signal
-	PARENT: Signaling 68545
-	Received USR1 in process 68545
+	PARENT: Signaling 23562
+	Received USR1 in process 23562
 
 .. {{{end}}}
 
@@ -772,16 +772,16 @@ status code returned by the process when it exited.
 
 	$ python3 -u os_wait_example.py
 	
-	PARENT 68558: Forking 0
-	PARENT 68558: Forking 1
+	PARENT 23613: Forking 0
+	PARENT 23613: Forking 1
 	PARENT: Waiting for 0
 	WORKER 0: Starting
 	WORKER 1: Starting
 	WORKER 0: Finishing
-	PARENT: Child done: (68559, 0)
+	PARENT: Child done: (23619, 0)
 	PARENT: Waiting for 1
 	WORKER 1: Finishing
-	PARENT: Child done: (68560, 256)
+	PARENT: Child done: (23620, 256)
 
 .. {{{end}}}
 
@@ -802,16 +802,16 @@ until that process exits.
 
 	$ python3 -u os_waitpid_example.py
 	
-	PARENT 68570: Forking 0
-	PARENT 68570: Forking 1
+	PARENT 23701: Forking 0
+	PARENT 23701: Forking 1
+	PARENT: Waiting for 23702
 	WORKER 0: Starting
-	PARENT: Waiting for 68571
 	WORKER 1: Starting
 	WORKER 0: Finishing
-	PARENT: Child done: (68571, 0)
-	PARENT: Waiting for 68572
+	PARENT: Child done: (23702, 0)
+	PARENT: Waiting for 23703
 	WORKER 1: Finishing
-	PARENT: Child done: (68572, 256)
+	PARENT: Child done: (23703, 256)
 
 .. {{{end}}}
 

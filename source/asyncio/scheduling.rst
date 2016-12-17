@@ -77,7 +77,7 @@ It is also possible to schedule a call to occur at a specific
 time. The loop uses a monotonic clock, rather than a wall-clock time,
 to ensure that the value of "now" never regresses. To choose a time
 for a scheduled callback it is necessary to start from the internal
-state of that clock using the loop's :func:`time` method.
+state of that clock using the loop's ``time()`` method.
 
 .. literalinclude:: asyncio_call_at.py
    :caption:

@@ -1,7 +1,7 @@
 .. _deque:
 
 ==============================
- Deque --- double-ended queue
+ deque --- double-ended queue
 ==============================
 
 A double-ended queue, or :class:`deque`, supports adding and removing

@@ -7,7 +7,7 @@
 
 The ``socket`` module exposes the low-level C API for communicating
 over a network using the BSD socket interface.  It includes the
-:class:`socket` class, for handling the actual data channel, and also
+``socket`` class, for handling the actual data channel, and also
 includes functions for network-related tasks such as converting a
 server's name to an address and formatting data to be sent across the
 network.

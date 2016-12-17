@@ -7,7 +7,6 @@
 """
 
 #end_pymotw_header
-
 def this_raises():
     """This function always raises an exception.
 

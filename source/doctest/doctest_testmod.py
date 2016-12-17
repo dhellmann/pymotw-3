@@ -7,7 +7,6 @@
 """
 
 #end_pymotw_header
-
 def my_function(a, b):
     """
     >>> my_function(2, 3)

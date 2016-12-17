@@ -45,7 +45,7 @@ Once the server object is instantiated, use either
 requests. The :func:`serve_forever` method calls
 :func:`handle_request` in an infinite loop, but if an application
 needs to integrate the server with another event loop or use
-:func:`select` to monitor several sockets for different servers, it
+``select()`` to monitor several sockets for different servers, it
 can call :func:`handle_request` directly.
 
 Implementing a Server

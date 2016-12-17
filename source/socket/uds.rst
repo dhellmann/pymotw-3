@@ -11,7 +11,7 @@ closed, and needs to be removed each time the server starts up.  The
 echo server example from earlier can be updated to use UDS by making a
 few changes in the setup section.
 
-The :class:`socket` needs to be created with address family
+The ``socket`` needs to be created with address family
 :const:`AF_UNIX`. Binding the socket and managing the incoming
 connections works the same as with TCP/IP sockets.
 

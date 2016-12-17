@@ -15,7 +15,7 @@ options that only work with specific variants of Unix.
 
    The new :mod:`selectors` module provides a higher-level interface
    built on top of the APIs in ``select``. It is easier to build
-   portable code using :mod:`selectors`, so use that module unless the
+   portable code using ``selectors``, so use that module unless the
    low-level APIs provided by ``select`` are somehow required.
 
 Using select()

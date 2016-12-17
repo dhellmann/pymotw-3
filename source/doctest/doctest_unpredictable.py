@@ -7,7 +7,6 @@
 """
 
 #end_pymotw_header
-
 class MyClass:
     pass
 
