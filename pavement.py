@@ -135,6 +135,7 @@ def run_script(input_file, script_name, break_lines_at=64, **kwds):
             _elide_path_prefix,
             functools.partial(_truncate_lines, c='-'),
             functools.partial(_truncate_lines, c='='),
+            functools.partial(_truncate_lines, c='*'),
         ]
     return paverutils.run_script(input_file, script_name,
                                  break_lines_at=break_lines_at,

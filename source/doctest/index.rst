@@ -139,7 +139,6 @@ into a different part of memory.
 	Expecting:
 	    [<doctest_unpredictable.MyClass object at 0x10055a2d0>]
 	****************************************************************
-	******
 	File ".../doctest_unpredictable.py", line 17, in doctest_unpredi
 	ctable.unpredictable
 	Failed example:
@@ -147,12 +146,11 @@ into a different part of memory.
 	Expected:
 	    [<doctest_unpredictable.MyClass object at 0x10055a2d0>]
 	Got:
-	    [<doctest_unpredictable.MyClass object at 0x101e97160>]
+	    [<doctest_unpredictable.MyClass object at 0x1016a4160>]
 	2 items had no tests:
 	    doctest_unpredictable
 	    doctest_unpredictable.MyClass
 	****************************************************************
-	******
 	1 items had failures:
 	   1 of   1 in doctest_unpredictable.unpredictable
 	1 tests in 3 items.
@@ -393,7 +391,6 @@ double-spaced with blank lines between.
 	Expecting:
 	    Line one.
 	****************************************************************
-	******
 	File ".../doctest_blankline_fail.py", line 12, in doctest_blankl
 	ine_fail.double_space
 	Failed example:
@@ -408,7 +405,6 @@ double-spaced with blank lines between.
 	1 items had no tests:
 	    doctest_blankline_fail
 	****************************************************************
-	******
 	1 items had failures:
 	   1 of   1 in doctest_blankline_fail.double_space
 	1 tests in 2 items.
@@ -483,7 +479,6 @@ report as well.
 	Expecting:
 	    6 
 	****************************************************************
-	******
 	File ".../doctest_extra_space.py", line 15, in doctest_extra_spa
 	ce.my_function
 	Failed example:
@@ -500,7 +495,6 @@ report as well.
 	1 items had no tests:
 	    doctest_extra_space
 	****************************************************************
-	******
 	1 items had failures:
 	   1 of   2 in doctest_extra_space.my_function
 	2 tests in 2 items.
@@ -533,7 +527,6 @@ also available, for output where those formats are more readable.
 	Expecting:
 	    6 
 	****************************************************************
-	******
 	File ".../doctest_ndiff.py", line 16, in doctest_ndiff.my_functi
 	on
 	Failed example:
@@ -550,7 +543,6 @@ also available, for output where those formats are more readable.
 	1 items had no tests:
 	    doctest_ndiff
 	****************************************************************
-	******
 	1 items had failures:
 	   1 of   2 in doctest_ndiff.my_function
 	2 tests in 2 items.
@@ -1094,7 +1086,6 @@ The module variable ``_module_data`` is changed by the tests for
 	Expecting:
 	    False
 	****************************************************************
-	******
 	File ".../doctest_mutable_globals.py", line 25, in doctest_mutab
 	le_globals.TestGlobals.two
 	Failed example:
@@ -1109,7 +1100,6 @@ The module variable ``_module_data`` is changed by the tests for
 	1 items passed all tests:
 	   2 tests in doctest_mutable_globals.TestGlobals.one
 	****************************************************************
-	******
 	1 items had failures:
 	   1 of   1 in doctest_mutable_globals.TestGlobals.two
 	3 tests in 4 items.
