@@ -63,9 +63,9 @@ actually part of the module and the list is long.
 	
 	A : <class 'example.A'>
 	B : <class 'example.B'>
-	instance_of_a : <example.A object at 0x101c904a8>
+	instance_of_a : <example.A object at 0x1014814a8>
 	module_level_function : <function module_level_function at
-	0x101c9ac80>
+	0x10148bc80>
 
 .. {{{end}}}
 
@@ -154,7 +154,7 @@ methods, slots, and other members of the class.
 	 ('__str__', <slot wrapper '__str__' of 'object' objects>),
 	 ('__subclasshook__',
 	  <built-in method __subclasshook__ of type object at
-	0x100788c18>),
+	0x10061fba8>),
 	 ('__weakref__', <attribute '__weakref__' of 'A' objects>),
 	 ('get_name', <function A.get_name at 0x101c99598>)]
 
@@ -178,8 +178,8 @@ Only unbound methods are returned now.
 
 	$ python3 inspect_getmembers_class_methods.py
 	
-	[('__init__', <function A.__init__ at 0x10128e510>),
-	 ('get_name', <function A.get_name at 0x10128e598>)]
+	[('__init__', <function A.__init__ at 0x10139d510>),
+	 ('get_name', <function A.get_name at 0x10139d598>)]
 
 .. {{{end}}}
 
@@ -202,9 +202,9 @@ identified as being methods of :class:`B`.
 
 	$ python3 inspect_getmembers_class_methods_b.py
 	
-	[('__init__', <function A.__init__ at 0x10149d510>),
-	 ('do_something', <function B.do_something at 0x10149d620>),
-	 ('get_name', <function B.get_name at 0x10149d6a8>)]
+	[('__init__', <function A.__init__ at 0x10129d510>),
+	 ('do_something', <function B.do_something at 0x10129d620>),
+	 ('get_name', <function B.get_name at 0x10129d6a8>)]
 
 .. {{{end}}}
 
@@ -229,9 +229,9 @@ The predicate :func:`ismethod` recognizes two bound methods from
 	$ python3 inspect_getmembers_instance.py
 	
 	[('__init__', <bound method A.__init__ of <example.A object at 0
-	x1018b1ba8>>),
+	x101ab1ba8>>),
 	 ('get_name', <bound method A.get_name of <example.A object at 0
-	x1018b1ba8>>)]
+	x101ab1ba8>>)]
 
 .. {{{end}}}
 
@@ -601,18 +601,18 @@ in the search order, because :class:`B` is derived from :class:`A`.
 	$ python3 inspect_getmro.py
 	
 	B_First:
-		 B_First
-		 B
-		 A
-		 C
-		 object
+	  B_First
+	  B
+	  A
+	  C
+	  object
 	
 	C_First:
-		 C_First
-		 C
-		 B
-		 A
-		 object
+	  C_First
+	  C
+	  B
+	  A
+	  object
 
 .. {{{end}}}
 
@@ -651,7 +651,7 @@ frame's dictionary of local variables.
 	
 	line 14 of inspect_currentframe.py
 	locals:
-	{'frame': <frame object at 0x1010c7b88>,
+	{'frame': <frame object at 0x1022a7b88>,
 	 'keyword': 'changed value of argument',
 	 'kwonly': 'must be named',
 	 'limit': 2,
@@ -659,7 +659,7 @@ frame's dictionary of local variables.
 	
 	line 14 of inspect_currentframe.py
 	locals:
-	{'frame': <frame object at 0x10110cea8>,
+	{'frame': <frame object at 0x102016b28>,
 	 'keyword': 'changed value of argument',
 	 'kwonly': 'must be named',
 	 'limit': 1,
@@ -667,7 +667,7 @@ frame's dictionary of local variables.
 	
 	line 14 of inspect_currentframe.py
 	locals:
-	{'frame': <frame object at 0x10110d878>,
+	{'frame': <frame object at 0x1020176b8>,
 	 'keyword': 'changed value of argument',
 	 'kwonly': 'must be named',
 	 'limit': 0,
@@ -699,7 +699,7 @@ The last part of the output represents the main program, outside of the
 	
 	inspect_stack.py[11]
 	  -> for level in inspect.stack():
-	{'level': FrameInfo(frame=<frame object at 0x10116f5d0>,
+	{'level': FrameInfo(frame=<frame object at 0x10127e5d0>,
 	filename='inspect_stack.py', lineno=11, function='show_stack',
 	code_context=['    for level in inspect.stack():\n'], index=0)}
 	
@@ -729,7 +729,7 @@ The last part of the output represents the main program, outside of the
 	 'inspect': <module 'inspect' from
 	'.../lib/python3.5/inspect.py'>,
 	 'pprint': <module 'pprint' from '.../lib/python3.5/pprint.py'>,
-	 'recurse': <function recurse at 0x10119b400>,
+	 'recurse': <function recurse at 0x1012aa400>,
 	 'show_stack': <function show_stack at 0x1007a6a60>}
 	
 

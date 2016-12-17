@@ -21,8 +21,8 @@ class B_First(example.B, C):
 
 print('B_First:')
 for c in inspect.getmro(B_First):
-    print('\t', c.__name__)
+    print('  {}'.format(c.__name__))
 print()
 print('C_First:')
 for c in inspect.getmro(C_First):
-    print('\t', c.__name__)
+    print('  {}'.format(c.__name__))
