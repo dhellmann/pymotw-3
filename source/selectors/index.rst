@@ -16,7 +16,7 @@ Operating Model
 ===============
 
 The APIs in ``selectors`` are event-based, similar to :func:`poll`
-from :mod:`select`. A selector object provides methods for specifying
+from ``select``. A selector object provides methods for specifying
 what events to look for on a socket, and then lets the caller wait for
 events in a platform-independent way.
 
