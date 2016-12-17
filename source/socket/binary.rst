@@ -55,7 +55,7 @@ The floating point value loses some precision as it is packed and
 unpacked, but otherwise the data is transmitted as expected.  One
 thing to keep in mind is that depending on the value of the integer,
 it may be more efficient to convert it to text and then transmit,
-instead of using :mod:`struct`.  The integer ``1`` uses one byte when
+instead of using ``struct``.  The integer ``1`` uses one byte when
 represented as a string, but four when packed into the structure.
 
 .. seealso::
