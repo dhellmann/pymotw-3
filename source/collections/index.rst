@@ -6,7 +6,7 @@
     :synopsis: Container data types.
 
 The ``collections`` module includes container data types beyond the
-built-in types :class:`list`, :class:`dict`, and :class:`tuple`.
+built-in types ``list``, ``dict``, and ``tuple``.
 
 .. toctree::
    :maxdepth: 1

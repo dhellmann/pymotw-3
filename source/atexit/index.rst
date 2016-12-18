@@ -15,13 +15,13 @@ Registering Exit Callbacks
    pair: callbacks; exit
 
 This is an example of registering a function explicitly by calling
-:func:`register`.
+``register()``.
 
 .. literalinclude:: atexit_simple.py
     :caption:
     :start-after: # end_pymotw_header
 
-Because the program does not do anything else, :func:`all_done` is
+Because the program does not do anything else, ``all_done()`` is
 called right away.
 
 .. {{{cog
@@ -76,7 +76,7 @@ Decorator Syntax
    single: decorator; atexit
 
 Functions that require no arguments can be registered by using
-:func:`register` as a decorator.  This alternative syntax is
+``register()`` as a decorator.  This alternative syntax is
 convenient for cleanup functions that operate on module-level global
 data.
 
@@ -108,7 +108,7 @@ Canceling Callbacks
 ===================
 
 To cancel an exit callback, remove it from the registry using
-:func:`unregister`.
+``unregister()``.
 
 .. literalinclude:: atexit_unregister.py
    :caption:
@@ -135,7 +135,7 @@ considered an error.
    :caption:
    :start-after: # end_pymotw_header
 
-Because it silently ignores unknown callbacks, :func:`unregister` can
+Because it silently ignores unknown callbacks, ``unregister()`` can
 be used even when the sequence of registrations might not be known.
 
 .. {{{cog
@@ -158,7 +158,7 @@ these conditions is met:
 
 * The program dies because of a signal.
 
-* :func:`os._exit()` is invoked directly.
+* ``os._exit()`` is invoked directly.
 
 * A fatal error is detected in the interpreter.
 
@@ -195,9 +195,9 @@ When run, this is the output.
 
 .. {{{end}}}
 
-The child does not print the message embedded in :func:`not_called()`.
+The child does not print the message embedded in ``not_called()``.
 
-If a program uses :func:`os._exit`, it can avoid having the
+If a program uses ``os._exit()``, it can avoid having the
 ``atexit`` callbacks invoked.
 
 .. literalinclude:: atexit_os_exit.py
@@ -220,13 +220,13 @@ not run.
 
 To ensure that the callbacks are run, allow the program to terminate
 by running out of statements to execute or by calling
-:func:`sys.exit`.
+``sys.exit()``.
 
 .. literalinclude:: atexit_sys_exit.py
     :caption:
     :start-after: # end_pymotw_header
 
-This example calls :func:`sys.exit`, so the registered callbacks are
+This example calls ``sys.exit()``, so the registered callbacks are
 invoked.
 
 .. {{{cog

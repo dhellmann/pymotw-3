@@ -13,15 +13,15 @@ Build-time Version Information
 ==============================
 
 The version used to build the C interpreter is available in a few
-forms.  :const:`sys.version` is a human-readable string that usually
+forms.  ``sys.version`` is a human-readable string that usually
 includes the full version number as well as information about the
-build date, compiler, and platform.  :const:`sys.hexversion` is easier
+build date, compiler, and platform.  ``sys.hexversion`` is easier
 to use for checking the interpreter version since it is a simple
-integer.  When formatted using :func:`hex`, it is clear that parts of
-:const:`sys.hexversion` come from the version information also visible
-in the more readable :const:`sys.version_info` (a five-part namedtuple
+integer.  When formatted using ``hex()``, it is clear that parts of
+``sys.hexversion`` come from the version information also visible
+in the more readable ``sys.version_info`` (a five-part namedtuple
 representing just the version number). The separate C API version used
-by the current interpreter is saved in :const:`sys.api_version`.
+by the current interpreter is saved in ``sys.api_version``.
 
 .. literalinclude:: sys_version_values.py
     :caption:
@@ -50,7 +50,7 @@ sample program.
 .. {{{end}}}
 
 The operating system platform used to build the interpreter is saved
-as :const:`sys.platform`.
+as ``sys.platform``.
 
 .. literalinclude:: sys_platform.py
     :caption:
@@ -76,14 +76,14 @@ other operating systems there is a hard-coded table of values.
 
   * `Platform values
     <https://docs.python.org/3/library/sys.html#sys.platform>`_ --
-    Hard-coded values of :const:`sys.platform` for systems without
+    Hard-coded values of ``sys.platform`` for systems without
     ``uname``.
 
 Interpreter Implementation
 ==========================
 
 The CPython interpreter is one of several implementations of the
-Python language.  :data:`sys.implementation` is provided to detect the
+Python language.  ``sys.implementation`` is provided to detect the
 current implementation for libraries that need to work around any
 differences in interpreters.
 
@@ -91,8 +91,8 @@ differences in interpreters.
    :caption:
    :start-after: #end_pymotw_header
 
-:data:`sys.implementation.version` is the same as
-:data:`sys.version_info` for CPython, but will be different for
+``sys.implementation.version`` is the same as
+``sys.version_info`` for CPython, but will be different for
 other interpreters.
 
 .. {{{cog
@@ -112,7 +112,7 @@ other interpreters.
 
 .. seealso::
 
-   * :pep:`421` -- Adding :data:`sys.implementation`
+   * :pep:`421` -- Adding ``sys.implementation``
 
 Command Line Options
 ====================
@@ -156,7 +156,7 @@ Flags`.
      * verbose
 
 Some of these are available for programs to check through
-:const:`sys.flags`.
+``sys.flags``.
 
 .. literalinclude:: sys_flags.py
     :caption:
@@ -186,12 +186,12 @@ Unicode Defaults
 ================
 
 To get the name of the default Unicode encoding the interpreter is
-using, call :func:`getdefaultencoding`.  The value is set during
+using, call ``getdefaultencoding()``.  The value is set during
 start-up, and cannot be changed.
 
 The internal encoding default and the file system encoding may be
 different for some operating systems, so there is a separate way to
-retrieve the file system setting.  :func:`getfilesystemencoding`
+retrieve the file system setting.  ``getfilesystemencoding()``
 returns an OS-specific (*not* file system-specific) value.
 
 .. literalinclude:: sys_unicode.py
@@ -222,8 +222,8 @@ Interactive Prompts
 ===================
 
 The interactive interpreter uses two separate prompts for indicating
-the default input level (:data:`ps1`) and the "continuation" of a
-multi-line statement (:data:`ps2`).  The values are only used by the
+the default input level (``ps1``) and the "continuation" of a
+multi-line statement (``ps2``).  The values are only used by the
 interactive interpreter.
 
 .. code-block:: none
@@ -256,7 +256,7 @@ Alternately, any object that can be converted to a string (via
     :caption:
     :start-after: #end_pymotw_header
 
-The :class:`LineCounter` keeps track of how many times it has been
+The ``LineCounter`` keeps track of how many times it has been
 used, so the number in the prompt increases each time.
 
 .. code-block:: none
@@ -276,7 +276,7 @@ used, so the number in the prompt increases each time.
 Display Hook
 ============
 
-:data:`sys.displayhook` is invoked by the interactive interpreter each
+``sys.displayhook`` is invoked by the interactive interpreter each
 time the user enters an expression.  The result of evaluating the
 expression is passed as the only argument to the function.
 
@@ -284,8 +284,8 @@ expression is passed as the only argument to the function.
     :caption:
     :start-after: #end_pymotw_header
 
-The default value (saved in :data:`sys.__displayhook__`) prints the
-result to stdout and saves it in :data:`_` for easy
+The default value (saved in ``sys.__displayhook__``) prints the
+result to stdout and saves it in ``_`` for easy
 reference later.
 
 .. code-block:: none
@@ -329,12 +329,12 @@ Install Location
 ================
 
 The path to the actual interpreter program is available in
-:const:`sys.executable` on all systems for which having a path to the
+``sys.executable`` on all systems for which having a path to the
 interpreter makes sense.  This can be useful for ensuring that the
 correct interpreter is being used, and also gives clues about paths
 that might be set based on the interpreter location.
 
-:const:`sys.prefix` refers to the parent directory of the interpreter
+``sys.prefix`` refers to the parent directory of the interpreter
 installation.  It usually includes ``bin`` and ``lib`` directories for
 executables and installed modules, respectively.
 

@@ -9,24 +9,24 @@ have two primary properties controlling the way they send data: the
 *socket type* controls the transport layer protocol.
 
 Python supports three address families.  The most common,
-:const:`AF_INET`, is used for IPv4 Internet addressing.  IPv4
+``AF_INET``, is used for IPv4 Internet addressing.  IPv4
 addresses are four bytes long and are usually represented as a
 sequence of four numbers, one per byte, separated by dots (e.g.,
 ``10.1.1.5`` and ``127.0.0.1``).  These values are more commonly
 referred to as "IP addresses."  Almost all Internet networking is done
 using IP version 4 at this time.
 
-:const:`AF_INET6` is used for IPv6 Internet addressing.  IPv6 is the
+``AF_INET6`` is used for IPv6 Internet addressing.  IPv6 is the
 "next generation" version of the Internet protocol, and supports
 128-bit addresses, traffic shaping, and routing features not available
 under IPv4.  Adoption of IPv6 is still limited, but continues to grow.
 
-:const:`AF_UNIX` is the address family for Unix Domain Sockets (UDS),
+``AF_UNIX`` is the address family for Unix Domain Sockets (UDS),
 an inter-process communication protocol available on POSIX-compliant
 systems.  The implementation of UDS typically allows the operating
 system to pass data directly from process to process, without going
 through the network stack.  This is more efficient than using
-:const:`AF_INET`, but because the file system is used as the namespace
+``AF_INET``, but because the file system is used as the namespace
 for addressing, UDS is restricted to processes on the same system.
 The appeal of using UDS over other IPC mechanisms such as named pipes
 or shared memory is that the programming interface is the same as for
@@ -36,11 +36,11 @@ when sending data across the network.
 
 .. note::
 
-  The :const:`AF_UNIX` constant is only defined on systems where UDS
+  The ``AF_UNIX`` constant is only defined on systems where UDS
   is supported.
 
-The socket type is usually either :const:`SOCK_DGRAM` for *user
-datagram protocol* (UDP) or :const:`SOCK_STREAM` for *transmission
+The socket type is usually either ``SOCK_DGRAM`` for *user
+datagram protocol* (UDP) or ``SOCK_STREAM`` for *transmission
 control protocol* (TCP).  UDP does not require transmission
 handshaking or other setup, but offers lower reliability of delivery.
 UDP messages may be delivered out of order, more than once, or not at
@@ -70,7 +70,7 @@ server, but it can be useful when reporting errors to include the
 numerical address as well as the name value being used.
 
 To find the official name of the current host, use
-:func:`gethostname`.
+``gethostname()``.
 
 .. literalinclude:: socket_gethostname.py
    :caption:
@@ -88,7 +88,7 @@ laptop attached to a wireless LAN).
 	
 	apu.hellfly.net
 
-Use :func:`gethostbyname` to consult the operating system hostname
+Use ``gethostbyname()`` to consult the operating system hostname
 resolution API and convert the name of a server to its numerical
 address.
 
@@ -119,7 +119,7 @@ of type ``socket.error`` is raised.
 .. {{{end}}}
 
 For access to more naming information about a server, use
-:func:`gethostbyname_ex`.  It returns the canonical hostname of the
+``gethostbyname_ex()``.  It returns the canonical hostname of the
 server, any aliases, and all of the available IP addresses that can be
 used to reach it.
 
@@ -159,7 +159,7 @@ own load balancing or fail-over algorithms.
 
 .. {{{end}}}
 
-Use :func:`getfqdn` to convert a partial name to a fully qualified
+Use ``getfqdn()`` to convert a partial name to a fully qualified
 domain name.
 
 .. literalinclude:: socket_getfqdn.py
@@ -182,7 +182,7 @@ way if the input is an alias, such as ``www`` is here.
 
 .. {{{end}}}
 
-When the address of a server is available, use :func:`gethostbyaddr`
+When the address of a server is available, use ``gethostbyaddr()``
 to do a "reverse" lookup for the name.
 
 .. literalinclude:: socket_gethostbyaddr.py
@@ -220,7 +220,7 @@ Some of the port numbers are pre-allocated for a specific protocol.
 For example, communication between email servers using SMTP occurs
 over port number 25 using TCP, and web clients and servers use port 80
 for HTTP.  The port numbers for network services with standardized
-names can be looked up with :func:`getservbyname`.
+names can be looked up with ``getservbyname()``.
 
 .. literalinclude:: socket_getservbyname.py
    :caption:
@@ -250,7 +250,7 @@ flexible when new services are added in the future.
 
 .. {{{end}}}
 
-To reverse the service port lookup, use :func:`getservbyport`.
+To reverse the service port lookup, use ``getservbyport()``.
 
 .. literalinclude:: socket_getservbyport.py
    :caption:
@@ -280,7 +280,7 @@ arbitrary addresses.
 .. {{{end}}}
 
 The number assigned to a transport protocol can be retrieved with
-:func:`getprotobyname`.
+``getprotobyname()``.
 
 .. literalinclude:: socket_getprotobyname.py
    :caption:
@@ -307,7 +307,7 @@ constants in ``socket`` with the prefix ``IPPROTO_``.
 Looking Up Server Addresses
 ===========================
 
-:func:`getaddrinfo` converts the basic address of a service into a
+``getaddrinfo()`` converts the basic address of a service into a
 list of tuples with all of the information necessary to make a
 connection.  The contents of each tuple will vary, containing
 different network families or protocols.
@@ -354,7 +354,7 @@ for ``www.python.org``.
 
 .. {{{end}}}
 
-:func:`getaddrinfo` takes several arguments for filtering the result
+``getaddrinfo()`` takes several arguments for filtering the result
 list. The ``host`` and ``port`` values given in the example are
 required arguments.  The optional arguments are ``family``,
 ``socktype``, ``proto``, and ``flags``.  The optional values should be
@@ -364,7 +364,7 @@ either ``0`` or one of the constants defined by ``socket``.
    :caption:
    :start-after: #end_pymotw_header
 
-Since ``flags`` includes :const:`AI_CANONNAME`, the canonical name of
+Since ``flags`` includes ``AI_CANONNAME``, the canonical name of
 the server, which may be different from the value used for the lookup
 if the host has any aliases, is included in the results this time.
 Without the flag, the canonical name value is left empty.
@@ -394,7 +394,7 @@ Network programs written in C use the data type ``struct
 sockaddr`` to represent IP addresses as binary values (instead of the
 string addresses usually found in Python programs).  To convert IPv4
 addresses between the Python representation and the C representation,
-use :func:`inet_aton` and :func:`inet_ntoa`.
+use ``inet_aton()`` and ``inet_ntoa()``.
 
 .. literalinclude:: socket_address_packing.py
    :caption:
@@ -422,7 +422,7 @@ transmitted safely over the network, or saved to a database compactly.
 
 .. {{{end}}}
 
-The related functions :func:`inet_pton` and :func:`inet_ntop` work
+The related functions ``inet_pton()`` and ``inet_ntop()`` work
 with both IPv4 and IPv6 addresses, producing the appropriate format
 based on the address family parameter passed in.
 

@@ -5,22 +5,22 @@
 .. module:: calendar
     :synopsis: Classes for working with year, month, and week-oriented values.
 
-The ``calendar`` module defines the :class:`Calendar` class, which
+The ``calendar`` module defines the ``Calendar`` class, which
 encapsulates calculations for values such as the dates of the weeks in
-a given month or year. In addition, the :class:`TextCalendar` and
-:class:`HTMLCalendar` classes can produce pre-formatted output.
+a given month or year. In addition, the ``TextCalendar`` and
+``HTMLCalendar`` classes can produce pre-formatted output.
 
 Formatting Examples
 ===================
 
-The :func:`prmonth` method is a simple function that produces the
+The ``prmonth()`` method is a simple function that produces the
 formatted text output for a month.
 
 .. literalinclude:: calendar_textcalendar.py
     :caption:
     :start-after: #end_pymotw_header
 
-The example configures :class:`TextCalendar` to start weeks on Sunday,
+The example configures ``TextCalendar`` to start weeks on Sunday,
 following the American convention. The default is to use the European
 convention of starting a week on Monday.
 
@@ -45,8 +45,8 @@ The output looks like:
 
 .. {{{end}}}
 
-A similar HTML table can be produced with :class:`HTMLCalendar` and
-:func:`formatmonth`.  The rendered output looks roughly the same as
+A similar HTML table can be produced with ``HTMLCalendar`` and
+``formatmonth()``.  The rendered output looks roughly the same as
 the plain text version, but is wrapped with HTML tags.  Each table
 cell has a class attribute corresponding to the day of the week, so
 the HTML can be styled through CSS.
@@ -54,11 +54,11 @@ the HTML can be styled through CSS.
 To produce output in a format other than one of the available
 defaults, use ``calendar`` to calculate the dates and organize the
 values into week and month ranges, then iterate over the result.  The
-:func:`weekheader`, :func:`monthcalendar`, and
-:func:`yeardays2calendar` methods of :class:`Calendar` are especially
+``weekheader()``, ``monthcalendar()``, and
+``yeardays2calendar()`` methods of ``Calendar`` are especially
 useful for that.
 
-Calling :func:`yeardays2calendar` produces a sequence of "month row"
+Calling ``yeardays2calendar()`` produces a sequence of "month row"
 lists. Each list includes the months as another list of weeks. The
 weeks are lists of tuples made up of day number (1-31) and weekday
 number (0-6). Days that fall outside of the month have a day number of
@@ -91,13 +91,13 @@ organized with three months per row.
 
 .. {{{end}}}
 
-This is equivalent to the data used by :func:`formatyear`.
+This is equivalent to the data used by ``formatyear()``.
 
 .. literalinclude:: calendar_formatyear.py
     :caption:
     :start-after: #end_pymotw_header
 
-For the same arguments, :func:`formatyear` produces this output:
+For the same arguments, ``formatyear()`` produces this output:
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'calendar_formatyear.py'))
@@ -146,8 +146,8 @@ For the same arguments, :func:`formatyear` produces this output:
 
 .. {{{end}}}
 
-The :data:`day_name`, :data:`day_abbr`, :data:`month_name`, and
-:data:`month_abbr` module attributes useful for producing custom
+The ``day_name``, ``day_abbr``, ``month_name``, and
+``month_abbr`` module attributes useful for producing custom
 formatted output (i.e., to include links in the HTML output). They are
 automatically configured correctly for the current locale.
 
@@ -155,8 +155,8 @@ Locales
 =======
 
 To produce a calendar formatted for a locale other than the current
-default, use :class:`LocaleTextCalendar` or
-:class:`LocaleHTMLCalendar`.
+default, use ``LocaleTextCalendar`` or
+``LocaleHTMLCalendar``.
 
 .. literalinclude:: calendar_locale.py
    :caption:
@@ -164,7 +164,7 @@ default, use :class:`LocaleTextCalendar` or
 
 The first day of the week is not part of the locale settings, and the
 value is taken from the argument to the calendar class just as with
-the regular :class:`TextCalendar`.
+the regular ``TextCalendar``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'calendar_locale.py'))
@@ -203,7 +203,7 @@ in various formats, it also provides functions useful for working with
 dates in other ways, such as calculating dates for a recurring
 event. For example, the Python Atlanta User's Group meets on the
 second Thursday of every month. To calculate the dates for the
-meetings for a year, use the return value of :func:`monthcalendar`.
+meetings for a year, use the return value of ``monthcalendar()``.
 
 .. literalinclude:: calendar_monthcalendar.py
     :caption:
@@ -230,9 +230,9 @@ the given month, but that are part of another month.
 
 
 The first day of the week defaults to Monday. It is possible to change
-that by calling :func:`setfirstweekday`, but since the calendar module
+that by calling ``setfirstweekday()``, but since the calendar module
 includes constants for indexing into the date ranges returned by
-:func:`monthcalendar`, it is more convenient to skip that step in this
+``monthcalendar()``, it is more convenient to skip that step in this
 case.
 
 To calculate the group meeting dates for 2015, assuming the second

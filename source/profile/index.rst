@@ -18,7 +18,7 @@ Running the Profiler
 ====================
 
 The most basic starting point in the ``profile`` module is
-:func:`run`.  It takes a string statement as argument, and creates a
+``run()``.  It takes a string statement as argument, and creates a
 report of the time spent executing different lines of code while
 running the statement.
 
@@ -71,7 +71,7 @@ showing the number of calls, total time spent in the function, time
 per call (tottime/ncalls), cumulative time spent in a function, and
 the ratio of cumulative time to primitive calls.
 
-Not surprisingly, most of the time here is spent calling :func:`fib`
+Not surprisingly, most of the time here is spent calling ``fib()``
 repeatedly.  Adding a memoize decorator reduces the number of
 recursive calls, and has a big impact on the performance of this
 function.
@@ -82,7 +82,7 @@ function.
 
 By remembering the Fibonacci value at each level, most of the
 recursion is avoided and the run drops down to 148 calls that only
-take 0.002 seconds.  The :data:`ncalls` count for :func:`fib` shows
+take 0.002 seconds.  The ``ncalls`` count for ``fib()`` shows
 that it *never* recurses.
 
 .. cog.out(run_script(cog.inFile, 'profile_fibonacci_memoized.py', line_break_mode='continue'))
@@ -122,17 +122,17 @@ that it *never* recurses.
 Running in a Context
 ====================
 
-Sometimes, instead of constructing a complex expression for :func:`run`,
+Sometimes, instead of constructing a complex expression for ``run()``,
 it is easier to build a simple expression and pass it parameters
-through a context, using :func:`runctx`.
+through a context, using ``runctx()``.
 
 .. literalinclude:: profile_runctx.py
    :caption:
    :start-after: #end_pymotw_header
 
-In this example, the value of :data:`n` is passed through the local
+In this example, the value of ``n`` is passed through the local
 variable context instead of being embedded directly in the statement
-passed to :func:`runctx`.
+passed to ``runctx()``.
 
 .. cog.out(run_script(cog.inFile, 'profile_runctx.py', line_break_mode='continue'))
 
@@ -175,8 +175,8 @@ pstats: Saving and Working With Statistics
 
 The standard report created by the ``profile`` functions is not
 very flexible.  However, custom reports can be produced by saving the
-raw profiling data from :func:`run` and :func:`runctx` and processing
-it separately with the :class:`pstats.Stats` class.
+raw profiling data from ``run()`` and ``runctx()`` and processing
+it separately with the ``pstats.Stats`` class.
 
 This example runs several iterations of the same test and combines the
 results:
@@ -240,7 +240,7 @@ Limiting Report Contents
 ========================
 
 The output can be restricted by function.  This version only shows
-information about the performance of :func:`fib` and :func:`fib_seq`
+information about the performance of ``fib()`` and ``fib_seq()``
 by using a regular expression to match the desired
 ``filename:lineno(function)`` values.
 
@@ -279,15 +279,15 @@ against the function name portion of the location value.
 Caller / Callee Graphs
 ======================
 
-:class:`Stats` also includes methods for printing the callers and callees
+``Stats`` also includes methods for printing the callers and callees
 of functions.
 
 .. literalinclude:: profile_stats_callers.py
    :caption:
    :start-after: #end_pymotw_header
 
-The arguments to :func:`print_callers` and :func:`print_callees` work
-the same as the restriction arguments to :func:`print_stats`.  The
+The arguments to ``print_callers()`` and ``print_callees()`` work
+the same as the restriction arguments to ``print_stats()``.  The
 output shows the caller, callee, number of calls, and cumulative time.
 
 .. cog.out(run_script(cog.inFile, 'profile_stats_callers.py',
@@ -337,7 +337,7 @@ output shows the caller, callee, number of calls, and cumulative time.
 
    * `The Stats Class
      <https://docs.python.org/3.5/library/profile.html#the-stats-class>`__
-     -- Standard library documentation for :class:`pstats.Stats`.
+     -- Standard library documentation for ``pstats.Stats``.
 
    * `Gprof2Dot <http://code.google.com/p/jrfonseca/wiki/Gprof2Dot>`__
      -- Visualization tool for profile output data.

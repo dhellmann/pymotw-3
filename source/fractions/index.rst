@@ -5,8 +5,8 @@
 .. module:: fractions
     :synopsis: Implements a class for working with rational numbers.
 
-The :class:`Fraction` class implements numerical operations for
-rational numbers based on the API defined by :class:`Rational` in
+The ``Fraction`` class implements numerical operations for
+rational numbers based on the API defined by ``Rational`` in
 the :mod:`numbers` module.
 
 Creating Fraction Instances
@@ -37,7 +37,7 @@ computed.
 
 .. {{{end}}}
 
-Another way to create a :class:`Fraction` is using a string representation of
+Another way to create a ``Fraction`` is using a string representation of
 ``<numerator> / <denominator>``:
 
 .. literalinclude:: fractions_create_strings.py
@@ -62,7 +62,7 @@ The string is parsed to find the numerator and denominator values.
 
 Strings can also use the more usual decimal or floating point notation
 of series of digits separated by a period. Any string that can be
-parsed by :func:`float` and that does not represent "not a number"
+parsed by ``float()`` and that does not represent "not a number"
 (``NaN``) or an infinite value is supported.
 
 .. literalinclude:: fractions_create_strings_floats.py
@@ -87,9 +87,9 @@ value is computed automatically.
 
 .. {{{end}}}
 
-It is also possible to create :class:`Fraction` instances directly
-from other representations of rational values, such as :class:`float`
-or :class:`Decimal`.
+It is also possible to create ``Fraction`` instances directly
+from other representations of rational values, such as ``float``
+or ``Decimal``.
 
 .. literalinclude:: fractions_from_float.py
     :caption:
@@ -170,7 +170,7 @@ All of the standard operators are supported.
 Approximating Values
 ====================
 
-A useful feature of :class:`Fraction` is the ability to convert a floating
+A useful feature of ``Fraction`` is the ability to convert a floating
 point number to an approximate rational value.
 
 .. literalinclude:: fractions_limit_denominator.py

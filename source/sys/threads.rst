@@ -19,8 +19,8 @@ reacquired, with other threads given priority over the thread which
 has just released the lock.
 
 The default switch interval is 5 milliseconds and the current value
-can always be retrieved with :func:`sys.getswitchinterval`.  Changing
-the interval with :func:`sys.setswitchinterval` may have an impact on
+can always be retrieved with ``sys.getswitchinterval()``.  Changing
+the interval with ``sys.setswitchinterval()`` may have an impact on
 the performance of an application, depending on the nature of the
 operations being performed.
 
@@ -64,7 +64,7 @@ Debugging
 =========
 
 Identifying deadlocks can be one of the most difficult aspects of
-working with threads.  :func:`sys._current_frames` can help by showing
+working with threads.  ``sys._current_frames()`` can help by showing
 exactly where a thread is stopped.
 
 .. cssclass:: with-linenos
@@ -74,7 +74,7 @@ exactly where a thread is stopped.
       :caption:
       :start-after: #end_pymotw_header
 
-The dictionary returned by :func:`sys._current_frames` is keyed on the
+The dictionary returned by ``sys._current_frames()`` is keyed on the
 thread identifier, rather than its name.  A little work is needed to
 map those identifiers back to the thread object.
 

@@ -44,11 +44,11 @@ Finding Patterns in Text
 ========================
 
 The most common use for ``re`` is to search for patterns in text.
-The :func:`search` function takes the pattern and text to scan, and
-returns a :class:`Match` object when the pattern is found.  If the
-pattern is not found, :func:`search` returns ``None``.
+The ``search()`` function takes the pattern and text to scan, and
+returns a ``Match`` object when the pattern is found.  If the
+pattern is not found, ``search()`` returns ``None``.
 
-Each :class:`Match` object holds information about the nature of the
+Each ``Match`` object holds information about the nature of the
 match, including the original input string, the regular expression
 used, and the location within the original string where the pattern
 occurs.
@@ -57,7 +57,7 @@ occurs.
    :caption:
    :start-after: #end_pymotw_header
 
-The :func:`start` and :func:`end` methods give the indexes into the
+The ``start()`` and ``end()`` methods give the indexes into the
 string showing where the text matched by the pattern occurs.
 
 .. {{{cog
@@ -79,8 +79,8 @@ Compiling Expressions
 
 ``re`` includes module-level functions for working with regular
 expressions as text strings, but it is more efficient to *compile* the
-expressions a program uses frequently.  The :func:`compile` function
-converts an expression string into a :class:`RegexObject`.
+expressions a program uses frequently.  The ``compile()`` function
+converts an expression string into a ``RegexObject``.
 
 .. literalinclude:: re_simple_compiled.py
    :caption:
@@ -112,8 +112,8 @@ responding to a user action.
 Multiple Matches
 ================
 
-So far, the example patterns have all used :func:`search` to look for
-single instances of literal text strings.  The :func:`findall`
+So far, the example patterns have all used ``search()`` to look for
+single instances of literal text strings.  The ``findall()``
 function returns all of the substrings of the input that match the
 pattern without overlapping.
 
@@ -136,15 +136,15 @@ There are two instances of ``ab`` in the input string.
 
 .. {{{end}}}
 
-:func:`finditer` returns an iterator that produces :class:`Match`
-instances instead of the strings returned by :func:`findall`.
+``finditer()`` returns an iterator that produces ``Match``
+instances instead of the strings returned by ``findall()``.
 
 .. literalinclude:: re_finditer.py
    :caption:
    :start-after: #end_pymotw_header
 
 This example finds the same two occurrences of ``ab``, and the
-:class:`Match` instance shows where they are in the original input.
+``Match`` instance shows where they are in the original input.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 're_finditer.py'))
@@ -174,7 +174,7 @@ pattern syntax implemented by ``re``.
    :caption:
    :start-after: #end_pymotw_header
 
-The following examples will use :func:`test_patterns` to explore how
+The following examples will use ``test_patterns()`` to explore how
 variations in patterns change the way they match the same input text.
 The output shows the input text and the substring range from each
 portion of the input that matches the pattern.
@@ -715,7 +715,7 @@ In situations where it is known in advance that only a subset of the
 full input should be searched, the regular expression match can be
 further constrained by telling ``re`` to limit the search range.
 For example, if the pattern must appear at the front of the input,
-then using :func:`match` instead of :func:`search` will anchor the
+then using ``match()`` instead of ``search()`` will anchor the
 search without having to explicitly include an anchor in the search
 pattern.
 
@@ -724,8 +724,8 @@ pattern.
    :start-after: #end_pymotw_header
 
 Since the literal text ``is`` does not appear at the start of the
-input text, it is not found using :func:`match`.  The sequence appears
-two other times in the text, though, so :func:`search` finds it.
+input text, it is not found using ``match()``.  The sequence appears
+two other times in the text, though, so ``search()`` finds it.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 're_match.py'))
@@ -742,15 +742,15 @@ two other times in the text, though, so :func:`search` finds it.
 
 .. {{{end}}}
 
-The :func:`fullmatch` method requires that the entire input string
+The ``fullmatch()`` method requires that the entire input string
 match the pattern.
 
 .. literalinclude:: re_fullmatch.py
    :caption:
    :start-after: #end_pymotw_header
 
-Here :func:`search` shows that the pattern does appear in the input,
-but it does not consume all of the input so :func:`fullmatch` does not
+Here ``search()`` shows that the pattern does appear in the input,
+but it does not consume all of the input so ``fullmatch()`` does not
 report a match.
 
 .. {{{cog
@@ -768,7 +768,7 @@ report a match.
 
 .. {{{end}}}
 
-The :func:`search` method of a compiled regular expression accepts
+The ``search()`` method of a compiled regular expression accepts
 optional ``start`` and ``end`` position parameters to limit the search
 to a substring of the input.
 
@@ -776,7 +776,7 @@ to a substring of the input.
    :caption:
    :start-after: #end_pymotw_header
 
-This example implements a less efficient form of :func:`iterall`.
+This example implements a less efficient form of ``iterall()``.
 Each time a match is found, the end position of that match is used for
 the next search.
 
@@ -855,13 +855,13 @@ repeat.
 .. {{{end}}}
 
 To access the substrings matched by the individual groups within a
-pattern, use the :func:`groups` method of the :class:`Match` object.
+pattern, use the ``groups()`` method of the ``Match`` object.
 
 .. literalinclude:: re_groups_match.py
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`Match.groups` returns a sequence of strings in the order of the
+``Match.groups()`` returns a sequence of strings in the order of the
 groups within the expression that matches the string.
 
 .. {{{cog
@@ -893,7 +893,7 @@ groups within the expression that matches the string.
 
 .. {{{end}}}
 
-Ask for the match of a single group with :func:`group`.  This is
+Ask for the match of a single group with ``group()``.  This is
 useful when grouping is being used to find parts of the string, but
 some of the parts matched by groups are not needed in the results.
 
@@ -930,9 +930,9 @@ To set the name of a group, use the syntax ``(?P<name>pattern)``.
    :caption:
    :start-after: #end_pymotw_header
 
-Use :func:`groupdict` to retrieve the dictionary mapping group names
+Use ``groupdict()`` to retrieve the dictionary mapping group names
 to substrings from the match.  Named patterns are included in the
-ordered sequence returned by :func:`groups`, as well.
+ordered sequence returned by ``groups()``, as well.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 're_groups_named.py'))
@@ -963,7 +963,7 @@ ordered sequence returned by :func:`groups`, as well.
 
 .. {{{end}}}
 
-An updated version of :func:`test_patterns` that shows the numbered
+An updated version of ``test_patterns()`` that shows the numbered
 and named groups matched by a pattern will make the following examples
 easier to follow.
 
@@ -979,7 +979,7 @@ nested within other groups to build even more complicated expressions.
    :start-after: #end_pymotw_header
 
 In this case, the group ``(a*)`` matches an empty string, so the
-return value from :func:`groups` includes that empty string as the
+return value from ``groups()`` includes that empty string as the
 matched value.
 
 .. {{{cog
@@ -1014,7 +1014,7 @@ resulting matches are completely different.
    :start-after: #end_pymotw_header
 
 When an alternative group is not matched, but the entire pattern does
-match, the return value of :func:`groups` includes a ``None`` value at
+match, the return value of ``groups()`` includes a ``None`` value at
 the point in the sequence where the alternative group should appear.
 
 .. {{{cog
@@ -1083,14 +1083,14 @@ Search Options
 
 The way the matching engine processes an expression can be changed
 using option flags.  The flags can be combined using a bit-wise or
-operation, then passed to :func:`compile`, :func:`search`,
-:func:`match`, and other functions that accept a pattern for
+operation, then passed to ``compile()``, ``search()``,
+``match()``, and other functions that accept a pattern for
 searching.
 
 Case-insensitive Matching
 -------------------------
 
-:const:`IGNORECASE` causes literal characters and character ranges in
+``IGNORECASE`` causes literal characters and character ranges in
 the pattern to match both upper and lower case characters.
 
 .. literalinclude:: re_flags_ignorecase.py
@@ -1098,7 +1098,7 @@ the pattern to match both upper and lower case characters.
    :start-after: #end_pymotw_header
 
 Since the pattern includes the literal ``T``, without setting
-:const:`IGNORECASE` the only match is the word ``This``.  When case is
+``IGNORECASE`` the only match is the word ``This``.  When case is
 ignored, ``text`` also matches.
 
 .. {{{cog
@@ -1125,7 +1125,7 @@ Input with Multiple Lines
 -------------------------
 
 There are two flags that effect how searching in multi-line input
-works: :const:`MULTILINE` and :const:`DOTALL`.  The :const:`MULTILINE`
+works: ``MULTILINE`` and ``DOTALL``.  The ``MULTILINE``
 flag controls how the pattern matching code processes anchoring
 instructions for text containing newline characters.  When multiline
 mode is turned on, the anchor rules for ``^`` and ``$`` apply at the
@@ -1162,7 +1162,7 @@ there is no newline.
 
 .. {{{end}}}
 
-:const:`DOTALL` is the other flag related to multiline text.  Normally,
+``DOTALL`` is the other flag related to multiline text.  Normally,
 the dot character (``.``) matches everything in the input text except a
 newline character.  The flag allows dot to match newlines as well.
 
@@ -1196,15 +1196,15 @@ separately.  Adding the flag causes the entire string to be consumed.
 Unicode
 -------
 
-Under Python 3, :class:`str` objects use the full Unicode character
-set, regular expression processing on a :class:`str` assumes that the
+Under Python 3, ``str`` objects use the full Unicode character
+set, regular expression processing on a ``str`` assumes that the
 pattern and input text are both Unicode.  The escape codes described
 earlier are defined in terms of Unicode by default.  Those assumptions
 mean that the pattern ``\w+`` will match the word "French" and
 "Français". To restrict escape codes to the ASCII character set, as
-was the default in Python 2, use the :const:`ASCII` flag when
+was the default in Python 2, use the ``ASCII`` flag when
 compiling the pattern or when calling the module-level functions
-:func:`search` and :func:`match`.
+``search()`` and ``match()``.
 
 .. literalinclude:: re_flags_ascii.py
    :caption:
@@ -1383,17 +1383,21 @@ or parsed, they should always come at the beginning of the expression.
 The abbreviations for all of the flags are listed in :table:`Regular
 Expression Flag Abbreviations`.
 
-.. table:: Regular Expression Flag Abbreviations
+.. list-table:: Regular Expression Flag Abbreviations
+   :header-rows: 1
 
-   ====================  ============
-   Flag                  Abbreviation
-   ====================  ============
-   :const:`ASCII`        ``a``
-   :const:`IGNORECASE`   ``i``
-   :const:`MULTILINE`    ``m``
-   :const:`DOTALL`       ``s``
-   :const:`VERBOSE`      ``x``
-   ====================  ============
+   - * Flag
+     * Abbreviation
+   - * ``ASCII``
+     * ``a``
+   - * ``IGNORECASE``
+     * ``i``
+   - * ``MULTILINE``
+     * ``m``
+   - * ``DOTALL``
+     * ``s``
+   - * ``VERBOSE``
+     * ``x``
 
 Embedded flags can be combined by placing them within the same group.
 For example, ``(?im)`` turns on case-insensitive matching for
@@ -1583,7 +1587,7 @@ in the expression.
    :caption:
    :start-after: #end_pymotw_header
 
-The address expression is compiled with the :const:`IGNORECASE` flag
+The address expression is compiled with the ``IGNORECASE`` flag
 on, since proper names are normally capitalized but email addresses
 are not.
 
@@ -1660,7 +1664,7 @@ Modifying Strings with Patterns
 In addition to searching through text, ``re`` also supports
 modifying text using regular expressions as the search mechanism, and
 the replacements can reference groups matched in the pattern as part of
-the substitution text.  Use :func:`sub` to replace all occurrences of a
+the substitution text.  Use ``sub()`` to replace all occurrences of a
 pattern with another string.
 
 .. literalinclude:: re_sub.py
@@ -1728,7 +1732,7 @@ Only the first substitution is made because ``count`` is ``1``.
 
 .. {{{end}}}
 
-:func:`subn` works just like :func:`sub` except that it returns both
+``subn()`` works just like ``sub()`` except that it returns both
 the modified string and the count of substitutions made.
 
 .. literalinclude:: re_subn.py
@@ -1753,15 +1757,15 @@ The search pattern matches twice in the example.
 Splitting with Patterns
 =======================
 
-:func:`str.split` is one of the most frequently used methods for
+``str.split()`` is one of the most frequently used methods for
 breaking apart strings to parse them.  It only supports using literal
 values as separators, though, and sometimes a regular expression is
 necessary if the input is not consistently formatted.  For example,
 many plain text markup languages define paragraph separators as two or
-more newline (``\n``) characters.  In this case, :func:`str.split`
+more newline (``\n``) characters.  In this case, ``str.split()``
 cannot be used because of the "or more" part of the definition.
 
-A strategy for identifying paragraphs using :func:`findall` would use
+A strategy for identifying paragraphs using ``findall()`` would use
 a pattern like ``(.+?)\n{2,}``.
 
 .. literalinclude:: re_paragraphs_findall.py
@@ -1789,15 +1793,15 @@ output.
 
 Extending the pattern to say that a paragraph ends with two or more
 newlines or the end of input fixes the problem, but makes the pattern
-more complicated.  Converting to :func:`re.split` instead of
-:func:`re.findall` handles the boundary condition automatically and
+more complicated.  Converting to ``re.split()`` instead of
+``re.findall()`` handles the boundary condition automatically and
 keeps the pattern simpler.
 
 .. literalinclude:: re_split.py
    :caption:
    :start-after: #end_pymotw_header
 
-The pattern argument to :func:`split` expresses the markup
+The pattern argument to ``split()`` expresses the markup
 specification more precisely. Two or more newline characters mark a
 separator point between paragraphs in the input string.
 
@@ -1828,7 +1832,7 @@ separator point between paragraphs in the input string.
 .. {{{end}}}
 
 Enclosing the expression in parentheses to define a group causes
-:func:`split` to work more like :func:`str.partition`, so it returns
+``split()`` to work more like ``str.partition()``, so it returns
 the separator values as well as the other parts of the string.
 
 .. literalinclude:: re_split_groups.py

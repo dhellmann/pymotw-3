@@ -40,7 +40,7 @@ Algorithms
 
 The :mod:`functools` module includes some tools for creating
 decorators, functions that wrap other functions to change how they
-behave. The wrapt_ package goes further than :func:`functools.wrap` to
+behave. The wrapt_ package goes further than ``functools.wrap()`` to
 ensure that a decorator is constructed properly and works for all
 edge-cases.
 
@@ -229,7 +229,7 @@ similar application isolation under both Python 2 and 3, use
 virtualenv_.
 
 The fixtures_ package provides several test resource management
-classes tailor made to work with the :func:`addCleanup` method of test
+classes tailor made to work with the ``addCleanup()`` method of test
 cases from the :mod:`unittest` module. The provided fixture classes
 can manage loggers, environment variables, temporary files, and more
 in a consistent and safe way that ensures each test case is completely

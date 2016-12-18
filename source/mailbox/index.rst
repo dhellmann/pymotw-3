@@ -14,7 +14,7 @@ messages stored in local disk formats, including:
 - Babyl
 - MMDF
 
-There are base classes for :class:`Mailbox` and :class:`Message`, and
+There are base classes for ``Mailbox`` and ``Message``, and
 each mailbox format includes a corresponding pair of subclasses to
 implement the details for that format.
 
@@ -32,9 +32,9 @@ are escaped by prefixing the line with ``">"``.
 Creating an mbox Mailbox
 ------------------------
 
-Instantiate the :class:`mbox` class by passing the filename to the
+Instantiate the ``mbox`` class by passing the filename to the
 constructor.  If the file does not exist, it is created when
-:func:`add` is used to append messages.
+``add()`` is used to append messages.
 
 .. literalinclude:: mailbox_mbox_create.py
     :caption:
@@ -77,7 +77,7 @@ messages.
 Reading an mbox Mailbox
 -----------------------
 
-To read an existing mailbox, open it and treat the :class:`mbox`
+To read an existing mailbox, open it and treat the ``mbox``
 object like a dictionary.  The keys are arbitrary values defined by
 the mailbox instance and are not necessary meaningful other than as
 internal identifiers for message objects.
@@ -152,8 +152,8 @@ sub-folders.
 Creating a Maildir Mailbox
 --------------------------
 
-The only real difference between creating a :class:`Maildir` and
-:class:`mbox` is that the argument to the constructor is a directory
+The only real difference between creating a ``Maildir`` and
+``mbox`` is that the argument to the constructor is a directory
 name instead of a file name.  As before, if the mailbox does not
 exist, it is created when messages are added.
 
@@ -213,15 +213,15 @@ subdirectory.
 .. {{{end}}}
 
 After they are read, a client could move them to the ``cur``
-subdirectory using the :func:`set_subdir` method of the
-:class:`MaildirMessage`.
+subdirectory using the ``set_subdir()`` method of the
+``MaildirMessage``.
 
 .. literalinclude:: mailbox_maildir_set_subdir.py
    :caption:
    :start-after: #end_pymotw_header
 
 Although a maildir includes a "``tmp``" directory, the only valid
-arguments for :func:`set_subdir` are "``cur``" and "``new``".
+arguments for ``set_subdir()`` are "``cur``" and "``new``".
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'mailbox_maildir_set_subdir.py'))
@@ -328,7 +328,7 @@ Maildir folders
 ---------------
 
 Subdirectories or *folders* of a Maildir mailbox can be managed
-directly through the methods of the :class:`Maildir` class.  Callers
+directly through the methods of the ``Maildir`` class.  Callers
 can list, retrieve, create, and remove sub-folders for a given
 mailbox.
 
@@ -410,7 +410,7 @@ Message Flags
 Messages in mailboxes have flags for tracking aspects such as whether
 or not the message has been read, flagged as important by the reader,
 or marked for deletion later. Flags are stored as a sequence of
-format-specific letter codes and the :class:`Message` classes have
+format-specific letter codes and the ``Message`` classes have
 methods to retrieve and change the values of the flags. This example
 shows the flags on the messages in the ``Example`` maildir before
 adding the flag to indicate that the message is considered important.
@@ -440,8 +440,8 @@ existing identifier.
 
 .. {{{end}}}
 
-Adding flags with :func:`add_flag` preserves any existing flags. Using
-:func:`set_flags` writes over any existing set of flags, replacing it
+Adding flags with ``add_flag()`` preserves any existing flags. Using
+``set_flags()`` writes over any existing set of flags, replacing it
 with the new values passed to the method.
 
 .. literalinclude:: mailbox_maildir_set_flags.py
@@ -449,7 +449,7 @@ with the new values passed to the method.
    :start-after: #end_pymotw_header
 
 The ``F`` flag added by the previous example is lost when
-:func:`set_flags` replaces the flags with ``S`` in this example.
+``set_flags()`` replaces the flags with ``S`` in this example.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'mailbox_maildir_set_flags.py'))

@@ -2,17 +2,17 @@
  OrderedDict --- remember the order keys are added to a dictionary
 ===================================================================
 
-An :class:`OrderedDict` is a dictionary subclass that remembers the
+An ``OrderedDict`` is a dictionary subclass that remembers the
 order in which its contents are added.
 
 .. literalinclude:: collections_ordereddict_iter.py
    :caption:
    :start-after: #end_pymotw_header
 
-A regular :class:`dict` does not track the insertion order, and
+A regular ``dict`` does not track the insertion order, and
 iterating over it produces the values in order based on how the keys
 are stored in the hash table, which is in turn influenced by a random
-value to reduce collisions.  In an :class:`OrderedDict`, by contrast,
+value to reduce collisions.  In an ``OrderedDict``, by contrast,
 the order the items are inserted is remembered and used when creating
 an iterator.
 
@@ -39,8 +39,8 @@ an iterator.
 Equality
 ========
 
-A regular :class:`dict` looks at its contents when testing for
-equality.  An :class:`OrderedDict` also considers the order the items
+A regular ``dict`` looks at its contents when testing for
+equality.  An ``OrderedDict`` also considers the order the items
 were added.
 
 .. literalinclude:: collections_ordereddict_equality.py
@@ -69,14 +69,14 @@ Re-ordering
 ===========
 
 It is possible to change the order of the keys in an
-:class:`OrderedDict` by moving them either to the beginning or the end
-of the sequence using :func:`move_to_end`.
+``OrderedDict`` by moving them either to the beginning or the end
+of the sequence using ``move_to_end()``.
 
 .. literalinclude:: collections_ordereddict_move_to_end.py
    :caption:
    :start-after: #end_pymotw_header
 
-The ``last`` argument tells :func:`move_to_end` whether to move the
+The ``last`` argument tells ``move_to_end()`` whether to move the
 item to be the last item in the key sequence (when ``True``), or the
 first (when ``False``).
 

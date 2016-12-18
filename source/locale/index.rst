@@ -25,23 +25,23 @@ for sorting, and working with dates. It does not cover translation
 
 This section covers some of the high-level functions in the
 ``locale`` module. There are others which are lower level
-(:func:`format_string`) or which relate to managing the locale for an
-application (:func:`resetlocale`).
+(``format_string()``) or which relate to managing the locale for an
+application (``resetlocale()``).
 
 Probing the Current Locale
 ==========================
 
 The most common way to let the user change the locale settings for an
-application is through an environment variable (:data:`LC_ALL`,
-:data:`LC_CTYPE`, :data:`LANG`, or :data:`LANGUAGE`, depending on the
-platform). The application then calls :func:`setlocale` without a
+application is through an environment variable (``LC_ALL``,
+``LC_CTYPE``, ``LANG``, or ``LANGUAGE``, depending on the
+platform). The application then calls ``setlocale()`` without a
 hard-coded value, and the environment value is used.
 
 .. literalinclude:: locale_env.py
    :caption:
    :start-after: #end_pymotw_header
 
-The :func:`localeconv` method returns a dictionary containing the
+The ``localeconv()`` method returns a dictionary containing the
 locale's conventions.  The full list of value names and definitions is
 covered in the standard library documentation.
 
@@ -91,7 +91,7 @@ this output:
 
 .. {{{end}}}
 
-Running the same script with the :data:`LANG` variable set shows how
+Running the same script with the ``LANG`` variable set shows how
 the locale and default encoding change.
 
 The United States (``en_US``):
@@ -367,8 +367,8 @@ used to separate large numbers into readable chunks changes.
    :caption:
    :start-after: #end_pymotw_header
 
-To format numbers without the currency symbol, use :func:`format`
-instead of :func:`currency`.
+To format numbers without the currency symbol, use ``format()``
+instead of ``currency()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'locale_grouping.py'))
@@ -388,7 +388,7 @@ instead of :func:`currency`.
 .. {{{end}}}
 
 To convert locale-formatted numbers to a normalized locale-agnostic
-format, use :func:`delocalize`.
+format, use ``delocalize()``.
 
 .. literalinclude:: locale_delocalize.py
    :caption:
@@ -419,8 +419,8 @@ Parsing Numbers
 ===============
 
 Besides generating output in different formats, the ``locale``
-module helps with parsing input. It includes :func:`atoi` and
-:func:`atof` functions for converting the strings to integer and
+module helps with parsing input. It includes ``atoi()`` and
+``atof()`` functions for converting the strings to integer and
 floating point values based on the locale's numerical formatting
 conventions.
 

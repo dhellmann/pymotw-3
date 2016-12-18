@@ -2,15 +2,15 @@
  Producing Results Asynchronously
 ==================================
 
-A :class:`Future` represents the result of work that has not been
-completed yet. The event loop can watch for a :class:`Future` object's
+A ``Future`` represents the result of work that has not been
+completed yet. The event loop can watch for a ``Future`` object's
 state to indicate that it is done, allowing one part of an application
 to wait for another part to finish some work.
 
 Waiting for a Future
 ====================
 
-A :class:`Future` acts like a coroutine, so any techniques useful for
+A ``Future`` acts like a coroutine, so any techniques useful for
 waiting for a coroutine can also be used to wait for the future to be
 marked done. This example passes the future to the event loop's
 ``run_until_complete()`` method.
@@ -19,8 +19,8 @@ marked done. This example passes the future to the event loop's
    :caption:
    :start-after: #end_pymotw_header
 
-The state of the :class:`Future` changes to done when
-:func:`set_result` is called, and the :class:`Future` instance retains
+The state of the ``Future`` changes to done when
+``set_result()`` is called, and the ``Future`` instance retains
 the result given to the method for retrieval later.
 
 .. {{{cog
@@ -40,16 +40,16 @@ the result given to the method for retrieval later.
 
 .. {{{end}}}
 
-A :class:`Future` can also be used with the ``await`` keyword, as in
+A ``Future`` can also be used with the ``await`` keyword, as in
 this example.
 
 .. literalinclude:: asyncio_future_await.py
    :caption:
    :start-after: #end_pymotw_header
 
-The result of the :class:`Future` is returned by ``await``, so it is
+The result of the ``Future`` is returned by ``await``, so it is
 frequently possible to have the same code work with a regular
-coroutine and a :class:`Future` instance.
+coroutine and a ``Future`` instance.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'asyncio_future_await.py'))
@@ -68,7 +68,7 @@ coroutine and a :class:`Future` instance.
 Future Callbacks
 ================
 
-In addition to working like a coroutine, a :class:`Future` can invoke
+In addition to working like a coroutine, a ``Future`` can invoke
 callbacks when it is completed. Callbacks are invoked in the order
 they are registered.
 
@@ -76,9 +76,9 @@ they are registered.
    :caption:
    :start-after: #end_pymotw_header
 
-The callback should expect one argument, the :class:`Future`
+The callback should expect one argument, the ``Future``
 instance. To pass additional arguments to the callbacks, use
-:func:`functools.partial` to create a wrapper.
+``functools.partial()`` to create a wrapper.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'asyncio_future_callback.py'))

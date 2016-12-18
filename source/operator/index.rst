@@ -23,11 +23,11 @@ comparing objects to see if they are identical.
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`not_` includes the trailing underscore because ``not``
-is a Python keyword.  :func:`truth` applies the same logic used when
+``not_()`` includes the trailing underscore because ``not``
+is a Python keyword.  ``truth()`` applies the same logic used when
 testing an expression in an ``if`` statement or converting an
-expression to a :class:`bool`.  :func:`is_` implements the same check
-used by the ``is`` keyword, and :func:`is_not` does the same
+expression to a ``bool``.  ``is_()`` implements the same check
+used by the ``is`` keyword, and ``is_not()`` does the same
 test and returns the opposite answer.
 
 .. {{{cog
@@ -91,9 +91,9 @@ supported.
    :caption:
    :start-after: #end_pymotw_header
 
-There are two separate division operators: :func:`floordiv` (integer
+There are two separate division operators: ``floordiv()`` (integer
 division as implemented in Python before version 3.0) and
-:func:`truediv` (floating point division).
+``truediv()`` (floating point division).
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'operator_math.py'))
@@ -149,7 +149,7 @@ contents, and removing items from sequences.
    :caption:
    :start-after: #end_pymotw_header
 
-Some of these operations, such as :func:`setitem` and :func:`delitem`,
+Some of these operations, such as ``setitem()`` and ``delitem()``,
 modify the sequence in place and do not return a value.
 
 .. {{{cog
@@ -316,7 +316,7 @@ methods used by each operator.
    * :pydoc:`operator`
 
    * :mod:`functools` -- Functional programming tools, including the
-     :func:`total_ordering` decorator for adding rich comparison
+     ``total_ordering()`` decorator for adding rich comparison
      methods to a class.
 
    * :mod:`itertools` -- Iterator operations.

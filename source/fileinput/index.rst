@@ -32,7 +32,7 @@ program is simplified.
 .. literalinclude:: fileinput_example.py
    :lines: 30-39
 
-The :func:`input` function takes as argument a list of filenames to
+The ``input()`` function takes as argument a list of filenames to
 examine. If the list is empty, the module reads data from standard
 input. The function returns an iterator that produces individual lines
 from the text files being processed.  The caller just needs to loop
@@ -88,8 +88,8 @@ Progress Metadata
 In the previous example, the filename and line number being processed were
 not important. Other tools, such as grep-like searching, might need
 that information. ``fileinput`` includes functions for accessing
-all of the metadata about the current line (:func:`filename`,
-:func:`filelineno`, and :func:`lineno`).
+all of the metadata about the current line (``filename()``,
+``filelineno()``, and ``lineno()``).
 
 .. literalinclude:: fileinput_grep.py
    :caption:
@@ -178,7 +178,7 @@ option.
    :caption:
    :start-after: #end_pymotw_header
 
-Although the script uses :func:`print`, no output is produced because
+Although the script uses ``print()``, no output is produced because
 ``fileinput`` redirects standard output to the file being
 overwritten.
 

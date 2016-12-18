@@ -9,12 +9,12 @@ the basic math that might appear in an average application.  The standard
 library includes modules for more advanced needs.
 
 Python's built-in floating point numbers use the underlying
-:class:`double` representation.  They are sufficiently precise for
+``double`` representation.  They are sufficiently precise for
 most programs with mathematical requirements, but when more accurate
 representations of non-integer values are needed the :mod:`decimal`
 and :mod:`fractions` modules will be useful.  Arithmetic with decimal
 and fractional values retains precision, but is not as fast as the
-native :class:`float`.
+native ``float``.
 
 The :mod:`random` module includes a uniform distribution
 pseudorandom number generator, as well as functions for simulating

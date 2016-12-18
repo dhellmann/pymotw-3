@@ -26,17 +26,17 @@ Inspecting Modules
 ==================
 
 The first kind of introspection probes live objects to learn about
-them. Use :func:`getmembers` to discover the member attributes of
+them. Use ``getmembers()`` to discover the member attributes of
 object.  The types of members that might be returned depend on the
 type of object scanned. Modules can contain classes and functions;
 classes can contain methods and attributes; and so on.
 
-The arguments to :func:`getmembers` are an object to scan (a module,
+The arguments to ``getmembers()`` are an object to scan (a module,
 class, or instance) and an optional predicate function that is used to
 filter the objects returned. The return value is a list of tuples with
 two values: the name of the member, and the type of the member. The
 ``inspect`` module includes several such predicate functions with
-names like :func:`ismodule`, :func:`isclass`, etc.
+names like ``ismodule()``, ``isclass()``, etc.
 
 .. literalinclude:: inspect_getmembers_module.py
     :caption:
@@ -44,7 +44,7 @@ names like :func:`ismodule`, :func:`isclass`, etc.
 
 This sample prints the members of the ``example`` module. Modules have
 several private attributes that are used as part of the import
-implementation as well as a set of :data:`__builtins__`.  All of these
+implementation as well as a set of ``__builtins__``.  All of these
 are ignored in the output for this example because they are not
 actually part of the module and the list is long.
 
@@ -91,7 +91,7 @@ Only classes are included in the output, now.
 Inspecting Classes
 ==================
 
-Classes are scanned using :func:`getmembers` in the same way as
+Classes are scanned using ``getmembers()`` in the same way as
 modules, though the types of members are different.
 
 .. literalinclude:: inspect_getmembers_class.py
@@ -156,8 +156,8 @@ methods, slots, and other members of the class.
 
 .. {{{end}}}
 
-To find the methods of a class, use the :func:`isfunction`
-predicate. The :func:`ismethod` predicate only recognizes bound
+To find the methods of a class, use the ``isfunction()``
+predicate. The ``ismethod()`` predicate only recognizes bound
 methods of instances.
 
 .. literalinclude:: inspect_getmembers_class_methods.py
@@ -179,16 +179,16 @@ Only unbound methods are returned now.
 
 .. {{{end}}}
 
-The output for :class:`B` includes the override for :func:`get_name`
-as well as the new method, and the inherited :func:`__init__` method
-implemented in :class:`A`.
+The output for ``B`` includes the override for ``get_name()``
+as well as the new method, and the inherited ``__init__()`` method
+implemented in ``A``.
 
 .. literalinclude:: inspect_getmembers_class_methods_b.py
     :caption:
     :start-after: #end_pymotw_header
 
-Methods inherited from :class:`A`, such as :func:`__init__`, are
-identified as being methods of :class:`B`.
+Methods inherited from ``A``, such as ``__init__()``, are
+identified as being methods of ``B``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'inspect_getmembers_class_methods_b.py'))
@@ -213,8 +213,8 @@ Introspecting instances works in the same way as other objects.
    :caption:
    :start-after: #end_pymotw_header
 
-The predicate :func:`ismethod` recognizes two bound methods from
-:class:`A` in the example instance.
+The predicate ``ismethod()`` recognizes two bound methods from
+``A`` in the example instance.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'inspect_getmembers_instance.py'))
@@ -235,7 +235,7 @@ Documentation Strings
 =====================
 
 The docstring for an object can be retrieved with
-:func:`getdoc`. The return value is the :attr:`__doc__` attribute
+``getdoc()``. The return value is the :attr:`__doc__` attribute
 with tabs expanded to spaces and with indentation made uniform.
 
 .. literalinclude:: inspect_getdoc.py
@@ -244,7 +244,7 @@ with tabs expanded to spaces and with indentation made uniform.
 
 The second line of the docstring is indented when it is retrieved
 through the attribute directly, but moved to the left margin by
-:func:`getdoc`.
+``getdoc()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'inspect_getdoc.py'))
@@ -267,7 +267,7 @@ through the attribute directly, but moved to the left margin by
 
 In addition to the actual docstring, it is possible to retrieve the
 comments from the source file where an object is implemented, if the
-source is available. The :func:`getcomments` function looks at the
+source is available. The ``getcomments()`` function looks at the
 source of the object and finds comments on lines preceding the
 implementation.
 
@@ -291,7 +291,7 @@ prefix stripped off.
 
 .. {{{end}}}
 
-When a module is passed to :func:`getcomments`, the return value is
+When a module is passed to ``getcomments()``, the return value is
 always the first comment in the module.
 
 .. literalinclude:: inspect_getcomments_module.py
@@ -320,7 +320,7 @@ Retrieving Source
 
 If the ``.py`` file is available for a module, the original source
 code for the class or method can be retrieved using
-:func:`getsource` and :func:`getsourcelines`.
+``getsource()`` and ``getsourcelines()``.
 
 .. literalinclude:: inspect_getsource_class.py
     :caption:
@@ -351,7 +351,7 @@ the output.
 .. {{{end}}}
 
 To retrieve the source for a single method, pass the method reference
-to :func:`getsource`.
+to ``getsource()``.
 
 .. literalinclude:: inspect_getsource_method.py
     :caption:
@@ -374,14 +374,14 @@ The original indent level is retained in this case.
 
 .. {{{end}}}
 
-Use :func:`getsourcelines` instead of :func:`getsource` to
+Use ``getsourcelines()`` instead of ``getsource()`` to
 retrieve the lines of source split into individual strings.
 
 .. literalinclude:: inspect_getsourcelines_method.py
     :caption:
     :start-after: #end_pymotw_header
 
-The return value from :func:`getsourcelines` is a :class:`tuple` containing a
+The return value from ``getsourcelines()`` is a ``tuple`` containing a
 list of strings (the lines from the source file), and a starting line
 number in the file where the source appears.
 
@@ -400,25 +400,25 @@ number in the file where the source appears.
 
 .. {{{end}}}
 
-If the source file is not available, :func:`getsource` and
-:func:`getsourcelines` raise an :class:`IOError`.
+If the source file is not available, ``getsource()`` and
+``getsourcelines()`` raise an ``IOError``.
 
 Method and Function Signatures
 ==============================
 
 In addition to the documentation for a function or method, it is
 possible to ask for a complete specification of the arguments the
-callable takes, including default values. The :func:`signature`
-function returns a :class:`Signature` instance containing information
+callable takes, including default values. The ``signature()``
+function returns a ``Signature`` instance containing information
 about the arguments to the function.
 
 .. literalinclude:: inspect_signature_function.py
     :caption:
     :start-after: #end_pymotw_header
 
-The function arguments are available through the :data:`parameters`
-attribute of the :class:`Signature`. :data:`parameters` is an ordered
-dictionary mapping the parameter names to :class:`Parameter` instances
+The function arguments are available through the ``parameters``
+attribute of the ``Signature``. ``parameters`` is an ordered
+dictionary mapping the parameter names to ``Parameter`` instances
 describing the argument.  In this example, the first argument to the
 function, ``arg1``, does not have a default value, while ``arg2`` does.
 
@@ -440,14 +440,14 @@ function, ``arg1``, does not have a default value, while ``arg2`` does.
 
 .. {{{end}}}
 
-The :class:`Signature` for a function can be used by decorators or
+The ``Signature`` for a function can be used by decorators or
 other functions to validate inputs, provide different defaults, etc.
 Writing a suitably generic and reusable validation decorator has one
 special challenge, though, because it can be complicated to match up
 incoming arguments with their names for functions that accept a
-combination of named and positional arguments. The :func:`bind` and
-:func:`bind_partial` methods provide the necessary logic to handle the
-mapping.  They return a :class:`BoundArguments` instance populated
+combination of named and positional arguments. The ``bind()`` and
+``bind_partial()`` methods provide the necessary logic to handle the
+mapping.  They return a ``BoundArguments`` instance populated
 with the arguments associated with the names of the arguments of a
 specified function.
 
@@ -455,7 +455,7 @@ specified function.
    :caption:
    :start-after: #end_pymotw_header
 
-The :class:`BoundArguments` instance has attributes ``args`` and
+The ``BoundArguments`` instance has attributes ``args`` and
 ``kwargs`` that can be used to call the function using the syntax to
 expand the tuple and dictionary onto the stack as the arguments.
 
@@ -478,15 +478,15 @@ expand the tuple and dictionary onto the stack as the arguments.
 
 .. {{{end}}}
 
-If only some arguments are available, :func:`bind_partial` will still
-create a :class:`BoundArguments` instance. It may not be fully usable
+If only some arguments are available, ``bind_partial()`` will still
+create a ``BoundArguments`` instance. It may not be fully usable
 until the remaining arguments are added.
 
 .. literalinclude:: inspect_signature_bind_partial.py
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`apply_defaults` will add any values from the parameter
+``apply_defaults()`` will add any values from the parameter
 defaults.
 
 .. {{{cog
@@ -512,7 +512,7 @@ Class Hierarchies
 =================
 
 ``inspect`` includes two methods for working directly with class
-hierarchies. The first, :func:`getclasstree`, creates a tree-like
+hierarchies. The first, ``getclasstree()``, creates a tree-like
 data structure based on the classes it is given and their base
 classes. Each element in the list returned is either a tuple with a
 class and its base classes, or another list containing tuples for
@@ -523,9 +523,9 @@ subclasses.
     :start-after: #end_pymotw_header
 
 The output from this example is the "tree" of inheritance for the
-:class:`A`, :class:`B`, :class:`C`, and :class:`D` classes. 
-:class:`D` appears twice, since it inherits from both :class:`C` and
-:class:`A`.
+``A``, ``B``, ``C``, and ``D`` classes. 
+``D`` appears twice, since it inherits from both ``C`` and
+``A``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'inspect_getclasstree.py'))
@@ -545,14 +545,14 @@ The output from this example is the "tree" of inheritance for the
 
 .. {{{end}}}
 
-If :func:`getclasstree` is called with ``unique`` set to a true value,
+If ``getclasstree()`` is called with ``unique`` set to a true value,
 the output is different.
 
 .. literalinclude:: inspect_getclasstree_unique.py
     :caption:
     :start-after: #end_pymotw_header
 
-This time, :class:`D` only appears in the output once:
+This time, ``D`` only appears in the output once:
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'inspect_getclasstree_unique.py'))
@@ -575,7 +575,7 @@ Method Resolution Order
 =======================
 
 The other function for working with class hierarchies is
-:func:`getmro`, which returns a :class:`tuple` of classes in the
+``getmro()``, which returns a ``tuple`` of classes in the
 order they should be scanned when resolving an attribute that might be
 inherited from a base class using the *Method Resolution Order*
 (MRO). Each class in the sequence appears only once.
@@ -585,8 +585,8 @@ inherited from a base class using the *Method Resolution Order*
     :start-after: #end_pymotw_header
 
 This output demonstrates the "depth-first" nature of the MRO
-search. For :class:`B_First`, :class:`A` also comes before :class:`C`
-in the search order, because :class:`B` is derived from :class:`A`.
+search. For ``B_First``, ``A`` also comes before ``C``
+in the search order, because ``B`` is derived from ``A``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'inspect_getmro.py'))
@@ -627,7 +627,7 @@ are raised. It can also be useful for logging or when debugging
 programs, since the stack frames can be interrogated to discover the
 argument values passed into the functions.
 
-:func:`currentframe` returns the frame at the top of the stack (for
+``currentframe()`` returns the frame at the top of the stack (for
 the current function).
 
 .. literalinclude:: inspect_currentframe.py
@@ -673,7 +673,7 @@ frame's dictionary of local variables.
 .. {{{end}}}
 
 
-Using :func:`stack`, it is also possible to access all of the stack
+Using ``stack()``, it is also possible to access all of the stack
 frames from the current frame to the first caller. This example is
 similar to the one shown earlier, except it waits until reaching the
 end of the recursion to print the stack information.
@@ -683,7 +683,7 @@ end of the recursion to print the stack information.
     :start-after: #end_pymotw_header
 
 The last part of the output represents the main program, outside of the
-:func:`recurse` function.
+``recurse()`` function.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'inspect_stack.py', break_lines_at=65, line_break_mode='wrap'))

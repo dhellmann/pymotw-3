@@ -15,7 +15,7 @@ if a signal is received in the middle.
 Signals are identified by integers and are defined in the operating
 system C headers.  Python exposes the signals appropriate for the
 platform as symbols in the ``signal`` module.  The examples in this
-section use :const:`SIGINT` and :const:`SIGUSR1`.  Both are typically
+section use ``SIGINT`` and ``SIGUSR1``.  Both are typically
 defined for all Unix and Unix-like systems.
 
 .. note::
@@ -41,11 +41,11 @@ the program that was interrupted by the signal.
     :start-after: #end_pymotw_header
 
 This example script loops indefinitely, pausing for a few seconds each
-time.  When a signal comes in, the :func:`sleep` call is interrupted
+time.  When a signal comes in, the ``sleep()`` call is interrupted
 and the signal handler ``receive_signal`` prints the signal number.
 After the signal handler returns, the loop continues.
 
-Send signals to the running program using :func:`os.kill` or the Unix
+Send signals to the running program using ``os.kill()`` or the Unix
 command line program ``kill``.
 
 .. NOT RUNNING
@@ -85,9 +85,9 @@ Retrieving Registered Handlers
 ==============================
 
 To see what signal handlers are registered for a signal, use
-:func:`getsignal`.  Pass the signal number as argument.  The return
+``getsignal()``.  Pass the signal number as argument.  The return
 value is the registered handler, or one of the special values
-:const:`SIG_IGN` (if the signal is being ignored), :const:`SIG_DFL`
+``SIG_IGN`` (if the signal is being ignored), ``SIG_DFL``
 (if the default behavior is being used), or ``None`` (if the existing
 signal handler was registered from C, rather than Python).
 
@@ -145,7 +145,7 @@ Sending Signals
 ===============
 
 The function for sending signals from within Python is
-:func:`os.kill`.  Its use is covered in the section on the :mod:`os`
+``os.kill()``.  Its use is covered in the section on the :mod:`os`
 module, :ref:`creating-processes-with-os-fork`.
 
 Alarms
@@ -160,9 +160,9 @@ blocking indefinitely on an I/O operation or other system call.
     :caption:
     :start-after: #end_pymotw_header
 
-In this example, the call to :func:`sleep` is interrupted, but then
+In this example, the call to ``sleep()`` is interrupted, but then
 continues after the signal is processed so the message printed after
-:func:`sleep` returns shows that the program was paused for at least
+``sleep()`` returns shows that the program was paused for at least
 as long as the sleep duration.
 
 .. {{{cog
@@ -183,19 +183,19 @@ as long as the sleep duration.
 Ignoring Signals
 ================
 
-To ignore a signal, register :const:`SIG_IGN` as the handler.  This
-script replaces the default handler for :const:`SIGINT` with
-:const:`SIG_IGN`, and registers a handler for :const:`SIGUSR1`.  Then
-it uses :func:`signal.pause` to wait for a signal to be received.
+To ignore a signal, register ``SIG_IGN`` as the handler.  This
+script replaces the default handler for ``SIGINT`` with
+``SIG_IGN``, and registers a handler for ``SIGUSR1``.  Then
+it uses ``signal.pause()`` to wait for a signal to be received.
 
 .. literalinclude:: signal_ignore.py
     :caption:
     :start-after: #end_pymotw_header
 
-Normally :const:`SIGINT` (the signal sent by the shell to a program
-when the user presses ``Ctrl-C``) raises a :class:`KeyboardInterrupt`.
-This example ignores :const:`SIGINT` and raises :class:`SystemExit`
-when it sees :const:`SIGUSR1`.  Each ``^C`` in the output represents
+Normally ``SIGINT`` (the signal sent by the shell to a program
+when the user presses ``Ctrl-C``) raises a ``KeyboardInterrupt``.
+This example ignores ``SIGINT`` and raises ``SystemExit``
+when it sees ``SIGUSR1``.  Each ``^C`` in the output represents
 an attempt to use ``Ctrl-C`` to kill the script from the terminal.
 Using ``kill -USR1 72598`` from another terminal eventually causes the
 script to exit.
@@ -225,7 +225,7 @@ signal from another.
 The signal handlers were all registered in the main thread because
 this is a requirement of the ``signal`` module implementation for
 Python, regardless of underlying platform support for mixing threads
-and signals.  Although the receiver thread calls :func:`signal.pause`,
+and signals.  Although the receiver thread calls ``signal.pause()``,
 it does not receive the signal.  The ``signal.alarm(2)`` call near the
 end of the example prevents an infinite block, since the receiver
 thread will never exit.
@@ -249,8 +249,8 @@ the main thread.
     :caption:
     :start-after: #end_pymotw_header
 
-The alarm does not abort the :func:`sleep` call in
-:func:`use_alarm`.
+The alarm does not abort the ``sleep()`` call in
+``use_alarm()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'signal_threads_alarm.py', ignore_error=True))
@@ -278,5 +278,5 @@ The alarm does not abort the :func:`sleep` call in
    * :mod:`subprocess` -- More examples of sending signals to
      processes.
 
-   * :ref:`creating-processes-with-os-fork` -- The :func:`kill`
+   * :ref:`creating-processes-with-os-fork` -- The ``kill()``
      function can be used to send signals between processes.

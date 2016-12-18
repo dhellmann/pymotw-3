@@ -25,7 +25,7 @@ information to understand the cause of the exception and permit a fix.
    :caption:
    :start-after: #end_pymotw_header
 
-This sample program has a subtle error in :func:`func2()`.
+This sample program has a subtle error in ``func2()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'cgitb_basic_traceback.py', ignore_error=True))
@@ -51,7 +51,7 @@ Enabling Detailed Tracebacks
 
 While the basic traceback includes enough information to spot the
 error, enabling ``cgitb`` gives more detail.  ``cgitb``
-replaces :data:`sys.excepthook` with a function that gives extended
+replaces ``sys.excepthook`` with a function that gives extended
 tracebacks.
 
 .. literalinclude:: cgitb_local_vars.py
@@ -185,10 +185,10 @@ the line where the actual exception is generated.
 .. {{{end}}}
 
 
-In the case of this code with a :class:`ZeroDivisionError`, it is
+In the case of this code with a ``ZeroDivisionError``, it is
 apparent that the problem is introduced in the computation of the
-value of ``c`` in :func:`func1`, rather than where the value is used
-in :func:`func2`.
+value of ``c`` in ``func1()``, rather than where the value is used
+in ``func2()``.
 
 The end of the output also includes the full details of the exception
 object (in case it has attributes other than ``message`` that would be
@@ -212,7 +212,7 @@ When the body of the function is pushed out of the code window
 displayed, there is not enough context to understand the location of
 the error.  Using a larger context value with ``cgitb`` solves this
 problem.  Passing an integer as the ``context`` argument to
-:func:`enable()` controls the amount of code displayed for each line
+``enable()`` controls the amount of code displayed for each line
 of the traceback.
 
 This output show that ``self.a`` and ``self.b`` are involved in the
@@ -455,7 +455,7 @@ Logging Tracebacks
 
 For many situations, printing the traceback details to standard error
 is the best resolution.  In a production system, however, logging the
-errors is even better.  The :func:`enable()` function includes an optional
+errors is even better.  The ``enable()`` function includes an optional
 argument, ``logdir``, to enable error logging.  When a directory name is
 provided, each exception is logged to its own file in the given
 directory.

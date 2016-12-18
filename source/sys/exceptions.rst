@@ -14,7 +14,7 @@ Unhandled Exceptions
 Many applications are structured with a main loop that wraps execution
 in a global exception handler to trap errors not handled at a lower
 level.  Another way to achieve the same thing is by setting the
-:data:`sys.excepthook` to a function that takes three arguments (the
+``sys.excepthook`` to a function that takes three arguments (the
 error type, error value, and traceback) and let it deal with unhandled
 errors.
 
@@ -23,7 +23,7 @@ errors.
     :start-after: #end_pymotw_header
 
 Since there is no ``try:except`` block around the line where
-the exception is raised the following call to :func:`print` is not
+the exception is raised the following call to ``print()`` is not
 run, even though the except hook is set.
 
 .. {{{cog
@@ -48,14 +48,14 @@ There are times when an explicit exception handler is preferred,
 either for code clarity or to avoid conflicts with libraries that try
 to install their own ``excepthook``.  In these cases, a common handler
 function can be created that does not need to have the exception
-object passed to it explicitly by calling :func:`exc_info` to retrieve
+object passed to it explicitly by calling ``exc_info()`` to retrieve
 the current exception for a thread.
 
-The return value of :func:`exc_info` is a three member tuple
+The return value of ``exc_info()`` is a three member tuple
 containing the exception class, an exception instance, and a
-traceback.  Using :func:`exc_info` is preferred over the old form
-(with :const:`exc_type`, :const:`exc_value`, and
-:const:`exc_traceback`) because it is thread-safe.
+traceback.  Using ``exc_info()`` is preferred over the old form
+(with ``exc_type``, ``exc_value``, and
+``exc_traceback``) because it is thread-safe.
 
 .. literalinclude:: sys_exc_info.py
     :caption:
@@ -63,7 +63,7 @@ traceback.  Using :func:`exc_info` is preferred over the old form
 
 This example avoids introducing a circular reference between the
 traceback object and a local variable in the current frame by ignoring
-that part of the return value from :func:`exc_info`.  If the traceback
+that part of the return value from ``exc_info()``.  If the traceback
 is needed (for example, so it can be logged), explicitly delete the
 local variable (using ``del``) to avoid cycles.
 
@@ -88,8 +88,8 @@ Previous Interactive Exception
 
 In the interactive interpreter, there is only one thread of
 interaction.  Unhandled exceptions in that thread are saved to three
-variables in ``sys`` (:const:`last_type`, :const:`last_value`, and
-:const:`last_traceback`) to make it easy to retrieve them for
+variables in ``sys`` (``last_type``, ``last_value``, and
+``last_traceback``) to make it easy to retrieve them for
 debugging.  Using the postmortem debugger in :mod:`pdb` avoids any
 need to use the values directly.
 

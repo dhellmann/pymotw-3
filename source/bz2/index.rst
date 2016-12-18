@@ -21,7 +21,7 @@ One-shot Operations in Memory
 
 The simplest way to work with ``bz2`` is to load all of the data to
 be compressed or decompressed in memory, and then use
-:func:`compress()` and :func:`decompress()` to transform it.
+``compress()`` and ``decompress()`` to transform it.
 
 .. literalinclude:: bz2_memory.py
     :caption:
@@ -87,8 +87,8 @@ Incremental Compression and Decompression
 =========================================
 
 The in-memory approach has obvious drawbacks that make it impractical
-for real-world use cases.  The alternative is to use :class:`BZ2Compressor`
-and :class:`BZ2Decompressor` objects to manipulate data incrementally so that
+for real-world use cases.  The alternative is to use ``BZ2Compressor``
+and ``BZ2Decompressor`` objects to manipulate data incrementally so that
 the entire data set does not have to fit into memory.
 
 .. literalinclude:: bz2_incremental.py
@@ -96,12 +96,12 @@ the entire data set does not have to fit into memory.
    :start-after: #end_pymotw_header
 
 This example reads small blocks of data from a plain-text file and
-passes it to :func:`compress`.  The compressor maintains an internal
+passes it to ``compress()``.  The compressor maintains an internal
 buffer of compressed data.  Since the compression algorithm depends on
 checksums and minimum block sizes, the compressor may not be ready to
 return data each time it receives more input.  If it does not have an
 entire compressed block ready, it returns an empty string.  When all
-of the data is fed in, the :func:`flush` method forces the compressor
+of the data is fed in, the ``flush()`` method forces the compressor
 to close the final block and return the rest of the compressed data.
 
 .. {{{cog
@@ -129,7 +129,7 @@ to close the final block and return the rest of the compressed data.
 Mixed Content Streams
 =====================
 
-:class:`BZ2Decompressor` can also be used in situations where
+``BZ2Decompressor`` can also be used in situations where
 compressed and uncompressed data is mixed together.
 
 .. literalinclude:: bz2_mixed.py
@@ -156,7 +156,7 @@ contains any data not used.
 Writing Compressed Files
 ========================
 
-:class:`BZ2File` can be used to write to and read from
+``BZ2File`` can be used to write to and read from
 bzip2-compressed files using the usual methods for writing and reading
 data.
 
@@ -212,7 +212,7 @@ for the same input data.  Results will vary for other inputs.
 	3103658384 1137 compress-level-9.bz2
 	Input contains 754688 bytes
 
-A :class:`BZ2File` instance also includes a :func:`writelines()`
+A ``BZ2File`` instance also includes a ``writelines()``
 method that can be used to write a sequence of strings.
 
 .. literalinclude:: bz2_file_writelines.py
@@ -250,7 +250,7 @@ Reading Compressed Files
 ========================
 
 To read data back from previously compressed files, open the file with
-read mode (``'r'``). The value returned from :func:`read` will be a
+read mode (``'r'``). The value returned from ``read()`` will be a
 byte string.
 
 .. literalinclude:: bz2_file_read.py
@@ -280,9 +280,9 @@ of the data.
     :caption:
     :start-after: #end_pymotw_header
 
-The :func:`seek` position is relative to the *uncompressed* data, so
+The ``seek()`` position is relative to the *uncompressed* data, so
 the caller does not need to be aware that the data file is compressed.
-This allows a :class:`BZ2File` instance to be passed to a function
+This allows a ``BZ2File`` instance to be passed to a function
 expecting a regular uncompressed file.
 
 .. {{{cog
@@ -305,18 +305,18 @@ expecting a regular uncompressed file.
 Reading and Writing Unicode Data
 ================================
 
-The previous examples used :class:`BZ2File` directly and managed the
+The previous examples used ``BZ2File`` directly and managed the
 encoding and decoding of Unicode text strings inline with an
-:class:`io.TextIOWrapper`, where necessary. These extra steps can be
-avoided by using :func:`bz2.open`, which sets up an
-:class:`io.TextIOWrapper` to handle the encoding or decoding
+``io.TextIOWrapper``, where necessary. These extra steps can be
+avoided by using ``bz2.open()``, which sets up an
+``io.TextIOWrapper`` to handle the encoding or decoding
 automatically.
 
 .. literalinclude:: bz2_unicode.py
    :caption:
    :start-after: #end_pymotw_header
 
-The file handle returned by :func:`open` supports :func:`seek`, but
+The file handle returned by ``open()`` supports ``seek()``, but
 use care because the file pointer moves by *bytes* not *characters*
 and may end up in the middle of an encoded character.
 
@@ -343,7 +343,7 @@ The code in the next example responds to requests consisting of
 filenames by writing a compressed version of the file to the socket
 used to communicate with the client.  It has some artificial chunking
 in place to illustrate the buffering that occurs when the data passed
-to :func:`compress()` or :func:`decompress()` does not result in a
+to ``compress()`` or ``decompress()`` does not result in a
 complete block of compressed or uncompressed output.
 
 .. literalinclude:: bz2_server.py
@@ -351,7 +351,7 @@ complete block of compressed or uncompressed output.
    :lines: 9-52
 
 The main program starts a server in a thread, combining
-:mod:`SocketServer` and :class:`Bz2RequestHandler`.  
+:mod:`SocketServer` and ``Bz2RequestHandler``.  
 
 .. literalinclude:: bz2_server.py
    :lines: 55-

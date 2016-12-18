@@ -7,19 +7,19 @@
 .. module:: zipimport
     :synopsis: Load Python code from ZIP archives.
 
-The ``zipimport`` module implements the :class:`zipimporter` class,
+The ``zipimport`` module implements the ``zipimporter`` class,
 which can be used to find and load Python modules inside ZIP
-archives. The :class:`zipimporter` supports the "import hooks" API
+archives. The ``zipimporter`` supports the "import hooks" API
 specified in PEP 302; this is how Python Eggs work.
 
 It is not usually necessary to use the ``zipimport`` module
 directly, since it is possible to import directly from a ZIP archive
-as long as that archive appears in :data:`sys.path`. However, it is
+as long as that archive appears in ``sys.path``. However, it is
 instructive to study how the importer API can be used, to learn the
 features available and understand how module importing works.  Knowing
 how the ZIP importer works will also help debug issues that may come
 up when distributing applications packaged as ZIP archives created
-with :class:`zipfile.PyZipFile`.
+with ``zipfile.PyZipFile``.
 
 Example
 =======
@@ -75,14 +75,14 @@ in this section.
 Finding a Module
 ================
 
-Given the full name of a module, :func:`find_module()` will try to
+Given the full name of a module, ``find_module()`` will try to
 locate that module inside the ZIP archive.
 
 .. literalinclude:: zipimport_find_module.py
    :caption:
    :start-after: #end_pymotw_header
 
-If the module is found, the :class:`zipimporter` instance is
+If the module is found, the ``zipimporter`` instance is
 returned. Otherwise, ``None`` is returned.
 
 .. {{{cog
@@ -104,14 +104,14 @@ returned. Otherwise, ``None`` is returned.
 Accessing Code
 ==============
 
-The :func:`get_code()` method loads the code object for a module from
+The ``get_code()`` method loads the code object for a module from
 the archive.
 
 .. literalinclude:: zipimport_get_code.py
    :caption:
    :start-after: #end_pymotw_header
 
-The code object is not the same as a :class:`module` object, but is
+The code object is not the same as a ``module`` object, but is
 used to create one.
 
 .. {{{cog
@@ -130,7 +130,7 @@ used to create one.
 
 .. {{{end}}}
 
-To load the code as a usable module, use :func:`load_module()`
+To load the code as a usable module, use ``load_module()``
 instead.
 
 .. literalinclude:: zipimport_load_module.py
@@ -173,7 +173,7 @@ rest of the modules are just added as the ``.pyc`` files).
    :caption:
    :start-after: #end_pymotw_header
 
-If the source for a module is not available, :func:`get_source()`
+If the source for a module is not available, ``get_source()``
 returns ``None``.
 
 .. {{{cog
@@ -227,7 +227,7 @@ Packages
 ========
 
 To determine if a name refers to a package instead of a regular module, use
-:func:`is_package()`.
+``is_package()``.
 
 .. literalinclude:: zipimport_is_package.py
    :caption:
@@ -322,7 +322,7 @@ the wrong value.
 .. {{{end}}}
 
 A more reliable way to retrieve the file is to use the
-:func:`get_data()` method. The :class:`zipimporter` instance that
+``get_data()`` method. The ``zipimporter`` instance that
 loaded the module can be accessed through the :attr:`__loader__`
 attribute of the imported module:
 
@@ -330,7 +330,7 @@ attribute of the imported module:
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`pkgutil.get_data` uses this interface to access data from
+``pkgutil.get_data()`` uses this interface to access data from
 within a package. The value returned is a byte string, which needs to
 be decoded to a unicode string before printing.
 
@@ -364,7 +364,7 @@ The ``__loader__`` is not set for modules not imported via
    * :mod:`imp` -- Other import-related functions.
 
    * :mod:`pkgutil` -- Provides a more generic interface to
-     :func:`get_data`.
+     ``get_data()``.
 
    * :mod:`zipfile` -- Read and write ZIP archive files.
 

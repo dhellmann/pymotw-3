@@ -8,7 +8,7 @@ select --- Wait for I/O Efficiently
 The ``select`` module provides access to platform-specific I/O
 monitoring functions.  The most portable interface is the POSIX
 function ``select()``, which is available on Unix and Windows.  The
-module also includes :func:`poll`, a Unix-only API, and several
+module also includes ``poll()``, a Unix-only API, and several
 options that only work with specific variants of Unix.
 
 .. note::
@@ -23,7 +23,7 @@ Using select()
 
 Python's ``select()`` function is a direct interface to the
 underlying operating system implementation.  It monitors sockets, open
-files, and pipes (anything with a :func:`fileno` method that returns a
+files, and pipes (anything with a ``fileno()`` method that returns a
 valid file descriptor) until they become readable or writable or a
 communication error occurs.  ``select()`` makes it easier to monitor
 multiple connections at the same time, and is more efficient than
@@ -74,10 +74,10 @@ block and wait for network activity.
 
 ``select()`` returns three new lists, containing subsets of the
 contents of the lists passed in.  All of the sockets in the
-:data:`readable` list have incoming data buffered and available to be
-read.  All of the sockets in the :data:`writable` list have free space
+``readable`` list have incoming data buffered and available to be
+read.  All of the sockets in the ``writable`` list have free space
 in their buffer and can be written to.  The sockets returned in
-:data:`exceptional` have had an error (the actual definition of
+``exceptional`` have had an error (the actual definition of
 "exceptional condition" depends on the platform).
 
 The "readable" sockets represent three possible cases.  If the socket
@@ -91,7 +91,7 @@ to not block.
    :lines: 46-59
 
 The next case is an established connection with a client that has sent
-data.  The data is read with :func:`recv`, then placed on the queue so
+data.  The data is read with ``recv()``, then placed on the queue so
 it can be sent through the socket and back to the client.
 
 .. literalinclude:: select_echo_server.py
@@ -270,59 +270,64 @@ And this is the client output:
 Using poll()
 ============
 
-The :func:`poll` function provides similar features to ``select()``,
+The ``poll()`` function provides similar features to ``select()``,
 but the underlying implementation is more efficient.  The trade-off is
-that :func:`poll` is not supported under Windows, so programs using
-:func:`poll` are less portable.
+that ``poll()`` is not supported under Windows, so programs using
+``poll()`` are less portable.
 
-An echo server built on :func:`poll` starts with the same socket
+An echo server built on ``poll()`` starts with the same socket
 configuration code used in the other examples.
 
 .. literalinclude:: select_poll_echo_server.py
    :caption:
    :lines: 10-29
 
-The timeout value passed to :func:`poll` is represented in
+The timeout value passed to ``poll()`` is represented in
 milliseconds, instead of seconds, so in order to pause for a full
 second the timeout must be set to ``1000``.
 
 .. literalinclude:: select_poll_echo_server.py
    :lines: 31-32
 
-Python implements :func:`poll` with a class that manages the
+Python implements ``poll()`` with a class that manages the
 registered data channels being monitored.  Channels are added by
-calling :func:`register` with flags indicating which events are
+calling ``register()`` with flags indicating which events are
 interesting for that channel.  The full set of flags is listed in
 :table:`Event Flags for poll()`.
 
-.. table:: Event Flags for poll()
+.. list-table:: Event Flags for poll()
+   :header-rows: 1
 
-   =================  ===========
-   Event              Description
-   =================  ===========
-   :const:`POLLIN`    Input ready
-   :const:`POLLPRI`   Priority input ready
-   :const:`POLLOUT`   Able to receive output
-   :const:`POLLERR`   Error
-   :const:`POLLHUP`   Channel closed
-   :const:`POLLNVAL`  Channel not open
-   =================  ===========
+   - * Event
+     * Description
+   - * ``POLLIN``
+     * Input ready
+   - * ``POLLPRI``
+     * Priority input ready
+   - * ``POLLOUT``
+     * Able to receive output
+   - * ``POLLERR``
+     * Error
+   - * ``POLLHUP``
+     * Channel closed
+   - * ``POLLNVAL``
+     * Channel not open
 
 The echo server will be setting up some sockets just for reading and
 others to be read from or written to.  The appropriate combinations of
-flags are saved to the local variables :data:`READ_ONLY` and
-:data:`READ_WRITE`.
+flags are saved to the local variables ``READ_ONLY`` and
+``READ_WRITE``.
 
 .. literalinclude:: select_poll_echo_server.py
    :lines: 34-41
 
-The :data:`server` socket is registered so that any incoming
+The ``server`` socket is registered so that any incoming
 connections or data triggers an event.
 
 .. literalinclude:: select_poll_echo_server.py
    :lines: 43-45
 
-Since :func:`poll` returns a list of tuples containing the file
+Since ``poll()`` returns a list of tuples containing the file
 descriptor for the socket and the event flag, a mapping from file
 descriptor numbers to objects is needed to retrieve the
 ``socket`` to read or write from it.
@@ -330,7 +335,7 @@ descriptor numbers to objects is needed to retrieve the
 .. literalinclude:: select_poll_echo_server.py
    :lines: 47-50
 
-The server's loop calls :func:`poll` and then processes the "events"
+The server's loop calls ``poll()`` and then processes the "events"
 returned by looking up the socket and taking action based on the flag
 in the event.
 
@@ -339,34 +344,34 @@ in the event.
 
 As with ``select()``, when the main server socket is "readable,"
 that really means there is a pending connection from a client.  The
-new connection is registered with the :data:`READ_ONLY` flags to watch
+new connection is registered with the ``READ_ONLY`` flags to watch
 for new data to come through it.
 
 .. literalinclude:: select_poll_echo_server.py
    :lines: 64-78
 
-Sockets other than the server are existing clients and :func:`recv`
+Sockets other than the server are existing clients and ``recv()``
 is used to access the data waiting to be read.
 
 .. literalinclude:: select_poll_echo_server.py
    :lines: 80-81
 
-If :func:`recv` returns any data, it is placed into the outgoing queue
+If ``recv()`` returns any data, it is placed into the outgoing queue
 for the socket, and the flags for that socket are changed using
-:func:`modify` so :func:`poll` will watch for the socket to be ready
+``modify()`` so ``poll()`` will watch for the socket to be ready
 to receive data.
 
 .. literalinclude:: select_poll_echo_server.py
    :lines: 82-89
 
-An empty string returned by :func:`recv` means the client
-disconnected, so :func:`unregister` is used to tell the :class:`poll`
+An empty string returned by ``recv()`` means the client
+disconnected, so ``unregister()`` is used to tell the ``poll``
 object to ignore the socket.
 
 .. literalinclude:: select_poll_echo_server.py
    :lines: 91-100
 
-The :const:`POLLHUP` flag indicates a client that "hung up" the
+The ``POLLHUP`` flag indicates a client that "hung up" the
 connection without closing it cleanly.  The server stops polling
 clients that disappear.
 
@@ -374,14 +379,14 @@ clients that disappear.
    :lines: 102-108
 
 The handling for writable sockets looks like the version used in the
-example for ``select()``, except that :func:`modify` is used to
+example for ``select()``, except that ``modify()`` is used to
 change the flags for the socket in the poller, instead of removing it
 from the output list.
 
 .. literalinclude:: select_poll_echo_server.py
    :lines: 110-124
 
-And, finally, any events with :const:`POLLERR` cause the server to
+And, finally, any events with ``POLLERR`` cause the server to
 close the socket.
 
 .. literalinclude:: select_poll_echo_server.py
@@ -440,9 +445,9 @@ sockets), this is the output.
 Platform-specific Options
 =========================
 
-Less portable options provided by ``select`` are :class:`epoll`,
-the *edge polling* API supported by Linux; :class:`kqueue`, which uses
-BSD's *kernel queue*; and :class:`kevent`, BSD's *kernel event*
+Less portable options provided by ``select`` are ``epoll``,
+the *edge polling* API supported by Linux; ``kqueue``, which uses
+BSD's *kernel queue*; and ``kevent``, BSD's *kernel event*
 interface.  Refer to the operating system library documentation for
 more detail about how they work.
 

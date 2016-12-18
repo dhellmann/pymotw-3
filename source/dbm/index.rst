@@ -7,7 +7,7 @@
 
 ``dbm`` is a front-end for DBM-style databases that use simple
 string values as keys to access records containing strings.  It uses
-:func:`whichdb` to identify databases, then opens them with the
+``whichdb()`` to identify databases, then opens them with the
 appropriate module.  It is used as a back-end for :mod:`shelve`, which
 stores objects in a DBM database using :mod:`pickle`.
 
@@ -28,10 +28,10 @@ dbm.gnu
 :mod:`dbm.gnu` is an interface to the version of the ``dbm``
 library from the GNU project.  It works the same as the other DBM
 implementations described here, with a few changes to the ``flags``
-supported by :func:`open`.
+supported by ``open()``.
 
 Besides the standard ``'r'``, ``'w'``, ``'c'``, and ``'n'`` flags,
-:func:`dbm.gnu.open` supports:
+``dbm.gnu.open()`` supports:
 
     * ``'f'`` to open the database in *fast* mode. In fast mode,
       writes to the database are not synchronized.
@@ -79,7 +79,7 @@ versions of each of the sub-modules in order.
 
 .. {{{end}}}
 
-The :func:`open` function takes ``flags`` to control how the database
+The ``open()`` function takes ``flags`` to control how the database
 file is managed.  To create a new database when necessary, use
 ``'c'``.  Using ``'n'`` always creates a new database, overwriting an
 existing file.
@@ -103,7 +103,7 @@ In this example, the file is always re-initialized.
 
 .. {{{end}}}
 
-:func:`whichdb` reports the type of database that was created.
+``whichdb()`` reports the type of database that was created.
 
 .. literalinclude:: dbm_whichdb.py
     :caption:
@@ -130,7 +130,7 @@ Opening an Existing Database
 
 To open an existing database, use ``flags`` of either ``'r'`` (for
 read-only) or ``'w'`` (for read-write).  Existing databases are
-automatically given to :func:`whichdb` to identify, so it as long as a
+automatically given to ``whichdb()`` to identify, so it as long as a
 file can be identified, the appropriate module is used to open it.
 
 .. literalinclude:: dbm_existing.py
@@ -166,7 +166,7 @@ The keys of the database need to be strings.
     :caption:
     :start-after: #end_pymotw_header
 
-Passing another type results in a :class:`TypeError`.
+Passing another type results in a ``TypeError``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'dbm_intkeys.py', ignore_error=True))
@@ -186,7 +186,7 @@ Values must be strings or ``None``.
     :caption:
     :start-after: #end_pymotw_header
 
-A similar :class:`TypeError` is raised if a value is not a string.
+A similar ``TypeError`` is raised if a value is not a string.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'dbm_intvalue.py', ignore_error=True))

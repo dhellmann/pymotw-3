@@ -2,15 +2,15 @@
  Text
 ======
 
-The :class:`str` class is the most obvious text processing tool
+The ``str`` class is the most obvious text processing tool
 available to Python programmers, but there are plenty of other tools
 in the standard library to make advanced text manipulation simple.
 
-Programs may use :class:`string.Template` as a simple way to
-parameterize strings beyond the features of :class:`str` objects.
+Programs may use ``string.Template`` as a simple way to
+parameterize strings beyond the features of ``str`` objects.
 While not as feature-rich as templates defined by many of the web
 frameworks or extension modules available from the Python Package
-Index, :class:`string.Template` is a good middle ground for
+Index, ``string.Template`` is a good middle ground for
 user-modifiable templates where dynamic values need to be inserted
 into otherwise static text.
 

@@ -3,12 +3,12 @@
 Parsing an XML Document
 =======================
 
-Parsed XML documents are represented in memory by :class:`ElementTree`
-and :class:`Element` objects connected in a tree structure based on
+Parsed XML documents are represented in memory by ``ElementTree``
+and ``Element`` objects connected in a tree structure based on
 the way the nodes in the XML document are nested.
 
-Parsing an entire document with :func:`parse` returns an
-:class:`ElementTree` instance.  The tree knows about all of the data
+Parsing an entire document with ``parse()`` returns an
+``ElementTree`` instance.  The tree knows about all of the data
 in the input document, and the nodes of the tree can be searched or
 manipulated in place.  While this flexibility can make working with
 the parsed document more convenient, it typically takes more memory
@@ -24,14 +24,14 @@ podcasts represented as an OPML outline is not significant:
       :caption:
       :language: xml
 
-To parse the file, pass an open file handle to :func:`parse`.
+To parse the file, pass an open file handle to ``parse()``.
 
 .. literalinclude:: ElementTree_parse_opml.py
    :caption:
    :start-after: #end_pymotw_header
 
 It will read the data, parse the XML, and return an
-:class:`ElementTree` object.
+``ElementTree`` object.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'ElementTree_parse_opml.py'))
@@ -48,8 +48,8 @@ It will read the data, parse the XML, and return an
 Traversing the Parsed Tree
 ==========================
 
-To visit all of the children in order, use :func:`iter` to create a
-generator that iterates over the :class:`ElementTree` instance.
+To visit all of the children in order, use ``iter()`` to create a
+generator that iterates over the ``ElementTree`` instance.
 
 .. literalinclude:: ElementTree_dump_opml.py
    :caption:
@@ -89,7 +89,7 @@ dictionary.
    :caption:
    :start-after: #end_pymotw_header
 
-The ``'outline'`` argument to :func:`iter` means processing is limited
+The ``'outline'`` argument to ``iter()`` means processing is limited
 to only nodes with the tag ``'outline'``.
 
 .. {{{cog
@@ -119,7 +119,7 @@ be error prone.  The previous example had to look at each outline node
 to determine if it was a group (nodes with only a :attr:`text`
 attribute) or podcast (with both :attr:`text` and :attr:`xmlUrl`).  To
 produce a simple list of the podcast feed URLs, without names or
-groups, the logic could be simplified using :func:`findall` to look
+groups, the logic could be simplified using ``findall()`` to look
 for nodes with more descriptive search characteristics.
 
 As a first pass at converting the first version, an XPath argument
@@ -130,7 +130,7 @@ can be used to look for all outline nodes.
    :start-after: #end_pymotw_header
 
 The logic in this version is not substantially different than the
-version using :func:`getiterator`.  It still has to check for the
+version using ``getiterator()``.  It still has to check for the
 presence of the URL, except that it does not print the group name when
 the URL is not found.
 
@@ -182,9 +182,9 @@ working.
 Parsed Node Attributes
 ======================
 
-The items returned by :func:`findall` and :func:`iter` are
-:class:`Element` objects, each representing a node in the XML parse
-tree.  Each :class:`Element` has attributes for accessing data pulled
+The items returned by ``findall()`` and ``iter()`` are
+``Element`` objects, each representing a node in the XML parse
+tree.  Each ``Element`` has attributes for accessing data pulled
 out of the XML.  This can be illustrated with a somewhat more
 contrived example input file, ``data.xml``.
 
@@ -296,7 +296,7 @@ Events can be one of:
 ``end-ns``
   End a namespace declaration.
 
-:func:`iterparse` returns an iterable that produces tuples
+``iterparse()`` returns an iterable that produces tuples
 containing the name of the event and the node triggering the event.
 
 .. literalinclude:: ElementTree_show_all_events.py
@@ -304,7 +304,7 @@ containing the name of the event and the node triggering the event.
    :start-after: #end_pymotw_header
 
 By default, only ``end`` events are generated.  To see other events,
-pass the list of desired event names to :func:`iterparse`, as in
+pass the list of desired event names to ``iterparse()``, as in
 this example.
 
 .. {{{cog
@@ -383,12 +383,12 @@ Creating a Custom Tree Builder
 
 A potentially more efficient means of handling parse events is to
 replace the standard tree builder behavior with a custom version.  The
-:class:`XMLParser` parser uses a :class:`TreeBuilder` to process
+``XMLParser`` parser uses a ``TreeBuilder`` to process
 the XML and call methods on a target class to save the results.  The
-usual output is an :class:`ElementTree` instance created by the
-default :class:`TreeBuilder` class.  Replacing :class:`TreeBuilder`
+usual output is an ``ElementTree`` instance created by the
+default ``TreeBuilder`` class.  Replacing ``TreeBuilder``
 with another class allows it to receive the events before the
-:class:`Element` nodes are instantiated, saving that portion of the
+``Element`` nodes are instantiated, saving that portion of the
 overhead.
 
 The XML-to-CSV converter from the previous section can be
@@ -398,14 +398,14 @@ re-implemented as a tree builder.
    :caption:
    :start-after: #end_pymotw_header
 
-:class:`PodcastListToCSV` implements the :class:`TreeBuilder`
-protocol.  Each time a new XML tag is encountered, :func:`start` is
+``PodcastListToCSV`` implements the ``TreeBuilder``
+protocol.  Each time a new XML tag is encountered, ``start()`` is
 called with the tag name and attributes.  When a closing tag is seen,
-:func:`end` is called with the name.  In between, :func:`data` is
+``end()`` is called with the name.  In between, ``data()`` is
 called when a node has content (the tree builder is expected to keep
 up with the "current" node).  When all of the input is processed,
-:func:`close` is called.  It can return a value, which will be
-returned to the user of the :class:`TreeBuilder`.
+``close()`` is called.  It can return a value, which will be
+returned to the user of the ``TreeBuilder``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'ElementTree_podcast_csv_treebuilder.py', 
@@ -437,17 +437,17 @@ Parsing Strings
 ===============
 
 To work with smaller bits of XML text, especially string literals that
-might be embedded in the source of a program, use :func:`XML` and
+might be embedded in the source of a program, use ``XML()`` and
 the string containing the XML to be parsed as the only argument.
 
 .. literalinclude:: ElementTree_XML.py
    :caption:
    :start-after: #end_pymotw_header
 
-Unlike with :func:`parse`, the return value is an
-:class:`Element` instance instead of an :class:`ElementTree`.  An
-:class:`Element` supports the iterator protocol directly, so there is
-no need to call :func:`getiterator`.
+Unlike with ``parse()``, the return value is an
+``Element`` instance instead of an ``ElementTree``.  An
+``Element`` supports the iterator protocol directly, so there is
+no need to call ``getiterator()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'ElementTree_XML.py'))
@@ -473,14 +473,14 @@ no need to call :func:`getiterator`.
 .. {{{end}}}
 
 For structured XML that uses the :attr:`id` attribute to identify
-unique nodes of interest, :func:`XMLID` is a convenient way to
+unique nodes of interest, ``XMLID()`` is a convenient way to
 access the parse results.
 
 .. literalinclude:: ElementTree_XMLID.py
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`XMLID` returns the parsed tree as an :class:`Element` object,
+``XMLID()`` returns the parsed tree as an ``Element`` object,
 along with a dictionary mapping the :attr:`id` attribute strings to
 the individual nodes in the tree.
 

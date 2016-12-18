@@ -14,7 +14,7 @@ Configuration Variables
 =======================
 
 Access the build-time configuration settings is provided through two
-functions.  :func:`get_config_vars` returns a dictionary mapping the
+functions.  ``get_config_vars()`` returns a dictionary mapping the
 configuration variable names to values.
 
 .. literalinclude:: sysconfig_get_config_vars.py
@@ -66,8 +66,8 @@ filename extensions, and version details.
 
 .. {{{end}}}
 
-Passing variable names to :func:`get_config_vars` changes the return
-value to a :class:`list` created by appending all of the values for
+Passing variable names to ``get_config_vars()`` changes the return
+value to a ``list`` created by appending all of the values for
 those variables together.
 
 .. literalinclude:: sysconfig_get_config_vars_by_name.py
@@ -94,13 +94,13 @@ where modules can be found on the current system.
 .. {{{end}}}
 
 When only a single configuration value is needed, use
-:func:`get_config_var` to retrieve it.
+``get_config_var()`` to retrieve it.
 
 .. literalinclude:: sysconfig_get_config_var.py
    :caption:
    :start-after: #end_pymotw_header
 
-If the variable is not found, :func:`get_config_var` returns ``None``
+If the variable is not found, ``get_config_var()`` returns ``None``
 instead of raising an exception.
 
 .. {{{cog
@@ -131,7 +131,7 @@ A scheme is a set of platform-specific default directories organized
 based on the platform's packaging standards and guidelines.  There are
 different schemes for installing into a site-wide location or a
 private directory owned by the user.  The full set of schemes can be
-accessed with :func:`get_scheme_names`.
+accessed with ``get_scheme_names()``.
 
 .. literalinclude:: sysconfig_get_scheme_names.py
    :caption:
@@ -142,7 +142,7 @@ depends on the platform, and the actual scheme used depends on options
 given to the installation program.  If the current system is running a
 POSIX-compliant operating system, the default is ``posix_prefix``.
 Otherwise the default is the operating system name, as defined by
-:data:`os.name`.
+``os.name``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'sysconfig_get_scheme_names.py'))
@@ -162,7 +162,7 @@ Otherwise the default is the operating system name, as defined by
 .. {{{end}}}
 
 Each scheme defines a set of paths used for installing packages.  For
-a list of the path names, use :func:`get_path_names`.
+a list of the path names, use ``get_path_names()``.
 
 .. literalinclude:: sysconfig_get_path_names.py
    :caption:
@@ -208,7 +208,7 @@ and their meaning.
 
 .. {{{end}}}
 
-Use :func:`get_paths` to retrieve the actual directories associated
+Use ``get_paths()`` to retrieve the actual directories associated
 with a scheme.
 
 .. literalinclude:: sysconfig_get_paths.py
@@ -270,15 +270,15 @@ user-specific values for ``posix_user``.
 
 .. {{{end}}}
 
-For an individual path, call :func:`get_path`.
+For an individual path, call ``get_path()``.
 
 .. literalinclude:: sysconfig_get_path.py
    :caption:
    :start-after: #end_pymotw_header
 
-Using :func:`get_path` is equivalent to saving the value of
-:func:`get_paths` and looking up the individual key in the dictionary.
-If several paths are needed, :func:`get_paths` is more efficient
+Using ``get_path()`` is equivalent to saving the value of
+``get_paths()`` and looking up the individual key in the dictionary.
+If several paths are needed, ``get_paths()`` is more efficient
 because it does not recompute all of the paths each time.
 
 .. {{{cog
@@ -307,10 +307,10 @@ Python Version and Platform
 
 While :mod:`sys` includes some basic platform identification (see
 :ref:`sys-build-time-info`), it is not specific enough to be used for
-installing binary packages because :data:`sys.platform` does not
+installing binary packages because ``sys.platform`` does not
 always include information about hardware architecture, instruction size, or
 other values that effect the compatibility of binary libraries.  For a
-more precise platform specifier, use :func:`get_platform`.
+more precise platform specifier, use ``get_platform()``.
 
 .. literalinclude:: sysconfig_get_platform.py
    :caption:
@@ -333,14 +333,14 @@ number included in the platform string.
 .. {{{end}}}
 
 As a convenience, the interpreter version from
-:data:`sys.version_info` is also available through
-:func:`get_python_version` in ``sysconfig``.
+``sys.version_info`` is also available through
+``get_python_version()`` in ``sysconfig``.
 
 .. literalinclude:: sysconfig_get_python_version.py
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`get_python_version` returns a string suitable for use when
+``get_python_version()`` returns a string suitable for use when
 building a version-specific path.
 
 .. {{{cog

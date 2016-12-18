@@ -36,14 +36,14 @@ The heap output is printed using ``heapq_showtree.py``:
 Creating a Heap
 ===============
 
-There are two basic ways to create a heap, :func:`heappush` and
-:func:`heapify`.
+There are two basic ways to create a heap, ``heappush()`` and
+``heapify()``.
 
 .. literalinclude:: heapq_heappush.py
    :caption:
    :start-after: #end_pymotw_header
 
-Using :func:`heappush`, the heap sort order of the elements is
+Using ``heappush()``, the heap sort order of the elements is
 maintained as new items are added from a data source.
 
 .. {{{cog
@@ -91,14 +91,14 @@ maintained as new items are added from a data source.
 .. {{{end}}}
 
 If the data is already in memory, it is more efficient to use
-:func:`heapify` to rearrange the items of the list in place.
+``heapify()`` to rearrange the items of the list in place.
 
 .. literalinclude:: heapq_heapify.py
    :caption:
    :start-after: #end_pymotw_header
 
 The result of building a list in heap order one item at a time is the
-same as building it unordered and then calling :func:`heapify`.
+same as building it unordered and then calling ``heapify()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'heapq_heapify.py'))
@@ -123,7 +123,7 @@ same as building it unordered and then calling :func:`heapify`.
 Accessing Contents of a Heap
 ============================
 
-Once the heap is organized correctly, use :func:`heappop` to remove the
+Once the heap is organized correctly, use ``heappop()`` to remove the
 element with the lowest value. 
 
 .. literalinclude:: heapq_heappop.py
@@ -131,7 +131,7 @@ element with the lowest value.
    :start-after: #end_pymotw_header
 
 In this example, adapted from the stdlib documentation,
-:func:`heapify` and :func:`heappop` are used to sort a list of
+``heapify()`` and ``heappop()`` are used to sort a list of
 numbers.
 
 .. {{{cog
@@ -167,7 +167,7 @@ numbers.
 .. {{{end}}}
 
 To remove existing elements and replace them with new values in a
-single operation, use :func:`heapreplace`.
+single operation, use ``heapreplace()``.
 
 .. literalinclude:: heapq_heapreplace.py
    :caption:
@@ -218,7 +218,7 @@ a range of the largest or smallest values it contains.
    :caption:
    :start-after: #end_pymotw_header
 
-Using :func:`nlargest` and :func:`nsmallest` are only efficient for
+Using ``nlargest()`` and ``nsmallest()`` are only efficient for
 relatively small values of n > 1, but can still come in handy in a few
 cases.
 
@@ -249,7 +249,7 @@ small data sets.
    list(sorted(itertools.chain(*data)))
 
 For larger data sets, this technique can use a considerable amount of
-memory. Instead of sorting the entire combined sequence, :func:`merge`
+memory. Instead of sorting the entire combined sequence, ``merge()``
 uses a heap to generate a new sequence one item at a time, and
 determine the next item using a fixed amount of memory.
 
@@ -257,7 +257,7 @@ determine the next item using a fixed amount of memory.
    :caption:
    :start-after: #end_pymotw_header
 
-Because the implementation of :func:`merge` uses a heap, it consumes
+Because the implementation of ``merge()`` uses a heap, it consumes
 memory based on the number of sequences being merged, rather than the
 number of items in those sequences.
 

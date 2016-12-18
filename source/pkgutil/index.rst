@@ -12,14 +12,14 @@ files distributed within a package.
 Package Import Paths
 ====================
 
-The :func:`extend_path` function is used to modify the search path and
+The ``extend_path()`` function is used to modify the search path and
 change the way sub-modules are imported from within a package so that
 several different directories can be combined as though they are one.
 This can be used to override installed versions of packages with
 development versions, or to combine platform-specific and shared
 modules into a single package namespace.
 
-The most common way to call :func:`extend_path` is by adding these two
+The most common way to call ``extend_path()`` is by adding these two
 lines to the ``__init__.py`` inside the package:
 
 .. code-block:: none
@@ -27,7 +27,7 @@ lines to the ``__init__.py`` inside the package:
     import pkgutil
     __path__ = pkgutil.extend_path(__path__, __name__)
 
-:func:`extend_path` scans ``sys.path`` for directories that include a
+``extend_path()`` scans ``sys.path`` for directories that include a
 subdirectory named for the package given as the second argument.  The
 list of directories is combined with the path value passed as the
 first argument and returned as a single list, suitable for use as the
@@ -96,7 +96,7 @@ When this test program is run directly from the command line, the
 .. {{{end}}}
 
 However, if the ``extension`` directory is added to the
-:data:`PYTHONPATH` and the program is run again, different results are
+``PYTHONPATH`` and the program is run again, different results are
 produced.
 
 .. {{{cog
@@ -162,18 +162,18 @@ and ``demopkg2/__init__.py`` contains
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`reverse` is used to ensure that any directories added to the
+``reverse()`` is used to ensure that any directories added to the
 search path by ``pkgutil`` are scanned for imports *before* the
 default location.
 
-This program imports :mod:`demopkg2.overloaded` and calls :func:`func`:
+This program imports :mod:`demopkg2.overloaded` and calls ``func()``:
 
 .. literalinclude:: pkgutil_devel.py
    :caption:
    :start-after: #end_pymotw_header
 
 Running it without any special path treatment produces output from the
-installed version of :func:`func`.
+installed version of ``func()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'pkgutil_devel.py'))
@@ -233,7 +233,7 @@ Managing Paths with PKG Files
 =============================
 
 The first example illustrated how to extend the search path using
-extra directories included in the :data:`PYTHONPATH`. It is also
+extra directories included in the ``PYTHONPATH``. It is also
 possible to add to the search path using ``*.pkg`` files containing
 directory names. PKG files are similar to the PTH files used by the
 :mod:`site` module. They can contain directory names, one per line, to
@@ -430,7 +430,7 @@ Package Data
 
 In addition to code, Python packages can contain data files such as
 templates, default configuration files, images, and other supporting
-files used by the code in the package.  The :func:`get_data` function
+files used by the code in the package.  The ``get_data()`` function
 gives access to the data in the files in a format-agnostic way, so it
 does not matter if the package is distributed as an EGG, part of a
 frozen binary, or regular files on the file system.
@@ -457,14 +457,14 @@ template.
    :caption:
    :language: html
 
-This program uses :func:`get_data` to retrieve the template contents
+This program uses ``get_data()`` to retrieve the template contents
 and print them out.
 
 .. literalinclude:: pkgutil_get_data.py
    :caption:
    :start-after: #end_pymotw_header
 
-The arguments to :func:`get_data` are the dotted name of the package,
+The arguments to ``get_data()`` are the dotted name of the package,
 and a filename relative to the top of the package.  The return value
 is a byte sequence, so it is decoded from UTF-8 before being printed.
 
@@ -491,7 +491,7 @@ is a byte sequence, so it is decoded from UTF-8 before being printed.
 
 .. {{{end}}}
 
-:func:`get_data` is distribution format-agnostic because it uses the
+``get_data()`` is distribution format-agnostic because it uses the
 import hooks defined in :pep:`302` to access the package contents.
 Any loader that provides the hooks can be used, including the ZIP
 archive importer in :mod:`zipfile`.
@@ -500,12 +500,12 @@ archive importer in :mod:`zipfile`.
    :caption:
    :start-after: #end_pymotw_header
 
-This example uses :func:`PyZipFile.writepy` to create a ZIP archive
+This example uses ``PyZipFile.writepy()`` to create a ZIP archive
 containing a copy of the :mod:`pkgwithdata` package, including a
 renamed version of the template file.  It then adds the ZIP archive to
 the import path before using ``pkgutil`` to load the template and
 print it.  Refer to the discussion of :mod:`zipfile` for more details
-about using :func:`writepy`.
+about using ``writepy()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'pkgutil_get_data_zip.py', line_break_mode='wrap'))

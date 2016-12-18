@@ -14,20 +14,20 @@ Unicode Primer
 ==============
 
 CPython 3.x differentiates between "text" and "byte" strings.
-:class:`bytes` instances use a sequence of 8-bit byte values.  In
-contrast, :class:`str` strings are managed internally as a sequence of
+``bytes`` instances use a sequence of 8-bit byte values.  In
+contrast, ``str`` strings are managed internally as a sequence of
 Unicode *code points*.  The code point values are saved as a sequence
 of 2 or 4 bytes each, depending on the options given when Python was
 compiled.
 
-When :class:`str` values are output, they are encoded using one of
+When ``str`` values are output, they are encoded using one of
 several standard schemes so that the sequence of bytes can be
 reconstructed as the same string of text later.  The bytes of the
 encoded value are not necessarily the same as the code point values,
 and the encoding defines a way to translate between the two sets of
 values.  Reading Unicode data also requires knowing the encoding so
 that the incoming bytes can be converted to the internal
-representation used by the :class:`unicode` class.
+representation used by the ``unicode`` class.
 
 The most common encodings for Western languages are ``UTF-8`` and
 ``UTF-16``, which use sequences of one and two byte values
@@ -71,7 +71,7 @@ bytes before returning the value.
 .. {{{end}}}
 
 The first encoding example begins by printing the text ``'pi: π'``
-using the raw representation of the :class:`unicode` class, followed
+using the raw representation of the ``unicode`` class, followed
 by the name of each character from the Unicode database.  The next two
 lines encode the string as UTF-8 and UTF-16 respectively, and show the
 hexadecimal values resulting from the encoding.
@@ -80,7 +80,7 @@ hexadecimal values resulting from the encoding.
    :caption:
    :start-after: #end_pymotw_header
 
-The result of encoding a :class:`str` is a :class:`bytes` object.
+The result of encoding a ``str`` is a ``bytes`` object.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'codecs_encodings.py'))
@@ -101,9 +101,9 @@ The result of encoding a :class:`str` is a :class:`bytes` object.
 
 .. {{{end}}}
 
-Given a sequence of encoded bytes as a :class:`bytes` instance, the
-:func:`decode` method translates them to code points and returns the
-sequence as a :class:`str` instance.
+Given a sequence of encoded bytes as a ``bytes`` instance, the
+``decode()`` method translates them to code points and returns the
+sequence as a ``str`` instance.
 
 .. literalinclude:: codecs_decode.py
    :caption:
@@ -147,7 +147,7 @@ whether enough bytes have been read in order to fully decode the data.
 decoding, so applications do not have to do that work.
 
 The simplest interface provided by ``codecs`` is an alternative to
-the built-in :func:`open` function.  The new version works just like
+the built-in ``open()`` function.  The new version works just like
 the built-in, but adds two new arguments to specify the encoding and
 desired error handling technique.
 
@@ -155,7 +155,7 @@ desired error handling technique.
    :caption:
    :start-after: #end_pymotw_header
 
-This example starts with a :class:`unicode` string with the code point
+This example starts with a ``unicode`` string with the code point
 for π and saves the text to a file using an encoding specified on the
 command line.
 
@@ -187,7 +187,7 @@ command line.
 
 .. {{{end}}}
 
-Reading the data with :func:`open` is straightforward, with one catch:
+Reading the data with ``open()`` is straightforward, with one catch:
 the encoding must be known in advance, in order to set up the decoder
 correctly.  Some data formats, such as XML, specify the encoding as
 part of the file, but usually it is up to the application to manage.
@@ -199,7 +199,7 @@ is correct.
    :start-after: #end_pymotw_header
 
 This example reads the files created by the previous program, and
-prints the representation of the resulting :class:`unicode` object to
+prints the representation of the resulting ``unicode`` object to
 the console.
 
 .. {{{cog
@@ -308,7 +308,7 @@ the file to determine it.
    :start-after: #end_pymotw_header
 
 Since the first two bytes of the file are used for byte order
-detection, they are not included in the data returned by :func:`read`.
+detection, they are not included in the data returned by ``read()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'codecs_bom_detection.py'))
@@ -336,8 +336,8 @@ encoding is used while writing then an error will be generated and
 data may be lost.
 
 ``codecs`` uses the same five error handling options that are
-provided by the :func:`encode` method of :class:`str` and the
-:func:`decode` method of :class:`bytes`, listed in :table:`Codec Error
+provided by the ``encode()`` method of ``str`` and the
+``decode()`` method of ``bytes``, listed in :table:`Codec Error
 Handling Modes`.
 
 .. table:: Codec Error Handling Modes
@@ -356,8 +356,8 @@ Encoding Errors
 ---------------
 
 The most common error condition is receiving a
-:class:`UnicodeEncodeError` when writing Unicode data to an ASCII
-output stream, such as a regular file or :data:`sys.stdout`.  This
+``UnicodeEncodeError`` when writing Unicode data to an ASCII
+output stream, such as a regular file or ``sys.stdout``.  This
 sample program can be used to experiment with the different error
 handling modes.
 
@@ -435,8 +435,8 @@ is specified in the W3C document *XML Entity Definitions for Characters*).
 .. {{{end}}}
 
 The other lossless error handling scheme is ``backslashreplace``, which
-produces an output format like the value returned when :func:`repr` of
-a :class:`unicode` object is printed.  Unicode characters are replaced
+produces an output format like the value returned when ``repr()`` of
+a ``unicode`` object is printed.  Unicode characters are replaced
 with ``\u`` followed by the hexadecimal value of the code point.
 
 .. {{{cog
@@ -464,7 +464,7 @@ the wrong encoding is used.
 
 As with encoding, ``strict`` error handling mode raises an exception
 if the byte stream cannot be properly decoded.  In this case, a
-:class:`UnicodeDecodeError` results from trying to convert part of the
+``UnicodeDecodeError`` results from trying to convert part of the
 UTF-16 BOM to a character using the UTF-8 decoder.
 
 .. {{{cog
@@ -523,10 +523,10 @@ with a black background containing a white question mark.
 Encoding Translation
 ====================
 
-Although most applications will work with :class:`str` data
+Although most applications will work with ``str`` data
 internally, decoding or encoding it as part of an I/O operation, there
 are times when changing a file's encoding without holding on to that
-intermediate data format is useful.  :func:`EncodedFile` takes an open
+intermediate data format is useful.  ``EncodedFile()`` takes an open
 file handle using one encoding and wraps it with a class that
 translates the data to another encoding as the I/O occurs.
 
@@ -535,11 +535,11 @@ translates the data to another encoding as the I/O occurs.
    :start-after: #end_pymotw_header
 
 This example shows reading from and writing to separate handles
-returned by :func:`EncodedFile`.  No matter whether the handle is used
+returned by ``EncodedFile()``.  No matter whether the handle is used
 for reading or writing, the ``file_encoding`` always refers to the
 encoding in use by the open file handle passed as the first argument,
 and ``data_encoding`` value refers to the encoding in use by the data
-passing through the :func:`read` and :func:`write` calls.
+passing through the ``read()`` and ``write()`` calls.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'codecs_encodedfile.py'))
@@ -595,7 +595,7 @@ than working directly with :mod:`zlib`.
 
 Not all of the compression or encoding systems support reading a
 portion of the data through the stream interface using
-:func:`readline` or :func:`read` because they need to find the end of
+``readline()`` or ``read()`` because they need to find the end of
 a compressed segment to expand it.  If a program cannot hold the
 entire uncompressed data set in memory, use the incremental access
 features of the compression library, instead of ``codecs``.
@@ -623,7 +623,7 @@ Some of the encodings provided, especially ``bz2`` and ``zlib``, may
 dramatically change the length of the data stream as they work on it.
 For large data sets, these encodings operate better incrementally,
 working on one small chunk of data at a time.  The
-:class:`IncrementalEncoder` and :class:`IncrementalDecoder` API is
+``IncrementalEncoder`` and ``IncrementalDecoder`` API is
 designed for this purpose.
 
 .. literalinclude:: codecs_incremental_bz2.py
@@ -633,7 +633,7 @@ designed for this purpose.
 Each time data is passed to the encoder or decoder its internal state
 is updated.  When the state is consistent (as defined by the codec),
 data is returned and the state resets.  Until that point, calls to
-:func:`encode` or :func:`decode` will not return any data.  When the
+``encode()`` or ``decode()`` will not return any data.  When the
 last bit of data is passed in, the argument ``final`` should be set to
 ``True`` so the codec knows to flush any remaining buffered data.
 
@@ -676,8 +676,8 @@ echos data it receives back to the sender.
    :caption:
    :start-after: #end_pymotw_header
 
-The data could be encoded explicitly before each call to :func:`send`,
-but missing one call to :func:`send` would result in an encoding
+The data could be encoded explicitly before each call to ``send()``,
+but missing one call to ``send()`` would result in an encoding
 error.
 
 .. Do not re-run this example every time, since it sometimes generates
@@ -698,7 +698,7 @@ error.
 
 .. {{{end}}}
 
-Using :func:`makefile` to get a file-like handle for the socket, and
+Using ``makefile()`` to get a file-like handle for the socket, and
 then wrapping that with a stream-based reader or writer, means Unicode
 strings will be encoded on the way in to and out of the socket.
 
@@ -706,7 +706,7 @@ strings will be encoded on the way in to and out of the socket.
    :caption:
    :start-after: #end_pymotw_header
 
-This example uses :class:`PassThrough` to show that the data is
+This example uses ``PassThrough`` to show that the data is
 encoded before being sent, and the response is decoded after it is
 received in the client.
 
@@ -769,9 +769,9 @@ map* based codecs such as invertcaps.  A character map encoding is
 made up of two dictionaries.  The *encoding map* converts character
 values from the input string to byte values in the output and the
 *decoding map* goes the other way.  Create the decoding map first,
-and then use :func:`make_encoding_map` to convert it to an encoding
-map.  The C functions :func:`charmap_encode` and
-:func:`charmap_decode` use the maps to convert their input data
+and then use ``make_encoding_map()`` to convert it to an encoding
+map.  The C functions ``charmap_encode()`` and
+``charmap_decode()`` use the maps to convert their input data
 efficiently.
 
 .. literalinclude:: codecs_invertcaps_charmap.py
@@ -779,7 +779,7 @@ efficiently.
    :start-after: #end_pymotw_header
 
 Although the encoding and decoding maps for invertcaps are the same,
-that may not always be the case.  :func:`make_encoding_map` detects
+that may not always be the case.  ``make_encoding_map()`` detects
 situations where more than one input character is encoded to the same
 output byte and replaces the encoding value with ``None`` to mark the
 encoding as undefined.
@@ -826,10 +826,10 @@ the strict error handling mode raises an exception.
 
 After the encoding and decoding maps are defined, a few
 additional classes need to be set up, and the encoding should be
-registered.  :func:`register` adds a search function to the registry
+registered.  ``register()`` adds a search function to the registry
 so that when a user wants to use the encoding ``codecs`` can locate
 it.  The search function must take a single string argument with the
-name of the encoding, and return a :class:`CodecInfo` object if it
+name of the encoding, and return a ``CodecInfo`` object if it
 knows the encoding, or ``None`` if it does not.
 
 .. literalinclude:: codecs_register.py
@@ -837,7 +837,7 @@ knows the encoding, or ``None`` if it does not.
    :start-after: #end_pymotw_header
 
 Multiple search functions can be registered, and each will be called
-in turn until one returns a :class:`CodecInfo` or the list is
+in turn until one returns a ``CodecInfo`` or the list is
 exhausted.  The internal search function registered by ``codecs``
 knows how to load the standard codecs such as UTF-8 from
 :mod:`encodings`, so those names will never be passed to custom search
@@ -859,41 +859,41 @@ functions.
 
 .. {{{end}}}
 
-The :class:`CodecInfo` instance returned by the search function tells
+The ``CodecInfo`` instance returned by the search function tells
 ``codecs`` how to encode and decode using all of the different
 mechanisms supported: stateless, incremental, and stream.
 ``codecs`` includes base classes to help with setting up a character
 map encoding.  This example puts all of the pieces together to
-register a search function that returns a :class:`CodecInfo` instance
+register a search function that returns a ``CodecInfo`` instance
 configured for the invertcaps codec.
 
 .. literalinclude:: codecs_invertcaps_register.py
    :caption:
    :start-after: #end_pymotw_header
 
-The stateless encoder/decoder base class is :class:`Codec`.  Override
-:func:`encode` and :func:`decode` with the new implementation (in this
-case, calling :func:`charmap_encode` and :func:`charmap_decode`
+The stateless encoder/decoder base class is ``Codec``.  Override
+``encode()`` and ``decode()`` with the new implementation (in this
+case, calling ``charmap_encode()`` and ``charmap_decode()``
 respectively).  Each method must return a tuple containing the
 transformed data and the number of the input bytes or characters
-consumed.  Conveniently, :func:`charmap_encode` and
-:func:`charmap_decode` already return that information.
+consumed.  Conveniently, ``charmap_encode()`` and
+``charmap_decode()`` already return that information.
 
-:class:`IncrementalEncoder` and :class:`IncrementalDecoder` serve as
-base classes for the incremental interfaces.  The :func:`encode` and
-:func:`decode` methods of the incremental classes are defined in such
+``IncrementalEncoder`` and ``IncrementalDecoder`` serve as
+base classes for the incremental interfaces.  The ``encode()`` and
+``decode()`` methods of the incremental classes are defined in such
 a way that they only return the actual transformed data.  Any
 information about buffering is maintained as internal state.  The
 invertcaps encoding does not need to buffer data (it uses a one-to-one
 mapping).  For encodings that produce a different amount of output
 depending on the data being processed, such as compression algorithms,
-:class:`BufferedIncrementalEncoder` and
-:class:`BufferedIncrementalDecoder` are more appropriate base classes,
+``BufferedIncrementalEncoder`` and
+``BufferedIncrementalDecoder`` are more appropriate base classes,
 since they manage the unprocessed portion of the input.
 
-:class:`StreamReader` and :class:`StreamWriter` need :func:`encode`
-and :func:`decode` methods, too, and since they are expected to return
-the same value as the version from :class:`Codec` multiple
+``StreamReader`` and ``StreamWriter`` need ``encode()``
+and ``decode()`` methods, too, and since they are expected to return
+the same value as the version from ``Codec`` multiple
 inheritance can be used for the implementation.
 
 .. {{{cog

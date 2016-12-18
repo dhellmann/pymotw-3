@@ -11,8 +11,8 @@ files, using :mod:`zlib` to compress and uncompress the data.
 Writing Compressed Files
 ========================
 
-The module-level function :func:`open` creates an instance of the
-file-like class :class:`GzipFile`.  The usual methods for writing and
+The module-level function ``open()`` creates an instance of the
+file-like class ``GzipFile``.  The usual methods for writing and
 reading bytes are provided.
 
 .. literalinclude:: gzip_write.py
@@ -72,7 +72,7 @@ storage space.  Results will vary, depending on the input data.
 
 .. {{{end}}}
 
-A :class:`GzipFile` instance also includes a :func:`writelines` method
+A ``GzipFile`` instance also includes a ``writelines()`` method
 that can be used to write a sequence of strings.
 
 .. literalinclude:: gzip_writelines.py
@@ -138,7 +138,7 @@ of the data.
     :caption:
     :start-after: #end_pymotw_header
 
-The :func:`seek` position is relative to the *uncompressed* data, so
+The ``seek()`` position is relative to the *uncompressed* data, so
 the caller does not need to know that the data file is compressed.
 
 .. {{{cog
@@ -162,7 +162,7 @@ the caller does not need to know that the data file is compressed.
 Working with Streams
 ====================
 
-The :class:`GzipFile` class can be used to wrap other types of data
+The ``GzipFile`` class can be used to wrap other types of data
 streams so they can use compression as well.  This is useful when the
 data is being transmitted over a socket or an existing
 (already open) file handle.  A :mod:`BytesIO` buffer can also be
@@ -172,11 +172,11 @@ used.
     :caption:
     :start-after: #end_pymotw_header
 
-One benefit of using :class:`GzipFile` over :mod:`zlib` is that it
+One benefit of using ``GzipFile`` over :mod:`zlib` is that it
 supports the file API.  However, when re-reading the previously
-compressed data, an explicit length is passed to :func:`read`.
+compressed data, an explicit length is passed to ``read()``.
 Leaving the length off resulted in a CRC error, possibly because
-:class:`BytesIO` returned an empty string before reporting EOF.  When
+``BytesIO`` returned an empty string before reporting EOF.  When
 working with streams of compressed data, either prefix the data with
 an integer representing the actual amount of data to be read or use
 the incremental decompression API in :mod:`zlib`.

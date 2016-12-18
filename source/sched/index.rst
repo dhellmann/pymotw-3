@@ -29,7 +29,7 @@ Running Events With a Delay
 ===========================
 
 Events can be scheduled to run after a delay, or at a specific
-time. To schedule them with a delay, use the :func:`enter` method,
+time. To schedule them with a delay, use the ``enter()`` method,
 which takes four arguments:
 
 * A number representing the delay
@@ -39,7 +39,7 @@ which takes four arguments:
 
 This example schedules two different events to run after two and three
 seconds respectively. When the event's time comes up,
-:func:`print_event` is called and prints the current time and the name
+``print_event()`` is called and prints the current time and the name
 argument passed to the event.
 
 .. literalinclude:: sched_basic.py
@@ -68,12 +68,12 @@ the time for the second event is three seconds after start.
 Overlapping Events
 ==================
 
-The call to :func:`run` blocks until all of the events have been
+The call to ``run()`` blocks until all of the events have been
 processed. Each event is run in the same thread, so if an event takes
 longer to run than the delay between events, there will be
 overlap. The overlap is resolved by postponing the later event. No
 events are lost, but some events may be called later than they were
-scheduled. In the next example, :func:`long_event` sleeps but it could
+scheduled. In the next example, ``long_event()`` sleeps but it could
 just as easily delay by performing a long calculation or by blocking
 on I/O.
 
@@ -113,8 +113,8 @@ are used to determine the order they are run.
     :start-after: #end_pymotw_header
 
 This example needs to ensure that they are scheduled for the exact
-same time, so the :func:`enterabs` method is used instead of
-:func:`enter`. The first argument to :func:`enterabs` is the time to
+same time, so the ``enterabs()`` method is used instead of
+``enter()``. The first argument to ``enterabs()`` is the time to
 run the event, instead of the amount of time to delay.
 
 .. {{{cog
@@ -135,8 +135,8 @@ run the event, instead of the amount of time to delay.
 Canceling Events
 ================
 
-Both :func:`enter` and :func:`enterabs` return a reference to the
-event that can be used to cancel it later. Because :func:`run` blocks,
+Both ``enter()`` and ``enterabs()`` return a reference to the
+event that can be used to cancel it later. Because ``run()`` blocks,
 the event has to be canceled in a different thread. For this example,
 a thread is started to run the scheduler and the main processing
 thread is used to cancel the event.

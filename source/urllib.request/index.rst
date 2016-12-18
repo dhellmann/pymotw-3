@@ -20,7 +20,7 @@ HTTP GET
     server in one terminal window, then run these examples in another.
 
 An HTTP GET operation is the simplest use of
-``urllib.request``. Pass the URL to :func:`urlopen` to get a
+``urllib.request``. Pass the URL to ``urlopen()`` to get a
 "file-like" handle to the remote data.
 
 .. literalinclude:: urllib_request_urlopen.py
@@ -28,10 +28,10 @@ An HTTP GET operation is the simplest use of
     :start-after: #end_pymotw_header
 
 The example server accepts the incoming values and formats a plain
-text response to send back. The return value from :func:`urlopen`
+text response to send back. The return value from ``urlopen()``
 gives access to the headers from the HTTP server through the
-:func:`info` method, and the data for the remote resource via
-methods like :func:`read` and :func:`readlines`.
+``info()`` method, and the data for the remote resource via
+methods like ``read()`` and ``readlines()``.
 
 .. code-block:: none
 
@@ -70,7 +70,7 @@ methods like :func:`read` and :func:`readlines`.
     User-Agent=Python-urllib/3.5
 
 
-The file-like object returned by :func:`urlopen` is iterable:
+The file-like object returned by ``urlopen()`` is iterable:
 
 .. literalinclude:: urllib_request_urlopen_iterator.py
     :caption:
@@ -106,7 +106,7 @@ Encoding Arguments
 ==================
 
 Arguments can be passed to the server by encoding them with
-:func:`urllib.parse.urlencode` and appending them to the URL.
+``urllib.parse.urlencode()`` and appending them to the URL.
 
 .. literalinclude:: urllib_request_http_get_args.py
     :caption:
@@ -149,7 +149,7 @@ HTTP POST
     server in one terminal window, then run these examples in another.
 
 To send form-encoded data to the remote server using POST instead GET,
-pass the encoded query arguments as data to :func:`urlopen`.
+pass the encoded query arguments as data to ``urlopen()``.
 
 .. literalinclude:: urllib_request_urlopen_post.py
     :caption:
@@ -172,9 +172,9 @@ by name.
 Adding Outgoing Headers
 =======================
 
-:func:`urlopen` is a convenience function that hides some of the
+``urlopen()`` is a convenience function that hides some of the
 details of how the request is made and handled. More precise control
-is possible by using a :class:`Request` instance directly.  For
+is possible by using a ``Request`` instance directly.  For
 example, custom headers can be added to the outgoing request to
 control the format of data returned, specify the version of a document
 cached locally, and tell the remote server the name of the software
@@ -193,7 +193,7 @@ using a ``robots.txt`` file (see the :mod:`http.robotparser` module).
     :caption:
     :start-after: #end_pymotw_header
 
-After creating a :class:`Request` object, use :func:`add_header` to
+After creating a ``Request`` object, use ``add_header()`` to
 set the user agent value before opening the request.  The last line of
 the output shows the custom value.
 
@@ -223,14 +223,14 @@ the output shows the custom value.
 Posting Form Data from a Request
 ================================
 
-The outgoing data can be specified when building the :class:`Request`
+The outgoing data can be specified when building the ``Request``
 to have it posted to the server.
 
 .. literalinclude:: urllib_request_request_post.py
     :caption:
     :start-after: #end_pymotw_header
 
-The HTTP method used by the :class:`Request` changes from GET to POST
+The HTTP method used by the ``Request`` changes from GET to POST
 automatically after the data is added.
 
 .. code-block:: none
@@ -262,7 +262,7 @@ from uploaded files.
     :caption:
     :start-after: #end_pymotw_header
 
-The :class:`MultiPartForm` class can represent an arbitrary form as a
+The ``MultiPartForm`` class can represent an arbitrary form as a
 multi-part MIME message with attached files.
 
 .. code-block:: none
@@ -309,24 +309,24 @@ file access. To add support for other URL types, register another
 protocol handler. For example, to support URLs pointing to arbitrary
 files on remote NFS servers, without requiring users to mount the path
 before accessing the file, create a class derived from
-:class:`BaseHandler` and with a method :func:`nfs_open`.
+``BaseHandler`` and with a method ``nfs_open()``.
 
-The protocol-specific :func:`open` method is given a single argument,
-the :class:`Request` instance, and it should return an object with a
-:func:`read` method that can be used to read the data, an :func:`info`
-method to return the response headers, and :func:`geturl` to return
+The protocol-specific ``open()`` method is given a single argument,
+the ``Request`` instance, and it should return an object with a
+``read()`` method that can be used to read the data, an ``info()``
+method to return the response headers, and ``geturl()`` to return
 the actual URL of the file being read. A simple way to achieve that is
-to create an instance of :class:`urllib.response.addinfourl`, passing
+to create an instance of ``urllib.response.addinfourl``, passing
 the headers, URL, and open file handle in to the constructor.
 
 .. literalinclude:: urllib_request_nfs_handler.py
     :caption:
     :start-after: #end_pymotw_header
 
-The :class:`FauxNFSHandler` and :class:`NFSFile` classes print
+The ``FauxNFSHandler`` and ``NFSFile`` classes print
 messages to illustrate where a real implementation would add mount and
 unmount calls. Since this is just a simulation,
-:class:`FauxNFSHandler` is primed with the name of a temporary
+``FauxNFSHandler`` is primed with the name of a temporary
 directory where it should look for all of its files.
 
 .. {{{cog

@@ -45,12 +45,12 @@ in Python's threading implementation.
 
 A *future* is a data structure representing the result of work that
 has not been completed yet. The event loop can watch for a
-:class:`Future` object to be set to done, allowing one part of an
+``Future`` object to be set to done, allowing one part of an
 application to wait for another part to finish some work. Besides
 futures, ``asyncio`` includes other concurrency primitives such as
 locks and semaphores.
 
-A :class:`Task` is a subclass of :class:`Future` that knows how to
+A ``Task`` is a subclass of ``Future`` that knows how to
 wrap and manage the execution for a coroutine. Tasks can be scheduled
 with the event loop to run when the resources they need are available,
 and to produce a result that can be consumed by other coroutines.

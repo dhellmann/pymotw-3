@@ -101,7 +101,7 @@ The token with the embedded apostrophe is no problem.
 Making Safe Strings for Shells
 ==============================
 
-The :func:`quote` function performs the inverse operation, escaping
+The ``quote()`` function performs the inverse operation, escaping
 existing quotes and adding missing quotes for strings to make them
 safe to use in shell commands.
 
@@ -110,8 +110,8 @@ safe to use in shell commands.
    :start-after: #end_pymotw_header
 
 It is still usually safer to use a list of arguments when using
-:class:`subprocess.Popen`, but in situations where that is not
-possible :func:`quote` provides some protection by ensuring that
+``subprocess.Popen``, but in situations where that is not
+possible ``quote()`` provides some protection by ensuring that
 special characters and white space are quoted properly.
 
 .. {{{cog
@@ -180,7 +180,7 @@ Splitting Strings into Tokens
 =============================
 
 To split an existing string into component tokens, the convenience
-function :func:`split()` is a simple wrapper around the parser.
+function ``split()`` is a simple wrapper around the parser.
 
 .. literalinclude:: shlex_split.py
     :caption:
@@ -261,7 +261,7 @@ added to the list of characters that are included in words (otherwise
 
 .. {{{end}}}
 
-The source feature uses a method called :func:`sourcehook()` to load
+The source feature uses a method called ``sourcehook()`` to load
 the additional input source, so a subclass of ``shlex`` can
 provide an alternate implementation that loads data from locations
 other than files.
@@ -341,7 +341,7 @@ Error Handling
 ==============
 
 When the parser encounters the end of its input before all quoted
-strings are closed, it raises :class:`ValueError`. When that happens,
+strings are closed, it raises ``ValueError``. When that happens,
 it is useful to examine some of the properties maintained by the parser
 as it processes the input. For example, :attr:`infile`
 refers to the name of the file being processed (which might be
@@ -350,7 +350,7 @@ different from the original file, if one file sources another). The
 :attr:`lineno` is typically the end of the file, which may be far away
 from the first quote. The :attr:`token` attribute contains the buffer
 of text not already included in a valid token. The
-:func:`error_leader()` method produces a message prefix in a style
+``error_leader()`` method produces a message prefix in a style
 similar to Unix compilers, which enables editors such as
 ``emacs`` to parse the error and take the user directly to the
 invalid line.

@@ -26,7 +26,7 @@ iteration.
 Merging and Splitting Iterators
 ===============================
 
-The :func:`chain` function takes several iterators as arguments and
+The ``chain()`` function takes several iterators as arguments and
 returns a single iterator that produces the contents of all of the
 inputs as though they came from a single iterator.
 
@@ -34,7 +34,7 @@ inputs as though they came from a single iterator.
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`chain` makes it easy to process several sequences without
+``chain()`` makes it easy to process several sequences without
 constructing one large list.
 
 .. {{{cog
@@ -50,7 +50,7 @@ constructing one large list.
 .. {{{end}}}
 
 If the iterables to be combined are not all known in advance, or need
-to be evaluated lazily, :func:`chain.from_iterable` can be used to
+to be evaluated lazily, ``chain.from_iterable()`` can be used to
 construct the chain instead.
 
 .. literalinclude:: itertools_chain_from_iterable.py
@@ -69,7 +69,7 @@ construct the chain instead.
 
 .. {{{end}}}
 
-The built-in function :func:`zip` returns an iterator that combines
+The built-in function ``zip()`` returns an iterator that combines
 the elements of several iterators into tuples.
 
 .. literalinclude:: itertools_zip.py
@@ -93,15 +93,15 @@ iterable object that produces values one at a time.
 
 .. {{{end}}}
 
-:func:`zip` stops when the first input iterator is exhausted. To
+``zip()`` stops when the first input iterator is exhausted. To
 process all of the inputs, even if the iterators produce different
-numbers of values, use :func:`zip_longest`.
+numbers of values, use ``zip_longest()``.
 
 .. literalinclude:: itertools_zip_longest.py
    :caption:
    :start-after: #end_pymotw_header
 
-By default, :func:`zip_longest` substitutes ``None`` for any missing
+By default, ``zip_longest()`` substitutes ``None`` for any missing
 values. Use the ``fillvalue`` argument to use a different substitute
 value.
 
@@ -122,14 +122,14 @@ value.
 .. {{{end}}}
 
 
-The :func:`islice` function returns an iterator which returns selected
+The ``islice()`` function returns an iterator which returns selected
 items from the input iterator, by index.
 
 .. literalinclude:: itertools_islice.py
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`islice` takes the same arguments as the slice operator for
+``islice()`` takes the same arguments as the slice operator for
 lists: ``start``, ``stop``, and ``step``. The start and step arguments
 are optional.
 
@@ -153,16 +153,16 @@ are optional.
 
 .. {{{end}}}
 
-The :func:`tee` function returns several independent iterators (defaults
+The ``tee()`` function returns several independent iterators (defaults
 to 2) based on a single original input. 
 
 .. literalinclude:: itertools_tee.py
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`tee` has semantics similar to the Unix ``tee`` utility,
+``tee()`` has semantics similar to the Unix ``tee`` utility,
 which repeats the values it reads from its input and writes them to a
-named file and standard output.  The iterators returned by :func:`tee`
+named file and standard output.  The iterators returned by ``tee()``
 can be used to feed the same set of data into multiple algorithms to
 be processed in parallel.
 
@@ -179,7 +179,7 @@ be processed in parallel.
 
 .. {{{end}}}
 
-The new iterators created by :func:`tee` share their input, so the
+The new iterators created by ``tee()`` share their input, so the
 original iterator should not be used after the new ones are created.
 
 .. literalinclude:: itertools_tee_error.py
@@ -206,7 +206,7 @@ not produce those values:
 Converting Inputs
 =================
 
-The built-in :func:`map` function returns an iterator that calls a
+The built-in ``map()`` function returns an iterator that calls a
 function on the values in the input iterators, and returns the
 results. It stops when any input iterator is exhausted.
 
@@ -249,7 +249,7 @@ after producing two tuples because the second range is exhausted.
 .. {{{end}}}
 
 
-The :func:`starmap` function is similar to :func:`map`, but instead of
+The ``starmap()`` function is similar to ``map()``, but instead of
 constructing a tuple from multiple iterators, it splits up the items
 in a single iterator as arguments to the mapping function using the
 ``*`` syntax.
@@ -258,8 +258,8 @@ in a single iterator as arguments to the mapping function using the
    :caption:
    :start-after: #end_pymotw_header
 
-Where the mapping function to :func:`map` is called ``f(i1, i2)``, the
-mapping function passed to :func:`starmap` is called ``f(*i)``.
+Where the mapping function to ``map()`` is called ``f(i1, i2)``, the
+mapping function passed to ``starmap()`` is called ``f(*i)``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'itertools_starmap.py'))
@@ -280,10 +280,10 @@ mapping function passed to :func:`starmap` is called ``f(*i)``.
 Producing New Values
 ====================
 
-The :func:`count` function returns an iterator that produces
+The ``count()`` function returns an iterator that produces
 consecutive integers, indefinitely. The first number can be passed as
 an argument (the default is zero). There is no upper bound argument
-(see the built-in :func:`range` for more control over the result set).
+(see the built-in ``range()`` for more control over the result set).
 
 .. literalinclude:: itertools_count.py
    :caption:
@@ -305,14 +305,14 @@ This example stops because the list argument is consumed.
 
 .. {{{end}}}
 
-The start and step arguments to :func:`count` can be any numerical
+The start and step arguments to ``count()`` can be any numerical
 values that can be added together.
 
 .. literalinclude:: itertools_count_step.py
    :caption:
    :start-after: #end_pymotw_header
 
-In this example, the start point and steps are :class:`Fraction`
+In this example, the start point and steps are ``Fraction``
 objects from the :mod:`fraction` module.
 
 .. {{{cog
@@ -329,7 +329,7 @@ objects from the :mod:`fraction` module.
 
 .. {{{end}}}
 
-The :func:`cycle` function returns an iterator that repeats the
+The ``cycle()`` function returns an iterator that repeats the
 contents of the arguments it is given indefinitely. Since it has to
 remember the entire contents of the input iterator, it may consume
 quite a bit of memory if the iterator is long.
@@ -359,14 +359,14 @@ in this example.
 
 .. {{{end}}}
 
-The :func:`repeat` function returns an iterator that produces the same
+The ``repeat()`` function returns an iterator that produces the same
 value each time it is accessed.
 
 .. literalinclude:: itertools_repeat.py
    :caption:
    :start-after: #end_pymotw_header
 
-The iterator returned by :func:`repeat` keeps returning data forever,
+The iterator returned by ``repeat()`` keeps returning data forever,
 unless the optional ``times`` argument is provided to limit it.
 
 .. {{{cog
@@ -385,7 +385,7 @@ unless the optional ``times`` argument is provided to limit it.
 
 .. {{{end}}}
 
-It is useful to combine :func:`repeat` with :func:`zip` or :func:`map`
+It is useful to combine ``repeat()`` with ``zip()`` or ``map()``
 when invariant values need to be included with the values from the
 other iterators.
 
@@ -394,7 +394,7 @@ other iterators.
    :start-after: #end_pymotw_header
 
 A counter value is combined with the constant returned by
-:func:`repeat` in this example.
+``repeat()`` in this example.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'itertools_repeat_zip.py'))
@@ -412,16 +412,16 @@ A counter value is combined with the constant returned by
 
 .. {{{end}}}
 
-This example uses :func:`map` to multiply the numbers in the range 0
+This example uses ``map()`` to multiply the numbers in the range 0
 through 4 by 2.
 
 .. literalinclude:: itertools_repeat_map.py
    :caption:
    :start-after: #end_pymotw_header
 
-The :func:`repeat` iterator does not need to be explicitly limited,
-since :func:`map` stops processing when any of its inputs ends, and
-the :func:`range` returns only five elements.
+The ``repeat()`` iterator does not need to be explicitly limited,
+since ``map()`` stops processing when any of its inputs ends, and
+the ``range()`` returns only five elements.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'itertools_repeat_map.py'))
@@ -443,7 +443,7 @@ the :func:`range` returns only five elements.
 Filtering
 =========
 
-The :func:`dropwhile` function returns an iterator that produces
+The ``dropwhile()`` function returns an iterator that produces
 elements of the input iterator after a condition becomes false for the
 first time.
 
@@ -451,7 +451,7 @@ first time.
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`dropwhile` does not filter every item of the input; after the
+``dropwhile()`` does not filter every item of the input; after the
 condition is false the first time, all of the remaining items in the
 input are returned.
 
@@ -472,7 +472,7 @@ input are returned.
 
 .. {{{end}}}
 
-The opposite of :func:`dropwhile` is :func:`takewhile`.  It returns an
+The opposite of ``dropwhile()`` is ``takewhile()``.  It returns an
 iterator that returns items from the input iterator as long as the
 test function returns true.
 
@@ -480,7 +480,7 @@ test function returns true.
    :caption:
    :start-after: #end_pymotw_header
 
-As soon as :func:`should_take` returns ``False``, :func:`takewhile`
+As soon as ``should_take()`` returns ``False``, ``takewhile()``
 stops processing the input.
 
 .. {{{cog
@@ -502,15 +502,15 @@ stops processing the input.
 .. {{{end}}}
 
 
-The built-in function :func:`filter` returns an iterator that includes
+The built-in function ``filter()`` returns an iterator that includes
 only items for which the test function returns true.
 
 .. literalinclude:: itertools_filter.py
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`filter` is different from :func:`dropwhile` and
-:func:`takewhile` in that every item is tested before it is returned.
+``filter()`` is different from ``dropwhile()`` and
+``takewhile()`` in that every item is tested before it is returned.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'itertools_filter.py'))
@@ -531,15 +531,15 @@ only items for which the test function returns true.
 
 .. {{{end}}}
 
-:func:`filterfalse` returns an iterator that includes only items
+``filterfalse()`` returns an iterator that includes only items
 where the test function returns false.
 
 .. literalinclude:: itertools_filterfalse.py
    :caption:
    :start-after: #end_pymotw_header
 
-The test expression in :func:`check_item` is the same, so the results
-in this example with :func:`filterfalse` are the opposite of the
+The test expression in ``check_item()`` is the same, so the results
+in this example with ``filterfalse()`` are the opposite of the
 results from the previous example.
 
 .. {{{cog
@@ -560,7 +560,7 @@ results from the previous example.
 
 .. {{{end}}}
 
-:func:`compress` offers another way to filter the contents of an
+``compress()`` offers another way to filter the contents of an
 iterable. Instead of calling a function, it uses the values in another
 iterable to indicate when to accept a value and when to ignore it.
 
@@ -592,7 +592,7 @@ produced, a false value causes it to be ignored).
 Grouping Data
 =============
 
-The :func:`groupby` function returns an iterator that produces sets of
+The ``groupby()`` function returns an iterator that produces sets of
 values organized by a common key.  This example illustrates grouping
 related values based on an attribute.
 
@@ -649,10 +649,10 @@ the groupings to work out as expected.
 Combining Inputs
 ================
 
-The :func:`accumulate` function processes the input iterable, passing
+The ``accumulate()`` function processes the input iterable, passing
 the nth and n+1st item to a function and producing the return value
 instead of either input. The default function used to combine the two
-values adds them, so :func:`accumulate` can be used to produce the
+values adds them, so ``accumulate()`` can be used to produce the
 cumulative sum of a series of numerical inputs.
 
 .. literalinclude:: itertools_accumulate.py
@@ -661,7 +661,7 @@ cumulative sum of a series of numerical inputs.
 
 When used with a sequence of non-integer values, the results depend on
 what it means to "add" two items together. The second example in this
-script shows that when :func:`accumulate` receives a string input each
+script shows that when ``accumulate()`` receives a string input each
 response is a progressively longer prefix of that string.
 
 .. {{{cog
@@ -677,7 +677,7 @@ response is a progressively longer prefix of that string.
 
 .. {{{end}}}
 
-It is possible to combine :func:`accumulate` with any other function
+It is possible to combine ``accumulate()`` with any other function
 that takes two input values to achieve different results.
 
 .. literalinclude:: itertools_accumulate_custom.py
@@ -686,7 +686,7 @@ that takes two input values to achieve different results.
 
 This example combines the string values in a way that makes a series
 of (nonsensical) palindromes. Each step of the way when ``f()`` is
-called, it prints the input values passed to it by :func:`accumulate`.
+called, it prints the input values passed to it by ``accumulate()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'itertools_accumulate_custom.py'))
@@ -705,17 +705,17 @@ called, it prints the input values passed to it by :func:`accumulate`.
 .. {{{end}}}
 
 Nested ``for`` loops that iterate over multiple sequences can often be
-replaced with :func:`product`, which produces a single iterable whose
+replaced with ``product()``, which produces a single iterable whose
 values are the Cartesian product of the set of input values.
 
 .. literalinclude:: itertools_product.py
    :caption:
    :start-after: #end_pymotw_header
 
-The values produced by :func:`product` are tuples, with the members
+The values produced by ``product()`` are tuples, with the members
 taken from each of the iterables passed in as arguments in the order
 they are passed. The first tuple returned includes the first value
-from each iterable. The *last* iterable passed to :func:`product` is
+from each iterable. The *last* iterable passed to ``product()`` is
 processed first, followed by the next to last, and so on. The result
 is that the return values are in order based on the first iterable,
 then the next iterable, etc.
@@ -747,7 +747,7 @@ In this example, the cards are ordered by value and then by suit.
 .. {{{end}}}
 
 To change the order of the cards, change the order of the arguments to
-:func:`product`.
+``product()``.
 
 .. literalinclude:: itertools_product_ordering.py
    :caption:
@@ -780,7 +780,7 @@ times the input should be repeated.
    :start-after: #end_pymotw_header
 
 Since repeating a single iterable is like passing the same iterable
-multiple times, each tuple produced by :func:`product` will contain a
+multiple times, each tuple produced by ``product()`` will contain a
 number of items equal to the repeat counter.
 
 .. {{{cog
@@ -812,7 +812,7 @@ number of items equal to the repeat counter.
 
 .. {{{end}}}
 
-The :func:`permutations` function produces items from the input
+The ``permutations()`` function produces items from the input
 iterable combined in the possible permutations of the given length. It
 defaults to producing the full set of all permutations.
 
@@ -847,14 +847,14 @@ individual permutations returned.
 .. {{{end}}}
 
 To limit the values to unique combinations rather than permutations,
-use :func:`combinations`. As long as the members of the input are
+use ``combinations()``. As long as the members of the input are
 unique, the output will not include any repeated values.
 
 .. literalinclude:: itertools_combinations.py
    :caption:
    :start-after: #end_pymotw_header
 
-Unlike with permutations, the ``r`` argument to :func:`combinations`
+Unlike with permutations, the ``r`` argument to ``combinations()``
 is required.
 
 .. {{{cog
@@ -873,10 +873,10 @@ is required.
 
 .. {{{end}}}
 
-While :func:`combinations` does not repeat individual input elements,
+While ``combinations()`` does not repeat individual input elements,
 sometimes it is useful to consider combinations that do include
 repeated elements. For those cases, use
-:func:`combinations_with_replacement`.
+``combinations_with_replacement()``.
 
 .. literalinclude:: itertools_combinations_with_replacement.py
    :caption:

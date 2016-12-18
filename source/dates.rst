@@ -3,7 +3,7 @@
 =================
 
 Python does not include native types for dates and times as it does
-for :class:`int`, :class:`float`, and :class:`str`, but there are
+for ``int``, ``float``, and ``str``, but there are
 three modules for manipulating date and time values in several
 representations.
 

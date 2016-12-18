@@ -11,7 +11,7 @@ during the queries.
 Address Lookup by Name
 ======================
 
-Use the coroutine :func:`getaddrinfo` to convert a hostname and port
+Use the coroutine ``getaddrinfo()`` to convert a hostname and port
 number to an IP or IPv6 address. As with the version of the function
 in the :mod:`socket` module, the return value is a list of tuples
 containing five pieces of information.
@@ -51,7 +51,7 @@ address and port number.
 Name Lookup by Address
 ======================
 
-The coroutine :func:`getnameinfo` works in the reverse direction,
+The coroutine ``getnameinfo()`` works in the reverse direction,
 converting an IP address to a hostname and a port number to a protocol
 name, where possible.
 

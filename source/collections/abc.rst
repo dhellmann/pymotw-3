@@ -50,7 +50,7 @@ provided by the ``collections`` module.
      * Adds methods for manipulating the set contents after it is created.
    - * Mapping
      * Sized, Iterable, Container
-     * Defines the read-only API used by :class:`dict`.
+     * Defines the read-only API used by ``dict``.
    - * MutableMapping
      * Mapping
      * Defines the methods for manipulating the contents of a mapping after it is created.
@@ -70,6 +70,6 @@ provided by the ``collections`` module.
 Besides clearly defining the APIs for containers with different
 semantics, these abstract base classes can be used to test whether an
 object supports an API before invoking it using
-:func:`isinstance`. Some of the classes also provide implementations
+``isinstance()``. Some of the classes also provide implementations
 of methods, and they can be used as mix-ins to build up custom
 container types without implementing every method from scratch.

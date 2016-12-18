@@ -19,7 +19,7 @@ Setting Up a Parser
 The first step when using ``argparse`` is to create a parser object
 and tell it what arguments to expect.  The parser can then be used to
 process the command-line arguments when the program runs.  The
-constructor for the parser class (:class:`ArgumentParser`) takes
+constructor for the parser class (``ArgumentParser``) takes
 several arguments to set up the description used in the help text for
 the program and other global behaviors or settings.
 
@@ -36,7 +36,7 @@ Defining Arguments
 
 ``argparse`` is a complete argument processing library. Arguments
 can trigger different actions, specified by the ``action`` argument to
-:func:`add_argument()`. Supported actions include storing the argument
+``add_argument()``. Supported actions include storing the argument
 (singly, or as part of a list), storing a constant value when the
 argument is encountered (including special handling for true/false
 values for Boolean switches), counting the number of times an argument
@@ -51,12 +51,12 @@ Parsing a Command-Line
 ======================
 
 After all of the arguments are defined, parse the command-line by
-passing a sequence of argument strings to :func:`parse_args()`. By
+passing a sequence of argument strings to ``parse_args()``. By
 default, the arguments are taken from ``sys.argv[1:]``, but any list
 of strings can be used. The options are processed using the GNU/POSIX
 syntax, so option and argument values can be mixed in the sequence.
 
-The return value from :func:`parse_args()` is a :class:`Namespace`
+The return value from ``parse_args()`` is a ``Namespace``
 containing the arguments to the command. The object holds the argument
 values as attributes, so if the argument's ``dest`` is set to
 ``"myoption"``, the value is accessible as ``args.myoption``.
@@ -88,7 +88,7 @@ previous example uses two different forms, ``-bval`` and ``-c val``.
 .. {{{end}}}
 
 The type of the value associated with ``'c'`` in the output is an
-integer, since the :class:`ArgumentParser` was told to convert the
+integer, since the ``ArgumentParser`` was told to convert the
 argument before storing it.
 
 "Long" option names, with more than a single character in their name,
@@ -298,7 +298,7 @@ different convention.
    :caption:
    :start-after: #end_pymotw_header
 
-Set the ``prefix_chars`` parameter for the :class:`ArgumentParser` to a
+Set the ``prefix_chars`` parameter for the ``ArgumentParser`` to a
 string containing all of the characters that should be allowed to
 signify options.  It is important to understand that although
 ``prefix_chars`` establishes the allowed switch characters, the
@@ -362,7 +362,7 @@ Sources of Arguments
 
 In the examples so far, the list of arguments given to the parser has
 come from a list passed in explicitly, or were taken implicitly from
-:data:`sys.argv`.  Passing the list explicitly is useful
+``sys.argv``.  Passing the list explicitly is useful
 when using ``argparse`` to process command-line-like instructions
 that do not come from the command-line (such as in a configuration
 file).
@@ -430,7 +430,7 @@ Automatically Generated Help
 
 ``argparse`` will automatically add options to generate help, if
 configured to do so.  The ``add_help`` argument to
-:class:`ArgumentParser` controls the help-related options.
+``ArgumentParser`` controls the help-related options.
 
 .. literalinclude:: argparse_with_help.py
    :caption:
@@ -477,7 +477,7 @@ Customizing Help
 ----------------
 
 For applications that need to handle the help output directly, some of
-the utility methods of :class:`ArgumentParser` will be useful in
+the utility methods of ``ArgumentParser`` will be useful in
 creating :ref:`custom actions <argparse-custom-actions>` to print help
 with extra information.
 
@@ -510,12 +510,12 @@ parser, and :meth:`print_help` prints the full help output.
 
 .. {{{end}}}
 
-The :class:`ArgumentParser` uses a formatter class to control the
+The ``ArgumentParser`` uses a formatter class to control the
 appearance of the help output. To change the class, pass
 ``formatter_class`` when instantiating the
-:class:`ArgumentParser`.
+``ArgumentParser``.
 
-For example, the :class:`RawDescriptionHelpFormatter` bypasses the
+For example, the ``RawDescriptionHelpFormatter`` bypasses the
 line wrapping provided by the default formatter.
 
 .. literalinclude:: argparse_raw_description_help_formatter.py
@@ -549,7 +549,7 @@ unchanged.
 
 .. {{{end}}}
 
-The :class:`RawTextHelpFormatter` treats all help text as pre-formatted.
+The ``RawTextHelpFormatter`` treats all help text as pre-formatted.
 
 .. literalinclude:: argparse_raw_text_help_formatter.py
    :caption:
@@ -588,7 +588,7 @@ Raw formatters may be useful for applications with examples in the
 description or epilog, where changing the format of the text may make
 the examples invalid.
 
-The :class:`MetavarTypeHelpFormatter` prints the name of the type for
+The ``MetavarTypeHelpFormatter`` prints the name of the type for
 each option, instead of the destination variable, which can be useful
 for applications with a lot of options of different types.
 
@@ -634,7 +634,7 @@ that all take a set of arguments, and then specialize in some way.
 For example, if the programs all need to authenticate the user before
 taking any real action, they would all need to support ``--user`` and
 ``--password`` options.  Rather than add the options explicitly to
-every :class:`ArgumentParser`, it is possible to define a parent
+every ``ArgumentParser``, it is possible to define a parent
 parser with the shared options, and then have the parsers for the
 individual programs inherit from its options.
 
@@ -707,7 +707,7 @@ example, the stand-alone option ``-b`` is masked by the alias for
       --long-b LONG_B, -b LONG_B
                             Long and short together
 
-Switching the order of the calls to :func:`add_argument` unmasks the
+Switching the order of the calls to ``add_argument()`` unmasks the
 stand-alone option:
 
 .. literalinclude:: argparse_conflict_handler_resolve2.py
@@ -774,7 +774,7 @@ shared-option example from earlier could be written using custom
 grouping so that the authentication options are shown together in the
 help.
 
-Create the "authentication" group with :func:`add_argument_group` and
+Create the "authentication" group with ``add_argument_group()`` and
 then add each of the authentication-related options to the group,
 instead of the base parser.
 
@@ -814,8 +814,8 @@ Mutually Exclusive Options
 --------------------------
 
 Defining mutually exclusive options is a special case of the option
-grouping feature, and uses :func:`add_mutually_exclusive_group`
-instead of :func:`add_argument_group`.
+grouping feature, and uses ``add_mutually_exclusive_group()``
+instead of ``add_argument_group()``.
 
 .. literalinclude:: argparse_mutually_exclusive.py
    :caption:
@@ -925,8 +925,8 @@ options for that command.
 
 .. {{{end}}}
 
-And when the arguments are parsed, the :class:`Namespace` object
-returned by :func:`parse_args` includes only the values related to the
+And when the arguments are parsed, the ``Namespace`` object
+returned by ``parse_args()`` includes only the values related to the
 command specified.
 
 .. {{{cog
@@ -1060,8 +1060,8 @@ Argument Types
 
 ``argparse`` treats all argument values as strings, unless it is
 told to convert the string to another type.  The ``type`` parameter to
-:func:`add_argument` defines a converter function, which is used by the
-:class:`ArgumentParser` to transform the argument value from a string
+``add_argument()`` defines a converter function, which is used by the
+``ArgumentParser`` to transform the argument value from a string
 to some other type.
 
 .. literalinclude:: argparse_type.py
@@ -1069,8 +1069,8 @@ to some other type.
    :start-after: #end_pymotw_header
 
 Any callable that takes a single string argument can be passed as
-``type``, including built-in types like :func:`int`, :func:`float`, and
-:func:`open`.
+``type``, including built-in types like ``int`` and ``float`` or even
+``open()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'argparse_type.py -i 1'))
@@ -1097,9 +1097,9 @@ Any callable that takes a single string argument can be passed as
 .. {{{end}}}
 
 If the type conversion fails, ``argparse`` raises an exception.
-:class:`TypeError` and :class:`ValueError` exceptions are trapped
+``TypeError`` and ``ValueError`` exceptions are trapped
 automatically and converted to a simple error message for the user.
-Other exceptions, such as the :class:`IOError` in the next example
+Other exceptions, such as the ``IOError`` in the next example
 where the input file does not exist, must be handled by the caller.
 
 .. {{{cog
@@ -1176,9 +1176,9 @@ error is generated and processing stops.
 File Arguments
 --------------
 
-Although :class:`file` objects can be instantiated with a single
+Although ``file`` objects can be instantiated with a single
 string argument, that does not include the access mode argument.
-:class:`FileType` provides a more flexible way of specifying that an
+``FileType`` provides a more flexible way of specifying that an
 argument should be a file, including the mode and buffer size.
 
 .. literalinclude:: argparse_FileType.py
@@ -1234,16 +1234,16 @@ Custom Actions
 
 In addition to the built-in actions described earlier, custom actions
 can be defined by providing an object that implements the Action API.
-The object passed to :func:`add_argument` as ``action`` should take
+The object passed to ``add_argument()`` as ``action`` should take
 parameters describing the argument being defined (all the same
-arguments given to :func:`add_argument`) and return a callable object
+arguments given to ``add_argument()``) and return a callable object
 that takes as parameters the ``parser`` processing the arguments, the
 ``namespace`` holding the parse results, the ``value`` of the argument
 being acted on, and the ``option_string`` that triggered the action.
 
-A class :class:`Action` is provided as a convenient starting point for
+A class ``Action`` is provided as a convenient starting point for
 defining new actions.  The constructor handles the argument
-definitions, so only :func:`__call__` needs to be overridden in the
+definitions, so only ``__call__()`` needs to be overridden in the
 subclass.
 
 .. literalinclude:: argparse_custom_action.py

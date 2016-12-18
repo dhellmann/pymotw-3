@@ -2,7 +2,7 @@
  Counter --- count hashable objects
 ====================================
 
-A :class:`Counter` is a container that keeps track of how many times
+A ``Counter`` is a container that keeps track of how many times
 equivalent values are added.  It can be used to implement the same
 algorithms for which other languages commonly use bag or multiset data
 structures.
@@ -10,7 +10,7 @@ structures.
 Initializing
 ============
 
-:class:`Counter` supports three forms of initialization.  Its
+``Counter`` supports three forms of initialization.  Its
 constructor can be called with a sequence of items, a dictionary
 containing keys and counts, or using keyword arguments mapping string
 names to counts.
@@ -35,8 +35,8 @@ The results of all three forms of initialization are the same.
 
 .. {{{end}}}
 
-An empty :class:`Counter` can be constructed with no arguments and
-populated via the :func:`update` method.
+An empty ``Counter`` can be constructed with no arguments and
+populated via the ``update()`` method.
 
 .. literalinclude:: collections_counter_update.py
    :caption:
@@ -63,14 +63,14 @@ replaced.  In this example, the count for ``a`` goes from ``3`` to
 Accessing Counts
 ================
 
-Once a :class:`Counter` is populated, its values can be retrieved
+Once a ``Counter`` is populated, its values can be retrieved
 using the dictionary API.
 
 .. literalinclude:: collections_counter_get_values.py
    :caption:
    :start-after: #end_pymotw_header
 
-:class:`Counter` does not raise :class:`KeyError` for unknown items.
+``Counter`` does not raise ``KeyError`` for unknown items.
 If a value has not been seen in the input (as with ``e`` in this
 example), its count is ``0``.
 
@@ -90,8 +90,8 @@ example), its count is ``0``.
 
 .. {{{end}}}
 
-The :func:`elements` method returns an iterator that produces all of
-the items known to the :class:`Counter`.
+The ``elements()`` method returns an iterator that produces all of
+the items known to the ``Counter``.
 
 .. literalinclude:: collections_counter_elements.py
    :caption:
@@ -114,7 +114,7 @@ than or equal to zero are not included.
 
 .. {{{end}}}
 
-Use :func:`most_common` to produce a sequence of the *n* most
+Use ``most_common()`` to produce a sequence of the *n* most
 frequently encountered input values and their respective counts.
 
 .. literalinclude:: collections_counter_most_common.py
@@ -124,7 +124,7 @@ frequently encountered input values and their respective counts.
 This example counts the letters appearing in all of the words in the
 system dictionary to produce a frequency distribution, then prints the
 three most common letters.  Leaving out the argument to
-:func:`most_common` produces a list of all the items, in order of
+``most_common()`` produces a list of all the items, in order of
 frequency.
 
 .. {{{cog
@@ -145,18 +145,18 @@ frequency.
 Arithmetic
 ==========
 
-:class:`Counter` instances support arithmetic and set operations for
+``Counter`` instances support arithmetic and set operations for
 aggregating results. This example shows the standard operators for
-creating new :class:`Counter` instances, but the in-place operators
+creating new ``Counter`` instances, but the in-place operators
 ``+=``, ``-=``, ``&=`` and ``|=`` are also supported.
 
 .. literalinclude:: collections_counter_arithmetic.py
    :caption:
    :start-after: #end_pymotw_header
 
-Each time a new :class:`Counter` is produced through an operation, any
+Each time a new ``Counter`` is produced through an operation, any
 items with zero or negative counts are discarded.  The count for ``a``
-is the same in :data:`c1` and :data:`c2`, so subtraction leaves it at
+is the same in ``c1`` and ``c2``, so subtraction leaves it at
 zero.
 
 .. {{{cog

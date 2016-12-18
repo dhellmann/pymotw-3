@@ -25,7 +25,7 @@ object.
    :caption:
    :lines: 9-14,44-51
 
-It then defines a subclass of :class:`asyncio.Protocol` to handle
+It then defines a subclass of ``asyncio.Protocol`` to handle
 client communication. The protocol object's methods are invoked based
 on events associated with the server socket.
 
@@ -33,20 +33,20 @@ on events associated with the server socket.
    :lines: 16
 
 Each new client connection triggers a call to
-:func:`connection_made`. The transport argument is an instance of
-:class:`asyncio.Transport`, which provides an abstraction for doing
+``connection_made()``. The transport argument is an instance of
+``asyncio.Transport``, which provides an abstraction for doing
 asynchronous I/O using the socket. Different types of communication
 provide different transport implementations, all with the same
 API. For example, there are separate transport classes for working
 with sockets and for working with pipes to subprocesses. The address
 of the incoming client is available from the transport through
-:func:`get_extra_info`, an implementation-specific method.
+``get_extra_info()``, an implementation-specific method.
 
 .. literalinclude:: asyncio_echo_server_protocol.py
    :lines: 18-24
 
 After a connection is established, when data is sent from the client
-to the server the :func:`data_received` method of the protocol is
+to the server the ``data_received()`` method of the protocol is
 invoked to pass the data in for processing. Data is passed as a byte
 string, and it is up to the application to decode it in an appropriate
 way. Here the results are logged, and then a response is sent back to
@@ -56,7 +56,7 @@ the client immediately by calling ``transport.write()``.
    :lines: 26-29
 
 Some transports support a special end-of-file indicator ("EOF"). When
-an EOF is encountered, the :func:`eof_received` method is called. In
+an EOF is encountered, the ``eof_received()`` method is called. In
 this implementation, the EOF is sent back to the client to indicate
 that it was received. Because not all transports support an explicit
 EOF, this protocol asks the transport first whether it is safe to send
@@ -66,7 +66,7 @@ EOF.
    :lines: 31-34
 
 When a connection is closed, either normally or as the result of an
-error, the protocol's :func:`connection_lost` method is called. If
+error, the protocol's ``connection_lost()`` method is called. If
 there was an error, the argument contains an appropriate exception
 object. Otherwise it is ``None``.
 
@@ -76,9 +76,9 @@ object. Otherwise it is ``None``.
 There are two steps to starting the server. First the application
 tells the event loop to create a new server object using the protocol
 class and the hostname and socket on which to listen. The
-:func:`create_server` method is a coroutine, so the results must be
+``create_server()`` method is a coroutine, so the results must be
 processed by the event loop in order to actually start the
-server. Completing the coroutine produces a :class:`asyncio.Server`
+server. Completing the coroutine produces a ``asyncio.Server``
 instance tied to the event loop.
 
 .. literalinclude:: asyncio_echo_server_protocol.py
@@ -86,7 +86,7 @@ instance tied to the event loop.
 
 Then the event loop needs to be run in order to process events and
 handle client requests. For a long-running service, the
-:func:`run_forever` method is the simplest way to do this.  When the
+``run_forever()`` method is the simplest way to do this.  When the
 event loop is stopped, either by the application code or by signaling
 the process, the server can be closed to clean up the socket properly,
 and then the event loop can be closed to finish handling any other
@@ -109,7 +109,7 @@ creating an event loop object.
 
 The client protocol class defines the same methods as the server, with
 different implementations. The class constructor accepts two
-arguments, a list of the messages to send and a :class:`Future`
+arguments, a list of the messages to send and a ``Future``
 instance to use to signal that the client has completed a cycle of
 work by receiving a response from the server.
 
@@ -147,17 +147,17 @@ and the future object is marked as done by setting a result.
 Normally the protocol class is passed to the event loop to create the
 connection. In this case, because the event loop has no facility for
 passing extra arguments to the protocol constructor, it is necessary
-to create a :class:`partial` to wrap the client class and pass the list of
-messages to send and the :class:`Future` instance. That new callable
+to create a ``partial`` to wrap the client class and pass the list of
+messages to send and the ``Future`` instance. That new callable
 is then used in place of the class when calling
-:func:`create_connection` to establish the client connection.
+``create_connection()`` to establish the client connection.
 
 .. literalinclude:: asyncio_echo_client_protocol.py
    :lines: 71-81
 
 To trigger the client to run, the event loop is called once with the
 coroutine for creating the client and then again with the
-:class:`Future` instance given to the client to communicate when it is
+``Future`` instance given to the client to communicate when it is
 finished. Using two calls like this avoids having an infinite loop in
 the client program, which likely wants to exit after it has finished
 communicating with the server. If only the first call was used to wait

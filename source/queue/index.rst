@@ -9,8 +9,8 @@ The ``queue`` module provides a first-in, first-out (FIFO) data
 structure suitable for multi-threaded programming. It can be used to
 pass messages or other data between producer and consumer threads
 safely. Locking is handled for the caller, so many threads can work
-with the same :class:`Queue` instance safely and easily. The size of a
-:class:`Queue` (the number of elements it contains) may be restricted
+with the same ``Queue`` instance safely and easily. The size of a
+``Queue`` (the number of elements it contains) may be restricted
 to throttle memory usage or processing.
 
 .. note::
@@ -22,9 +22,9 @@ to throttle memory usage or processing.
 Basic FIFO Queue
 ================
 
-The :class:`Queue` class implements a basic first-in, first-out
+The ``Queue`` class implements a basic first-in, first-out
 container.  Elements are added to one "end" of the sequence using
-:func:`put`, and removed from the other end using :func:`get`.
+``put()``, and removed from the other end using ``get()``.
 
 .. literalinclude:: queue_fifo.py
    :caption:
@@ -48,16 +48,16 @@ removed from the queue in the same order they are inserted.
 LIFO Queue
 ==========
 
-In contrast to the standard FIFO implementation of :class:`Queue`, the
-:class:`LifoQueue` uses last-in, first-out ordering (normally associated
+In contrast to the standard FIFO implementation of ``Queue``, the
+``LifoQueue`` uses last-in, first-out ordering (normally associated
 with a stack data structure).
 
 .. literalinclude:: queue_lifo.py
    :caption:
    :start-after: #end_pymotw_header
 
-The item most recently :class:`put` into the queue is removed by
-:class:`get`.
+The item most recently ``put`` into the queue is removed by
+``get``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'queue_lifo.py'))
@@ -80,7 +80,7 @@ Sometimes the processing order of the items in a queue needs to be
 based on characteristics of those items, rather than just the order
 they are created or added to the queue.  For example, print jobs from
 the payroll department may take precedence over a code listing printed
-by a developer.  :class:`PriorityQueue` uses the sort order of the
+by a developer.  ``PriorityQueue`` uses the sort order of the
 contents of the queue to decide which to retrieve.
 
 .. literalinclude:: queue_priority.py
@@ -89,7 +89,7 @@ contents of the queue to decide which to retrieve.
 
 This example has multiple threads consuming the jobs, which are be
 processed based on the priority of items in the queue at the time
-:func:`get` was called.  The order of processing for items added to
+``get()`` was called.  The order of processing for items added to
 the queue while the consumer threads are running depends on thread
 context switching.
 
@@ -114,7 +114,7 @@ Building a Threaded Podcast Client
 ==================================
 
 The source code for the podcasting client in this section demonstrates
-how to use the :class:`Queue` class with multiple threads.  The
+how to use the ``Queue`` class with multiple threads.  The
 program reads one or more RSS feeds, queues up the enclosures for the
 five most recent episodes from each feed to be downloaded, and
 processes several downloads in parallel using threads. It does not
@@ -130,14 +130,14 @@ fetch.
    :caption:
    :lines: 6-25
 
-The function :func:`download_enclosures` will run in the worker thread
+The function ``download_enclosures()`` will run in the worker thread
 and process the downloads using :mod:`urllib`.
 
 .. literalinclude:: fetch_podcasts.py
    :lines: 28-46
 
 Once the target function for the threads is defined, the worker
-threads can be started. When :func:`download_enclosures` processes the
+threads can be started. When ``download_enclosures()`` processes the
 statement ``url = q.get()``, it blocks and waits until the queue has
 something to return.  That means it is safe to start the threads
 before there is anything in the queue.
@@ -156,7 +156,7 @@ turns dequeuing URLs to download them.
    :lines: 59-68
 
 The only thing left to do is wait for the queue to empty out again,
-using :func:`join`.
+using ``join()``.
 
 .. literalinclude:: fetch_podcasts.py
    :lines: 70-

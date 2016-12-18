@@ -23,7 +23,7 @@ create a new object with the same characteristics.
 Encoding and Decoding Data in Strings
 =====================================
 
-This first example Uses :func:`dumps` to encode a data structure as a
+This first example Uses ``dumps()`` to encode a data structure as a
 string, then prints the string to the console. It uses a data
 structure made up of entirely built-in types. Instances of any class
 can be pickled, as will be illustrated in a later example.
@@ -80,7 +80,7 @@ the original.
 Working with Streams
 ====================
 
-In addition to :func:`dumps` and :func:`loads`, ``pickle`` provides
+In addition to ``dumps()`` and ``loads()``, ``pickle`` provides
 convenience functions for working with file-like streams. It is
 possible to write multiple objects to a stream, and then read them
 from the stream without knowing in advance how many objects are
@@ -92,7 +92,7 @@ written, or how big they are.
 
 The example simulates streams using two :mod:`StringIO` buffers.  The
 first receives the pickled objects, and its value is fed to a second
-from which :func:`load` reads.  A simple database format could use
+from which ``load()`` reads.  A simple database format could use
 pickles to store objects, too (see :mod:`shelve`).
 
 .. {{{cog
@@ -113,7 +113,7 @@ pickles to store objects, too (see :mod:`shelve`).
 .. {{{end}}}
 
 Besides storing data, pickles are handy for inter-process
-communication. For example, :func:`os.fork` and :func:`os.pipe` can be
+communication. For example, ``os.fork()`` and ``os.pipe()`` can be
 used to establish worker processes that read job instructions from one
 pipe and write the results to another pipe. The core code for managing
 the worker pool and sending jobs in and receiving responses can be
@@ -160,7 +160,7 @@ A simplistic attempt to load the resulting pickled objects fails:
    :caption:
    :start-after: #end_pymotw_header
 
-This version fails because there is no :class:`SimpleObject` class
+This version fails because there is no ``SimpleObject`` class
 available.
 
 .. {{{cog
@@ -179,7 +179,7 @@ available.
 
 .. {{{end}}}
 
-The corrected version, which imports :class:`SimpleObject` from the
+The corrected version, which imports ``SimpleObject`` from the
 original script, succeeds.  Adding this import statement to the end of
 the import list allows the script to find the class and construct the
 object.
@@ -211,23 +211,23 @@ Not all objects can be pickled. Sockets, file handles, database
 connections, and other objects with runtime state that depends on the
 operating system or another process may not be able to be saved in a
 meaningful way. Objects that have non-picklable attributes can define
-:func:`__getstate__` and :func:`__setstate__` to return a subset of the
+``__getstate__()`` and ``__setstate__()`` to return a subset of the
 state of the instance to be pickled.
 
-The :func:`__getstate__` method must return an object containing the
+The ``__getstate__()`` method must return an object containing the
 internal state of the object. One convenient way to represent that
 state is with a dictionary, but the value can be any picklable
-object. The state is stored, and passed to :func:`__setstate__` when
+object. The state is stored, and passed to ``__setstate__()`` when
 the object is loaded from the pickle.
 
 .. literalinclude:: pickle_state.py
    :caption:
    :start-after: #end_pymotw_header
 
-This example uses a separate :class:`State` object to hold the
-internal state of :class:`MyClass`. When an instance of
-:class:`MyClass` is loaded from a pickle, :func:`__setstate__` is
-passed a :class:`State` instance which it uses to initialize the
+This example uses a separate ``State`` object to hold the
+internal state of ``MyClass``. When an instance of
+``MyClass`` is loaded from a pickle, ``__setstate__()`` is
+passed a ``State`` instance which it uses to initialize the
 object.
 
 .. {{{cog
@@ -248,7 +248,7 @@ object.
 
 .. warning::
 
-   If the return value is false, then :func:`__setstate__` is not
+   If the return value is false, then ``__setstate__()`` is not
    called when the object is unpickled.
 
 Circular References
@@ -278,7 +278,7 @@ reloaded.
 The reloaded nodes are not the same object, but the relationship
 between the nodes is maintained and only one copy of the object with
 multiple references is reloaded. Both of these statements can be
-verified by examining the :func:`id` values for the nodes before and
+verified by examining the ``id()`` values for the nodes before and
 after being passed through pickle.
 
 .. {{{cog

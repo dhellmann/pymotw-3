@@ -6,19 +6,19 @@
     :synopsis: Base classes for implementing web servers.
 
 ``http.server`` uses classes from :mod:`socketserver` to create
-base classes for making HTTP servers. :class:`HTTPServer` can be used
-directly, but the :class:`BaseHTTPRequestHandler` is intended to be
+base classes for making HTTP servers. ``HTTPServer`` can be used
+directly, but the ``BaseHTTPRequestHandler`` is intended to be
 extended to handle each protocol method (GET, POST, etc.).
 
 HTTP GET
 ========
 
 To add support for an HTTP method in a request handler class,
-implement the method :func:`do_METHOD`, replacing ``METHOD`` with the
-name of the HTTP method (e.g., :func:`do_GET`, :func:`do_POST`,
+implement the method ``do_METHOD()``, replacing ``METHOD`` with the
+name of the HTTP method (e.g., ``do_GET()``, ``do_POST()``,
 etc.). For consistency, the request handler methods take no
 arguments. All of the parameters for the request are parsed by
-:class:`BaseHTTPRequestHandler` and stored as instance attributes of
+``BaseHTTPRequestHandler`` and stored as instance attributes of
 the request instance.
 
 This example request handler illustrates how to return a response to the
@@ -31,12 +31,12 @@ response.
 
 The message text is assembled and then written to :attr:`wfile`, the
 file handle wrapping the response socket. Each response needs a
-response code, set via :func:`send_response`. If an error code is used
+response code, set via ``send_response()``. If an error code is used
 (404, 501, etc.), an appropriate default error message is included in
 the header, or a message can be passed with the error code.
 
 To run the request handler in a server, pass it to the constructor of
-:class:`HTTPServer`, as in the ``__main__`` processing portion of the
+``HTTPServer``, as in the ``__main__`` processing portion of the
 sample script.
 
 Then start the server:
@@ -95,7 +95,7 @@ HTTP POST
 
 Supporting POST requests is a little more work, because the base class
 does not parse the form data automatically. The :mod:`cgi` module
-provides the :class:`FieldStorage` class which knows how to parse the
+provides the ``FieldStorage`` class which knows how to parse the
 form, if it is given the correct inputs.
 
 .. literalinclude:: http_server_POST.py
@@ -150,8 +150,8 @@ form.
 Threading and Forking
 =====================
 
-:class:`HTTPServer` is a simple subclass of
-:class:`socketserver.TCPServer`, and does not use multiple threads or
+``HTTPServer`` is a simple subclass of
+``socketserver.TCPServer``, and does not use multiple threads or
 processes to handle requests. To add threading or forking, create a
 new class using the appropriate mix-in from :mod:`socketserver`.
 
@@ -184,7 +184,7 @@ process to handle it:
 
     Thread-3
 
-Swapping :class:`ForkingMixIn` for :class:`ThreadingMixIn` would
+Swapping ``ForkingMixIn`` for ``ThreadingMixIn`` would
 achieve similar results, using separate processes instead of threads.
 
 Handling Errors

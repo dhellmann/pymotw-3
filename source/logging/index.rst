@@ -16,11 +16,11 @@ Logging Components
 
 The logging system is made up of four interacting types of
 objects. Each module or application that wants to log uses a
-:class:`Logger` instance to add information to the logs. Invoking the
-logger creates a :class:`LogRecord`, which is used to hold the
-information in memory until it is processed. A :class:`Logger` may
-have a number of :class:`Handler` objects configured to receive and
-process log records. The :class:`Handler` uses a :class:`Formatter` to
+``Logger`` instance to add information to the logs. Invoking the
+logger creates a ``LogRecord``, which is used to hold the
+information in memory until it is processed. A ``Logger`` may
+have a number of ``Handler`` objects configured to receive and
+process log records. The ``Handler`` uses a ``Formatter`` to
 turn the log records into output messages.
 
 Logging in Applications vs. Libraries
@@ -50,7 +50,7 @@ Logging to a File
 =================
 
 Most applications are configured to log to a file. Use the
-:func:`basicConfig` function to set up the default handler so that
+``basicConfig()`` function to set up the default handler so that
 debug messages are written to a file.
 
 .. literalinclude:: logging_file_example.py
@@ -80,9 +80,9 @@ Rotating Log Files
 
 Running the script repeatedly causes more messages to be appended to
 the file. To create a new file each time the program runs, pass a
-``filemode`` argument to :func:`basicConfig` with a value of
+``filemode`` argument to ``basicConfig()`` with a value of
 ``'w'``. Rather than managing the creation of files this way, though,
-it is better to use a :class:`RotatingFileHandler`, which creates new
+it is better to use a ``RotatingFileHandler``, which creates new
 files automatically and preserves the old log file at the same time.
 
 .. literalinclude:: logging_rotatingfile_example.py
@@ -146,9 +146,9 @@ defined by ``logging``.
 
 The log message is only emitted if the handler and logger are
 configured to emit messages of that level or higher. For example, if a
-message is :const:`CRITICAL`, and the logger is set to :const:`ERROR`,
-the message is emitted (50 > 40). If a message is a :const:`WARNING`,
-and the logger is set to produce only messages set to :const:`ERROR`,
+message is ``CRITICAL``, and the logger is set to ``ERROR``,
+the message is emitted (50 > 40). If a message is a ``WARNING``,
+and the logger is set to produce only messages set to ``ERROR``,
 the message is not emitted (30 < 40).
 
 .. literalinclude:: logging_level_example.py
@@ -214,7 +214,7 @@ The output shows the different module names for each output line.
 The Logging Tree
 ================
 
-The :class:`Logger` instances are configured in a tree structure,
+The ``Logger`` instances are configured in a tree structure,
 based on their names. Typically each application or library defines a
 base name, with loggers for individual modules set as children. The
 root logger has no name.
@@ -243,7 +243,7 @@ Integration with the warnings Module
 ====================================
 
 The logging module integrates with :mod:`warnings` through
-:func:`captureWarnings`, which configures ``warnings`` to send
+``captureWarnings()``, which configures ``warnings`` to send
 messages through the logging system instead of outputting them
 directly.
 
@@ -252,7 +252,7 @@ directly.
    :start-after: #end_pymotw_header
 
 The warning message is sent to a logger named ``py.warnings`` using
-the :const:`WARNING` level.
+the ``WARNING`` level.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'logging_capture_warnings.py'))

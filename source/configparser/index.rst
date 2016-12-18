@@ -47,7 +47,7 @@ Reading Configuration Files
 The most common use for a configuration file is to have a user or
 system administrator edit the file with a regular text editor to set
 application behavior defaults and then have the application read the
-file, parse it, and act based on its contents.  Use the :func:`read`
+file, parse it, and act based on its contents.  Use the ``read()``
 method of :mod:`ConfigParser` to read the configuration file.
 
 .. literalinclude:: configparser_read.py
@@ -55,8 +55,8 @@ method of :mod:`ConfigParser` to read the configuration file.
    :start-after: #end_pymotw_header
 
 This program reads the ``simple.ini`` file from the previous section
-and prints the value of the :data:`url` option from the
-:data:`bug_tracker` section.
+and prints the value of the ``url`` option from the
+``bug_tracker`` section.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'configparser_read.py'))
@@ -70,14 +70,14 @@ and prints the value of the :data:`url` option from the
 
 .. {{{end}}}
 
-The :func:`read` method also accepts a list of filenames.  Each name
+The ``read()`` method also accepts a list of filenames.  Each name
 in turn is scanned, and if the file exists it is opened and read.
 
 .. literalinclude:: configparser_read_many.py
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`read` returns a list containing the names of the files
+``read()`` returns a list containing the names of the files
 successfully loaded, so the program can discover which configuration
 files are missing and decide whether to ignore them or treat the
 condition as an error.
@@ -114,7 +114,7 @@ data to native Unicode strings.
    :caption:
    :start-after: #end_pymotw_header
 
-The value returned by :func:`get` is a Unicode string, so in order to
+The value returned by ``get()`` is a Unicode string, so in order to
 print it safely it must be re-encoded as UTF-8.
 
 .. {{{cog
@@ -135,7 +135,7 @@ print it safely it must be re-encoded as UTF-8.
 Accessing Configuration Settings
 ================================
 
-:class:`ConfigParser` includes methods for examining the structure
+``ConfigParser`` includes methods for examining the structure
 of the parsed configuration, including listing the sections and
 options, and getting their values.  This configuration file includes
 two sections for separate web services.
@@ -143,15 +143,15 @@ two sections for separate web services.
 .. literalinclude:: multisection.ini
 
 And this sample program exercises some of the methods for looking at
-the configuration data, including :func:`sections`, :func:`options`,
-and :func:`items`.
+the configuration data, including ``sections()``, ``options()``,
+and ``items()``.
 
 .. literalinclude:: configparser_structure.py
    :caption:
    :start-after: #end_pymotw_header
 
-Both :func:`sections` and :func:`options` return lists of strings,
-while :func:`items` returns a list of tuples containing the name-value
+Both ``sections()`` and ``options()`` return lists of strings,
+while ``items()`` returns a list of tuples containing the name-value
 pairs.
 
 .. {{{cog
@@ -177,8 +177,8 @@ pairs.
 
 .. {{{end}}}
 
-A :class:`ConfigParser` also supports the same mapping API as `dict`,
-with the :class:`ConfigParser` acting as one dictionary containing
+A ``ConfigParser`` also supports the same mapping API as `dict`,
+with the ``ConfigParser`` acting as one dictionary containing
 separate dictionaries for each section.
 
 .. literalinclude:: configparser_structure_dict.py
@@ -217,14 +217,14 @@ the same output.
 Testing Whether Values Are Present
 ----------------------------------
 
-To test if a section exists, use :func:`has_section`, passing the
+To test if a section exists, use ``has_section()``, passing the
 section name.
 
 .. literalinclude:: configparser_has_section.py
    :caption:
    :start-after: #end_pymotw_header
 
-Testing if a section exists before calling :func:`get` avoids
+Testing if a section exists before calling ``get()`` avoids
 exceptions for missing data.
 
 .. {{{cog
@@ -241,13 +241,13 @@ exceptions for missing data.
 
 .. {{{end}}}
 
-Use :func:`has_option` to test if an option exists within a section.
+Use ``has_option()`` to test if an option exists within a section.
 
 .. literalinclude:: configparser_has_option.py
    :caption:
    :start-after: #end_pymotw_header
 
-If the section does not exist, :func:`has_option` returns ``False``.
+If the section does not exist, ``has_option()`` returns ``False``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'configparser_has_option.py'))
@@ -282,11 +282,11 @@ false.  This example file includes one of each:
 
 .. literalinclude:: types.ini
 
-:class:`ConfigParser` does not make any attempt to understand the
+``ConfigParser`` does not make any attempt to understand the
 option type.  The application is expected to use the correct method to
-fetch the value as the desired type.  :func:`get` always returns a
-string.  Use :func:`getint` for integers, :func:`getfloat` for
-floating point numbers, and :func:`getboolean` for boolean values.
+fetch the value as the desired type.  ``get()`` always returns a
+string.  Use ``getint()`` for integers, ``getfloat()`` for
+floating point numbers, and ``getboolean()`` for boolean values.
 
 .. literalinclude:: configparser_value_types.py
    :caption:
@@ -324,7 +324,7 @@ output.
 .. {{{end}}}
 
 Custom type converters can be added by passing conversion functions in
-the ``converters`` argument to :class:`ConfigParser`. Each converter
+the ``converters`` argument to ``ConfigParser``. Each converter
 receives a single input value, and should transform that value into
 the appropriate return type.
 
@@ -332,10 +332,10 @@ the appropriate return type.
    :caption:
    :start-after: #end_pymotw_header
 
-Adding a converter causes :class:`ConfigParser` to automatically
+Adding a converter causes ``ConfigParser`` to automatically
 create a retrieval method for that type, using the name of the type as
 specified in ``converters``. In this example, the ``'datetime'``
-converter causes a new :func:`getdatetime` method to be added.
+converter causes a new ``getdatetime()`` method to be added.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'configparser_custom_types.py'))
@@ -352,14 +352,14 @@ converter causes a new :func:`getdatetime` method to be added.
 .. {{{end}}}
 
 It is also possible to add converter methods directly to a subclass of
-:class:`ConfigParser`.
+``ConfigParser``.
 
 
 Options as Flags
 ----------------
 
 Usually, the parser requires an explicit value for each option, but
-with the :class:`ConfigParser` parameter ``allow_no_value`` set to
+with the ``ConfigParser`` parameter ``allow_no_value`` set to
 ``True`` an option can appear by itself on a line in the input file,
 and be used as a flag.
 
@@ -367,8 +367,8 @@ and be used as a flag.
    :caption:
    :start-after: #end_pymotw_header
 
-When an option has no explicit value, :func:`has_option` reports that
-the option exists and :func:`get` returns ``None``.
+When an option has no explicit value, ``has_option()`` reports that
+the option exists and ``get()`` returns ``None``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'configparser_allow_no_value.py'))
@@ -424,9 +424,9 @@ of the value and preserved.
 Modifying Settings
 ==================
 
-While :class:`ConfigParser` is primarily intended to be configured
+While ``ConfigParser`` is primarily intended to be configured
 by reading settings from files, settings can also be populated by
-calling :func:`add_section` to create a new section, and :func:`set`
+calling ``add_section()`` to create a new section, and ``set()``
 to add or change an option.
 
 .. literalinclude:: configparser_populate.py
@@ -451,8 +451,8 @@ integer, float, or Boolean values.
 
 .. {{{end}}}
 
-Sections and options can be removed from a :class:`ConfigParser`
-with :func:`remove_section` and :func:`remove_option`.
+Sections and options can be removed from a ``ConfigParser``
+with ``remove_section()`` and ``remove_option()``.
 
 .. literalinclude:: configparser_remove.py
    :caption:
@@ -491,8 +491,8 @@ Removing a section deletes any options it contains.
 Saving Configuration Files
 ==========================
 
-Once a :class:`ConfigParser` is populated with desired data, it
-can be saved to a file by calling the :func:`write` method.  This
+Once a ``ConfigParser`` is populated with desired data, it
+can be saved to a file by calling the ``write()`` method.  This
 makes it possible to provide a user interface for editing the
 configuration settings, without having to write any code to manage the
 file.
@@ -501,9 +501,9 @@ file.
    :caption:
    :start-after: #end_pymotw_header
 
-The :func:`write` method takes a file-like object as argument.  It
+The ``write()`` method takes a file-like object as argument.  It
 writes the data out in the INI format so it can be parsed again by
-:class:`ConfigParser`.
+``ConfigParser``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'configparser_write.py'))
@@ -531,15 +531,15 @@ writes the data out in the INI format so it can be parsed again by
 Option Search Path
 ==================
 
-:class:`ConfigParser` uses a multi-step search process when
+``ConfigParser`` uses a multi-step search process when
 looking for an option.
 
 Before starting the option search, the section name is tested.  If the
 section does not exist, and the name is not the special value
-``DEFAULT``, then :class:`NoSectionError` is raised.
+``DEFAULT``, then ``NoSectionError`` is raised.
 
 1. If the option name appears in the ``vars`` dictionary passed to
-   :func:`get`, the value from ``vars`` is returned.
+   ``get()``, the value from ``vars`` is returned.
 2. If the option name appears in the specified section, the value from
    that section is returned.
 3. If the option name appears in the ``DEFAULT`` section, that value
@@ -548,7 +548,7 @@ section does not exist, and the name is not the special value
    the constructor, that value is returned.
 
 If the name is not found in any of those locations,
-:class:`NoOptionError` is raised.
+``NoOptionError`` is raised.
 
 The search path behavior can be demonstrated using this configuration
 file.
@@ -609,7 +609,7 @@ values.
 Combining Values with Interpolation
 ===================================
 
-:class:`ConfigParser` provides a feature called *interpolation*
+``ConfigParser`` provides a feature called *interpolation*
 that can be used to combine values together.  Values containing
 standard Python format strings trigger the interpolation feature when
 they are retrieved.  Options named within the value
@@ -623,15 +623,15 @@ port from the URL as separate options.
 
 .. literalinclude:: interpolation.ini
 
-Interpolation is performed by default each time :func:`get` is called.
-Pass a true value in the :data:`raw` argument to retrieve the original
+Interpolation is performed by default each time ``get()`` is called.
+Pass a true value in the ``raw`` argument to retrieve the original
 value, without interpolation.
 
 .. literalinclude:: configparser_interpolation.py
    :caption:
    :start-after: #end_pymotw_header
 
-Because the value is computed by :func:`get`, changing one of the
+Because the value is computed by ``get()``, changing one of the
 settings being used by the ``url`` value changes the return value.
 
 .. {{{cog
@@ -689,7 +689,7 @@ avoid problems due to recursive references.
    :caption:
    :start-after: #end_pymotw_header
 
-An :class:`InterpolationDepthError` exception is raised if there are
+An ``InterpolationDepthError`` exception is raised if there are
 too many substitution steps.
 
 .. {{{cog
@@ -706,7 +706,7 @@ too many substitution steps.
 
 .. {{{end}}}
 
-Missing values result in an :class:`InterpolationMissingOptionError`
+Missing values result in an ``InterpolationMissingOptionError``
 exception.
 
 .. literalinclude:: configparser_interpolation_error.py
@@ -762,11 +762,11 @@ automatically.
 Extended Interpolation
 ----------------------
 
-:class:`ConfigParser` supports alternate interpolation implementations
+``ConfigParser`` supports alternate interpolation implementations
 Passing an object that supports the API defined by
-:class:`Interpolation` to the ``interpolation`` parameter.  For
-example, using :class:`ExtendedInterpolation` instead of the default
-:class:`BasicInterpolation` enables a different syntax using ``${}``
+``Interpolation`` to the ``interpolation`` parameter.  For
+example, using ``ExtendedInterpolation`` instead of the default
+``BasicInterpolation`` enables a different syntax using ``${}``
 to indicate variables.
 
 .. literalinclude:: configparser_extendedinterpolation.py
@@ -803,7 +803,7 @@ Disabling Interpolation
 -----------------------
 
 To disable interpolation, pass ``None`` instead of an
-:class:`Interpolation` object.
+``Interpolation`` object.
 
 .. literalinclude:: configparser_nointerpolation.py
    :caption:

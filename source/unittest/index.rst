@@ -16,14 +16,14 @@ Basic Test Structure
 
 Tests, as defined by ``unittest``, have two parts: code to manage
 test dependencies (called "fixtures"), and the test itself. Individual
-tests are created by subclassing :class:`TestCase` and overriding or
+tests are created by subclassing ``TestCase`` and overriding or
 adding appropriate methods. For example,
 
 .. literalinclude:: unittest_simple.py
     :caption:
     :start-after: #end_pymotw_header
 
-In this case, the :class:`SimplisticTest` has a single :func:`test`
+In this case, the ``SimplisticTest`` has a single ``test()``
 method, which would fail if ``a`` is ever different from ``b``.
 
 Running Tests
@@ -128,7 +128,7 @@ output.
 
 .. {{{end}}}
 
-In the previous example, :func:`testFail` fails and the traceback
+In the previous example, ``testFail()`` fails and the traceback
 shows the line with the failure code. It is up to the person reading
 the test output to look at the code to figure out the meaning of the
 failed test, though.
@@ -138,7 +138,7 @@ failed test, though.
     :start-after: #end_pymotw_header
 
 To make it easier to understand the nature of a test failure, the
-:func:`fail*` and :func:`assert*` methods all accept an argument
+``fail*()`` and ``assert*()`` methods all accept an argument
 ``msg``, which can be used to produce a more detailed error message.
 
 .. {{{cog
@@ -180,8 +180,8 @@ the test author and the desired outcome of the code being tested.
     :start-after: #end_pymotw_header
 
 If the code produces a value which can be evaluated as true, the
-method :func:`assertTrue` should be used. If the code produces a false
-value, the method :func:`assertFalse` make more sense.
+method ``assertTrue()`` should be used. If the code produces a false
+value, the method ``assertFalse()`` make more sense.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '-m unittest -v unittest_truth.py'))
@@ -259,8 +259,8 @@ Almost Equal?
 =============
 
 In addition to strict equality, it is possible to test for near
-equality of floating point numbers using :func:`assertAlmostEqual`
-and :func:`assertNotAlmostEqual`.
+equality of floating point numbers using ``assertAlmostEqual()``
+and ``assertNotAlmostEqual()``.
 
 .. literalinclude:: unittest_almostequal.py
     :caption:
@@ -298,9 +298,9 @@ Containers
 ==========
 
 
-In addition to the generic :func:`assertEqual` and
-:func:`assertNotEqual`, there are special methods for comparing
-containers like :class:`list`, :class:`dict:`, and :class:`set`
+In addition to the generic ``assertEqual()`` and
+``assertNotEqual()``, there are special methods for comparing
+containers like ``list``, ``dict:``, and ``set``
 objects.
 
 .. literalinclude:: unittest_equality_container.py
@@ -443,14 +443,14 @@ the input type, making test failures easier to understand and correct.
 
 .. {{{end}}}
 
-Use :func:`assertIn` to test container membership.
+Use ``assertIn()`` to test container membership.
 
 .. literalinclude:: unittest_in.py
    :caption:
    :start-after: #end_pymotw_header
 
 Any object that supports the ``in`` operator or the container API can
-be used with :func:`assertIn`.
+be used with ``assertIn()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '-m unittest unittest_in.py', ignore_error=True))
@@ -497,12 +497,12 @@ Testing for Exceptions
 ======================
 
 As previously mentioned, if a test raises an exception other than
-:class:`AssertionError` it is treated as an error. This is very useful
+``AssertionError`` it is treated as an error. This is very useful
 for uncovering mistakes while modifying code that has existing test
 coverage. There are circumstances, however, in which the test should
 verify that some code does produce an exception. For example, if an
 invalid value is given to an attribute of an object. In such cases,
-:func:`assertRaises` makes the code more clear than trapping the
+``assertRaises()`` makes the code more clear than trapping the
 exception in the test. Compare these two tests:
 
 .. literalinclude:: unittest_exception.py
@@ -510,7 +510,7 @@ exception in the test. Compare these two tests:
     :start-after: #end_pymotw_header
 
 The results for both are the same, but the second test using
-:func:`failUnlessRaises` is more succinct.
+``failUnlessRaises()`` is more succinct.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '-m unittest -v unittest_exception.py'))
@@ -543,13 +543,13 @@ but they are still tests and still useful).
 
 ``unittest`` includes special hooks to configure and clean up any
 fixtures needed by tests. To establish fixtures for each individual
-test case, override :func:`setUp` on the :class:`TestCase`. To clean
-them up, override :func:`tearDown`. To manage one set of fixtures for
+test case, override ``setUp()`` on the ``TestCase``. To clean
+them up, override ``tearDown()``. To manage one set of fixtures for
 all instances of a test class, override the class methods
-:func:`setUpClass` and :func:`tearDownClass` for the
-:class:`TestCase`. And to handle especially expensive setup operations
+``setUpClass()`` and ``tearDownClass()`` for the
+``TestCase``. And to handle especially expensive setup operations
 for all of the tests within a module, use the module-level functions
-:func:`setUpModule` and :func:`tearDownModule`.
+``setUpModule()`` and ``tearDownModule()``.
 
 .. literalinclude:: unittest_fixtures.py
     :caption:
@@ -590,7 +590,7 @@ and test methods is apparent.
 
 The ``tearDown`` methods may not all be invoked if there are errors in
 the process of cleaning up fixtures. To ensure that a fixture is
-always released correctly, use :func:`addCleanup`.
+always released correctly, use ``addCleanup()``.
 
 .. literalinclude:: unittest_addcleanup.py
    :caption:
@@ -633,7 +633,7 @@ inputs. Rather than defining a separate test method for each small
 case, a common way of doing this is to use one test method containing
 several related assertion calls. The problem with this approach is
 that as soon as one assertion fails, the rest are skipped. A better
-solution is to use :func:`subTest` to create a context for a test
+solution is to use ``subTest()`` to create a context for a test
 within a test method. If the test fails, the failure is reported and
 the remaining tests continue.
 
@@ -696,8 +696,8 @@ It is frequently useful to be able to skip a test if some external
 condition is not met. For example, when writing tests to check
 behavior of a library under a specific version of Python there is no
 reason to run those tests under other versions of Python. Test classes
-and methods can be decorated with :func:`skip` to always skip the
-tests. The decorators :func:`skipIf` and :func:`skipUnless` can be
+and methods can be decorated with ``skip()`` to always skip the
+tests. The decorators ``skipIf()`` and ``skipUnless()`` can be
 used to check a condition before skipping.
 
 .. literalinclude:: unittest_skip.py
@@ -705,8 +705,8 @@ used to check a condition before skipping.
    :start-after: #end_pymotw_header
 
 For complex conditions that are difficult to express in a single
-expression to be passed to :func:`skipIf` or :func:`skipUnless`, a
-test case may raise :class:`SkipTest` directly to cause the test to be
+expression to be passed to ``skipIf()`` or ``skipUnless()``, a
+test case may raise ``SkipTest`` directly to cause the test to be
 skipped.
 
 .. {{{cog
@@ -736,7 +736,7 @@ Ignoring Failing Tests
 ======================
 
 Rather than deleting tests that are persistently broken, they can be
-marked with the :func:`expectedFailure` decorator so the failure is
+marked with the ``expectedFailure()`` decorator so the failure is
 ignored.
 
 .. literalinclude:: unittest_expectedfailure.py

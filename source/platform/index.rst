@@ -35,11 +35,11 @@ Interpreter
 ===========
 
 There are four functions for getting information about the current
-Python interpreter. :func:`python_version` and
-:func:`python_version_tuple` return different forms of the interpreter
+Python interpreter. ``python_version()`` and
+``python_version_tuple()`` return different forms of the interpreter
 version with major, minor, and patch level components.
-:func:`python_compiler` reports on the compiler used to build the
-interpreter. And :func:`python_build` gives a version string for the
+``python_compiler()`` reports on the compiler used to build the
+interpreter. And ``python_build()`` gives a version string for the
 build of the interpreter.
 
 .. literalinclude:: platform_python.py
@@ -88,7 +88,7 @@ Windows:
 Platform
 ========
 
-The :func:`platform` function returns a string containing a general
+The ``platform()`` function returns a string containing a general
 purpose platform identifier.  The function accepts two optional
 Boolean arguments. If ``aliased`` is True, the names in the return value
 are converted from a formal name to their more common form. When
@@ -139,24 +139,30 @@ Operating System and Hardware Info
 ==================================
 
 More detailed information about the operating system and hardware the
-interpreter is running under can be retrieved as well. :func:`uname`
+interpreter is running under can be retrieved as well. ``uname()``
 returns a tuple containing the system, node, release, version,
 machine, and processor values.  Individual values can be accessed
 through functions of the same names, listed in :table:`Platform
 Information Functions`.
 
-.. table:: Platform Information Functions
+.. list-table:: Platform Information Functions
+   :header-rows: 1
+   :widths: 20 60
 
-  =================  ============
-  Function           Return Value
-  =================  ============
-  :func:`system`     operating system name
-  :func:`node`       host name of the server, not fully qualified
-  :func:`release`    operating system release number
-  :func:`version`    more detailed system version
-  :func:`machine`    a hardware-type identifier, such as ``'i386'``
-  :func:`processor`  a real identifier for the processor (the same value as :func:`machine` in many cases)
-  =================  ============
+   - * Function
+     * Return Value
+   - * ``system()``
+     * operating system name
+   - * ``node()``
+     * host name of the server, not fully qualified
+   - * ``release()``
+     * operating system release number
+   - * ``version()``
+     * more detailed system version
+   - * ``machine()``
+     * a hardware-type identifier, such as ``'i386'``
+   - * ``processor()``
+     * a real identifier for the processor (the same value as ``machine()`` in many cases)
 
 .. literalinclude:: platform_os_info.py
     :caption:
@@ -226,8 +232,8 @@ Executable Architecture
 =======================
 
 Individual program architecture information can be probed using the
-:func:`architecture` function. The first argument is the path to an
-executable program (defaulting to :data:`sys.executable`, the Python
+``architecture()`` function. The first argument is the path to an
+executable program (defaulting to ``sys.executable``, the Python
 interpreter). The return value is a tuple containing the bit
 architecture and the linkage format used.
 

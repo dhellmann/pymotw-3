@@ -6,14 +6,14 @@
     :synopsis: Spawning additional processes
 
 The ``subprocess`` module supports three APIs for working with
-processes. The :func:`run` function, added in Python 3.5, is a
+processes. The ``run()`` function, added in Python 3.5, is a
 high-level API for running a process and optionally collecting its
-output. The functions :func:`call`, :func:`check_call`, and
-:func:`check_output` are the former high-level API, carried over from
+output. The functions ``call()``, ``check_call()``, and
+``check_output()`` are the former high-level API, carried over from
 Python 2. They are still supported and widely used in existing
-programs. The class :class:`Popen` is a low-level API used to build
+programs. The class ``Popen`` is a low-level API used to build
 the other APIs and useful for more complex process interactions. The
-constructor for :class:`Popen` takes arguments to set up the new
+constructor for ``Popen`` takes arguments to set up the new
 process so the parent can communicate with it via pipes.  It provides
 all of the functionality of the other modules and functions it
 replaces, and more. The API is consistent for all uses, and many of
@@ -22,9 +22,9 @@ descriptors and ensuring the pipes are closed) are "built in" instead
 of being handled by the application code separately.
 
 The ``subprocess`` module is intended to replace functions such as
-:func:`os.system`, :func:`os.spawnv`, the variations of :func:`popen`
+``os.system()``, ``os.spawnv()``, the variations of ``popen()``
 in the :mod:`os` and :mod:`popen2` modules, as well as the
-:func:`commands` module. To make it easier to compare
+``commands()`` module. To make it easier to compare
 ``subprocess`` with those other modules, many of the examples in
 this section re-create the ones used for :mod:`os` and :mod:`popen2`.
 
@@ -39,7 +39,7 @@ Running External Command
 ========================
 
 To run an external command without interacting with it in the same way
-as :func:`os.system`, use the :func:`run` function.
+as ``os.system()``, use the ``run()`` function.
 
 .. literalinclude:: subprocess_os_system.py
     :caption:
@@ -47,8 +47,8 @@ as :func:`os.system`, use the :func:`run` function.
 
 The command line arguments are passed as a list of strings, which
 avoids the need for escaping quotes or other special characters that
-might be interpreted by the shell. :func:`run` returns a
-:class:`CompletedProcess` instance, with information about the process
+might be interpreted by the shell. ``run()`` returns a
+``CompletedProcess`` instance, with information about the process
 like the exit code and output.
 
 .. {{{cog
@@ -112,25 +112,25 @@ before the command is run.
 
 .. note::
 
-  Using :func:`run` without passing ``check=True`` is equivalent to
-  using :func:`call`, which only returned the exit code from the
+  Using ``run()`` without passing ``check=True`` is equivalent to
+  using ``call()``, which only returned the exit code from the
   process.
 
 Error Handling
 --------------
 
-The ``returncode`` attribute of the :class:`CompletedProcess` is the
+The ``returncode`` attribute of the ``CompletedProcess`` is the
 exit code of the program.  The caller is responsible for interpreting
-it to detect errors.  If the ``check`` argument to :func:`run` is
+it to detect errors.  If the ``check`` argument to ``run()`` is
 ``True``, the exit code is checked and if it indicates an error
-happened then a :class:`CalledProcessError` exception is raised.
+happened then a ``CalledProcessError`` exception is raised.
 
 .. literalinclude:: subprocess_run_check.py
    :caption:
    :start-after: #end_pymotw_header
 
 The ``false`` command always exits with a non-zero status code,
-which :func:`run` interprets as an error.
+which ``run()`` interprets as an error.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'subprocess_run_check.py', ignore_error=True))
@@ -146,16 +146,16 @@ which :func:`run` interprets as an error.
 
 .. note::
 
-   Passing ``check=True`` to :func:`run` makes it equivalent to using
-   :func:`check_call`.
+   Passing ``check=True`` to ``run()`` makes it equivalent to using
+   ``check_call()``.
 
 Capturing Output
 ----------------
 
 The standard input and output channels for the process started by
-:func:`run` are bound to the parent's input and output.  That means
+``run()`` are bound to the parent's input and output.  That means
 the calling program cannot capture the output of the command.  Pass
-:const:`PIPE` for the ``stdout`` and ``stderr`` arguments to capture
+``PIPE`` for the ``stdout`` and ``stderr`` arguments to capture
 the output for later processing.
 
 .. literalinclude:: subprocess_run_output.py
@@ -202,8 +202,8 @@ standard output is captured and returned.
 
 .. note::
 
-   Passing ``check=True`` and setting ``stdout`` to :const:`PIPE` is
-   equivalent to using :func:`check_output`.
+   Passing ``check=True`` and setting ``stdout`` to ``PIPE`` is
+   equivalent to using ``check_output()``.
 
 The next example runs a series of commands in a sub-shell.  Messages are
 sent to standard output and standard error before the commands exit
@@ -232,8 +232,8 @@ message to standard output is hidden.
 .. {{{end}}}
 
 To prevent error messages from commands run through
-:func:`run` from being written to the console, set the
-``stderr`` parameter to the constant :const:`PIPE`.
+``run()`` from being written to the console, set the
+``stderr`` parameter to the constant ``PIPE``.
 
 .. literalinclude:: subprocess_run_output_error_trap.py
    :caption:
@@ -257,8 +257,8 @@ is captured and printed.
 
 .. {{{end}}}
 
-To capture error messages when using :func:`check_output`, set
-``stderr`` to :const:`STDOUT`, and the messages will be merged with
+To capture error messages when using ``check_output()``, set
+``stderr`` to ``STDOUT``, and the messages will be merged with
 the rest of the output from the command.
 
 .. literalinclude:: subprocess_check_output_error_trap_output.py
@@ -284,14 +284,14 @@ Suppressing Output
 ------------------
 
 For cases where the output should not be shown or captured, use
-:const:`DEVNULL` to suppress an output stream. This example suppresses
+``DEVNULL`` to suppress an output stream. This example suppresses
 both the standard output and error streams.
 
 .. literalinclude:: subprocess_run_output_error_suppress.py
    :caption:
    :start-after: #end_pymotw_header
 
-The name :const:`DEVNULL` comes from the Unix special device file,
+The name ``DEVNULL`` comes from the Unix special device file,
 ``/dev/null``, which responds with end-of-file when opened for reading
 and receives but ignores any amount of input when writing.
 
@@ -312,25 +312,25 @@ and receives but ignores any amount of input when writing.
 Working with Pipes Directly
 ===========================
 
-The functions :func:`run`, :func:`call`, :func:`check_call`, and
-:func:`check_output` are wrappers around the :class:`Popen` class.
-Using :class:`Popen` directly gives more control over how the command
+The functions ``run()``, ``call()``, ``check_call()``, and
+``check_output()`` are wrappers around the ``Popen`` class.
+Using ``Popen`` directly gives more control over how the command
 is run, and how its input and output streams are processed.  For
 example, by passing different arguments for ``stdin``, ``stdout``, and
-``stderr`` it is possible to mimic the variations of :func:`os.popen`.
+``stderr`` it is possible to mimic the variations of ``os.popen()``.
 
 One-way Communication With a Process
 ------------------------------------
 
 To run a process and read all of its output, set the ``stdout`` value to
-:const:`PIPE` and call :func:`communicate`.
+``PIPE`` and call ``communicate()``.
 
 .. literalinclude:: subprocess_popen_read.py
     :caption:
     :start-after: #end_pymotw_header
 
-This is similar to the way :func:`popen` works, except that the
-reading is managed internally by the :class:`Popen` instance.
+This is similar to the way ``popen()`` works, except that the
+reading is managed internally by the ``Popen`` instance.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'subprocess_popen_read.py'))
@@ -346,15 +346,15 @@ reading is managed internally by the :class:`Popen` instance.
 .. {{{end}}}
 
 To set up a pipe to allow the calling program to write data to it, set
-``stdin`` to :const:`PIPE`.
+``stdin`` to ``PIPE``.
 
 .. literalinclude:: subprocess_popen_write.py
     :caption:
     :start-after: #end_pymotw_header
 
 To send data to the standard input channel of the process one time,
-pass the data to :func:`communicate`.  This is similar to using
-:func:`popen` with mode ``'w'``.
+pass the data to ``communicate()``.  This is similar to using
+``popen()`` with mode ``'w'``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '-u subprocess_popen_write.py'))
@@ -372,14 +372,14 @@ pass the data to :func:`communicate`.  This is similar to using
 Bi-directional Communication With a Process
 -------------------------------------------
 
-To set up the :class:`Popen` instance for reading and writing at the
+To set up the ``Popen`` instance for reading and writing at the
 same time, use a combination of the previous techniques.
 
 .. literalinclude:: subprocess_popen2.py
     :caption:
     :start-after: #end_pymotw_header
 
-This sets up the pipe to mimic :func:`popen2`.
+This sets up the pipe to mimic ``popen2()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '-u subprocess_popen2.py'))
@@ -398,15 +398,15 @@ Capturing Error Output
 ----------------------
 
 It is also possible watch both of the streams for ``stdout`` and ``stderr``,
-as with :func:`popen3`.
+as with ``popen3()``.
 
 .. literalinclude:: subprocess_popen3.py
     :caption:
     :start-after: #end_pymotw_header
 
 Reading from ``stderr`` works the same as with ``stdout``.  Passing
-:const:`PIPE` tells :class:`Popen` to attach to the channel, and
-:func:`communicate` reads all of the data from it before returning.
+``PIPE`` tells ``Popen`` to attach to the channel, and
+``communicate()`` reads all of the data from it before returning.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '-u subprocess_popen3.py'))
@@ -426,13 +426,13 @@ Combining Regular and Error Output
 ----------------------------------
 
 To direct the error output from the process to its standard output
-channel, use :const:`STDOUT` for ``stderr`` instead of :const:`PIPE`.
+channel, use ``STDOUT`` for ``stderr`` instead of ``PIPE``.
 
 .. literalinclude:: subprocess_popen4.py
     :caption:
     :start-after: #end_pymotw_header
 
-Combining the output in this way is similar to how :func:`popen4`
+Combining the output in this way is similar to how ``popen4()``
 works.
 
 .. {{{cog
@@ -453,11 +453,11 @@ Connecting Segments of a Pipe
 =============================
 
 Multiple commands can be connected into a *pipeline*, similar to the
-way the Unix shell works, by creating separate :class:`Popen`
+way the Unix shell works, by creating separate ``Popen``
 instances and chaining their inputs and outputs together.  The
-:attr:`stdout` attribute of one :class:`Popen` instance is used as the
+:attr:`stdout` attribute of one ``Popen`` instance is used as the
 ``stdin`` argument for the next in the pipeline, instead of the constant
-:const:`PIPE`.  The output is read from the :attr:`stdout` handle for
+``PIPE``.  The output is read from the :attr:`stdout` handle for
 the final command in the pipeline.
 
 .. literalinclude:: subprocess_pipes.py
@@ -511,10 +511,10 @@ Interacting with Another Command
 ================================
 
 All of the previous examples assume a limited amount of
-interaction. The :func:`communicate` method reads all of the output
+interaction. The ``communicate()`` method reads all of the output
 and waits for child process to exit before returning. It is also
 possible to write to and read from the individual pipe handles used by
-the :class:`Popen` instance incrementally, as the program runs. A
+the ``Popen`` instance incrementally, as the program runs. A
 simple echo program that reads from standard input and writes to
 standard output illustrates this technique.
 
@@ -529,12 +529,12 @@ the child process.
     :start-after: #end_pymotw_header
 
 The next interaction example uses the :attr:`stdin` and :attr:`stdout`
-file handles owned by the :class:`Popen` instance in different
+file handles owned by the ``Popen`` instance in different
 ways. In the first example, a sequence of five numbers are written to
 :attr:`stdin` of the process, and after each write the next line of
 output is read back. In the second example, the same five numbers are
 written but the output is read all at once using
-:func:`communicate`.
+``communicate()``.
 
 .. literalinclude:: interaction.py
     :caption:
@@ -578,19 +578,19 @@ Signaling Between Processes
 ===========================
 
 The process management examples for the :mod:`os` module include a
-demonstration of signaling between processes using :func:`os.fork` and
-:func:`os.kill`. Since each :class:`Popen` instance provides a *pid*
+demonstration of signaling between processes using ``os.fork()`` and
+``os.kill()``. Since each ``Popen`` instance provides a *pid*
 attribute with the process id of the child process, it is possible to
 do something similar with ``subprocess``. The next example combines
 two scripts.  This child process sets up a signal handler for the
-:const:`USR` signal.
+``USR`` signal.
 
 .. literalinclude:: signal_child.py
     :caption:
     :start-after: #end_pymotw_header
 
 This script runs as the parent process.  It starts
-``signal_child.py``, then sends the :const:`USR1` signal.
+``signal_child.py``, then sends the ``USR1`` signal.
 
 .. literalinclude:: signal_parent.py
     :caption:
@@ -619,11 +619,11 @@ The output is:
 Process Groups / Sessions
 -------------------------
 
-If the process created by :class:`Popen` spawns sub-processes, those
+If the process created by ``Popen`` spawns sub-processes, those
 children will not receive any signals sent to the parent.  That means
-when using the ``shell`` argument to :class:`Popen` it will be difficult
+when using the ``shell`` argument to ``Popen`` it will be difficult
 to cause the command started in the shell to terminate by sending
-:const:`SIGINT` or :const:`SIGTERM`.
+``SIGINT`` or ``SIGTERM``.
 
 .. literalinclude:: subprocess_signal_parent_shell.py
     :caption:
@@ -658,17 +658,17 @@ are three separate processes interacting:
 
 To send signals to descendants without knowing their process id, use a
 *process group* to associate the children so they can be signaled
-together.  The process group is created with :func:`os.setpgrp`,
+together.  The process group is created with ``os.setpgrp()``,
 which sets process group id to the process id of the current process.
 All child processes inherit their process group from their parent, and
-since it should only be set in the shell created by :class:`Popen`
-and its descendants, :func:`os.setpgrp` should not be called in the
-same process where the :class:`Popen` is created.  Instead, the
-function is passed to :class:`Popen` as the ``preexec_fn`` argument so
-it is run after the :func:`fork` inside the new process, before it
-uses :func:`exec` to run the shell.  To signal the entire process
-group, use :func:`os.killpg` with the :attr:`pid` value from the
-:class:`Popen` instance.
+since it should only be set in the shell created by ``Popen``
+and its descendants, ``os.setpgrp()`` should not be called in the
+same process where the ``Popen`` is created.  Instead, the
+function is passed to ``Popen`` as the ``preexec_fn`` argument so
+it is run after the ``fork()`` inside the new process, before it
+uses ``exec()`` to run the shell.  To signal the entire process
+group, use ``os.killpg()`` with the :attr:`pid` value from the
+``Popen`` instance.
 
 .. literalinclude:: subprocess_signal_setpgrp.py
     :caption:
@@ -676,10 +676,10 @@ group, use :func:`os.killpg` with the :attr:`pid` value from the
 
 The sequence of events is
 
-1. The parent program instantiates :class:`Popen`.
-2. The :class:`Popen` instance forks a new process.
-3. The new process runs :func:`os.setpgrp`.
-4. The new process runs :func:`exec` to start the shell.
+1. The parent program instantiates ``Popen``.
+2. The ``Popen`` instance forks a new process.
+3. The new process runs ``os.setpgrp()``.
+4. The new process runs ``exec()`` to start the shell.
 5. The shell runs the shell script.
 6. The shell script forks again and that process execs Python.
 7. Python runs ``signal_child.py``.

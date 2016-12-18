@@ -12,7 +12,7 @@ elements into a list while maintaining the list in sorted order.
 Inserting in Sorted Order
 =========================
 
-Here is a simple example using :func:`insort` to insert items into a
+Here is a simple example using ``insort()`` to insert items into a
 list in sorted order.
 
 .. literalinclude:: bisect_example.py
@@ -60,17 +60,17 @@ Handling Duplicates
 The result set shown previously includes a repeated value,
 ``77``. The ``bisect`` module provides two ways to handle repeats. New
 values can be inserted to the left of existing values, or to the
-right. The :func:`insort` function is actually an alias for
-:func:`insort_right`, which inserts after the existing value. The
-corresponding function :func:`insort_left` inserts before the existing
+right. The ``insort()`` function is actually an alias for
+``insort_right()``, which inserts after the existing value. The
+corresponding function ``insort_left()`` inserts before the existing
 value.
 
 .. literalinclude:: bisect_example2.py
     :caption:
     :start-after: #end_pymotw_header
 
-When the same data is manipulated using :func:`bisect_left` and
-:func:`insort_left`, the results are the same sorted list but the
+When the same data is manipulated using ``bisect_left()`` and
+``insort_left()``, the results are the same sorted list but the
 insert positions are different for the duplicate values.
 
 .. {{{cog

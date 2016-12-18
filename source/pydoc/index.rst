@@ -85,7 +85,7 @@ server.
 Interactive Help
 ================
 
-``pydoc`` also adds a function :func:`help` to the ``__builtins__``
+``pydoc`` also adds a function ``help()`` to the ``__builtins__``
 so the same information can be accessed from the Python interpreter
 prompt.
 

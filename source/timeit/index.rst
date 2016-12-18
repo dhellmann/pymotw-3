@@ -14,20 +14,20 @@ costs on the time calculation by executing the code repeatedly.
 Module Contents
 ===============
 
-``timeit`` defines a single public class, :class:`Timer`. The
-constructor for :class:`Timer` takes a statement to be timed and a
+``timeit`` defines a single public class, ``Timer``. The
+constructor for ``Timer`` takes a statement to be timed and a
 "setup" statement (used to initialize variables, for example). The
 Python statements should be strings and can include embedded newlines.
 
-The :func:`timeit` method runs the setup statement one time, then
+The ``timeit()`` method runs the setup statement one time, then
 executes the primary statement repeatedly and returns the amount of
-time that passes. The argument to :func:`timeit` controls how many
+time that passes. The argument to ``timeit()`` controls how many
 times to run the statement; the default is 1,000,000.
 
 Basic Example
 =============
 
-To illustrate how the various arguments to :class:`Timer` are used,
+To illustrate how the various arguments to ``Timer`` are used,
 here is a simple example that prints an identifying value when each
 statement is executed:
 
@@ -65,12 +65,12 @@ When run, the output is:
 
 .. {{{end}}}
 
-:func:`timeit` runs the setup statement one time, then calls the
+``timeit()`` runs the setup statement one time, then calls the
 main statement ``count`` times. It returns a single floating point value
 representing the cumulative amount of time spent running the main
 statement.
 
-When :func:`repeat` is used, it calls :func:`timeit` several
+When ``repeat()`` is used, it calls ``timeit()`` several
 times (3 in this case) and all of the responses are returned in a
 list.
 
@@ -80,7 +80,7 @@ Storing Values in a Dictionary
 This more complex example compares the amount of time it takes to
 populate a dictionary with a large number of values using a variety of
 methods. First, a few constants are needed to configure the
-:class:`Timer`.  The :data:`setup_statement` variable initializes a
+``Timer``.  The ``setup_statement`` variable initializes a
 list of tuples containing strings and integers that will be used by
 the main statements to build dictionaries using the strings as keys
 and storing the integers as the associated values.
@@ -88,10 +88,10 @@ and storing the integers as the associated values.
 .. literalinclude:: timeit_dictionary.py
    :lines: 15-21
 
-A utility function, :func:`show_results`, is defined to print the
-results in a useful format.  The :func:`timeit` method returns the
+A utility function, ``show_results()``, is defined to print the
+results in a useful format.  The ``timeit()`` method returns the
 amount of time it takes to execute the statement repeatedly. The
-output of :func:`show_results` converts that into the amount of time
+output of ``show_results()`` converts that into the amount of time
 it takes per iteration, and then further reduces the value to the
 average amount of time it takes to store one item in the dictionary.
 
@@ -99,11 +99,11 @@ average amount of time it takes to store one item in the dictionary.
    :lines: 24-35
 
 To establish a baseline, the first configuration tested uses
-:func:`__setitem__`.  All of the other variations avoid overwriting
+``__setitem__()``.  All of the other variations avoid overwriting
 values already in the dictionary, so this simple version should be the
 fastest.
 
-The first argument to :class:`Timer` is a multi-line string, with
+The first argument to ``Timer`` is a multi-line string, with
 white space preserved to ensure that it parses correctly when run. The
 second argument is a constant established to initialize the list of
 values and the dictionary.
@@ -111,13 +111,13 @@ values and the dictionary.
 .. literalinclude:: timeit_dictionary.py
    :lines: 37-47
 
-The next variation uses :func:`setdefault` to ensure that values
+The next variation uses ``setdefault()`` to ensure that values
 already in the dictionary are not overwritten.
 
 .. literalinclude:: timeit_dictionary.py
    :lines: 49-59
 
-This method adds the value only if a :class:`KeyError`
+This method adds the value only if a ``KeyError``
 exception is raised when looking for the
 existing value.
 
@@ -183,7 +183,7 @@ For example, to get help:
     ...
 
 The ``statement`` argument works a little differently on the command
-line than the argument to :class:`Timer`.  Instead of using one long
+line than the argument to ``Timer``.  Instead of using one long
 string, pass each line of the instructions as a separate command line
 argument. To indent lines (such as inside a loop), embed spaces in the
 string by enclosing it in quotes.

@@ -12,7 +12,7 @@ Echo Server
 
 This sample program, based on the one in the standard library
 documentation, receives incoming messages and echos them back to the
-sender.  It starts by creating a TCP/IP socket, then :func:`bind` is
+sender.  It starts by creating a TCP/IP socket, then ``bind()`` is
 used to associate the socket with the server address.  In this case,
 the address is ``localhost``, referring to the current server, and the
 port number is 10000.
@@ -22,21 +22,21 @@ port number is 10000.
    :caption:
    :start-after: #end_pymotw_header
 
-Calling :func:`listen` puts the socket into server mode, and
-:func:`accept` waits for an incoming connection.  The integer argument
+Calling ``listen()`` puts the socket into server mode, and
+``accept()`` waits for an incoming connection.  The integer argument
 is the number of connections the system should queue up in the
 background before rejecting new clients.  This example only expects to
 work with one connection at a time.
 
-:func:`accept` returns an open connection between the server and
+``accept()`` returns an open connection between the server and
 client, along with the address of the client.  The connection is
 actually a different socket on another port (assigned by the kernel).
-Data is read from the connection with :func:`recv` and transmitted
-with :func:`sendall`.
+Data is read from the connection with ``recv()`` and transmitted
+with ``sendall()``.
 
 When communication with a client is finished, the connection needs to
-be cleaned up using :func:`close`.  This example uses a
-``try:finally`` block to ensure that :func:`close` is always called,
+be cleaned up using ``close()``.  This example uses a
+``try:finally`` block to ensure that ``close()`` is always called,
 even in the event of an error.
 
 Echo Client
@@ -44,7 +44,7 @@ Echo Client
 
 The client program sets up its ``socket`` differently from the
 way a server does.  Instead of binding to a port and listening, it
-uses :func:`connect` to attach the socket directly to the remote
+uses ``connect()`` to attach the socket directly to the remote
 address.
 
 .. literalinclude:: socket_echo_client.py
@@ -52,7 +52,7 @@ address.
    :start-after: #end_pymotw_header
 
 After the connection is established, data can be sent through the
-``socket`` with :func:`sendall` and received with :func:`recv`,
+``socket`` with ``sendall()`` and received with ``recv()``,
 just as in the server. When the entire message is sent and a copy
 received, the socket is closed to free up the port.
 
@@ -101,7 +101,7 @@ Easy Client Connections
 =======================
 
 TCP/IP clients can save a few steps by using the convenience function
-:func:`create_connection` to connect to a server.  The function takes
+``create_connection()`` to connect to a server.  The function takes
 one argument, a two-value tuple containing the address of the server,
 and derives the best address to use for the connection.
 
@@ -109,7 +109,7 @@ and derives the best address to use for the connection.
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`create_connection` uses :func:`getaddrinfo` to find candidate
+``create_connection()`` uses ``getaddrinfo()`` to find candidate
 connection parameters, and returns a ``socket`` opened with the
 first configuration that creates a successful connection.  The
 :attr:`family`, :attr:`type`, and :attr:`proto` attributes can be
@@ -137,7 +137,7 @@ It is important to bind a server to the correct address, so that
 clients can communicate with it.  The previous examples all used
 ``'localhost'`` as the IP address, which limits connections to clients
 running on the same server.  Use a public address of the server, such
-as the value returned by :func:`gethostname`, to allow other hosts to
+as the value returned by ``gethostname()``, to allow other hosts to
 connect.  This example modifies the echo server to listen on an
 address specified via a command line argument.
 
@@ -212,11 +212,11 @@ And the server output is:
 
 Many servers have more than one network interface, and therefore more
 than one IP address.  Rather than running separate copies of a service
-bound to each IP address, use the special address :const:`INADDR_ANY`
+bound to each IP address, use the special address ``INADDR_ANY``
 to listen on all addresses at the same time.  Although ``socket``
-defines a constant for :const:`INADDR_ANY`, it is an integer value and
+defines a constant for ``INADDR_ANY``, it is an integer value and
 must be converted to a dotted-notation string address before it can be
-passed to :func:`bind`.  As a shortcut, use "``0.0.0.0``" or an empty
+passed to ``bind()``.  As a shortcut, use "``0.0.0.0``" or an empty
 string (``''``) instead of doing the conversion.
 
 .. literalinclude:: socket_echo_server_any.py
@@ -224,7 +224,7 @@ string (``''``) instead of doing the conversion.
    :start-after: #end_pymotw_header
 
 To see the actual address being used by a socket, call its
-:func:`getsockname` method.  After starting the service, running
+``getsockname()`` method.  After starting the service, running
 ``netstat`` again shows it listening for incoming connections
 on any address.
 

@@ -16,7 +16,7 @@ it from being cleaned up automatically.
 References
 ==========
 
-Weak references to objects are managed through the :class:`ref`
+Weak references to objects are managed through the ``ref``
 class. To retrieve the original object, call the reference object.
 
 .. literalinclude:: weakref_ref.py
@@ -24,7 +24,7 @@ class. To retrieve the original object, call the reference object.
    :start-after: #end_pymotw_header
 
 In this case, since ``obj`` is deleted before the second call to the
-reference, the :class:`ref` returns ``None``.
+reference, the ``ref`` returns ``None``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'weakref_ref.py', line_break_mode='wrap'))
@@ -47,7 +47,7 @@ reference, the :class:`ref` returns ``None``.
 Reference Callbacks
 ===================
 
-The :class:`ref` constructor accepts an optional callback function to
+The ``ref`` constructor accepts an optional callback function to
 invoke when the referenced object is deleted.
 
 .. literalinclude:: weakref_ref_callback.py
@@ -82,8 +82,8 @@ Finalizing Objects
 ==================
 
 For more robust management of resources when weak references are
-cleaned up, use :class:`finalize` to associate callbacks with
-objects. A :class:`finalize` instance is retained until the attached
+cleaned up, use ``finalize`` to associate callbacks with
+objects. A ``finalize`` instance is retained until the attached
 object is deleted, even if the application does not retain a reference
 to the finalizer.
 
@@ -91,7 +91,7 @@ to the finalizer.
    :caption:
    :start-after: #end_pymotw_header
 
-The arguments to :class:`finalize` are the object to track, a callable
+The arguments to ``finalize`` are the object to track, a callable
 to invoke when the object is garbage collected, and any positional or
 named arguments to pass to the callable.
 
@@ -108,7 +108,7 @@ named arguments to pass to the callable.
 
 .. {{{end}}}
 
-The :class:`finalize` instance has a writable propertly ``atexit`` to
+The ``finalize`` instance has a writable propertly ``atexit`` to
 control whether or not to invoke the callback as a program is exiting,
 if it hasn't already been called.
 
@@ -136,7 +136,7 @@ disables that behavior.
 
 .. {{{end}}}
 
-Giving the :class:`finalize` a reference to the object it tracks
+Giving the ``finalize`` a reference to the object it tracks
 causes a reference to be retained, so the object is never garbage
 collected.
 
@@ -167,7 +167,7 @@ prevent an object from being finalized properly.
    :caption:
    :start-after: #end_pymotw_header
 
-Because the callable given to :class:`finalize` is a bound method of
+Because the callable given to ``finalize`` is a bound method of
 the instance ``obj``, the finalize object holds a reference to
 ``obj``, which can not be deleted and garbage collected.
 
@@ -197,7 +197,7 @@ receiving a reference instead of the real object.
    :start-after: #end_pymotw_header
 
 If the proxy is accessed after the referent object is removed, a
-:class:`ReferenceError` exception is raised.
+``ReferenceError`` exception is raised.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'weakref_proxy.py', ignore_error=True))
@@ -221,17 +221,17 @@ If the proxy is accessed after the referent object is removed, a
 Caching Objects
 ===============
 
-The :class:`ref` and :class:`proxy` classes are considered "low
+The ``ref`` and ``proxy`` classes are considered "low
 level". While they are useful for maintaining weak references to
 individual objects and allowing cycles to be garbage collected, the
-:class:`WeakKeyDictionary` and :class:`WeakValueDictionary` provide a
+``WeakKeyDictionary`` and ``WeakValueDictionary`` provide a
 more appropriate API for creating a cache of several objects.
 
-The :class:`WeakValueDictionary` uses weak references to the values it
+The ``WeakValueDictionary`` uses weak references to the values it
 holds, allowing them to be garbage collected when other code is not
 actually using them.  Using explicit calls to the garbage collector
 illustrates the difference between memory handling with a regular
-dictionary and :class:`WeakValueDictionary`:
+dictionary and ``WeakValueDictionary``:
 
 .. literalinclude:: weakref_valuedict.py
    :caption:
@@ -293,7 +293,7 @@ collected prematurely.
 
 .. {{{end}}}
 
-The :class:`WeakKeyDictionary` works similarly but uses weak
+The ``WeakKeyDictionary`` works similarly but uses weak
 references for the keys instead of the values in the dictionary.
 
 .. warning::
@@ -301,10 +301,10 @@ references for the keys instead of the values in the dictionary.
     The library documentation for ``weakref`` contains this
     warning:
 
-    Caution: Because a :class:`WeakValueDictionary` is built on top of
+    Caution: Because a ``WeakValueDictionary`` is built on top of
     a Python dictionary, it must not change size when iterating over
     it. This can be difficult to ensure for a
-    :class:`WeakValueDictionary` because actions performed by the
+    ``WeakValueDictionary`` because actions performed by the
     program during iteration may cause items in the dictionary to
     vanish "by magic" (as a side effect of garbage collection).
 

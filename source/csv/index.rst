@@ -13,7 +13,7 @@ because commas are often used to separate the fields in a record.
 Reading
 =======
 
-Use :func:`reader` to create a an object for reading data from a CSV
+Use ``reader()`` to create a an object for reading data from a CSV
 file.  The reader can be used as an iterator to process the rows of
 the file in order. For example
 
@@ -21,15 +21,15 @@ the file in order. For example
     :caption:
     :start-after: #end_pymotw_header
 
-The first argument to :func:`reader` is the source of text lines. In
+The first argument to ``reader()`` is the source of text lines. In
 this case, it is a file, but any iterable is accepted (a :mod:`StringIO`
-instance, :class:`list`, etc.).  Other optional arguments can be given to
+instance, ``list``, etc.).  Other optional arguments can be given to
 control how the input data is parsed.
 
 .. literalinclude:: testdata.csv
 
 As it is read, each row of the input data is parsed and converted to a
-:class:`list` of strings.
+``list`` of strings.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'csv_reader.py testdata.csv'))
@@ -71,9 +71,9 @@ when they are returned by the parser.
 Writing
 =======
 
-Writing CSV files is just as easy as reading them. Use :func:`writer`
+Writing CSV files is just as easy as reading them. Use ``writer()``
 to create an object for writing, then iterate over the rows, using
-:func:`writerow` to print them.
+``writerow()`` to print them.
 
 .. literalinclude:: csv_writer.py
     :caption:
@@ -112,7 +112,7 @@ modes.
 
     writer = csv.writer(f, quoting=csv.QUOTE_NONNUMERIC)
 
-In this case, :const:`QUOTE_NONNUMERIC` adds quotes around all columns
+In this case, ``QUOTE_NONNUMERIC`` adds quotes around all columns
 that contain values that are not numbers.
 
 .. {{{cog
@@ -134,18 +134,18 @@ that contain values that are not numbers.
 There are four different quoting options, defined as constants in the csv
 module.
 
-:const:`QUOTE_ALL`
+``QUOTE_ALL``
   Quote everything, regardless of type.
 
-:const:`QUOTE_MINIMAL`
+``QUOTE_MINIMAL``
   Quote fields with special characters (anything that would confuse a parser
   configured with the same dialect and options). This is the default
 
-:const:`QUOTE_NONNUMERIC`
+``QUOTE_NONNUMERIC``
   Quote all fields that are not integers or floats. When used with the reader,
   input fields that are not quoted are converted to floats.
 
-:const:`QUOTE_NONE`
+``QUOTE_NONE``
   Do not quote anything on output. When used with the reader, quote characters
   are included in the field values (normally, they are treated as delimiters and
   stripped).
@@ -163,7 +163,7 @@ separately, they are grouped together into a *dialect* object.
 Dialect classes can be registered by name, so that callers of the ``csv``
 module do not need to know the parameter settings in advance.  The
 complete list of registered dialects can be retrieved with
-:func:`list_dialects`.
+``list_dialects()``.
 
 .. literalinclude:: csv_list_dialects.py
    :caption:
@@ -225,20 +225,35 @@ data file.  :table:`CSV Dialect Parameters` lists the aspects of the
 file format that can be specified, from the way columns are delimited
 to the character used to escape a token.
 
-.. table:: CSV Dialect Parameters
-   
-   ====================  ======================  =======
-   Attribute             Default                 Meaning
-   ====================  ======================  =======
-   delimiter             ``,``                   Field separator (one character)
-   doublequote           True                    Flag controlling whether quotechar instances are doubled
-   escapechar            None                    Character used to indicate an escape sequence
-   lineterminator        ``\r\n``                String used by writer to terminate a line
-   quotechar             ``"``                   String to surround fields containing special values (one character)
-   quoting               :const:`QUOTE_MINIMAL`  Controls quoting behavior described earlier
-   skipinitialspace      False                   Ignore whitespace after the field delimiter
-   ====================  ======================  =======
-   
+.. list-table:: CSV Dialect Parameters
+   :header-rows: 1
+   :widths: 20 20 60
+
+   - * Attribute
+     * Default
+     * Meaning
+   - * delimiter
+     * ``,``
+     * Field separator (one character)
+   - * doublequote
+     * True
+     * Flag controlling whether quotechar instances are doubled
+   - * escapechar
+     * None
+     * Character used to indicate an escape sequence
+   - * lineterminator
+     * ``\r\n``
+     * String used by writer to terminate a line
+   - * quotechar
+     * ``"``
+     * String to surround fields containing special values (one character)
+   - * quoting
+     * ``QUOTE_MINIMAL``
+     * Controls quoting behavior described earlier
+   - * skipinitialspace
+     * False
+     * Ignore whitespace after the field delimiter
+
 .. literalinclude:: csv_dialect_variations.py
    :caption:
    :start-after: #end_pymotw_header
@@ -307,8 +322,8 @@ Automatically Detecting Dialects
 
 The best way to configure a dialect for parsing an input file is to
 know the correct settings in advance.  For data where the dialect
-parameters are unknown, the :class:`Sniffer` class can be used to make
-an educated guess.  The :func:`sniff` method takes a sample of the
+parameters are unknown, the ``Sniffer`` class can be used to make
+an educated guess.  The ``sniff()`` method takes a sample of the
 input data and an optional argument giving the possible delimiter
 characters.
 
@@ -316,7 +331,7 @@ characters.
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`sniff` returns a :class:`Dialect` instance with the settings to
+``sniff()`` returns a ``Dialect`` instance with the settings to
 be used for parsing the data.  The results are not always perfect, as
 demonstrated by the "escaped" dialect in the example.
 
@@ -378,7 +393,7 @@ Using Field Names
 
 In addition to working with sequences of data, the ``csv`` module
 includes classes for working with rows as dictionaries so that the
-fields can be named. The :class:`DictReader` and :class:`DictWriter`
+fields can be named. The ``DictReader`` and ``DictWriter``
 classes translate rows to dictionaries instead of lists. Keys for the
 dictionary can be passed in, or inferred from the first row in the
 input (when the row contains headers).
@@ -409,7 +424,7 @@ returned as dictionaries instead of lists or tuples.
 
 .. {{{end}}}
 
-The :class:`DictWriter` must be given a list of field names so it
+The ``DictWriter`` must be given a list of field names so it
 knows how to order the columns in the output.
 
 .. literalinclude:: csv_dictwriter.py
@@ -417,7 +432,7 @@ knows how to order the columns in the output.
     :start-after: #end_pymotw_header
 
 The field names are not written to the file automatically, but they
-can be written explicitly using the :func:`writeheader` method.
+can be written explicitly using the ``writeheader()`` method.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'csv_dictwriter.py testout.csv'))

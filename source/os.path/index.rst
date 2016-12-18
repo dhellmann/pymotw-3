@@ -20,28 +20,28 @@ actually existing; they operate solely on the strings.
 
 Path parsing depends on a few variable defined in :mod:`os`:
 
-* :const:`os.sep` - The separator between portions of the path (e.g.,
+* ``os.sep`` - The separator between portions of the path (e.g.,
   "``/``" or "``\``").
 
-* :const:`os.extsep` - The separator between a filename and the file
+* ``os.extsep`` - The separator between a filename and the file
   "extension" (e.g., "``.``").
 
-* :const:`os.pardir` - The path component that means traverse the
+* ``os.pardir`` - The path component that means traverse the
   directory tree up one level (e.g., "``..``").
 
-* :const:`os.curdir` - The path component that refers to the current
+* ``os.curdir`` - The path component that refers to the current
   directory (e.g., "``.``").
 
-The :func:`split` function breaks the path into two separate parts and
-returns a :class:`tuple` with the results. The second element of the
-:class:`tuple` is the last component of the path, and the first element is
+The ``split()`` function breaks the path into two separate parts and
+returns a ``tuple`` with the results. The second element of the
+``tuple`` is the last component of the path, and the first element is
 everything that comes before it.
 
 .. literalinclude:: ospath_split.py
     :caption:
     :start-after: #end_pymotw_header
 
-When the input argument ends in :const:`os.sep`, the "last element" of
+When the input argument ends in ``os.sep``, the "last element" of
 the path is an empty string.
 
 .. {{{cog
@@ -60,8 +60,8 @@ the path is an empty string.
 
 .. {{{end}}}
 
-The :func:`basename` function returns a value equivalent to the second
-part of the :func:`split` value.
+The ``basename()`` function returns a value equivalent to the second
+part of the ``split()`` value.
 
 .. literalinclude:: ospath_basename.py
     :caption:
@@ -69,7 +69,7 @@ part of the :func:`split` value.
 
 The full path is stripped down to the last element, whether that
 refers to a file or directory.  If the path ends in the directory
-separator (:const:`os.sep`), the base portion is considered to be
+separator (``os.sep``), the base portion is considered to be
 empty.
 
 .. {{{cog
@@ -88,13 +88,13 @@ empty.
 
 .. {{{end}}}
 
-The :func:`dirname` function returns the first part of the split path:
+The ``dirname()`` function returns the first part of the split path:
 
 .. literalinclude:: ospath_dirname.py
     :caption:
     :start-after: #end_pymotw_header
 
-Combining the results of :func:`basename` with :func:`dirname` gives
+Combining the results of ``basename()`` with ``dirname()`` gives
 the original path.
 
 .. {{{cog
@@ -113,14 +113,14 @@ the original path.
 
 .. {{{end}}}
 
-:func:`splitext` works like :func:`split`, but divides the path on the
+``splitext()`` works like ``split()``, but divides the path on the
 extension separator, rather than the directory separator.
 
 .. literalinclude:: ospath_splitext.py
     :caption:
     :start-after: #end_pymotw_header
 
-Only the last occurrence of :const:`os.extsep` is used when looking
+Only the last occurrence of ``os.extsep`` is used when looking
 for the extension, so if a filename has multiple extensions
 the results of splitting it leaves part of the extension on the
 prefix.
@@ -143,7 +143,7 @@ prefix.
 
 .. {{{end}}}
 
-:func:`commonprefix` takes a list of paths as an argument and returns
+``commonprefix()`` takes a list of paths as an argument and returns
 a single string that represents a common prefix present in all of the
 paths. The value may represent a path that does not actually exist,
 and the path separator is not included in the consideration, so the
@@ -172,7 +172,7 @@ though one path does not include a directory named ``three``.
 
 .. {{{end}}}
 
-:func:`commonpath` does honor path separators, and returns a prefix
+``commonpath()`` does honor path separators, and returns a prefix
 that does not include partial path values.
 
 .. literalinclude:: ospath_commonpath.py
@@ -203,13 +203,13 @@ Building Paths
 
 Besides taking existing paths apart, it is frequently necessary to
 build paths from other strings.  To combine several path components
-into a single value, use :func:`join`:
+into a single value, use ``join()``:
 
 .. literalinclude:: ospath_join.py
     :caption:
     :start-after: #end_pymotw_header
 
-If any argument to join begins with :const:`os.sep`, all of the
+If any argument to join begins with ``os.sep``, all of the
 previous arguments are discarded and the new one becomes the beginning
 of the return value.
 
@@ -228,7 +228,7 @@ of the return value.
 .. {{{end}}}
 
 It is also possible to work with paths that include "variable" components
-that can be expanded automatically. For example, :func:`expanduser`
+that can be expanded automatically. For example, ``expanduser()``
 converts the tilde (``~``) character to the name of a user's home
 directory.
 
@@ -253,7 +253,7 @@ unchanged, as with ``~nosuchuser`` in this example.
 
 .. {{{end}}}
 
-:func:`expandvars` is more general, and expands any shell environment
+``expandvars()`` is more general, and expands any shell environment
 variables present in the path.
 
 .. literalinclude:: ospath_expandvars.py
@@ -278,15 +278,15 @@ in the name of a file that already exists.
 Normalizing Paths
 =================
 
-Paths assembled from separate strings using :func:`join` or with
+Paths assembled from separate strings using ``join()`` or with
 embedded variables might end up with extra separators or relative path
-components. Use :func:`normpath` to clean them up:
+components. Use ``normpath()`` to clean them up:
 
 .. literalinclude:: ospath_normpath.py
     :caption:
     :start-after: #end_pymotw_header
 
-Path segments made up of :const:`os.curdir` and :const:`os.pardir` are
+Path segments made up of ``os.curdir`` and ``os.pardir`` are
 evaluated and collapsed.
 
 .. {{{cog
@@ -304,7 +304,7 @@ evaluated and collapsed.
 .. {{{end}}}
 
 To convert a relative path to an absolute filename, use
-:func:`abspath`.
+``abspath()``.
 
 .. literalinclude:: ospath_abspath.py
     :caption:
@@ -333,16 +333,16 @@ File Times
 
 Besides working with paths, ``os.path`` includes functions for
 retrieving file properties, similar to the ones returned by
-:func:`os.stat`:
+``os.stat()``:
 
 .. literalinclude:: ospath_properties.py
     :caption:
     :start-after: #end_pymotw_header
 
-:func:`os.path.getatime` returns the access time,
-:func:`os.path.getmtime` returns the modification time, and
-:func:`os.path.getctime` returns the creation time.
-:func:`os.path.getsize` returns the amount of data in the file,
+``os.path.getatime()`` returns the access time,
+``os.path.getmtime()`` returns the modification time, and
+``os.path.getctime()`` returns the creation time.
+``os.path.getsize()`` returns the amount of data in the file,
 represented in bytes.
 
 .. {{{cog

@@ -14,10 +14,10 @@ accessed directly by both the kernel and the user application.
 
 Memory-mapped files can be treated as mutable strings or file-like
 objects, depending on the need. A mapped file supports the expected
-file API methods, such as :func:`close`, :func:`flush`, :func:`read`,
-``readline()``, :func:`seek`, :func:`tell`, and :func:`write`. It
+file API methods, such as ``close()``, ``flush()``, ``read()``,
+``readline()``, ``seek()``, ``tell()``, and ``write()``. It
 also supports the string API, with features such as slicing and
-methods like :func:`find`.
+methods like ``find()``.
 
 All of the examples use the text file ``lorem.txt``, containing a bit
 of Lorem Ipsum. For reference, the text of the file is
@@ -28,19 +28,19 @@ of Lorem Ipsum. For reference, the text of the file is
 .. note::
 
   There are differences in the arguments and behaviors for
-  :func:`mmap` between Unix and Windows, which are not fully discussed
+  ``mmap()`` between Unix and Windows, which are not fully discussed
   here. For more details, refer to the standard library documentation.
 
 Reading
 =======
 
-Use the :func:`mmap` function to create a memory-mapped file.  The
-first argument is a file descriptor, either from the :func:`fileno`
-method of a :class:`file` object or from :func:`os.open`. The caller
-is responsible for opening the file before invoking :func:`mmap`, and
+Use the ``mmap()`` function to create a memory-mapped file.  The
+first argument is a file descriptor, either from the ``fileno()``
+method of a ``file`` object or from ``os.open()``. The caller
+is responsible for opening the file before invoking ``mmap()``, and
 closing it after it is no longer needed.
 
-The second argument to :func:`mmap` is a size in bytes for the portion
+The second argument to ``mmap()`` is a size in bytes for the portion
 of the file to map. If the value is ``0``, the entire file is
 mapped. If the size is larger than the current size of the file, the
 file is extended.
@@ -50,9 +50,9 @@ file is extended.
   Windows does not support creating a zero-length mapping.
 
 An optional keyword argument, ``access``, is supported by both
-platforms. Use :const:`ACCESS_READ` for read-only access,
-:const:`ACCESS_WRITE` for write-through (assignments to the memory go
-directly to the file), or :const:`ACCESS_COPY` for copy-on-write
+platforms. Use ``ACCESS_READ`` for read-only access,
+``ACCESS_WRITE`` for write-through (assignments to the memory go
+directly to the file), or ``ACCESS_COPY`` for copy-on-write
 (assignments to memory are not written to the file).
 
 .. literalinclude:: mmap_read.py
@@ -63,7 +63,7 @@ The file pointer tracks the last byte accessed through a slice
 operation.  In this example, the pointer moves ahead 10 bytes after
 the first read.  It is then reset to the beginning of the file by the
 slice operation, and moved ahead 10 bytes again by the slice.  After
-the slice operation, calling :func:`read` again gives the bytes 11-20
+the slice operation, calling ``read()`` again gives the bytes 11-20
 in the file.
 
 .. {{{cog
@@ -86,9 +86,9 @@ Writing
 To set up the memory mapped file to receive updates, start by opening
 it for appending with mode ``'r+'`` (not ``'w'``) before mapping
 it. Then use any of the API methods that change the data
-(:func:`write`, assignment to a slice, etc.).
+(``write()``, assignment to a slice, etc.).
 
-The next example uses the default access mode of :const:`ACCESS_WRITE`
+The next example uses the default access mode of ``ACCESS_WRITE``
 and assigning to a slice to modify part of a line in place.
 
 .. literalinclude:: mmap_write_slice.py
@@ -120,7 +120,7 @@ line in memory and in the file.
 Copy Mode
 ---------
 
-Using the access setting :const:`ACCESS_COPY` does not write changes
+Using the access setting ``ACCESS_COPY`` does not write changes
 to the file on disk.
 
 .. literalinclude:: mmap_write_copy.py
@@ -128,7 +128,7 @@ to the file on disk.
    :start-after: #end_pymotw_header
 
 It is necessary to rewind the file handle in this example separately
-from the :class:`mmap` handle, because the internal state of the two
+from the ``mmap`` handle, because the internal state of the two
 objects is maintained separately.
 
 .. {{{cog
@@ -164,7 +164,7 @@ them.
    :start-after: #end_pymotw_header
 
 Because the pattern includes two groups, the return value from
-:func:`findall` is a sequence of tuples. The ``print``
+``findall()`` is a sequence of tuples. The ``print``
 statement pulls out the matching sentence and replaces newlines with
 spaces so each result prints on a single line.
 

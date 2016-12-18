@@ -29,7 +29,7 @@ and module called :mod:`submodule` containing:
     :caption:
     :start-after: #end_pymotw_header
 
-Watch for the text from the :func:`print` calls in the sample output
+Watch for the text from the ``print()`` calls in the sample output
 when the package or module are imported.
 
 Module Types
@@ -85,7 +85,7 @@ argument.
    :caption:
    :start-after: #end_pymotw_header
 
-The return value from :func:`import_module` is the module object that
+The return value from ``import_module()`` is the module object that
 was created by the import.
 
 .. {{{cog
@@ -104,8 +104,8 @@ was created by the import.
 
 .. {{{end}}}
 
-If the module cannot be imported, :func:`import_module` raises
-:class:`ImportError`.
+If the module cannot be imported, ``import_module()`` raises
+``ImportError``.
 
 .. literalinclude:: importlib_import_module_error.py
    :caption:
@@ -126,13 +126,13 @@ The error message includes the name of the missing module.
 
 .. {{{end}}}
 
-To reload an existing module, use :func:`reload`.
+To reload an existing module, use ``reload()``.
 
 .. literalinclude:: importlib_reload.py
    :caption:
    :start-after: #end_pymotw_header
 
-The return value from :func:`reload` is the new module. Depending on
+The return value from ``reload()`` is the new module. Depending on
 which type of loader was used, it may be the same module instance.
 
 .. {{{cog
@@ -157,8 +157,8 @@ Loaders
 The lower-level API in ``importlib`` provides access to the loader
 objects, as described in :ref:`sys-imports` from the section on the
 :mod:`sys` module. To get a loader for a module, use
-:func:`find_loader`. Then to retrieve the module, use the loader's
-:func:`load_module` method.
+``find_loader()``. Then to retrieve the module, use the loader's
+``load_module()`` method.
 
 .. literalinclude:: importlib_find_loader.py
    :caption:
@@ -183,14 +183,14 @@ This example loads the top level of the ``example`` package.
 
 Submodules within packages need to be loaded separately using the path
 from the package. In the following example, the package is loaded
-first and then its path is passed to :func:`find_loader` to create a
+first and then its path is passed to ``find_loader()`` to create a
 loader capable of loading the submodule.
 
 .. literalinclude:: importlib_submodule.py
    :caption:
    :start-after: #end_pymotw_header
 
-Unlike with :func:`import_module`, the name of the submodule should be
+Unlike with ``import_module()``, the name of the submodule should be
 given without any relative path prefix, since the loader will already
 be constrained by the package's path.
 

@@ -18,17 +18,17 @@ With ``gc`` the incoming and outgoing references between objects
 can be used to find cycles in complex data structures.  If a data
 structure is known to have a cycle, custom code can be used to examine
 its properties.  If the cycle is in unknown code, the
-:func:`get_referents` and :func:`get_referrers` functions can be
+``get_referents()`` and ``get_referrers()`` functions can be
 used to build generic debugging tools.
 
-For example, :func:`get_referents` shows the objects *referred to*
+For example, ``get_referents()`` shows the objects *referred to*
 by the input arguments.
 
 .. literalinclude:: gc_get_referents.py
    :caption:
    :start-after: #end_pymotw_header
 
-In this case, the :class:`Graph` instance ``three`` holds references
+In this case, the ``Graph`` instance ``three`` holds references
 to its instance dictionary (in the ``__dict__`` attribute) and its
 class.
 
@@ -63,9 +63,9 @@ avoids looking at methods, modules, etc.
 
 The cycle in the nodes is easily found by watching for objects that
 have already been processed.  To avoid holding references to those
-objects, their :func:`id` values are cached in a set.  The
+objects, their ``id()`` values are cached in a set.  The
 dictionary objects found in the cycle are the ``__dict__`` values for
-the :class:`Graph` instances, and hold their instance attributes.
+the ``Graph`` instances, and hold their instance attributes.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'gc_get_referents_cycles.py'))
@@ -103,15 +103,15 @@ Although the garbage collector runs automatically as the interpreter
 executes a program, it can be triggered to run at a specific time when
 there are a lot of objects to free or there is not much work happening
 and the collector will not hurt application performance.  Trigger
-collection using :func:`collect`.
+collection using ``collect()``.
 
 .. literalinclude:: gc_collect.py
    :caption:
    :start-after: #end_pymotw_header
 
 In this example, the cycle is cleared as soon as collection runs the
-first time, since nothing refers to the :class:`Graph` nodes except
-themselves.  :func:`collect` returns the number of "unreachable"
+first time, since nothing refers to the ``Graph`` nodes except
+themselves.  ``collect()`` returns the number of "unreachable"
 objects it found.  In this case, the value is ``6`` because there are
 three objects with their instance attribute dictionaries.
 
@@ -144,7 +144,7 @@ Looking for the object holding a reference to something in the garbage
 list is a little trickier than seeing what an object references.
 Because the code asking about the reference needs to hold a reference
 itself, some of the referrers need to be ignored.  This example
-creates a graph cycle, then works through the :class:`Graph` instances
+creates a graph cycle, then works through the ``Graph`` instances
 and removes the reference in the "parent" node.
 
 .. literalinclude:: gc_get_referrers.py
@@ -152,7 +152,7 @@ and removes the reference in the "parent" node.
    :start-after: #end_pymotw_header
 
 This sort of logic is overkill if the cycles are understood, but for
-an unexplained cycle in data using :func:`get_referrers` can expose
+an unexplained cycle in data using ``get_referrers()`` can expose
 the unexpected relationship.
 
 .. {{{cog
@@ -198,7 +198,7 @@ based on the difference between the number of object allocations and
 deallocations between runs.  When the number of allocations minus the
 number of deallocations is greater than the threshold for the
 generation, the garbage collector is run.  The current thresholds can
-be examined with :func:`get_threshold`.
+be examined with ``get_threshold()``.
 
 .. literalinclude:: gc_get_threshold.py
    :caption:
@@ -218,7 +218,7 @@ The return value is a tuple with the threshold for each generation.
 
 .. {{{end}}}
 
-The thresholds can be changed with :func:`set_threshold`.  This
+The thresholds can be changed with ``set_threshold()``.  This
 example program uses a command line argument to set the threshold for
 generation ``0`` then allocates a series of objects.
 
@@ -343,10 +343,10 @@ Debugging
 Debugging memory leaks can be challenging.  ``gc`` includes several
 options to expose the inner workings to make the job easier.  The
 options are bit-flags meant to be combined and passed to
-:func:`set_debug` to configure the garbage collector while the program
-is running.  Debugging information is printed to :data:`sys.stderr`.
+``set_debug()`` to configure the garbage collector while the program
+is running.  Debugging information is printed to ``sys.stderr``.
 
-The :const:`DEBUG_STATS` flag turns on statistics reporting, causing
+The ``DEBUG_STATS`` flag turns on statistics reporting, causing
 the garbage collector to report when it is running, the number of
 objects tracked for each generation, and the amount of time it took to
 perform the sweep.
@@ -383,7 +383,7 @@ interpreter exits.
 
 .. {{{end}}}
 
-Enabling :const:`DEBUG_COLLECTABLE` and :const:`DEBUG_UNCOLLECTABLE`
+Enabling ``DEBUG_COLLECTABLE`` and ``DEBUG_UNCOLLECTABLE``
 causes the collector to report on whether each object it examines can
 or cannot be collected.
 
@@ -391,15 +391,15 @@ or cannot be collected.
    :caption:
    :start-after: #end_pymotw_header
 
-The two classes :class:`Graph` and :class:`CleanupGraph` are
+The two classes ``Graph`` and ``CleanupGraph`` are
 constructed so it is possible to create structures that can be
 collected automatically and structures where cycles need to be
 explicitly broken by the user.
 
-The output shows that the :class:`Graph` instances :obj:`one` and
+The output shows that the ``Graph`` instances :obj:`one` and
 :obj:`two` create a cycle, but can still be collected because they do
 not have a finalizer and their only incoming references are from other
-objects that can be collected.  Although :class:`CleanupGraph` has a
+objects that can be collected.  Although ``CleanupGraph`` has a
 finalizer, :obj:`three` is reclaimed as soon as its reference count
 goes to zero. In contrast, :obj:`four` and :obj:`five` create a cycle
 and cannot be freed.
@@ -440,7 +440,7 @@ and cannot be freed.
 
 If seeing the objects that cannot be collected is not enough
 information to understand where data is being retained, enable
-:const:`DEBUG_SAVEALL` to cause ``gc`` to preserve all objects it
+``DEBUG_SAVEALL`` to cause ``gc`` to preserve all objects it
 finds without any references in the :obj:`garbage` list.
 
 .. literalinclude:: gc_debug_saveall.py
@@ -479,15 +479,15 @@ the object id when each object is created.
 
 .. {{{end}}}
 
-For simplicity, :const:`DEBUG_LEAK` is defined as a combination of all
+For simplicity, ``DEBUG_LEAK`` is defined as a combination of all
 of the other options.
 
 .. literalinclude:: gc_debug_leak.py
    :caption:
    :start-after: #end_pymotw_header
 
-Keep in mind that because :const:`DEBUG_SAVEALL` is enabled by
-:const:`DEBUG_LEAK`, even the unreferenced objects that would normally
+Keep in mind that because ``DEBUG_SAVEALL`` is enabled by
+``DEBUG_LEAK``, even the unreferenced objects that would normally
 have been collected and deleted are retained.
 
 .. {{{cog
