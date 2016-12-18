@@ -9,21 +9,21 @@
 
 The ``statistics`` module implements many common statistical
 formulas for efficient calculations using Python's various numerical
-types (:class:`int`, :class:`float`, :class:`Decimal`, and
-:class:`Fraction`).
+types (``int``, ``float``, ``Decimal``, and
+``Fraction``).
 
 Averages
 ========
 
 There are three forms of "averages" supported, the mean, the median,
-and the mode. Calculate the arithmetic mean with :func:`mean`.
+and the mode. Calculate the arithmetic mean with ``mean()``.
 
 .. literalinclude:: statistics_mean.py
    :caption:
    :start-after: #end_pymotw_header
 
 The return value for integers and floats is always a float. For
-:class:`Decimal` and :class:`Fraction` input data, the result is of
+``Decimal`` and ``Fraction`` input data, the result is of
 the same type as the inputs.
 
 .. {{{cog
@@ -38,14 +38,14 @@ the same type as the inputs.
 
 .. {{{end}}}
 
-Calculate the most common data point in a data set using :func:`mode`.
+Calculate the most common data point in a data set using ``mode()``.
 
 .. literalinclude:: statistics_mode.py
    :caption:
    :start-after: #end_pymotw_header
 
 The return value is always a member of the input data set. Because
-:func:`mode` treats the input as a set of discrete values, and counts
+``mode()`` treats the input as a set of discrete values, and counts
 the recurrences, the inputs do not actually need to be numerical
 values.
 
@@ -70,11 +70,11 @@ even number of elements.
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`median` finds the center value, and if the data set has an even
-number of values it averages the two middle items. :func:`median_low`
+``median()`` finds the center value, and if the data set has an even
+number of values it averages the two middle items. ``median_low()``
 always returns a value from the input data set, using the lower of the
 two middle items for data sets with an even number of
-items. :func:`median_high` similarly returns the higher of the two
+items. ``median_high()`` similarly returns the higher of the two
 middle items.
 
 .. {{{cog
@@ -91,7 +91,7 @@ middle items.
 
 .. {{{end}}}
 
-The fourth version of the median calculation, :func:`median_grouped`,
+The fourth version of the median calculation, ``median_grouped()``,
 treats the inputs as continuous data and calculates the 50% percentile
 median by first finding the median range using the provided interval
 width and then interpolating within that range using the position of
@@ -138,9 +138,9 @@ Python includes two sets of functions for computing variance and
 standard deviation, depending on whether the data set represents the
 entire population or a sample of the population.  This example uses
 ``wc`` to count the number of lines in the input files for all of the
-example programs and then uses :func:`pvariance` and :func:`pstdev` to
+example programs and then uses ``pvariance()`` and ``pstdev()`` to
 compute the variance and standard deviation for the entire population
-before using :func:`variance` and :func:`stddev` to compute the sample
+before using ``variance()`` and ``stddev()`` to compute the sample
 variance and standard deviation for a subset created by using the
 length of every second file found.
 

@@ -22,10 +22,10 @@ The examples in this section will all use this common test data in the
 Comparing Bodies of Text
 ========================
 
-The :class:`Differ` class works on sequences of text lines and
+The ``Differ`` class works on sequences of text lines and
 produces human-readable *deltas*, or change instructions, including
 differences within individual lines.  The default output produced by
-:class:`Differ` is similar to the ``diff`` command line tool
+``Differ`` is similar to the ``diff`` command line tool
 under Unix.  It includes the original input values from both lists,
 including common values, and markup data to indicate what changes were
 made.
@@ -42,7 +42,7 @@ made.
   may have differences.
 
 Breaking the text up into a sequence of individual lines before
-passing it to :func:`compare` produces more readable output than
+passing it to ``compare()`` produces more readable output than
 passing in large strings.
 
 .. literalinclude:: difflib_differ.py
@@ -90,22 +90,22 @@ new.
    :lines: 17-
    :language: none
 
-The :func:`ndiff` function produces essentially the same output.
+The ``ndiff()`` function produces essentially the same output.
 The processing is specifically tailored for working with text data and
 eliminating "noise" in the input.
 
 Other Output Formats
 --------------------
 
-While the :class:`Differ` class shows all of the input lines, a
+While the ``Differ`` class shows all of the input lines, a
 *unified diff* only includes modified lines and a bit of context. The
-:func:`unified_diff` function produces this sort of output.
+``unified_diff()`` function produces this sort of output.
 
 .. literalinclude:: difflib_unified.py
     :caption:
     :start-after: #end_pymotw_header
 
-The ``lineterm`` argument is used to tell :func:`unified_diff` to skip
+The ``lineterm`` argument is used to tell ``unified_diff()`` to skip
 appending newlines to the control lines it returns because the input
 lines do not include them.  Newlines are added to all of the lines
 when they are printed.  The output should look familiar to users of
@@ -142,7 +142,7 @@ many common version control tools.
 
 .. {{{end}}}
 
-Using :func:`context_diff` produces similar readable output.
+Using ``context_diff()`` produces similar readable output.
 
 Junk Data
 =========
@@ -157,10 +157,10 @@ file, for example.
     :caption:
     :start-after: #end_pymotw_header
 
-The default for :class:`Differ` is to not ignore any lines or
+The default for ``Differ`` is to not ignore any lines or
 characters explicitly, but to rely on the ability of
-:class:`SequenceMatcher` to detect noise. The default for
-:func:`ndiff` is to ignore space and tab characters.
+``SequenceMatcher`` to detect noise. The default for
+``ndiff()`` is to ignore space and tab characters.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'difflib_junk.py'))
@@ -193,12 +193,12 @@ characters explicitly, but to rely on the ability of
 Comparing Arbitrary Types
 =========================
 
-The :class:`SequenceMatcher` class compares two sequences of any
+The ``SequenceMatcher`` class compares two sequences of any
 types, as long as the values are hashable. It uses an algorithm to
 identify the longest contiguous matching blocks from the sequences,
 eliminating "junk" values that do not contribute to the real data.
 
-The funct :func:`get_opcodes` returns a list of instructions for
+The funct ``get_opcodes()`` returns a list of instructions for
 modifying the first sequence to make it match the second. The
 instructions are encoded as five-element tuples including a string
 instruction (the "opcode") and two pairs of start and stop indexes
@@ -223,7 +223,7 @@ into the sequences (denoted as ``i1``, ``i2``, ``j1``, and ``j2``).
     :start-after: #end_pymotw_header
 
 This example compares two lists of integers and uses
-:func:`get_opcodes` to derive the instructions for converting the
+``get_opcodes()`` to derive the instructions for converting the
 original list into the newer version.  The modifications are applied
 in reverse order so that the list indexes remain accurate after items
 are added and removed.
@@ -263,7 +263,7 @@ are added and removed.
 
 .. {{{end}}}
 
-:class:`SequenceMatcher` works with custom classes, as well as
+``SequenceMatcher`` works with custom classes, as well as
 built-in types, as long as they are hashable.
 
 .. seealso::

@@ -14,16 +14,16 @@ It is often useful to divide one operation into many parts and execute
 them separately. For example, downloading several remote resources or
 querying remote APIs. In situations where the order of execution
 doesn't matter, and where there may be an arbitrary number of
-operations, :func:`wait` can be used to pause one coroutine until the
+operations, ``wait()`` can be used to pause one coroutine until the
 other background operations complete.
 
 .. literalinclude:: asyncio_wait.py
    :caption:
    :start-after: #end_pymotw_header
 
-Internally, :func:`wait` uses a :class:`set` to hold the :class:`Task`
+Internally, ``wait()`` uses a ``set`` to hold the ``Task``
 instances it creates. This results in them starting, and finishing, in
-an unpredictable order.  The return value from :func:`wait` is a tuple
+an unpredictable order.  The return value from ``wait()`` is a tuple
 containing two sets holding the finished and pending tasks.
 
 .. {{{cog
@@ -46,7 +46,7 @@ containing two sets holding the finished and pending tasks.
 
 .. {{{end}}}
 
-There will only be pending operations left if :func:`wait` is used
+There will only be pending operations left if ``wait()`` is used
 with a timeout value.
 
 .. literalinclude:: asyncio_wait_timeout.py
@@ -86,7 +86,7 @@ Gathering Results from Coroutines
 =================================
 
 If the background phases are well-defined, and only the results of
-those phases matter, then :func:`gather` may be more useful for
+those phases matter, then ``gather()`` may be more useful for
 waiting for multiple operations.
 
 .. literalinclude:: asyncio_gather.py
@@ -95,7 +95,7 @@ waiting for multiple operations.
 
 The tasks created by gather are not exposed, so they cannot be
 cancelled. The return value is a list of results in the same order as
-the arguments passed to :func:`gather`, regardless of the order the
+the arguments passed to ``gather()``, regardless of the order the
 background operations actually completed.
 
 .. {{{cog
@@ -119,10 +119,10 @@ background operations actually completed.
 Handling Background Operations as They Finish
 =============================================
 
-:func:`as_completed` is a generator that manages the execution of a
+``as_completed()`` is a generator that manages the execution of a
 list of coroutines given to it and produces their results one at a
-time as they finish running. As with :func:`wait`, order is not
-guaranteed by :func:`as_completed`, but it is not necessary to wait
+time as they finish running. As with ``wait()``, order is not
+guaranteed by ``as_completed()``, but it is not necessary to wait
 for all of the background operations to complete before taking other
 action.
 

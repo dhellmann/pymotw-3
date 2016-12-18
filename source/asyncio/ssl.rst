@@ -3,7 +3,7 @@
 ===========
 
 ``asyncio`` has built-in support for enabling SSL communication on
-sockets. Passing an :class:`SSLContext` instance to the coroutines
+sockets. Passing an ``SSLContext`` instance to the coroutines
 that create server or client connections enables the support and
 ensures that the SSL protocol setup is taken care of before the socket
 is presented as ready for the application to use.
@@ -23,25 +23,25 @@ to generate the certificate, and then produce the output files
 requested.
 
 The insecure socket setup in the previous server example uses
-:func:`start_server` to create the listening socket.
+``start_server()`` to create the listening socket.
 
 .. literalinclude:: asyncio_echo_server_coroutine.py
    :lines: 45-46
 
-To add encryption, create an :class:`SSLContext` with the certificate
+To add encryption, create an ``SSLContext`` with the certificate
 and key just generated and then pass the context to
-:func:`start_server`.
+``start_server()``.
 
 .. literalinclude:: asyncio_echo_server_ssl.py
    :lines: 44-55
 
 Similar changes are needed in the client. The old version uses
-:func:`open_connection` to create the socket connected to the server.
+``open_connection()`` to create the socket connected to the server.
 
 .. literalinclude:: asyncio_echo_client_coroutine.py
    :lines: 26
 
-An :class:`SSLContext` is needed again to secure the client-side of
+An ``SSLContext`` is needed again to secure the client-side of
 the socket. Client identity is not being enforced, so only the
 certificate needs to be loaded.
 
@@ -53,12 +53,12 @@ connection does not support sending an end-of-file (EOF), the client
 closes its outgoing connection to the server to signal that it is
 done.
 
-The old version of the client send loop uses :func:`write_eof`.
+The old version of the client send loop uses ``write_eof()``.
 
 .. literalinclude:: asyncio_echo_client_coroutine.py
    :lines: 28-36
 
-The new version uses :func:`close`.
+The new version uses ``close()``.
 
 .. literalinclude:: asyncio_echo_client_ssl.py
    :lines: 39-49

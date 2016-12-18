@@ -12,7 +12,7 @@ can be used to write a debugger, monitor code coverage, or achieve
 many other purposes.
 
 The trace hook is modified by passing a callback function to
-:func:`sys.settrace`.  The callback will receive three arguments: the
+``sys.settrace()``.  The callback will receive three arguments: the
 stack frame from the code being run, a string naming the type of
 notification, and an event-specific argument value.  :table:`Event
 Hooks for settrace()` lists the seven event types for different
@@ -60,8 +60,8 @@ called and from where.
       :linenos:
       :caption:
 
-This example ignores calls to :func:`write`, as used by ``print`` to
-write to :const:`sys.stdout`.
+This example ignores calls to ``write()``, as used by ``print`` to
+write to ``sys.stdout``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'sys_settrace_call.py'))
@@ -98,8 +98,8 @@ tracing to only run line-by-line within certain modules or functions.
       :caption:
 
 In this example, the list of functions is kept in the variable
-:py:data:`to_be_traced`, so when :func:`trace_calls` runs it can return
-:func:`trace_lines` to enable tracing inside of :func:`b`.
+:py``to_be_traced``, so when ``trace_calls()`` runs it can return
+``trace_lines()`` to enable tracing inside of ``b()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'sys_settrace_line.py'))
@@ -137,7 +137,7 @@ values, watch for the ``return`` event.
       :caption:
 
 The local trace function is used for watching return events, so
-:func:`trace_calls_and_returns` needs to return a reference to itself
+``trace_calls_and_returns()`` needs to return a reference to itself
 when a function is called, so the return value can be monitored.
 
 .. {{{cog

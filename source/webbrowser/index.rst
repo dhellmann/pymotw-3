@@ -15,7 +15,7 @@ also be controlled with the ``BROWSER`` environment variable.
 Simple Example
 ==============
 
-To open a page in the browser, use the :func:`open()` function.
+To open a page in the browser, use the ``open()`` function.
 
 .. literalinclude:: webbrowser_open.py
    :caption:
@@ -30,21 +30,21 @@ always created.
 Windows vs. Tabs
 ================
 
-If you always want a new window used, use :func:`open_new()`.
+If you always want a new window used, use ``open_new()``.
 
 .. literalinclude:: webbrowser_open_new.py
    :caption:
    :start-after: #end_pymotw_header
 
-If you would rather create a new tab, use :func:`open_new_tab()` instead.
+If you would rather create a new tab, use ``open_new_tab()`` instead.
 
 Using a specific browser
 ========================
 
 If for some reason your application needs to use a specific browser,
 you can access the set of registered browser controllers using the
-:func:`get()` function. The browser controller has methods to
-:func:`open()`, :func:`open_new()`, and :func:`open_new_tab()`. This
+``get()`` function. The browser controller has methods to
+``open()``, ``open_new()``, and ``open_new_tab()``. This
 example forces the use of the lynx browser:
 
 .. literalinclude:: webbrowser_get.py
@@ -62,7 +62,7 @@ the environment variable ``BROWSER`` to the browser names or commands
 to try. The value should consist of a series of browser names
 separated by ``os.pathsep``. If the name includes ``%s``, the name is
 interpreted as a literal command and executed directly with the ``%s``
-replaced by the URL. Otherwise, the name is passed to :func:`get()` to
+replaced by the URL. Otherwise, the name is passed to ``get()`` to
 obtain a controller object from the registry.
 
 For example, this command opens the web page in lynx, assuming it is

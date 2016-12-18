@@ -269,8 +269,8 @@ sets
 ----
 
 The :mod:`sets` module was deprecated in Python 2.6 and removed in
-Python 3.0. Use the built-in types :class:`set` and
-:class:`orderedset` instead.
+Python 3.0. Use the built-in types ``set`` and
+``orderedset`` instead.
 
 sha
 ---
@@ -297,7 +297,7 @@ statvfs
    pair: porting; os
 
 The :mod:`statvfs` module was deprecated in Python 2.6 and removed
-in Python 3.0. See :func:`os.statvfs` in the :mod:`os` module
+in Python 3.0. See ``os.statvfs()`` in the :mod:`os` module
 instead.
 
 
@@ -390,10 +390,10 @@ abc
 .. index::
    pair: porting; abc
 
-The :func:`abstractproperty`, :func:`abstractclassmethod`, and
-:func:`abstractstaticmethod` decorators are deprecated. Combining
-:func:`abstractmethod` with the :func:`property`, :func:`classmethod`,
-and :func:`staticmethod` decorators works as expected
+The ``abstractproperty()``, ``abstractclassmethod()``, and
+``abstractstaticmethod()`` decorators are deprecated. Combining
+``abstractmethod()`` with the ``property()``, ``classmethod()``,
+and ``staticmethod()`` decorators works as expected
 (:pyissue:`11610`).
 
 .. _porting-dbm:
@@ -416,7 +416,7 @@ argparse
 .. index::
    pair: porting; argparse
 
-The ``version`` argument to :class:`ArgumentParser` has been removed
+The ``version`` argument to ``ArgumentParser`` has been removed
 in favor of a special ``action`` type (:pyissue:`13248`).
 
 Replace::
@@ -449,8 +449,8 @@ has been removed. Use ``'b'`` or ``'B'`` for bytes instead.
 The ``'u'`` type for characters from unicode strings has been
 deprecated and will be removed in Python 4.0.
 
-The methods :func:`tostring` and :func:`fromstring` have been renamed
-:func:`tobytes` and :func:`frombytes` to remove ambiguity
+The methods ``tostring()`` and ``fromstring()`` have been renamed
+``tobytes()`` and ``frombytes()`` to remove ambiguity
 (:pyissue:`8990`).
 
 .. _porting-atexit:
@@ -475,13 +475,13 @@ base64
 .. index::
    pair: porting; base64
 
-The :func:`encodestring` and :func:`decodestring` have been renamed
-:func:`encodebytes` and :func:`decodebytes` respectively. The old
+The ``encodestring()`` and ``decodestring()`` have been renamed
+``encodebytes()`` and ``decodebytes()`` respectively. The old
 names still work as aliases, but are deprecated (:pyissue:`3613`).
 
 Two new encodings using 85-character alphabets have been
-added. :func:`b85encode` implements an encoding used in Mercurial and
-git, while :func:`a85encode` implements the Ascii85 format used by PDF
+added. ``b85encode()`` implements an encoding used in Mercurial and
+git, while ``a85encode()`` implements the Ascii85 format used by PDF
 files (:pyissue:`17618`).
 
 .. _porting-bz2:
@@ -492,8 +492,8 @@ bz2
 .. index::
    pair: porting; bz2
 
-:class:`BZ2File` instances now support the context manager protocol,
-and do not need to be wrapped with :func:`contextlib.closing`.
+``BZ2File`` instances now support the context manager protocol,
+and do not need to be wrapped with ``contextlib.closing()``.
 
 .. _porting-collections:
 
@@ -516,7 +516,7 @@ comands
    pair: porting; comands
    pair: porting; subprocess
 
-The functions :func:`getoutput` and :func:`getstatusoutput` have been
+The functions ``getoutput()`` and ``getstatusoutput()`` have been
 moved to :mod:`subprocess` and :mod:`commands` has been deleted.
 
 .. _porting-configparser:
@@ -530,16 +530,16 @@ configparser
 The old ``ConfigParser`` module has been renamed to
 :mod:`configparser`.
 
-The old :class:`ConfigParser` class was removed in favor of
-:class:`SafeConfigParser` which has in turn been renamed to
-:class:`ConfigParser`. The deprecated interpolation behavior is
-available via :class:`LegacyInterpolation`.
+The old ``ConfigParser`` class was removed in favor of
+``SafeConfigParser`` which has in turn been renamed to
+``ConfigParser``. The deprecated interpolation behavior is
+available via ``LegacyInterpolation``.
 
-The :func:`read` method now supports an ``encoding`` argument, so it
+The ``read()`` method now supports an ``encoding`` argument, so it
 is no longer necessary to use :mod:`codecs` to read configuration
 files with Unicode values in them.
 
-Using the old :class:`RawConfigParser` is discouraged. New projects
+Using the old ``RawConfigParser`` is discouraged. New projects
 should use ``ConfigParser(interpolation=None)`` instead to achieve the
 same behavior.
 
@@ -551,7 +551,7 @@ contextlib
 .. index::
    pair: porting; contextlib
 
-:func:`contextlib.nested` has been removed. Pass multiple context
+``contextlib.nested()`` has been removed. Pass multiple context
 managers to the same ``with`` statement instead.
 
 .. _porting-csv:
@@ -562,8 +562,8 @@ csv
 .. index::
    pair: porting; csv
 
-Instead of using the :func:`next` method of a reader directly, use the
-built-in :func:`next` function to invoke the iterator properly.
+Instead of using the ``next()`` method of a reader directly, use the
+built-in ``next()`` function to invoke the iterator properly.
 
 .. _porting-datetime:
 
@@ -574,10 +574,10 @@ datetime
    pair: porting; datetime
 
 Starting with Python 3.3, equality comparisons between naive and
-timezone-aware :class:`datetime` instances return ``False`` instead of
-raising :class:`TypeError` (:pyissue:`15006`).
+timezone-aware ``datetime`` instances return ``False`` instead of
+raising ``TypeError`` (:pyissue:`15006`).
 
-Prior to Python 3.5, a :class:`datetime.time` object representing
+Prior to Python 3.5, a ``datetime.time`` object representing
 midnight evaluated to ``False`` when converted to a Boolean. This
 behavior has been removed in Python 3.5 (:pyissue:`13936`).
 
@@ -604,9 +604,9 @@ fractions
 .. index::
    pair: porting; fractions
 
-The :func:`from_float` and :func:`from_decimal` class methods are no
-longer needed. Floating point and :class:`Decimal` values can be
-passed directly to the :class:`Fraction` constructor.
+The ``from_float()`` and ``from_decimal()`` class methods are no
+longer needed. Floating point and ``Decimal`` values can be
+passed directly to the ``Fraction`` constructor.
 
 .. _porting-gc:
 
@@ -616,7 +616,7 @@ gc
 .. index::
    pair: porting; gc
 
-The flags :const:`DEBUG_OBJECT` and :const:`DEBUG_INSTANCE` have been
+The flags ``DEBUG_OBJECT`` and ``DEBUG_INSTANCE`` have been
 removed. They are no longer needed to differentiate between new and
 old-style classes.
 
@@ -630,7 +630,7 @@ gettext
    pair: porting; gettext
 
 All of the translation functions in :mod:`gettext` assume unicode
-input and output, and the unicode variants such as :func:`ugettext`
+input and output, and the unicode variants such as ``ugettext()``
 have been removed.
 
 
@@ -642,7 +642,7 @@ glob
 .. index::
    pair: porting; glob
 
-The new function :func:`escape` implements a work-around for searching
+The new function ``escape()`` implements a work-around for searching
 for files with meta-characters in the name (:pyissue:`8402`).
 
 .. _porting-http.cookies:
@@ -679,10 +679,10 @@ inspect
 .. index::
    pair: porting; inspect
 
-The functions :func:`getargspec`, :func:`getfullargspec`,
-:func:`getargvalues`, :func:`getcallargs`, :func:`getargvalues`,
-:func:`formatargspec`, and :func:`formatargvalues` have been
-deprecated in favor of :func:`signature` (:pyissue:`20438`).
+The functions ``getargspec()``, ``getfullargspec()``,
+``getargvalues()``, ``getcallargs()``, ``getargvalues()``,
+``formatargspec()``, and ``formatargvalues()`` have been
+deprecated in favor of ``signature()`` (:pyissue:`20438`).
 
 .. _porting-itertools:
 
@@ -692,13 +692,13 @@ itertools
 .. index::
    pair: porting; itertools
 
-The functions :func:`imap`, :func:`izip`, and :func:`ifilter` have
+The functions ``imap()``, ``izip()``, and ``ifilter()`` have
 been replaced with versions of the built-in functions that return
-iterables instead of :class:`list` objects (:func:`map`, :func:`zip`,
-and :func:`filter:` respectively).
+iterables instead of ``list`` objects (``map()``, ``zip()``,
+and ``filter:()`` respectively).
 
-The function :func:`ifilterfalse` has been renamed
-:func:`filterfalse`.
+The function ``ifilterfalse()`` has been renamed
+``filterfalse()``.
 
 .. _porting-json:
 
@@ -708,8 +708,8 @@ json
 .. index::
    pair: porting; json
 
-The :mod:`json` API was updated to only support :class:`str` and not
-with :class:`bytes` because the JSON specification is defined using
+The :mod:`json` API was updated to only support ``str`` and not
+with ``bytes`` because the JSON specification is defined using
 Unicode.
 
 .. _porting-locale:
@@ -770,24 +770,24 @@ operator
 .. index::
    pair: porting; operator
 
-The :func:`div` function has been removed. Use either :func:`floordiv`
-or :func:`truediv`, depending on the desired semantics.
+The ``div()`` function has been removed. Use either ``floordiv()``
+or ``truediv()``, depending on the desired semantics.
 
-The :func:`repeat` function is removed. Use :func:`mul` instead.
+The ``repeat()`` function is removed. Use ``mul()`` instead.
 
-The functions :func:`getslice`, :func:`setslice`, and :func:`delslice`
-are removed. Use :func:`getitem`, :func:`setitem`, and :func:`delitem`
+The functions ``getslice()``, ``setslice()``, and ``delslice()``
+are removed. Use ``getitem()``, ``setitem()``, and ``delitem()``
 with slice indexes instead.
 
-The function :func:`isCallable` has been removed. Use the abstract
-base class :class:`collections.Callable` instead.
+The function ``isCallable()`` has been removed. Use the abstract
+base class ``collections.Callable`` instead.
 
 .. code-block:: python
 
    isinstance(obj, collections.Callable)
 
-The type checking functions :func:`isMappingType`,
-:func:`isSequenceType`, and :func:`isNumberType` have been
+The type checking functions ``isMappingType()``,
+``isSequenceType()``, and ``isNumberType()`` have been
 removed. Use the relevant abstract base classes from
 :mod:`collections` or :mod:`numbers` instead.
 
@@ -797,8 +797,8 @@ removed. Use the relevant abstract base classes from
    isinstance(obj, collections.Sequence)
    isinstance(obj, numbers.Number)
 
-The :func:`sequenceIncludes` function has been removed. Use
-:func:`contains` instead.
+The ``sequenceIncludes()`` function has been removed. Use
+``contains()`` instead.
 
 .. _porting-os:
 
@@ -808,20 +808,20 @@ os
 .. index::
    pair: porting; os
 
-The functions :func:`popen2`, :func:`popen3`, and :func:`popen4` have
-been removed.  :func:`popen` is still present but deprecated and emits
+The functions ``popen2()``, ``popen3()``, and ``popen4()`` have
+been removed.  ``popen()`` is still present but deprecated and emits
 warnings if used.  Code using these functions should be rewritten to
 use :mod:`subprocess` instead to be more portable across operating
 systems.
 
-The functions :func:`os.tmpnam`, :func:`os.tempnam` and
-:func:`os.tmpfile` have been removed. Use the :mod:`tempfile` module
+The functions ``os.tmpnam()``, ``os.tempnam()`` and
+``os.tmpfile()`` have been removed. Use the :mod:`tempfile` module
 instead.
 
-The function :func:`os.stat_float_times` is deprecated
+The function ``os.stat_float_times()`` is deprecated
 (:pyissue:`14711`).
 
-:func:`os.unsetenv` no longer ignores errors (:pyissue:`13415`).
+``os.unsetenv()`` no longer ignores errors (:pyissue:`13415`).
 
 .. _porting-os.path:
 
@@ -831,7 +831,7 @@ os.path
 .. index::
    pair: porting; os.path
 
-:func:`os.path.walk` has been removed. Use :func:`os.walk` instead.
+``os.path.walk()`` has been removed. Use ``os.walk()`` instead.
 
 
 .. _porting-pdb:
@@ -895,7 +895,7 @@ interoperability when shared between Python 3 applications.
 Byte string data written to a pickle by a Python 2.x application is
 decoded when it is read back to create a Unicode string object. The
 encoding for the transformation defaults to ASCII, and can be changed
-by passing values to the :class:`Unpickler`.
+by passing values to the ``Unpickler``.
 
 .. _porting-pipes:
 
@@ -905,7 +905,7 @@ pipes
 .. index::
    pair: porting; pipes
 
-:func:`pipes.quote` has moved to :mod:`shlex` (:pyissue:`9723`).
+``pipes.quote()`` has moved to :mod:`shlex` (:pyissue:`9723`).
 
 .. _porting-platform:
 
@@ -915,14 +915,14 @@ platform
 .. index::
    pair: porting; platform
 
-:func:`platform.popen` has been deprecated. Use :func:`subprocess.popen`
+``platform.popen()`` has been deprecated. Use ``subprocess.popen()``
 instead (:pyissue:`11377`).
 
-:func:`platform.uname` now returns a :class:`namedtuple`.
+``platform.uname()`` now returns a ``namedtuple``.
 
 Because Linux distributions do not have a consistent way to describe
 themselves, the functions for getting the descriptions
-(:func:`platform.dist` and :func:`platform.linux_distribution`) are
+(``platform.dist()`` and ``platform.linux_distribution()``) are
 deprecated and scheduled to be removed in Python 3.7
 (:pyissue:`1322`).
 
@@ -945,8 +945,8 @@ re
 .. index::
    pair: porting; re
 
-The :const:`UNICODE` flag represents the default behavior. To restore
-the ASCII-specific behavior from Python 2, use the :const:`ASCII`
+The ``UNICODE`` flag represents the default behavior. To restore
+the ASCII-specific behavior from Python 2, use the ``ASCII``
 flag.
 
 
@@ -959,7 +959,7 @@ shelve
    pair: porting; shelve
 
 The default output format for :mod:`shelve` may create a file with a
-``.db`` extension added to the name given to :func:`shelve.open`.
+``.db`` extension added to the name given to ``shelve.open()``.
 
 .. _porting-signal:
 
@@ -983,8 +983,8 @@ socket
 .. index::
    pair: porting; socket
 
-Under Python 2 typically :class:`str` objects could be sent directly
-over a socket. Because :class:`str` replaces :class:`unicode`, in
+Under Python 2 typically ``str`` objects could be sent directly
+over a socket. Because ``str`` replaces ``unicode``, in
 Python 3 the values must be encoded before being sent. The examples in
 the :mod:`socket` section use byte strings, which are already encoded.
 
@@ -1009,14 +1009,14 @@ string
    pair: porting; string
 
 All functions from the :mod:`string` module that are also methods of
-:class:`str` objects have been removed.
+``str`` objects have been removed.
 
-The constants :data:`letters`, :data:`lowercase`, and
-:data:`uppercase` have been removed. The new constants with similar
+The constants ``letters``, ``lowercase``, and
+``uppercase`` have been removed. The new constants with similar
 names are limited to the ASCII character set.
 
-The :func:`maketrans` function has been replaced by methods on
-:class:`str`, :class:`bytes`, and :class:`bytearray` to clarify which
+The ``maketrans()`` function has been replaced by methods on
+``str``, ``bytes``, and ``bytearray`` to clarify which
 input types are supported by each translation table.
 
 
@@ -1028,7 +1028,7 @@ struct
 .. index::
    pair: porting; struct
 
-:func:`struct.pack` now only supports byte strings when using the
+``struct.pack()`` now only supports byte strings when using the
 ``s`` string pack code, and no longer implicitly encodes string
 objects to UTF-8 (:pyissue:`10783`).
 
@@ -1041,7 +1041,7 @@ subprocess
    pair: porting; subprocess
 
 The default value for the ``close_fds`` argument to
-:class:`subprocess.Popen` has changed from always being ``False``. It
+``subprocess.Popen`` has changed from always being ``False``. It
 always defaults to ``True`` under Unix. It defaults to ``True`` under
 Windows if the standard I/O stream arguments are set to ``None``,
 otherwise it defaults to ``False``.
@@ -1056,25 +1056,25 @@ sys
 
 .. Patch #1680961
 
-The variable :data:`sys.exitfunc` is no longer checked for a clean-up
+The variable ``sys.exitfunc`` is no longer checked for a clean-up
 action to be run when a program exits. Use :mod:`atexit` instead.
 
-The variable :data:`sys.subversion` is no longer defined.
+The variable ``sys.subversion`` is no longer defined.
 
-Flags :data:`sys.flags.py3k_warning`,
-:data:`sys.flags.division_warning`, :data:`sys.flags.division_new`,
-:data:`sys.flags.tabcheck`, and :data:`sys.flags.unicode` are no
+Flags ``sys.flags.py3k_warning``,
+``sys.flags.division_warning``, ``sys.flags.division_new``,
+``sys.flags.tabcheck``, and ``sys.flags.unicode`` are no
 longer defined.
 
-The variable :data:`sys.maxint` is no longer defined, use
-:data:`sys.maxsize` instead. See :pep:`237` (Unifying Long Integers
+The variable ``sys.maxint`` is no longer defined, use
+``sys.maxsize`` instead. See :pep:`237` (Unifying Long Integers
 and Integers).
 
-The global exception tracking variables :data:`sys.exc_type`,
-:data:`sys.exc_value`, and :data:`sys.exc_traceback` have been
-removed. The function :func:`sys.exc_clear` has also been removed.
+The global exception tracking variables ``sys.exc_type``,
+``sys.exc_value``, and ``sys.exc_traceback`` have been
+removed. The function ``sys.exc_clear()`` has also been removed.
 
-The variable :data:`sys.version_info` is now a :py:class:`namedtuple`
+The variable ``sys.version_info`` is now a :py``namedtuple``
 instance with attributes ``major``, ``minor``, ``micro``,
 ``releaselevel``, and ``serial`` (:pyissue:`4285`).
 
@@ -1083,19 +1083,19 @@ instance with attributes ``major``, ``minor``, ``micro``,
 The "check interval" feature, controlling the number of opcodes to
 execute before allowing a thread context switch has been replaced with
 an absolute time value instead, managed with
-:func:`sys.setswitchinterval`. The old functions for managing the
-check interval, :func:`sys.getcheckinterval` and
-:func:`sys.setcheckinterval`, are deprecated.
+``sys.setswitchinterval()``. The old functions for managing the
+check interval, ``sys.getcheckinterval()`` and
+``sys.setcheckinterval()``, are deprecated.
 
 .. https://docs.python.org/3.3/whatsnew/3.3.html#visible-changes
 
-The :data:`sys.meta_path` and :data:`sys.path_hooks` variables now
+The ``sys.meta_path`` and ``sys.path_hooks`` variables now
 expose all of the path finders and entry hooks for importing
 modules. In earlier versions, only finders and hooks explicitly added
 to the path were exposed, and the C import used values in its
 implementation that could not be modified from the outside.
 
-For Linux systems, :data:`sys.platform` no longer includes the version
+For Linux systems, ``sys.platform`` no longer includes the version
 number. The value is now just ``linux`` and not ``linux2`` or
 ``linux3``.
 
@@ -1133,10 +1133,10 @@ time
 .. index::
    pair: porting; time
 
-:func:`time.asctime` and :func:`time.ctime` have been reimplemented to
+``time.asctime()`` and ``time.ctime()`` have been reimplemented to
 not use the system functions of the same time to allow larger years to
-be used. :func:`time.ctime` now supports years from 1900 through
-:data:`maxint`, although for values higher than ``9999`` the output
+be used. ``time.ctime()`` now supports years from 1900 through
+``maxint``, although for values higher than ``9999`` the output
 string is longer than the standard 24 characters to allow for the
 extra year digits (:pyissue:`8013`).
 
@@ -1148,8 +1148,8 @@ unittest
 .. index::
    pair: porting; unittest
 
-The :class:`TestCase` methods starting with "fail" (:func:`failIf`,
-:func:`failUnless`, etc.) have been deprecated. Use the alternate form
+The ``TestCase`` methods starting with "fail" (``failIf()``,
+``failUnless()``, etc.) have been deprecated. Use the alternate form
 of the assert methods instead.
 
 Several older method aliases have been deprecated and replaced with
@@ -1161,16 +1161,16 @@ preferred names. Using the deprecated names produces a warning
 
    * - Deprecated Name
      - Preferred Name
-   * - :func:`assert_`
-     - :func:`assertTrue`
-   * - :func:`assertEquals`
-     - :func:`assertEqual`
-   * - :func:`assertNotEquals`
-     - :func:`assertNotEqual`
-   * - :func:`assertAlmostEquals`
-     - :func:`assertAlmostEqual`
-   * - :func:`assertNotAlmostEquals`
-     - :func:`assertNotAlmostEqual`
+   * - ``assert_()``
+     - ``assertTrue()``
+   * - ``assertEquals()``
+     - ``assertEqual()``
+   * - ``assertNotEquals()``
+     - ``assertNotEqual()``
+   * - ``assertAlmostEquals()``
+     - ``assertAlmostEqual()``
+   * - ``assertNotAlmostEquals()``
+     - ``assertNotAlmostEqual()``
 
 .. _porting-UserDict:
 .. _porting-UserList:
@@ -1185,8 +1185,8 @@ UserDict, UserList, and UserString
    pair: porting; UserString
 
 The UserDict, UserList, and UserString classes have been moved out of
-their own modules into the :mod:`collections` module. :class:`dict`,
-:class:`list`, and :class:`str` can be subclassed directly, but the
+their own modules into the :mod:`collections` module. ``dict``,
+``list``, and ``str`` can be subclassed directly, but the
 classes in :mod:`collections` may make implementing the subclass
 simpler because the content of the container is available directly
 through an instance attribute. The abstract classes in
@@ -1201,7 +1201,7 @@ uuid
 .. index::
    pair: porting; uuid
 
-:func:`uuid.getnode` now uses the ``PATH`` environment variable to
+``uuid.getnode()`` now uses the ``PATH`` environment variable to
 find programs that can report the MAC address of the host under Unix
 (:pyissue:`19855`). It falls back to looking in ``/sbin`` and
 ``/usr/sbin`` if no program is found on the search path. This search
@@ -1228,19 +1228,19 @@ xml.etree.ElementTree
 .. index::
    pair: porting; xml.etree.ElementTree
 
-:class:`XMLTreeBuilder` has been renamed :class:`TreeBuilder`, and the
+``XMLTreeBuilder`` has been renamed ``TreeBuilder``, and the
 API has undergone several changes.
 
-:func:`ElementTree.getchildren` has been deprecated. Use
+``ElementTree.getchildren()`` has been deprecated. Use
 ``list(elem)`` to build a list of the children.
 
-:func:`ElementTree.getiterator` has been deprecated. Use :func:`iter`
+``ElementTree.getiterator()`` has been deprecated. Use ``iter()``
 to create an iterator using the normal iterator protocol
 instead.
 
 When parsing fails, rather than raising
-:class:`xml.parsers.expat.ExpatError`, :class:`XMLParser` now raises
-:class:`xml.etree.ElementTree.ParseError`.
+``xml.parsers.expat.ExpatError``, ``XMLParser`` now raises
+``xml.etree.ElementTree.ParseError``.
 
 .. _porting-zipimport:
 
@@ -1250,5 +1250,5 @@ zipimport
 .. index::
    pair: porting; zipimport
 
-The data returned from :func:`get_data` is a byte string, and needs to
+The data returned from ``get_data()`` is a byte string, and needs to
 be decoded before being used as a unicode string.

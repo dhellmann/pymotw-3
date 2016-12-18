@@ -13,7 +13,7 @@
 Message Access Protocol (IMAP) version 4 servers.  The IMAP protocol
 defines a set of commands sent to the server and the responses
 delivered back to the client.  Most of the commands are available as
-methods of the :class:`IMAP4` object used to communicate with the
+methods of the ``IMAP4`` object used to communicate with the
 server.
 
 These examples discuss part of the IMAP protocol, but are by no means
@@ -24,11 +24,11 @@ Variations
 ==========
 
 There are three client classes for communicating with servers using
-various mechanisms.  The first, :class:`IMAP4`, uses clear text
-sockets; :class:`IMAP4_SSL` uses encrypted communication over SSL
-sockets; and :class:`IMAP4_stream` uses the standard input and
+various mechanisms.  The first, ``IMAP4``, uses clear text
+sockets; ``IMAP4_SSL`` uses encrypted communication over SSL
+sockets; and ``IMAP4_stream`` uses the standard input and
 standard output of an external command.  All of the examples here
-will use :class:`IMAP4_SSL`, but the APIs for the other classes are
+will use ``IMAP4_SSL``, but the APIs for the other classes are
 similar.
 
 
@@ -44,9 +44,9 @@ read server and user information from a configuration file.
    :caption:
    :start-after: #end_pymotw_header
 
-When run, :func:`open_connection()` reads the configuration
+When run, ``open_connection()`` reads the configuration
 information from a file in the user's home directory, then opens the
-:class:`IMAP4_SSL` connection and authenticates.
+``IMAP4_SSL`` connection and authenticates.
 
 .. NOT RUNNING
 
@@ -101,13 +101,13 @@ Listing Mailboxes
 =================
 
 To retrieve the mailboxes available for an account, use the
-:func:`list()` method.
+``list()`` method.
 
 .. literalinclude:: imaplib_list.py
    :caption:
    :start-after: #end_pymotw_header
 
-The return value is a :class:`tuple` containing a response code and
+The return value is a ``tuple`` containing a response code and
 the data returned by the server.  The response code is ``OK``, unless
 there has been an error.  The data for :meth:`list()` is a sequence of
 strings containing *flags*, the *hierarchy delimiter*, and *mailbox
@@ -226,7 +226,7 @@ parser.
    :caption:
    :start-after: #end_pymotw_header
 
-The return value is the usual :class:`tuple` containing a response
+The return value is the usual ``tuple`` containing a response
 code and a list of information from the server.  In this case, the
 list contains a single string formatted with the name of the mailbox
 in quotes, then the status conditions and values in parentheses.
@@ -605,7 +605,7 @@ the client.
    :start-after: #end_pymotw_header
 
 Fetching values separately has the added benefit of making it easy to
-use :func:`ParseFlags()` to parse the flags from the response.
+use ``ParseFlags()`` to parse the flags from the response.
 
 .. NOT RUNNING
 
@@ -702,7 +702,7 @@ for each message.
 Uploading Messages
 ==================
 
-To add a new message to a mailbox, construct a :class:`Message`
+To add a new message to a mailbox, construct a ``Message``
 instance and pass it to the :meth:`append()` method, along with the
 timestamp for the message.
 
@@ -711,7 +711,7 @@ timestamp for the message.
    :start-after: #end_pymotw_header
 
 The ``payload`` used in this example is a simple plaintext email body.
-:class:`Message` also supports MIME-encoded multi-part messages.
+``Message`` also supports MIME-encoded multi-part messages.
 
 .. NOT RUNNING
 

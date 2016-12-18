@@ -4,16 +4,16 @@ Building Documents With Element Nodes
 =====================================
 
 In addition to its parsing capabilities, ``xml.etree.ElementTree``
-also supports creating well-formed XML documents from :class:`Element`
-objects constructed in an application.  The :class:`Element` class
+also supports creating well-formed XML documents from ``Element``
+objects constructed in an application.  The ``Element`` class
 used when a document is parsed also knows how to generate a serialized
 form of its contents, which can then be written to a file or other
 data stream.
 
 There are three helper functions useful for creating a hierarchy of
-:class:`Element` nodes.  :func:`Element` creates a standard node,
-:func:`SubElement` attaches a new node to a parent, and
-:func:`Comment` creates a node that serializes using XML's comment
+``Element`` nodes.  ``Element()`` creates a standard node,
+``SubElement()`` attaches a new node to a parent, and
+``Comment()`` creates a node that serializes using XML's comment
 syntax.
 
 .. literalinclude:: ElementTree_create.py
@@ -44,12 +44,12 @@ converted to the entity reference ``&amp;`` automatically.
 Pretty-Printing XML
 ===================
 
-:class:`ElementTree` makes no effort to format the output of
-:func:`tostring` to make it easy to read because adding extra
+``ElementTree`` makes no effort to format the output of
+``tostring()`` to make it easy to read because adding extra
 whitespace changes the contents of the document.  To make the output
 easier to follow, the rest of the examples will use
 :mod:`xml.dom.minidom` to re-parse the XML then use its
-:func:`toprettyxml` method.
+``toprettyxml()`` method.
 
 .. literalinclude:: ElementTree_pretty.py
    :caption:
@@ -95,7 +95,7 @@ not set any attributes of the nodes.  Many of the examples from
 :ref:`xml.etree.ElementTree.parsing` worked with an OPML file listing
 podcasts and their feeds.  The ``outline`` nodes in the tree used
 attributes for the group names and podcast properties.
-:class:`ElementTree` can be used to construct a similar XML file from
+``ElementTree`` can be used to construct a similar XML file from
 a CSV input file, setting all of the element attributes as the tree is
 constructed.
 
@@ -104,7 +104,7 @@ constructed.
    :start-after: #end_pymotw_header
 
 This example uses two techniques to set the attribute values of new
-nodes. The root node is configured using :func:`set` to change one attribute
+nodes. The root node is configured using ``set()`` to change one attribute
 at a time. The podcast nodes are given all of their attributes at once
 by passing a dictionary to the node factory.
 
@@ -147,16 +147,16 @@ by passing a dictionary to the node factory.
 Building Trees from Lists of Nodes
 ==================================
 
-Multiple children can be added to an :class:`Element` instance together with
-the :func:`extend` method.  The argument to :func:`extend` is any
-iterable, including a :class:`list` or another :class:`Element`
+Multiple children can be added to an ``Element`` instance together with
+the ``extend()`` method.  The argument to ``extend()`` is any
+iterable, including a ``list`` or another ``Element``
 instance.
 
 .. literalinclude:: ElementTree_extend.py
    :caption:
    :start-after: #end_pymotw_header
 
-When a :class:`list` is given, the nodes in the list are added
+When a ``list`` is given, the nodes in the list are added
 directly to the new parent.
 
 .. {{{cog
@@ -177,7 +177,7 @@ directly to the new parent.
 
 .. {{{end}}}
 
-When another :class:`Element` instance is given, the children of that
+When another ``Element`` instance is given, the children of that
 node are added to the new parent.
 
 .. literalinclude:: ElementTree_extend_node.py
@@ -208,9 +208,9 @@ The ``root`` node is not part of the output tree.
 
 .. {{{end}}}
 
-It is important to understand that :func:`extend` does not modify any
+It is important to understand that ``extend()`` does not modify any
 existing parent-child relationships with the nodes.  If the values
-passed to :func:`extend` exist somewhere in the tree already, they
+passed to ``extend()`` exist somewhere in the tree already, they
 will still be there, and will be repeated in the output.
 
 .. literalinclude:: ElementTree_extend_node_copy.py
@@ -264,18 +264,18 @@ appear in the output tree more than once.
 Serializing XML to a Stream
 ===========================
 
-:func:`tostring` is implemented by writing to an in-memory file-like
+``tostring()`` is implemented by writing to an in-memory file-like
 object, then returning a string representing the entire element tree.
 When working with large amounts of data, it will take less memory and
 make more efficient use of the I/O libraries to write directly to a
-file handle using the :func:`write` method of :class:`ElementTree`.
+file handle using the ``write()`` method of ``ElementTree``.
 
 .. literalinclude:: ElementTree_write.py
    :caption:
    :start-after: #end_pymotw_header
 
-The example uses :data:`sys.stdout.buffer` to write to the console
-instead of :data:`sys.stdout` because :class:`ElementTree` produces
+The example uses ``sys.stdout.buffer`` to write to the console
+instead of ``sys.stdout`` because ``ElementTree`` produces
 encoded bytes instead of a Unicode string. It could also write to a
 file opened in binary mode or socket.
 
@@ -295,7 +295,7 @@ file opened in binary mode or socket.
 .. {{{end}}}
 
 The last node in the tree contains no text or sub-nodes, so it is
-written as an empty tag, ``<empty_child />``.  :func:`write` takes a
+written as an empty tag, ``<empty_child />``.  ``write()`` takes a
 ``method`` argument to control the handling for empty nodes.
 
 .. literalinclude:: ElementTree_write_method.py

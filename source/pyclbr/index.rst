@@ -24,8 +24,8 @@ Scanning for Classes
 ====================
 
 There are two public functions exposed by ``pyclbr``.
-The first, :func:`readmodule`, takes the name of the module as argument returns a
-mapping of class names to :class:`Class` objects containing the metadata
+The first, ``readmodule()``, takes the name of the module as argument returns a
+mapping of class names to ``Class`` objects containing the metadata
 about the class source.
 
 .. literalinclude:: pyclbr_readmodule.py
@@ -76,16 +76,16 @@ their line number in the source file.
 Scanning for Functions
 ======================
 
-The other public function in ``pyclbr`` is :func:`readmodule_ex`.
-It does everything that :func:`readmodule` does, and adds functions to
+The other public function in ``pyclbr`` is ``readmodule_ex()``.
+It does everything that ``readmodule()`` does, and adds functions to
 the result set.
 
 .. literalinclude:: pyclbr_readmodule_ex.py
     :caption:
     :start-after: #end_pymotw_header
 
-Each :class:`Function` object has properties much like the
-:class:`Class` object.
+Each ``Function`` object has properties much like the
+``Class`` object.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'pyclbr_readmodule_ex.py'))

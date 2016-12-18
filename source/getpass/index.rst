@@ -56,16 +56,16 @@ give better security.
     What is your favorite color?
     Auuuuugh!
 
-By default, ``getpass()`` uses :data:`sys.stdout` to print the
+By default, ``getpass()`` uses ``sys.stdout`` to print the
 prompt string. For a program that may produce useful output on
 ``sys.stdout``, it is frequently better to send the prompt to another
-stream such as :data:`sys.stderr`.
+stream such as ``sys.stderr``.
 
 .. literalinclude:: getpass_stream.py
    :caption:
    :start-after: #end_pymotw_header
 
-Using :data:`sys.stderr` for the prompt means standard output can be
+Using ``sys.stderr`` for the prompt means standard output can be
 redirected (to a pipe or file) without seeing the password prompt. The
 value entered by the user is still not echoed back to the screen.
 

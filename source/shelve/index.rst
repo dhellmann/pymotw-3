@@ -18,9 +18,9 @@ and managed by :mod:`dbm`.
 Creating a new Shelf
 ====================
 
-The simplest way to use ``shelve`` is via the :class:`DbfilenameShelf`
+The simplest way to use ``shelve`` is via the ``DbfilenameShelf``
 class. It uses :mod:`dbm` to store the data. The class can be used
-directly, or by calling :func:`shelve.open()`:
+directly, or by calling ``shelve.open()``:
 
 .. literalinclude:: shelve_create.py
    :caption:
@@ -157,12 +157,12 @@ Specific Shelf Types
 ====================
 
 The earlier examples all used the default shelf implementation. Using
-:func:`shelve.open()` instead of one of the shelf implementations
+``shelve.open()`` instead of one of the shelf implementations
 directly is a common usage pattern, especially if it does not matter
 what type of database is used to store the data. There are times,
 however, when the database format is important. In those situations,
-use :class:`DbfilenameShelf` or :class:`BsdDbShelf` directly, or even
-subclass :class:`Shelf` for a custom solution.
+use ``DbfilenameShelf`` or ``BsdDbShelf`` directly, or even
+subclass ``Shelf`` for a custom solution.
 
 .. seealso::
 

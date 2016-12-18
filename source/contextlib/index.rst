@@ -24,10 +24,10 @@ reading or writing is done.
    :start-after: #end_pymotw_header
 
 A context manager is enabled by the ``with`` statement, and the
-API involves two methods.  The :func:`__enter__` method is run when
+API involves two methods.  The ``__enter__()`` method is run when
 execution flow enters the code block inside the ``with``.  It
 returns an object to be used within the context.  When execution flow
-leaves the ``with`` block, the :func:`__exit__` method of the
+leaves the ``with`` block, the ``__exit__()`` method of the
 context manager is called to clean up any resources being used.
 
 .. literalinclude:: contextlib_api.py
@@ -36,7 +36,7 @@ context manager is called to clean up any resources being used.
 
 Combining a context manager and the ``with`` statement is a
 more compact way of writing a ``try:finally`` block, since the
-context manager's :func:`__exit__` method is always called, even if an
+context manager's ``__exit__()`` method is always called, even if an
 exception is raised.
 
 .. {{{cog
@@ -54,18 +54,18 @@ exception is raised.
 
 .. {{{end}}}
 
-The :func:`__enter__` method can return any object to be associated
+The ``__enter__()`` method can return any object to be associated
 with a name specified in the ``as`` clause of the
-``with`` statement.  In this example, the :class:`Context`
+``with`` statement.  In this example, the ``Context``
 returns an object that uses the open context.
 
 .. literalinclude:: contextlib_api_other_object.py
    :caption:
    :start-after: #end_pymotw_header
 
-The value associated with the variable :data:`c` is the object
-returned by :func:`__enter__`, which is not necessarily the
-:class:`Context` instance created in the ``with`` statement.
+The value associated with the variable ``c`` is the object
+returned by ``__enter__()``, which is not necessarily the
+``Context`` instance created in the ``with`` statement.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'contextlib_api_other_object.py'))
@@ -84,17 +84,17 @@ returned by :func:`__enter__`, which is not necessarily the
 
 .. {{{end}}}
 
-The :func:`__exit__` method receives arguments containing details of
+The ``__exit__()`` method receives arguments containing details of
 any exception raised in the ``with`` block.  
 
 .. literalinclude:: contextlib_api_error.py
    :caption:
    :start-after: #end_pymotw_header
 
-If the context manager can handle the exception, :func:`__exit__`
+If the context manager can handle the exception, ``__exit__()``
 should return a true value to indicate that the exception does not
 need to be propagated.  Returning false causes the exception to be
-re-raised after :func:`__exit__` returns.
+re-raised after ``__exit__()`` returns.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'contextlib_api_error.py', ignore_error=True))
@@ -127,7 +127,7 @@ re-raised after :func:`__exit__` returns.
 Context Managers as Function Decorators
 =======================================
 
-The class :class:`ContextDecorator` adds support to regular context
+The class ``ContextDecorator`` adds support to regular context
 manager classes to let them be used as function decorators as well as
 context managers.
 
@@ -136,7 +136,7 @@ context managers.
    :start-after: #end_pymotw_header
 
 One difference with using the context manager as a decorator is that
-the value returned by :func:`__enter__` is not available inside the
+the value returned by ``__enter__()`` is not available inside the
 function being decorated, unlike when using ``with`` and
 ``as``. Arguments passed to the decorated function are
 available in the usual way.
@@ -168,10 +168,10 @@ From Generator to Context Manager
 =================================
 
 Creating context managers the traditional way, by writing a class with
-:func:`__enter__()` and :func:`__exit__()` methods, is not
+``__enter__()`` and ``__exit__()`` methods, is not
 difficult. But sometimes writing everything out fully is extra
 overhead for a trivial bit of context. In those sorts of situations,
-use the :func:`contextmanager()` decorator to convert a generator
+use the ``contextmanager()`` decorator to convert a generator
 function into a context manager.
 
 .. literalinclude:: contextlib_contextmanager.py
@@ -213,18 +213,18 @@ re-raised inside the generator, so they can be handled there.
 
 .. {{{end}}}
 
-The context manager returned by :func:`contextmanager` is derived from
-:class:`ContextDecorator`, so it also works as a function decorator.
+The context manager returned by ``contextmanager()`` is derived from
+``ContextDecorator``, so it also works as a function decorator.
 
 .. literalinclude:: contextlib_contextmanager_decorator.py
    :caption:
    :start-after: #end_pymotw_header
 
-As in the :class:`ContextDecorator` example above, when the context
+As in the ``ContextDecorator`` example above, when the context
 manager is used as a decorator the value yielded by the generator is
 not available inside the function being decorated. Arguments passed to
 the decorated function are still available, as demonstrated by
-:func:`throw_error` in this example.
+``throw_error()`` in this example.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'contextlib_contextmanager_decorator.py', 
@@ -264,13 +264,13 @@ the decorated function are still available, as demonstrated by
 Closing Open Handles
 ====================
 
-The :class:`file` class supports the context manager API directly, but
+The ``file`` class supports the context manager API directly, but
 some other objects that represent open handles do not. The example
 given in the standard library documentation for ``contextlib`` is
-the object returned from :func:`urllib.urlopen`.  There are other
-legacy classes that use a :func:`close` method but do not support the
+the object returned from ``urllib.urlopen()``.  There are other
+legacy classes that use a ``close()`` method but do not support the
 context manager API. To ensure that a handle is closed, use
-:func:`closing()` to create a context manager for it.
+``closing()`` to create a context manager for it.
 
 .. literalinclude:: contextlib_closing.py
     :caption:
@@ -330,7 +330,7 @@ In this case, the operation fails and the error is ignored.
 .. {{{end}}}
 
 The ``try:except`` form can be replaced with
-:func:`contextlib.suppress` to more explicitly suppress a class of
+``contextlib.suppress()`` to more explicitly suppress a class of
 exceptions happening anywhere in the ``with`` block.
 
 .. literalinclude:: contextlib_suppress.py
@@ -357,8 +357,8 @@ Redirecting Output Streams
 
 Poorly designed library code may write directly to ``sys.stdout`` or
 ``sys.stderr``, without providing arguments to configure different
-output destinations. The :func:`redirect_stdout` and
-:func:`redirect_stderr` context managers can be used to capture output
+output destinations. The ``redirect_stdout()`` and
+``redirect_stderr()`` context managers can be used to capture output
 from functions like this, for which the source cannot be changed to
 accept a new output argument.
 
@@ -368,7 +368,7 @@ accept a new output argument.
 
 In this example, ``misbehaving_function()`` writes to both ``stdout``
 and ``stderr``, but the two context managers send that output to the
-same :class:`io.StringIO` instance where it is saved to be used later.
+same ``io.StringIO`` instance where it is saved to be used later.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'contextlib_redirect.py'))
@@ -386,7 +386,7 @@ same :class:`io.StringIO` instance where it is saved to be used later.
 
 .. note::
 
-   Both :func:`redirect_stdout` and :func:`redirect_stderr` modify
+   Both ``redirect_stdout()`` and ``redirect_stderr()`` modify
    global state by replacing objects in the :mod:`sys` module, and
    should be used with care. The functions are not thread-safe, and
    may interfere with other operations that expect the standard output
@@ -400,10 +400,10 @@ single file or database handle. In these cases, the object is known in
 advance and the code using the context manager can be built around
 that one object. In other cases, a program may need to create an
 unknown number of objects in a context, while wanting all of them to
-be cleaned up when control flow exits the context. :class:`ExitStack`
+be cleaned up when control flow exits the context. ``ExitStack``
 was created to handle these more dynamic cases.
 
-An :class:`ExitStack` instance maintains a stack data structure of
+An ``ExitStack`` instance maintains a stack data structure of
 cleanup callbacks. The callbacks are populated explicitly within the
 context, and any registered callbacks are called in the reverse order
 when control flow exits the context. The result is like having multple
@@ -413,16 +413,16 @@ dynamically.
 Stacking Context Managers
 -------------------------
 
-There are several ways to populate the :class:`ExitStack`.  This
-example uses :func:`enter_context` to add a new context manager to the
+There are several ways to populate the ``ExitStack``.  This
+example uses ``enter_context()`` to add a new context manager to the
 stack.
 
 .. literalinclude:: contextlib_exitstack_enter_context.py
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`enter_context` first calls :func:`__enter__` on the context
-manager, and then registers its :func:`__exit__` method as a callback
+``enter_context()`` first calls ``__enter__()`` on the context
+manager, and then registers its ``__exit__()`` method as a callback
 to be invoked as the stack is undone.
 
 .. {{{cog
@@ -442,7 +442,7 @@ to be invoked as the stack is undone.
 
 .. {{{end}}}
 
-The context managers given to :class:`ExitStack` are treated as though
+The context managers given to ``ExitStack`` are treated as though
 they are in a series of nested ``with`` statements. Errors that
 happen anywhere within the context propagate through the normal error
 handling of the context managers. These context manager classes
@@ -453,8 +453,8 @@ illustrate the way errors propagate.
    :start-after: #end_pymotw_header
 
 The examples using these classes is based around
-:func:`variable_stack`, which uses the context managers passed to
-construct an :class:`ExitStack`, building up the overall context one
+``variable_stack()``, which uses the context managers passed to
+construct an ``ExitStack``, building up the overall context one
 by one. The examples below pass different context managers to explore
 the error handling behavior. First, the normal case of no exceptions.
 
@@ -536,7 +536,7 @@ any other context managers.
 Arbitrary Context Callbacks
 ---------------------------
 
-:class:`ExitStack` also supports arbitrary callbacks for closing a
+``ExitStack`` also supports arbitrary callbacks for closing a
 context, making it easy to clean up resources that are not controlled
 via a context manager.
 
@@ -544,7 +544,7 @@ via a context manager.
    :caption:
    :start-after: #end_pymotw_header
 
-Just as with the :func:`__exit__` methods of full context managers,
+Just as with the ``__exit__()`` methods of full context managers,
 the callbacks are invoked in the reverse order that they are
 registered.
 
@@ -590,14 +590,14 @@ context managers.
 Callbacks make a convenient way to clearly define cleanup logic
 without the overhead of creating a new context manager class. To
 improve code readability, that logic can be encapsulated in an inline
-function, and :func:`callback` can be used as a decorator.
+function, and ``callback()`` can be used as a decorator.
 
 .. literalinclude:: contextlib_exitstack_callbacks_decorator.py
    :caption:
    :start-after: #end_pymotw_header
 
 There is no way to specify the arguments for functions registered
-using the decorator form of :func:`callback`. However, if the cleanup
+using the decorator form of ``callback()``. However, if the cleanup
 callback is defined inline, scope rules give it access to variables
 defined in the calling code.
 
@@ -625,12 +625,12 @@ can all be set up properly. For example, if an operation needs several
 long-lived network connections, it may be best to not start the
 operation if one connection fails. However, if all of the connections
 can be opened they need to stay open longer than the duration of a
-single context manager. The :func:`pop_all` method of
-:class:`ExitStack` can be used in this scenario.
+single context manager. The ``pop_all()`` method of
+``ExitStack`` can be used in this scenario.
 
-:func:`pop_all` clears all of the context managers and callbacks from
+``pop_all()`` clears all of the context managers and callbacks from
 the stack on which it is called, and returns a new stack pre-populated
-with those same context managers and callbacks. The :func:`close`
+with those same context managers and callbacks. The ``close()``
 method of the new stack can be invoked later, after the original stack
 is gone, to clean up the resources.
 
@@ -639,11 +639,11 @@ is gone, to clean up the resources.
    :start-after: #end_pymotw_header
 
 This example uses the same context manager classes defined earlier,
-with the difference that :class:`ErrorOnEnter` produces an error on
-:func:`__enter__` instead of :func:`__exit__`. Inside
-:func:`variable_stack`, if all of the contexts are entered without
-error then the :func:`close` method of a new :class:`ExitStack` is
-returned. If a handled error occurs, :func:`variable_stack` returns
+with the difference that ``ErrorOnEnter`` produces an error on
+``__enter__()`` instead of ``__exit__()``. Inside
+``variable_stack()``, if all of the contexts are entered without
+error then the ``close()`` method of a new ``ExitStack`` is
+returned. If a handled error occurs, ``variable_stack()`` returns
 ``None`` to indicate that the cleanup work is already done. And if an
 unhandled error occurs, the partial stack is cleaned up and the error
 is propagated.
@@ -698,5 +698,5 @@ is propagated.
 
    * `Resource management in Python 3.3, or contextlib.ExitStack FTW!
      <http://www.wefearchange.org/2013/05/resource-management-in-python-33-or.html>`__
-     -- Description of using :class:`ExitStack` to deploy safe code
+     -- Description of using ``ExitStack`` to deploy safe code
      from Barry Warsaw.

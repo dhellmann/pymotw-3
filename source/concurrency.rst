@@ -21,14 +21,14 @@ but other inter-process communication techniques are more reliable and
 can deliver more complicated messages.
 
 :mod:`threading` includes a high-level, object oriented, API for
-working with concurrency from Python.  :class:`Thread` objects run
+working with concurrency from Python.  ``Thread`` objects run
 concurrently within the same process and share memory.  Using threads
 is an easy way to scale for tasks that are more I/O bound than CPU
 bound.
 
 The :mod:`multiprocessing` module mirrors :mod:`threading`, except
-that instead of a :class:`Thread` class it provides a
-:class:`Process`.  Each :class:`Process` is a true system process
+that instead of a ``Thread`` class it provides a
+``Process``.  Each ``Process`` is a true system process
 without shared memory, but :mod:`multiprocessing` provides features
 for sharing data and passing messages between them so that in many
 cases converting from threads to processes is as simple as changing a

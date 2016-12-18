@@ -44,7 +44,7 @@ In this example, the pattern matches all files starting with
 .. {{{end}}}
 
 To force a case-sensitive comparison, regardless of the file system and
-operating system settings, use :func:`fnmatchcase`.
+operating system settings, use ``fnmatchcase()``.
 
 .. literalinclude:: fnmatch_fnmatchcase.py
    :caption:
@@ -74,14 +74,14 @@ file system, no files match the modified pattern.
 Filtering
 =========
 
-To test a sequence of filenames, use :func:`filter`, which returns a
+To test a sequence of filenames, use ``filter()``, which returns a
 list of the names that match the pattern argument.
 
 .. literalinclude:: fnmatch_filter.py
    :caption:
    :start-after: #end_pymotw_header
 
-In this example, :func:`filter` returns the list of names of the
+In this example, ``filter()`` returns the list of names of the
 example source files associated with this section.
 
 .. {{{cog
@@ -114,7 +114,7 @@ Translating Patterns
 
 Internally, ``fnmatch`` converts the glob pattern to a regular
 expression and uses the :mod:`re` module to compare the name and
-pattern. The :func:`translate` function is the public API for
+pattern. The ``translate()`` function is the public API for
 converting glob patterns to regular expressions.
 
 .. literalinclude:: fnmatch_translate.py

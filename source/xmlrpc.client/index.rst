@@ -23,14 +23,14 @@ Connecting to a Server
 ======================
 
 The simplest way to connect a client to a server is to instantiate a
-:class:`ServerProxy` object, giving it the URI of the server. For
+``ServerProxy`` object, giving it the URI of the server. For
 example, the demo server runs on port 9000 of localhost:
 
 .. literalinclude:: xmlrpc_ServerProxy.py
    :caption:
    :start-after: #end_pymotw_header
 
-In this case, the :func:`ping` method of the service takes no
+In this case, the ``ping()`` method of the service takes no
 arguments and returns a single Boolean value.
 
 .. code-block:: none
@@ -153,8 +153,8 @@ complexity.
 
 This program passes a list of dictionaries containing all of the
 supported types to the sample server, which returns the data.  Tuples
-are converted to lists and :class:`datetime` instances are converted
-to :class:`DateTime` objects, but otherwise the data is unchanged.
+are converted to lists and ``datetime`` instances are converted
+to ``DateTime`` objects, but otherwise the data is unchanged.
 
 .. code-block:: none
 
@@ -214,7 +214,7 @@ or when they are received from the server.
    :caption:
    :start-after: #end_pymotw_header
 
-By default an internal version of :class:`DateTime` is used, but the
+By default an internal version of ``DateTime`` is used, but the
 ``use_datetime`` option turns on support for using the classes in the
 :mod:`datetime` module.
 
@@ -262,13 +262,13 @@ All values passed to the server are encoded and escaped
 automatically. However, some data types may contain characters that
 are not valid XML. For example, binary image data may include byte
 values in the ASCII control range 0 to 31.  To pass binary data, it is
-best to use the :class:`Binary` class to encode it for transport.
+best to use the ``Binary`` class to encode it for transport.
 
 .. literalinclude:: xmlrpc_Binary.py
    :caption:
    :start-after: #end_pymotw_header
 
-If the string containing a NULL byte is passed to :func:`show_type()`,
+If the string containing a NULL byte is passed to ``show_type()``,
 an exception is raised in the XML parser as it processes the response.
 
 .. code-block:: none
@@ -280,7 +280,7 @@ an exception is raised in the XML parser as it processes the response.
 
     ERROR: not well-formed (invalid token): line 6, column 55
 
-:class:`Binary` objects can also be used to send objects using
+``Binary`` objects can also be used to send objects using
 :mod:`pickle`. The normal security issues related to sending what
 amounts to executable code over the wire apply here (i.e., do not do
 this unless the communication channel is secure).
@@ -289,7 +289,7 @@ this unless the communication channel is secure).
     :literal:
     :start-after: #end_pymotw_header
 
-The data attribute of the :class:`Binary` instance contains the
+The data attribute of the ``Binary`` instance contains the
 pickled version of the object, so it has to be unpickled before it can
 be used. That results in a different object (with a new id value).
 
@@ -312,7 +312,7 @@ Exception Handling
 
 Since the XML-RPC server might be written in any language, exception
 classes cannot be transmitted directly. Instead, exceptions raised in
-the server are converted to :class:`Fault` objects and raised as
+the server are converted to ``Fault`` objects and raised as
 exceptions locally in the client.
 
 .. literalinclude:: xmlrpc_exception.py
@@ -340,8 +340,8 @@ collected and returned to the caller.
    :caption:
    :start-after: #end_pymotw_header
 
-To use a :class:`MultiCall` instance, invoke the methods on it as with
-a :class:`ServerProxy`, then call the object with no arguments to
+To use a ``MultiCall`` instance, invoke the methods on it as with
+a ``ServerProxy``, then call the object with no arguments to
 actually run the remote functions. The return value is an iterator
 that yields the results from all of the calls.
 
@@ -353,7 +353,7 @@ that yields the results from all of the calls.
     1 ['1', "<class 'int'>", 1]
     2 ['string', "<class 'str'>", 'string']
 
-If one of the calls causes a :class:`Fault`, the exception is raised
+If one of the calls causes a ``Fault``, the exception is raised
 when the result is produced from the iterator and no more results are
 available.
 
@@ -361,8 +361,8 @@ available.
    :caption:
    :start-after: #end_pymotw_header
 
-Since the third response, from :func:`raises_exception`, generates an
-exception, the response from :func:`show_type` is not accessible.
+Since the third response, from ``raises_exception()``, generates an
+exception, the response from ``show_type()`` is not accessible.
 
 .. code-block:: none
 

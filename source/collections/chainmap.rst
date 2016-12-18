@@ -2,16 +2,16 @@
  ChainMap --- search multiple dictionaries
 ===========================================
 
-The :class:`ChainMap` class manages a sequence of dictionaries,
+The ``ChainMap`` class manages a sequence of dictionaries,
 searching them in order to find values associated with keys. A
-:class:`ChainMap` makes a good "context" container, since it can be
+``ChainMap`` makes a good "context" container, since it can be
 treated as a stack with changes happening as the stack grows, then
 being discarded again as the stack shrinks.
 
 Accessing Values
 ================
 
-The :class:`ChainMap` supports the same API as a regular dictionary
+The ``ChainMap`` supports the same API as a regular dictionary
 for accessing existing values.
 
 .. literalinclude:: collections_chainmap_read.py
@@ -50,7 +50,7 @@ constructor, so the value reported for the key ``'c'`` comes from the
 Reordering
 ==========
 
-The :class:`ChainMap` stores the list of mappings over which it
+The ``ChainMap`` stores the list of mappings over which it
 searches in a list in its :attr:`maps` attribute. The list is mutable,
 so it is possible to add new mappings directly or to change the order
 of the elements to control look-up and update behavior.
@@ -81,9 +81,9 @@ When the list of mappings is reversed, the value associated with
 Updating Values
 ===============
 
-A :class:`ChainMap` does not cache the values in the child mappings,
+A ``ChainMap`` does not cache the values in the child mappings,
 so if their contents are modified the results are reflected when the
-:class:`ChainMap` is accessed.
+``ChainMap`` is accessed.
 
 .. literalinclude:: collections_chainmap_update_behind.py
    :caption:
@@ -105,7 +105,7 @@ elements works the same way.
 
 .. {{{end}}}
 
-It is also possible to set values through the :class:`ChainMap`
+It is also possible to set values through the ``ChainMap``
 directly, though only the first mapping in the chain is actually
 modified.
 
@@ -130,7 +130,7 @@ updated.
 
 .. {{{end}}}
 
-:class:`ChainMap` provides a convenience method for creating a new
+``ChainMap`` provides a convenience method for creating a new
 instance with one extra mapping at the front of the :attr:`maps` list
 to make it easy to avoid modifying the existing underlying data
 structures.
@@ -140,7 +140,7 @@ structures.
    :start-after: #end_pymotw_header
 
 This stacking behavior is what makes it convenient to use
-:class:`ChainMap` instances as template or application contexts, since
+``ChainMap`` instances as template or application contexts, since
 it is easy to add or update values in one iteration, then discard the
 changes for the next iteration.
 
@@ -162,7 +162,7 @@ changes for the next iteration.
 .. {{{end}}}
 
 For situations where the new context is known or built in advance it
-is also possible to pass a mapping to :func:`new_child`.
+is also possible to pass a mapping to ``new_child()``.
 
 .. literalinclude:: collections_chainmap_new_child_explicit.py
    :caption:

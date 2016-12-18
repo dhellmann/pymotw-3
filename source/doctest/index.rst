@@ -22,7 +22,7 @@ Getting Started
 
 The first step to setting up doctests is to use the interactive
 interpreter to create examples and then copy and paste them into the
-docstrings in the module.  Here, :func:`my_function` has two examples
+docstrings in the module.  Here, ``my_function()`` has two examples
 given:
 
 .. literalinclude:: doctest_simple.py
@@ -161,7 +161,7 @@ into a different part of memory.
 
 When the tests include values that are likely to change in
 unpredictable ways, and where the actual value is not important to the
-test results, use the :const:`ELLIPSIS` option to tell ``doctest``
+test results, use the ``ELLIPSIS`` option to tell ``doctest``
 to ignore portions of the verification value.
 
 .. literalinclude:: doctest_ellipsis.py
@@ -169,8 +169,8 @@ to ignore portions of the verification value.
    :start-after: #end_pymotw_header
 
 The "``#doctest: +ELLIPSIS``" comment after the call to
-:func:`unpredictable` tells ``doctest`` to turn on the
-:const:`ELLIPSIS` option for that test.  The ``...`` replaces the
+``unpredictable()`` tells ``doctest`` to turn on the
+``ELLIPSIS`` option for that test.  The ``...`` replaces the
 memory address in the object id, so that portion of the expected value
 is ignored and the actual output matches and the test passes.
 
@@ -375,7 +375,7 @@ are used to delimit tests.
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`double_space` takes a list of input lines, and prints them
+``double_space()`` takes a list of input lines, and prints them
 double-spaced with blank lines between.
 
 .. {{{cog
@@ -838,7 +838,7 @@ included at the bottom of modules.
    :caption:
    :start-after: #end_pymotw_header
 
-Calling :func:`testmod` only if the current module name is
+Calling ``testmod()`` only if the current module name is
 ``__main__`` ensures that the tests are only run when the module is
 invoked as a main program.
 
@@ -870,7 +870,7 @@ invoked as a main program.
 
 .. {{{end}}}
 
-The first argument to :func:`testmod` is a module containing code to
+The first argument to ``testmod()`` is a module containing code to
 be scanned for tests.  A separate test script can use this feature to
 import the real code and run the tests in each module one after
 another.
@@ -913,7 +913,7 @@ module and running its tests.
 By File
 -------
 
-:func:`testfile` works in a way similar to :func:`testmod`, allowing
+``testfile()`` works in a way similar to ``testmod()``, allowing
 the tests to be invoked explicitly in an external file from within the
 test program.
 
@@ -921,7 +921,7 @@ test program.
    :caption:
    :start-after: #end_pymotw_header
 
-Both :func:`testmod` and :func:`testfile` include optional parameters
+Both ``testmod()`` and ``testfile()`` include optional parameters
 to control the behavior of the tests through the ``doctest``
 options.  Refer to the standard library documentation for more details
 about those features -- most of the time they are not needed.
@@ -972,7 +972,7 @@ Unittest Suite
 When both :mod:`unittest` and ``doctest`` are used for testing the
 same code in different situations, the ``unittest`` integration in
 ``doctest`` can be used to run the tests together.  Two classes,
-:class:`DocTestSuite` and :class:`DocFileSuite` create test suites
+``DocTestSuite`` and ``DocFileSuite`` create test suites
 compatible with the test-runner API of ``unittest``.
 
 .. literalinclude:: doctest_unittest.py
@@ -1015,9 +1015,9 @@ less likely to interfere with one another.
    :caption:
    :start-after: #end_pymotw_header
 
-:class:`TestGlobals` has two methods: :func:`one` and :func:`two`.
-The tests in the docstring for :func:`one` set a global variable, and
-the test for :func:`two` looks for it (expecting not to find it).
+``TestGlobals`` has two methods: ``one()`` and ``two()``.
+The tests in the docstring for ``one()`` set a global variable, and
+the test for ``two()`` looks for it (expecting not to find it).
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '-m doctest -v doctest_test_globals.py'))
@@ -1062,7 +1062,7 @@ the module.
    :start-after: #end_pymotw_header
 
 The module variable ``_module_data`` is changed by the tests for
-:func:`one`, causing the test for :func:`two` to fail.
+``one()``, causing the test for ``two()`` to fail.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '-m doctest -v doctest_mutable_globals.py', ignore_error=True))
@@ -1109,8 +1109,8 @@ The module variable ``_module_data`` is changed by the tests for
 .. {{{end}}}
 
 If global values are needed for the tests, to parameterize them for an
-environment for example, values can be passed to :func:`testmod` and
-:func:`testfile` to have the context set up using data controlled by
+environment for example, values can be passed to ``testmod()`` and
+``testfile()`` to have the context set up using data controlled by
 the caller.
 
 .. seealso::
@@ -1119,7 +1119,7 @@ the caller.
 
    * `The Mighty Dictionary <https://www.youtube.com/watch?v=C4Kc8xzcA68>`__ --
      Presentation by Brandon Rhodes at PyCon 2010 about the internal
-     operations of the :class:`dict`.
+     operations of the ``dict``.
 
    * :mod:`difflib` -- Python's sequence difference computation
      library, used to produce the ndiff output.

@@ -36,8 +36,8 @@ socket to avoid blocking indefinitely while waiting for an answer.
 
 The socket also needs to be configured with a *time-to-live* value
 (TTL) for the messages.  The TTL controls how many networks will
-receive the packet.  Set the TTL with the :const:`IP_MULTICAST_TTL`
-option and :func:`setsockopt`.  The default, ``1``, means that the
+receive the packet.  Set the TTL with the ``IP_MULTICAST_TTL``
+option and ``setsockopt()``.  The default, ``1``, means that the
 packets are not forwarded by the router beyond the current network
 segment.  The value can range up to 255, and should be packed into a
 single byte.
@@ -47,7 +47,7 @@ single byte.
    :start-after: #end_pymotw_header
 
 The rest of the sender looks like the UDP echo client, except that it
-expects multiple responses so uses a loop to call :func:`recvfrom`
+expects multiple responses so uses a loop to call ``recvfrom()``
 until it times out.
 
 Receiving Multicast Messages
@@ -55,12 +55,12 @@ Receiving Multicast Messages
 
 The first step to establishing a multicast receiver is to create the
 UDP socket. After the regular socket is created and bound to a port,
-it can be added to the multicast group by using :func:`setsockopt` to
-change the :const:`IP_ADD_MEMBERSHIP` option.  The option value is the
+it can be added to the multicast group by using ``setsockopt()`` to
+change the ``IP_ADD_MEMBERSHIP`` option.  The option value is the
 8-byte packed representation of the multicast group address followed
 by the network interface on which the server should listen for the
 traffic, identified by its IP address.  In this case, the receiver
-listens on all interfaces using :const:`INADDR_ANY`.
+listens on all interfaces using ``INADDR_ANY``.
 
 .. literalinclude:: socket_multicast_receiver.py
    :caption:

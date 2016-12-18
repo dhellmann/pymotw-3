@@ -13,7 +13,7 @@ The ``linecache`` module is used within other parts of the Python
 standard library when dealing with Python source files. The
 implementation of the cache holds the contents of files, parsed into
 separate lines, in memory. The API returns the requested line(s) by
-indexing into a :class:`list`, and saves time over repeatedly reading
+indexing into a ``list``, and saves time over repeatedly reading
 the file and parsing lines to find the one desired. This is especially
 useful when looking for multiple lines from the same file, such as
 when producing a traceback for an error report.
@@ -83,7 +83,7 @@ Error Handling
 ==============
 
 If the requested line number falls out of the range of valid lines in
-the file, :func:`getline` returns an empty string.
+the file, ``getline()`` returns an empty string.
 
 .. literalinclude:: linecache_out_of_range.py
     :caption:
@@ -136,7 +136,7 @@ in the import path by specifying the base name of the module.
     :start-after: #end_pymotw_header
 
 The cache population code in ``linecache`` searches
-:data:`sys.path` for the named module if it cannot find a file with
+``sys.path`` for the named module if it cannot find a file with
 that name in the current directory.  This example looks for
 ``linecache.py``.  Since there is no copy in the current directory,
 the file from the standard library is found instead.

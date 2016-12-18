@@ -36,13 +36,13 @@ Testing Access Permissions
 ==========================
 
 Using the data presented earlier, a simple crawler can test whether it
-is allowed to download a page using :func:`RobotFileParser.can_fetch`.
+is allowed to download a page using ``RobotFileParser.can_fetch()``.
 
 .. literalinclude:: urllib_robotparser_simple.py
     :caption:
     :start-after: #end_pymotw_header
 
-The URL argument to :func:`can_fetch` can be a path relative to the
+The URL argument to ``can_fetch()`` can be a path relative to the
 root of the site, or full URL.
 
 .. {{{cog

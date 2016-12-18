@@ -2,7 +2,7 @@ multiprocessing Basics
 ======================
 
 The simplest way to spawn a second process is to instantiate a
-:class:`Process` object with a target function and call :func:`start`
+``Process`` object with a target function and call ``start()``
 to let it begin working.
 
 .. literalinclude:: multiprocessing_simple.py
@@ -32,7 +32,7 @@ because each process is competing for access to the output stream.
 
 It usually more useful to be able to spawn a process with arguments to
 tell it what work to do.  Unlike with ``threading``, in order to pass
-arguments to a ``multiprocessing`` :class:`Process` the arguments
+arguments to a ``multiprocessing`` ``Process`` the arguments
 must be able to be serialized using :mod:`pickle`.  This example
 passes each worker a number to be printed.
 
@@ -104,7 +104,7 @@ Determining the Current Process
 ===============================
 
 Passing arguments to identify or name the process is cumbersome, and
-unnecessary.  Each :class:`Process` instance has a name with a default
+unnecessary.  Each ``Process`` instance has a name with a default
 value that can be changed as the process is created. Naming processes
 is useful for keeping track of them, especially in applications with
 multiple types of processes running simultaneously.
@@ -147,7 +147,7 @@ lose or corrupt data (for example, a task that generates "heart beats"
 for a service monitoring tool). 
 
 To mark a process as a daemon, set its :attr:`daemon` attribute to
-:data:`True`. The default is for processes to not be daemons.
+``True``. The default is for processes to not be daemons.
 
 .. literalinclude:: multiprocessing_daemon.py
     :caption:
@@ -182,14 +182,14 @@ Waiting for Processes
 =====================
 
 To wait until a process has completed its work and exited, use the
-:func:`join` method.
+``join()`` method.
 
 .. literalinclude:: multiprocessing_daemon_join.py
     :caption:
     :start-after: #end_pymotw_header
 
 Since the main process waits for the daemon to exit using
-:func:`join`, the "Exiting" message is printed this time.
+``join()``, the "Exiting" message is printed this time.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'multiprocessing_daemon_join.py'))
@@ -206,17 +206,17 @@ Since the main process waits for the daemon to exit using
 
 .. {{{end}}}
 
-By default, :func:`join` blocks indefinitely. It is also possible to
+By default, ``join()`` blocks indefinitely. It is also possible to
 pass a timeout argument (a float representing the number of seconds to
 wait for the process to become inactive). If the process does not
-complete within the timeout period, :func:`join` returns anyway.
+complete within the timeout period, ``join()`` returns anyway.
 
 .. literalinclude:: multiprocessing_daemon_join_timeout.py
     :caption:
     :start-after: #end_pymotw_header
 
 Since the timeout passed is less than the amount of time the daemon
-sleeps, the process is still "alive" after :func:`join` returns.
+sleeps, the process is still "alive" after ``join()`` returns.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'multiprocessing_daemon_join_timeout.py'))
@@ -238,7 +238,7 @@ Terminating Processes
 Although it is better to use the *poison pill* method of signaling to
 a process that it should exit (see :ref:`multiprocessing-queues`,
 later in this chapter), if a process appears hung or deadlocked it can
-be useful to be able to kill it forcibly.  Calling :func:`terminate`
+be useful to be able to kill it forcibly.  Calling ``terminate()``
 on a process object kills the child process.
 
 .. literalinclude:: multiprocessing_terminate.py
@@ -247,7 +247,7 @@ on a process object kills the child process.
 
 .. note::
 
-    It is important to :func:`join` the process after terminating it
+    It is important to ``join()`` the process after terminating it
     in order to give the process management code time to update the
     status of the object to reflect the termination.
 
@@ -330,7 +330,7 @@ Logging
 When debugging concurrency issues, it can be useful to have access to
 the internals of the objects provided by ``multiprocessing``.
 There is a convenient module-level function to enable logging called
-:func:`log_to_stderr`.  It sets up a logger object using
+``log_to_stderr()``.  It sets up a logger object using
 :mod:`logging` and adds a handler so that log messages are sent to the
 standard error channel.
 
@@ -365,7 +365,7 @@ level of detail desired.
 .. {{{end}}}
 
 To manipulate the logger directly (change its level setting or add
-handlers), use :func:`get_logger`.
+handlers), use ``get_logger()``.
 
 .. literalinclude:: multiprocessing_get_logger.py
     :caption:
@@ -395,7 +395,7 @@ Subclassing Process
 ===================
 
 Although the simplest way to start a job in a separate process is to
-use :class:`Process` and pass a target function, it is also possible
+use ``Process`` and pass a target function, it is also possible
 to use a custom subclass.
 
 .. literalinclude:: multiprocessing_subclass.py

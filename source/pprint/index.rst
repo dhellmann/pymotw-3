@@ -24,15 +24,15 @@ contains:
 Printing
 ========
 
-The simplest way to use the module is through the :func:`pprint`
+The simplest way to use the module is through the ``pprint()``
 function.
 
 .. literalinclude:: pprint_pprint.py
     :caption:
     :start-after: #end_pymotw_header
 
-:func:`pprint` formats an object and writes it to the data stream
-passed in as argument (or :data:`sys.stdout` by default).
+``pprint()`` formats an object and writes it to the data stream
+passed in as argument (or ``sys.stdout`` by default).
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'pprint_pprint.py', break_lines_at=68))
@@ -69,7 +69,7 @@ Formatting
 ==========
 
 To format a data structure without writing it directly to a stream
-(for example, for logging), use :func:`pformat` to build a string
+(for example, for logging), use ``pformat()`` to build a string
 representation.
 
 .. literalinclude:: pprint_pformat.py
@@ -106,15 +106,15 @@ The formatted string can then be printed or logged independently.
 Arbitrary Classes
 =================
 
-The :class:`PrettyPrinter` class used by :func:`pprint` can also work
-with custom classes, if they define a :func:`__repr__` method.
+The ``PrettyPrinter`` class used by ``pprint()`` can also work
+with custom classes, if they define a ``__repr__()`` method.
 
 .. literalinclude:: pprint_arbitrary_object.py
     :caption:
     :start-after: #end_pymotw_header
 
 The representations of the nested objects are combined by the
-:class:`PrettyPrinter` to return the full string representation.
+``PrettyPrinter`` to return the full string representation.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'pprint_arbitrary_object.py'))
@@ -142,7 +142,7 @@ with id=number>``.
     :caption:
     :start-after: #end_pymotw_header
 
-In this example, the list :data:`local_data` is added to itself,
+In this example, the list ``local_data`` is added to itself,
 creating a recursive reference.
 
 .. {{{cog
@@ -193,7 +193,7 @@ Controlling Output Width
 ========================
 
 The default output width for the formatted text is 80 columns. To
-adjust that width, use the ``width`` argument to :func:`pprint`.
+adjust that width, use the ``width`` argument to ``pprint()``.
 
 .. literalinclude:: pprint_width.py
     :caption:
@@ -260,7 +260,7 @@ syntax.
 
 .. {{{end}}}
 
-The ``compact`` flag tells :func:`pprint` to try to fit more data on
+The ``compact`` flag tells ``pprint()`` to try to fit more data on
 each individual line, rather than spreading complex data structures
 across lines.
 

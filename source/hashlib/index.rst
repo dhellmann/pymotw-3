@@ -9,7 +9,7 @@
 
 The ``hashlib`` module defines an API for accessing different
 cryptographic hashing algorithms. To work with a specific hash
-algorithm, use the appropriate constructor function or :func:`new` to
+algorithm, use the appropriate constructor function or ``new()`` to
 create a hash object. From there, the objects use the same API, no
 matter what algorithm is being used.
 
@@ -28,7 +28,7 @@ provided by that library are available, including:
 
 Some algorithms are available on all platforms, and some depend on the
 underlying libraries. For lists of each, look at
-:data:`algorithms_guaranteed` and :data:`algorithms_available`
+``algorithms_guaranteed`` and ``algorithms_available``
 respectively.
 
 .. literalinclude:: hashlib_algorithms.py
@@ -71,16 +71,16 @@ MD5 Example
 
 To calculate the MD5 hash, or *digest*, for a block of data (here a
 unicode string converted to a byte string), first create the hash
-object, then add the data and call :func:`digest` or
-:func:`hexdigest`.
+object, then add the data and call ``digest()`` or
+``hexdigest()``.
 
 .. literalinclude:: hashlib_md5.py
     :caption:
     :start-after: #end_pymotw_header
 
-This example uses the :func:`hexdigest()` method instead of
-:func:`digest()` because the output is formatted so it can be printed
-clearly. If a binary digest value is acceptable, use :func:`digest()`.
+This example uses the ``hexdigest()`` method instead of
+``digest()`` because the output is formatted so it can be printed
+clearly. If a binary digest value is acceptable, use ``digest()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'hashlib_md5.py'))
@@ -125,7 +125,7 @@ Creating a Hash by Name
 Sometimes it is more convenient to refer to the algorithm by name in a
 string rather than by using the constructor function directly. It is
 useful, for example, to be able to store the hash type in a
-configuration file. In those cases, use :func:`new()` to create a hash
+configuration file. In those cases, use ``new()`` to create a hash
 calculator.
 
 .. literalinclude:: hashlib_new.py
@@ -166,7 +166,7 @@ When run with a variety of arguments:
 Incremental Updates
 ===================
 
-The :func:`update()` method of the hash calculators can be called
+The ``update()`` method of the hash calculators can be called
 repeatedly. Each time, the digest is updated based on the additional
 text fed in. Updating incrementally is more efficient than reading an
 entire file into memory, and produces the same results.

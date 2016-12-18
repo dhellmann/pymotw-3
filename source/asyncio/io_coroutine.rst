@@ -6,7 +6,7 @@ This section examines alternate versions of the two sample programs
 implementing a simple echo server and client, using coroutines and the
 ``asyncio`` streams API instead of the protocol and transport class
 abstractions. The examples operate at a lower abstraction level than
-the :class:`Protocol` API discussed previously, but the events being
+the ``Protocol`` API discussed previously, but the events being
 processed are similar.
 
 Echo Server
@@ -27,17 +27,17 @@ client at a time. Python's language runtime manages the state for each
 coroutine instance, so the application code does not need to manage
 any extra data structures to track separate clients.
 
-The arguments to the coroutine are :class:`StreamReader` and
-:class:`StreamWriter` instances associated with the new connection. As
-with the :class:`Transport`, the client address can be accessed
-through the writer's method :func:`get_extra_info`.
+The arguments to the coroutine are ``StreamReader`` and
+``StreamWriter`` instances associated with the new connection. As
+with the ``Transport``, the client address can be accessed
+through the writer's method ``get_extra_info()``.
 
 .. literalinclude:: asyncio_echo_server_coroutine.py
    :lines: 16-19
 
 Although the coroutine is called when the connection is established,
 there may not be any data to read, yet. To avoid blocking while
-reading, the coroutine uses ``await`` with the :func:`read` call to
+reading, the coroutine uses ``await`` with the ``read()`` call to
 allow the event loop to carry on processing other tasks until there is
 data to read.
 
@@ -46,8 +46,8 @@ data to read.
 
 If the client sends data, it is returned from ``await`` and can be
 sent back to the client by passing it to the writer. Multiple calls to
-:func:`write` can be used to buffer outgoing data, and then
-:func:`drain` is used to flush the results. Since flushing network I/O
+``write()`` can be used to buffer outgoing data, and then
+``drain()`` is used to flush the results. Since flushing network I/O
 can block, again ``await`` is used to restore control to the event
 loop, which monitors the write socket and invokes the writer when it
 is possible to send more data.
@@ -55,7 +55,7 @@ is possible to send more data.
 .. literalinclude:: asyncio_echo_server_coroutine.py
    :lines: 22-26
 
-If the client has sent no data, :func:`read` returns an empty byte
+If the client has sent no data, ``read()`` returns an empty byte
 string to indicate that the connection is closed. The server needs to
 close the socket for writing to the client, and then the coroutine can
 return to indicate that it is finished.
@@ -66,9 +66,9 @@ return to indicate that it is finished.
 There are two steps to starting the server. First the application
 tells the event loop to create a new server object using the coroutine
 and the hostname and socket on which to listen. The
-:func:`start_server` method is itself a coroutine, so the results must
+``start_server()`` method is itself a coroutine, so the results must
 be processed by the event loop in order to actually start the
-server. Completing the coroutine produces a :class:`asyncio.Server`
+server. Completing the coroutine produces a ``asyncio.Server``
 instance tied to the event loop.
 
 .. literalinclude:: asyncio_echo_server_coroutine.py
@@ -76,7 +76,7 @@ instance tied to the event loop.
 
 Then the event loop needs to be run in order to process events and
 handle client requests. For a long-running service, the
-:func:`run_forever` method is the simplest way to do this.  When the
+``run_forever()`` method is the simplest way to do this.  When the
 event loop is stopped, either by the application code or by signaling
 the process, the server can be closed to clean up the socket properly,
 and then the event loop can be closed to finish handling any other
@@ -106,17 +106,17 @@ server is and what messages to send.
 The coroutine is called when the task starts, but it has no active
 connection to work with. The first step, therefore, is to have the
 client establish its own connection. It uses ``await`` to avoid
-blocking other activity while the :func:`open_connection` coroutine
+blocking other activity while the ``open_connection()`` coroutine
 runs.
 
 .. literalinclude:: asyncio_echo_client_coroutine.py
    :lines: 23-27
 
-The :func:`open_connection` coroutine returns :class:`StreamReader`
-and :class:`StreamWriter` instances associated with the new
+The ``open_connection()`` coroutine returns ``StreamReader``
+and ``StreamWriter`` instances associated with the new
 socket. The next step is to use the writer to send data to the
 server. As in the server, the writer will buffer outgoing data until
-the socket is ready or :func:`drain` is used to flush the
+the socket is ready or ``drain()`` is used to flush the
 results. Since flushing network I/O can block, again ``await`` is used
 to restore control to the event loop, which monitors the write socket
 and invokes the writer when it is possible to send more data.
@@ -126,9 +126,9 @@ and invokes the writer when it is possible to send more data.
 
 Next the client looks for a response from the server by trying to read
 data until there is nothing left to read. To avoid blocking on an
-individual :func:`read` call, ``await`` yields control back to the
+individual ``read()`` call, ``await`` yields control back to the
 event loop. If the server has sent data, it is logged. If the server
-has sent no data, :func:`read` returns an empty byte string to
+has sent no data, ``read()`` returns an empty byte string to
 indicate that the connection is closed. The client needs to close the
 socket for sending to the server and then return to indicate that it
 is finished.
@@ -137,10 +137,10 @@ is finished.
    :lines: 38-47
 
 To start the client, the event loop is called with the coroutine for
-creating the client. Using :func:`run_until_complete` avoids having an
+creating the client. Using ``run_until_complete()`` avoids having an
 infinite loop in the client program. Unlike in the protocol example,
 no separate future is needed to signal when the coroutine is finished,
-because :func:`echo_client` contains all of the client logic itself
+because ``echo_client()`` contains all of the client logic itself
 and it does not return until it has received a response and closed the
 server connection.
 

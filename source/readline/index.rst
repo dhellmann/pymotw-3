@@ -36,14 +36,14 @@ Configuring
 ===========
 
 There are two ways to configure the underlying readline library, using
-a configuration file or the :func:`parse_and_bind` function.
+a configuration file or the ``parse_and_bind()`` function.
 Configuration options include the key-binding to invoke completion,
 editing modes (``vi`` or ``emacs``), and many other
 values.  Refer to the documentation for the GNU readline library for
 details.
 
 The easiest way to enable tab-completion is through a call to
-:func:`parse_and_bind`.  Other options can be set at the same time.
+``parse_and_bind()``.  Other options can be set at the same time.
 This example changes the editing controls to use "vi" mode instead of
 the default of "emacs".  To edit the current input line, press ``ESC``
 then use normal ``vi`` navigation keys such as ``j``, ``k``,
@@ -59,7 +59,7 @@ the library with a single call.  If ``myreadline.rc`` contains
 .. literalinclude:: myreadline.rc
     :caption:
 
-the file can be read with :func:`read_init_file`
+the file can be read with ``read_init_file()``
 
 .. literalinclude:: readline_read_init_file.py
     :caption:
@@ -75,19 +75,19 @@ tab-completion when the user is entering instructions.
     :caption:
     :start-after: #end_pymotw_header
 
-The :func:`input_loop` function reads one line after another
+The ``input_loop()`` function reads one line after another
 until the input value is ``"stop"``.  A more sophisticated program
 could actually parse the input line and run the command.
 
-The :class:`SimpleCompleter` class keeps a list of "options" that are
-candidates for auto-completion.  The :func:`complete` method for an
+The ``SimpleCompleter`` class keeps a list of "options" that are
+candidates for auto-completion.  The ``complete()`` method for an
 instance is designed to be registered with ``readline`` as the
 source of completions.  The arguments are a ``text`` string to complete
 and a ``state`` value, indicating how many times the function has been
 called with the same text.  The function is called repeatedly with the
 state incremented each time.  It should return a string if there is a
 candidate for that state value or ``None`` if there are no more
-candidates.  The implementation of :func:`complete` here looks for a
+candidates.  The implementation of ``complete()`` here looks for a
 set of matches when state is ``0``, and then returns all of the
 candidate matches one at a time on subsequent calls.
 
@@ -109,7 +109,7 @@ Pressing ``TAB`` twice causes a list of options to be printed.
     list   print  start  stop
     Prompt ("stop" to quit): 
 
-The log file shows that :func:`complete` was called with two separate
+The log file shows that ``complete()`` was called with two separate
 sequences of state values.
 
 .. code-block:: none
@@ -141,7 +141,7 @@ shows:
 
     Prompt ("stop" to quit): list
 
-and the log reflects the different arguments to :func:`complete`:
+and the log reflects the different arguments to ``complete()``:
 
 .. code-block:: none
 
@@ -149,7 +149,7 @@ and the log reflects the different arguments to :func:`complete`:
     complete('l', 0) => 'list'
     complete('l', 1) => None
 
-Pressing RETURN now causes :func:`input` to return the value, and the
+Pressing RETURN now causes ``input()`` to return the value, and the
 ``while`` loop cycles.
 
 .. code-block:: none
@@ -188,7 +188,7 @@ and the screen:
 Accessing the Completion Buffer
 ===============================
 
-The completion algorithm in :class:`SimpleCompleter` is simplistic
+The completion algorithm in ``SimpleCompleter`` is simplistic
 because it only looks at the text argument passed to the function, but
 does not use any more of readline's internal state.  It is also
 possible to use ``readline`` functions to manipulate the text of
@@ -199,7 +199,7 @@ the input buffer.
     :start-after: #end_pymotw_header
 
 In this example, commands with sub-options are being completed.
-The :func:`complete` method needs to look at the position of the
+The ``complete()`` method needs to look at the position of the
 completion within the input buffer to determine whether it is part of
 the first word or a later word.  If the target is the first word, the
 keys of the options dictionary are used as candidates.  If it is not
@@ -293,17 +293,17 @@ Input History
 ``readline`` tracks the input history automatically.  There are two
 different sets of functions for working with the history.  The history
 for the current session can be accessed with
-:func:`get_current_history_length` and :func:`get_history_item`.  That
+``get_current_history_length()`` and ``get_history_item()``.  That
 same history can be saved to a file to be reloaded later using
-:func:`write_history_file` and :func:`read_history_file`.  By default
+``write_history_file()`` and ``read_history_file()``.  By default
 the entire history is saved but the maximum length of the file can be
-set with :func:`set_history_length`.  A length of -1 means no limit.
+set with ``set_history_length()``.  A length of -1 means no limit.
 
 .. literalinclude:: readline_history.py
     :caption:
     :start-after: #end_pymotw_header
 
-The :class:`HistoryCompleter` remembers everything typed, and uses
+The ``HistoryCompleter`` remembers everything typed, and uses
 those values when completing subsequent inputs.
 
 .. code-block:: none
@@ -365,7 +365,7 @@ prompt, but before reading text from the user.
     :caption:
     :start-after: #end_pymotw_header
 
-Either hook is a potentially good place to use :func:`insert_text` to
+Either hook is a potentially good place to use ``insert_text()`` to
 modify the input buffer.
 
 .. code-block:: none
@@ -374,7 +374,7 @@ modify the input buffer.
 
     Prompt ("stop" to quit): from startup_hook from pre_input_hook
 
-If the buffer is modified inside the pre-input hook, :func:`redisplay`
+If the buffer is modified inside the pre-input hook, ``redisplay()``
 must be called to update the screen.
 
 .. seealso::

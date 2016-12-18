@@ -20,15 +20,15 @@ Encoding and Decoding Simple Data Types
 =======================================
 
 The encoder understands Python's native types by default
-(:class:`str`, :class:`int`, :class:`float`, :class:`list`,
-:class:`tuple`, and :class:`dict`).
+(``str``, ``int``, ``float``, ``list``,
+``tuple``, and ``dict``).
 
 .. literalinclude:: json_simple_types.py
     :caption:
     :start-after: #end_pymotw_header
 
 Values are encoded in a manner superficially similar to Python's
-:func:`repr` output.
+``repr()`` output.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'json_simple_types.py'))
@@ -72,7 +72,7 @@ Human-consumable vs. Compact Output
 ===================================
 
 Another benefit of JSON over :mod:`pickle` is that the results are
-human-readable.  The :func:`dumps` function accepts several arguments
+human-readable.  The ``dumps()`` function accepts several arguments
 to make the output even nicer.  For example, the ``sort_keys`` flag
 tells the encoder to output the keys of a dictionary in sorted,
 instead of random, order.
@@ -144,7 +144,7 @@ more compact than the default.
     :caption:
     :start-after: #end_pymotw_header
 
-The ``separators`` argument to :func:`dumps` should be a tuple
+The ``separators`` argument to ``dumps()`` should be a tuple
 containing the strings to separate items in a list and keys from
 values in a dictionary.  The default is ``(', ', ': ')``. By removing
 the whitespace, a more compact output is produced.
@@ -170,7 +170,7 @@ Encoding Dictionaries
 
 The JSON format expects the keys to a dictionary to be strings.
 Trying to encode a dictionary with non-string types as keys produces a
-:class:`TypeError`. One way to work around that limitation is to tell
+``TypeError``. One way to work around that limitation is to tell
 the encoder to skip over non-string keys using the ``skipkeys``
 argument:
 
@@ -209,7 +209,7 @@ Given this class to encode:
     :caption:
     :start-after: #end_pymotw_header
 
-The simple way of encoding a :class:`MyObj` instance is to define a
+The simple way of encoding a ``MyObj`` instance is to define a
 function to convert an unknown type to a known type.  It does not need
 to do the encoding, so it should just convert one object to another.
 
@@ -217,7 +217,7 @@ to do the encoding, so it should just convert one object to another.
     :caption:
     :start-after: #end_pymotw_header
 
-In :func:`convert_to_builtin_type`, instances of classes not recognized
+In ``convert_to_builtin_type()``, instances of classes not recognized
 by ``json`` are converted to dictionaries with enough information
 to re-create the object if a program has access to the Python modules
 necessary.
@@ -241,8 +241,8 @@ necessary.
 
 .. {{{end}}}
 
-To decode the results and create a :func:`MyObj` instance, use the
-``object_hook`` argument to :func:`loads` to tie in to the decoder so
+To decode the results and create a ``MyObj()`` instance, use the
+``object_hook`` argument to ``loads()`` to tie in to the decoder so
 the class can be imported from the module and used to create the
 instance.
 
@@ -285,7 +285,7 @@ Besides the convenience functions already covered, the ``json``
 module provides classes for encoding and decoding.  Using the classes
 directly gives access to extra APIs for customizing their behavior.
 
-The :class:`JSONEncoder` uses an iterable interface for producing
+The ``JSONEncoder`` uses an iterable interface for producing
 "chunks" of encoded data, making it easier to write to files or
 network sockets without having to represent an entire data structure
 in memory.
@@ -325,13 +325,13 @@ any size value.
 
 .. {{{end}}}
 
-The :func:`encode` method is basically equivalent to
+The ``encode()`` method is basically equivalent to
 ``''.join(encoder.iterencode())``, with some extra error checking up
 front.
 
-To encode arbitrary objects, override the :func:`default` method with
+To encode arbitrary objects, override the ``default()`` method with
 an implementation similar to the one used in
-:func:`convert_to_builtin_type`.
+``convert_to_builtin_type()``.
 
 .. literalinclude:: json_encoder_default.py
     :caption:
@@ -387,7 +387,7 @@ All of the examples so far have assumed that the encoded version of
 the entire data structure could be held in memory at one time.  With
 large data structures, it may be preferable to write the encoding
 directly to a file-like object.  The convenience functions
-:func:`load` and :func:`dump` accept references to a file-like object
+``load()`` and ``dump()`` accept references to a file-like object
 to use for reading or writing.
 
 .. literalinclude:: json_dump_file.py
@@ -395,7 +395,7 @@ to use for reading or writing.
     :start-after: #end_pymotw_header
 
 A socket or normal file handle would work the same way as the
-:class:`StringIO` buffer used in this example.
+``StringIO`` buffer used in this example.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'json_dump_file.py'))
@@ -410,15 +410,15 @@ A socket or normal file handle would work the same way as the
 .. {{{end}}}
 
 Although it is not optimized to read only part of the data at a time,
-the :func:`load` function still offers the benefit of encapsulating
+the ``load()`` function still offers the benefit of encapsulating
 the logic of generating objects from stream input.
 
 .. literalinclude:: json_load_file.py
     :caption:
     :start-after: #end_pymotw_header
 
-Just as for :func:`dump`, any file-like object can be passed to
-:func:`load`.
+Just as for ``dump()``, any file-like object can be passed to
+``load()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'json_load_file.py'))
@@ -436,7 +436,7 @@ Just as for :func:`dump`, any file-like object can be passed to
 Mixed Data Streams
 ==================
 
-:class:`JSONDecoder` includes :func:`raw_decode`, a method for
+``JSONDecoder`` includes ``raw_decode()``, a method for
 decoding a data structure followed by more data, such as JSON data
 with trailing text.  The return value is the object created by
 decoding the input data, and an index into that data indicating where

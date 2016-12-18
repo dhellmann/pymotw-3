@@ -8,7 +8,7 @@ There are several useful debugging features built into
 First, the event loop uses :mod:`logging` to emit status messages as
 it runs. Some of these are available if logging is enabled in an
 application. Others can be turned on by telling the loop to emit more
-debugging messages.  Call :func:`set_debug` passing a boolean value
+debugging messages.  Call ``set_debug()`` passing a boolean value
 indicating whether or not debugging should be enabled.
 
 Because applications built on ``asyncio`` are highly sensitive to
@@ -21,7 +21,7 @@ seconds after which a warning should be emitted.
 Finally, if an application using ``asyncio`` exits without cleaning
 up some of the coroutines or other resources, that may mean there is a
 logic error preventing some of the application code from
-running. Enabling :class:`ResourceWarning` warnings causes these cases
+running. Enabling ``ResourceWarning`` warnings causes these cases
 to be reported when the program exits.
 
 .. literalinclude:: asyncio_debug.py
@@ -49,7 +49,7 @@ application.
 .. {{{end}}}
 
 Turning on debugging exposes some of the issues it has, including the
-fact that although :func:`inner` finishes it takes more time to do so
+fact that although ``inner()`` finishes it takes more time to do so
 than the ``slow_callback_duration`` that has been set and that the
 event loop is not being properly closed when the program exits.
 

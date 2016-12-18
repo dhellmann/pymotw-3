@@ -9,7 +9,7 @@ Python, regardless of the application area.
 
 The :mod:`warnings` module is used to report non-fatal conditions or
 recoverable errors.  A common example of a warning is the
-:class:`DeprecationWarning` generated when a feature of the standard
+``DeprecationWarning`` generated when a feature of the standard
 library has been superseded by a new class, interface, or module.  Use
 ``warnings`` to report conditions that may need user attention, but
 are not fatal.

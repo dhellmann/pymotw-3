@@ -10,13 +10,13 @@
 The ``time`` module provides access to several different types of
 clocks, each useful for different purposes. The standard system calls
 like ``time()`` report the system "wall clock" time. The
-:func:`monotonic` clock can be used to measure elapsed time in a
+``monotonic()`` clock can be used to measure elapsed time in a
 long-running process because it is guaranteed never to move backwards,
 even if the system time is changed. For performance testing,
-:func:`perf_counter` provides access to the clock with the highest
+``perf_counter()`` provides access to the clock with the highest
 available resolution to make short time measurements more
 accurate. The CPU time is available through ``time()``, and
-:func:`process_time` returns the combined processor time and system
+``process_time()`` returns the combined processor time and system
 time.
 
 .. note::
@@ -31,7 +31,7 @@ Comparing Clocks
 ================
 
 Implementation details for the clocks varies by platform. Use
-:func:`get_clock_info` to access basic information about the current
+``get_clock_info()`` to access basic information about the current
 implementation, including the clock's resolution.
 
 .. literalinclude:: time_get_clock_info.py
@@ -116,14 +116,14 @@ actual precision is platform-dependent.
 
 The float representation is useful when storing or comparing dates,
 but not as useful for producing human readable representations. For
-logging or printing time :func:`ctime` can be more useful.
+logging or printing time ``ctime()`` can be more useful.
 
 .. literalinclude:: time_ctime.py
     :caption:
     :start-after: #end_pymotw_header
 
-The second :func:`print` call in this example shows how to use
-:func:`ctime` to format a time value other than the current time.
+The second ``print()`` call in this example shows how to use
+``ctime()`` to format a time value other than the current time.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'time_ctime.py'))
@@ -148,7 +148,7 @@ can be changed by the user or system services for synchronizing clocks
 across multiple computers, calling ``time()`` repeatedly may produce
 values that go forwards and backwards. This can result in unexpected
 behavior when trying to measure durations or otherwise use those times
-for computation. Avoid those situations by using :func:`monotonic`,
+for computation. Avoid those situations by using ``monotonic()``,
 which always returns values that go forward.
 
 .. literalinclude:: time_monotonic.py
@@ -158,7 +158,7 @@ which always returns values that go forward.
 The start point for the monotonic clock is not defined, so return
 values are only useful for doing calculations with other clock
 values. In this example the duration of the sleep is measured using
-:func:`monotonic`.
+``monotonic()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'time_monotonic.py'))
@@ -177,16 +177,16 @@ values. In this example the duration of the sleep is measured using
 Processor Clock Time
 ====================
 
-While ``time()`` returns a wall clock time, :func:`clock` returns
-processor clock time.  The values returned from :func:`clock` reflect
+While ``time()`` returns a wall clock time, ``clock()`` returns
+processor clock time.  The values returned from ``clock()`` reflect
 the actual time used by the program as it runs.
 
 .. literalinclude:: time_clock.py
     :caption:
     :start-after: #end_pymotw_header
 
-In this example, the formatted :func:`ctime` is printed along with
-the floating point values from ``time()``, and :func:`clock` for
+In this example, the formatted ``ctime()`` is printed along with
+the floating point values from ``time()``, and ``clock()`` for
 each iteration through the loop.
 
 .. note::
@@ -220,7 +220,7 @@ anything.
 
 In this example, the loop does very little work by going to sleep
 after each iteration. The ``time()`` value increases even while
-the application is asleep, but the :func:`clock` value does not.
+the application is asleep, but the ``clock()`` value does not.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '-u time_clock_sleep.py'))
@@ -240,7 +240,7 @@ the application is asleep, but the :func:`clock` value does not.
 
 .. {{{end}}}
 
-Calling :func:`sleep` yields control from the current thread and
+Calling ``sleep()`` yields control from the current thread and
 asks it to wait for the system to wake it back up. If a program has
 only one thread, this effectively blocks the app and it does no work.
 
@@ -250,13 +250,13 @@ Performance Counter
 It is important to have a high-resolution monotonic clock for
 measuring performance. Determining the best clock data source requires
 platform-specific knowledge, which Python provides in
-:func:`perf_counter`.
+``perf_counter()``.
 
 .. literalinclude:: time_perf_counter.py
    :caption:
    :start-after: #end_pymotw_header
 
-As with :func:`monotonic`, the epoch for :func:`perf_counter` is
+As with ``monotonic()``, the epoch for ``perf_counter()`` is
 undefined, and the values are meant to be used for comparing and
 computing values, not as absolute times.
 
@@ -282,17 +282,17 @@ Time Components
 Storing times as elapsed seconds is useful in some situations, but
 there are times when a program needs to have access to the individual
 fields of a date (year, month, etc.). The ``time`` module defines
-:class:`struct_time` for holding date and time values with components
+``struct_time`` for holding date and time values with components
 broken out so they are easy to access. There are several functions
-that work with :class:`struct_time` values instead of floats.
+that work with ``struct_time`` values instead of floats.
 
 .. literalinclude:: time_struct.py
     :caption:
     :start-after: #end_pymotw_header
 
-The :func:`gmtime` function returns the current time in
-UTC. :func:`localtime` returns the current time with the current
-time zone applied. :func:`mktime` takes a :class:`struct_time` and
+The ``gmtime()`` function returns the current time in
+UTC. ``localtime()`` returns the current time with the current
+time zone applied. ``mktime()`` takes a ``struct_time`` and
 converts it to the floating point representation.
 
 .. {{{cog
@@ -340,7 +340,7 @@ set for the system. Changing the time zone does not change the actual
 time, just the way it is represented.
 
 To change the time zone, set the environment variable ``TZ``, then
-call :func:`tzset`.  The time zone can be specified with a lot of
+call ``tzset()``.  The time zone can be specified with a lot of
 detail, right down to the start and stop times for daylight savings
 time. It is usually easier to use the time zone name and let the
 underlying libraries derive the other information, though.
@@ -391,14 +391,14 @@ flag, and timezone offset value.
 Parsing and Formatting Times
 ============================
 
-The two functions :func:`strptime` and :func:`strftime` convert
-between :class:`struct_time` and string representations of time
+The two functions ``strptime()`` and ``strftime()`` convert
+between ``struct_time`` and string representations of time
 values. There is a long list of formatting instructions available to
 support input and output in different styles. The complete list is
 documented in the library documentation for the ``time`` module.
 
 This example converts the current time from a string to a
-:class:`struct_time` instance and back to a string.
+``struct_time`` instance and back to a string.
 
 .. literalinclude:: time_strptime.py
     :caption:

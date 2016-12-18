@@ -34,7 +34,7 @@ command line, giving it the program as input so it knows what to run.
 Running the debugger from the command line causes it to load the
 source file and stop execution on the first statement it finds.  In
 this case, it stops before evaluating the definition of the class
-:class:`MyObj` on line 8.
+``MyObj`` on line 8.
 
 .. code-block:: none
 
@@ -58,7 +58,7 @@ Many Python developers work with the interactive interpreter while
 developing early versions of modules because it lets them experiment
 more iteratively without the save/run/repeat cycle needed when
 creating standalone scripts.  To run the debugger from within an
-interactive interpreter, use :func:`run` or :func:`runeval`.
+interactive interpreter, use ``run()`` or ``runeval()``.
 
 .. code-block:: none
 
@@ -73,7 +73,7 @@ interactive interpreter, use :func:`run` or :func:`runeval`.
     > <string>(1)<module>()
     (Pdb)
 
-The argument to :func:`run` is a string expression that can be
+The argument to ``run()`` is a string expression that can be
 evaluated by the Python interpreter.  The debugger will parse it, then
 pause execution just before the first expression evaluates.  The
 debugger commands described here can be used to navigate and control
@@ -85,7 +85,7 @@ From Within a Program
 Both of the previous examples start the debugger at the beginning of a
 program.  For a long-running process where the problem appears much
 later in the program execution, it will be more convenient to start
-the debugger from inside the program using :func:`set_trace`.
+the debugger from inside the program using ``set_trace()``.
 
 .. cssclass:: with-linenos
 
@@ -104,7 +104,7 @@ execution, pausing it on line 18.
     -> print(i)
     (Pdb)
 
-:func:`set_trace` is just a Python function, so it can be called at
+``set_trace()`` is just a Python function, so it can be called at
 any point in a program.  This makes it possible to enter the debugger
 based on conditions inside the program, including from an exception
 handler or via a specific branch of a control statement.
@@ -114,7 +114,7 @@ After a Failure
 
 Debugging a failure after a program terminates is called *post-mortem*
 debugging.  ``pdb`` supports post-mortem debugging through the
-:func:`pm` and :func:`post_mortem` functions.
+``pm()`` and ``post_mortem()`` functions.
 
 .. cssclass:: with-linenos
 
@@ -123,8 +123,8 @@ debugging.  ``pdb`` supports post-mortem debugging through the
       :caption:
 
 Here the incorrect attribute name on line 14 triggers an
-:class:`AttributeError` exception, causing execution to
-stop. :func:`pm` looks for the active traceback and starts the
+``AttributeError`` exception, causing execution to
+stop. ``pm()`` looks for the active traceback and starts the
 debugger at the point in the call stack where the exception occurred.
 
 .. code-block:: none
@@ -163,7 +163,7 @@ Navigating the Execution Stack
 At any point while the debugger is running use ``where``
 (abbreviated ``w``) to find out exactly what line is being
 executed and where on the call stack the program is.  In this case,
-the module ``pdb_set_trace.py`` line 18 in the :func:`go` method.
+the module ``pdb_set_trace.py`` line 18 in the ``go()`` method.
 
 .. code-block:: none
 
@@ -357,7 +357,7 @@ Python interpreter to be evaluated.  This feature can be used to
 execute arbitrary Python statements, including modifying variables.
 This example changes the value of ``output`` before letting the debugger
 continue running the program.  The next statement after the call to
-:func:`set_trace` prints the value of ``output``, showing the modified
+``set_trace()`` prints the value of ``output``, showing the modified
 value.
 
 .. code-block:: none
@@ -506,9 +506,9 @@ being called or the next line of the current function.
     > .../pdb_step.py(18)<module>()
     -> f(5)
 
-The interpreter pauses after the call to :func:`set_trace` and gives
+The interpreter pauses after the call to ``set_trace()`` and gives
 control to the debugger.  The first ``step`` causes the
-execution to enter :func:`f`.
+execution to enter ``f()``.
 
 
 .. code-block:: none
@@ -519,7 +519,7 @@ execution to enter :func:`f`.
     -> def f(n):
 
 One more ``step`` moves execution to the first line of
-:func:`f` and starts the loop.
+``f()`` and starts the loop.
 
 .. code-block:: none
 
@@ -563,9 +563,9 @@ the same function is called repeatedly.
       :linenos:
       :caption:
 
-In this example, there is nothing wrong with :func:`calc`, so stepping
-through it each time it is called in the loop in :func:`f` obscures
-the useful output by showing all of the lines of :func:`calc` as they
+In this example, there is nothing wrong with ``calc()``, so stepping
+through it each time it is called in the loop in ``f()`` obscures
+the useful output by showing all of the lines of ``calc()`` as they
 are executed.
 
 .. code-block:: none
@@ -775,7 +775,7 @@ As programs grow longer, even using ``next`` and
 ``until`` will become slow and cumbersome.  Instead of stepping
 through the program by hand, a better solution is to let it run
 normally until it reaches a point where the debugger should interrupt
-it.  :func:`set_trace` can start the debugger, but that only works if
+it.  ``set_trace()`` can start the debugger, but that only works if
 there is a single point in the program where it should pause.  It is
 more convenient to run the program through the debugger, but tell the
 debugger where to stop in advance using *breakpoints*.  The debugger
@@ -814,12 +814,12 @@ of the current file, use ``break lineno``:
 
 The command ``continue`` tells the debugger to keep running
 the program until the next breakpoint.  In this case, it runs through
-the first iteration of the ``for`` loop in :func:`f` and stops inside
-:func:`calc` during the second iteration.
+the first iteration of the ``for`` loop in ``f()`` and stops inside
+``calc()`` during the second iteration.
 
 Breakpoints can also be set to the first line of a function by
 specifying the function name instead of a line number.  This example
-shows what happens if a breakpoint is added for the :func:`calc`
+shows what happens if a breakpoint is added for the ``calc()``
 function.
 
 .. code-block:: none

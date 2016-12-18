@@ -13,13 +13,13 @@ Creating Enumerations
 =====================
 
 A new enumeration is defined using the ``class`` syntax by subclassing
-:class:`Enum` and adding class attributes describing the values.
+``Enum`` and adding class attributes describing the values.
 
 .. literalinclude:: enum_create.py
    :caption:
    :start-after: #end_pymotw_header
 
-The members of the :class:`Enum` are converted to instances as the
+The members of the ``Enum`` are converted to instances as the
 class is parsed. Each instance has a ``name`` property corresponding
 to the member name and a ``value`` property corresponding to the value
 assigned to the name in the class definition.
@@ -80,7 +80,7 @@ comparison by identity and equality.
    :start-after: #end_pymotw_header
 
 The greater-than and less-than comparison operators raise a
-:class:`TypeError` exception.
+``TypeError`` exception.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'enum_comparison.py'))
@@ -97,7 +97,7 @@ The greater-than and less-than comparison operators raise a
 
 .. {{{end}}}
 
-Use the :class:`IntEnum` class for enumerations where the members need
+Use the ``IntEnum`` class for enumerations where the members need
 to behave more like numbers, for example to support comparisons.
 
 .. literalinclude:: enum_intenum.py
@@ -128,7 +128,7 @@ Unique Enumeration Values
 
 Enum members with the same value are tracked as alias references to
 the same member object. Aliases do not cause repeated values to be
-present in the iterator for the :class:`Enum`.
+present in the iterator for the ``Enum``.
 
 .. literalinclude:: enum_aliases.py
    :caption:
@@ -136,7 +136,7 @@ present in the iterator for the :class:`Enum`.
 
 Because ``by_design`` and ``closed`` are aliases for other members,
 they do not appear separately in the output when iterating over the
-:class:`Enum`. The canonical name for a member is the first name
+``Enum``. The canonical name for a member is the first name
 attached to the value.
 
 .. {{{cog
@@ -161,14 +161,14 @@ attached to the value.
 .. {{{end}}}
 
 To require all members to have unique values, add the ``@unique``
-decorator to the :class:`Enum`.
+decorator to the ``Enum``.
 
 .. literalinclude:: enum_unique_enforce.py
    :caption:
    :start-after: #end_pymotw_header
 
-Members with repeated values trigger a :class:`ValueError` exception
-when the :class:`Enum` class is being interpreted.
+Members with repeated values trigger a ``ValueError`` exception
+when the ``Enum`` class is being interpreted.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'enum_unique_enforce.py', ignore_error=True, 
@@ -194,7 +194,7 @@ Creating Enumerations Programmatically
 
 There are cases when it is more convenient to create enumerations
 programmatically, rather than hard-coding them in a class
-definition. For those situations, :class:`Enum` also supports passing
+definition. For those situations, ``Enum`` also supports passing
 the member names and values to the class constructor.
 
 .. literalinclude:: enum_programmatic_create.py
@@ -266,7 +266,7 @@ Non-integer Member Values
 
 Enum member values are not restricted to integers. Any type of object
 can be associated with a member. If the value is a tuple, the members
-are passed as individual arguments to :func:`__init__`.
+are passed as individual arguments to ``__init__()``.
 
 .. literalinclude:: enum_tuple_values.py
    :caption:
@@ -295,7 +295,7 @@ For more complex cases, tuples might become unwieldy. Since member
 values can be any type of object, it is possible to use dictionaries
 for cases where there are a lot of separate attributes to track for
 each enum value. Complex values are passed directly to
-:func:`__init__` as the only argument other than ``self``.
+``__init__()`` as the only argument other than ``self``.
 
 .. literalinclude:: enum_complex_values.py
    :caption:

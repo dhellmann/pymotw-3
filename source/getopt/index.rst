@@ -10,7 +10,7 @@
 The ``getopt`` module is the original command line option parser
 that supports the conventions established by the Unix function
 ``getopt``. It parses an argument sequence, such as
-:data:`sys.argv` and returns a sequence of tuples containing (option,
+``sys.argv`` and returns a sequence of tuples containing (option,
 argument) pairs and a sequence of non-option arguments.
 
 Supported option syntax includes short and long form options:
@@ -281,7 +281,7 @@ argument is encountered.
 .. {{{end}}}
 
 To mix option and non-option arguments on the command line in any
-order, use :func:`gnu_getopt` instead.
+order, use ``gnu_getopt()`` instead.
 
 .. literalinclude:: getopt_gnu.py
    :caption:

@@ -2,9 +2,9 @@
  defaultdict --- missing keys return a default value
 =====================================================
 
-The standard dictionary includes the method :func:`setdefault` for
+The standard dictionary includes the method ``setdefault()`` for
 retrieving a value and establishing a default if the value does not
-exist. By contrast, :class:`defaultdict` lets the caller specify the
+exist. By contrast, ``defaultdict`` lets the caller specify the
 default up front when the container is initialized.
 
 .. literalinclude:: collections_defaultdict.py
@@ -14,9 +14,9 @@ default up front when the container is initialized.
 This method works well as long as it is appropriate for all keys to
 have the same default. It can be especially useful if the default is a
 type used for aggregating or accumulating values, such as a
-:class:`list`, :class:`set`, or even :class:`int`. The standard
+``list``, ``set``, or even ``int``. The standard
 library documentation includes several examples of using
-:class:`defaultdict` this way.
+``defaultdict`` this way.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'collections_defaultdict.py'))
@@ -42,5 +42,5 @@ library documentation includes several examples of using
 
     * `Evolution of Default Dictionaries in Python
       <http://jtauber.com/blog/2008/02/27/evolution_of_default_dictionaries_in_python/>`_
-      -- Discussion from James Tauber of how :class:`defaultdict`
+      -- Discussion from James Tauber of how ``defaultdict``
       relates to other means of initializing dictionaries.

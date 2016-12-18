@@ -45,7 +45,7 @@ Morsels
 
 It is also possible to control the other aspects of a cookie, such as
 the expiration, path, and domain. In fact, all of the RFC attributes
-for cookies can be managed through the :class:`Morsel` object
+for cookies can be managed through the ``Morsel`` object
 representing the cookie value.
 
 .. literalinclude:: http_cookies_Morsel.py
@@ -99,8 +99,8 @@ be discarded.
 .. {{{end}}}
 
 
-Both the :class:`Cookie` and :class:`Morsel` objects act like
-dictionaries. A :class:`Morsel` responds to a fixed set of keys:
+Both the ``Cookie`` and ``Morsel`` objects act like
+dictionaries. A ``Morsel`` responds to a fixed set of keys:
 
 - expires
 - path
@@ -110,9 +110,9 @@ dictionaries. A :class:`Morsel` responds to a fixed set of keys:
 - secure
 - version
 
-The keys for a :class:`Cookie` instance are the names of the
+The keys for a ``Cookie`` instance are the names of the
 individual cookies being stored. That information is also available
-from the key attribute of the :class:`Morsel`.
+from the key attribute of the ``Morsel``.
 
 Encoded Values
 ==============
@@ -172,7 +172,7 @@ variable.
     :start-after: #end_pymotw_header
 
 To decode them, pass the string without the header prefix to
-:class:`SimpleCookie` when instantiating it, or use the :func:`load`
+``SimpleCookie`` when instantiating it, or use the ``load()``
 method.
 
 .. {{{cog
@@ -197,8 +197,8 @@ Alternative Output Formats
 ==========================
 
 Besides using the ``Set-Cookie`` header, servers may deliver
-JavaScript that adds cookies to a client. :class:`SimpleCookie` and
-:class:`Morsel` provide JavaScript output via the :func:`js_output`
+JavaScript that adds cookies to a client. ``SimpleCookie`` and
+``Morsel`` provide JavaScript output via the ``js_output()``
 method.
 
 .. literalinclude:: http_cookies_js_output.py

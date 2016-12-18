@@ -9,22 +9,22 @@
 
 The ``string`` module dates from the earliest versions of
 Python. Many of the functions previously implemented in the module
-have been moved to methods of :class:`str` objects. The ``string``
+have been moved to methods of ``str`` objects. The ``string``
 module retains several useful constants and classes for working with
-:class:`str` objects, and this discussion will concentrate on them.
+``str`` objects, and this discussion will concentrate on them.
 
 Functions
 =========
 
-The function :func:`capwords` capitalizes all of the words in a
+The function ``capwords()`` capitalizes all of the words in a
 string.
 
 .. literalinclude:: string_capwords.py
     :caption:
     :start-after: #end_pymotw_header
 
-The results are the same as calling :func:`split`, capitalizing the
-words in the resulting list, then calling :func:`join` to combine the
+The results are the same as calling ``split()``, capitalizing the
+words in the resulting list, then calling ``join()`` to combine the
 results.
 
 .. {{{cog
@@ -45,14 +45,14 @@ Templates
 
 String templates were added as part of :pep:`292` and
 are intended as an alternative to the built-in interpolation
-syntax. With :class:`string.Template` interpolation, variables are
+syntax. With ``string.Template`` interpolation, variables are
 identified by prefixing the name with ``$`` (e.g., ``$var``) or, if
 necessary to set them off from surrounding text, they can also be
 wrapped with curly braces (e.g., ``${var}``).
 
 This example compares a simple template with similar string
 interpolation using the ``%`` operator and the new format string
-syntax using :func:`str.format`.
+syntax using ``str.format()``.
 
 .. literalinclude:: string_template.py
     :caption:
@@ -95,7 +95,7 @@ inserted into the result. No formatting options are available. For
 example, there is no way to control the number of digits used to
 represent a floating point value.
 
-A benefit, though, is that by using the :func:`safe_substitute`
+A benefit, though, is that by using the ``safe_substitute()``
 method, it is possible to avoid exceptions if not all of the values
 needed by the template are provided as arguments.
 
@@ -104,8 +104,8 @@ needed by the template are provided as arguments.
     :start-after: #end_pymotw_header
 
 Since there is no value for ``missing`` in the values dictionary, a
-:class:`KeyError` is raised by :func:`substitute`. Instead of
-raising the error, :func:`safe_substitute` catches it and leaves the
+``KeyError`` is raised by ``substitute()``. Instead of
+raising the error, ``safe_substitute()`` catches it and leaves the
 variable expression alone in the text.
 
 .. {{{cog
@@ -124,7 +124,7 @@ variable expression alone in the text.
 Advanced Templates
 ==================
 
-The default syntax for :class:`string.Template` can be changed by
+The default syntax for ``string.Template`` can be changed by
 adjusting the regular expression patterns it uses to find the variable
 names in the template body. A simple way to do that is to change the
 :attr:`delimiter` and :attr:`idpattern` class attributes.
@@ -210,12 +210,12 @@ generates:
 Formatter
 =========
 
-The :class:`Formatter` class implements the same layout specification
-language as the :func:`format` method of :class:`str`. Features
+The ``Formatter`` class implements the same layout specification
+language as the ``format()`` method of ``str``. Features
 include type coersion, alignment, attribute and field references,
 named and positional template arguments, and type-specific formatting
-options. Most of the time the :func:`format` method is a more
-convenient interface to these features, but :class:`Formatter` is
+options. Most of the time the ``format()`` method is a more
+convenient interface to these features, but ``Formatter`` is
 provided as a way to build subclasses, for cases where variations are
 needed.
 
@@ -272,7 +272,7 @@ Unicode, their application is limited.
 
    * `String Methods
      <https://docs.python.org/3/library/stdtypes.html#string-methods>`_
-     -- Methods of :class:`str` objects that replace the deprecated
+     -- Methods of ``str`` objects that replace the deprecated
      functions in ``string``.
 
    * :pep:`292` -- Simpler String Substitutions
@@ -280,4 +280,4 @@ Unicode, their application is limited.
    * `Format String Syntax
      <https://docs.python.org/3.5/library/string.html#format-string-syntax>`__
      -- The formal definition of the layout specification language
-     used by :class:`Formatter` and :func:`str.format`.
+     used by ``Formatter`` and ``str.format()``.

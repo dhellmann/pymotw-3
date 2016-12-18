@@ -13,8 +13,8 @@ copying and archiving.
 Copying Files
 =============
 
-:func:`copyfile` copies the contents of the source to the destination
-and raises :class:`IOError` if it does not have permission to write to
+``copyfile()`` copies the contents of the source to the destination
+and raises ``IOError`` if it does not have permission to write to
 the destination file.
 
 .. literalinclude:: shutil_copyfile.py
@@ -23,7 +23,7 @@ the destination file.
 
 Because the function opens the input file for reading, regardless of
 its type, special files (such as Unix device nodes) cannot be copied
-as new special files with :func:`copyfile`.
+as new special files with ``copyfile()``.
 
 .. {{{cog
 .. run_script(cog.inFile, 'rm -rf *.copy', interpreter=None)
@@ -42,9 +42,9 @@ as new special files with :func:`copyfile`.
 
 .. {{{end}}}
 
-The implementation of :func:`copyfile` uses the lower-level function
-:func:`copyfileobj`. While the arguments to :func:`copyfile` are
-filenames, the arguments to :func:`copyfileobj` are open file
+The implementation of ``copyfile()`` uses the lower-level function
+``copyfileobj()``. While the arguments to ``copyfile()`` are
+filenames, the arguments to ``copyfileobj()`` are open file
 handles. The optional third argument is a buffer length to use for
 reading in blocks.
 
@@ -105,7 +105,7 @@ The permissions of the file are copied along with the contents.
 .. {{{end}}}
 
 
-:func:`copy2` works like ``copy()``, but includes the access and
+``copy2()`` works like ``copy()``, but includes the access and
 modification times in the metadata copied to the new file.
 
 .. literalinclude:: shutil_copy2.py
@@ -141,14 +141,14 @@ Copying File Metadata
 
 By default when a new file is created under Unix, it receives
 permissions based on the umask of the current user. To copy the
-permissions from one file to another, use :func:`copymode`.
+permissions from one file to another, use ``copymode()``.
 
 .. literalinclude:: shutil_copymode.py
     :caption:
     :start-after: #end_pymotw_header
 
 This example script creates a file to be modified, then uses
-:func:`copymode` to duplicate the permissions of the script to the
+``copymode()`` to duplicate the permissions of the script to the
 example file.
 
 .. {{{cog
@@ -165,14 +165,14 @@ example file.
 
 .. {{{end}}}
 
-To copy other metadata about the file use :func:`copystat`.
+To copy other metadata about the file use ``copystat()``.
 
 .. literalinclude:: shutil_copystat.py
     :caption:
     :start-after: #end_pymotw_header
 
 Only the permissions and dates associated with the file are duplicated
-with :func:`copystat`.
+with ``copystat()``.
 
 .. {{{cog
 .. run_script(cog.inFile, 'rm -f file_to_change.txt', interpreter='')
@@ -203,7 +203,7 @@ Working With Directory Trees
 
 ``shutil`` includes three functions for working with directory
 trees. To copy a directory from one place to another, use
-:func:`copytree`. It recurses through the source directory tree,
+``copytree()``. It recurses through the source directory tree,
 copying files to the destination. The destination directory must not
 exist in advance.
 
@@ -254,7 +254,7 @@ destination tree.
 
 .. {{{end}}}
 
-:func:`copytree` accepts two callable arguments to control its
+``copytree()`` accepts two callable arguments to control its
 behavior. The ``ignore`` argument is called with the name of each
 directory or subdirectory being copied along with a list of the
 contents of the directory. It should return a list of items that
@@ -265,9 +265,9 @@ copy the file.
    :caption:
    :start-after: #end_pymotw_header
 
-In the example, :func:`ignore_patterns` is used to create an ignore
-function to skip copying Python source files. :func:`verbose_copy`
-prints the names of files as they are copied then uses :func:`copy2`,
+In the example, ``ignore_patterns()`` is used to create an ignore
+function to skip copying Python source files. ``verbose_copy()``
+prints the names of files as they are copied then uses ``copy2()``,
 the default copy function, to make the copies.
 
 .. {{{cog
@@ -301,7 +301,7 @@ the default copy function, to make the copies.
 
 .. {{{end}}}
 
-To remove a directory and its contents, use :func:`rmtree`.
+To remove a directory and its contents, use ``rmtree()``.
 
 .. literalinclude:: shutil_rmtree.py
     :caption:
@@ -331,7 +331,7 @@ provided in the third argument.
 .. {{{end}}}
 
 To move a file or directory from one place to another, use
-:func:`move`.
+``move()``.
 
 .. literalinclude:: shutil_move.py
     :caption:
@@ -360,7 +360,7 @@ the source is removed.
 Finding Files
 =============
 
-The :func:`which` function scans a search path looking for a named
+The ``which()`` function scans a search path looking for a named
 file. The typical use case is to find an executable program on the
 shell's search path defined in the environment variable ``PATH``.
 
@@ -368,7 +368,7 @@ shell's search path defined in the environment variable ``PATH``.
    :caption:
    :start-after: #end_pymotw_header
 
-If no file matching the search parameters can be found, :func:`which`
+If no file matching the search parameters can be found, ``which()``
 returns ``None``.
 
 .. {{{cog
@@ -385,10 +385,10 @@ returns ``None``.
 
 .. {{{end}}}
 
-:func:`which` takes arguments to filter based on the permissions the
+``which()`` takes arguments to filter based on the permissions the
 file has, and the search path to examine. The ``path`` argument defaults
 to ``os.environ('PATH')``, but can be any string containing directory
-names separated by :const:`os.pathsep`. The ``mode`` argument should be
+names separated by ``os.pathsep``. The ``mode`` argument should be
 a bitmask matching the permissions of the file. By default the mask
 looks for executable files, but the following example uses a readable
 bitmask and an alternate search path to find a configuration file.
@@ -421,7 +421,7 @@ Archives
 Python's standard library includes many modules for managing archive
 files such as :mod:`tarfile` and :mod:`zipfile`. There are also
 several higher-level functions for creating and extracting archives in
-``shutil``. :func:`get_archive_formats` returns a sequence of names
+``shutil``. ``get_archive_formats()`` returns a sequence of names
 and descriptions for formats supported on the current system.
 
 .. literalinclude:: shutil_get_archive_formats.py
@@ -448,7 +448,7 @@ where it is run.
 
 .. {{{end}}}
 
-Use :func:`make_archive` to create a new archive file. Its inputs are
+Use ``make_archive()`` to create a new archive file. Its inputs are
 designed to best support archiving an entire directory and all of its
 contents, recursively. By default it uses the current working
 directory, so that all of the files and subdirectories appear at the
@@ -464,7 +464,7 @@ This example starts within the source directory for the examples for
 ``shutil`` and moves up one level in the file system, then adds the
 ``shutil`` directory to a tar archive compressed with gzip. The
 :mod:`logging` module is configured to show messages from
-:func:`make_archive` about what it is doing.
+``make_archive()`` about what it is doing.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'shutil_make_archive.py'))
@@ -506,7 +506,7 @@ This example starts within the source directory for the examples for
 .. {{{end}}}
 
 ``shutil`` maintains a registry of formats that can be unpacked on
-the current system, accessible via :func:`get_unpack_formats`.
+the current system, accessible via ``get_unpack_formats()``.
 
 .. literalinclude:: shutil_get_unpack_formats.py
    :caption:
@@ -533,7 +533,7 @@ to use based on the file extension.
 
 .. {{{end}}}
 
-Extract the archive with :func:`unpack_archive`, passing the archive
+Extract the archive with ``unpack_archive()``, passing the archive
 file name and optionally the directory where it should be
 extracted. If no directory is given, the current directory is used.
 
@@ -541,7 +541,7 @@ extracted. If no directory is given, the current directory is used.
    :caption:
    :start-after: #end_pymotw_header
 
-In this example :func:`unpack_archive` is able to determine the format
+In this example ``unpack_archive()`` is able to determine the format
 of the archive because the filename ends with ``tar.gz``, and that
 value is associated with the ``gztar`` format in the unpack format
 registry.
@@ -587,14 +587,14 @@ File System Space
 
 It can be useful to examine the local file system to see how much
 space is available before performing a long running operation that may
-exhaust that space. :func:`disk_usage` returns a tuple with the total
+exhaust that space. ``disk_usage()`` returns a tuple with the total
 space, the amount currently being used, and the amount remaining free.
 
 .. literalinclude:: shutil_disk_usage.py
    :caption:
    :start-after: #end_pymotw_header
 
-The values returned by :func:`disk_usage` are the number of bytes, so
+The values returned by ``disk_usage()`` are the number of bytes, so
 the example program converts them to more readable units before
 printing them.
 

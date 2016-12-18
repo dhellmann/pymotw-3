@@ -12,7 +12,7 @@ echo server example from earlier can be updated to use UDS by making a
 few changes in the setup section.
 
 The ``socket`` needs to be created with address family
-:const:`AF_UNIX`. Binding the socket and managing the incoming
+``AF_UNIX``. Binding the socket and managing the incoming
 connections works the same as with TCP/IP sockets.
 
 .. literalinclude:: socket_echo_server_uds.py
@@ -102,7 +102,7 @@ error because the process does not have permission to open the socket.
 Communication Between Parent and Child Processes
 ================================================
 
-The :func:`socketpair` function is useful for setting up UDS sockets
+The ``socketpair()`` function is useful for setting up UDS sockets
 for inter-process communication under Unix.  It creates a pair of
 connected sockets that can be used to communicate between a parent
 process and a child process after the child is forked.

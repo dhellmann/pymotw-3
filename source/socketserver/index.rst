@@ -28,10 +28,10 @@ Server Types
 ============
 
 There are five different server classes defined in
-``socketserver``.  :class:`BaseServer` defines the API, and is not
-intended to be instantiated and used directly. :class:`TCPServer` uses
-TCP/IP sockets to communicate. :class:`UDPServer` uses datagram
-sockets. :class:`UnixStreamServer` and :class:`UnixDatagramServer` use
+``socketserver``.  ``BaseServer`` defines the API, and is not
+intended to be instantiated and used directly. ``TCPServer`` uses
+TCP/IP sockets to communicate. ``UDPServer`` uses datagram
+sockets. ``UnixStreamServer`` and ``UnixDatagramServer`` use
 Unix-domain sockets and are only available on Unix platforms.
 
 Server Objects
@@ -43,19 +43,19 @@ format depends on the server type and the socket family used. Refer to
 the :mod:`socket` module documentation for details.
 
 Once the server object is instantiated, use either
-:func:`handle_request` or :func:`serve_forever` to process
-requests. The :func:`serve_forever` method calls
-:func:`handle_request` in an infinite loop, but if an application
+``handle_request()`` or ``serve_forever()`` to process
+requests. The ``serve_forever()`` method calls
+``handle_request()`` in an infinite loop, but if an application
 needs to integrate the server with another event loop or use
 ``select()`` to monitor several sockets for different servers, it
-can call :func:`handle_request` directly.
+can call ``handle_request()`` directly.
 
 Implementing a Server
 =====================
 
 When creating a server, it is usually sufficient to reuse one of the
 existing classes and provide a custom request handler class.  For
-other cases, :class:`BaseServer` includes several methods that can be
+other cases, ``BaseServer`` includes several methods that can be
 overridden in a subclass.
 
 * ``verify_request(request, client_address)``: Return ``True`` to process
@@ -63,13 +63,13 @@ overridden in a subclass.
   refuse requests from an IP range or if it is overloaded.
 
 * ``process_request(request, client_address)``: Calls
-  :func:`finish_request` to actually do the work of handling the
+  ``finish_request()`` to actually do the work of handling the
   request.  It can also create a separate thread or process, as the
   mix-in classes do.
 
 * ``finish_request(request, client_address)``: Creates a request
   handler instance using the class given to the server's
-  constructor. Calls :func:`handle` on the request handler to
+  constructor. Calls ``handle()`` on the request handler to
   process the request.
 
 Request Handlers
@@ -83,15 +83,15 @@ incoming data channel, processes it, and writes a response back
 out. There are three methods available to be over-ridden.
 
 * ``setup()``: Prepares the request handler for the request. In the
-  :class:`StreamRequestHandler` the :func:`setup` method creates
+  ``StreamRequestHandler`` the ``setup()`` method creates
   file-like objects for reading from and writing to the socket.
 
 * ``handle()``: Does the real work for the request. Parse the incoming
   request, process the data, and send a response.
 
-* ``finish()``: Cleans up anything created during :func:`setup`.
+* ``finish()``: Cleans up anything created during ``setup()``.
 
-Many handlers can be implemented with only a :func:`handle` method.
+Many handlers can be implemented with only a ``handle()`` method.
 
 Echo Example
 ============
@@ -105,10 +105,10 @@ client. It starts with the request handler.
    :lines: 6-40
 
 The only method that actually needs to be implemented is
-:func:`EchoRequestHandler.handle`, but versions of all of the
+``EchoRequestHandler.handle()``, but versions of all of the
 methods described earlier are included to illustrate the sequence of
-calls made.  The :class:`EchoServer` class does nothing
-different from :class:`TCPServer`, except log when each method is
+calls made.  The ``EchoServer`` class does nothing
+different from ``TCPServer``, except log when each method is
 called.
 
 .. literalinclude:: socketserver_echo.py
@@ -172,7 +172,7 @@ Running the program produces the following output.
   number in the address tuple instead of the ``0``.
 
 Here is a condensed version of the same server, without the logging
-calls.  Only the :func:`handle` method in the request handler class
+calls.  Only the ``handle()`` method in the request handler class
 needs to be provided.
 
 .. literalinclude:: socketserver_echo_simple.py
@@ -200,11 +200,11 @@ Threading and Forking
 
 To add threading or forking support to a server, include the
 appropriate mix-in in the class hierarchy for the server. The mix-in
-classes override :func:`process_request` to start a new thread or
+classes override ``process_request()`` to start a new thread or
 process when a request is ready to be handled, and the work is done in
 the new child.
 
-For threads, use :class:`ThreadingMixIn`.
+For threads, use ``ThreadingMixIn``.
 
 .. literalinclude:: socketserver_threaded.py
     :caption:
@@ -227,7 +227,7 @@ thread where the request is handled.
 
 .. {{{end}}}
 
-For separate processes, use the :class:`ForkingMixIn`.
+For separate processes, use the ``ForkingMixIn``.
 
 .. literalinclude:: socketserver_forking.py
     :caption:

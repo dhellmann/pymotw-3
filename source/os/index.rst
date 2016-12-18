@@ -24,7 +24,7 @@ Examining the File System Contents
 ==================================
 
 To prepare a list of the contents of a directory on the file system,
-use :func:`listdir`.
+use ``listdir()``.
 
 .. literalinclude:: os_listdir.py
    :caption:
@@ -57,8 +57,8 @@ or symlinks.
 
 .. {{{end}}}
 
-The function :func:`walk` traverses a directory recursively and for
-each subdirectory generates a :class:`tuple` containing the directory
+The function ``walk()`` traverses a directory recursively and for
+each subdirectory generates a ``tuple`` containing the directory
 path, any immediate sub-directories of that path, and a list of the
 names of any files in that directory.
 
@@ -116,15 +116,15 @@ This example shows a recursive directory listing.
 .. {{{end}}}
 
 If more information is needed than the names of the files, it is
-likely to be more efficient to use :func:`scandir` than
-:func:`listdir` because more information is collected in one system
+likely to be more efficient to use ``scandir()`` than
+``listdir()`` because more information is collected in one system
 call when the directory is scanned.
 
 .. literalinclude:: os_scandir.py
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`scandir` returns a sequence of :class:`DirEntry` instances for
+``scandir()`` returns a sequence of ``DirEntry`` instances for
 the items in the directory. The object has several attributes and
 methods for accessing metadata about the file.
 
@@ -173,8 +173,8 @@ methods for accessing metadata about the file.
 Managing File System Permissions
 ================================
 
-Detailed information about a file can be accessed using :func:`stat`
-or :func:`lstat` (for checking the status of something that might be a
+Detailed information about a file can be accessed using ``stat()``
+or ``lstat()`` (for checking the status of something that might be a
 symbolic link).
 
 .. literalinclude:: os_stat.py
@@ -218,7 +218,7 @@ installed. Try passing different filenames on the command line to
 
 
 On Unix-like systems, file permissions can be changed using
-:func:`chmod`, passing the mode as an integer. Mode values can be
+``chmod()``, passing the mode as an integer. Mode values can be
 constructed using constants defined in the :mod:`stat` module.  This
 example toggles the user's execute permission bit:
 
@@ -241,7 +241,7 @@ of the file when run.
 
 .. {{{end}}}
 
-The function :func:`access` can be used to test the access rights a
+The function ``access()`` can be used to test the access rights a
 process has for a file.
 
 .. literalinclude:: os_access.py
@@ -267,17 +267,17 @@ but the output will be similar to this:
 
 .. {{{end}}}
 
-The library documentation for :func:`access` includes two special
-warnings. First, there is not much sense in calling :func:`access` to
-test whether a file can be opened before actually calling :func:`open`
+The library documentation for ``access()`` includes two special
+warnings. First, there is not much sense in calling ``access()`` to
+test whether a file can be opened before actually calling ``open()``
 on it. There is a small, but real, window of time between the two
 calls during which the permissions on the file could change. The other
 warning applies mostly to networked file systems that extend the POSIX
 permission semantics. Some file system types may respond to the POSIX
 call that a process has permission to access a file, then report a
-failure when the attempt is made using :func:`open` for some reason
+failure when the attempt is made using ``open()`` for some reason
 not tested via the POSIX call. All in all, it is better to call
-:func:`open` with the required mode and catch the :class:`IOError`
+``open()`` with the required mode and catch the ``IOError``
 raised if there is a problem.
 
 .. _os-directories:
@@ -293,13 +293,13 @@ system, including creating, listing contents, and removing them.
    :start-after: #end_pymotw_header
 
 There are two sets of functions for creating and deleting
-directories. When creating a new directory with :func:`mkdir`, all of
+directories. When creating a new directory with ``mkdir()``, all of
 the parent directories must already exist. When removing a directory
-with :func:`rmdir`, only the leaf directory (the last part of the
-path) is actually removed. In contrast, :func:`makedirs` and
-:func:`removedirs` operate on all of the nodes in the path.
-:func:`makedirs` will create any parts of the path that do not exist,
-and :func:`removedirs` will remove all of the parent directories, as
+with ``rmdir()``, only the leaf directory (the last part of the
+path) is actually removed. In contrast, ``makedirs()`` and
+``removedirs()`` operate on all of the nodes in the path.
+``makedirs()`` will create any parts of the path that do not exist,
+and ``removedirs()`` will remove all of the parent directories, as
 long as they are empty.
 
 .. {{{cog
@@ -326,9 +326,9 @@ for working with symlinks.
    :caption:
    :start-after: #end_pymotw_header
 
-Use :func:`symlink` to create a symbolic link and :func:`readlink` for
+Use ``symlink()`` to create a symbolic link and ``readlink()`` for
 reading it to determine the original file pointed to by the link.  The
-:func:`lstat` function is like :func:`stat`, but operates on symbolic
+``lstat()`` function is like ``stat()``, but operates on symbolic
 links.
 
 .. {{{cog
@@ -349,15 +349,15 @@ Safely Replacing an Existing File
 =================================
 
 Replacing or renaming an existing file is not idempotent and may
-expose applications to race conditions. The :func:`rename` and
-:func:`replace` functions implement safe algorithms for these actions,
+expose applications to race conditions. The ``rename()`` and
+``replace()`` functions implement safe algorithms for these actions,
 using atomic operations on POSIX-compliant systems when possible.
 
 .. literalinclude:: os_rename_replace.py
    :caption:
    :start-after: #end_pymotw_header
 
-The :func:`rename` and :func:`replace` functions work across
+The ``rename()`` and ``replace()`` functions work across
 filesystems, most of the time. Renaming a file may fail if it is being
 moved to a new fileystem or if the destination already exists.
 
@@ -397,8 +397,8 @@ different user.
 
 .. note::
 
-  Before running the example, change the :data:`TEST_GID` and
-  :data:`TEST_UID` values to match a real user defined on the system.
+  Before running the example, change the ``TEST_GID`` and
+  ``TEST_UID`` values to match a real user defined on the system.
 
 .. literalinclude:: os_process_user_example.py
    :caption:
@@ -429,7 +429,7 @@ produced:
 The values do not change because when it is not running as root, a
 process cannot change its effective owner value. Any attempt to set
 the effective user id or group id to anything other than that of the
-current user causes an :class:`OSError`.  Running the same script
+current user causes an ``OSError``.  Running the same script
 using ``sudo`` so that it starts out with root privileges is a
 different story.
 
@@ -470,7 +470,7 @@ Managing the Process Environment
 Another feature of the operating system exposed to a program though
 the ``os`` module is the environment. Variables set in the
 environment are visible as strings that can be read through
-:data:`os.environ` or :func:`getenv`. Environment variables are
+``os.environ`` or ``getenv()``. Environment variables are
 commonly used for configuration values such as search paths, file
 locations, and debug flags. This example shows how to retrieve an
 environment variable, and pass a value through to a child process.
@@ -479,8 +479,8 @@ environment variable, and pass a value through to a child process.
    :caption:
    :start-after: #end_pymotw_header
 
-The :data:`os.environ` object follows the standard Python mapping API
-for retrieving and setting values. Changes to :data:`os.environ` are
+The ``os.environ`` object follows the standard Python mapping API
+for retrieving and setting values. Changes to ``os.environ`` are
 exported for child processes.
 
 .. {{{cog
@@ -512,13 +512,13 @@ Operating systems with hierarchical file systems have a concept of the
 *current working directory* -- the directory on the file system the
 process uses as the starting location when files are accessed with
 relative paths.  The current working directory can be retrieved with
-:func:`getcwd` and changed with :func:`chdir`.
+``getcwd()`` and changed with ``chdir()``.
 
 .. literalinclude:: os_cwd_example.py
    :caption:
    :start-after: #end_pymotw_header
 
-:const:`os.curdir` and :const:`os.pardir` are used to refer to the
+``os.curdir`` and ``os.pardir`` are used to refer to the
 current and parent directories in a portable manner.
 
 .. Only elide part of the prefix for the path so it is possible to see
@@ -556,14 +556,14 @@ Running External Commands
     instead.
 
 The most basic way to run a separate command, without interacting with
-it at all, is :func:`system`. It takes a single string argument, which is
+it at all, is ``system()``. It takes a single string argument, which is
 the command line to be executed by a sub-process running a shell.
 
 .. literalinclude:: os_system_example.py
    :caption:
    :start-after: #end_pymotw_header
 
-The return value of :func:`system` is the exit value of the shell
+The return value of ``system()`` is the exit value of the shell
 running the program packed into a 16 bit number, with the high byte
 the exit status and the low byte the signal number that caused the
 process to die, or zero.
@@ -610,7 +610,7 @@ the shell runs the command line.
 
 
 Unless the command is explicitly run in the background, the call to
-:func:`system` blocks until it is complete. Standard input,
+``system()`` blocks until it is complete. Standard input,
 output, and error from the child process are tied to the appropriate
 streams owned by the caller by default, but can be redirected using
 shell syntax.
@@ -642,14 +642,14 @@ accomplish the same thing.
 Creating Processes with os.fork()
 =================================
 
-The POSIX functions :func:`fork` and :func:`exec` (available under Mac
+The POSIX functions ``fork()`` and ``exec()`` (available under Mac
 OS X, Linux, and other Unix variants) are exposed via the ``os``
 module. Entire books have been written about reliably using these
 functions, so check the library or bookstore for more details than are
 presented here in this introduction.
 
 To create a new process as a clone of the current process, use
-:func:`fork`:
+``fork()``:
 
 .. literalinclude:: os_fork_example.py
    :caption:
@@ -673,7 +673,7 @@ example is run, but it will look something like:
 
 After the fork, there are two processes running the same code. For a
 program to tell which one it is in, it needs to check the return value
-of :func:`fork`. If the value is ``0``, the current process is the
+of ``fork()``. If the value is ``0``, the current process is the
 child.  If it is not ``0``, the program is running in the parent
 process and the return value is the process id of the child process.
 
@@ -681,13 +681,13 @@ process and the return value is the process id of the child process.
    :caption:
    :start-after: #end_pymotw_header
 
-The parent can send signals to the child process using :func:`kill`
+The parent can send signals to the child process using ``kill()``
 and the :mod:`signal` module. First, define a signal handler to be
-invoked when the signal is received.  Then :func:`fork`, and in the
-parent pause a short amount of time before sending a :const:`USR1`
-signal using :func:`kill`. This example uses a short pause to give
+invoked when the signal is received.  Then ``fork()``, and in the
+parent pause a short amount of time before sending a ``USR1``
+signal using ``kill()``. This example uses a short pause to give
 the child process time to set up the signal handler. A real
-application, would not need (or want) to call :func:`sleep`.  In the
+application, would not need (or want) to call ``sleep()``.  In the
 child, set up the signal handler and go to sleep for a while to give
 the parent time to send the signal.
 
@@ -710,17 +710,17 @@ the parent time to send the signal.
 .. {{{end}}}
 
 A simple way to handle separate behavior in the child process is to
-check the return value of :func:`fork` and branch. More complex
+check the return value of ``fork()`` and branch. More complex
 behavior may call for more code separation than a simple branch. In
 other cases, there may be an existing program that needs to be
-wrapped. For both of these situations, the :func:`exec*` series
+wrapped. For both of these situations, the ``exec*()`` series
 of functions can be used to run another program. 
 
 .. literalinclude:: os_exec_example.py
    :caption:
    :start-after: #end_pymotw_header
 
-When a program is run by :func:`exec`, the code from that program replaces the
+When a program is run by ``exec()``, the code from that program replaces the
 code from the existing process.
 
 .. {{{cog
@@ -735,13 +735,13 @@ code from the existing process.
 
 .. {{{end}}}
 
-There are many variations of :func:`exec`, depending on the form in
+There are many variations of ``exec()``, depending on the form in
 which the arguments are available, whether the path and environment of
 the parent process should be copied to the child, etc.  For all
 variations, the first argument is a path or filename and the remaining
 arguments control how that program runs. They are either passed as
 command line arguments or override the process "environment" (see
-:data:`os.environ` and :data:`os.getenv`).  Refer to the library
+``os.environ`` and ``os.getenv``).  Refer to the library
 documentation for complete details.
 
 Waiting for Child Processes
@@ -752,16 +752,16 @@ around the threading limitations of Python and the global interpreter
 lock. When starting several processes to run separate tasks, the
 master will need to wait for one or more of them to finish before
 starting new ones, to avoid overloading the server. There are a few
-different ways to do that using :func:`wait` and related functions.
+different ways to do that using ``wait()`` and related functions.
 
 When it does not matter which child process might exit first, use
-:func:`wait`.  It returns as soon as any child process exits.
+``wait()``.  It returns as soon as any child process exits.
 
 .. literalinclude:: os_wait_example.py
    :caption:
    :start-after: #end_pymotw_header
 
-The return value from :func:`wait` is a tuple containing the process
+The return value from ``wait()`` is a tuple containing the process
 id and exit status combined into a 16-bit value.  The low byte is the
 number of the signal that killed the process, and the high byte is the
 status code returned by the process when it exited.
@@ -787,13 +787,13 @@ status code returned by the process when it exited.
 
 .. {{{end}}}
 
-To wait for a specific process, use :func:`waitpid`.
+To wait for a specific process, use ``waitpid()``.
 
 .. literalinclude:: os_waitpid_example.py
    :caption:
    :start-after: #end_pymotw_header
 
-Pass the process id of the target process, and :func:`waitpid` blocks
+Pass the process id of the target process, and ``waitpid()`` blocks
 until that process exits.
 
 .. {{{cog
@@ -817,15 +817,15 @@ until that process exits.
 
 .. {{{end}}}
 
-:func:`wait3` and :func:`wait4` work in a similar manner, but return
+``wait3()`` and ``wait4()`` work in a similar manner, but return
 more detailed information about the child process with the pid, exit
 status, and resource usage.
 
 Spawning New Processes
 ======================
 
-As a convenience, the :func:`spawn` family of functions handles the
-:func:`fork` and :func:`exec` in one statement:
+As a convenience, the ``spawn()`` family of functions handles the
+``fork()`` and ``exec()`` in one statement:
 
 .. literalinclude:: os_spawn_example.py
    :caption:
@@ -833,7 +833,7 @@ As a convenience, the :func:`spawn` family of functions handles the
 
 The first argument is a mode indicating whether or not to wait for the
 process to finish before returning.  This example waits.  Use
-:const:`P_NOWAIT` to let the other process start, but then resume in
+``P_NOWAIT`` to let the other process start, but then resume in
 the current process.
 
 .. {{{cog
@@ -853,7 +853,7 @@ Operating System Error Codes
 
 Error codes defined by the operating system and managed in the
 :mod:`errno` module can be translated to message strings using
-:func:`strerror`.
+``strerror()``.
 
 .. literalinclude:: os_strerror.py
    :caption:
@@ -886,7 +886,7 @@ come up frequently.
      signal handling techniques in more detail.
 
    * :mod:`subprocess` -- The ``subprocess`` module supersedes
-     :func:`os.popen`.
+     ``os.popen()``.
 
    * :mod:`multiprocessing` -- The ``multiprocessing`` module makes
      working with extra processes easier.

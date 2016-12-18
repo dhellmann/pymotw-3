@@ -14,7 +14,7 @@ load a program can impose on a system.
 Current Usage
 =============
 
-Use :func:`getrusage` to probe the resources used by the current
+Use ``getrusage()`` to probe the resources used by the current
 process and/or its children.  The return value is a data structure
 containing several resource metrics based on the current state of the
 system.
@@ -86,13 +86,13 @@ the operating system.
 
 .. {{{end}}}
 
-The limits can be changed with :func:`setrlimit`.
+The limits can be changed with ``setrlimit()``.
 
 .. literalinclude:: resource_setrlimit_nofile.py
     :caption:
     :start-after: #end_pymotw_header
 
-This example uses :const:`RLIMIT_NOFILE` to control the number of open
+This example uses ``RLIMIT_NOFILE`` to control the number of open
 files allowed, changing it to a smaller soft limit than the default.
 
 .. {{{cog
@@ -112,7 +112,7 @@ files allowed, changing it to a smaller soft limit than the default.
 
 It can also be useful to limit the amount of CPU time a process should
 consume, to avoid using too much.  When the process runs past the
-allotted amount of time, it sent a :const:`SIGXCPU` signal.
+allotted amount of time, it sent a ``SIGXCPU`` signal.
 
 .. literalinclude:: resource_setrlimit_cpu.py
     :caption:

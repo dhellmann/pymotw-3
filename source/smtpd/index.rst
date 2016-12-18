@@ -15,13 +15,13 @@ Mail Server Base Class
 ======================
 
 The base class for all of the provided example servers is
-:class:`SMTPServer`.  It handles communicating with the client,
+``SMTPServer``.  It handles communicating with the client,
 receiving incoming data, and provides a convenient hook to override to
 process the message once it is fully available.
 
 The constructor arguments are the local address to listen for
 connections and the remote address where proxied messages should be
-delivered.  The method :func:`process_message` is provided as a hook
+delivered.  The method ``process_message()`` is provided as a hook
 to be overridden by a derived class.  It is called when the message is
 completely received, and given these arguments:
 
@@ -45,8 +45,8 @@ completely received, and given these arguments:
 
   The full RFC 5322 message body.
 
-The default implementation of :func:`process_message` raises
-:class:`NotImplementedError`.  The next example defines a subclass
+The default implementation of ``process_message()`` raises
+``NotImplementedError``.  The next example defines a subclass
 that overrides the method to print information about the messages it
 receives.
 
@@ -54,8 +54,8 @@ receives.
     :caption:
     :start-after: #end_pymotw_header
 
-:class:`SMTPServer` uses :mod:`asyncore`, so to run the server call
-:func:`asyncore.loop`.
+``SMTPServer`` uses :mod:`asyncore`, so to run the server call
+``asyncore.loop()``.
 
 A client is needed to demonstrate the server.  One of the examples
 from the section on :mod:`smtplib` can be adapted to create a client
@@ -126,9 +126,9 @@ To stop the server, press ``Ctrl-C``.
 Debugging Server
 ================
 
-The previous example shows the arguments to :func:`process_message`,
+The previous example shows the arguments to ``process_message()``,
 but ``smtpd`` also includes a server specifically designed for more
-complete debugging, called :class:`DebuggingServer`.  It prints the
+complete debugging, called ``DebuggingServer``.  It prints the
 entire incoming message to the console and then stops processing (it
 does not proxy the message to a real mail server).
 
@@ -137,7 +137,7 @@ does not proxy the message to a real mail server).
     :start-after: #end_pymotw_header
 
 Using the ``smtpd_senddata.py`` client program from earlier, the output
-of the :class:`DebuggingServer` is:
+of the ``DebuggingServer`` is:
 
 .. NOT RUNNING
 
@@ -158,7 +158,7 @@ of the :class:`DebuggingServer` is:
 Proxy Server
 ============
 
-The :class:`PureProxy` class implements a straightforward proxy
+The ``PureProxy`` class implements a straightforward proxy
 server.  Incoming messages are forwarded upstream to the server given
 as argument to the constructor.
 

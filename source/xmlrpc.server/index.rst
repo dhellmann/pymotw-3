@@ -24,7 +24,7 @@ A Simple Server
 
 This simple server example exposes a single function that takes the
 name of a directory and returns the contents. The first step is to
-create the :class:`SimpleXMLRPCServer` instance and tell it where to
+create the ``SimpleXMLRPCServer`` instance and tell it where to
 listen for incoming requests ('localhost' port 9000 in this
 case). Then a function is defined to be part of the service, and
 registered so the server knows how to call it. The final step is to
@@ -43,13 +43,13 @@ requests.
 
 The server can be accessed at the URL ``http://localhost:9000`` using
 :mod:`xmlrpc.client`.  This client code illustrates how to call the
-:func:`list_contents` service from Python.
+``list_contents()`` service from Python.
 
 .. literalinclude:: xmlrpc_function_client.py
    :caption:
    :start-after: #end_pymotw_header
 
-The :class:`ServerProxy` is connected to the server using its base
+The ``ServerProxy`` is connected to the server using its base
 URL, and then methods are called directly on the proxy. Each method
 invoked on the proxy is translated into a request to the server. The
 arguments are formatted using XML, and then sent to the server in a
@@ -89,8 +89,8 @@ window.
     INFO:root:list_contents(/tmp)
     127.0.0.1 - - [18/Jun/2016 19:54:54] "POST /RPC2 HTTP/1.1" 200 -
 
-The first line of output is from the :func:`logging.info` call inside
-:func:`list_contents`. The second line is from the server logging the
+The first line of output is from the ``logging.info()`` call inside
+``list_contents()``. The second line is from the server logging the
 request because ``logRequests`` is ``True``.
 
 Alternate API Names
@@ -102,20 +102,20 @@ because a platform-specific implementation is loaded, the service API
 is built dynamically based on a configuration file, or real functions
 can be replaced with stubs for testing.  To register a function with
 an alternate name, pass the name as the second argument to
-:func:`register_function()`, like this:
+``register_function()``, like this:
 
 .. literalinclude:: xmlrpc_alternate_name.py
    :caption:
    :start-after: #end_pymotw_header
 
-The client should now use the name :func:`dir` instead of
-:func:`list_contents`:
+The client should now use the name ``dir()`` instead of
+``list_contents()``:
 
 .. literalinclude:: xmlrpc_alternate_name_client.py
    :caption:
    :start-after: #end_pymotw_header
 
-Calling :func:`list_contents` results in an error, since the server no
+Calling ``list_contents()`` results in an error, since the server no
 longer has a handler registered by that name.
 
 .. code-block:: none
@@ -182,7 +182,7 @@ args``".
    :start-after: #end_pymotw_header
 
 Since the registered name contains a space, dot notation cannot be
-used to access it directly from the proxy.  Using :func:`getattr` does
+used to access it directly from the proxy.  Using ``getattr()`` does
 work, however.
 
 .. literalinclude:: xmlrpc_arbitrary_name_client.py
@@ -238,16 +238,16 @@ invoked from clients.
    :caption:
    :start-after: #end_pymotw_header
 
-By registering the instance of :class:`ServiceRoot` with
+By registering the instance of ``ServiceRoot`` with
 ``allow_dotted_names`` enabled, the server has permission to walk the
 tree of objects when a request comes in to find the named method using
-:func:`getattr`.
+``getattr()``.
 
 .. literalinclude:: xmlrpc_instance_dotted_names_client.py
    :caption:
    :start-after: #end_pymotw_header
 
-The output of :func:`dir.list` is the same as with the previous
+The output of ``dir.list()`` is the same as with the previous
 implementations.
 
 .. code-block:: none
@@ -263,7 +263,7 @@ implementations.
 Dispatching Calls
 =================
 
-By default, :func:`register_instance()` finds all callable attributes
+By default, ``register_instance()`` finds all callable attributes
 of the instance with names not starting with an underscore ("``_``") and registers
 them with their name. To be more careful about the exposed methods,
 custom dispatching logic can be used. For example:
@@ -272,10 +272,10 @@ custom dispatching logic can be used. For example:
    :caption:
    :start-after: #end_pymotw_header
 
-The :func:`public()` method of :class:`MyService` is marked as exposed
-to the XML-RPC service while :func:`private()` is not. The
-:func:`_dispatch()` method is invoked when the client tries to access
-a function that is part of :class:`MyService`. It first enforces the
+The ``public()`` method of ``MyService`` is marked as exposed
+to the XML-RPC service while ``private()`` is not. The
+``_dispatch()`` method is invoked when the client tries to access
+a function that is part of ``MyService``. It first enforces the
 use of a prefix ("``prefix.``" in this case, but any string can be
 used).  Then it requires the function to have an attribute called
 ``exposed`` with a true value. The exposed flag is set on a function
@@ -303,7 +303,7 @@ reported:
     supported'>
 
 There are several other ways to override the dispatching mechanism,
-including subclassing directly from :class:`SimpleXMLRPCServer`. Refer
+including subclassing directly from ``SimpleXMLRPCServer``. Refer
 to the docstrings in the module for more details.
 
 
@@ -312,22 +312,22 @@ Introspection API
 
 As with many network services, it is possible to query an XML-RPC
 server to ask it what methods it supports and learn how to use
-them. :class:`SimpleXMLRPCServer` includes a set of public methods for
+them. ``SimpleXMLRPCServer`` includes a set of public methods for
 performing this introspection. By default they are turned off, but can
-be enabled with :func:`register_introspection_functions()`.  Support
-for :func:`system.listMethods()` and :func:`system.methodHelp()` can
-be added to a service by defining :func:`_listMethods()` and
-:func:`_methodHelp()` on the service class.
+be enabled with ``register_introspection_functions()``.  Support
+for ``system.listMethods()`` and ``system.methodHelp()`` can
+be added to a service by defining ``_listMethods()`` and
+``_methodHelp()`` on the service class.
 
 .. literalinclude:: xmlrpc_introspection.py
    :caption:
    :start-after: #end_pymotw_header
 
-In this case, the convenience function :func:`list_public_methods()`
+In this case, the convenience function ``list_public_methods()``
 scans an instance to return the names of callable attributes that do
-not start with underscore (``_``). Redefine :func:`_listMethods()` to
+not start with underscore (``_``). Redefine ``_listMethods()`` to
 apply whatever rules are desired.  Similarly, for this basic example
-:func:`_methodHelp()` returns the docstring of the function, but could
+``_methodHelp()`` returns the docstring of the function, but could
 be written to build a help string from another source.
 
 This client queries the server and reports on all of the publicly

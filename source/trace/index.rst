@@ -24,7 +24,7 @@ from it.
     :caption:
     :start-after: #end_pymotw_header
 
-The :func:`recurse` function invokes itself until the level argument
+The ``recurse()`` function invokes itself until the level argument
 reaches ``0``.
 
 .. literalinclude:: trace_example/recurse.py
@@ -87,9 +87,9 @@ that clutter up the output in this simple example.
 The first part of the output shows the setup operations performed by
 ``trace``.  The rest of the output shows the entry into each
 function, including the module where the function is located, and then
-the lines of the source file as they are executed.  :func:`recurse`
+the lines of the source file as they are executed.  ``recurse()``
 is entered three times, as expected based on the way it is called in
-:func:`main`.
+``main()``.
 
 Code Coverage
 =============
@@ -293,8 +293,8 @@ Programming Interface
 =====================
 
 For more control over the ``trace`` interface, it can be
-invoked from within a program using a :class:`Trace` object.
-:class:`Trace` supports setting up fixtures and other dependencies
+invoked from within a program using a ``Trace`` object.
+``Trace`` supports setting up fixtures and other dependencies
 before running a single function or executing a Python command to be
 traced.
 
@@ -302,7 +302,7 @@ traced.
     :caption:
     :start-after: #end_pymotw_header
 
-Since the example only traces into the :func:`recurse` function, no
+Since the example only traces into the ``recurse()`` function, no
 information from ``main.py`` is included in the output.
 
 .. {{{cog
@@ -333,14 +333,14 @@ information from ``main.py`` is included in the output.
 
 .. {{{end}}}
 
-That same output can be produced with the :func:`runfunc` method,
+That same output can be produced with the ``runfunc()`` method,
 too.
 
 .. literalinclude:: trace_runfunc.py
     :caption:
     :start-after: #end_pymotw_header
 
-:func:`runfunc` accepts arbitrary positional and keyword arguments,
+``runfunc()`` accepts arbitrary positional and keyword arguments,
 which are passed to the function when it is called by the tracer.
 
 .. {{{cog
@@ -373,7 +373,7 @@ Saving Result Data
 
 Counts and coverage information can be recorded as well, just as with
 the command line interface.  The data must be saved explicitly, using
-the :class:`CoverageResults` instance from the :class:`Trace` object.
+the ``CoverageResults`` instance from the ``Trace`` object.
 
 .. literalinclude:: trace_CoverageResults.py
     :caption:
@@ -407,7 +407,7 @@ The output file contains
 .. literalinclude:: coverdir2/trace_example.recurse.cover
 
 To save the counts data for generating reports, use the ``infile`` and
-``outfile`` arguments to :class:`Trace`.
+``outfile`` arguments to ``Trace``.
 
 .. literalinclude:: trace_report.py
     :caption:
@@ -438,7 +438,7 @@ with cumulative data.
 Options
 =======
 
-The constructor for :class:`Trace` takes several optional parameters
+The constructor for ``Trace`` takes several optional parameters
 to control runtime behavior.
 
 ``count``

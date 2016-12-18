@@ -9,7 +9,7 @@ based on the timer value kept in the loop.
 Scheduling a Callback "Soon"
 ============================
 
-If the timing of the callback does not matter, :func:`call_soon` can
+If the timing of the callback does not matter, ``call_soon()`` can
 be used to schedule the call for the next iteration of the loop. Any
 extra arguments after the function are passed to the callback when it
 is invoked.
@@ -40,7 +40,7 @@ Scheduling a Callback with a Delay
 ==================================
 
 To postpone a callback until some time in the future, use
-:func:`call_later`. The first argument is the delay in seconds and the
+``call_later()``. The first argument is the delay in seconds and the
 second argument is the callback.
 
 .. literalinclude:: asyncio_call_later.py
@@ -49,7 +49,7 @@ second argument is the callback.
 
 In this example, the same callback function is scheduled for several
 different times with different arguments. The final instance, using
-:func:`call_soon`, results in the callback being invoked with the
+``call_soon()``, results in the callback being invoked with the
 argument ``3`` before any of the time-scheduled instances, showing
 that "soon" usually implies a minimal delay.
 
@@ -84,7 +84,7 @@ state of that clock using the loop's ``time()`` method.
    :start-after: #end_pymotw_header
 
 Note that the time according to the loop does not match the value
-returned by :func:`time.time`.
+returned by ``time.time()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'asyncio_call_at.py'))

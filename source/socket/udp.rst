@@ -15,7 +15,7 @@ Echo Server
 ===========
 
 Since there is no connection, per se, the server does not need to
-listen for and accept connections.  It only needs to use :func:`bind`
+listen for and accept connections.  It only needs to use ``bind()``
 to associate its socket with a port, and then wait for individual
 messages.
 
@@ -23,7 +23,7 @@ messages.
    :caption:
    :start-after: #end_pymotw_header
 
-Messages are read from the socket using :func:`recvfrom`, which
+Messages are read from the socket using ``recvfrom()``, which
 returns the data as well as the address of the client from which it
 was sent.
 
@@ -31,9 +31,9 @@ Echo Client
 ===========
 
 The UDP echo client is similar the server, but does not use
-:func:`bind` to attach its socket to an address.  It uses
-:func:`sendto` to deliver its message directly to the server, and
-:func:`recvfrom` to receive the response.
+``bind()`` to attach its socket to an address.  It uses
+``sendto()`` to deliver its message directly to the server, and
+``recvfrom()`` to receive the response.
 
 .. literalinclude:: socket_echo_client_dgram.py
    :caption:

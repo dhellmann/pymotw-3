@@ -13,7 +13,7 @@ them to the byte-code representation, saving the results in ``.pyc``.
 Compiling One Directory
 =======================
 
-:func:`compile_dir` is used to recursively scan a directory and
+``compile_dir()`` is used to recursively scan a directory and
 byte-compile the files within it.
 
 .. literalinclude:: compileall_compile_dir.py
@@ -82,7 +82,7 @@ to avoid recursion entirely pass ``0``.
     :caption:
     :start-after: #end_pymotw_header
 
-Only files within the directory passed to :func:`compile_dir` are
+Only files within the directory passed to ``compile_dir()`` are
 compiled.
 
 .. {{{cog
@@ -105,13 +105,13 @@ Compiling sys.path
 ==================
 
 All of the Python source files found in sys.path can be compiled with
-a single call to :func:`compile_path`.
+a single call to ``compile_path()``.
 
 .. literalinclude:: compileall_path.py
     :caption:
     :start-after: #end_pymotw_header
 
-This example replaces the default contents of :data:`sys.path` to
+This example replaces the default contents of ``sys.path`` to
 avoid permission errors while running the script, but still
 illustrates the default behavior.  Note that the ``maxlevels`` value
 defaults to ``0``.
@@ -139,7 +139,7 @@ Compiling Individual Files
 ==========================
 
 To compile a single file, rather than an entire directory of files,
-use :func:`compile_file`.
+use ``compile_file()``.
 
 .. literalinclude:: compileall_compile_file.py
    :caption:

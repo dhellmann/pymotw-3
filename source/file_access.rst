@@ -16,7 +16,7 @@ with file system paths. Using it instead of :mod:`os.path` provides
 some conveniences because it operates at a higher level of
 abstraction.
 
-List the contents of a directory with :func:`listdir()` from
+List the contents of a directory with ``listdir()`` from
 :mod:`os`, or use :mod:`glob` to build a list of filenames from a
 pattern.
 
@@ -25,7 +25,7 @@ directly through :mod:`fnmatch` so it can be used in other contexts.
 
 After the name of the file is identified, other characteristics, such
 as permissions or the file size, can be checked using
-:func:`os.stat()` and the constants in :mod:`stat`.
+``os.stat()`` and the constants in :mod:`stat`.
 
 When an application needs random access to files, :mod:`linecache`
 makes it easy to read lines by their line number.  The contents of the
@@ -46,18 +46,18 @@ The :mod:`filecmp` module compares files and directories by looking at
 the bytes they contain, but without any special knowledge about their
 format.
 
-The built-in :class:`file` class can be used to read and write files
+The built-in ``file`` class can be used to read and write files
 visible on local file systems.  A program's performance can suffer when
-it accesses large files through the :func:`read` and :func:`write`
+it accesses large files through the ``read()`` and ``write()``
 interfaces, though, since they both involve copying the data
 multiple times as it is moved from the disk to memory the application
 can see.  Using :mod:`mmap` tells the operating system to use its virtual
 memory subsystem to map a file's contents directly into memory accessible
 by a program, avoiding a copy step between the operating system and the
-internal buffer for the :class:`file` object.
+internal buffer for the ``file`` object.
 
 Text data using characters not available in ASCII is usually saved in
-a Unicode data format.  Since the standard :class:`file` handle
+a Unicode data format.  Since the standard ``file`` handle
 assumes each byte of a text file represents one character, reading
 Unicode text with multi-byte encodings requires extra processing.  The
 :mod:`codecs` module handles the encoding and decoding automatically,

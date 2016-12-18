@@ -11,7 +11,7 @@ Why use Abstract Base Classes?
 ==============================
 
 Abstract base classes are a form of interface checking more strict
-than individual :func:`hasattr` checks for particular methods.  By
+than individual ``hasattr()`` checks for particular methods.  By
 defining an abstract base class, a common API can be established for a
 set of subclasses.  This capability is especially useful in situations
 where someone less familiar with the source for an application is
@@ -25,12 +25,12 @@ How ABCs Work
 ``abc`` works by marking methods of the base class as abstract, and
 then registering concrete classes as implementations of the abstract
 base.  If an application or library requires a particular API,
-:func:`issubclass` or :func:`isinstance` can be used to check an
+``issubclass()`` or ``isinstance()`` can be used to check an
 object against the abstract class.
 
 To start, define an abstract base class to represent the API of a set
 of plug-ins for saving and loading data.  Set the metaclass for the
-new base class to :class:`ABCMeta`, and use decorators to establish
+new base class to ``ABCMeta``, and use decorators to establish
 the public API for the class.  The following examples use
 ``abc_base.py``, which contains:
 
@@ -44,7 +44,7 @@ Registering a Concrete Class
 
 There are two ways to indicate that a concrete class implements an
 abstract API: either explicitly register the class or create a new
-subclass directly from the abstract base.  Use the :func:`register`
+subclass directly from the abstract base.  Use the ``register()``
 class method as a decorator on a concrete class to add it explicitly
 when the class provides the required API, but is not part of the
 inheritance tree of the abstract base class.
@@ -53,10 +53,10 @@ inheritance tree of the abstract base class.
     :caption:
     :start-after: #end_pymotw_header
 
-In this example the :class:`RegisteredImplementation` is derived from
-:class:`LocalBaseClass`, but is registered as implementing the
-:class:`PluginBase` API so :func:`issubclass` and :func:`isinstance`
-treat it as though it is derived from :class:`PluginBase`.
+In this example the ``RegisteredImplementation`` is derived from
+``LocalBaseClass``, but is registered as implementing the
+``PluginBase`` API so ``issubclass()`` and ``isinstance()``
+treat it as though it is derived from ``PluginBase``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'abc_register.py'))
@@ -83,8 +83,8 @@ class explicitly.
     :start-after: #end_pymotw_header
 
 In this case, normal Python class management features are used to
-recognize :class:`SubclassImplementation` as implementing the abstract
-:class:`PluginBase`.
+recognize ``SubclassImplementation`` as implementing the abstract
+``PluginBase``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'abc_subclass.py'))
@@ -108,8 +108,8 @@ feature, all classes can do this).
     :caption:
     :start-after: #end_pymotw_header
 
-Even though :func:`abc_register` is imported,
-:class:`RegisteredImplementation` is not among the list of subclasses
+Even though ``abc_register()`` is imported,
+``RegisteredImplementation`` is not among the list of subclasses
 because it is not actually derived from the base.
 
 .. {{{cog
@@ -136,7 +136,7 @@ the metaclass automatically.
    :caption:
    :start-after: #end_pymotw_header
 
-To create a new abstract class, simply inherit from :class:`ABC`.
+To create a new abstract class, simply inherit from ``ABC``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'abc_abc_base.py'))
@@ -189,7 +189,7 @@ Concrete Methods in ABCs
 
 Although a concrete class must provide implementations of all abstract
 methods, the abstract base class can also provide implementations that
-can be invoked via :func:`super`.  This allows common logic to be
+can be invoked via ``super()``.  This allows common logic to be
 reused by placing it in the base class, but forces subclasses to
 provide an overriding method with (potentially) custom logic.
 
@@ -197,9 +197,9 @@ provide an overriding method with (potentially) custom logic.
     :caption:
     :start-after: #end_pymotw_header
 
-Since :func:`ABCWithConcreteImplementation` is an abstract base class,
+Since ``ABCWithConcreteImplementation()`` is an abstract base class,
 it is not possible to instantiate it to use it directly.  Subclasses
-*must* provide an override for :func:`retrieve_values`, and in this
+*must* provide an override for ``retrieve_values()``, and in this
 case the concrete class sorts the data before returning it.
 
 .. {{{cog
@@ -224,16 +224,16 @@ Abstract Properties
 
 If an API specification includes attributes in addition to methods, it
 can require the attributes in concrete classes by combining
-:func:`abstractmethod` with :func:`property`.
+``abstractmethod()`` with ``property()``.
 
 .. literalinclude:: abc_abstractproperty.py
     :caption:
     :start-after: #end_pymotw_header
 
-The :class:`Base` class in the example cannot be instantiated because
+The ``Base`` class in the example cannot be instantiated because
 it has only an abstract version of the property getter methods for
 ``value`` and ``constant``.  The ``value`` property is given a
-concrete getter in :class:`Implementation` and ``constant`` is defined
+concrete getter in ``Implementation`` and ``constant`` is defined
 using a class attribute.
 
 .. {{{cog
@@ -260,7 +260,7 @@ Abstract read-write properties can also be defined.
 
 The concrete property must be defined the same way as the abstract
 property, as either read-write or read-only.  Overriding a read-write
-property in :class:`PartialImplementation` with one that is read-only
+property in ``PartialImplementation`` with one that is read-only
 leaves the property read-only -- the property's setter method from the
 base class is not reused.
 

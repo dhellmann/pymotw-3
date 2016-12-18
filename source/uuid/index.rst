@@ -28,7 +28,7 @@ UUID 1 - IEEE 802 MAC Address
 =============================
 
 UUID version 1 values are computed using the MAC address of the host.
-The ``uuid`` module uses :func:`getnode` to retrieve the MAC value
+The ``uuid`` module uses ``getnode()`` to retrieve the MAC value
 of the current system.
 
 .. literalinclude:: uuid_getnode.py
@@ -51,8 +51,8 @@ any one of the values may be returned.
 .. {{{end}}}
 
 To generate a UUID for a host, identified by its MAC address, use the
-:func:`uuid1` function. The node identifier argument is optional;
-leave the field blank to use the value returned by :func:`getnode`.
+``uuid1()`` function. The node identifier argument is optional;
+leave the field blank to use the value returned by ``getnode()``.
 
 .. literalinclude:: uuid_uuid1.py
    :caption:
@@ -90,7 +90,7 @@ and ``urn``, are different representations of the UUID value.
 
 .. {{{end}}}
 
-Because of the time component, each call to :func:`uuid1` returns a
+Because of the time component, each call to ``uuid1()`` returns a
 new value.
 
 .. literalinclude:: uuid_uuid1_repeat.py
@@ -156,8 +156,8 @@ defined by generating and saving UUID values.
    :caption:
    :start-after: #end_pymotw_header
 
-To create a UUID from a DNS name, pass :const:`uuid.NAMESPACE_DNS` as
-the namespace argument to :func:`uuid3` or :func:`uuid5`:
+To create a UUID from a DNS name, pass ``uuid.NAMESPACE_DNS`` as
+the namespace argument to ``uuid3()`` or ``uuid5()``:
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'uuid_uuid3_uuid5.py'))
@@ -224,7 +224,7 @@ used as a hash key, a more random sequence of values with more
 differentiation is desirable to avoid collisions in the hash
 table. Having values with fewer common digits also makes it easier to
 find them in log files. To add greater differentiation in UUIDs, use
-:func:`uuid4` to generate them using random input values.
+``uuid4()`` to generate them using random input values.
 
 .. literalinclude:: uuid_uuid4.py
    :caption:
@@ -233,7 +233,7 @@ find them in log files. To add greater differentiation in UUIDs, use
 The source of randomness depends on which C libraries are available
 when ``uuid`` is imported.  If ``libuuid`` (or ``uuid.dll``) can be
 loaded and it contains a function for generating random values, it is
-used.  Otherwise :func:`os.urandom` or the :mod:`random` module are
+used.  Otherwise ``os.urandom()`` or the :mod:`random` module are
 used.
 
 .. {{{cog

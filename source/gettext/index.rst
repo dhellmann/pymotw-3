@@ -207,7 +207,7 @@ own default value, but ``gettext`` does not know all of these
 defaults.  It uses a default locale directory of ``sys.prefix +
 '/share/locale'``, but most of the time it is safer to always
 explicitly give a ``localedir`` value than to depend on this default
-being valid.  The :func:`find` function is responsible for locating an
+being valid.  The ``find()`` function is responsible for locating an
 appropriate message catalog at runtime.
 
 .. literalinclude:: gettext_find.py
@@ -261,7 +261,7 @@ that works, use a second message catalog to run a few experiments.
 
 .. {{{end}}}
 
-Although :func:`find` shows the complete list of catalogs, only the
+Although ``find()`` shows the complete list of catalogs, only the
 first one in the sequence is actually loaded for message lookups.
 
 .. {{{cog
@@ -311,7 +311,7 @@ functions for asking for the plural form of a message.
     :caption:
     :start-after: #end_pymotw_header
 
-Use :func:`ngettext` to access the plural substitution for a message.
+Use ``ngettext()`` to access the plural substitution for a message.
 The arguments are the messages to be translated and the item count.
 
 .. {{{cog
@@ -396,7 +396,7 @@ Application Localization
 ------------------------
 
 For application-wide translations, it is acceptable for the
-author to install a function like :func:`ngettext` globally using the
+author to install a function like ``ngettext()`` globally using the
 ``__builtins__`` namespace, because they have control over the
 top-level of the application's code.
 
@@ -404,8 +404,8 @@ top-level of the application's code.
     :caption:
     :start-after: #end_pymotw_header
 
-The :func:`install` function binds ``gettext()`` to the name ``_()``
-in the ``__builtins__`` namespace.  It also adds :func:`ngettext` and
+The ``install()`` function binds ``gettext()`` to the name ``_()``
+in the ``__builtins__`` namespace.  It also adds ``ngettext()`` and
 other functions listed in ``names``.
 
 Module Localization

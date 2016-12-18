@@ -4,7 +4,7 @@
  deque --- double-ended queue
 ==============================
 
-A double-ended queue, or :class:`deque`, supports adding and removing
+A double-ended queue, or ``deque``, supports adding and removing
 elements from either end. The more commonly used stacks and queues are
 degenerate forms of deques, where the inputs and outputs are
 restricted to a single end.
@@ -14,8 +14,8 @@ restricted to a single end.
     :start-after: #end_pymotw_header
 
 Since deques are a type of sequence container, they support some of
-the same operations as :class:`list`, such as examining the contents
-with :func:`__getitem__`, determining length, and removing elements
+the same operations as ``list``, such as examining the contents
+with ``__getitem__()``, determining length, and removing elements
 from the middle by matching identity.
 
 .. {{{cog
@@ -44,9 +44,9 @@ Python implementation.
     :caption:
     :start-after: #end_pymotw_header
 
-The :func:`extendleft` function iterates over its input and performs
-the equivalent of an :func:`appendleft` for each item. The end result
-is the :class:`deque` contains the input sequence in reverse order.
+The ``extendleft()`` function iterates over its input and performs
+the equivalent of an ``appendleft()`` for each item. The end result
+is the ``deque`` contains the input sequence in reverse order.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'collections_deque_populating.py'))
@@ -66,15 +66,15 @@ is the :class:`deque` contains the input sequence in reverse order.
 Consuming
 =========
 
-Similarly, the elements of the :class:`deque` can be consumed from
+Similarly, the elements of the ``deque`` can be consumed from
 both or either end, depending on the algorithm being applied.
 
 .. literalinclude:: collections_deque_consuming.py
     :caption:
     :start-after: #end_pymotw_header
 
-Use :func:`pop` to remove an item from the "right" end of the
-:class:`deque` and :func:`popleft` to take from the "left" end.
+Use ``pop()`` to remove an item from the "right" end of the
+``deque`` and ``popleft()`` to take from the "left" end.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'collections_deque_consuming.py'))
@@ -100,7 +100,7 @@ both ends at the same time from separate threads.
     :start-after: #end_pymotw_header
 
 The threads in this example alternate between each end, removing items
-until the :class:`deque` is empty.
+until the ``deque`` is empty.
 
 .. NOT RUNNING
 .. cog.out(run_script(cog.inFile, 'collections_deque_both_ends.py'))
@@ -120,14 +120,14 @@ until the :class:`deque` is empty.
 Rotating
 ========
 
-Another useful capability of the :class:`deque` is to rotate it in
+Another useful capability of the ``deque`` is to rotate it in
 either direction, to skip over some items.
 
 .. literalinclude:: collections_deque_rotate.py
     :caption:
     :start-after: #end_pymotw_header
 
-Rotating the :class:`deque` to the right (using a positive rotation)
+Rotating the ``deque`` to the right (using a positive rotation)
 takes items from the right end and moves them to the left
 end. Rotating to the left (with a negative value) takes items from the
 left end and moves them to the right end.  It may help to visualize
@@ -150,7 +150,7 @@ the items in the deque as being engraved along the edge of a dial.
 Constraining the Queue Size
 ===========================
 
-A :class:`deque` instance can be configured with a maximum length so
+A ``deque`` instance can be configured with a maximum length so
 that it never grows beyond that size. When the queue reaches the
 specified length, existing items are discarded as new items are
 added. This behavior is useful for finding the last *n* items in a

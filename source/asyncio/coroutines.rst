@@ -5,7 +5,7 @@
 Coroutines are a language construct designed for concurrent
 operation. A coroutine function creates a coroutine object when
 called, and the caller can then run the code of the function using the
-coroutine's :func:`send` method. A coroutine can pause execution using
+coroutine's ``send()`` method. A coroutine can pause execution using
 the ``await`` keyword with another coroutine. While it is paused, the
 coroutine's state is maintained, allowing it to resume where it left
 off the next time it is awakened.
@@ -14,7 +14,7 @@ Starting a Coroutine
 ====================
 
 There are a few different ways to have the ``asyncio`` event loop
-start a coroutine. The simplest is to use :func:`run_until_complete`,
+start a coroutine. The simplest is to use ``run_until_complete()``,
 passing the coroutine to it directly.
 
 .. literalinclude:: asyncio_coroutine.py
@@ -24,7 +24,7 @@ passing the coroutine to it directly.
 The first step is to obtain a reference to the event loop. The default
 loop type can be used, or a specific loop class can be
 instantiated. In this example, the default loop is used. The
-:func:`run_until_complete` method starts the loop with the coroutine
+``run_until_complete()`` method starts the loop with the coroutine
 object and stops the loop when the coroutine exits by returning.
 
 .. {{{cog
@@ -52,7 +52,7 @@ and waits for it.
    :caption:
    :start-after: #end_pymotw_header
 
-In this case, :func:`run_until_complete` also returns the result of
+In this case, ``run_until_complete()`` also returns the result of
 the coroutine it is waiting for.
 
 .. {{{cog
@@ -116,7 +116,7 @@ Python 3.5 introduced new language features to define such coroutines
 natively using ``async def`` and to yield control using ``await``, and
 the examples for ``asyncio`` take advantage of the new
 feature. Earlier versions of Python 3 can use generator functions
-wrapped with the :func:`asyncio.coroutine` decorator and ``yield
+wrapped with the ``asyncio.coroutine()`` decorator and ``yield
 from`` to achieve the same effect.
 
 .. literalinclude:: asyncio_generator.py

@@ -12,10 +12,10 @@ Import Path
 ===========
 
 ``site`` is automatically imported each time the interpreter starts
-up.  On import, it extends :data:`sys.path` with site-specific names
-constructed by combining the prefix values :data:`sys.prefix` and
-:data:`sys.exec_prefix` with several suffixes.  The prefix values used
-are saved in the module-level variable :data:`PREFIXES` for reference
+up.  On import, it extends ``sys.path`` with site-specific names
+constructed by combining the prefix values ``sys.prefix`` and
+``sys.exec_prefix`` with several suffixes.  The prefix values used
+are saved in the module-level variable ``PREFIXES`` for reference
 later.  Under Windows, the suffixes are an empty string and
 ``lib/site-packages``.  For Unix-like platforms, the values are
 ``lib/python$version/site-packages`` (where ``$version`` is replaced
@@ -27,7 +27,7 @@ by the major and minor version number of the interpreter, such as
    :start-after: #end_pymotw_header
 
 Each of the paths resulting from the combinations is tested, and those
-that exist are added to :data:`sys.path`.  This output shows the
+that exist are added to ``sys.path``.  This output shows the
 framework version of Python installed on a Mac OS X system.
 
 .. NOT RUNNING because virtualenv gives misleading output
@@ -55,17 +55,17 @@ User Directories
 
 In addition to the global site-packages paths, ``site`` is
 responsible for adding the user-specific locations to the import path.
-The user-specific paths are all based on the :data:`USER_BASE`
+The user-specific paths are all based on the ``USER_BASE``
 directory, which usually located in a part of the file system owned
-(and writable) by the current user. Inside the :data:`USER_BASE`
+(and writable) by the current user. Inside the ``USER_BASE``
 directory is a ``site-packages`` directory, with the path accessible
-as :data:`USER_SITE`.
+as ``USER_SITE``.
 
 .. literalinclude:: site_user_base.py
    :caption:
    :start-after: #end_pymotw_header
 
-The :data:`USER_SITE` path name is created using the same
+The ``USER_SITE`` path name is created using the same
 platform-specific suffix values described earlier.
 
 .. {{{cog
@@ -81,7 +81,7 @@ platform-specific suffix values described earlier.
 
 .. {{{end}}}
 
-The user base directory can be set through the :data:`PYTHONUSERBASE`
+The user base directory can be set through the ``PYTHONUSERBASE``
 environment variable, and has platform-specific defaults
 (``~/Python$version/site-packages`` for Windows and ``~/.local`` for
 non-Windows).
@@ -148,7 +148,7 @@ example, the ``setuptools`` package adds a path to
 ``easy-install.pth`` when it installs a package in development mode
 using ``python setup.py develop``.
 
-The function for extending :data:`sys.path` is public, and it can be used
+The function for extending ``sys.path`` is public, and it can be used
 in example programs to show how the path configuration files work.
 Given a directory named ``with_modules`` containing the file ``mymodule.py``
 with this ``print`` statement showing how the module was imported:
@@ -157,7 +157,7 @@ with this ``print`` statement showing how the module was imported:
    :caption:
    :start-after: #end_pymotw_header
 
-This script shows how :func:`addsitedir()` extends the import path so
+This script shows how ``addsitedir()`` extends the import path so
 the interpreter can find the desired module.
 
 .. literalinclude:: site_addsitedir.py
@@ -165,7 +165,7 @@ the interpreter can find the desired module.
    :start-after: #end_pymotw_header
 
 After the directory containing the module is added
-to :data:`sys.path`, the script can import :mod:`mymodule` without
+to ``sys.path``, the script can import :mod:`mymodule` without
 issue.
 
 .. {{{cog
@@ -185,9 +185,9 @@ issue.
 
 .. {{{end}}}
 
-The path changes by :func:`addsitedir` go beyond simply appending the
-argument to :data:`sys.path`.  If the directory given to
-:func:`addsitedir` includes any files matching the pattern ``*.pth``,
+The path changes by ``addsitedir()`` go beyond simply appending the
+argument to ``sys.path``.  If the directory given to
+``addsitedir()`` includes any files matching the pattern ``*.pth``,
 they are loaded as path configuration files. Given a directory
 structure like the following
 

@@ -15,8 +15,8 @@ stack up from the point of a call (and without the context of an
 error), which is useful for finding out the paths being followed into
 a function.
 
-The high-level API in ``traceback`` uses :class:`StackSummary` and
-:class:`FrameSummary` instances to hold the representation of the
+The high-level API in ``traceback`` uses ``StackSummary`` and
+``FrameSummary`` instances to hold the representation of the
 stack. These classes can be constructed from a traceback or the
 current execution stack, and then processed in the same ways.
 
@@ -28,7 +28,7 @@ sequence of tuples containing the filename, line number, function
 name, and text of the source line.
 
 Once extracted, the stack trace can be formatted using functions like
-:func:`format_exception`, :func:`format_stack`, etc. The format
+``format_exception()``, ``format_stack()``, etc. The format
 functions return a list of strings with messages formatted to be
 printed. There are shorthand functions for printing the formatted
 values, as well.
@@ -53,14 +53,14 @@ The examples in this section use the module ``traceback_example.py``:
 Examining the Stack
 ===================
 
-To examine the current stack, construct a :class:`StackSummary` from
-:func:`walk_stack`.
+To examine the current stack, construct a ``StackSummary`` from
+``walk_stack()``.
 
 .. literalinclude:: traceback_stacksummary.py
    :caption:
    :start-after: #end_pymotw_header
 
-The :func:`format` method produces a sequence of formatted strings
+The ``format()`` method produces a sequence of formatted strings
 ready to be printed.
 
 .. {{{cog
@@ -93,14 +93,14 @@ ready to be printed.
 
 .. {{{end}}}
 
-The :class:`StackSummary` is an iterable container holding
-:class:`FrameSummary` instances.
+The ``StackSummary`` is an iterable container holding
+``FrameSummary`` instances.
 
 .. literalinclude:: traceback_framesummary.py
    :caption:
    :start-after: #end_pymotw_header
 
-Each :class:`FrameSummary` describes a frame of the stack, including
+Each ``FrameSummary`` describes a frame of the stack, including
 information about where in the program source files the execution
 context is.
 
@@ -137,15 +137,15 @@ context is.
 TracebackException
 ==================
 
-The :class:`TracebackException` class is a high-level interface for
-building a :class:`StackSummary` while processing a traceback.
+The ``TracebackException`` class is a high-level interface for
+building a ``StackSummary`` while processing a traceback.
 
 .. literalinclude:: traceback_tracebackexception.py
    :caption:
    :start-after: #end_pymotw_header
 
-The :func:`format` method produces a formatted version of the full
-traceback, while :func:`format_exception_only` shows only the
+The ``format()`` method produces a formatted version of the full
+traceback, while ``format_exception_only()`` shows only the
 exception message.
 
 .. {{{cog
@@ -183,16 +183,16 @@ Low-level Exception APIs
 ========================
 
 Another way to handle exception reporting is with
-:func:`print_exc`. It uses :func:`sys.exc_info` to obtain the
+``print_exc()``. It uses ``sys.exc_info()`` to obtain the
 exception information for the current thread, formats the results, and
-prints the text to a file handle (:data:`sys.stderr`, by default).
+prints the text to a file handle (``sys.stderr``, by default).
 
 .. literalinclude:: traceback_print_exc.py
     :caption:
     :start-after: #end_pymotw_header
 
 
-In this example, the file handle for :data:`sys.stdout` is substituted so
+In this example, the file handle for ``sys.stdout`` is substituted so
 the informational and traceback messages are mingled correctly:
 
 .. {{{cog
@@ -226,14 +226,14 @@ the informational and traceback messages are mingled correctly:
 
 .. {{{end}}}
 
-:func:`print_exc` is just a shortcut for :func:`print_exception`,
+``print_exc()`` is just a shortcut for ``print_exception()``,
 which requires explicit arguments.
 
 .. literalinclude:: traceback_print_exception.py
     :caption:
     :start-after: #end_pymotw_header
 
-The arguments to :func:`print_exception` are produced by :func:`sys.exc_info`.
+The arguments to ``print_exception()`` are produced by ``sys.exc_info()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'traceback_print_exception.py'))
@@ -258,7 +258,7 @@ The arguments to :func:`print_exception` are produced by :func:`sys.exc_info`.
 .. {{{end}}}
 
 
-:func:`print_exception` uses :func:`format_exception` to prepare
+``print_exception()`` uses ``format_exception()`` to prepare
 the text.
 
 .. literalinclude:: traceback_format_exception.py
@@ -266,7 +266,7 @@ the text.
     :start-after: #end_pymotw_header
 
 The same three arguments, exception type, exception value, and
-traceback, are used with :func:`format_exception`.
+traceback, are used with ``format_exception()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'traceback_format_exception.py', line_break_mode='wrap'))
@@ -298,7 +298,7 @@ traceback, are used with :func:`format_exception`.
 .. {{{end}}}
 
 To process the traceback in some other way, such as formatting it
-differently, use :func:`extract_tb` to get the data in a usable form.
+differently, use ``extract_tb()`` to get the data in a usable form.
 
 .. literalinclude:: traceback_extract_tb.py
    :caption:
@@ -337,7 +337,7 @@ Low-level Stack APIs
 
 There are a similar set of functions for performing the same
 operations with the current call stack instead of a traceback.
-:func:`print_stack` prints the current stack, without generating an
+``print_stack()`` prints the current stack, without generating an
 exception.
 
 .. literalinclude:: traceback_print_stack.py
@@ -374,8 +374,8 @@ The output look like a traceback without an error message.
 
 .. {{{end}}}
 
-:func:`format_stack` prepares the stack trace in the same way that
-:func:`format_exception` prepares the traceback.
+``format_stack()`` prepares the stack trace in the same way that
+``format_exception()`` prepares the traceback.
 
 .. literalinclude:: traceback_format_stack.py
     :caption:
@@ -411,7 +411,7 @@ output.
 
 .. {{{end}}}
 
-The :func:`extract_stack` function works like :func:`extract_tb`.
+The ``extract_stack()`` function works like ``extract_tb()``.
 
 .. literalinclude:: traceback_extract_stack.py
     :caption:

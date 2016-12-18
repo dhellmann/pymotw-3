@@ -20,7 +20,7 @@ data to be compressed or decompressed in memory.
     :caption:
     :start-after: #end_pymotw_header
 
-The :func:`compress` and :func:`decompress` functions both take a
+The ``compress()`` and ``decompress()`` functions both take a
 byte sequence argument and return a byte sequence.
 
 .. {{{cog
@@ -71,7 +71,7 @@ takes up more memory than the uncompressed version.
 ``zlib`` supports several different compression levels, allowing a
 balance between computational cost and the amount of space
 reduction. The default compression level,
-:data:`zlib.Z_DEFAULT_COMPRESSION` is ``-1`` and corresponds to a
+``zlib.Z_DEFAULT_COMPRESSION`` is ``-1`` and corresponds to a
 hard-coded value that compromises between performance and compression
 outcome. This currently corresponds to level ``6``.
 
@@ -114,8 +114,8 @@ Incremental Compression and Decompression
 The in-memory approach has drawbacks that make it impractical for
 real-world use cases, primarily that the system needs enough memory to
 hold both the uncompressed and compressed versions resident in memory
-at the same time.  The alternative is to use :class:`Compress` and
-:class:`Decompress` objects to manipulate data incrementally, so that
+at the same time.  The alternative is to use ``Compress`` and
+``Decompress`` objects to manipulate data incrementally, so that
 the entire data set does not have to fit into memory.
 
 .. literalinclude:: zlib_incremental.py
@@ -123,12 +123,12 @@ the entire data set does not have to fit into memory.
    :start-after: #end_pymotw_header
 
 This example reads small blocks of data from a plain text file and
-passes it to :func:`compress`.  The compressor maintains an internal
+passes it to ``compress()``.  The compressor maintains an internal
 buffer of compressed data.  Since the compression algorithm depends on
 checksums and minimum block sizes, the compressor may not be ready to
 return data each time it receives more input.  If it does not have an
 entire compressed block ready, it returns an empty byte string.  When
-all of the data is fed in, the :func:`flush` method forces the
+all of the data is fed in, the ``flush()`` method forces the
 compressor to close the final block and return the rest of the
 compressed data.
 
@@ -159,7 +159,7 @@ compressed data.
 Mixed Content Streams
 =====================
 
-The :class:`Decompress` class returned by :func:`decompressobj` can
+The ``Decompress`` class returned by ``decompressobj()`` can
 also be used in situations where compressed and uncompressed data is
 mixed together.
 
@@ -188,7 +188,7 @@ Checksums
 
 In addition to compression and decompression functions, ``zlib``
 includes two functions for computing checksums of data,
-:func:`adler32` and :func:`crc32`.  Neither checksum is
+``adler32()`` and ``crc32()``.  Neither checksum is
 cryptographically secure, and they are only intended for use for data
 integrity verification.
 
@@ -229,8 +229,8 @@ the file to the socket used to communicate with the client.
    :start-after: #end_pymotw_header
 
 It has some artificial chunking in place to illustrate the buffering
-behavior that happens when the data passed to :func:`compress` or
-:func:`decompress` does not result in a complete block of compressed
+behavior that happens when the data passed to ``compress()`` or
+``decompress()`` does not result in a complete block of compressed
 or uncompressed output.
 
 The client connects to the socket and requests a file.  Then it loops,

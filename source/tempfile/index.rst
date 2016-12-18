@@ -11,10 +11,10 @@ Creating temporary files with unique names securely, so they cannot be
 guessed by someone wanting to break the application or steal the data,
 is challenging. The ``tempfile`` module provides several functions
 for creating temporary file system resources securely.
-:func:`TemporaryFile` opens and returns an unnamed file,
-:func:`NamedTemporaryFile` opens and returns a named file,
-:class:`SpooledTemporaryFile` holds its content in memory before
-writing to disk, and :class:`TemporaryDirectory` is a context manager
+``TemporaryFile()`` opens and returns an unnamed file,
+``NamedTemporaryFile()`` opens and returns a named file,
+``SpooledTemporaryFile`` holds its content in memory before
+writing to disk, and ``TemporaryDirectory`` is a context manager
 what removes the directory when the context is closed.
 
 Temporary Files
@@ -22,12 +22,12 @@ Temporary Files
 
 Applications that need temporary files to store data, without needing
 to share that file with other programs, should use the
-:func:`TemporaryFile` function to create the files. The function
+``TemporaryFile()`` function to create the files. The function
 creates a file, and on platforms where it is possible, unlinks it
 immediately. This makes it impossible for another program to find or
 open the file, since there is no reference to it in the file system
-table. The file created by :func:`TemporaryFile` is removed
-automatically when it is closed, whether by calling :func:`close` or
+table. The file created by ``TemporaryFile()`` is removed
+automatically when it is closed, whether by calling ``close()`` or
 by using the context manager API and ``with`` statement.
 
 .. literalinclude:: tempfile_TemporaryFile.py
@@ -36,8 +36,8 @@ by using the context manager API and ``with`` statement.
 
 This example illustrates the difference in creating a temporary file
 using a common pattern for making up a name, versus using the
-:func:`TemporaryFile` function. The file returned by
-:func:`TemporaryFile` has no name.
+``TemporaryFile()`` function. The file returned by
+``TemporaryFile()`` has no name.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'tempfile_TemporaryFile.py', break_lines_at=58))
@@ -69,7 +69,7 @@ and read from it.
     :caption:
     :start-after: #end_pymotw_header
 
-After writing, the file handle must be "rewound" using :func:`seek`
+After writing, the file handle must be "rewound" using ``seek()``
 in order to read the data back from it.
 
 .. {{{cog
@@ -112,7 +112,7 @@ Named Files
 There are situations where having a named temporary file is
 important. For applications spanning multiple processes, or even
 hosts, naming the file is the simplest way to pass it between parts of
-the application. The :func:`NamedTemporaryFile` function creates a
+the application. The ``NamedTemporaryFile()`` function creates a
 file without unlinking it, so it retains its name (accessed with the
 :attr:`name` attribute).
 
@@ -142,18 +142,18 @@ Spooled Files
 =============
 
 For temporary files containing relatively small amounts of data, it is
-likely to be more efficient to use a :class:`SpooledTemporaryFile`
+likely to be more efficient to use a ``SpooledTemporaryFile``
 because it holds the file contents in memory using a
-:class:`io.BytesIO` or :class:`io.StringIO` buffer until they reach a
+``io.BytesIO`` or ``io.StringIO`` buffer until they reach a
 threshold size. When the data passes the threshold, it is written to
-disk and the buffer is replaced with a normal :func:`TemporaryFile`.
+disk and the buffer is replaced with a normal ``TemporaryFile()``.
 
 .. literalinclude:: tempfile_SpooledTemporaryFile.py
    :caption:
    :start-after: #end_pymotw_header
 
 This example uses private attributes of the
-:class:`SpooledTemporaryFile` to determine when the "rollover" to disk
+``SpooledTemporaryFile`` to determine when the "rollover" to disk
 has happened. It is not normally necessary to check this status except
 when tuning the buffer size.
 
@@ -173,7 +173,7 @@ when tuning the buffer size.
 .. {{{end}}}
 
 To explicitly cause the buffer to be written to disk, call the
-:func:`rollover` or :func:`fileno` methods.
+``rollover()`` or ``fileno()`` methods.
 
 .. literalinclude:: tempfile_SpooledTemporaryFile_explicit.py
    :caption:
@@ -181,7 +181,7 @@ To explicitly cause the buffer to be written to disk, call the
 
 In this example, because the buffer size is so much larger than the
 amount of data, no file would be created on disk except that
-:func:`rollover` was called.
+``rollover()`` was called.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'tempfile_SpooledTemporaryFile_explicit.py'))
@@ -204,7 +204,7 @@ Temporary Directories
 =====================
 
 When several temporary files are needed, it may be more convenient to
-create a single temporary directory with :class:`TemporaryDirectory`
+create a single temporary directory with ``TemporaryDirectory``
 and open all of the files in that directory.
 
 .. literalinclude:: tempfile_TemporaryDirectory.py
@@ -279,8 +279,8 @@ functions for querying the settings being used at runtime.
     :caption:
     :start-after: #end_pymotw_header
 
-:func:`gettempdir` returns the default directory that will hold all
-of the temporary files and :func:`gettempprefix` returns the string
+``gettempdir()`` returns the default directory that will hold all
+of the temporary files and ``gettempprefix()`` returns the string
 prefix for new file and directory names.
 
 .. {{{cog
@@ -296,7 +296,7 @@ prefix for new file and directory names.
 
 .. {{{end}}}
 
-The value returned by :func:`gettempdir` is set based on a
+The value returned by ``gettempdir()`` is set based on a
 straightforward algorithm of looking through a list of locations for
 the first place the current process can create a file.  The search
 list is:
@@ -316,7 +316,7 @@ list is:
 
 Programs that need to use a global location for all temporary files
 without using any of these environment variables should set
-:const:`tempfile.tempdir` directly by assigning a value to the
+``tempfile.tempdir`` directly by assigning a value to the
 variable.
 
 .. {{{cog

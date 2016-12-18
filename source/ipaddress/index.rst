@@ -16,9 +16,9 @@ Addresses
 =========
 
 The most basic object represents the network address itself. Pass a
-string, integer, or byte sequence to :func:`ip_address` to construct
-an address. The return value will be a :class:`IPv4Address` or
-:class:`IPv6Address` instance, depending on the type of address being
+string, integer, or byte sequence to ``ip_address()`` to construct
+an address. The return value will be a ``IPv4Address`` or
+``IPv6Address`` instance, depending on the type of address being
 used.
 
 .. literalinclude:: ipaddress_addresses.py
@@ -132,7 +132,7 @@ network can contain far more addresses than fit in the output.
 Iterating over the network yields addresses, but not all of them are
 valid for hosts. For example, the base address of the network and the
 broadcast address are both included. To find the addresses that can be
-used by regular hosts on the network, use the :func:`hosts` method,
+used by regular hosts on the network, use the ``hosts()`` method,
 which produces a generator.
 
 .. literalinclude:: ipaddress_network_iterate_hosts.py

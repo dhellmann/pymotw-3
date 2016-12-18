@@ -17,7 +17,7 @@ Command Line Arguments
 The arguments captured by the interpreter are processed there and not
 passed to the program being run.  Any remaining options and arguments,
 including the name of the script itself, are saved to
-:const:`sys.argv` in case the program does need to use them.
+``sys.argv`` in case the program does need to use them.
 
 .. literalinclude:: sys_argv.py
     :caption:
@@ -64,10 +64,10 @@ descriptors by default.
     :caption:
     :start-after: #end_pymotw_header
 
-:const:`stdin` is the standard way to read input, usually from a
-console but also from other programs via a pipeline.  :const:`stdout`
+``stdin`` is the standard way to read input, usually from a
+console but also from other programs via a pipeline.  ``stdout``
 is the standard way to write output for a user (to the console) or to
-be sent to the next program in a pipeline.  :const:`stderr` is
+be sent to the next program in a pipeline.  ``stderr`` is
 intended for use with warning or error messages.
 
 .. {{{cog
@@ -109,7 +109,7 @@ Returning Status
 ================
 
 To return an exit code from a program, pass an integer value to
-:func:`sys.exit`.
+``sys.exit()``.
 
 .. literalinclude:: sys_exit.py
     :caption:

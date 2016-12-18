@@ -24,7 +24,7 @@ level of trust, without transmitting the secret key.
 Signing Messages
 ================
 
-The :func:`new` function creates a new object for calculating a
+The ``new()`` function creates a new object for calculating a
 message signature.  This example uses the default MD5 hash algorithm.
 
 .. literalinclude:: hmac_simple.py
@@ -59,15 +59,15 @@ should be used instead.
     :caption:
     :start-after: #end_pymotw_header
 
-The :func:`new` function takes three arguments. The first is the
+The ``new()`` function takes three arguments. The first is the
 secret key, which should be shared between the two endpoints that are
 communicating so both ends can use the same value. The second value is
 an initial message. If the message content that needs to be
 authenticated is small, such as a timestamp or HTTP POST, the entire
-body of the message can be passed to :func:`new` instead of using the
-:func:`update` method. The last argument is the digest module to be
-used. The default is :const:`hashlib.md5`. This example passes
-``'sha1'``, causing ``hmac`` to use :const:`hashlib.sha1`
+body of the message can be passed to ``new()`` instead of using the
+``update()`` method. The last argument is the digest module to be
+used. The default is ``hashlib.md5``. This example passes
+``'sha1'``, causing ``hmac`` to use ``hashlib.sha1``
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'hmac_sha.py'))
@@ -84,10 +84,10 @@ used. The default is :const:`hashlib.md5`. This example passes
 Binary Digests
 ==============
 
-The previous examples used the :func:`hexdigest` method to produce
+The previous examples used the ``hexdigest()`` method to produce
 printable digests. The hexdigest is a different representation of the
-value calculated by the :func:`digest` method, which is a binary value
-that may include unprintable characters, including :const:`NUL`.  Some
+value calculated by the ``digest()`` method, which is a binary value
+that may include unprintable characters, including ``NUL``.  Some
 web services (Google checkout, Amazon S3) use the base64 encoded
 version of the binary digest instead of the hexdigest.
 
@@ -156,7 +156,7 @@ pickle.
 Now that the data is in the :mod:`BytesIO` buffer, it can be read back
 out again.  Start by reading the line of data with the digest and data
 length.  Then read the remaining data, using the length
-value. :func:`pickle.load` could read directly from the stream, but
+value. ``pickle.load()`` could read directly from the stream, but
 that assumes a trusted data stream and this data is not yet trusted
 enough to unpickle it. Reading the pickle as a string from the stream,
 without actually unpickling the object, is safer.
@@ -166,7 +166,7 @@ without actually unpickling the object, is safer.
 
 Once the pickled data is in memory, the digest value can be
 recalculated and compared against the data read using
-:func:`compare_digest`. If the digests match, it is safe to trust the
+``compare_digest()``. If the digests match, it is safe to trust the
 data and unpickle it.
 
 .. literalinclude:: hmac_pickle.py
@@ -199,7 +199,7 @@ The output shows that the first object is verified and the second is deemed
 
 Comparing two digests with a simple string or bytes comparison can be
 used in a timing attack to expose part or all of the secret key by
-passing digests of different lengths. :func:`compare_digest`
+passing digests of different lengths. ``compare_digest()``
 implements a fast but constant-time comparison function to protect
 against timing attacks.
 

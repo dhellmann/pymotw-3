@@ -62,10 +62,10 @@ In this case, the source translates to four different operations to
 create and populate the dictionary, then save the results to a local
 variable.  Since the Python interpreter is stack-based, the first
 steps are to put the constants onto the stack in the correct order
-with :const:`LOAD_CONST`, and then use :const:`BUILD_MAP` to pop off
+with ``LOAD_CONST``, and then use ``BUILD_MAP`` to pop off
 the new key and value to be added to the dictionary.  The resulting
-:class:`dict` object is bound to the name ``my_dict`` with
-:const:`STORE_NAME`.
+``dict`` object is bound to the name ``my_dict`` with
+``STORE_NAME``.
 
 
 Disassembling Functions
@@ -82,7 +82,7 @@ functions automatically.
 
 The results of disassembling ``dis_function.py`` show the operations
 for loading the function's code object onto the stack and then turning
-it into a function (:const:`LOAD_CONST`, :const:`MAKE_FUNCTION`), but
+it into a function (``LOAD_CONST``, ``MAKE_FUNCTION``), but
 *not* the body of the function.
 
 .. {{{cog
@@ -149,12 +149,12 @@ To see inside the function, the function itself must be passed to
 .. {{{end}}}
 
 To print a summary of the function, including information about the
-arguments and names it uses, call :func:`show_code`, passing the
+arguments and names it uses, call ``show_code()``, passing the
 function as the first argument.
 
 .. literalinclude:: dis_show_code.py
 
-The argument to :func:`show_code` is passed to :func:`code_info`,
+The argument to ``show_code()`` is passed to ``code_info()``,
 which returns a nicely formatted summary of the function, method, code
 string, or other code object, ready to be printed.
 
@@ -314,8 +314,8 @@ error.  There is no ``i`` variable defined, so the value associated
 with the name cannot be loaded onto the stack.
 
 A program can also print the information about an active traceback by
-passing it to :func:`distb` directly.  In this example, there is a
-:class:`DivideByZero` exception, but since the formula has two
+passing it to ``distb()`` directly.  In this example, there is a
+``DivideByZero`` exception, but since the formula has two
 divisions it may not be clear which part is zero.
 
 .. cssclass:: with-linenos
@@ -374,7 +374,7 @@ performance issues. Examining the disassembled code is especially
 useful with tight loops where the number of Python instructions is low
 but they translate to an inefficient set of bytecodes.  The
 helpfulness of the disassembly can be seen by examining a few
-different implementations of a class, :class:`Dictionary`, that reads
+different implementations of a class, ``Dictionary``, that reads
 a list of words and groups them by their first letter.
 
 .. literalinclude:: dis_test_loop.py
@@ -382,9 +382,9 @@ a list of words and groups them by their first letter.
    :start-after: #end_pymotw_header
 
 The test driver application ``dis_test_loop.py`` can be used to run
-each incarnation of the :class:`Dictionary` class.
+each incarnation of the ``Dictionary`` class.
 
-A straightforward, but slow, implementation of :class:`Dictionary`
+A straightforward, but slow, implementation of ``Dictionary``
 starts out like this:
 
 .. cssclass:: with-linenos
@@ -456,7 +456,7 @@ to load the 235886 words in the copy of ``/usr/share/dict/words`` on
 OS X.  That is not too bad, but the accompanying disassembly shows
 that the loop is doing more work than it needs to.  As it enters the
 loop in opcode 13, it sets up an exception context
-(:const:`SETUP_EXCEPT`).  Then it takes six opcodes to find
+(``SETUP_EXCEPT``).  Then it takes six opcodes to find
 ``self.by_letter[word[0]]`` before appending ``word`` to the list.  If
 there is an exception because ``word[0]`` is not in the dictionary
 yet, the exception handler does all of the same work to determine
@@ -522,7 +522,7 @@ after all).
 
 Opcodes 0-6 now find the value of ``self.by_letter`` and save it as a
 local variable ``by_letter``.  Using a local variable only takes a
-single opcode, instead of two (statement 22 uses :const:`LOAD_FAST` to
+single opcode, instead of two (statement 22 uses ``LOAD_FAST`` to
 place the dictionary onto the stack).  After this change, the run time
 is down to 0.0473 seconds.
 
@@ -563,7 +563,7 @@ is down to 0.0473 seconds.
 
 A further optimization, suggested by Brandon Rhodes, is to eliminate
 the Python version of the ``for`` loop entirely. If
-:func:`itertools.groupby` is used to arrange the input, the iteration
+``itertools.groupby()`` is used to arrange the input, the iteration
 is moved to C.  This is safe because the inputs are known to be
 sorted.  If that was not the case, the program would need to sort them
 first.
@@ -635,7 +635,7 @@ during compilation, when possible.
 None of the values in the expressions on lines 5-7 can change the way
 the operation is performed, so the result of the expressions can be
 computed at compilation time and collapsed into single
-:const:`LOAD_CONST` instructions.  That is not true about lines
+``LOAD_CONST`` instructions.  That is not true about lines
 10-12. Because a variable is involved in those expressions, and the
 variable might refer to an object that overloads the operator
 involved, the evaluation has to be delayed to runtime.

@@ -26,7 +26,7 @@ which contains a string ``sample_text``.
 Filling Paragraphs
 ==================
 
-The :func:`fill` function takes text as input and produces formatted
+The ``fill()`` function takes text as input and produces formatted
 text as output.
 
 .. literalinclude:: textwrap_fill.py
@@ -60,7 +60,7 @@ Removing Existing Indentation
 The previous example has embedded tabs and extra spaces mixed into the
 middle of the output, so it is not formatted very cleanly. Removing
 the common whitespace prefix from all of the lines in the sample text
-with :func:`dedent` produces better results and allows the use of
+with ``dedent()`` produces better results and allows the use of
 docstrings or embedded multi-line strings straight from Python code
 while removing the formatting of the code itself. The sample string
 has an artificial indent level introduced for illustrating this
@@ -114,7 +114,7 @@ becomes
 Combining Dedent and Fill
 =========================
 
-Next, the dedented text can be passed through :func:`fill` with a
+Next, the dedented text can be passed through ``fill()`` with a
 few different ``width`` values.
 
 .. literalinclude:: textwrap_fill_width.py
@@ -154,7 +154,7 @@ This produces outputs in the specified widths.
 Indenting Blocks
 ================
 
-Use the :func:`indent` function to add consistent prefix text to all
+Use the ``indent()`` function to add consistent prefix text to all
 of the lines in a string. This example formats the same example text
 as though it was part of an email message being quoted in the reply,
 using ``>`` as the prefix for each line.
@@ -188,7 +188,7 @@ new string and returned.
 .. {{{end}}}
 
 To control which lines receive the new prefix, pass a callable as the
-``predicate`` argument to :func:`indent`. The callable will be invoked for
+``predicate`` argument to ``indent()``. The callable will be invoked for
 each line of text in turn and the prefix will be added for lines where
 the return value is true.
 
@@ -260,7 +260,7 @@ Truncating Long Text
 ====================
 
 To truncate text to create a summary or preview, use
-:func:`shorten`. All existing whitespace such as tabs, newlines, and
+``shorten()``. All existing whitespace such as tabs, newlines, and
 series of multiple spaces will be standardized to a single space. Then
 the text will be truncated to a length less than or equal to what is
 requested, between word boundaries so that no partial words are
@@ -273,7 +273,7 @@ included.
 If non-whitespace text is removed from the original text as part of
 the truncation, it is replaced with a placeholder value. The default
 value ``[...]`` can be replaced by providing a ``placeholder``
-argument to :func:`shorten`.
+argument to ``shorten()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'textwrap_shorten.py'))

@@ -19,11 +19,11 @@ but do not interact with an actual filesystem, and "concrete" classes,
 which extend the API to include operations that reflect or modify data
 on the local filesystem.
 
-The pure classes :class:`PurePosixPath` and :class:`PureWindowsPath`
+The pure classes ``PurePosixPath`` and ``PureWindowsPath``
 can be instantiated and used on any operating system, since they only
 work on names. To instantiate the correct class for working with a
-real filesystem, use :class:`Path` to get either a :class:`PosixPath`
-or :class:`WindowsPath`, depending on the platform.
+real filesystem, use ``Path`` to get either a ``PosixPath``
+or ``WindowsPath``, depending on the platform.
 
 Building Paths
 ==============
@@ -43,7 +43,7 @@ combines the path values as they are given, and does not normalize the
 result when it contains the parent directory reference
 ``".."``. However, if a segment begins with the path separator it is
 interpreted as a new "root" reference in the same way as
-:func:`os.path.join`.  Extra path separators are removed from the
+``os.path.join()``.  Extra path separators are removed from the
 middle of the path value, as in the ``etc`` example here.
 
 .. {{{cog
@@ -62,7 +62,7 @@ middle of the path value, as in the ``etc`` example here.
 
 .. {{{end}}}
 
-The concrete path classes include a :func:`resolve` method for
+The concrete path classes include a ``resolve()`` method for
 normalizing a path by looking at the filesystem for directories and
 symbolic links and producing the absolute path referred to by a name.
 
@@ -88,13 +88,13 @@ target.
 .. {{{end}}}
 
 To build paths when the segments are not known in advance, use
-:func:`joinpath`, passing each path segment as a separate argument.
+``joinpath()``, passing each path segment as a separate argument.
 
 .. literalinclude:: pathlib_joinpath.py
    :caption:
    :start-after: #end_pymotw_header
 
-As with the ``/`` operator, calling :func:`joinpath` creates a new
+As with the ``/`` operator, calling ``joinpath()`` creates a new
 instance.
 
 .. {{{cog
@@ -111,9 +111,9 @@ instance.
 
 Given an existing path object, it is easy to build a new one with
 minor differences such as referring to a different file in the same
-directory. Use :func:`with_name` to create a new path that replaces
+directory. Use ``with_name()`` to create a new path that replaces
 the name portion of a path with a different file name. Use
-:func:`with_suffix` to create a new path that replaces the file name's
+``with_suffix()`` to create a new path that replaces the file name's
 extension with a different value.
 
 .. literalinclude:: pathlib_from_existing.py
@@ -165,7 +165,7 @@ instance.
 There are two ways to navigate "up" the filesystem hierarchy from a
 given path object. The ``parent`` property refers to a new path
 instance for the directory containing the path, the value returned by
-:func:`os.path.dirname`.  The ``parents`` property is an iterable that
+``os.path.dirname()``.  The ``parents`` property is an iterable that
 produces parent directory references, continually going "up" the path
 hierarchy until reaching the root.
 
@@ -195,7 +195,7 @@ member values.
 
 Other parts of the path can be accessed through properties of the path
 object.  The ``name`` property holds the last part of the path, after
-the final path separator (the same value that :func:`os.path.basename`
+the final path separator (the same value that ``os.path.basename()``
 produces). The ``suffix`` property holds the value after the extension
 separator (usually ".") and the ``stem`` property holds the portion of
 the name before the suffix.
@@ -205,7 +205,7 @@ the name before the suffix.
    :start-after: #end_pymotw_header
 
 Although the ``suffix`` and ``stem`` values are similar to the values
-produced by :func:`os.path.splitext`, the values are based only on the
+produced by ``os.path.splitext()``, the values are based only on the
 value of ``name`` and not the full path.
 
 .. {{{cog
@@ -226,7 +226,7 @@ value of ``name`` and not the full path.
 Creating Concrete Paths
 =======================
 
-Instances of the concrete :class:`Path` class can be created from
+Instances of the concrete ``Path`` class can be created from
 string arguments referring to the name (or potential name) of a file,
 directory, or symbolic link on the file system. The class also
 provides several convenience methods for building instances using
@@ -237,7 +237,7 @@ directory and the user's home directory.
    :caption:
    :start-after: #end_pymotw_header
 
-Both methods create :class:`Path` instances pre-populated with an
+Both methods create ``Path`` instances pre-populated with an
 absolute file system reference.
 
 .. {{{cog
@@ -262,15 +262,15 @@ Directory Contents
 
 There are three methods for accessing the directory listings to
 discover the names of files available on the file
-system. :func:`iterdir` is a generator, yielding a new :class:`Path`
+system. ``iterdir()`` is a generator, yielding a new ``Path``
 instance for each item in the containing directory.
 
 .. literalinclude:: pathlib_iterdir.py
    :caption:
    :start-after: #end_pymotw_header
 
-If the :class:`Path` does not refer to a directory, :func:`iterdir`
-raises :class:`NotADirectoryError`.
+If the ``Path`` does not refer to a directory, ``iterdir()``
+raises ``NotADirectoryError``.
 
 .. {{{cog
 .. run_script(cog.inFile, 'rm -f *~', interpreter='')
@@ -309,7 +309,7 @@ raises :class:`NotADirectoryError`.
 
 .. {{{end}}}
 
-Use :func:`glob` to find only files matching a pattern.
+Use ``glob()`` to find only files matching a pattern.
 
 .. literalinclude:: pathlib_glob.py
    :caption:
@@ -353,7 +353,7 @@ parent directory of the script.
 .. {{{end}}}
 
 The glob processor support recursive scanning using the pattern prefix
-``**`` or by calling :func:`rglob` instead of :func:`glob`.
+``**`` or by calling ``rglob()`` instead of ``glob()``.
 
 .. literalinclude:: pathlib_rglob.py
    :caption:
@@ -398,12 +398,12 @@ search is necessary to find the example files matching
 Reading and Writing Files
 =========================
 
-Each :class:`Path` instance includes methods for working with the
+Each ``Path`` instance includes methods for working with the
 contents of the file to which it refers. For immediately retrieving
-the contents, use :func:`read_bytes` or :func:`read_text`. To write to
-the file, use :func:`write_bytes` or :func:`write_text`.  Use the
-:func:`open` method to open the file and retain the file handle,
-instead of passing the name to the built-in :func:`open` function.
+the contents, use ``read_bytes()`` or ``read_text()``. To write to
+the file, use ``write_bytes()`` or ``write_text()``.  Use the
+``open()`` method to open the file and retain the file handle,
+instead of passing the name to the built-in ``open()`` function.
 
 .. literalinclude:: pathlib_read_write.py
    :caption:
@@ -436,8 +436,8 @@ be used to create the associated file system entries.
    :caption:
    :start-after: #end_pymotw_header
 
-If the path already exists, :func:`mkdir` raises a
-:class:`FileExistsError`.
+If the path already exists, ``mkdir()`` raises a
+``FileExistsError``.
 
 .. {{{cog
 .. run_script(cog.inFile, 'rm -rf example_dir', interpreter='')
@@ -465,15 +465,15 @@ If the path already exists, :func:`mkdir` raises a
 
 .. {{{end}}}
 
-Use :func:`symlink_to` to create a symbolic link. The link will be
+Use ``symlink_to()`` to create a symbolic link. The link will be
 named based on the path's value and will refer to the name given as
-argument to :func:`symlink_to`.
+argument to ``symlink_to()``.
 
 .. literalinclude:: pathlib_symlink_to.py
    :caption:
    :start-after: #end_pymotw_header
 
-This example creates a symbolic link, then uses :func:`resolve` to
+This example creates a symbolic link, then uses ``resolve()`` to
 read the link to find what it points to and print the name.
 
 .. {{{cog
@@ -493,7 +493,7 @@ read the link to find what it points to and print the name.
 File Types
 ==========
 
-A :class:`Path` instance includes several methods for testing the type
+A ``Path`` instance includes several methods for testing the type
 of file refered to by the path. This example creates several files of
 different types and tests those as well as a few other device-specific
 files available on the local operating system.
@@ -502,9 +502,9 @@ files available on the local operating system.
    :caption:
    :start-after: #end_pymotw_header
 
-Each of the methods, :func:`is_dir`, :func:`is_file`,
-:func:`is_symlink`, :func:`is_socket`, :func:`is_fifo`,
-:func:`is_block_device`, and :func:`is_char_device`, takes no
+Each of the methods, ``is_dir()``, ``is_file()``,
+``is_symlink()``, ``is_socket()``, ``is_fifo()``,
+``is_block_device()``, and ``is_char_device()``, takes no
 arguments.
 
 .. {{{cog
@@ -562,9 +562,9 @@ File Properties
 ===============
 
 Detailed information about a file can be accessed using the methods
-:func:`stat` or :func:`lstat` (for checking the status of something
+``stat()`` or ``lstat()`` (for checking the status of something
 that might be a symbolic link). These methods produce the same results
-as :func:`os.stat` and :func:`os.lstat`.
+as ``os.stat()`` and ``os.lstat()``.
 
 .. literalinclude:: pathlib_stat.py
    :caption:
@@ -606,13 +606,13 @@ installed. Try passing different filenames on the command line to
 .. {{{end}}}
 
 For simpler access to information about the owner of a file, use
-:func:`owner` and :func:`group`.
+``owner()`` and ``group()``.
 
 .. literalinclude:: pathlib_ownership.py
    :caption:
    :start-after: #end_pymotw_header
 
-While :func:`stat` returns numerical system ID values, these methods
+While ``stat()`` returns numerical system ID values, these methods
 look up the name associated with the IDs.
 
 .. {{{cog
@@ -627,7 +627,7 @@ look up the name associated with the IDs.
 
 .. {{{end}}}
 
-The :func:`touch` method works like the Unix command ``touch``
+The ``touch()`` method works like the Unix command ``touch``
 to create a file or update an existing file's modification time and
 permissions.
 
@@ -664,7 +664,7 @@ Permissions
 ===========
 
 On Unix-like systems, file permissions can be changed using
-:func:`chmod`, passing the mode as an integer. Mode values can be
+``chmod()``, passing the mode as an integer. Mode values can be
 constructed using constants defined in the :mod:`stat` module.  This
 example toggles the user's execute permission bit.
 
@@ -694,13 +694,13 @@ Deleting
 
 There are two methods for removing things from the file system,
 depending on the type.  To remove an empty directory, use
-:func:`rmdir`.
+``rmdir()``.
 
 .. literalinclude:: pathlib_rmdir.py
    :caption:
    :start-after: #end_pymotw_header
 
-A :class:`FileNotFoundError` exception is raised if the
+A ``FileNotFoundError`` exception is raised if the
 post-conditions are already met and the directory does not exist. It
 is also an error to try to remove a directory that is not empty.
 
@@ -732,7 +732,7 @@ is also an error to try to remove a directory that is not empty.
 .. {{{end}}}
 
 For files, symbolic links, and most other path types use
-:func:`unlink`.
+``unlink()``.
 
 .. literalinclude:: pathlib_unlink.py
    :caption:

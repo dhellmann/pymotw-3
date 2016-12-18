@@ -15,12 +15,12 @@ functions in :mod:`select`.
 Operating Model
 ===============
 
-The APIs in ``selectors`` are event-based, similar to :func:`poll`
+The APIs in ``selectors`` are event-based, similar to ``poll()``
 from ``select``. A selector object provides methods for specifying
 what events to look for on a socket, and then lets the caller wait for
 events in a platform-independent way.
 
-Registering interest in an event creates a :class:`SelectorKey`, which
+Registering interest in an event creates a ``SelectorKey``, which
 holds the socket, information about the events of interest, and
 optional application data.  The owner of the selector calls its
 ``select()`` method to learn about events. The return value is a
@@ -32,19 +32,19 @@ Echo Server
 ===========
 
 The echo server example below uses the application data in the
-:class:`SelectorKey` to register a callback function to be invoked on
+``SelectorKey`` to register a callback function to be invoked on
 the new event. The main loop gets the callback from the key and passes
 the socket and event mask to it. As the server starts, it registers
-the :func:`accept` function to be called for read events on the main
+the ``accept()`` function to be called for read events on the main
 server socket. Accepting the connection produces a new socket, which
-is then registered with the :func:`read` function as a callback for
+is then registered with the ``read()`` function as a callback for
 read events.
 
 .. literalinclude:: selectors_echo_server.py
    :caption:
    :start-after: #end_pymotw_header
 
-When :func:`read` receives no data from the socket, it interprets the
+When ``read()`` receives no data from the socket, it interprets the
 read event as the other side of the connection being closed instead of
 sending data. It removes the socket from the selector and closes
 it. In order to avoid an infinite loop, this server also shuts itself

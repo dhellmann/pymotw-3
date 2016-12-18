@@ -15,13 +15,13 @@ Functions vs. Struct Class
 ==========================
 
 There are a set of module-level functions for working with structured
-values, and there is also the :class:`Struct` class.  Format
+values, and there is also the ``Struct`` class.  Format
 specifiers are converted from their string format to a compiled
 representation, similar to the way regular expressions are handled.
 The conversion takes some resources, so it is typically more efficient
-to do it once when creating a :class:`Struct` instance and call
+to do it once when creating a ``Struct`` instance and call
 methods on the instance instead of using the module-level functions.
-All of the following examples use the :class:`Struct` class.
+All of the following examples use the ``Struct`` class.
 
 Packing and Unpacking
 =====================
@@ -42,7 +42,7 @@ ignored when the format is compiled.
     :start-after: #end_pymotw_header
 
 The example converts the packed value to a sequence of hex bytes for
-printing with :func:`binascii.hexlify`, since some of the characters are
+printing with ``binascii.hexlify()``, since some of the characters are
 nulls.
 
 .. {{{cog
@@ -60,13 +60,13 @@ nulls.
 
 .. {{{end}}}
 
-Use :func:`unpack` to extract data from its packed representation.
+Use ``unpack()`` to extract data from its packed representation.
 
 .. literalinclude:: struct_unpack.py
     :caption:
     :start-after: #end_pymotw_header
 
-Passing the packed value to :func:`unpack`, gives basically the same
+Passing the packed value to ``unpack()``, gives basically the same
 values back (note the discrepancy in the floating point value).
 
 .. {{{cog
@@ -94,7 +94,7 @@ explicit endianness directive in the format string.
     :start-after: #end_pymotw_header
 
 :table:`Byte Order Specifiers for struct` lists the byte order
-specifiers used by :class:`Struct`.
+specifiers used by ``Struct``.
 
 .. table::  Byte Order Specifiers for struct
 
@@ -159,7 +159,7 @@ pre-allocated buffers directly.
     :caption:
     :start-after: #end_pymotw_header
 
-The ``size`` attribute of the :class:`Struct` tells us how big the
+The ``size`` attribute of the ``Struct`` tells us how big the
 buffer needs to be.
 
 .. {{{cog

@@ -93,16 +93,16 @@ directories to give interesting recursive comparison options.
 Comparing Files
 ===============
 
-:func:`cmp` compares two files on the file system.
+``cmp()`` compares two files on the file system.
 
 .. literalinclude:: filecmp_cmp.py
    :caption:
    :start-after: #end_pymotw_header
 
-The ``shallow`` argument tells :func:`cmp` whether to look at the
+The ``shallow`` argument tells ``cmp()`` whether to look at the
 contents of the file, in addition to its metadata. The default is to
 perform a shallow comparison using the information available from
-:func:`os.stat`. If the stat results are the same, the files are
+``os.stat()``. If the stat results are the same, the files are
 considered the same so files of the same size created at the same time
 are reported as the same, even if their contents differ. When
 ``shallow`` is ``False``, the contents of the file are always compared.
@@ -122,18 +122,18 @@ are reported as the same, even if their contents differ. When
 .. {{{end}}}
 
 To compare a set of files in two directories without recursing, use
-:func:`cmpfiles`. The arguments are the names of the directories and a
+``cmpfiles()``. The arguments are the names of the directories and a
 list of files to be checked in the two locations. The list of common
 files passed in should contain only filenames (directories always result in a
 mismatch) and the files must be present in both locations. The next
 example shows a simple way to build the common list. The comparison
-also takes the ``shallow`` flag, just as with :func:`cmp`.
+also takes the ``shallow`` flag, just as with ``cmp()``.
 
 .. literalinclude:: filecmp_cmpfiles.py
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`cmpfiles` returns three lists of filenames containing files
+``cmpfiles()`` returns three lists of filenames containing files
 that match, files that do not match, and files that could not be
 compared (due to permission problems or for any other reason).
 
@@ -158,8 +158,8 @@ Comparing Directories
 
 The functions described earlier are suitable for relatively simple
 comparisons.  For recursive comparison of large directory trees or
-for more complete analysis, the :class:`dircmp` class is more
-useful. In its simplest use case, :func:`report` prints a report
+for more complete analysis, the ``dircmp`` class is more
+useful. In its simplest use case, ``report()`` prints a report
 comparing two directories.
 
 .. literalinclude:: filecmp_dircmp_report.py
@@ -170,7 +170,7 @@ The output is a plain-text report showing the results of just the
 contents of the directories given, without recursing. In this case,
 the file "``not_the_same``" is thought to be the same because the contents
 are not being compared. There is no way to have :mod:`dircmp` compare
-the contents of files like :func:`cmp` does.
+the contents of files like ``cmp()`` does.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'filecmp_dircmp_report.py'))
@@ -190,7 +190,7 @@ the contents of files like :func:`cmp` does.
 .. {{{end}}}
 
 For more detail, and a recursive comparison, use
-:func:`report_full_closure`:
+``report_full_closure()``:
 
 .. literalinclude:: filecmp_dircmp_report_full_closure.py
    :caption:
@@ -247,10 +247,10 @@ The output includes comparisons of all parallel subdirectories.
 Using Differences in a Program
 ==============================
 
-Besides producing printed reports, :class:`dircmp` calculates lists of
+Besides producing printed reports, ``dircmp`` calculates lists of
 files that can be used in programs directly. Each of the following
 attributes is calculated only when requested, so creating a
-:class:`dircmp` instance does not incur overhead for unused data.
+``dircmp`` instance does not incur overhead for unused data.
 
 .. literalinclude:: filecmp_dircmp_list.py
    :caption:
@@ -328,7 +328,7 @@ The names of files common to both input directories are saved in
    :caption:
    :start-after: #end_pymotw_header
 
-The "left" directory is the first argument to :func:`dircmp` and the
+The "left" directory is the first argument to ``dircmp()`` and the
 "right" directory is the second.
 
 .. {{{cog
@@ -352,7 +352,7 @@ The "left" directory is the first argument to :func:`dircmp` and the
 
 The common members can be further broken down into files, directories
 and "funny" items (anything that has a different type in the two
-directories or where there is an error from :func:`os.stat`).
+directories or where there is an error from ``os.stat()``).
 
 .. literalinclude:: filecmp_dircmp_common.py
    :caption:
@@ -390,7 +390,7 @@ The differences between files are broken down similarly.
    :caption:
    :start-after: #end_pymotw_header
 
-The file ``not_the_same`` is only being compared via :func:`os.stat`,
+The file ``not_the_same`` is only being compared via ``os.stat()``,
 and the contents are not examined, so it is included in the
 :attr:`same_files` list.
 
@@ -416,7 +416,7 @@ comparison.
    :start-after: #end_pymotw_header
 
 The attribute :attr:`subdirs` is a dictionary mapping the directory
-name to new :class:`dircmp` objects.
+name to new ``dircmp`` objects.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'filecmp_dircmp_subdirs.py'))

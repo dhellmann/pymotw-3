@@ -12,7 +12,7 @@ the same program.
 enabling aspect oriented programming and code reuse beyond what a
 traditional object oriented approach supports.  It also provides a
 class decorator for implementing all of the rich comparison APIs using
-a short-cut, and :class:`partial` objects for creating references to
+a short-cut, and ``partial`` objects for creating references to
 functions with their arguments included.
 
 The :mod:`itertools` module includes functions for creating and

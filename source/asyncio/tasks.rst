@@ -4,15 +4,15 @@
 
 Tasks are one of the primary ways to interact with the event
 loop. Tasks wrap coroutines and track when they are complete. Tasks
-are subclasses of :class:`Future`, so other coroutines can wait for
+are subclasses of ``Future``, so other coroutines can wait for
 them and each has a result that can be retrieved after the task
 completes.
 
 Starting a Task
 ===============
 
-To start a task, use :func:`create_task` to create a
-:class:`Task` instance. The resulting task will run as part of the
+To start a task, use ``create_task()`` to create a
+``Task`` instance. The resulting task will run as part of the
 concurrent operations managed by the event loop as long as the loop is
 running and the coroutine does not return.
 
@@ -44,8 +44,8 @@ This example waits for the task to return a result before the
 Canceling a Task
 ================
 
-By retaining the :class:`Task` object returned from
-:func:`create_task`, it is possible to cancel the operation of the
+By retaining the ``Task`` object returned from
+``create_task()``, it is possible to cancel the operation of the
 task before it completes.
 
 .. literalinclude:: asyncio_cancel_task.py
@@ -53,8 +53,8 @@ task before it completes.
    :start-after: #end_pymotw_header
 
 This example creates and then cancels a task before starting the event
-loop. The result is a :class:`CancelledError` exception from
-:func:`run_until_complete`.
+loop. The result is a ``CancelledError`` exception from
+``run_until_complete()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'asyncio_cancel_task.py', line_break_mode='wrap'))
@@ -74,7 +74,7 @@ loop. The result is a :class:`CancelledError` exception from
 
 If a task is canceled while it is waiting for another concurrent
 operation, the task is notified of its cancellation by having a
-:class:`CancelledError` exception raised at the point where it is
+``CancelledError`` exception raised at the point where it is
 waiting.
 
 .. literalinclude:: asyncio_cancel_task2.py
@@ -104,8 +104,8 @@ already done, if necessary.
 Creating Tasks from Coroutines
 ==============================
 
-The :func:`ensure_future` function returns a :class:`Task` tied to the
-execution of a coroutine. That :class:`Task` instance can then be
+The ``ensure_future()`` function returns a ``Task`` tied to the
+execution of a coroutine. That ``Task`` instance can then be
 passed to other code, which can wait for it without knowing how the
 original coroutine was constructed or called.
 
@@ -113,7 +113,7 @@ original coroutine was constructed or called.
    :caption:
    :start-after: #end_pymotw_header
 
-Note that the coroutine given to :func:`ensure_future` is not started
+Note that the coroutine given to ``ensure_future()`` is not started
 until something uses ``await`` to allow it to be executed.
 
 .. {{{cog

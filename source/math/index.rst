@@ -82,7 +82,7 @@ infinite.
 
 Not all floating point overflows result in ``inf`` values, however.
 Calculating an exponent with floating point values, in particular,
-raises :class:`OverflowError` instead of preserving the ``inf``
+raises ``OverflowError`` instead of preserving the ``inf``
 result.
 
 .. literalinclude:: math_overflow.py
@@ -114,7 +114,7 @@ of dividing a number by infinity is ``nan`` (not a number).
    :start-after: #end_pymotw_header
 
 ``nan`` does not compare as equal to any value, even itself, so to
-check for ``nan`` use :func:`isnan`.
+check for ``nan`` use ``isnan()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'math_isnan.py'))
@@ -132,14 +132,14 @@ check for ``nan`` use :func:`isnan`.
 
 .. {{{end}}}
 
-Use :func:`isfinite` to check for regular numbers or either of the
+Use ``isfinite()`` to check for regular numbers or either of the
 special values ``inf`` or ``nan``.
 
 .. literalinclude:: math_isfinite.py
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`isfinite` returns false for either of the exceptional cases,
+``isfinite()`` returns false for either of the exceptional cases,
 and true otherwise.
 
 .. {{{cog
@@ -164,7 +164,7 @@ Comparing
 
 Comparisons for floating point values can be error prone, with each
 step of the computation potentially introducing errors due to the
-numerical representation. The :func:`isclose` function uses a stable
+numerical representation. The ``isclose()`` function uses a stable
 algorithm to minimize these errors and provide a way for relative as
 well as absolute comparisons. The formula used is equivalent to
 
@@ -172,11 +172,11 @@ well as absolute comparisons. The formula used is equivalent to
 
   abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
 
-By default, :func:`isclose` uses relative comparison with the
+By default, ``isclose()`` uses relative comparison with the
 tolerance set to ``1e-09``, meaning that the difference between the
 values must be less than or equal to ``1e-09`` times the larger
 absolute value between ``a`` and ``b``. Passing a keyword argument
-``rel_tol`` to :func:`isclose` changes the tolerance. In this example,
+``rel_tol`` to ``isclose()`` changes the tolerance. In this example,
 the values must be within 10% of each other.
 
 .. literalinclude:: math_isclose.py
@@ -261,17 +261,17 @@ The ``math`` module includes three functions for converting
 floating point values to whole numbers.  Each takes a different
 approach, and will be useful in different circumstances.
 
-The simplest is :func:`trunc`, which truncates the digits following
+The simplest is ``trunc()``, which truncates the digits following
 the decimal, leaving only the significant digits making up the whole
-number portion of the value.  :func:`floor` converts its input to the
-largest preceding integer, and :func:`ceil` (ceiling) produces the
+number portion of the value.  ``floor()`` converts its input to the
+largest preceding integer, and ``ceil()`` (ceiling) produces the
 largest integer following sequentially after the input value.
 
 .. literalinclude:: math_integers.py
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`trunc` is equivalent to converting to :class:`int` directly.
+``trunc()`` is equivalent to converting to ``int`` directly.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'math_integers.py'))
@@ -298,7 +298,7 @@ largest integer following sequentially after the input value.
 Alternate Representations of Floating Point Values
 ==================================================
 
-:func:`modf` takes a single floating point number and returns a tuple
+``modf()`` takes a single floating point number and returns a tuple
 containing the fractional and whole number parts of the input value.
 
 .. literalinclude:: math_modf.py
@@ -324,7 +324,7 @@ Both numbers in the return value are floats.
 
 .. {{{end}}}
 
-:func:`frexp` returns the mantissa and exponent of a floating point
+``frexp()`` returns the mantissa and exponent of a floating point
 number, and can be used to create a more portable representation of
 the value.
 
@@ -332,7 +332,7 @@ the value.
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`frexp` uses the formula ``x = m * 2**e``, and returns the
+``frexp()`` uses the formula ``x = m * 2**e``, and returns the
 values ``m`` and ``e``.
 
 .. {{{cog
@@ -351,13 +351,13 @@ values ``m`` and ``e``.
 
 .. {{{end}}}
 
-:func:`ldexp` is the inverse of :func:`frexp`.  
+``ldexp()`` is the inverse of ``frexp()``.  
 
 .. literalinclude:: math_ldexp.py
    :caption:
    :start-after: #end_pymotw_header
 
-Using the same formula as :func:`frexp`, :func:`ldexp` takes the
+Using the same formula as ``frexp()``, ``ldexp()`` takes the
 mantissa and exponent values as arguments and returns a floating point
 number.
 
@@ -382,14 +382,14 @@ Positive and Negative Signs
 ===========================
 
 The absolute value of a number is its value without a sign.  Use
-:func:`fabs` to calculate the absolute value of a floating point
+``fabs()`` to calculate the absolute value of a floating point
 number.
 
 .. literalinclude:: math_fabs.py
    :caption:
    :start-after: #end_pymotw_header
 
-In practical terms, the absolute value of a :class:`float` is
+In practical terms, the absolute value of a ``float`` is
 represented as a positive value.
 
 .. {{{cog
@@ -408,14 +408,14 @@ represented as a positive value.
 .. {{{end}}}
 
 To determine the sign of a value, either to give a set of values the
-same sign or to compare two values, use :func:`copysign` to set the
+same sign or to compare two values, use ``copysign()`` to set the
 sign of a known good value.
 
 .. literalinclude:: math_copysign.py
    :caption:
    :start-after: #end_pymotw_header
 
-An extra function like :func:`copysign` is needed because comparing
+An extra function like ``copysign()`` is needed because comparing
 nan and -nan directly with other values does not work.
 
 .. {{{cog
@@ -455,7 +455,7 @@ point numbers using an efficient algorithm that minimizes such errors.
 Given a sequence of ten values, each equal to ``0.1``, the expected
 value for the sum of the sequence is ``1.0``.  Since ``0.1`` cannot be
 represented exactly as a floating point value, however, errors are
-introduced into the sum unless it is calculated with :func:`fsum`.
+introduced into the sum unless it is calculated with ``fsum()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'math_fsum.py'))
@@ -472,7 +472,7 @@ introduced into the sum unless it is calculated with :func:`fsum`.
 
 .. {{{end}}}
 
-:func:`factorial` is commonly used to calculate the number of
+``factorial()`` is commonly used to calculate the number of
 permutations and combinations of a series of objects.  The factorial
 of a positive integer ``n``, expressed ``n!``, is defined recursively as
 ``(n-1)! * n`` and stops with ``0! == 1``.
@@ -481,8 +481,8 @@ of a positive integer ``n``, expressed ``n!``, is defined recursively as
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`factorial` only works with whole numbers, but does accept
-:class:`float` arguments as long as they can be converted to an
+``factorial()`` only works with whole numbers, but does accept
+``float`` arguments as long as they can be converted to an
 integer without losing value.
 
 .. {{{cog
@@ -504,7 +504,7 @@ integer without losing value.
 
 .. {{{end}}}
 
-:func:`gamma` is like :func:`factorial`, except it works with real
+``gamma()`` is like ``factorial()``, except it works with real
 numbers and the value is shifted down by one (gamma is equal to ``(n -
 1)!``).
 
@@ -532,15 +532,15 @@ Since zero causes the start value to be negative, it is not allowed.
 
 .. {{{end}}}
 
-:func:`lgamma` returns the natural logarithm of the absolute value of
+``lgamma()`` returns the natural logarithm of the absolute value of
 gamma for the input value.
 
 .. literalinclude:: math_lgamma.py
    :caption:
    :start-after: #end_pymotw_header
 
-Using :func:`lgamma` retains more precision than calculating the
-logarithm separately using the results of :func:`gamma`.
+Using ``lgamma()`` retains more precision than calculating the
+logarithm separately using the results of ``gamma()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'math_lgamma.py'))
@@ -564,7 +564,7 @@ The modulo operator (``%``) computes the remainder of a division
 expression (i.e., ``5 % 2 = 1``).  The operator built into the
 language works well with integers but, as with so many other floating
 point operations, intermediate calculations cause representational
-issues that result in a loss of data.  :func:`fmod` provides a more
+issues that result in a loss of data.  ``fmod()`` provides a more
 accurate implementation for floating point values.
 
 .. literalinclude:: math_fmod.py
@@ -591,7 +591,7 @@ from that used by ``%``, so the sign of the result is different.
 
 .. {{{end}}}
 
-Use :func:`gcd` to find the largest integer that can divide evenly
+Use ``gcd()`` to find the largest integer that can divide evenly
 into two integers, the greatest common divisor.
 
 .. literalinclude:: math_gcd.py
@@ -621,7 +621,7 @@ Exponents and Logarithms
 
 Exponential growth curves appear in economics, physics, and other
 sciences.  Python has a built-in exponentiation operator ("``**``"),
-but :func:`pow` can be useful when a callable function is needed as an
+but ``pow()`` can be useful when a callable function is needed as an
 argument to another function.
 
 .. literalinclude:: math_pow.py
@@ -631,7 +631,7 @@ argument to another function.
 Raising ``1`` to any power always returns ``1.0``, as does raising any
 value to a power of ``0.0``.  Most operations on the not-a-number
 value ``nan`` return ``nan``.  If the exponent is less than ``1``,
-:func:`pow` computes a root.
+``pow()`` computes a root.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'math_pow.py'))
@@ -661,7 +661,7 @@ is a separate function for computing them.
 Computing the square roots of negative numbers requires *complex
 numbers*, which are not handled by ``math``.  Any attempt to
 calculate a square root of a negative value results in a
-:class:`ValueError`.
+``ValueError``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'math_sqrt.py'))
@@ -678,7 +678,7 @@ calculate a square root of a negative value results in a
 .. {{{end}}}
 
 The logarithm function finds ``y`` where ``x = b ** y``.  By default,
-:func:`log` computes the natural logarithm (the base is *e*).  If a
+``log()`` computes the natural logarithm (the base is *e*).  If a
 second argument is provided, that value is used as the base.
 
 .. literalinclude:: math_log.py
@@ -701,11 +701,11 @@ Logarithms where ``x`` is less than one yield negative results.
 
 .. {{{end}}}
 
-There are three variations of :func:`log`.  Given floating point
+There are three variations of ``log()``.  Given floating point
 representation and rounding errors, the computed value produced by
 ``log(x, b)`` has limited accuracy, especially for some bases.
-:func:`log10` computes ``log(x, 10)``, using a more accurate algorithm
-than :func:`log`.
+``log10()`` computes ``log(x, 10)``, using a more accurate algorithm
+than ``log()``.
 
 .. literalinclude:: math_log10.py
    :caption:
@@ -737,7 +737,7 @@ values.
 
 .. {{{end}}}
 
-Similar to :func:`log10`, :func:`log2` calculates the equivalent of
+Similar to ``log10()``, ``log2()`` calculates the equivalent of
 ``math.log(x, 2)``.
 
 .. literalinclude:: math_log2.py
@@ -772,14 +772,14 @@ more general purpose function.
 
 .. {{{end}}}
 
-:func:`log1p` calculates the Newton-Mercator series (the natural
+``log1p()`` calculates the Newton-Mercator series (the natural
 logarithm of ``1+x``).
 
 .. literalinclude:: math_log1p.py
    :caption:
    :start-after: #end_pymotw_header
 
-:func:`log1p` is more accurate for values of ``x`` very close to zero
+``log1p()`` is more accurate for values of ``x`` very close to zero
 because it uses an algorithm that compensates for round-off errors
 from the initial addition.
 
@@ -798,7 +798,7 @@ from the initial addition.
 
 .. {{{end}}}
 
-:func:`exp` computes the exponential function (``e**x``).
+``exp()`` computes the exponential function (``e**x``).
 
 .. literalinclude:: math_exp.py
    :caption:
@@ -822,7 +822,7 @@ produces more accurate results than the general-purpose equivalent
 
 .. {{{end}}}
 
-:func:`expm1` is the inverse of :func:`log1p`, and calculates ``e**x -
+``expm1()`` is the inverse of ``log1p()``, and calculates ``e**x -
 1``.
 
 .. literalinclude:: math_expm1.py
@@ -830,7 +830,7 @@ produces more accurate results than the general-purpose equivalent
    :start-after: #end_pymotw_header
 
 Small values of ``x`` lose precision when the subtraction is performed
-separately, like with :func:`log1p`.
+separately, like with ``log1p()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'math_expm1.py'))
@@ -861,7 +861,7 @@ trigonometric calculations.  That relationship leads to radians being
 used in trigonometry and calculus, because they result in more compact
 formulas.
 
-To convert from degrees to radians, use :func:`radians`.
+To convert from degrees to radians, use ``radians()``.
 
 .. literalinclude:: math_radians.py
    :caption:
@@ -890,7 +890,7 @@ The formula for the conversion is ``rad = deg * π / 180``.
 
 .. {{{end}}}
 
-To convert from radians to degrees, use :func:`degrees`.
+To convert from radians to degrees, use ``degrees()``.
 
 .. literalinclude:: math_degrees.py
    :caption:
@@ -972,7 +972,7 @@ tangent is infinite.
 
 Given a point ``(x, y)``, the length of the hypotenuse for the
 triangle between the points [(0, 0), (``x``, 0), (``x``, ``y``)] is
-``(x**2 + y**2) ** 1/2``, and can be computed with :func:`hypot`.
+``(x**2 + y**2) ** 1/2``, and can be computed with ``hypot()``.
 
 .. literalinclude:: math_hypot.py
    :caption:
@@ -1006,7 +1006,7 @@ The same function can be used to find the distance between two points.
    :start-after: #end_pymotw_header
 
 Use the difference in the ``x`` and ``y`` values to move one endpoint
-to the origin, and then pass the results to :func:`hypot`.
+to the origin, and then pass the results to ``hypot()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'math_distance_2_points.py'))
@@ -1092,8 +1092,8 @@ hyperbolic cosine and hyperbolic sine form half of a hyperbola.
 
 .. {{{end}}}
 
-Inverse hyperbolic functions :func:`acosh`, :func:`asinh`, and
-:func:`atanh` are also available.
+Inverse hyperbolic functions ``acosh()``, ``asinh()``, and
+``atanh()`` are also available.
 
 Special Functions
 =================
@@ -1136,7 +1136,7 @@ The complimentary error function is ``1 - erf(x)``.
    :caption:
    :start-after: #end_pymotw_header
 
-The implementation of :func:`erfc` avoids precision errors for small
+The implementation of ``erfc()`` avoids precision errors for small
 values of ``x`` when subtracting from 1.
 
 .. {{{cog

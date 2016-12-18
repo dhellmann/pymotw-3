@@ -4,14 +4,14 @@
  namedtuple --- tuple subclass with named fields
 =================================================
 
-The standard :class:`tuple` uses numerical indexes to access its
+The standard ``tuple`` uses numerical indexes to access its
 members.
 
 .. literalinclude:: collections_tuple.py
    :caption:
    :start-after: #end_pymotw_header
 
-This makes :class:`tuples` convenient containers for simple uses.
+This makes ``tuples`` convenient containers for simple uses.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'collections_tuple.py'))
@@ -32,18 +32,18 @@ This makes :class:`tuples` convenient containers for simple uses.
 .. {{{end}}}
 
 On the other hand, remembering which index should be used for each
-value can lead to errors, especially if the :class:`tuple` has a lot
+value can lead to errors, especially if the ``tuple`` has a lot
 of fields and is constructed far from where it is used.  A
-:class:`namedtuple` assigns names, as well as the numerical index, to
+``namedtuple`` assigns names, as well as the numerical index, to
 each member.
 
 Defining
 ========
 
-:class:`namedtuple` instances are just as memory efficient as regular
+``namedtuple`` instances are just as memory efficient as regular
 tuples because they do not have per-instance dictionaries.  Each kind
-of :class:`namedtuple` is represented by its own class, created by
-using the :func:`namedtuple` factory function.  The arguments are the
+of ``namedtuple`` is represented by its own class, created by
+using the ``namedtuple()`` factory function.  The arguments are the
 name of the new class and a string containing the names of the
 elements.
 
@@ -52,7 +52,7 @@ elements.
     :start-after: #end_pymotw_header
 
 As the example illustrates, it is possible to access the fields of the
-:class:`namedtuple` by name using dotted notation (``obj.attr``) as
+``namedtuple`` by name using dotted notation (``obj.attr``) as
 well as using the positional indexes of standard tuples.
 
 .. {{{cog
@@ -74,8 +74,8 @@ well as using the positional indexes of standard tuples.
 
 .. {{{end}}}
 
-Just as with a regular :class:`tuple`, a :class:`namedtuple` is
-immutable. This restriction allows :class:`tuple` instances to have a
+Just as with a regular ``tuple``, a ``namedtuple`` is
+immutable. This restriction allows ``tuple`` instances to have a
 consistent hash value, which makes it possible to use them as keys in
 dictionaries and to be included in sets.
 
@@ -84,7 +84,7 @@ dictionaries and to be included in sets.
    :start-after: #end_pymotw_header
 
 Trying to change a value through its named attribute results in an
-:class:`AttributeError`.
+``AttributeError``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'collections_namedtuple_immutable.py', ignore_error=True))
@@ -115,7 +115,7 @@ keywords.
    :start-after: #end_pymotw_header
 
 As the field names are parsed, invalid values cause
-:class:`ValueError` exceptions.
+``ValueError`` exceptions.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'collections_namedtuple_bad_fields.py'))
@@ -130,7 +130,7 @@ As the field names are parsed, invalid values cause
 
 .. {{{end}}}
 
-In situations where a :class:`namedtuple` is being created based on
+In situations where a ``namedtuple`` is being created based on
 values outside of the control of the program (such as to represent
 the rows returned by a database query, where the schema is not known
 in advance), set the ``rename`` option to ``True`` so the invalid fields
@@ -160,14 +160,14 @@ so the field with name ``class`` becomes ``_1`` and the duplicate
 Special Attributes
 ==================
 
-:class:`namedtuple` provides several useful attributes and methods for
+``namedtuple`` provides several useful attributes and methods for
 working with subclasses and instances. All of these built-in
 properties have names prefixed with underscore (``_``), which by
 convention in most Python programs indicates a private
-attribute. However, for :class:`namedtuple` the prefix is intended to
+attribute. However, for ``namedtuple`` the prefix is intended to
 protect the name from collision with user-provided attribute names.
 
-The names of the fields passed to :class:`namedtuple` to define the
+The names of the fields passed to ``namedtuple`` to define the
 new class are saved in the :attr:`_fields` attribute.
 
 .. literalinclude:: collections_namedtuple_fields.py
@@ -191,15 +191,15 @@ value is the sequence of individual names.
 
 .. {{{end}}}
 
-:class:`namedtuple` instances can be converted to :class:`OrderedDict`
-instances using :func:`_asdict`.
+``namedtuple`` instances can be converted to ``OrderedDict``
+instances using ``_asdict()``.
 
 .. literalinclude:: collections_namedtuple_asdict.py
    :caption:
    :start-after: #end_pymotw_header
 
-The keys of the :class:`OrderedDict` are in the same order as the
-fields for the :class:`namedtuple`.
+The keys of the ``OrderedDict`` are in the same order as the
+fields for the ``namedtuple``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'collections_namedtuple_asdict.py'))
@@ -215,7 +215,7 @@ fields for the :class:`namedtuple`.
 
 .. {{{end}}}
 
-The :func:`_replace` method builds a new instance, replacing the
+The ``_replace()`` method builds a new instance, replacing the
 values of some fields in the process.
 
 .. literalinclude:: collections_namedtuple_replace.py
@@ -223,7 +223,7 @@ values of some fields in the process.
    :start-after: #end_pymotw_header
 
 Although the name implies it is modifying the existing object, because
-:class:`namedtuple` instances are immutable the method actually
+``namedtuple`` instances are immutable the method actually
 returns a new object.
 
 .. {{{cog

@@ -13,7 +13,7 @@ the format popularized by the PC program PKZIP.
 Testing ZIP Files
 =================
 
-The :func:`is_zipfile` function returns a boolean indicating whether
+The ``is_zipfile()`` function returns a boolean indicating whether
 or not the filename passed as an argument refers to a valid ZIP
 archive.
 
@@ -21,8 +21,8 @@ archive.
     :caption:
     :start-after: #end_pymotw_header
 
-If the file does not exist at all, :func:`is_zipfile` returns
-:const:`False`.
+If the file does not exist at all, ``is_zipfile()`` returns
+``False``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'zipfile_is_zipfile.py'))
@@ -42,7 +42,7 @@ If the file does not exist at all, :func:`is_zipfile` returns
 Reading Metadata from an Archive
 ================================
 
-Use the :class:`ZipFile` class to work directly with a ZIP archive. It
+Use the ``ZipFile`` class to work directly with a ZIP archive. It
 supports methods for reading data about existing archives as well as
 modifying the archives by adding additional files.
 
@@ -50,7 +50,7 @@ modifying the archives by adding additional files.
     :caption:
     :start-after: #end_pymotw_header
 
-The :func:`namelist` method returns the names of the files in an
+The ``namelist()`` method returns the names of the files in an
 existing archive.
 
 .. {{{cog
@@ -67,7 +67,7 @@ existing archive.
 
 The list of names is only part of the information available from the
 archive, though. To access all of the metadata about the ZIP
-contents, use the :func:`infolist` or :func:`getinfo` methods.
+contents, use the ``infolist()`` or ``getinfo()`` methods.
 
 .. literalinclude:: zipfile_infolist.py
     :caption:
@@ -97,15 +97,15 @@ of the *PKZIP Application Note* with the ZIP file specification.
 .. {{{end}}}
 
 If the name of the archive member is known in advance, its
-:class:`ZipInfo` object can be retrieved directly with
-:func:`getinfo`.
+``ZipInfo`` object can be retrieved directly with
+``getinfo()``.
 
 .. literalinclude:: zipfile_getinfo.py
     :caption:
     :start-after: #end_pymotw_header
 
-If the archive member is not present, :func:`getinfo` raises a
-:class:`KeyError`.
+If the archive member is not present, ``getinfo()`` raises a
+``KeyError``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'zipfile_getinfo.py'))
@@ -123,7 +123,7 @@ If the archive member is not present, :func:`getinfo` raises a
 Extracting Archived Files From an Archive
 =========================================
 
-To access the data from an archive member, use the :func:`read`
+To access the data from an archive member, use the ``read()``
 method, passing the member's name.
 
 .. literalinclude:: zipfile_read.py
@@ -152,9 +152,9 @@ The data is automatically decompressed, if necessary.
 Creating New Archives
 =====================
 
-To create a new archive, instantiate the :class:`ZipFile` with
+To create a new archive, instantiate the ``ZipFile`` with
 a mode of ``'w'``.  Any existing file is truncated and a new archive
-is started. To add files, use the :func:`write` method.
+is started. To add files, use the ``write()`` method.
 
 .. literalinclude:: zipfile_write.py
     :caption:
@@ -188,8 +188,8 @@ By default, the contents of the archive are not compressed.
 
 To add compression, the :mod:`zlib` module is required. If :mod:`zlib`
 is available, the compression mode for individual files or for the
-archive as a whole can be set using :const:`zipfile.ZIP_DEFLATED`. The
-default compression mode is :const:`zipfile.ZIP_STORED`, which adds
+archive as a whole can be set using ``zipfile.ZIP_DEFLATED``. The
+default compression mode is ``zipfile.ZIP_STORED``, which adds
 the input data to the archive without compressing it.
 
 .. literalinclude:: zipfile_write_compression.py
@@ -225,7 +225,7 @@ This time, the archive member is compressed.
 Using Alternate Archive Member Names
 ====================================
 
-Pass an ``arcname`` value to :func:`write` to add a file to an archive
+Pass an ``arcname`` value to ``write()`` to add a file to an archive
 using a name other than the original filename.
 
 .. literalinclude:: zipfile_write_arcname.py
@@ -261,7 +261,7 @@ Writing Data from Sources Other Than Files
 Sometimes it is necessary to write to a ZIP archive using data that
 did not come from an existing file. Rather than writing the data to a
 file, then adding that file to the ZIP archive, use the
-:func:`writestr` method to add a string of bytes to the archive
+``writestr()`` method to add a string of bytes to the archive
 directly.
 
 .. literalinclude:: zipfile_writestr.py
@@ -269,8 +269,8 @@ directly.
     :start-after: #end_pymotw_header
 
 
-In this case, the ``compress_type`` argument to :class:`ZipFile` was
-used to compress the data, since :func:`writestr` does not take
+In this case, the ``compress_type`` argument to ``ZipFile`` was
+used to compress the data, since ``writestr()`` does not take
 an argument to specify the compression.
 
 .. {{{cog
@@ -298,8 +298,8 @@ Writing with a ZipInfo Instance
 ===============================
 
 Normally, the modification date is computed when a file or string is
-added to the archive.  A :class:`ZipInfo` instance can be passed to
-:func:`writestr` to define the modification date and other metadata.
+added to the archive.  A ``ZipInfo`` instance can be passed to
+``writestr()`` to define the modification date and other metadata.
 
 .. literalinclude:: zipfile_writestr_zipinfo.py
     :caption:
@@ -387,10 +387,10 @@ Python ZIP Archives
 ===================
 
 Python can import modules from inside ZIP archives using
-:mod:`zipimport`, if those archives appear in :data:`sys.path`. The
-:class:`PyZipFile` class can be used to construct a module suitable
-for use in this way. The extra method :func:`writepy` tells
-:class:`PyZipFile` to scan a directory for ``.py`` files and add the
+:mod:`zipimport`, if those archives appear in ``sys.path``. The
+``PyZipFile`` class can be used to construct a module suitable
+for use in this way. The extra method ``writepy()`` tells
+``PyZipFile`` to scan a directory for ``.py`` files and add the
 corresponding ``.pyo`` or ``.pyc`` file to the archive. If neither
 compiled form exists, a ``.pyc`` file is created and added.
 
@@ -398,7 +398,7 @@ compiled form exists, a ``.pyc`` file is created and added.
     :caption:
     :start-after: #end_pymotw_header
 
-With the debug attribute of the :class:`PyZipFile` set to ``3``,
+With the debug attribute of the ``PyZipFile`` set to ``3``,
 verbose debugging is enabled and output is produced as it compiles
 each ``.py`` file it finds.
 

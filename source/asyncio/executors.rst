@@ -14,17 +14,17 @@ separate thread or a separate process.
 Threads
 =======
 
-The :func:`run_in_executor` method of the event loop takes an executor
+The ``run_in_executor()`` method of the event loop takes an executor
 instance, a regular callable to invoke, and any arguments to be passed
-to the callable. It returns a :class:`Future` that can be used to wait
+to the callable. It returns a ``Future`` that can be used to wait
 for the function to finish its work and return something. If no
-executor is passed in, a :class:`ThreadPoolExecutor` is created. This
+executor is passed in, a ``ThreadPoolExecutor`` is created. This
 example explicitly creates an executor to limit the number of worker
 threads it will have available.
 
-A :class:`ThreadPoolExecutor` starts its worker threads and then calls
+A ``ThreadPoolExecutor`` starts its worker threads and then calls
 each of the provided functions once in a thread. This example shows
-how to combine :func:`run_in_executor` and :func:`wait` to have a
+how to combine ``run_in_executor()`` and ``wait()`` to have a
 coroutine yield control to the event loop while blocking functions run
 in separate threads, and then wake back up when those functions are
 finished.
@@ -36,7 +36,7 @@ finished.
 ``asyncio_executor_thread.py`` uses :mod:`logging` to conveniently
 indicate which thread and function are producing each log
 message. Because a separate logger is used in each call to
-:func:`blocks`, the output clearly shows the same threads being reused
+``blocks()``, the output clearly shows the same threads being reused
 to call multiple copies of the function with different arguments.
 
 .. {{{cog
@@ -70,7 +70,7 @@ to call multiple copies of the function with different arguments.
 Processes
 =========
 
-A :class:`ProcessPoolExecutor` works in much the same way, creating a
+A ``ProcessPoolExecutor`` works in much the same way, creating a
 set of worker processes instead of threads. Using separate processes
 requires more system resources, but for computationally-intensive
 operations it can make sense to run a separate task on each CPU core.

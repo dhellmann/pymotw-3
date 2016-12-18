@@ -164,7 +164,7 @@ To identify the group running the current process, combine
 .. {{{end}}}
 
 And to get the group name based on the permissions on a file, look up
-the group returned by :func:`os.stat`.
+the group returned by ``os.stat()``.
 
 .. literalinclude:: grp_getgrgid_fileowner.py
     :caption:

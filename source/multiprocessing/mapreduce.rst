@@ -1,7 +1,7 @@
 Implementing MapReduce
 ======================
 
-The :class:`Pool` class can be used to create a simple single-server
+The ``Pool`` class can be used to create a simple single-server
 MapReduce implementation.  Although it does not give the full benefits
 of distributed processing, it does illustrate how easy it is to break
 some problems down into distributable units of work.
@@ -25,13 +25,13 @@ of the markup.
     :caption:
     :start-after: #end_pymotw_header
 
-The :func:`file_to_words` function converts each input file to a
+The ``file_to_words()`` function converts each input file to a
 sequence of tuples containing the word and the number ``1`` (representing
-a single occurrence) .The data is divided up by :func:`partition`
+a single occurrence) .The data is divided up by ``partition()``
 using the word as the key, so the resulting structure consists of a key
 and a sequence of ``1`` values representing each occurrence of the word.
 The partitioned data is converted to a set of tuples containing a word
-and the count for that word by :func:`count_words` during the
+and the count for that word by ``count_words()`` during the
 reduction phase.
 
 .. {{{cog

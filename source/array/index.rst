@@ -8,7 +8,7 @@
 :Purpose: Manage sequences of fixed-type numerical data efficiently.
 
 The ``array`` module defines a sequence data structure that looks
-very much like a :class:`list`, except that all of the members have to
+very much like a ``list``, except that all of the members have to
 be of the same primitive type. The types supported are all numeric or
 other fixed-size primitive types such as bytes.
 
@@ -62,7 +62,7 @@ complete list of type codes.
 Initialization
 ==============
 
-An :class:`array` is instantiated with an argument describing the type
+An ``array`` is instantiated with an argument describing the type
 of data to be allowed, and possibly an initial sequence of data to
 store in the array.
 
@@ -92,7 +92,7 @@ and is initialized with a simple byte string.
 Manipulating Arrays
 ===================
 
-An :class:`array` can be extended and otherwise manipulated in the
+An ``array`` can be extended and otherwise manipulated in the
 same ways as other Python sequences.
 
 .. literalinclude:: array_sequence.py
@@ -147,14 +147,14 @@ bytes to the appropriate types.
 
 .. {{{end}}}
 
-:func:`tofile` uses :func:`tobytes` to format the data and `fromfile`
-uses :func:`frombytes` to convert it back to an array instance.
+``tofile()`` uses ``tobytes()`` to format the data and `fromfile`
+uses ``frombytes()`` to convert it back to an array instance.
 
 .. literalinclude:: array_tobytes.py
    :caption:
    :start-after: #end_pymotw_header
 
-Both :func:`tobytes` and :func:`frombytes` work on byte strings, not
+Both ``tobytes()`` and ``frombytes()`` work on byte strings, not
 unicode strings.
 
 .. {{{cog
@@ -183,7 +183,7 @@ iterating over the elements from Python.
     :caption:
     :start-after: #end_pymotw_header
 
-The :func:`byteswap` method switches the byte order of the items in
+The ``byteswap()`` method switches the byte order of the items in
 the array from within C, so it is much more efficient than looping
 over the data in Python.
 

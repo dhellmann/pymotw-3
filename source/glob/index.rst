@@ -69,7 +69,7 @@ name. For example, ``dir/*``.
 
 The pattern matches every path name (file or directory) in the
 directory dir, without recursing further into subdirectories. The data
-returned by :func:`glob` is not sorted, so the examples here sort it
+returned by ``glob()`` is not sorted, so the examples here sort it
 to make studying the results easier.
 
 .. {{{cog
@@ -187,7 +187,7 @@ Escaping Meta-characters
 
 Sometimes it is necessary to search for files with names containing
 the special meta-characters ``glob`` uses for its patterns. The
-:func:`escape` function builds a suitable pattern with the special
+``escape()`` function builds a suitable pattern with the special
 characters "escaped" so they are not expanded or interpreted as
 special by ``glob``.
 

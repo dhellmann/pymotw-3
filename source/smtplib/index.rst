@@ -7,7 +7,7 @@
 
 :Purpose: Interact with SMTP servers, including sending email.
 
-``smtplib`` includes the class :class:`SMTP`, which can be used to
+``smtplib`` includes the class ``SMTP``, which can be used to
 communicate with mail servers to send mail.
 
 .. note::
@@ -20,10 +20,10 @@ communicate with mail servers to send mail.
 Sending an Email Message
 ========================
 
-The most common use of :class:`SMTP` is to connect to a mail server
+The most common use of ``SMTP`` is to connect to a mail server
 and send a message.  The mail server host name and port can be passed
-to the constructor, or :func:`connect` can be invoked explicitly.
-Once connected, call :func:`sendmail` with the envelope parameters and
+to the constructor, or ``connect()`` can be invoked explicitly.
+Once connected, call ``sendmail()`` with the envelope parameters and
 body of the message.  The message text should be fully formed and
 comply with RFC 5322, since ``smtplib`` does not modify the
 contents or headers at all.  That means the ``From`` and ``To``
@@ -75,7 +75,7 @@ output at all.
 	reply: b'221 Bye\r\n'
 	reply: retcode (221); Msg: b'Bye'
 
-The second argument to :func:`sendmail`, the recipients, is passed as
+The second argument to ``sendmail()``, the recipients, is passed as
 a list.  Any number of addresses can be included in the list to have
 the message delivered to each of them in turn.  Since the envelope
 information is separate from the message headers, it is possible to
@@ -86,15 +86,15 @@ argument, but not in the message header.
 Authentication and Encryption
 =============================
 
-The :class:`SMTP` class also handles authentication and TLS (transport
+The ``SMTP`` class also handles authentication and TLS (transport
 layer security) encryption, when the server supports them.  To
-determine if the server supports TLS, call :func:`ehlo` directly to
+determine if the server supports TLS, call ``ehlo()`` directly to
 identify the client to the server and ask it what extensions are
-available.  Then call :func:`has_extn` to check the results.  After
-TLS is started, :func:`ehlo` must be called again before
+available.  Then call ``has_extn()`` to check the results.  After
+TLS is started, ``ehlo()`` must be called again before
 authenticating. Many mail hosting providers now *only* support
 TLS-based connections. For communicating with those servers, use
-:class:`SMTP_SSL` to start off with an encrypted connection.
+``SMTP_SSL`` to start off with an encrypted connection.
 
 .. literalinclude:: smtplib_authenticated.py
     :caption:

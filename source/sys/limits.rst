@@ -14,14 +14,14 @@ The primary implementation of Python (CPython) uses *reference
 counting* and *garbage collection* for automatic memory management.
 An object is automatically marked to be collected when its reference
 count drops to zero.  To examine the reference count of an existing
-object, use :func:`getrefcount`.
+object, use ``getrefcount()``.
 
 .. literalinclude:: sys_getrefcount.py
     :caption:
     :start-after: #end_pymotw_header
 
 The value reported is actually one higher than expected because there
-is a temporary reference to the object held by :func:`getrefcount`
+is a temporary reference to the object held by ``getrefcount()``
 itself.
 
 .. {{{cog
@@ -55,7 +55,7 @@ objects are.
     :caption:
     :start-after: #end_pymotw_header
 
-:func:`getsizeof` reports the size of an object in bytes.
+``getsizeof()`` reports the size of an object in bytes.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'sys_getsizeof.py'))
@@ -102,7 +102,7 @@ consumed.
 .. {{{end}}}
 
 For a more complete estimate of the space used by a class, provide a
-:func:`__sizeof__` method to compute the value by aggregating the
+``__sizeof__()`` method to compute the value by aggregating the
 sizes of attributes of an object.
 
 .. literalinclude:: sys_getsizeof_custom.py
@@ -110,7 +110,7 @@ sizes of attributes of an object.
     :start-after: #end_pymotw_header
 
 This version adds the base size of the object to the sizes of all of
-the attributes stored in the internal :data:`__dict__`.
+the attributes stored in the internal ``__dict__``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'sys_getsizeof_custom.py'))
@@ -130,15 +130,15 @@ Recursion
 Allowing infinite recursion in a Python application may introduce a
 stack overflow in the interpreter itself, leading to a crash. To
 eliminate this situation, the interpreter provides a way to control
-the maximum recursion depth using :func:`setrecursionlimit` and
-:func:`getrecursionlimit`.
+the maximum recursion depth using ``setrecursionlimit()`` and
+``getrecursionlimit()``.
 
 .. literalinclude:: sys_recursionlimit.py
     :caption:
     :start-after: #end_pymotw_header
 
 Once the recursion limit is reached, the interpreter raises a
-:class:`RuntimeError` exception so the
+``RuntimeError`` exception so the
 program has an opportunity to handle the situation.
 
 .. {{{cog
@@ -177,9 +177,9 @@ to system.
     :caption:
     :start-after: #end_pymotw_header
 
-:const:`maxsize` is the maximum size of a list, dictionary, string, or
+``maxsize`` is the maximum size of a list, dictionary, string, or
 other data structure dictated by the C interpreter's size type.
-:const:`maxunicode` is the largest integer Unicode point supported by
+``maxunicode`` is the largest integer Unicode point supported by
 the interpreter as currently configured.
 
 .. {{{cog
@@ -198,7 +198,7 @@ the interpreter as currently configured.
 Floating Point Values
 =====================
 
-The structure :data:`float_info` contains information about the
+The structure ``float_info`` contains information about the
 floating-point type representation used by the interpreter, based on
 the underlying system's :c:type:`float` implementation.
 
@@ -245,7 +245,7 @@ examples were produced on OS X 10.9.5 on an Intel Core i7.
 Integer Values
 ==============
 
-The structure :data:`int_info` holds information about the internal
+The structure ``int_info`` holds information about the internal
 representation of integers used by the interpreter.
 
 .. literalinclude:: sys_int_info.py
@@ -282,7 +282,7 @@ with the configuration flag ``--enable-big-digits``.
 Byte Ordering
 =============
 
-:const:`byteorder` is set to the native byte order.
+``byteorder`` is set to the native byte order.
 
 .. literalinclude:: sys_byteorder.py
    :caption:

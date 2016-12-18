@@ -59,7 +59,7 @@ expand to 248 bytes after being encoded.
 Base 64 Decoding
 ================
 
-:func:`b64decode` converts an encoded string back to the original
+``b64decode()`` converts an encoded string back to the original
 form by taking four bytes and converting them to the original three, using a
 lookup table.
 
@@ -86,7 +86,7 @@ evenly divisible by 24, in this example.
 
 .. {{{end}}}
 
-The value returned from :func:`b64decode` is a byte string. If the
+The value returned from ``b64decode()`` is a byte string. If the
 contents are known to be text, the byte string can be converted to a
 unicode object. However, the point of using base 64 encoding is to be
 able to transmit binary data, and so it is not always safe to assume
@@ -187,8 +187,8 @@ space-efficient than base 64.
 
 There are several Base85 encodings and different variations are used
 in Mercurial, git, and the PDF file format. Python includes two
-implementations, :func:`b85encode` implements the version used in Git
-and Mercurial while :func:`a85encode` implements the Ascii85 variant
+implementations, ``b85encode()`` implements the version used in Git
+and Mercurial while ``a85encode()`` implements the Ascii85 variant
 used by PDF files.
 
 .. {{{cog

@@ -15,19 +15,19 @@ Decorators
 ==========
 
 The primary tool supplied by the ``functools`` module is the class
-:class:`partial`, which can be used to "wrap" a callable object with
+``partial``, which can be used to "wrap" a callable object with
 default arguments. The resulting object is itself callable and can be
 treated as though it is the original function.  It takes all of the
 same arguments as the original, and can be invoked with extra
-positional or named arguments as well.  A :class:`partial` can be used
+positional or named arguments as well.  A ``partial`` can be used
 instead of a ``lambda`` to provide default arguments to a
 function, while leaving some arguments unspecified.
 
 Partial Objects
 ---------------
 
-This example shows two simple :class:`partial` objects for the
-function :func:`myfunc`.  The output of :func:`show_details` includes
+This example shows two simple ``partial`` objects for the
+function ``myfunc()``.  The output of ``show_details()`` includes
 the :attr:`func`, :attr:`args`, and :attr:`keywords` attributes of the
 partial object.
 
@@ -35,7 +35,7 @@ partial object.
     :caption:
     :start-after: #end_pymotw_header
 
-At the end of the example, the first :class:`partial` created is
+At the end of the example, the first ``partial`` created is
 invoked without passing a value for ``a``, causing an exception.
 
 .. {{{cog
@@ -82,18 +82,18 @@ invoked without passing a value for ``a``, causing an exception.
 Acquiring Function Properties
 -----------------------------
 
-The :class:`partial` object does not have :attr:`__name__` or :attr:`__doc__`
+The ``partial`` object does not have :attr:`__name__` or :attr:`__doc__`
 attributes by default, and without those attributes, decorated
-functions are more difficult to debug. Using :func:`update_wrapper`,
+functions are more difficult to debug. Using ``update_wrapper()``,
 copies or adds attributes from the original function to the
-:class:`partial` object.
+``partial`` object.
 
 .. literalinclude:: functools_update_wrapper.py
     :caption:
     :start-after: #end_pymotw_header
 
 The attributes added to the wrapper are defined in
-:const:`WRAPPER_ASSIGNMENTS`, while :const:`WRAPPER_UPDATES` lists
+``WRAPPER_ASSIGNMENTS``, while ``WRAPPER_UPDATES`` lists
 values to be modified.
 
 .. {{{cog
@@ -170,12 +170,12 @@ This example creates partials from an instance of a class with a
 Methods and Functions
 ---------------------
 
-While :func:`partial` returns a callable ready to be used directly,
-:func:`partialmethod` returns a callable ready to be used as an
+While ``partial()`` returns a callable ready to be used directly,
+``partialmethod()`` returns a callable ready to be used as an
 unbound method of an object. In the following example, the same
 standalone function is added as an attribute of ``MyClass`` twice,
-once using :func:`partialmethod` as ``method1()`` and again using
-:func:`partial` as ``method2()``.
+once using ``partialmethod()`` as ``method1()`` and again using
+``partial()`` as ``method2()``.
 
 .. literalinclude:: functools_partialmethod.py
    :caption:
@@ -185,7 +185,7 @@ once using :func:`partialmethod` as ``method1()`` and again using
 instance is passed as the first argument just as with methods defined
 normally. ``method2()`` is not set up as a bound method, and so the
 ``self`` argument must be passed explicitly, or the call will result
-in a :class:`TypeError`.
+in a ``TypeError``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'functools_partialmethod.py', line_break_mode='wrap'))
@@ -220,8 +220,8 @@ properties of the original "bare" function.
     :caption:
     :start-after: #end_pymotw_header
 
-``functools`` provides a decorator, :func:`wraps`, that applies
-:func:`update_wrapper` to the decorated function.
+``functools`` provides a decorator, ``wraps()``, that applies
+``update_wrapper()`` to the decorated function.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'functools_wraps.py'))
@@ -264,13 +264,13 @@ properties of the original "bare" function.
 Comparison
 ==========
 
-Under Python 2, classes could define a :func:`__cmp__` method that
+Under Python 2, classes could define a ``__cmp__()`` method that
 returns ``-1``, ``0``, or ``1`` based on whether the object is less
 than, equal to, or greater than the item being compared.  Python 2.1
-introduced the *rich comparison* methods API (:func:`__lt__`,
-:func:`__le__`, :func:`__eq__`, :func:`__ne__`, :func:`__gt__`, and
-:func:`__ge__`), which perform a single comparison operation and return
-a boolean value.  Python 3 deprecated :func:`__cmp__` in favor of
+introduced the *rich comparison* methods API (``__lt__()``,
+``__le__()``, ``__eq__()``, ``__ne__()``, ``__gt__()``, and
+``__ge__()``), which perform a single comparison operation and return
+a boolean value.  Python 3 deprecated ``__cmp__()`` in favor of
 these new methods and ``functools`` provides tools to make it
 easier to write classes that comply with the new comparison
 requirements in Python 3.
@@ -282,14 +282,14 @@ The rich comparison API is designed to allow classes with complex
 comparisons to implement each test in the most efficient way possible.
 However, for classes where comparison is relatively simple, there is
 no point in manually creating each of the rich comparison methods.
-The :func:`total_ordering` class decorator takes a class that provides
+The ``total_ordering()`` class decorator takes a class that provides
 some of the methods, and adds the rest of them.
 
 .. literalinclude:: functools_total_ordering.py
    :caption:
    :start-after: #end_pymotw_header
 
-The class must provide implementation of :func:`__eq__` and one other
+The class must provide implementation of ``__eq__()`` and one other
 rich comparison method.  The decorator adds implementations of the
 rest of the methods that work by using the comparisons provided.
 
@@ -340,9 +340,9 @@ Collation Order
 ---------------
 
 Since old-style comparison functions are deprecated in Python 3, the
-:data:`cmp` argument to functions like :func:`sort` are also no longer
+``cmp`` argument to functions like ``sort()`` are also no longer
 supported.  Older programs that use comparison functions can use
-:func:`cmp_to_key` to convert them to a function that returns a
+``cmp_to_key()`` to convert them to a function that returns a
 *collation key*, which is used to determine the position in the final
 sequence.
 
@@ -350,13 +350,13 @@ sequence.
    :caption:
    :start-after: #end_pymotw_header
 
-Normally :func:`cmp_to_key` would be used directly, but in this
+Normally ``cmp_to_key()`` would be used directly, but in this
 example an extra wrapper function is introduced to print out more
 information as the key function is being called.
 
-The output shows that :func:`sorted` starts by calling
-:func:`get_key_wrapper` for each item in the sequence to produce a
-key.  The keys returned by :func:`cmp_to_key` are instances of a class
+The output shows that ``sorted()`` starts by calling
+``get_key_wrapper()`` for each item in the sequence to produce a
+key.  The keys returned by ``cmp_to_key()`` are instances of a class
 defined in ``functools`` that implements the rich comparison API
 using the old-style comparison function passed in.  After all of the
 keys are created, the sequence is sorted by comparing the keys.
@@ -394,13 +394,13 @@ keys are created, the sequence is sorted by comparing the keys.
 Caching
 =======
 
-The :func:`lru_cache` decorator wraps a function in a
+The ``lru_cache()`` decorator wraps a function in a
 least-recently-used cache. Arguments to the function are used to build
 a hash key, which is then mapped to the result. Subsequent calls with
 the same arguments will fetch the value from the cache instead of
 calling the function. The decorator also adds methods to the function
-to examine the state of the cache (:func:`cache_info`) and empty the
-cache (:func:`cache_clear`).
+to examine the state of the cache (``cache_info()``) and empty the
+cache (``cache_clear()``).
 
 .. literalinclude:: functools_lru_cache.py
    :caption:
@@ -485,7 +485,7 @@ dropped and replaced with the new result.
 
 .. {{{end}}}
 
-The keys for the cache managed by :func:`lru_cache` must be hashable,
+The keys for the cache managed by ``lru_cache()`` must be hashable,
 so all of the arguments to the function wrapped with the cache lookup
 must be hashable.
 
@@ -494,7 +494,7 @@ must be hashable.
    :start-after: #end_pymotw_header
 
 If any object that can't be hashed is passed in to
-the function, a :class:`TypeError` is raised.
+the function, a ``TypeError`` is raised.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'functools_lru_cache_arguments.py'))
@@ -513,7 +513,7 @@ the function, a :class:`TypeError` is raised.
 Reducing a Data Set
 ===================
 
-The :func:`reduce` function takes a callable and a sequence of data as
+The ``reduce()`` function takes a callable and a sequence of data as
 input and produces a single value as output based on invoking the
 callable with the values from the sequence and accumulating the
 resulting output.
@@ -549,7 +549,7 @@ update a previously computed value with new inputs.
    :start-after: #end_pymotw_header
 
 In this example a previous sum of ``99`` is used to initialize the
-value computed by :func:`reduce`.
+value computed by ``reduce()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'functools_reduce_initializer.py'))
@@ -580,7 +580,7 @@ Because the initializer argument serves as a default, but is also
 combined with the new values if the input sequence is not empty, it is
 important to consider carefully whether to use it. When it does not
 make sense to combine the default with new values, it is better to
-catch the :class:`TypeError` rather than passing an initializer.
+catch the ``TypeError`` rather than passing an initializer.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'functools_reduce_short_sequences.py'))
@@ -607,7 +607,7 @@ especially when dealing with the difference between a list of items
 and a single item. It is simple enough to check the type of an
 argument directly, but in cases where the behavioral difference can be
 isolated into separate functions ``functools`` provides the
-:func:`singledispatch` decorator to register a set of *generic
+``singledispatch()`` decorator to register a set of *generic
 functions* for automatic switching based on the type of the first
 argument to a function.
 
@@ -615,11 +615,11 @@ argument to a function.
    :caption:
    :start-after: #end_pymotw_header
 
-The :func:`register` attribute of the new function serves as another
+The ``register()`` attribute of the new function serves as another
 decorator for registering alternative implementations. The first
-function wrapped with :func:`singledispatch` is the default
+function wrapped with ``singledispatch()`` is the default
 implementation if no other type-specific function is found, as with
-the :class:`float` case in this example.
+the ``float`` case in this example.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'functools_singledispatch.py'))
