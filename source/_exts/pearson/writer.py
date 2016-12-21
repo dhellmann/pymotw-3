@@ -818,7 +818,7 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
         self.body.append('}')
 
     def visit_desc_addname(self, node):
-        self.body.append(r'\sphinxcode{')
+        self.body.append(r'\sphinxcode{')  # KEEP
         self.literal_whitespace += 1
 
     def depart_desc_addname(self, node):
@@ -838,7 +838,7 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
         self.body.append(r'}')
 
     def visit_desc_name(self, node):
-        self.body.append(r'\sphinxbfcode{')
+        self.body.append(r'\sphinxbfcode{')  # KEEP
         self.no_contractions += 1
         self.literal_whitespace += 1
 
