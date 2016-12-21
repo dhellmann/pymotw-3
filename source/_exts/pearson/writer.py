@@ -1713,7 +1713,7 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
         if self.in_title:
             self.body.append(r'\texttt{')
         else:
-            self.body.append(r'\sphinxcode{')
+            self.body.append(r'\sphinxcode{') # KEEP
 
     def depart_literal(self, node):
         self.no_contractions -= 1
