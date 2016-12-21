@@ -356,8 +356,8 @@ latex_elements = {
     # 'wrapperclass': 'newphstyle',
 
     # The font size ('10pt', '11pt' or '12pt').
-    'pointsize': '11pt',
-    # 'pointsize': '10pt',
+    #'pointsize': '11pt',
+    'pointsize': '10pt',  # this size is used by Pearson's Dev Lib template
 
     # Use a chapter heading that does not spell out the chapter
     # number.
