@@ -1598,12 +1598,11 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
                 # mark up as termreference
                 self.body.append(r'\sphinxtermref{')
             else:
-                self.body.append(r'\sphinxcrossref{')
                 if self.builder.config.latex_show_pagerefs and not \
                    self.in_production_list:
-                    self.context.append('}}} (%s)' % self.hyperpageref(id))
+                    self.context.append('}} (%s)' % self.hyperpageref(id))
                 else:
-                    self.context.append('}}}')
+                    self.context.append('}}')
         else:
             self.builder.warn('unusable reference target found: %s' % uri,
                               (self.curfilestack[-1], node.line))
