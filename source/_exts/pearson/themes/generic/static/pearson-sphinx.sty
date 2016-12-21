@@ -9,11 +9,6 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesPackage{sphinx}[2010/01/15 LaTeX package (Sphinx markup)]
 
-% Redefine these colors to your liking in the preamble.
-\definecolor{TitleColor}{rgb}{0.0,0.0,0.0}
-\definecolor{InnerLinkColor}{rgb}{0.0,0.0,0.0}
-\definecolor{OuterLinkColor}{rgb}{0.0,0.0,0.0}
-
 % this is the \ltx@ifundefined of ltxcmds.sty, which is loaded by
 % hyperref.sty, but we need it before, and initial ltxcmds.sty
 % as in TL2009/Debian had wrong definition.
@@ -45,7 +40,4 @@
 \def\thempfootnote{\arabic{mpfootnote}}
 
 % Include hyperref last.
-\RequirePackage[colorlinks,breaklinks,
-                linkcolor=InnerLinkColor,filecolor=OuterLinkColor,
-                menucolor=OuterLinkColor,urlcolor=OuterLinkColor,
-                citecolor=InnerLinkColor]{hyperref}
+\RequirePackage[breaklinks]{hyperref}
