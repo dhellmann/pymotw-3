@@ -145,7 +145,7 @@ bytes to the appropriate types.
 
 .. {{{end}}}
 
-``tofile()`` uses ``tobytes()`` to format the data and `fromfile`
+``tofile()`` uses ``tobytes()`` to format the data and ``fromfile()``
 uses ``frombytes()`` to convert it back to an array instance.
 
 .. literalinclude:: array_tobytes.py
