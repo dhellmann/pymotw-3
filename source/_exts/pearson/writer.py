@@ -1938,9 +1938,6 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
         elif classes in [['accelerator']]:
             self.body.append(r'\sphinxaccelerator{')
             self.context.append('}')
-        elif classes and not self.in_title:
-            self.body.append(r'\DUrole{%s}{' % ','.join(classes))
-            self.context.append('}')
         else:
             self.context.append('')
 
