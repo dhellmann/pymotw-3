@@ -1685,7 +1685,7 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
         return self.depart_literal_emphasis(node)
 
     def visit_title_reference(self, node):
-        self.body.append(r'\sphinxtitleref{')
+        self.body.append(r'\emph{')
 
     def depart_title_reference(self, node):
         self.body.append('}')
