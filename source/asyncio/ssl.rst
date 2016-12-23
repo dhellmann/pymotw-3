@@ -62,7 +62,7 @@ The new version sends a zero byte (``b'\x00'``).
 .. literalinclude:: asyncio_echo_client_ssl.py
    :lines: 39-48
 
-The ``echo()`` coroutine in the server must look for the null byte and
+The ``echo()`` coroutine in the server must look for the NULL byte and
 close the client connection when it is received.
 
 .. literalinclude:: asyncio_echo_server_ssl.py
