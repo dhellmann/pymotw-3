@@ -20,13 +20,15 @@ async def echo(reader, writer):
     log.debug('connection accepted')
     while True:
         data = await reader.read(128)
+        terminate = data.endswith(b'\x00')
+        data = data.rstrip(b'\x00')
         if data:
             log.debug('received {!r}'.format(data))
             writer.write(data)
             await writer.drain()
             log.debug('sent {!r}'.format(data))
-        else:
-            log.debug('closing')
+        if not data or terminate:
+            log.debug('message terminated, closing connection')
             writer.close()
             return
 

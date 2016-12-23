@@ -33,7 +33,7 @@ and key just generated and then pass the context to
 ``start_server()``.
 
 .. literalinclude:: asyncio_echo_server_ssl.py
-   :lines: 44-55
+   :lines: 46-56
 
 Similar changes are needed in the client. The old version uses
 ``open_connection()`` to create the socket connected to the server.
@@ -50,18 +50,23 @@ certificate needs to be loaded.
 
 One other small changes is needed in the client. Because the SSL
 connection does not support sending an end-of-file (EOF), the client
-closes its outgoing connection to the server to signal that it is
-done.
+uses a NULL byte as a message terminator instead.
 
 The old version of the client send loop uses ``write_eof()``.
 
 .. literalinclude:: asyncio_echo_client_coroutine.py
    :lines: 28-36
 
-The new version uses ``close()``.
+The new version sends a zero byte (``b'\x00'``).
 
 .. literalinclude:: asyncio_echo_client_ssl.py
-   :lines: 39-49
+   :lines: 39-48
+
+The ``echo()`` coroutine in the server must look for the NULL byte and
+close the client connection when it is received.
+
+.. literalinclude:: asyncio_echo_server_ssl.py
+   :lines: 17-33
 
 Running the server in one window, and the client in another, produces
 this output.
@@ -73,12 +78,12 @@ this output.
     $ python3 asyncio_echo_server_ssl.py
     asyncio: Using selector: KqueueSelector
     main: starting up on localhost port 10000
-    echo_::1_55235: connection accepted
-    echo_::1_55235: received b'This is the message. '
-    echo_::1_55235: sent b'This is the message. '
-    echo_::1_55235: received b'It will be sent in parts.'
-    echo_::1_55235: sent b'It will be sent in parts.'
-    echo_::1_55235: closing
+    echo_::1_53957: connection accepted
+    echo_::1_53957: received b'This is the message. '
+    echo_::1_53957: sent b'This is the message. '
+    echo_::1_53957: received b'It will be sent in parts.'
+    echo_::1_53957: sent b'It will be sent in parts.'
+    echo_::1_53957: message terminated, closing connection
 
 .. NOT RUNNING
 
@@ -91,7 +96,7 @@ this output.
     echo_client: sending b'It will be sent '
     echo_client: sending b'in parts.'
     echo_client: waiting for response
-    asyncio: returning true from eof_received() has no effect when using ssl
+    echo_client: received b'This is the message. '
+    echo_client: received b'It will be sent in parts.'
     echo_client: closing
     main: closing event loop
-    
