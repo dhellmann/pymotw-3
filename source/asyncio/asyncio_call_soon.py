@@ -7,16 +7,18 @@
 
 #end_pymotw_header
 import asyncio
+import functools
 
 
-def callback(arg):
-    print('callback {} invoked'.format(arg))
+def callback(arg, *, kwarg='default'):
+    print('callback invoked with {} and {}'.format(arg, kwarg))
 
 
 async def main(loop):
     print('registering callbacks')
     loop.call_soon(callback, 1)
-    loop.call_soon(callback, 2)
+    wrapped = functools.partial(callback, kwarg='not default')
+    loop.call_soon(wrapped, 2)
 
     await asyncio.sleep(0.1)
 

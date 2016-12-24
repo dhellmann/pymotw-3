@@ -9,10 +9,11 @@ based on the timer value kept in the loop.
 Scheduling a Callback "Soon"
 ============================
 
-If the timing of the callback does not matter, ``call_soon()`` can
-be used to schedule the call for the next iteration of the loop. Any
-extra arguments after the function are passed to the callback when it
-is invoked.
+If the timing of the callback does not matter, ``call_soon()`` can be
+used to schedule the call for the next iteration of the loop. Any
+extra positional arguments after the function are passed to the
+callback when it is invoked. To pass keyword arguments to the
+callback, use ``partial()`` from the :mod:`functools` module.
 
 .. literalinclude:: asyncio_call_soon.py
    :caption:
@@ -30,8 +31,8 @@ The callbacks are invoked in the order they are scheduled.
 	
 	entering event loop
 	registering callbacks
-	callback 1 invoked
-	callback 2 invoked
+	callback invoked with 1 and default
+	callback invoked with 2 and not default
 	closing event loop
 
 .. {{{end}}}
