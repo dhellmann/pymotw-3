@@ -42,8 +42,8 @@ async def echo_client(server_address, messages):
     for msg in messages:
         writer.write(msg)
         log.debug('sending {!r}'.format(msg))
-    # SSL does not support EOF, so send a null byte to indicate the
-    # end of the message.
+    # SSL does not support EOF, so send a null byte to indicate
+    # the end of the message.
     writer.write(b'\x00')
     await writer.drain()
 
