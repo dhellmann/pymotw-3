@@ -216,8 +216,8 @@ the following output.
 Although the client always sends the messages separately, the first
 time the client runs the server receives one large message and echoes
 that back to the client. These results vary in subsequent runs, based
-on how busy the network is and whether the socket is flushed before
-all of the data is prepared.
+on how busy the network is and whether the network buffers are flushed
+before all of the data is prepared.
 
 .. NOT RUNNING
 
