@@ -25,19 +25,10 @@
 }
 
 % Some custom font markup commands.
-\newcommand{\sphinxstrong}[1]{{\textbf{#1}}}
-% let \sphinxcode and \sphinxbfcode use straight quotes. \@noligs patched by upquote,
+% let \sphinxcode use straight quotes. \@noligs patched by upquote,
 % but needs protection in "moving arguments" such as for captions.
 % Use \scantokens to handle e.g. \item[{\sphinxcode{'fontenc'}}]
 \DeclareRobustCommand{\sphinxcode}[1]{{\@noligs\scantokens{\small\texttt{#1}\relax}}}
-\newcommand{\sphinxbfcode}[1]{\sphinxcode{\bfseries#1}}
-\newcommand{\sphinxemail}[1]{\textsf{#1}}
-\newcommand{\sphinxtablecontinued}[1]{\textsf{#1}}
-\newcommand{\sphinxmenuselection}[1]{\emph{#1}}
-\newcommand{\sphinxaccelerator}[1]{\underline{#1}}
-
-% Support large numbered footnotes in minipage (cf. admonitions)
-\def\thempfootnote{\arabic{mpfootnote}}
 
 % Include hyperref last.
 \RequirePackage[breaklinks]{hyperref}
