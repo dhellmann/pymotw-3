@@ -56,7 +56,7 @@ private network.
 Networks
 ========
 
-A "network" is defined by a range of addresses. It is usually
+A network is defined by a range of addresses. It is usually
 expressed with a base address and a mask indicating which portions of
 the address represent the network, and which portions are remaining to
 represent addresses on that network. The mask can be expressed
