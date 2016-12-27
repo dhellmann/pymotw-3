@@ -22,10 +22,10 @@ time.
    :caption:
    :start-after: #end_pymotw_header
 
-Locks can be invoked directly, using ``await`` to acquire it and
-calling the ``release()`` method when done as in ``coro2()`` in
-this example. They also can be used as asynchronous context managers
-with the ``with await`` keywords, as in ``coro1()``.
+A lock can be invoked directly, using ``await`` to acquire it and
+calling the ``release()`` method when done as in ``coro2()`` in this
+example. They also can be used as asynchronous context managers with
+the ``with await`` keywords, as in ``coro1()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'asyncio_lock.py'))
