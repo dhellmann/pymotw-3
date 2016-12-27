@@ -11,8 +11,8 @@ so applications can switch between threads and processes with minimal
 changes.
 
 The module provides two types of classes for interacting with the
-pools. "Executors" are used for managing pools of workers, and
-"futures" are used for managing results computed by the workers. To
+pools. *Executors* are used for managing pools of workers, and
+*futures* are used for managing results computed by the workers. To
 use a pool of workers, an application creates an instance of the
 appropriate executor class and then submits tasks for it to run. When
 each task is started, a ``Future`` instance is returned. When the

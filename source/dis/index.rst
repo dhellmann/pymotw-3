@@ -598,8 +598,8 @@ The :mod:`itertools` version takes only 0.0332 seconds to run, about
 	             27 STORE_FAST               2 (grouped)
 	
 	 21          30 LOAD_CONST               3 (<code object
-	<dictcomp> at 0x101517930, file "/Users/dhellmann/Dropbox/PyMOTW
-	/Python3/pymotw-3/source/dis/dis_eliminate_loop.py", line 21>)
+	<dictcomp> at 0x101517930, file ".../dis_eliminate_loop.py",
+    line 21>)
 	             33 LOAD_CONST               4
 	('Dictionary.load_data.<locals>.<dictcomp>')
 	             36 MAKE_FUNCTION            0

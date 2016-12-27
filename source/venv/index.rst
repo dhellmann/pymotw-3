@@ -143,7 +143,8 @@ create two virtual environments.
 .. # Remove previous run.
 .. run_script(cog.inFile, 'rm -rf /tmp/sphinx1', interpreter='')
 .. run_script(cog.inFile, 'rm -rf /tmp/sphinx2', interpreter='')
-.. cog.out(run_script(cog.inFile, '-m venv /tmp/sphinx1', interpreter=INTERP, line_cleanups=CLEAN))
+.. cog.out(run_script(cog.inFile, '-m venv /tmp/sphinx1', interpreter=INTERP, line_cleanups=CLEAN,
+..                    trailing_newlines=False))
 .. cog.out(run_script(cog.inFile, '-m venv /tmp/sphinx2', interpreter=INTERP, line_cleanups=CLEAN,
 ..                    include_prefix=False))
 .. # Upgrade pip to avoid warnings.
@@ -154,8 +155,6 @@ create two virtual environments.
 .. code-block:: none
 
 	$ python3 -m venv /tmp/sphinx1
-	
-
 	$ python3 -m venv /tmp/sphinx2
 	
 

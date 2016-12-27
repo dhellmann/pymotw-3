@@ -352,7 +352,7 @@ parent directory of the script.
 
 .. {{{end}}}
 
-The glob processor support recursive scanning using the pattern prefix
+The glob processor supports recursive scanning using the pattern prefix
 ``**`` or by calling ``rglob()`` instead of ``glob()``.
 
 .. literalinclude:: pathlib_rglob.py
@@ -562,9 +562,9 @@ File Properties
 ===============
 
 Detailed information about a file can be accessed using the methods
-``stat()`` or ``lstat()`` (for checking the status of something
-that might be a symbolic link). These methods produce the same results
-as ``os.stat()`` and ``os.lstat()``.
+``stat()`` or ``lstat()`` (for checking the status of something that
+might be a symbolic link). These methods produce the same results as
+``os.stat()`` and ``os.lstat()``.
 
 .. literalinclude:: pathlib_stat.py
    :caption:
@@ -766,6 +766,8 @@ socket, or other file system object.
    * :pydoc:`pathlib`
 
    * :mod:`os.path` -- Platform-independent manipulation of filenames
+
+   * :ref:`os-stat` -- Discussion of ``os.stat()`` and ``os.lstat()``.
 
    * :mod:`glob` -- Unix shell pattern matching for filenames
 

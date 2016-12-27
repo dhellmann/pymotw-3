@@ -13,14 +13,14 @@ types (``int``, ``float``, ``Decimal``, and
 Averages
 ========
 
-There are three forms of "averages" supported, the mean, the median,
+There are three forms of averages supported, the mean, the median,
 and the mode. Calculate the arithmetic mean with ``mean()``.
 
 .. literalinclude:: statistics_mean.py
    :caption:
    :start-after: #end_pymotw_header
 
-The return value for integers and floats is always a float. For
+The return value for integers and floats is always a ``float``. For
 ``Decimal`` and ``Fraction`` input data, the result is of
 the same type as the inputs.
 
