@@ -99,6 +99,8 @@ Input like
 
   .. raw:: latex
 
+     %% (dhellmann) Show spaces in this example talking about
+     %% indentation changes
      \lstset{showspaces=true}
 
   .. literalinclude:: textwrap_undedented.txt
@@ -121,6 +123,8 @@ becomes
 
   .. raw:: latex
 
+     %% (dhellmann) Show spaces in this example talking about
+     %% indentation changes
      \lstset{showspaces=true}
 
   .. literalinclude:: textwrap_dedented.txt
