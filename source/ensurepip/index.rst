@@ -23,15 +23,14 @@ This example uses a virtual environment configured without
 
 .. {{{cog
 .. run_script(cog.inFile, 'rm -rf /tmp/demoenv', interpreter='')
-.. cog.out(run_script(cog.inFile, 'pyvenv --without-pip /tmp/demoenv', interpreter=''))
+.. cog.out(run_script(cog.inFile, 'pyvenv --without-pip /tmp/demoenv', interpreter='',
+..                    trailing_newlines=False))
 .. cog.out(run_script(cog.inFile, 'ls -F /tmp/demoenv/bin', interpreter='', include_prefix=False))
 .. }}}
 
 .. code-block:: none
 
 	$ pyvenv --without-pip /tmp/demoenv
-	
-
 	$ ls -F /tmp/demoenv/bin
 	
 	activate
