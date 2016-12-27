@@ -429,7 +429,6 @@ pearson_chapters = [
     'runtime_services',
     'language',
     'importing',
-    'unix',
 ]
 
 latex_additional_files = [
