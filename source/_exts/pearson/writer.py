@@ -1421,7 +1421,7 @@ class PearsonLaTeXTranslator(nodes.NodeVisitor):
 
     def _make_visit_admonition(name):
         def visit_admonition(self, node):
-            self.body.append(u'\n\\%snoheader{' % name)
+            self.body.append(u'\n\\%s{}{' % (name,))
         return visit_admonition
 
     def _depart_named_admonition(self, node):
