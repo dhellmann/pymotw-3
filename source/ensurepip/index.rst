@@ -51,12 +51,12 @@ to install an updated version of pip.  To ensure a recent version of
 ``ensurepip``.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, '/tmp/demoenv/bin/python -m ensurepip --upgrade', interpreter=''))
+.. cog.out(run_script(cog.inFile, '/tmp/demoenv/bin/python3 -m ensurepip --upgrade', interpreter=''))
 .. }}}
 
 .. code-block:: none
 
-	$ /tmp/demoenv/bin/python -m ensurepip --upgrade
+	$ /tmp/demoenv/bin/python3 -m ensurepip --upgrade
 	
 	Ignoring indexes: https://pypi.python.org/simple
 	Collecting setuptools
