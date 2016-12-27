@@ -352,7 +352,7 @@ parent directory of the script.
 
 .. {{{end}}}
 
-The glob processor support recursive scanning using the pattern prefix
+The glob processor supports recursive scanning using the pattern prefix
 ``**`` or by calling ``rglob()`` instead of ``glob()``.
 
 .. literalinclude:: pathlib_rglob.py
