@@ -66,9 +66,9 @@ After creating the new database file, the next step is to create the
 schema to define the tables within the database.  The remaining
 examples in this section all use the same database schema with tables
 for managing tasks.  The details of the database schema are presented
-in :table:`The "project" Table` and :table:`The "task" Table`.
+in :table:`The project Table` and :table:`The task Table`.
 
-.. table:: The "project" Table
+.. table:: The project Table
 
   ===========  ====  ===========
   Column       Type  Description
@@ -78,7 +78,7 @@ in :table:`The "project" Table` and :table:`The "task" Table`.
   deadline     date  Due date for the entire project
   ===========  ====  ===========
 
-.. table:: The "task" Table
+.. table:: The task Table
 
   ===============  =======  ===========
   Column           Type     Description
