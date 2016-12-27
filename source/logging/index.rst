@@ -216,30 +216,33 @@ The output shows the different module names for each output line.
 The Logging Tree
 ================
 
-The ``Logger`` instances are configured in a tree structure,
-based on their names. Typically each application or library defines a
-base name, with loggers for individual modules set as children. The
-root logger has no name.
+The ``Logger`` instances are configured in a tree structure, based on
+their names, as illustrated in :figure:`Example Logger
+Tree`. Typically each application or library defines a base name, with
+loggers for individual modules set as children. The root logger has no
+name.
 
 .. graphviz:: logger_tree.dot
-   :caption: logging: Example Logger Tree
+   :caption: Example Logger Tree
 
 The tree structure is useful for configuring logging because it means
 each logger does not need its own set of handlers. If a logger does
 not have any handlers, the message is handed to its parent for
 processing. This means that for most applications it is only necessary
 to configure handlers on the root logger, and all log information will
-be collected and sent to the same place.
+be collected and sent to the same place, as shown in :figure:`One
+Logging Handler`.
 
 .. graphviz:: logger_tree_handler.dot
-   :caption: logging: One Logging Handler
+   :caption: One Logging Handler
 
 The tree structure also allows different verbosity levels, handlers,
 and formatters to be set for different parts of the application or
-library to control which messages are logged and where they go.
+library to control which messages are logged and where they go, as in
+:figure:`Different Levels and Handlers`.
 
 .. graphviz:: logger_tree_multihandler.dot
-   :caption: logging: Different Levels and Handlers
+   :caption: Different Levels and Handlers
 
 Integration with the warnings Module
 ====================================
