@@ -168,7 +168,7 @@ methods for accessing metadata about the file.
 
 .. {{{end}}}
 
-
+.. _os-stat:
 
 Managing File System Permissions
 ================================
