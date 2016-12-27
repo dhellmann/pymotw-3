@@ -41,9 +41,11 @@ working on.
 
 .. note::
 
-   ``asyncio`` is still a *provisional* module. The API may change
-   in backwards-incompatible ways, and the entire module may be
-   removed, though that is much less likely.
+   In Python 3.5, ``asyncio`` is still a *provisional* module. The API
+   was stablized in Python 3.6, and most of the changes were
+   backported to later patch releases of Python 3.5. As a result, the
+   module may work slightly differently under different versions of
+   Python 3.5.
 
 ..
    - run_until_complete() vs. run_forever()
@@ -74,6 +76,11 @@ working on.
     * :mod:`select` -- Low-level asynchronous I/O tools
 
     * :mod:`socketserver` -- Framework for creating network servers
+
+    * `asyncio: What's New in Python 3.6
+      <https://docs.python.org/3/whatsnew/3.6.html#asyncio>`__ --
+      Summary of the changes to ``asyncio`` as the API stablized in
+      Python 3.6.
 
     * `trollius <https://pypi.python.org/pypi/trollius>`__ -- A port
       of Tulip, the original version of asyncio, to Python 2.
