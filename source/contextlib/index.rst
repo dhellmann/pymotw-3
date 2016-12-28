@@ -228,7 +228,7 @@ the decorated function are still available, as demonstrated by
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'contextlib_contextmanager_decorator.py', 
-..                    ignore_error=True))
+..                    ignore_error=True, line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
@@ -249,13 +249,13 @@ the decorated function are still available, as demonstrated by
 	  entering
 	  exiting
 	Traceback (most recent call last):
-	  File "contextlib_contextmanager_decorator.py", line 43, in <mo
-	dule>
+	  File "contextlib_contextmanager_decorator.py", line 43, in
+	<module>
 	    throw_error(ValueError('this exception is not handled'))
 	  File ".../lib/python3.5/contextlib.py", line 30, in inner
 	    return func(*args, **kwds)
-	  File "contextlib_contextmanager_decorator.py", line 33, in thr
-	ow_error
+	  File "contextlib_contextmanager_decorator.py", line 33, in
+	throw_error
 	    raise err
 	ValueError: this exception is not handled
 
