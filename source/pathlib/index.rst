@@ -197,7 +197,7 @@ Other parts of the path can be accessed through properties of the path
 object.  The ``name`` property holds the last part of the path, after
 the final path separator (the same value that ``os.path.basename()``
 produces). The ``suffix`` property holds the value after the extension
-separator (usually ".") and the ``stem`` property holds the portion of
+separator and the ``stem`` property holds the portion of
 the name before the suffix.
 
 .. literalinclude:: pathlib_name.py
