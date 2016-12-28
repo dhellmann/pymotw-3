@@ -212,4 +212,4 @@ the denominator.
 
     * :mod:`numbers` -- Numeric abstract base classes.
 
-    * :ref:`Porting notes for fractions <porting-fractions>`
+    * :ref:`Python 2 to 3 porting notes for fractions <porting-fractions>`

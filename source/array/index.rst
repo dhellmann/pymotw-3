@@ -215,4 +215,4 @@ over the data in Python.
     * `Numerical Python <http://www.scipy.org>`_ -- NumPy is a Python
       library for working with large data sets efficiently.
 
-    * :ref:`Porting notes for array <porting-array>`
+    * :ref:`Python 2 to 3 porting notes for array <porting-array>`

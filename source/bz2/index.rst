@@ -443,4 +443,4 @@ Running ``bz2_server.py`` produces:
     * :mod:`gzip` -- A file-like interface to GNU zip compressed
       files.
 
-    * :ref:`Porting notes for bz2 <porting-bz2>`
+    * :ref:`Python 2 to 3 porting notes for bz2 <porting-bz2>`

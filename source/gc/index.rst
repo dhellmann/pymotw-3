@@ -525,7 +525,7 @@ have been collected and deleted are retained.
 
    * :pydoc:`gc`
 
-   * :ref:`Porting notes for gc <porting-gc>`
+   * :ref:`Python 2 to 3 porting notes for gc <porting-gc>`
 
    * :mod:`weakref` -- The ``weakref`` module provides a way to create
      references to objects without increasing their reference count,

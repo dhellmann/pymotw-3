@@ -281,7 +281,7 @@ Windows:
 
    * :pydoc:`platform`
 
-   * :ref:`Porting notes for platform <porting-platform>`
+   * :ref:`Python 2 to 3 porting notes for platform <porting-platform>`
 
 ..
    3.6.0a4 output from Brad Threatt via

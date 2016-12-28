@@ -29,7 +29,7 @@ network.
 
    * :pydoc:`socket`
 
-   * :ref:`Porting notes for socket <porting-socket>`
+   * :ref:`Python 2 to 3 porting notes for socket <porting-socket>`
 
    * :mod:`select` -- Testing a socket to see if it is ready for
      reading or writing for non-blocking I/O.

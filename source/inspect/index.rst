@@ -790,7 +790,7 @@ to be printed instead of the source.
 
    * :pydoc:`inspect`
 
-   * :ref:`Porting notes for inspect <porting-inspect>`
+   * :ref:`Python 2 to 3 porting notes for inspect <porting-inspect>`
 
    * `Python 2.3 Method Resolution Order
      <http://www.python.org/download/releases/2.3/mro/>`__ --

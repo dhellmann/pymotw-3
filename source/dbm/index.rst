@@ -206,9 +206,9 @@ A similar ``TypeError`` is raised if a value is not a string.
 
     * :pydoc:`dbm`
 
-    * :ref:`Porting notes for anydbm <porting-anydbm>`
+    * :ref:`Python 2 to 3 porting notes for anydbm <porting-anydbm>`
 
-    * :ref:`Porting notes for whichdb <porting-whichdb>`
+    * :ref:`Python 2 to 3 porting notes for whichdb <porting-whichdb>`
 
     * :mod:`shelve` -- Examples for the ``shelve`` module, which uses
       ``dbm`` to store data.

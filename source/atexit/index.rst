@@ -295,4 +295,4 @@ functions, since it is messy to have a program dump errors on exit.
     * :ref:`sys-exceptions` -- Global handling for uncaught
       exceptions.
 
-    * :ref:`Porting notes for atexit <porting-atexit>`
+    * :ref:`Python 2 to 3 porting notes for atexit <porting-atexit>`

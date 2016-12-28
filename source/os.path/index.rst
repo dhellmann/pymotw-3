@@ -432,7 +432,7 @@ All of the test functions return boolean values.
 
    * :pydoc:`os.path`
 
-   * :ref:`Porting notes for os.path <porting-os.path>`
+   * :ref:`Python 2 to 3 porting notes for os.path <porting-os.path>`
 
    * :mod:`pathlib` -- Paths as objects.
 
