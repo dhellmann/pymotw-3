@@ -15,7 +15,7 @@ long-running process because it is guaranteed never to move backwards,
 even if the system time is changed. For performance testing,
 ``perf_counter()`` provides access to the clock with the highest
 available resolution to make short time measurements more
-accurate. The CPU time is available through ``time()``, and
+accurate. The CPU time is available through ``clock()``, and
 ``process_time()`` returns the combined processor time and system
 time.
 
