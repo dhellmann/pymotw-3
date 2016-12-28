@@ -415,20 +415,20 @@ month is prefixed with a zero.
 
 	$ python3 time_strptime.py
 	
-	Now: Sun Aug 14 14:10:42 2016
+	Now: Mon Jan  2 16:17:27 2017
 	
 	Parsed:
-	  tm_year : 2016
-	  tm_mon  : 8
-	  tm_mday : 14
-	  tm_hour : 14
-	  tm_min  : 10
-	  tm_sec  : 42
-	  tm_wday : 6
-	  tm_yday : 227
+	  tm_year : 2017
+	  tm_mon  : 1
+	  tm_mday : 2
+	  tm_hour : 16
+	  tm_min  : 17
+	  tm_sec  : 27
+	  tm_wday : 0
+	  tm_yday : 2
 	  tm_isdst: -1
 	
-	Formatted: Sun Aug 14 14:10:42 2016
+	Formatted: Mon Jan 02 16:17:27 2017
 
 .. {{{end}}}
 
