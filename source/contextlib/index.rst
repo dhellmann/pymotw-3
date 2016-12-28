@@ -392,8 +392,8 @@ same ``io.StringIO`` instance where it is saved to be used later.
    may interfere with other operations that expect the standard output
    streams to be attached to terminal devices.
 
-Dynamic Context Managers Stacks
-===============================
+Dynamic Context Manager Stacks
+==============================
 
 Most context managers operate on one object at a time, such as a
 single file or database handle. In these cases, the object is known in
