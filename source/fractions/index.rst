@@ -113,14 +113,14 @@ unexpected results.
 
 .. {{{end}}}
 
-Using :mod:`decimal` representations of the values gives the expected
+Using ``Decimal`` representations of the values gives the expected
 results.
 
 .. literalinclude:: fractions_from_decimal.py
     :caption:
     :start-after: #end_pymotw_header
 
-The internal implementation of the :mod:`decimal` does not suffer from
+The internal implementation of ``Decimal`` does not suffer from
 the precision errors of the standard floating point representation.
 
 .. {{{cog

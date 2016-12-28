@@ -11,7 +11,7 @@ import random
 import itertools
 
 FACE_CARDS = ('J', 'Q', 'K', 'A')
-SUITS = ('\u2665', '\u2666', '\u2663', '\u2660')
+SUITS = ('H', 'D', 'C', 'S')
 
 
 def new_deck():

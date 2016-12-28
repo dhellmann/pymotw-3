@@ -503,8 +503,8 @@ integer without losing value.
 .. {{{end}}}
 
 ``gamma()`` is like ``factorial()``, except it works with real
-numbers and the value is shifted down by one (gamma is equal to ``(n -
-1)!``).
+numbers and the value is shifted down by one (gamma is equal to
+``(n - 1)!``).
 
 .. literalinclude:: math_gamma.py
    :caption:
@@ -570,7 +570,7 @@ accurate implementation for floating point values.
    :start-after: #end_pymotw_header
 
 A potentially more frequent source of confusion is the fact that the
-algorithm used by :mod:`fmod` for computing modulo is also different
+algorithm used by ``fmod()`` for computing modulo is also different
 from that used by ``%``, so the sign of the result is different.
 
 .. {{{cog
@@ -976,7 +976,7 @@ triangle between the points [(0, 0), (``x``, 0), (``x``, ``y``)] is
    :caption:
    :start-after: #end_pymotw_header
 
-Points on the circle always have hypotenuse == ``1``.
+Points on the circle always have hypotenuse equal to 1.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'math_hypot.py'))
