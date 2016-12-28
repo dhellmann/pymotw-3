@@ -19,15 +19,15 @@ library documentation includes several examples of using
 ``defaultdict`` this way.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'collections_defaultdict.py'))
+.. cog.out(run_script(cog.inFile, 'collections_defaultdict.py', line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
 
 	$ python3 collections_defaultdict.py
 	
-	d: defaultdict(<function default_factory at 0x1010969d8>, {'foo'
-	: 'bar'})
+	d: defaultdict(<function default_factory at 0x101921950>,
+	{'foo': 'bar'})
 	foo => bar
 	bar => default value
 

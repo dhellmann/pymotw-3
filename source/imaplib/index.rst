@@ -898,6 +898,6 @@ not notified about the deletions when :meth:`close()` is called.
       application for keeping a local set of mailboxes in sync with an
       IMAP server.
 
-    * :ref:`Porting notes for imaplib <porting-imaplib>`
+    * :ref:`Python 2 to 3 porting notes for imaplib <porting-imaplib>`
 
 .. _IMAP Backup Script: http://snipplr.com/view/7955/imap-backup-script/

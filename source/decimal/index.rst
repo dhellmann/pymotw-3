@@ -455,7 +455,7 @@ it within each thread.
 
    * :pydoc:`decimal`
 
-   * :ref:`Porting notes for decimal <porting-decimal>`
+   * :ref:`Python 2 to 3 porting notes for decimal <porting-decimal>`
 
    * `Wikipedia: Floating Point
      <https://en.wikipedia.org/wiki/Floating_point>`_ -- Article on

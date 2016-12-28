@@ -480,6 +480,6 @@ the current date and time.
 
    * :pydoc:`locale`
 
-   * :ref:`Porting notes for locale <porting-locale>`
+   * :ref:`Python 2 to 3 porting notes for locale <porting-locale>`
 
    * :mod:`gettext` -- Message catalogs for translations.

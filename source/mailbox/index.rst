@@ -481,7 +481,7 @@ methods found in the Maildir class.
 
    * :pydoc:`mailbox`
 
-   * :ref:`Porting notes for mailbox <porting-mailbox>`
+   * :ref:`Python 2 to 3 porting notes for mailbox <porting-mailbox>`
 
    * `mbox manpage from qmail
      <http://www.qmail.org/man/man5/mbox.html>`_ -- Documentation for

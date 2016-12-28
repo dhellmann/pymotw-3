@@ -327,7 +327,7 @@ not defined.
       <http://pyvideo.org/pycon-us-2013/dynamic-code-patterns-extending-your-application.html>`__
       -- PyCon 2013 presentation by Doug Hellmann
 
-    * :ref:`Porting notes for abc <porting-abc>`
+    * :ref:`Python 2 to 3 porting notes for abc <porting-abc>`
 
 ..  This video appears to have been deleted, and the old PyCon 2009
     site appears to be gone.

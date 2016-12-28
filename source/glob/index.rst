@@ -229,4 +229,4 @@ containing a single entry.
 
     * :mod:`fnmatch` -- Filename matching implementation.
 
-    * :ref:`Porting notes for glob <porting-glob>`
+    * :ref:`Python 2 to 3 porting notes for glob <porting-glob>`

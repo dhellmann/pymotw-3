@@ -788,7 +788,7 @@ value), once in each thread to set the default values.
 
    * :pydoc:`threading`
 
-   * :ref:`Porting notes for threading <porting-threading>`
+   * :ref:`Python 2 to 3 porting notes for threading <porting-threading>`
 
    * :mod:`thread` -- Lower level thread API.
 

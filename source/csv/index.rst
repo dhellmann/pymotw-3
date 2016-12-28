@@ -456,6 +456,6 @@ can be written explicitly using the ``writeheader()`` method.
 
     * :pep:`305` -- CSV File API
 
-    * :ref:`Porting notes for csv <porting-csv>`
+    * :ref:`Python 2 to 3 porting notes for csv <porting-csv>`
 
 .. _LibreOffice: http://www.libreoffice.org

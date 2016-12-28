@@ -596,7 +596,7 @@ line shows the value in the system timezone, acquired by calling
 
    * :pydoc:`datetime`
 
-   * :ref:`Porting notes for datetime <porting-datetime>`
+   * :ref:`Python 2 to 3 porting notes for datetime <porting-datetime>`
 
    * :mod:`calendar` -- The ``calendar`` module.
 

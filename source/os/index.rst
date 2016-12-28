@@ -878,7 +878,7 @@ come up frequently.
 
    * :pydoc:`os`
 
-   * :ref:`Porting notes for os <porting-os>`
+   * :ref:`Python 2 to 3 porting notes for os <porting-os>`
 
    * :mod:`signal` -- The section on the ``signal`` module goes over
      signal handling techniques in more detail.

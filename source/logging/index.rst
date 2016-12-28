@@ -281,7 +281,7 @@ the ``WARNING`` level.
      extensive, and includes tutorials and reference material that
      goes beyond the exmaples presented here.
 
-   * :ref:`Porting notes for logging <porting-logging>`
+   * :ref:`Python 2 to 3 porting notes for logging <porting-logging>`
 
    * :mod:`warnings` -- Non-fatal alerts.
 

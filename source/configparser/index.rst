@@ -835,4 +835,4 @@ interpolation object to be safely ignored.
       -- An advanced configuration file parser with support for
       features like content validation.
 
-    * :ref:`Porting notes for configparser <porting-configparser>`
+    * :ref:`Python 2 to 3 porting notes for configparser <porting-configparser>`

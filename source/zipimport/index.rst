@@ -359,7 +359,7 @@ The ``__loader__`` is not set for modules not imported via
 
    * :pydoc:`zipimport`
 
-   * :ref:`Porting notes for zipimport <porting-zipimport>`
+   * :ref:`Python 2 to 3 porting notes for zipimport <porting-zipimport>`
 
    * :mod:`imp` -- Other import-related functions.
 

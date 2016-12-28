@@ -23,4 +23,4 @@ built-in types ``list``, ``dict``, and ``tuple``.
 
     * :pydoc:`collections`
 
-    * :ref:`Porting notes for collections <porting-collections>`
+    * :ref:`Python 2 to 3 porting notes for collections <porting-collections>`

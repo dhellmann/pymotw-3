@@ -908,7 +908,7 @@ of the other members of the input sequence.
 
    * :pydoc:`itertools`
 
-   * :ref:`Porting notes for itertools <porting-itertools>`
+   * :ref:`Python 2 to 3 porting notes for itertools <porting-itertools>`
 
    * `The Standard ML Basis Library
      <http://www.standardml.org/Basis/>`_) -- The library for SML.

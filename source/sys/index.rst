@@ -25,4 +25,4 @@ program.
 
     * :pydoc:`sys`
 
-    * :ref:`Porting notes for sys <porting-sys>`
+    * :ref:`Python 2 to 3 porting notes for sys <porting-sys>`

@@ -52,7 +52,9 @@ list. The remainder of each line is the current sorted list.
 This is a simple example, and for the amount of data being manipulated
 it might be faster to simply build the list and then sort it once. But
 for long lists, significant time and memory savings can be achieved
-using an insertion sort algorithm such as this.
+using an insertion sort algorithm such as this, especially when the
+operation to compare two members of the list require expensive
+computation.
 
 Handling Duplicates
 ===================

@@ -186,7 +186,7 @@ spaces so each result prints on a single line.
 
    * :pydoc:`mmap`
 
-   * :ref:`Porting notes for mmap <porting-mmap>`
+   * :ref:`Python 2 to 3 porting notes for mmap <porting-mmap>`
 
    * :mod:`os` -- The ``os`` module.
 

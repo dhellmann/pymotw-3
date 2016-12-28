@@ -518,7 +518,7 @@ sort the mapping keys before printing the output.
 
    * :pydoc:`json`
 
-   * :ref:`Porting notes for json <porting-json>`
+   * :ref:`Python 2 to 3 porting notes for json <porting-json>`
 
    * `JavaScript Object Notation`_ -- JSON home, with documentation
      and implementations in other languages.

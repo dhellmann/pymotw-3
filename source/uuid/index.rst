@@ -296,7 +296,7 @@ Surrounding curly braces are removed from the input, as are dashes
 
    * :pydoc:`uuid`
 
-   * :ref:`Porting notes for uuid <porting-uuid>`
+   * :ref:`Python 2 to 3 porting notes for uuid <porting-uuid>`
 
    * :rfc:`4122` -- A Universally Unique Identifier (UUID) URN
      Namespace
