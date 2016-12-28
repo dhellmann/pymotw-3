@@ -43,7 +43,7 @@ everything that comes before it.
     :caption:
     :start-after: #end_pymotw_header
 
-When the input argument ends in ``os.sep``, the "last element" of
+When the input argument ends in ``os.sep``, the last element of
 the path is an empty string.
 
 .. {{{cog
