@@ -453,7 +453,7 @@ Approximation
 The *triangular* distribution is used as an approximate distribution
 for small sample sizes.  The "curve" of a triangular distribution has
 low points at known minimum and maximum values, and a high point at
-and the mode, which is estimated based on a "most likely" outcome
+the mode, which is estimated based on a "most likely" outcome
 (reflected by the mode argument to ``triangular()``).
 
 Exponential
