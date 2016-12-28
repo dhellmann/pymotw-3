@@ -185,7 +185,6 @@ value is the sequence of individual names.
 
 	$ python3 collections_namedtuple_fields.py
 	
-	
 	Representation: Person(name='Bob', age=30)
 	Fields: ('name', 'age')
 
@@ -208,7 +207,6 @@ fields for the ``namedtuple``.
 .. code-block:: none
 
 	$ python3 collections_namedtuple_asdict.py
-	
 	
 	Representation: Person(name='Bob', age=30)
 	As Dictionary: OrderedDict([('name', 'Bob'), ('age', 30)])
