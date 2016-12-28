@@ -452,34 +452,34 @@ illustrate the way errors propagate.
    :caption:
    :start-after: #end_pymotw_header
 
-The examples using these classes is based around
+The examples using these classes are based around
 ``variable_stack()``, which uses the context managers passed to
 construct an ``ExitStack``, building up the overall context one
 by one. The examples below pass different context managers to explore
 the error handling behavior. First, the normal case of no exceptions.
 
 .. literalinclude:: contextlib_exitstack_enter_context_errors.py
-   :lines: 19-23
+   :lines: 20-24
 
 Then, an example of handling exceptions within the context managers at
 the end of the stack, in which all of the open contexts are closed as
 the stack is unwound.
 
 .. literalinclude:: contextlib_exitstack_enter_context_errors.py
-   :lines: 25-30
+   :lines: 26-31
 
 Next, an example of handling exceptions within the context managers in
 the middle of the stack, in which the error does not occur until some
 contexts are already closed, so those contexts do not see the error.
 
 .. literalinclude:: contextlib_exitstack_enter_context_errors.py
-   :lines: 32-38
+   :lines: 33-39
 
 Finally, an example of the exception remaining unhandled and
 propagating up to the calling code.
 
 .. literalinclude:: contextlib_exitstack_enter_context_errors.py
-   :lines: 40-
+   :lines: 41-
 
 If any context manager in the stack receives an exception and returns
 a ``True`` value, it prevents that exception from propagating up to
