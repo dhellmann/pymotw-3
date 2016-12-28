@@ -6,7 +6,7 @@ from itertools import *
 import pprint
 
 FACE_CARDS = ('J', 'Q', 'K', 'A')
-SUITS = ('\u2665', '\u2666', '\u2663', '\u2660')
+SUITS = ('H', 'D', 'C', 'S')
 
 DECK = list(
     product(
