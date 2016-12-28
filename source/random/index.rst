@@ -258,7 +258,7 @@ then individual cards removed as they are dealt.
    :caption:
    :start-after: #end_pymotw_header
 
-The cards are represented as strings with the face value and a unicode symbol
+The cards are represented as strings with the face value and a letter
 indicating the suit.  The dealt "hands" are created by adding one card
 at a time to each of four lists, and removing it from the deck so it
 cannot be dealt again.
@@ -272,27 +272,27 @@ cannot be dealt again.
 	$ python3 random_shuffle.py
 	
 	Initial deck:
-	 2♥  2♦  2♣  2♠  3♥  3♦  3♣  3♠  4♥  4♦  4♣  4♠  5♥ 
-	 5♦  5♣  5♠  6♥  6♦  6♣  6♠  7♥  7♦  7♣  7♠  8♥  8♦ 
-	 8♣  8♠  9♥  9♦  9♣  9♠ 10♥ 10♦ 10♣ 10♠  J♥  J♦  J♣ 
-	 J♠  Q♥  Q♦  Q♣  Q♠  K♥  K♦  K♣  K♠  A♥  A♦  A♣  A♠ 
+	 2H  2D  2C  2S  3H  3D  3C  3S  4H  4D  4C  4S  5H 
+	 5D  5C  5S  6H  6D  6C  6S  7H  7D  7C  7S  8H  8D 
+	 8C  8S  9H  9D  9C  9S 10H 10D 10C 10S  JH  JD  JC 
+	 JS  QH  QD  QC  QS  KH  KD  KC  KS  AH  AD  AC  AS 
 	
 	Shuffled deck:
-	 K♦  5♦  6♦  9♦ 10♦  4♦  4♣  K♠  A♦  Q♠ 10♥  K♥ 10♣ 
-	 A♥  7♥  8♦  9♥  7♦  A♠  6♥  K♣  3♥  2♣  4♠  5♣  J♥ 
-	 J♦  3♠  4♥  7♣  5♥  Q♦  J♠  6♠  2♠  3♣  8♣  7♠  8♥ 
-	 5♠  3♦ 10♠  A♣  Q♣  2♦  Q♥  J♣  8♠  9♠  6♣  9♣  2♥ 
+	 QD  8C  JD  2S  AC  2C  6S  6D  6C  7H  JC  QS  QC 
+	 KS  4D 10C  KH  5S  9C 10S  5C  7C  AS  6H  3C  9H 
+	 4S  7S 10H  2D  8S  AH  9S  8H  QH  5D  5H  KD  8D 
+	10D  4C  3S  3H  7D  AD  4H  9D  3D  2H  KC  JH  JS 
 	
 	Hands:
-	1:  2♥  8♠  Q♣  5♠  3♣ 
-	2:  9♣  J♣  A♣  8♥  2♠ 
-	3:  6♣  Q♥ 10♠  7♠  6♠ 
-	4:  9♠  2♦  3♦  8♣  J♠ 
+	1:  JS  3D  7D 10D  5D 
+	2:  JH  9D  3H  8D  QH 
+	3:  KC  4H  3S  KD  8H 
+	4:  2H  AD  4C  5H  9S 
 	
 	Remaining deck:
-	 K♦  5♦  6♦  9♦ 10♦  4♦  4♣  K♠  A♦  Q♠ 10♥  K♥ 10♣ 
-	 A♥  7♥  8♦  9♥  7♦  A♠  6♥  K♣  3♥  2♣  4♠  5♣  J♥ 
-	 J♦  3♠  4♥  7♣  5♥  Q♦ 
+	 QD  8C  JD  2S  AC  2C  6S  6D  6C  7H  JC  QS  QC 
+	 KS  4D 10C  KH  5S  9C 10S  5C  7C  AS  6H  3C  9H 
+	 4S  7S 10H  2D  8S  AH 
 
 .. {{{end}}}
 
