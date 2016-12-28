@@ -18,5 +18,5 @@ def show(iterable):
 print('All permutations:\n')
 show(permutations('abcd'))
 
-print('Pairs:\n')
+print('\nPairs:\n')
 show(permutations('abcd', r=2))
