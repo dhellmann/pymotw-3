@@ -33,12 +33,19 @@ to_scan = itertools.chain(
     [pathlib.Path('/dev/disk0'),
      pathlib.Path('/dev/console')],
 )
+hfmt = '{:18s}' + ('  {:>5}' * 6)
+print(hfmt.format('Name', 'File', 'Dir', 'Link', 'FIFO', 'Block',
+                  'Character'))
+print()
+
+fmt = '{:20s}  ' + ('{!r:>5}  ' * 6)
 for f in to_scan:
-    print(f)
-    print('Is File?             :', f.is_file())
-    print('Is Dir?              :', f.is_dir())
-    print('Is Link?             :', f.is_symlink())
-    print('Is FIFO?             :', f.is_fifo())
-    print('Is block device?     :', f.is_block_device())
-    print('Is character device? :', f.is_char_device())
-    print()
+    print(fmt.format(
+        str(f),
+        f.is_file(),
+        f.is_dir(),
+        f.is_symlink(),
+        f.is_fifo(),
+        f.is_block_device(),
+        f.is_char_device(),
+    ))
