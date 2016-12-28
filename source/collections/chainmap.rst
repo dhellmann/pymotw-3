@@ -145,7 +145,7 @@ it is easy to add or update values in one iteration, then discard the
 changes for the next iteration.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'collections_chainmap_new_child.py'))
+.. cog.out(run_script(cog.inFile, 'collections_chainmap_new_child.py', line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
@@ -153,10 +153,10 @@ changes for the next iteration.
 	$ python3 collections_chainmap_new_child.py
 	
 	m1 before: ChainMap({'c': 'C', 'a': 'A'}, {'c': 'D', 'b': 'B'})
-	m2 before: ChainMap({}, {'c': 'C', 'a': 'A'}, {'c': 'D', 'b': 'B
-	'})
+	m2 before: ChainMap({}, {'c': 'C', 'a': 'A'}, {'c': 'D', 'b':
+	'B'})
 	m1 after: ChainMap({'c': 'C', 'a': 'A'}, {'c': 'D', 'b': 'B'})
-	m2 after: ChainMap({'c': 'E'}, {'c': 'C', 'a': 'A'}, {'c': 'D', 
+	m2 after: ChainMap({'c': 'E'}, {'c': 'C', 'a': 'A'}, {'c': 'D',
 	'b': 'B'})
 
 .. {{{end}}}
