@@ -505,8 +505,8 @@ integer without losing value.
 .. {{{end}}}
 
 ``gamma()`` is like ``factorial()``, except it works with real
-numbers and the value is shifted down by one (gamma is equal to ``(n -
-1)!``).
+numbers and the value is shifted down by one (gamma is equal to
+``(n - 1)!``).
 
 .. literalinclude:: math_gamma.py
    :caption:
