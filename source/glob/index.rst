@@ -111,9 +111,9 @@ while the second case depends on a wildcard to find the directory.
 	$ python3 glob_subdir.py
 	
 	Named explicitly:
-		 dir/subdir/subfile.txt
+	  dir/subdir/subfile.txt
 	Named with wildcard:
-		 dir/subdir/subfile.txt
+	  dir/subdir/subfile.txt
 
 .. {{{end}}}
 
