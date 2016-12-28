@@ -572,7 +572,7 @@ accurate implementation for floating point values.
    :start-after: #end_pymotw_header
 
 A potentially more frequent source of confusion is the fact that the
-algorithm used by :mod:`fmod` for computing modulo is also different
+algorithm used by ``fmod()`` for computing modulo is also different
 from that used by ``%``, so the sign of the result is different.
 
 .. {{{cog
