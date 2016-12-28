@@ -58,10 +58,8 @@ values in a different order, they are considered to be different.
 
 	$ python3 collections_ordereddict_equality.py
 	
-	dict       :
-	True
-	OrderedDict:
-	False
+	dict       : True
+	OrderedDict: False
 
 .. {{{end}}}
 
