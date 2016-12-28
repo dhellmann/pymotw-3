@@ -18,9 +18,9 @@ iteration-based algorithms.
 Iterator-based code offers better memory consumption characteristics
 than code that uses lists.  Since data is not produced from the
 iterator until it is needed, all of the data does not need to be
-stored in memory at the same time.  This "lazy" processing model uses
-less memory, which can reduce swapping and other side-effects of large
-data sets, improving performance.
+stored in memory at the same time.  This "lazy" processing model can
+reduce swapping and other side-effects of large data sets, improving
+performance.
 
 In addition to the functions defined in ``itertools``, the examples
 in this section also rely on some of the built-in functions for
