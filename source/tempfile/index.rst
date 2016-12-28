@@ -15,7 +15,7 @@ for creating temporary file system resources securely.
 ``NamedTemporaryFile()`` opens and returns a named file,
 ``SpooledTemporaryFile`` holds its content in memory before
 writing to disk, and ``TemporaryDirectory`` is a context manager
-what removes the directory when the context is closed.
+that removes the directory when the context is closed.
 
 Temporary Files
 ===============
