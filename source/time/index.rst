@@ -13,14 +13,14 @@ long-running process because it is guaranteed never to move backwards,
 even if the system time is changed. For performance testing,
 ``perf_counter()`` provides access to the clock with the highest
 available resolution to make short time measurements more
-accurate. The CPU time is available through ``time()``, and
+accurate. The CPU time is available through ``clock()``, and
 ``process_time()`` returns the combined processor time and system
 time.
 
 .. note::
 
   The implementations expose C library functions for manipulating
-  dates and times.  Since they is tied to the underlying C
+  dates and times.  Since they are tied to the underlying C
   implementation, some details (such as the start of the epoch and
   maximum date value supported) are platform-specific.  Refer to the
   library documentation for complete details.
@@ -413,20 +413,20 @@ month is prefixed with a zero.
 
 	$ python3 time_strptime.py
 	
-	Now: Sun Aug 14 14:10:42 2016
+	Now: Mon Jan  2 16:17:27 2017
 	
 	Parsed:
-	  tm_year : 2016
-	  tm_mon  : 8
-	  tm_mday : 14
-	  tm_hour : 14
-	  tm_min  : 10
-	  tm_sec  : 42
-	  tm_wday : 6
-	  tm_yday : 227
+	  tm_year : 2017
+	  tm_mon  : 1
+	  tm_mday : 2
+	  tm_hour : 16
+	  tm_min  : 17
+	  tm_sec  : 27
+	  tm_wday : 0
+	  tm_yday : 2
 	  tm_isdst: -1
 	
-	Formatted: Sun Aug 14 14:10:42 2016
+	Formatted: Mon Jan 02 16:17:27 2017
 
 .. {{{end}}}
 

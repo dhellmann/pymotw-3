@@ -34,13 +34,14 @@ The output looks like:
 
 	$ python3 calendar_textcalendar.py
 	
-	     July 2015
+	     July 2017
 	Su Mo Tu We Th Fr Sa
-	          1  2  3  4
-	 5  6  7  8  9 10 11
-	12 13 14 15 16 17 18
-	19 20 21 22 23 24 25
-	26 27 28 29 30 31
+	                   1
+	 2  3  4  5  6  7  8
+	 9 10 11 12 13 14 15
+	16 17 18 19 20 21 22
+	23 24 25 26 27 28 29
+	30 31
 	 
 
 .. {{{end}}}
@@ -68,11 +69,11 @@ number (0-6). Days that fall outside of the month have a day number of
     :caption:
     :start-after: #end_pymotw_header
 
-Calling ``yeardays2calendar(2015, 3)`` returns data for 2015,
+Calling ``yeardays2calendar(2017, 3)`` returns data for 2017,
 organized with three months per row.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'calendar_yeardays2calendar.py', break_lines_at=66))
+.. cog.out(run_script(cog.inFile, 'calendar_yeardays2calendar.py', line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
@@ -83,11 +84,13 @@ organized with three months per row.
 	len(top_months)    : 3
 	len(first_month)   : 5
 	first_month:
-	[[(0, 6), (0, 0), (0, 1), (0, 2), (1, 3), (2, 4), (3, 5)],
-	 [(4, 6), (5, 0), (6, 1), (7, 2), (8, 3), (9, 4), (10, 5)],
-	 [(11, 6), (12, 0), (13, 1), (14, 2), (15, 3), (16, 4), (17, 5)],
-	 [(18, 6), (19, 0), (20, 1), (21, 2), (22, 3), (23, 4), (24, 5)],
-	 [(25, 6), (26, 0), (27, 1), (28, 2), (29, 3), (30, 4), (31, 5)]]
+	[[(1, 6), (2, 0), (3, 1), (4, 2), (5, 3), (6, 4), (7, 5)],
+	 [(8, 6), (9, 0), (10, 1), (11, 2), (12, 3), (13, 4), (14, 5)],
+	 [(15, 6), (16, 0), (17, 1), (18, 2), (19, 3), (20, 4), (21,
+	5)],
+	 [(22, 6), (23, 0), (24, 1), (25, 2), (26, 3), (27, 4), (28,
+	5)],
+	 [(29, 6), (30, 0), (31, 1), (0, 2), (0, 3), (0, 4), (0, 5)]]
 
 .. {{{end}}}
 
@@ -107,41 +110,42 @@ For the same arguments, ``formatyear()`` produces this output:
 
 	$ python3 calendar_formatyear.py
 	
-	                              2015
+	                              2017
 	
 	      January               February               March
 	Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa
-	             1  2  3   1  2  3  4  5  6  7   1  2  3  4  5  6  7
-	 4  5  6  7  8  9 10   8  9 10 11 12 13 14   8  9 10 11 12 13 14
-	11 12 13 14 15 16 17  15 16 17 18 19 20 21  15 16 17 18 19 20 21
-	18 19 20 21 22 23 24  22 23 24 25 26 27 28  22 23 24 25 26 27 28
-	25 26 27 28 29 30 31                        29 30 31
+	 1  2  3  4  5  6  7            1  2  3  4            1  2  3  4
+	 8  9 10 11 12 13 14   5  6  7  8  9 10 11   5  6  7  8  9 10 11
+	15 16 17 18 19 20 21  12 13 14 15 16 17 18  12 13 14 15 16 17 18
+	22 23 24 25 26 27 28  19 20 21 22 23 24 25  19 20 21 22 23 24 25
+	29 30 31              26 27 28              26 27 28 29 30 31
 	
 	       April                  May                   June
 	Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa
-	          1  2  3  4                  1  2      1  2  3  4  5  6
-	 5  6  7  8  9 10 11   3  4  5  6  7  8  9   7  8  9 10 11 12 13
-	12 13 14 15 16 17 18  10 11 12 13 14 15 16  14 15 16 17 18 19 20
-	19 20 21 22 23 24 25  17 18 19 20 21 22 23  21 22 23 24 25 26 27
-	26 27 28 29 30        24 25 26 27 28 29 30  28 29 30
-	                      31
+	                   1      1  2  3  4  5  6               1  2  3
+	 2  3  4  5  6  7  8   7  8  9 10 11 12 13   4  5  6  7  8  9 10
+	 9 10 11 12 13 14 15  14 15 16 17 18 19 20  11 12 13 14 15 16 17
+	16 17 18 19 20 21 22  21 22 23 24 25 26 27  18 19 20 21 22 23 24
+	23 24 25 26 27 28 29  28 29 30 31           25 26 27 28 29 30
+	30
 	
 	        July                 August              September
 	Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa
-	          1  2  3  4                     1         1  2  3  4  5
-	 5  6  7  8  9 10 11   2  3  4  5  6  7  8   6  7  8  9 10 11 12
-	12 13 14 15 16 17 18   9 10 11 12 13 14 15  13 14 15 16 17 18 19
-	19 20 21 22 23 24 25  16 17 18 19 20 21 22  20 21 22 23 24 25 26
-	26 27 28 29 30 31     23 24 25 26 27 28 29  27 28 29 30
-	                      30 31
+	                   1         1  2  3  4  5                  1  2
+	 2  3  4  5  6  7  8   6  7  8  9 10 11 12   3  4  5  6  7  8  9
+	 9 10 11 12 13 14 15  13 14 15 16 17 18 19  10 11 12 13 14 15 16
+	16 17 18 19 20 21 22  20 21 22 23 24 25 26  17 18 19 20 21 22 23
+	23 24 25 26 27 28 29  27 28 29 30 31        24 25 26 27 28 29 30
+	30 31
 	
 	      October               November              December
 	Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa
-	             1  2  3   1  2  3  4  5  6  7         1  2  3  4  5
-	 4  5  6  7  8  9 10   8  9 10 11 12 13 14   6  7  8  9 10 11 12
-	11 12 13 14 15 16 17  15 16 17 18 19 20 21  13 14 15 16 17 18 19
-	18 19 20 21 22 23 24  22 23 24 25 26 27 28  20 21 22 23 24 25 26
-	25 26 27 28 29 30 31  29 30                 27 28 29 30 31
+	 1  2  3  4  5  6  7            1  2  3  4                  1  2
+	 8  9 10 11 12 13 14   5  6  7  8  9 10 11   3  4  5  6  7  8  9
+	15 16 17 18 19 20 21  12 13 14 15 16 17 18  10 11 12 13 14 15 16
+	22 23 24 25 26 27 28  19 20 21 22 23 24 25  17 18 19 20 21 22 23
+	29 30 31              26 27 28 29 30        24 25 26 27 28 29 30
+	                                            31
 	
 
 .. {{{end}}}
@@ -174,21 +178,23 @@ the regular ``TextCalendar``.
 
 	$ python3 calendar_locale.py
 	
-	     July 2015
+	     July 2017
 	Mo Tu We Th Fr Sa Su
-	       1  2  3  4  5
-	 6  7  8  9 10 11 12
-	13 14 15 16 17 18 19
-	20 21 22 23 24 25 26
-	27 28 29 30 31
+	                1  2
+	 3  4  5  6  7  8  9
+	10 11 12 13 14 15 16
+	17 18 19 20 21 22 23
+	24 25 26 27 28 29 30
+	31
 	 
-	    juillet 2015
+	    juillet 2017
 	Lu Ma Me Je Ve Sa Di
-	       1  2  3  4  5
-	 6  7  8  9 10 11 12
-	13 14 15 16 17 18 19
-	20 21 22 23 24 25 26
-	27 28 29 30 31
+	                1  2
+	 3  4  5  6  7  8  9
+	10 11 12 13 14 15 16
+	17 18 19 20 21 22 23
+	24 25 26 27 28 29 30
+	31
 	 
 
 .. {{{end}}}
@@ -220,11 +226,12 @@ the given month, but that are part of another month.
 
 	$ python3 calendar_monthcalendar.py
 	
-	[[0, 0, 1, 2, 3, 4, 5],
-	 [6, 7, 8, 9, 10, 11, 12],
-	 [13, 14, 15, 16, 17, 18, 19],
-	 [20, 21, 22, 23, 24, 25, 26],
-	 [27, 28, 29, 30, 31, 0, 0]]
+	[[0, 0, 0, 0, 0, 1, 2],
+	 [3, 4, 5, 6, 7, 8, 9],
+	 [10, 11, 12, 13, 14, 15, 16],
+	 [17, 18, 19, 20, 21, 22, 23],
+	 [24, 25, 26, 27, 28, 29, 30],
+	 [31, 0, 0, 0, 0, 0, 0]]
 
 .. {{{end}}}
 
@@ -235,10 +242,13 @@ includes constants for indexing into the date ranges returned by
 ``monthcalendar()``, it is more convenient to skip that step in this
 case.
 
-To calculate the group meeting dates for 2015, assuming the second
-Thursday of every month, the 0 values indicate whether the Thursday of
-the first week is included in the month (or if the month starts, for
-example, on a Friday).
+To calculate the group meeting dates for a year, assuming they are
+always on the second Thursday of every month, look at the output of
+``monthcalendar()`` to find the dates on which Thursdays fall. The
+first and last week of the month are padded with 0 values as
+placeholders for the days falling in the preceding or subsequent
+month. For example, if a month starts on a Friday, the value in the
+first week in the Thursday position will be 0.
 
 .. literalinclude:: calendar_secondthursday.py
     :caption:
@@ -247,25 +257,25 @@ example, on a Friday).
 So the meeting schedule for the year is:
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'calendar_secondthursday.py'))
+.. cog.out(run_script(cog.inFile, 'calendar_secondthursday.py 2017'))
 .. }}}
 
 .. code-block:: none
 
-	$ python3 calendar_secondthursday.py
+	$ python3 calendar_secondthursday.py 2017
 	
-	Jan:  8
-	Feb: 12
-	Mar: 12
-	Apr:  9
-	May: 14
-	Jun: 11
-	Jul:  9
-	Aug: 13
-	Sep: 10
-	Oct:  8
-	Nov: 12
-	Dec: 10
+	Jan: 12
+	Feb:  9
+	Mar:  9
+	Apr: 13
+	May: 11
+	Jun:  8
+	Jul: 13
+	Aug: 10
+	Sep: 14
+	Oct: 12
+	Nov:  9
+	Dec: 14
 
 .. {{{end}}}
 
