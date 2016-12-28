@@ -22,7 +22,7 @@ time.
 .. note::
 
   The implementations expose C library functions for manipulating
-  dates and times.  Since they is tied to the underlying C
+  dates and times.  Since they are tied to the underlying C
   implementation, some details (such as the start of the epoch and
   maximum date value supported) are platform-specific.  Refer to the
   library documentation for complete details.
