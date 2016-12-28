@@ -323,10 +323,10 @@ tree.
 
 	$ python3 ospath_abspath.py
 	
-	                  '.' : '/private/tmp'
-	                 '..' : '/private'
-	    './one/two/three' : '/private/tmp/one/two/three'
-	   '../one/two/three' : '/private/one/two/three'
+	                  '.' : '/usr'
+	                 '..' : '/'
+	    './one/two/three' : '/usr/one/two/three'
+	   '../one/two/three' : '/one/two/three'
 
 .. {{{end}}}
 
