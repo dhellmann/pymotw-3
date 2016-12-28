@@ -18,7 +18,7 @@ The pattern rules for ``glob`` are not the same as the regular
 expressions used by the :mod:`re` module. Instead, they follow
 standard Unix path expansion rules. There are only a few special
 characters used to implement two different wild-cards and character
-ranges. The patterns rules are applied to segments of the filename
+ranges. The pattern rules are applied to segments of the filename
 (stopping at the path separator, ``/``). Paths in the pattern can be
 relative or absolute. Shell variable names and tilde (``~``) are not
 expanded.
