@@ -978,7 +978,7 @@ triangle between the points [(0, 0), (``x``, 0), (``x``, ``y``)] is
    :caption:
    :start-after: #end_pymotw_header
 
-Points on the circle always have hypotenuse == ``1``.
+Points on the circle always have hypotenuse equal to 1.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'math_hypot.py'))
