@@ -87,7 +87,7 @@ Trying to change a value through its named attribute results in an
 ``AttributeError``.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'collections_namedtuple_immutable.py', ignore_error=True))
+.. cog.out(run_script(cog.inFile, 'collections_namedtuple_immutable.py', ignore_error=True, line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
@@ -97,8 +97,8 @@ Trying to change a value through its named attribute results in an
 	
 	Representation: Person(name='Pat', age=12)
 	Traceback (most recent call last):
-	  File "collections_namedtuple_immutable.py", line 17, in <modul
-	e>
+	  File "collections_namedtuple_immutable.py", line 17, in
+	<module>
 	    pat.age = 21
 	AttributeError: can't set attribute
 
