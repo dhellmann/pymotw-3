@@ -727,7 +727,7 @@ Thread-specific Data
 
 While some resources need to be locked so multiple threads can use
 them, others need to be protected so that they are hidden from threads
-that do not "own" them. The ``local()`` class creates an object
+that do not own them. The ``local()`` class creates an object
 capable of hiding values from view in separate threads.
 
 .. literalinclude:: threading_local.py
