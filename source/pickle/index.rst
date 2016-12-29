@@ -95,7 +95,8 @@ written, or how big they are.
 The example simulates streams using two ``BytesIO`` buffers.  The
 first receives the pickled objects, and its value is fed to a second
 from which ``load()`` reads.  A simple database format could use
-pickles to store objects, too (see :mod:`shelve`).
+pickles to store objects, too. The :mod:`shelve` module is one such
+implementation.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'pickle_stream.py'))
