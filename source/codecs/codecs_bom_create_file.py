@@ -22,7 +22,7 @@ print('Native order  :', to_hex(codecs.BOM_UTF16, 2))
 print('Selected order:', to_hex(bom, 2))
 
 # Encode the text.
-encoded_text = u'pi: \u03c0'.encode(encoding)
+encoded_text = 'français'.encode(encoding)
 print('{:14}: {}'.format(encoding, to_hex(encoded_text, 2)))
 
 with open('nonnative-encoded.txt', mode='wb') as f:

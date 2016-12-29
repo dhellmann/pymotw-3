@@ -10,7 +10,7 @@
 import unicodedata
 from codecs_to_hex import to_hex
 
-text = u'pi: π'
+text = 'français'
 
 print('Raw   : {!r}'.format(text))
 for c in text:

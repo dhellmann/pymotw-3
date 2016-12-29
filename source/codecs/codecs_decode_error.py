@@ -14,7 +14,7 @@ from codecs_to_hex import to_hex
 
 error_handling = sys.argv[1]
 
-text = u'pi: \u03c0'
+text = 'français'
 print('Original     :', repr(text))
 
 # Save the data with one encoding

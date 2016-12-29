@@ -13,7 +13,7 @@ import codecs
 import io
 
 # Raw version of the original data.
-data = u'pi: \u03c0'
+data = 'français'
 
 # Manually encode it as UTF-8.
 utf8 = data.encode('utf-8')
