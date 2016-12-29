@@ -166,7 +166,10 @@ data.
     :caption:
     :start-after: #end_pymotw_header
 
-To write data into a compressed file, open the file with mode ``'w'``.
+To write data into a compressed file, open the file with mode
+``'wb'``. This example wraps the ``BZ2File`` with a ``TextIOWrapper``
+from the :mod:`io` module to encode Unicode text to bytes suitable for
+compression.
 
 .. {{{cog
 .. from paver.path import path
@@ -252,7 +255,7 @@ Reading Compressed Files
 ========================
 
 To read data back from previously compressed files, open the file with
-read mode (``'r'``). The value returned from ``read()`` will be a
+read mode (``'rb'``). The value returned from ``read()`` will be a
 byte string.
 
 .. literalinclude:: bz2_file_read.py
@@ -260,7 +263,8 @@ byte string.
     :start-after: #end_pymotw_header
 
 This example reads the file written by ``bz2_file_write.py`` from the
-previous section.
+previous section. The ``BZ2File`` is wrapped with a ``TextIOWrapper``
+to decode bytes read to Unicode text.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'bz2_file_read.py'))
@@ -442,5 +446,8 @@ Running ``bz2_server.py`` produces:
 
     * :mod:`gzip` -- A file-like interface to GNU zip compressed
       files.
+
+    * :mod:`io` -- Building-blocks for creating input and output
+      pipelines.
 
     * :ref:`Python 2 to 3 porting notes for bz2 <porting-bz2>`
