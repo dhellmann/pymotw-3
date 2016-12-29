@@ -27,7 +27,7 @@ of the markup.
 
 The ``file_to_words()`` function converts each input file to a
 sequence of tuples containing the word and the number ``1`` (representing
-a single occurrence) .The data is divided up by ``partition()``
+a single occurrence). The data is divided up by ``partition()``
 using the word as the key, so the resulting structure consists of a key
 and a sequence of ``1`` values representing each occurrence of the word.
 The partitioned data is converted to a set of tuples containing a word
@@ -58,7 +58,6 @@ reduction phase.
 	after           :    34
 	processes       :    31
 	start           :    29
-	class           :    28
 	header          :    27
 	pymotw          :    27
 	caption         :    27
@@ -66,8 +65,9 @@ reduction phase.
 	daemon          :    22
 	can             :    22
 	exiting         :    21
-	mod             :    21
-	func            :    21
+	forkpoolworker  :    21
 	consumer        :    20
+	main            :    18
+	event           :    16
 
 .. {{{end}}}
