@@ -21,7 +21,10 @@ reading bytes are provided.
     :caption:
     :start-after: #end_pymotw_header
 
-To write data into a compressed file, open the file with mode ``'w'``.
+To write data into a compressed file, open the file with mode
+``'wb'``. This example wraps the ``GzipFile`` with a ``TextIOWrapper``
+from the :mod:`io` module to encode Unicode text to bytes suitable for
+compression.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'gzip_write.py'))
@@ -118,7 +121,8 @@ endings or Unicode decoding is performed.
     :start-after: #end_pymotw_header
 
 This example reads the file written by ``gzip_write.py`` from the
-previous section.
+previous section, using a ``TextIOWrapper`` to decode the text after
+it is decompressed.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'gzip_read.py'))
@@ -226,3 +230,6 @@ the incremental decompression API in :mod:`zlib`.
 
    * :mod:`tarfile` -- The ``tarfile`` module includes built-in
      support for reading compressed tar archives.
+
+   * :mod:`io` -- Building-blocks for creating input and output
+     pipelines.
