@@ -4,10 +4,10 @@ import fileinput
 import re
 
 straight_pat = re.compile(':(class|data|const|command):`(.*?)`')
-func_pat = re.compile(':func:`(.*?)(\(\))?`')
+func_pat = re.compile(':(func|meth):`(.*?)(\(\))?`')
 
 for line in fileinput.input(inplace=True):
     line = line.rstrip('\n')
     line = straight_pat.sub(r'``\2``', line)
-    line = func_pat.sub(r'``\1()``', line)
+    line = func_pat.sub(r'``\2()``', line)
     print(line)
