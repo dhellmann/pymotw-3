@@ -20,19 +20,19 @@ Creating a new Shelf
 
 The simplest way to use ``shelve`` is via the ``DbfilenameShelf``
 class. It uses :mod:`dbm` to store the data. The class can be used
-directly, or by calling ``shelve.open()``:
+directly, or by calling ``shelve.open()``.
 
 .. literalinclude:: shelve_create.py
    :caption:
    :start-after: #end_pymotw_header
 
-To access the data again, open the shelf and use it like a dictionary:
+To access the data again, open the shelf and use it like a dictionary.
 
 .. literalinclude:: shelve_existing.py
    :caption:
    :start-after: #end_pymotw_header
 
-Running both sample scripts produces:
+Running both sample scripts produces the following output.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'shelve_create.py', trailing_newlines=False))
