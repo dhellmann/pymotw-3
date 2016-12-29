@@ -40,7 +40,8 @@ passes each worker a number to be printed.
     :caption:
     :start-after: #end_pymotw_header
 
-The integer argument is now included in the message printed by each worker:
+The integer argument is now included in the message printed by each
+worker.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'multiprocessing_simpleargs.py'))
