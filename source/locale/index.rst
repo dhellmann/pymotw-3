@@ -59,10 +59,10 @@ this output:
 	$ export LANG=; export LC_CTYPE=; python3 locale_env.py
 	
 	Environment settings:
-		LC_ALL = 
-		LC_CTYPE = 
-		LANG = 
-		LANGUAGE = 
+	  LC_ALL = 
+	  LC_CTYPE = 
+	  LANG = 
+	  LANGUAGE = 
 	
 	Locale from environment: (None, None)
 	
@@ -107,10 +107,10 @@ The United States (``en_US``):
 	$ LANG=en_US LC_CTYPE=en_US LC_ALL=en_US python3 locale_env.py
 	
 	Environment settings:
-		LC_ALL = en_US
-		LC_CTYPE = en_US
-		LANG = en_US
-		LANGUAGE = 
+	  LC_ALL = en_US
+	  LC_CTYPE = en_US
+	  LANG = en_US
+	  LANGUAGE = 
 	
 	Locale from environment: ('en_US', 'ISO8859-1')
 	
@@ -152,10 +152,10 @@ France (``fr_FR``):
 	$ LANG=fr_FR LC_CTYPE=fr_FR LC_ALL=fr_FR python3 locale_env.py
 	
 	Environment settings:
-		LC_ALL = fr_FR
-		LC_CTYPE = fr_FR
-		LANG = fr_FR
-		LANGUAGE = 
+	  LC_ALL = fr_FR
+	  LC_CTYPE = fr_FR
+	  LANG = fr_FR
+	  LANGUAGE = 
 	
 	Locale from environment: ('fr_FR', 'ISO8859-1')
 	
@@ -199,10 +199,10 @@ Spain (``es_ES``):
 	$ LANG=es_ES LC_CTYPE=es_ES LC_ALL=es_ES python3 locale_env.py
 	
 	Environment settings:
-		LC_ALL = es_ES
-		LC_CTYPE = es_ES
-		LANG = es_ES
-		LANGUAGE = 
+	  LC_ALL = es_ES
+	  LC_CTYPE = es_ES
+	  LANG = es_ES
+	  LANGUAGE = 
 	
 	Locale from environment: ('es_ES', 'ISO8859-1')
 	
@@ -245,10 +245,10 @@ Portugal (``pt_PT``):
 	$ LANG=pt_PT LC_CTYPE=pt_PT LC_ALL=pt_PT python3 locale_env.py
 	
 	Environment settings:
-		LC_ALL = pt_PT
-		LC_CTYPE = pt_PT
-		LANG = pt_PT
-		LANGUAGE = 
+	  LC_ALL = pt_PT
+	  LC_CTYPE = pt_PT
+	  LANG = pt_PT
+	  LANGUAGE = 
 	
 	Locale from environment: ('pt_PT', 'ISO8859-1')
 	
@@ -292,10 +292,10 @@ Poland (``pl_PL``):
 	$ LANG=pl_PL LC_CTYPE=pl_PL LC_ALL=pl_PL python3 locale_env.py
 	
 	Environment settings:
-		LC_ALL = pl_PL
-		LC_CTYPE = pl_PL
-		LANG = pl_PL
-		LANGUAGE = 
+	  LC_ALL = pl_PL
+	  LC_CTYPE = pl_PL
+	  LANG = pl_PL
+	  LANGUAGE = 
 	
 	Locale from environment: ('pl_PL', 'ISO8859-2')
 	

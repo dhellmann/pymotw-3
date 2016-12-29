@@ -16,7 +16,7 @@ locale.setlocale(locale.LC_ALL, '')
 
 print('Environment settings:')
 for env_name in ['LC_ALL', 'LC_CTYPE', 'LANG', 'LANGUAGE']:
-    print('\t{} = {}'.format(
+    print('  {} = {}'.format(
         env_name, os.environ.get(env_name, ''))
     )
 
