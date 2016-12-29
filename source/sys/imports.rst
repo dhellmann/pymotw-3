@@ -159,9 +159,9 @@ module may be loaded the second time.
 	
 	Base directory: .
 	Imported example from: ./package_dir_a/example.py
-		 This is example A
+	   This is example A
 	Reloaded example from: ./package_dir_b/example.py
-		 This is example B
+	   This is example B
 
 .. {{{end}}}
 
@@ -208,7 +208,7 @@ real path on the file system. This test prevents the
 	Path hook: <class 'zipimport.zipimporter'>
 	Path hook: <function
 	FileFinder.path_hook.<locals>.path_hook_for_FileFinder at
-	0x101833950>
+	0x100734950>
 	Path hook: <class '__main__.NoisyImportFinder'>
 	importing target_module
 	Checking NoisyImportFinder_PATH_TRIGGER: works
@@ -245,12 +245,12 @@ this.
 	$ python3 sys_shelve_importer_create.py
 	
 	Created /tmp/pymotw_import_example.shelve with:
-		 data:README
-		 package.__init__
-		 package.module1
-		 package.subpackage.__init__
-		 package.subpackage.module2
-		 package.with_error
+	   data:README
+	   package.__init__
+	   package.module1
+	   package.subpackage.__init__
+	   package.subpackage.module2
+	   package.with_error
 
 .. {{{end}}}
 
@@ -304,13 +304,13 @@ preserved as module-level attributes.
 	  __package__: package
 	  __file__   : /tmp/pymotw_import_example.shelve/package
 	  __path__   : ['/tmp/pymotw_import_example.shelve']
-	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x101
-	c875f8>
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x102
+	467860>
 	
 	Global settings:
 	sys.modules entry:
 	<module 'package' (<sys_shelve_importer.ShelveLoader object at 0
-	x101c875f8>)>
+	x102467860>)>
 
 .. {{{end}}}
 
@@ -330,7 +330,7 @@ name is passed to the loader's :meth:`load_module` method, which
 constructs and returns a ``module`` instance.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'sys_shelve_importer_module.py'))
+.. cog.out(run_script(cog.inFile, 'sys_shelve_importer_module.py', line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
@@ -366,8 +366,8 @@ constructs and returns a ``module`` instance.
 	  __package__: package
 	  __file__   : /tmp/pymotw_import_example.shelve/package.module1
 	  __path__   : /tmp/pymotw_import_example.shelve
-	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x101
-	c6bcf8>
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at
+	0x101c76e10>
 	
 	Import of "package.subpackage.module2":
 	
@@ -395,11 +395,11 @@ constructs and returns a ``module`` instance.
 	  message    : This message is in package.subpackage.module2
 	  __name__   : package.subpackage.module2
 	  __package__: package.subpackage
-	  __file__   : /tmp/pymotw_import_example.shelve/package.subpack
-	age.module2
+	  __file__   :
+	/tmp/pymotw_import_example.shelve/package.subpackage.module2
 	  __path__   : /tmp/pymotw_import_example.shelve
-	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x101
-	c93828>
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at
+	0x101ca6c88>
 
 .. {{{end}}}
 
