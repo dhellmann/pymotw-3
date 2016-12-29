@@ -14,7 +14,7 @@ from operator import itemgetter
 def show_class(name, class_data):
     print('Class:', name)
     filename = os.path.basename(class_data.file)
-    print('\tFile: {0} [{1}]'.format(
+    print('  File: {0} [{1}]'.format(
         filename, class_data.lineno))
     show_super_classes(name, class_data)
     show_methods(name, class_data)
@@ -24,7 +24,7 @@ def show_class(name, class_data):
 def show_methods(class_name, class_data):
     for name, lineno in sorted(class_data.methods.items(),
                                key=itemgetter(1)):
-        print('\tMethod: {0} [{1}]'.format(name, lineno))
+        print('  Method: {0} [{1}]'.format(name, lineno))
 
 
 def show_super_classes(name, class_data):
@@ -37,7 +37,7 @@ def show_super_classes(name, class_data):
         else:
             super_class_names.append(super_class.name)
     if super_class_names:
-        print('\tSuper classes:', super_class_names)
+        print('  Super classes:', super_class_names)
 
 
 example_data = pyclbr.readmodule('pyclbr_example')

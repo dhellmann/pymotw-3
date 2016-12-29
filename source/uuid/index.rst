@@ -69,23 +69,23 @@ and ``urn``, are different representations of the UUID value.
 
 	$ python3 uuid_uuid1.py
 	
-	eecba340-572c-11e6-8999-c82a14598875
+	335ea282-cded-11e6-9ede-c82a14598875
 	<class 'uuid.UUID'>
-	bytes   : b'\xee\xcb\xa3@W,\x11\xe6\x89\x99\xc8*\x14Y\x88u'
-	hex     : eecba340572c11e68999c82a14598875
-	int     : 317413610389438817018311067027923110005
-	urn     : urn:uuid:eecba340-572c-11e6-8999-c82a14598875
+	bytes   : b'3^\xa2\x82\xcd\xed\x11\xe6\x9e\xde\xc8*\x14Y\x88u'
+	hex     : 335ea282cded11e69edec82a14598875
+	int     : 68281999803480928707202152670695098485
+	urn     : urn:uuid:335ea282-cded-11e6-9ede-c82a14598875
 	variant : specified in RFC 4122
 	version : 1
-	fields  : (4006323008, 22316, 4582, 137, 153, 220083055593589)
-		time_low            :  4006323008
-		time_mid            :  22316
-		time_hi_version     :  4582
-		clock_seq_hi_variant:  137
-		clock_seq_low       :  153
-		node                :  220083055593589
-		time                :  136892689177879360
-		clock_seq           :  2457
+	fields  : (861840002, 52717, 4582, 158, 222, 220083055593589)
+	  time_low            :  861840002
+	  time_mid            :  52717
+	  time_hi_version     :  4582
+	  clock_seq_hi_variant:  158
+	  clock_seq_low       :  222
+	  node                :  220083055593589
+	  time                :  137023257334162050
+	  clock_seq           :  7902
 
 .. {{{end}}}
 
@@ -107,9 +107,9 @@ string) changes.
 
 	$ python3 uuid_uuid1_repeat.py
 	
-	eedaeaf8-572c-11e6-9ab2-c82a14598875
-	eedd60da-572c-11e6-9280-c82a14598875
-	eedd621a-572c-11e6-8ae5-c82a14598875
+	3369ab5c-cded-11e6-8d5e-c82a14598875
+	336eea22-cded-11e6-9943-c82a14598875
+	336eeb5e-cded-11e6-9e22-c82a14598875
 
 .. {{{end}}}
 
@@ -133,8 +133,8 @@ of the UUID also changes.
 
 	$ python3 uuid_uuid1_othermac.py
 	
-	eee93718-572c-11e6-b165-001ec200d9e0 0x1ec200d9e0
-	eee9bfec-572c-11e6-93f1-001e5274040e 0x1e5274040e
+	337969be-cded-11e6-97fa-001ec200d9e0 0x1ec200d9e0
+	3379b7e6-cded-11e6-9d72-001e5274040e 0x1e5274040e
 
 .. {{{end}}}
 
@@ -243,9 +243,9 @@ used.
 
 	$ python3 uuid_uuid4.py
 	
-	d62f4162-26d8-411c-a0b5-95d71235af87
-	d27b5299-682e-4469-b458-7a647cb5de5c
-	c356a69c-09c4-4eea-9714-5ec24c7c5e69
+	7821863a-06f0-4109-9b88-59ba1ca5cc04
+	44846e16-4a59-4a21-8c8e-008f169c2dd5
+	1f3cef3c-e2bc-4877-96c8-eba43bf15bb6
 
 .. {{{end}}}
 

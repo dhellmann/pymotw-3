@@ -16,7 +16,7 @@ iterations = 1000
 def show_results(title, result, iterations):
     "Report microseconds per pass and per item."
     per_pass = 1000000 * (result / iterations)
-    print('{}:\t{:0.2f} usec/pass'.format(title, per_pass))
+    print('{}:  {:0.2f} usec/pass'.format(title, per_pass))
 
 
 adler32 = timeit.Timer(

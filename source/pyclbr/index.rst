@@ -44,27 +44,27 @@ their line number in the source file.
 	$ python3 pyclbr_readmodule.py
 	
 	Class: Base
-		File: pyclbr_example.py [11]
-		Method: method1 [15]
+	  File: pyclbr_example.py [11]
+	  Method: method1 [15]
 	
 	Class: Sub1
-		File: pyclbr_example.py [19]
-		Super classes: ['Base']
+	  File: pyclbr_example.py [19]
+	  Super classes: ['Base']
 	
 	Class: Sub2
-		File: pyclbr_example.py [24]
-		Super classes: ['Base']
+	  File: pyclbr_example.py [24]
+	  Super classes: ['Base']
 	
 	Class: Mixin
-		File: pyclbr_example.py [29]
-		Method: method2 [33]
+	  File: pyclbr_example.py [29]
+	  Method: method2 [33]
 	
 	Class: MixinUser
-		File: pyclbr_example.py [37]
-		Super classes: ['Sub2', 'Mixin']
-		Method: method1 [41]
-		Method: method2 [44]
-		Method: method3 [47]
+	  File: pyclbr_example.py [37]
+	  Super classes: ['Sub2', 'Mixin']
+	  Method: method1 [41]
+	  Method: method2 [44]
+	  Method: method3 [47]
 	
 
 .. {{{end}}}

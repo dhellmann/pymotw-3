@@ -96,8 +96,8 @@ cannot because **Thread-2** already has it.
 	Thread-1 finishing
 	Thread-2 with ident 123145307557888 going to sleep
 	Thread-3 with ident 123145312813056 going to sleep
-	Thread-3 stopped in block at line 45 of sys_current_frames.py
-	Thread-2 stopped in block at line 46 of sys_current_frames.py
+	Thread-3 stopped in block at line 18 of sys_current_frames.py
+	Thread-2 stopped in block at line 19 of sys_current_frames.py
 
 .. {{{end}}}
 

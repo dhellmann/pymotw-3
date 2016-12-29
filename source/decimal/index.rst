@@ -442,11 +442,11 @@ it within each thread.
 
 	$ python3 decimal_thread_context.py
 	
-	1 	 4
-	2 	 3.9
-	3 	 3.87
-	4 	 3.875
-	5 	 3.8748
+	1  4
+	2  3.9
+	3  3.87
+	4  3.875
+	5  3.8748
 
 .. {{{end}}}
 

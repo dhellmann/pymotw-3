@@ -54,7 +54,7 @@ messages.
 
 	$ python3 mailbox_mbox_create.py
 	
-	From MAILER-DAEMON Sun Jul 10 14:45:06 2016
+	From MAILER-DAEMON Thu Dec 29 17:23:56 2016
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -63,7 +63,7 @@ messages.
 	>From (will not be escaped).
 	There are 3 lines.
 	
-	From MAILER-DAEMON Sun Jul 10 14:45:06 2016
+	From MAILER-DAEMON Thu Dec 29 17:23:56 2016
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 2
@@ -126,7 +126,7 @@ changes to be written to disk.
 	$ python3 mailbox_mbox_remove.py
 	
 	Removing: 1
-	From MAILER-DAEMON Sun Jul 10 14:45:06 2016
+	From MAILER-DAEMON Thu Dec 29 17:23:56 2016
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -182,13 +182,13 @@ subdirectory.
 	$ python3 mailbox_maildir_create.py
 	
 	Example
-		Directories: ['cur', 'new', 'tmp']
+	  Directories: ['cur', 'new', 'tmp']
 	Example/cur
-		Directories: []
+	  Directories: []
 	Example/new
-		Directories: []
+	  Directories: []
 	
-	*** Example/new/1468161907.M47549P22409Q1.lrrr.local
+	*** Example/new/1483032236.M378880P24253Q1.hubert.local
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -199,7 +199,7 @@ subdirectory.
 	
 	********************
 	
-	*** Example/new/1468161907.M52295P22409Q2.lrrr.local
+	*** Example/new/1483032236.M381366P24253Q2.hubert.local
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 2
@@ -208,7 +208,7 @@ subdirectory.
 	
 	********************
 	Example/tmp
-		Directories: []
+	  Directories: []
 
 .. {{{end}}}
 
@@ -240,15 +240,15 @@ arguments for ``set_subdir()`` are "``cur``" and "``new``".
 	cur    "Sample message 1"
 	
 	Example
-		Directories: ['cur', 'new', 'tmp']
+	  Directories: ['cur', 'new', 'tmp']
 	Example/cur
-		Directories: []
-	Example/cur/1468161907.M47549P22409Q1.lrrr.local
-	Example/cur/1468161907.M52295P22409Q2.lrrr.local
+	  Directories: []
+	Example/cur/1483032236.M378880P24253Q1.hubert.local
+	Example/cur/1483032236.M381366P24253Q2.hubert.local
 	Example/new
-		Directories: []
+	  Directories: []
 	Example/tmp
-		Directories: []
+	  Directories: []
 
 .. {{{end}}}
 
@@ -300,13 +300,13 @@ mailbox at the same time.
 
 	$ python3 mailbox_maildir_remove.py
 	
-	Removing: 1468161907.M52295P22409Q2.lrrr.local
+	Removing: 1483032236.M381366P24253Q2.hubert.local
 	Example
-		Directories: ['cur', 'new', 'tmp']
+	  Directories: ['cur', 'new', 'tmp']
 	Example/cur
-		Directories: []
+	  Directories: []
 	
-	*** Example/cur/1468161907.M47549P22409Q1.lrrr.local
+	*** Example/cur/1483032236.M378880P24253Q1.hubert.local
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -317,9 +317,9 @@ mailbox at the same time.
 	
 	********************
 	Example/new
-		Directories: []
+	  Directories: []
 	Example/tmp
-		Directories: []
+	  Directories: []
 
 .. {{{end}}}
 
@@ -349,7 +349,7 @@ folder name with a period (``.``).
 	
 	Example
 	Example/cur
-	Example/cur/1468161907.M47549P22409Q1.lrrr.local
+	Example/cur/1483032236.M378880P24253Q1.hubert.local
 	Example/new
 	Example/tmp
 	Example
@@ -359,7 +359,7 @@ folder name with a period (``.``).
 	Example/.subfolder/new
 	Example/.subfolder/tmp
 	Example/cur
-	Example/cur/1468161907.M47549P22409Q1.lrrr.local
+	Example/cur/1483032236.M378880P24253Q1.hubert.local
 	Example/new
 	Example/tmp
 	Example
@@ -374,7 +374,7 @@ folder name with a period (``.``).
 	Example/.subfolder/new
 	Example/.subfolder/tmp
 	Example/cur
-	Example/cur/1468161907.M47549P22409Q1.lrrr.local
+	Example/cur/1483032236.M378880P24253Q1.hubert.local
 	Example/new
 	Example/tmp
 	Example
@@ -384,7 +384,7 @@ folder name with a period (``.``).
 	Example/.subfolder/new
 	Example/.subfolder/tmp
 	Example/cur
-	Example/cur/1468161907.M47549P22409Q1.lrrr.local
+	Example/cur/1483032236.M378880P24253Q1.hubert.local
 	Example/new
 	Example/tmp
 	Before: []
