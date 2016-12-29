@@ -13,7 +13,7 @@ available for other purposes.
 Unicode Primer
 ==============
 
-CPython 3.x differentiates between "text" and "byte" strings.
+CPython 3.x differentiates between *text* and *byte* strings.
 ``bytes`` instances use a sequence of 8-bit byte values.  In
 contrast, ``str`` strings are managed internally as a sequence of
 Unicode *code points*.  The code point values are saved as a sequence
@@ -70,7 +70,7 @@ bytes before returning the value.
 
 .. {{{end}}}
 
-The first encoding example begins by printing the text ``'pi: π'``
+The first encoding example begins by printing the text ``'français'``
 using the raw representation of the ``unicode`` class, followed
 by the name of each character from the Unicode database.  The next two
 lines encode the string as UTF-8 and UTF-16 respectively, and show the
@@ -90,14 +90,17 @@ The result of encoding a ``str`` is a ``bytes`` object.
 
 	$ python3 codecs_encodings.py
 	
-	Raw   : 'pi: π'
-	  'p': LATIN SMALL LETTER P
+	Raw   : 'français'
+	  'f': LATIN SMALL LETTER F
+	  'r': LATIN SMALL LETTER R
+	  'a': LATIN SMALL LETTER A
+	  'n': LATIN SMALL LETTER N
+	  'ç': LATIN SMALL LETTER C WITH CEDILLA
+	  'a': LATIN SMALL LETTER A
 	  'i': LATIN SMALL LETTER I
-	  ':': COLON
-	  ' ': SPACE
-	  'π': GREEK SMALL LETTER PI
-	UTF-8 : b'70 69 3a 20 cf 80'
-	UTF-16: b'fffe 7000 6900 3a00 2000 c003'
+	  's': LATIN SMALL LETTER S
+	UTF-8 : b'66 72 61 6e c3 a7 61 69 73'
+	UTF-16: b'fffe 6600 7200 6100 6e00 e700 6100 6900 7300'
 
 .. {{{end}}}
 
@@ -119,9 +122,9 @@ The choice of encoding used does not change the output type.
 
 	$ python3 codecs_decode.py
 	
-	Original : 'pi: π'
-	Encoded  : b'70 69 3a 20 cf 80' <class 'bytes'>
-	Decoded  : 'pi: π' <class 'str'>
+	Original : 'français'
+	Encoded  : b'66 72 61 6e c3 a7 61 69 73' <class 'bytes'>
+	Decoded  : 'français' <class 'str'>
 
 .. {{{end}}}
 
@@ -155,14 +158,14 @@ desired error handling technique.
    :caption:
    :start-after: #end_pymotw_header
 
-This example starts with a ``unicode`` string with the code point
-for π and saves the text to a file using an encoding specified on the
-command line.
+This example starts with a ``unicode`` string with "ç" and saves the
+text to a file using an encoding specified on the command line.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'codecs_open_write.py utf-8'))
 .. cog.out(run_script(cog.inFile, 'codecs_open_write.py utf-16', include_prefix=False))
-.. cog.out(run_script(cog.inFile, 'codecs_open_write.py utf-32', include_prefix=False))
+.. cog.out(run_script(cog.inFile, 'codecs_open_write.py utf-32', include_prefix=False,
+..                    line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
@@ -171,19 +174,20 @@ command line.
 	
 	Writing to utf-8.txt
 	File contents:
-	b'70 69 3a 20 cf 80'
+	b'66 72 61 6e c3 a7 61 69 73'
 
 	$ python3 codecs_open_write.py utf-16
 	
 	Writing to utf-16.txt
 	File contents:
-	b'fffe 7000 6900 3a00 2000 c003'
+	b'fffe 6600 7200 6100 6e00 e700 6100 6900 7300'
 
 	$ python3 codecs_open_write.py utf-32
 	
 	Writing to utf-32.txt
 	File contents:
-	b'fffe0000 70000000 69000000 3a000000 20000000 c0030000'
+	b'fffe0000 66000000 72000000 61000000 6e000000 e7000000 61000000
+	69000000 73000000'
 
 .. {{{end}}}
 
@@ -213,17 +217,17 @@ the console.
 	$ python3 codecs_open_read.py utf-8
 	
 	Reading from utf-8.txt
-	'pi: π'
+	'français'
 
 	$ python3 codecs_open_read.py utf-16
 	
 	Reading from utf-16.txt
-	'pi: π'
+	'français'
 
 	$ python3 codecs_open_read.py utf-32
 	
 	Reading from utf-32.txt
-	'pi: π'
+	'français'
 
 .. {{{end}}}
 
@@ -295,7 +299,7 @@ demonstrate auto-detection while reading.
 	
 	Native order  : b'fffe'
 	Selected order: b'feff'
-	utf_16_be     : b'0070 0069 003a 0020 03c0'
+	utf_16_be     : b'0066 0072 0061 006e 00e7 0061 0069 0073'
 
 .. {{{end}}}
 
@@ -318,8 +322,8 @@ detection, they are not included in the data returned by ``read()``.
 
 	$ python3 codecs_bom_detection.py
 	
-	Raw    : b'feff 0070 0069 003a 0020 03c0'
-	Decoded: 'pi: π'
+	Raw    : b'feff 0066 0072 0061 006e 00e7 0061 0069 0073'
+	Decoded: 'français'
 
 .. {{{end}}}
 
@@ -355,9 +359,9 @@ Handling Modes`.
 Encoding Errors
 ---------------
 
-The most common error condition is receiving a
-``UnicodeEncodeError`` when writing Unicode data to an ASCII
-output stream, such as a regular file or ``sys.stdout``.  This
+The most common error condition is receiving a ``UnicodeEncodeError``
+when writing Unicode data to an ASCII output stream, such as a regular
+file or ``sys.stdout`` without a more robust encoding set.  This
 sample program can be used to experiment with the different error
 handling modes.
 
@@ -377,7 +381,7 @@ program crashes when an exception is raised.
 
 	$ python3 codecs_encode_error.py strict
 	
-	ERROR: 'ascii' codec can't encode character '\u03c0' in position
+	ERROR: 'ascii' codec can't encode character '\xe7' in position
 	4: ordinal not in range(128)
 
 .. {{{end}}}
@@ -397,7 +401,7 @@ with ``?`` in the output.
 
 	$ python3 codecs_encode_error.py replace
 	
-	File contents: b'pi: ?'
+	File contents: b'fran?ais'
 
 .. {{{end}}}
 
@@ -412,7 +416,7 @@ cannot be encoded is discarded.
 
 	$ python3 codecs_encode_error.py ignore
 	
-	File contents: b'pi: '
+	File contents: b'franais'
 
 .. {{{end}}}
 
@@ -430,7 +434,7 @@ is specified in the W3C document *XML Entity Definitions for Characters*).
 
 	$ python3 codecs_encode_error.py xmlcharrefreplace
 	
-	File contents: b'pi: &#960;'
+	File contents: b'fran&#231;ais'
 
 .. {{{end}}}
 
@@ -447,7 +451,7 @@ with ``\u`` followed by the hexadecimal value of the code point.
 
 	$ python3 codecs_encode_error.py backslashreplace
 	
-	File contents: b'pi: \\u03c0'
+	File contents: b'fran\\xe7ais'
 
 .. {{{end}}}
 
@@ -468,17 +472,18 @@ if the byte stream cannot be properly decoded.  In this case, a
 UTF-16 BOM to a character using the UTF-8 decoder.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'codecs_decode_error.py strict', break_lines_at=66))
+.. cog.out(run_script(cog.inFile, 'codecs_decode_error.py strict', line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
 
 	$ python3 codecs_decode_error.py strict
 	
-	Original     : 'pi: π'
-	File contents: b'ff fe 70 00 69 00 3a 00 20 00 c0 03'
-	ERROR: 'utf-8' codec can't decode byte 0xff in position 0: invalid
-	 start byte
+	Original     : 'français'
+	File contents: b'ff fe 66 00 72 00 61 00 6e 00 e7 00 61 00 69 00
+	73 00'
+	ERROR: 'utf-8' codec can't decode byte 0xff in position 0:
+	invalid start byte
 
 .. {{{end}}}
 
@@ -487,16 +492,17 @@ bytes.  The result is still not quite what is expected, though, since
 it includes embedded null bytes.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'codecs_decode_error.py ignore'))
+.. cog.out(run_script(cog.inFile, 'codecs_decode_error.py ignore', line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
 
 	$ python3 codecs_decode_error.py ignore
 	
-	Original     : 'pi: π'
-	File contents: b'ff fe 70 00 69 00 3a 00 20 00 c0 03'
-	Read         : 'p\x00i\x00:\x00 \x00\x03'
+	Original     : 'français'
+	File contents: b'ff fe 66 00 72 00 61 00 6e 00 e7 00 61 00 69 00
+	73 00'
+	Read         : 'f\x00r\x00a\x00n\x00\x00a\x00i\x00s\x00'
 
 .. {{{end}}}
 
@@ -507,16 +513,17 @@ with a black background containing a white question mark.
 .. |?| unicode:: 0xFFFD
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'codecs_decode_error.py replace'))
+.. cog.out(run_script(cog.inFile, 'codecs_decode_error.py replace', line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
 
 	$ python3 codecs_decode_error.py replace
 	
-	Original     : 'pi: π'
-	File contents: b'ff fe 70 00 69 00 3a 00 20 00 c0 03'
-	Read         : '��p\x00i\x00:\x00 \x00�\x03'
+	Original     : 'français'
+	File contents: b'ff fe 66 00 72 00 61 00 6e 00 e7 00 61 00 69 00
+	73 00'
+	Read         : '��f\x00r\x00a\x00n\x00�\x00a\x00i\x00s\x00'
 
 .. {{{end}}}
 
@@ -542,16 +549,17 @@ and ``data_encoding`` value refers to the encoding in use by the data
 passing through the ``read()`` and ``write()`` calls.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'codecs_encodedfile.py'))
+.. cog.out(run_script(cog.inFile, 'codecs_encodedfile.py', line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
 
 	$ python3 codecs_encodedfile.py
 	
-	Start as UTF-8   : b'70 69 3a 20 cf 80'
-	Encoded to UTF-16: b'fffe 7000 6900 3a00 2000 c003'
-	Back to UTF-8    : b'70 69 3a 20 cf 80'
+	Start as UTF-8   : b'66 72 61 6e c3 a7 61 69 73'
+	Encoded to UTF-16: b'fffe 6600 7200 6100 6e00 e700 6100 6900
+	7300'
+	Back to UTF-8    : b'66 72 61 6e c3 a7 61 69 73'
 
 .. {{{end}}}
 
@@ -666,7 +674,7 @@ last bit of data is passed in, the argument ``final`` should be set to
 Unicode Data and Network Communication
 ======================================
 
-Uetwork sockets are byte-streams, and unlike the standard input and
+Network sockets are byte-streams, and unlike the standard input and
 output streams they do not support encoding by default. That means
 programs that want to send or receive Unicode data over the network
 must encode into bytes before it is written to a socket.  This server
@@ -718,13 +726,11 @@ received in the client.
 
 	$ python3 codecs_socket.py
 	
-	Sending : 'pi: π'
-	Writing : b'pi: \xcf\x80'
-	Reading :
-	b'pi: \xcf\x80'
-	Reading :
-	b''
-	Received: 'pi: π'
+	Sending : 'français'
+	Writing : b'fran\xc3\xa7ais'
+	Reading : b'fran\xc3\xa7ais'
+	Reading : b''
+	Received: 'français'
 
 .. {{{end}}}
 
@@ -806,7 +812,7 @@ to comply with that part of the API.
    :caption:
    :start-after: #end_pymotw_header
 
-Because the Unicode code point for ``π`` is not in the encoding map,
+Because the Unicode code point for π is not in the encoding map,
 the strict error handling mode raises an exception.
 
 .. {{{cog
@@ -852,7 +858,7 @@ functions.
 	$ python3 codecs_register.py
 	
 	UTF-8: <codecs.CodecInfo object for encoding utf-8 at
-	0x1019773a8>
+	0x1007773a8>
 	search1: Searching for: no-such-encoding
 	search2: Searching for: no-such-encoding
 	ERROR: unknown encoding: no-such-encoding

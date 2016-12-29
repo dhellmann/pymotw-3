@@ -11,7 +11,7 @@
 import os
 import os.path
 
-os.chdir('/tmp')
+os.chdir('/usr')
 
 PATHS = [
     '.',

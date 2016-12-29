@@ -41,7 +41,7 @@ everything that comes before it.
     :caption:
     :start-after: #end_pymotw_header
 
-When the input argument ends in ``os.sep``, the "last element" of
+When the input argument ends in ``os.sep``, the last element of
 the path is an empty string.
 
 .. {{{cog
@@ -321,10 +321,10 @@ tree.
 
 	$ python3 ospath_abspath.py
 	
-	                  '.' : '/private/tmp'
-	                 '..' : '/private'
-	    './one/two/three' : '/private/tmp/one/two/three'
-	   '../one/two/three' : '/private/one/two/three'
+	                  '.' : '/usr'
+	                 '..' : '/'
+	    './one/two/three' : '/usr/one/two/three'
+	   '../one/two/three' : '/one/two/three'
 
 .. {{{end}}}
 

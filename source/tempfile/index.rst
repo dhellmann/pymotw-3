@@ -13,7 +13,7 @@ for creating temporary file system resources securely.
 ``NamedTemporaryFile()`` opens and returns a named file,
 ``SpooledTemporaryFile`` holds its content in memory before
 writing to disk, and ``TemporaryDirectory`` is a context manager
-what removes the directory when the context is closed.
+that removes the directory when the context is closed.
 
 Temporary Files
 ===============
@@ -140,20 +140,21 @@ Spooled Files
 =============
 
 For temporary files containing relatively small amounts of data, it is
-likely to be more efficient to use a ``SpooledTemporaryFile``
-because it holds the file contents in memory using a
-``io.BytesIO`` or ``io.StringIO`` buffer until they reach a
-threshold size. When the data passes the threshold, it is written to
-disk and the buffer is replaced with a normal ``TemporaryFile()``.
+likely to be more efficient to use a ``SpooledTemporaryFile`` because
+it holds the file contents in memory using a ``io.BytesIO`` or
+``io.StringIO`` buffer until they reach a threshold size. When the
+amount of data passes the threshold, it is "rolled over" and written
+to disk, and then the buffer is replaced with a normal
+``TemporaryFile()``.
 
 .. literalinclude:: tempfile_SpooledTemporaryFile.py
    :caption:
    :start-after: #end_pymotw_header
 
-This example uses private attributes of the
-``SpooledTemporaryFile`` to determine when the "rollover" to disk
-has happened. It is not normally necessary to check this status except
-when tuning the buffer size.
+This example uses private attributes of the ``SpooledTemporaryFile``
+to determine when the rollover to disk has happened. It is not
+normally necessary to check this status except when tuning the buffer
+size.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'tempfile_SpooledTemporaryFile.py'))

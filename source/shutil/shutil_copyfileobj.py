@@ -13,7 +13,7 @@ class VerboseStringIO(io.StringIO):
 
     def read(self, n=-1):
         next = io.StringIO.read(self, n)
-        print('read({}) bytes'.format(n))
+        print('read({}) got {} bytes'.format(n, len(next)))
         return next
 
 

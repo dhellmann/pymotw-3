@@ -64,16 +64,16 @@ to show the effect.
 	$ python3 shutil_copyfileobj.py
 	
 	Default:
-	read(16384) bytes
-	read(16384) bytes
+	read(16384) got 166 bytes
+	read(16384) got 0 bytes
 	
 	All at once:
-	read(-1) bytes
-	read(-1) bytes
+	read(-1) got 166 bytes
+	read(-1) got 0 bytes
 	
 	Blocks of 256:
-	read(256) bytes
-	read(256) bytes
+	read(256) got 166 bytes
+	read(256) got 0 bytes
 
 .. {{{end}}}
 
@@ -122,15 +122,15 @@ The new file has all of the same characteristics as the old version.
 	$ python3 shutil_copy2.py
 	
 	SOURCE:
-		Mode    : 0o100644
-		Created : Sat Sep  3 09:51:54 2016
-		Accessed: Sat Sep  3 13:10:29 2016
-		Modified: Sat Sep  3 09:51:54 2016
+	  Mode    : 0o100644
+	  Created : Wed Dec 28 19:03:12 2016
+	  Accessed: Wed Dec 28 19:03:49 2016
+	  Modified: Wed Dec 28 19:03:12 2016
 	DEST:
-		Mode    : 0o100644
-		Created : Sat Sep  3 13:10:29 2016
-		Accessed: Sat Sep  3 13:10:29 2016
-		Modified: Sat Sep  3 09:51:54 2016
+	  Mode    : 0o100644
+	  Created : Wed Dec 28 19:03:49 2016
+	  Accessed: Wed Dec 28 19:03:49 2016
+	  Modified: Wed Dec 28 19:03:12 2016
 
 .. {{{end}}}
 
@@ -182,15 +182,15 @@ with ``copystat()``.
 	$ python3 shutil_copystat.py
 	
 	BEFORE:
-		Mode    : 0o100444
-		Created : Sat Sep  3 13:10:30 2016
-		Accessed: Sat Sep  3 13:10:30 2016
-		Modified: Sat Sep  3 13:10:30 2016
+	  Mode    : 0o100444
+	  Created : Wed Dec 28 19:03:49 2016
+	  Accessed: Wed Dec 28 19:03:49 2016
+	  Modified: Wed Dec 28 19:03:49 2016
 	AFTER:
-		Mode    : 0o100644
-		Created : Sat Sep  3 13:10:30 2016
-		Accessed: Sat Sep  3 13:10:29 2016
-		Modified: Sat Sep  3 09:55:22 2016
+	  Mode    : 0o100644
+	  Created : Wed Dec 28 19:03:49 2016
+	  Accessed: Wed Dec 28 19:03:49 2016
+	  Modified: Wed Dec 28 19:03:46 2016
 
 .. {{{end}}}
 

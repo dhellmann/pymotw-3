@@ -33,7 +33,7 @@ class PassThrough:
         return self.other.write(data)
 
     def read(self, size=-1):
-        print('Reading :',)
+        print('Reading :', end=' ')
         data = self.other.read(size)
         print(repr(data))
         return data
@@ -69,7 +69,7 @@ if __name__ == '__main__':
     outgoing = codecs.getwriter('utf-8')(PassThrough(write_file))
 
     # Send the data
-    text = u'pi: π'
+    text = 'français'
     print('Sending :', repr(text))
     outgoing.write(text)
     outgoing.flush()

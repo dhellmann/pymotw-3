@@ -197,7 +197,7 @@ Other parts of the path can be accessed through properties of the path
 object.  The ``name`` property holds the last part of the path, after
 the final path separator (the same value that ``os.path.basename()``
 produces). The ``suffix`` property holds the value after the extension
-separator (usually ".") and the ``stem`` property holds the portion of
+separator and the ``stem`` property holds the portion of
 the name before the suffix.
 
 .. literalinclude:: pathlib_name.py
@@ -328,10 +328,11 @@ parent directory of the script.
 	
 	../about.rst
 	../algorithm_tools.rst
+	../book.rst
 	../compression.rst
 	../concurrency.rst
 	../cryptographic.rst
-	../data_types.rst
+	../data_structures.rst
 	../dates.rst
 	../dev_tools.rst
 	../email.rst
@@ -348,6 +349,7 @@ parent directory of the script.
 	../porting_notes.rst
 	../runtime_services.rst
 	../text.rst
+	../third_party.rst
 	../unix.rst
 
 .. {{{end}}}
@@ -515,46 +517,13 @@ arguments.
 
 	$ python3 pathlib_types.py
 	
-	test_files/fifo
-	Is File?             : False
-	Is Dir?              : False
-	Is Link?             : False
-	Is FIFO?             : True
-	Is block device?     : False
-	Is character device? : False
+	Name                 File    Dir   Link   FIFO  Block  Character
 	
-	test_files/file
-	Is File?             : True
-	Is Dir?              : False
-	Is Link?             : False
-	Is FIFO?             : False
-	Is block device?     : False
-	Is character device? : False
-	
-	test_files/symlink
-	Is File?             : True
-	Is Dir?              : False
-	Is Link?             : True
-	Is FIFO?             : False
-	Is block device?     : False
-	Is character device? : False
-	
-	/dev/disk0
-	Is File?             : False
-	Is Dir?              : False
-	Is Link?             : False
-	Is FIFO?             : False
-	Is block device?     : True
-	Is character device? : False
-	
-	/dev/console
-	Is File?             : False
-	Is Dir?              : False
-	Is Link?             : False
-	Is FIFO?             : False
-	Is block device?     : False
-	Is character device? : True
-	
+	test_files/fifo       False  False  False   True  False  False  
+	test_files/file        True  False  False  False  False  False  
+	test_files/symlink     True  False   True  False  False  False  
+	/dev/disk0            False  False  False  False   True  False  
+	/dev/console          False  False  False  False  False   True  
 
 .. {{{end}}}
 

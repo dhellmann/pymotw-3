@@ -39,7 +39,7 @@ if __name__ == '__main__':
 
     # Send the data
     # WRONG: Not encoded first!
-    text = u'pi: π'
+    text = 'français'
     len_sent = s.send(text)
 
     # Receive a response

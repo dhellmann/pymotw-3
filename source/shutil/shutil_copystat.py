@@ -10,10 +10,10 @@ import time
 
 def show_file_info(filename):
     stat_info = os.stat(filename)
-    print('\tMode    :', oct(stat_info.st_mode))
-    print('\tCreated :', time.ctime(stat_info.st_ctime))
-    print('\tAccessed:', time.ctime(stat_info.st_atime))
-    print('\tModified:', time.ctime(stat_info.st_mtime))
+    print('  Mode    :', oct(stat_info.st_mode))
+    print('  Created :', time.ctime(stat_info.st_ctime))
+    print('  Accessed:', time.ctime(stat_info.st_atime))
+    print('  Modified:', time.ctime(stat_info.st_mtime))
 
 
 with open('file_to_change.txt', 'wt') as f:

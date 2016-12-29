@@ -12,7 +12,7 @@ import sys
 
 error_handling = sys.argv[1]
 
-text = 'pi: \u03c0'
+text = 'français'
 
 try:
     # Save the data, encoded as ASCII, using the error

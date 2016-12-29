@@ -10,7 +10,7 @@
 import codecs
 from codecs_invertcaps_charmap import encoding_map
 
-text = u'pi: π'
+text = 'pi: \u03c0'
 
 for error in ['ignore', 'replace', 'strict']:
     try:

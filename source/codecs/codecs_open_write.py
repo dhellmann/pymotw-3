@@ -17,7 +17,7 @@ filename = encoding + '.txt'
 
 print('Writing to', filename)
 with codecs.open(filename, mode='w', encoding=encoding) as f:
-    f.write(u'pi: \u03c0')
+    f.write('français')
 
 # Determine the byte grouping to use for to_hex()
 nbytes = {
