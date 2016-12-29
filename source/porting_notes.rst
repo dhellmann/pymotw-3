@@ -396,7 +396,6 @@ The ``abstractproperty()``, ``abstractclassmethod()``, and
 and ``staticmethod()`` decorators works as expected
 (:pyissue:`11610`).
 
-.. _porting-dbm:
 .. _porting-anydbm:
 
 anydbm
@@ -1171,10 +1170,6 @@ preferred names. Using the deprecated names produces a warning
      - ``assertAlmostEqual()``
    * - ``assertNotAlmostEquals()``
      - ``assertNotAlmostEqual()``
-
-.. _porting-UserDict:
-.. _porting-UserList:
-.. _porting-UserString:
 
 UserDict, UserList, and UserString
 ----------------------------------
