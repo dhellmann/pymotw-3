@@ -43,7 +43,7 @@ that clutter up the output in this simple example.
 
 .. {{{cog
 .. import os
-.. cog.out(run_script(cog.inFile, ['-m trace --ignore-dir=' + os.path.abspath(os.path.dirname(os.__file__)), '--trace trace_example/main.py'], break_lines_at=60))
+.. cog.out(run_script(cog.inFile, ['-m trace --ignore-dir=' + os.path.abspath(os.path.dirname(os.__file__)), '--trace trace_example/main.py']))
 .. }}}
 
 .. code-block:: none
@@ -139,7 +139,9 @@ and ``trace_example/recurse.cover``:
 
 It is also possible to run the program several times, perhaps with
 different options, to save the coverage data and produce a combined
-report.
+report. The first time ``trace`` is run with an output file, it
+reports an error when it tries to load any existing data to merge with
+the new results before creating the file.
 
 .. {{{cog
 .. run_script(cog.inFile, 'rm -rf coverdir1', interpreter='')
@@ -147,6 +149,7 @@ report.
 .. cog.out(run_script(cog.inFile, ['-m trace --coverdir coverdir1 --count', '--file coverdir1/coverage_report.dat trace_example/main.py']))
 .. cog.out(run_script(cog.inFile, ['-m trace --coverdir coverdir1 --count', '--file coverdir1/coverage_report.dat trace_example/main.py'], include_prefix=False))
 .. cog.out(run_script(cog.inFile, ['-m trace --coverdir coverdir1 --count', '--file coverdir1/coverage_report.dat trace_example/main.py'], include_prefix=False))
+.. cog.out(run_script(cog.inFile, 'ls coverdir1', interpreter=None, include_prefix=False))
 .. }}}
 
 .. code-block:: none
@@ -176,6 +179,10 @@ report.
 	recurse(2)
 	recurse(1)
 	recurse(0)
+
+	$ ls coverdir1
+	
+	coverage_report.dat
 
 .. {{{end}}}
 
