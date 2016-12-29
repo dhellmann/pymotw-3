@@ -26,5 +26,5 @@ for i in range(7):
     date = d + delta
     print
     print(day_names[date.weekday()], date)
-    print('\tISO Weekday:', day_names[date.isoweekday()])
-    print('\tISO Calendar:', date.isocalendar())
+    print('  ISO Weekday:', day_names[date.isoweekday()])
+    print('  ISO Calendar:', date.isocalendar())
