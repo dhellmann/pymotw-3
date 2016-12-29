@@ -497,23 +497,3 @@ the individual nodes in the tree.
 	c = <Element 'child' at 0x10133af98>
 
 .. {{{end}}}
-
-
-.. seealso::
-
-   * `Outline Processor Markup Language (OPML)
-     <http://www.opml.org/>`__ -- Dave Winer's OPML specification and
-     documentation.
-
-   * `XML Path Language (XPath) <http://www.w3.org/TR/xpath/>`__ -- A
-     syntax for identifying parts of an XML document.
-
-   * `XPath Support in ElementTree
-     <http://effbot.org/zone/element-xpath.htm>`__ -- Part of Fredrick
-     Lundh's original documentation for ElementTree.
-
-   * :mod:`csv` -- Read and write comma-separated-value files
-
-.. _OPML: http://www.opml.org/
-
-.. _XPath: http://www.w3.org/TR/xpath/
