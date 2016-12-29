@@ -36,8 +36,7 @@ network.
 
    * :mod:`SocketServer` -- Framework for creating network servers.
 
-   * :mod:`asyncore` and :mod:`asynchat` -- Frameworks for
-     asynchronous communication.
+   * :mod:`asyncio` -- Asynchronous I/O and concurrency tools.
 
    * :mod:`urllib` and :mod:`urllib2` -- Most network clients should
      use the more convenient libraries for accessing remote resources
