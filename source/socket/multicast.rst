@@ -12,8 +12,8 @@ endpoint at a time achieves better efficiency because the network
 infrastructure ensures that the packets are delivered to all
 recipients.
 
-Multicast messages are always sent using UDP, since TCP requires an
-end-to-end communication channel.  The addresses for multicast, called
+Multicast messages are always sent using UDP, since TCP assumes a pair
+of communicating systems.  The addresses for multicast, called
 *multicast groups*, are a subset of regular IPv4 address range
 (224.0.0.0 through 230.255.255.255) reserved for multicast traffic.
 These addresses are treated specially by network routers and switches,
