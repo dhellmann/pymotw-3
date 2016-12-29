@@ -402,11 +402,12 @@ In addition to synchronizing the operations of threads, it is also
 important to be able to control access to shared resources to prevent
 corruption or missed data. Python's built-in data structures (lists,
 dictionaries, etc.) are thread-safe as a side-effect of having atomic
-byte-codes for manipulating them (the GIL is not released in the
+byte-codes for manipulating them (the global interpreter lock used to
+protect Python's internal data structures is not released in the
 middle of an update). Other data structures implemented in Python, or
-simpler types like integers and floats, do not have that protection. To
-guard against simultaneous access to an object, use a ``Lock``
-object.
+simpler types like integers and floats, do not have that
+protection. To guard against simultaneous access to an object, use a
+``Lock`` object.
 
 .. literalinclude:: threading_lock.py
     :caption:
@@ -725,7 +726,7 @@ Thread-specific Data
 
 While some resources need to be locked so multiple threads can use
 them, others need to be protected so that they are hidden from threads
-that do not "own" them. The ``local()`` class creates an object
+that do not own them. The ``local()`` class creates an object
 capable of hiding values from view in separate threads.
 
 .. literalinclude:: threading_local.py

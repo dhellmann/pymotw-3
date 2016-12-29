@@ -31,7 +31,8 @@ this section re-create the ones used for :mod:`os` and :mod:`popen2`.
 .. note::
 
     The API for working on Unix and Windows is roughly the same, but
-    the underlying implementation is slightly different.  All of the
+    the underlying implementation is different because of the
+    difference in process models in the operating systems.  All of the
     examples shown here were tested on Mac OS X. Behavior on a
     non-Unix OS may vary.
 
