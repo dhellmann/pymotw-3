@@ -12,7 +12,7 @@ import xml.parsers.expat
 
 server = xmlrpc.client.ServerProxy('http://localhost:9000')
 
-s = b'This is a string with control characters\0'
+s = b'This is a string with control characters\x00'
 print('Local string:', s)
 
 data = xmlrpc.client.Binary(s)
