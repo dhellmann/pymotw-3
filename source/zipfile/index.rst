@@ -86,12 +86,12 @@ of the *PKZIP Application Note* with the ZIP file specification.
 	$ python3 zipfile_infolist.py
 	
 	README.txt
-		Comment     : b''
-		Modified    : 2010-11-15 06:48:02
-		System      : Unix
-		ZIP version : 30
-		Compressed  : 65 bytes
-		Uncompressed: 76 bytes
+	  Comment     : b''
+	  Modified    : 2010-11-15 06:48:02
+	  System      : Unix
+	  ZIP version : 30
+	  Compressed  : 65 bytes
+	  Uncompressed: 76 bytes
 	
 
 .. {{{end}}}
@@ -175,12 +175,12 @@ By default, the contents of the archive are not compressed.
 	adding README.txt
 	
 	README.txt
-		Comment     : b''
-		Modified    : 2012-05-13 20:09:26
-		System      : Unix
-		ZIP version : 20
-		Compressed  : 76 bytes
-		Uncompressed: 76 bytes
+	  Comment     : b''
+	  Modified    : 2016-08-07 13:31:24
+	  System      : Unix
+	  ZIP version : 20
+	  Compressed  : 76 bytes
+	  Uncompressed: 76 bytes
 	
 
 .. {{{end}}}
@@ -211,12 +211,12 @@ This time, the archive member is compressed.
 	adding README.txt with compression mode deflated
 	
 	README.txt
-		Comment     : b''
-		Modified    : 2012-05-13 20:09:26
-		System      : Unix
-		ZIP version : 20
-		Compressed  : 65 bytes
-		Uncompressed: 76 bytes
+	  Comment     : b''
+	  Modified    : 2016-08-07 13:31:24
+	  System      : Unix
+	  ZIP version : 20
+	  Compressed  : 65 bytes
+	  Uncompressed: 76 bytes
 	
 
 .. {{{end}}}
@@ -244,12 +244,12 @@ There is no sign of the original filename in the archive.
 	$ python3 zipfile_write_arcname.py
 	
 	NOT_README.txt
-		Comment     : b''
-		Modified    : 2012-05-13 20:09:26
-		System      : Unix
-		ZIP version : 20
-		Compressed  : 76 bytes
-		Uncompressed: 76 bytes
+	  Comment     : b''
+	  Modified    : 2016-08-07 13:31:24
+	  System      : Unix
+	  ZIP version : 20
+	  Compressed  : 76 bytes
+	  Uncompressed: 76 bytes
 	
 
 .. {{{end}}}
@@ -283,12 +283,12 @@ an argument to specify the compression.
 	$ python3 zipfile_writestr.py
 	
 	from_string.txt
-		Comment     : b''
-		Modified    : 2016-08-07 13:27:24
-		System      : Unix
-		ZIP version : 20
-		Compressed  : 36 bytes
-		Uncompressed: 34 bytes
+	  Comment     : b''
+	  Modified    : 2016-12-29 12:14:42
+	  System      : Unix
+	  ZIP version : 20
+	  Compressed  : 36 bytes
+	  Uncompressed: 34 bytes
 	
 	b'This data did not exist in a file.'
 
@@ -319,12 +319,12 @@ simple comment is also associated with the new file.
 	$ python3 zipfile_writestr_zipinfo.py
 	
 	from_string.txt
-		Comment     : b'Remarks go here'
-		Modified    : 2016-08-07 13:27:24
-		System      : Windows
-		ZIP version : 20
-		Compressed  : 36 bytes
-		Uncompressed: 34 bytes
+	  Comment     : b'Remarks go here'
+	  Modified    : 2016-12-29 12:14:42
+	  System      : Windows
+	  ZIP version : 20
+	  Compressed  : 36 bytes
+	  Uncompressed: 34 bytes
 	
 
 .. {{{end}}}
@@ -355,30 +355,30 @@ The resulting archive contains two members:
 	creating archive
 	
 	README.txt
-		Comment     : b''
-		Modified    : 2012-05-13 20:09:26
-		System      : Unix
-		ZIP version : 20
-		Compressed  : 76 bytes
-		Uncompressed: 76 bytes
+	  Comment     : b''
+	  Modified    : 2016-08-07 13:31:24
+	  System      : Unix
+	  ZIP version : 20
+	  Compressed  : 76 bytes
+	  Uncompressed: 76 bytes
 	
 	appending to the archive
 	
 	README.txt
-		Comment     : b''
-		Modified    : 2012-05-13 20:09:26
-		System      : Unix
-		ZIP version : 20
-		Compressed  : 76 bytes
-		Uncompressed: 76 bytes
+	  Comment     : b''
+	  Modified    : 2016-08-07 13:31:24
+	  System      : Unix
+	  ZIP version : 20
+	  Compressed  : 76 bytes
+	  Uncompressed: 76 bytes
 	
 	README2.txt
-		Comment     : b''
-		Modified    : 2012-05-13 20:09:26
-		System      : Unix
-		ZIP version : 20
-		Compressed  : 76 bytes
-		Uncompressed: 76 bytes
+	  Comment     : b''
+	  Modified    : 2016-08-07 13:31:24
+	  System      : Unix
+	  ZIP version : 20
+	  Compressed  : 76 bytes
+	  Uncompressed: 76 bytes
 	
 
 .. {{{end}}}
