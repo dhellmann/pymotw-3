@@ -11,8 +11,8 @@ either as a client or a server.
 The :mod:`urllib.parse` module manipulates URL strings, splitting and
 combining their components, and is useful in clients and servers.
 
-The original :mod:`urllib.request` module implements an API for
-retrieving content remotely.
+The :mod:`urllib.request` module implements an API for retrieving
+content remotely.
 
 HTTP POST requests are usually "form encoded" with :mod:`urllib`.
 Binary data sent through a POST should be encoded with :mod:`base64`

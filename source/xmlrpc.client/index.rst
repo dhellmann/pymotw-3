@@ -22,7 +22,7 @@ Connecting to a Server
 
 The simplest way to connect a client to a server is to instantiate a
 ``ServerProxy`` object, giving it the URI of the server. For
-example, the demo server runs on port 9000 of localhost:
+example, the demo server runs on port 9000 of localhost.
 
 .. literalinclude:: xmlrpc_ServerProxy.py
    :caption:
