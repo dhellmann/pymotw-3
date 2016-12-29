@@ -36,7 +36,7 @@ respectively.
    :start-after: #end_pymotw_header
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'hashlib_algorithms.py'))
+.. cog.out(run_script(cog.inFile, 'hashlib_algorithms.py', line_break_mode='wrap-no-breaks'))
 .. }}}
 
 .. code-block:: none
@@ -47,10 +47,10 @@ respectively.
 	md5, sha1, sha224, sha256, sha384, sha512
 	
 	Available:
-	DSA, DSA-SHA, MD4, MD5, MDC2, RIPEMD160, SHA, SHA1, SHA224, SHA2
-	56, SHA384, SHA512, dsaEncryption, dsaWithSHA, ecdsa-with-SHA1, 
-	md4, md5, mdc2, ripemd160, sha, sha1, sha224, sha256, sha384, sh
-	a512
+	DSA, DSA-SHA, MD4, MD5, MDC2, RIPEMD160, SHA, SHA1, SHA224,
+	SHA256, SHA384, SHA512, dsaEncryption, dsaWithSHA,
+	ecdsa-with-SHA1, md4, md5, mdc2, ripemd160, sha, sha1, sha224,
+	sha256, sha384, sha512
 
 .. {{{end}}}
 
