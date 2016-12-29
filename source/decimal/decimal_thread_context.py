@@ -41,4 +41,4 @@ for t in threads:
 
 for i in range(5):
     prec, value = q.get()
-    print(prec, '\t', value)
+    print('{}  {}'.format(prec, value))
