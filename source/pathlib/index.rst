@@ -553,24 +553,24 @@ installed. Try passing different filenames on the command line to
 	$ python3 pathlib_stat.py
 	
 	pathlib_stat.py:
-		Size: 607
-		Permissions: 0o100644
-		Owner: 527
-		Device: 16777218
-		Created      : Sat Aug 27 19:55:05 2016
-		Last modified: Sat Aug 27 19:55:04 2016
-		Last accessed: Sat Aug 27 21:45:41 2016
+	  Size: 607
+	  Permissions: 0o100644
+	  Owner: 527
+	  Device: 16777218
+	  Created      : Thu Dec 29 12:25:25 2016
+	  Last modified: Thu Dec 29 12:25:25 2016
+	  Last accessed: Thu Dec 29 12:25:34 2016
 
 	$ python3 pathlib_stat.py index.rst
 	
 	index.rst:
-		Size: 20080
-		Permissions: 0o100644
-		Owner: 527
-		Device: 16777218
-		Created      : Sat Aug 27 21:45:33 2016
-		Last modified: Sat Aug 27 21:45:33 2016
-		Last accessed: Sat Aug 27 21:45:40 2016
+	  Size: 19363
+	  Permissions: 0o100644
+	  Owner: 527
+	  Device: 16777218
+	  Created      : Thu Dec 29 11:27:58 2016
+	  Last modified: Thu Dec 29 11:27:58 2016
+	  Last accessed: Thu Dec 29 12:25:33 2016
 
 .. {{{end}}}
 
@@ -618,14 +618,14 @@ subsequent runs.
 	$ python3 pathlib_touch.py
 	
 	creating new
-	Start: Sat Aug 27 21:45:41 2016
-	End  : Sat Aug 27 21:45:42 2016
+	Start: Thu Dec 29 12:25:34 2016
+	End  : Thu Dec 29 12:25:35 2016
 
 	$ python3 pathlib_touch.py
 	
 	already exists
-	Start: Sat Aug 27 21:45:42 2016
-	End  : Sat Aug 27 21:45:43 2016
+	Start: Thu Dec 29 12:25:35 2016
+	End  : Thu Dec 29 12:25:36 2016
 
 .. {{{end}}}
 
