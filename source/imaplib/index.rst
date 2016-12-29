@@ -107,7 +107,7 @@ To retrieve the mailboxes available for an account, use the
 
 The return value is a ``tuple`` containing a response code and
 the data returned by the server.  The response code is ``OK``, unless
-there has been an error.  The data for :meth:`list()` is a sequence of
+there has been an error.  The data for ``list()`` is a sequence of
 strings containing *flags*, the *hierarchy delimiter*, and *mailbox
 name* for each mailbox.
 
@@ -127,7 +127,7 @@ name* for each mailbox.
 
 Each response string can be split into three parts using :mod:`re` or
 :mod:`csv` (see *IMAP Backup Script* in the references at the end of
-this section for an example using :mod:`csv`).
+this section for an example using ``csv``).
 
 .. literalinclude:: imaplib_list_parse.py
    :caption:
@@ -155,7 +155,7 @@ back to the server later.
 	Server response: b'(\\HasNoChildren) "." INBOX'
 	Parsed response: ('\\HasNoChildren', '.', 'INBOX')
 
-:meth:`list()` takes arguments to specify mailboxes in part of the
+``list()`` takes arguments to specify mailboxes in part of the
 hierarchy.  For example, to list sub-folders of ``Example``, pass
 ``"Example"`` as the ``directory`` argument.
 
@@ -198,7 +198,7 @@ the response.
 Mailbox Status
 ==============
 
-Use :meth:`status()` to ask for aggregated information about the
+Use ``status()`` to ask for aggregated information about the
 contents.  :table:`IMAP 4 Mailbox Status Conditions` lists the status
 conditions defined by the standard.
 
@@ -306,7 +306,7 @@ The data contains an error message describing the problem.
 Searching for Messages
 ======================
 
-After selecting the mailbox, use :meth:`search()` to retrieve the IDs
+After selecting the mailbox, use ``search()`` to retrieve the IDs
 of messages in the mailbox.
 
 .. literalinclude:: imaplib_search_all.py
@@ -423,18 +423,18 @@ The criteria are combined with a logical ``and`` operation.
 Fetching Messages
 =================
 
-The identifiers returned by :meth:`search()` are used to retrieve the
+The identifiers returned by ``search()`` are used to retrieve the
 contents, or partial contents, of messages for further processing
-using the :meth:`fetch()` method.  It takes two arguments, the message
+using the ``fetch()`` method.  It takes two arguments, the message
 IDs to fetch and the portion(s) of the message to retrieve.
 
 The ``message_ids`` argument is a comma separated list of ids (e.g.,
 ``"1"``, ``"1,2"``) or ID ranges (e.g., ``1:2``).  The ``message_parts``
 argument is an IMAP list of message segment names.  As with search
-criteria for :meth:`search()`, the IMAP protocol specifies named
+criteria for ``search()``, the IMAP protocol specifies named
 message segments so clients can efficiently retrieve only the parts of
 the message they actually need.  For example, to retrieve the headers
-of the messages in a mailbox, use :meth:`fetch()` with the argument
+of the messages in a mailbox, use ``fetch()`` with the argument
 ``BODY.PEEK[HEADER]``.
 
 .. note::
@@ -447,8 +447,8 @@ of the messages in a mailbox, use :meth:`fetch()` with the argument
    :caption:
    :start-after: #end_pymotw_header
 
-The return value of :meth:`fetch()` has been partially parsed so it is
-somewhat harder to work with than the return value of :meth:`list()`.
+The return value of ``fetch()`` has been partially parsed so it is
+somewhat harder to work with than the return value of ``list()``.
 Turning on debugging shows the complete interaction between the client
 and server to understand why this is so.
 
@@ -701,7 +701,7 @@ Uploading Messages
 ==================
 
 To add a new message to a mailbox, construct a ``Message``
-instance and pass it to the :meth:`append()` method, along with the
+instance and pass it to the ``append()`` method, along with the
 timestamp for the message.
 
 .. literalinclude:: imaplib_append.py
@@ -785,8 +785,8 @@ Moving and Copying Messages
 ===========================
 
 Once a message is on the server, it can be moved or copied without
-downloading it using :meth:`move()` or :meth:`copy()`.  These methods
-operate on message id ranges, just as :meth:`fetch()` does.
+downloading it using ``move()`` or ``copy()``.  These methods
+operate on message id ranges, just as ``fetch()`` does.
 
 .. literalinclude:: imaplib_archive_read.py
    :caption:
@@ -806,7 +806,7 @@ the read messages from ``INBOX`` into it.
 	COPIED: b'1'
 
 Running the same script again shows the importance to checking return
-codes.  Instead of raising an exception, the call to :meth:`create()`
+codes.  Instead of raising an exception, the call to ``create()``
 to make the new mailbox reports that the mailbox already exists.
 
 .. NOT RUNNING
@@ -836,9 +836,9 @@ querying the server again.
    :caption:
    :start-after: #end_pymotw_header
 
-Explicitly calling :meth:`expunge()` removes the messages, but calling
-:meth:`close()` has the same effect.  The difference is the client is
-not notified about the deletions when :meth:`close()` is called.
+Explicitly calling ``expunge()`` removes the messages, but calling
+``close()`` has the same effect.  The difference is the client is
+not notified about the deletions when ``close()`` is called.
 
 .. NOT RUNNING
 
