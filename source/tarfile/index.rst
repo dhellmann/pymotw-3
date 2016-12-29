@@ -94,16 +94,16 @@ Load the metadata via ``getmembers()`` and ``getmember()``.
 	$ python3 tarfile_getmembers.py
 	
 	index.rst
-		Modified:	 Fri Aug 19 16:27:54 2016
-		Mode    :	 0o644
-		Type    :	 b'0'
-		Size    :	 9878 bytes
+	  Modified: Fri Aug 19 16:27:54 2016
+	  Mode    : 0o644
+	  Type    : b'0'
+	  Size    : 9878 bytes
 	
 	README.txt
-		Modified:	 Fri Aug 19 16:27:54 2016
-		Mode    :	 0o644
-		Type    :	 b'0'
-		Size    :	 75 bytes
+	  Modified: Fri Aug 19 16:27:54 2016
+	  Mode    : 0o644
+	  Type    : b'0'
+	  Size    : 75 bytes
 	
 
 .. {{{end}}}
