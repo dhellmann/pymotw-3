@@ -92,7 +92,7 @@ written, or how big they are.
    :caption:
    :start-after: #end_pymotw_header
 
-The example simulates streams using two :mod:`StringIO` buffers.  The
+The example simulates streams using two ``BytesIO`` buffers.  The
 first receives the pickled objects, and its value is fed to a second
 from which ``load()`` reads.  A simple database format could use
 pickles to store objects, too (see :mod:`shelve`).
