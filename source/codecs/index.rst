@@ -15,7 +15,7 @@ but other encodings are also available for other purposes.
 Unicode Primer
 ==============
 
-CPython 3.x differentiates between "text" and "byte" strings.
+CPython 3.x differentiates between *text* and *byte* strings.
 ``bytes`` instances use a sequence of 8-bit byte values.  In
 contrast, ``str`` strings are managed internally as a sequence of
 Unicode *code points*.  The code point values are saved as a sequence
