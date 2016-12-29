@@ -90,10 +90,11 @@ written, or how big they are.
    :caption:
    :start-after: #end_pymotw_header
 
-The example simulates streams using two :mod:`StringIO` buffers.  The
+The example simulates streams using two ``BytesIO`` buffers.  The
 first receives the pickled objects, and its value is fed to a second
 from which ``load()`` reads.  A simple database format could use
-pickles to store objects, too (see :mod:`shelve`).
+pickles to store objects, too. The :mod:`shelve` module is one such
+implementation.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'pickle_stream.py'))
@@ -131,14 +132,15 @@ When working with custom classes, the class being pickled must appear
 in the namespace of the process reading the pickle. Only the data for
 the instance is pickled, not the class definition. The class name is
 used to find the constructor to create the new object when
-unpickling. This example writes instances of a class to a file:
+unpickling. The following example writes instances of a class to a
+file.
 
 .. literalinclude:: pickle_dump_to_file_1.py
    :caption:
    :start-after: #end_pymotw_header
 
 When run, the script creates a file based on the name given as
-argument on the command line:
+argument on the command line.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'pickle_dump_to_file_1.py test.dat'))
@@ -154,7 +156,7 @@ argument on the command line:
 
 .. {{{end}}}
 
-A simplistic attempt to load the resulting pickled objects fails:
+A simplistic attempt to load the resulting pickled objects fails.
 
 .. literalinclude:: pickle_load_from_file_1.py
    :caption:

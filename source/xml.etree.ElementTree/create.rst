@@ -332,18 +332,3 @@ Three methods are supported:
 	
 
 .. {{{end}}}
-
-
-
-.. seealso::
-
-   * `Outline Processor Markup Language (OPML)
-     <http://www.opml.org/>`__ -- Dave Winer's OPML specification and
-     documentation.
-
-   * `Prety print xml with python - indenting xml
-     <http://renesd.blogspot.com/2007/05/pretty-print-xml-with-python.html>`__
-     -- A tip from Rene Dudfield for pretty-printing XML in Python.
-
-
-.. _OPML: http://www.opml.org/
