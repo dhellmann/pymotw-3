@@ -66,16 +66,16 @@ to show the effect.
 	$ python3 shutil_copyfileobj.py
 	
 	Default:
-	read(16384) bytes
-	read(16384) bytes
+	read(16384) got 166 bytes
+	read(16384) got 0 bytes
 	
 	All at once:
-	read(-1) bytes
-	read(-1) bytes
+	read(-1) got 166 bytes
+	read(-1) got 0 bytes
 	
 	Blocks of 256:
-	read(256) bytes
-	read(256) bytes
+	read(256) got 166 bytes
+	read(256) got 0 bytes
 
 .. {{{end}}}
 
