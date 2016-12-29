@@ -18,14 +18,15 @@ Creating and Setting a Cookie
 
 Cookies are used as state management for browser-based application,
 and as such are usually set by the server to be stored and returned by
-the client. The most trivial example of creating a cookie is
+the client. The most trivial example of creating a cookie sets a
+single name-value pair.
 
 .. literalinclude:: http_cookies_setheaders.py
     :caption:
     :start-after: #end_pymotw_header
 
 The output is a valid ``Set-Cookie`` header ready to be passed to the
-client as part of the HTTP response:
+client as part of the HTTP response.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'http_cookies_setheaders.py'))
