@@ -102,14 +102,14 @@ because a platform-specific implementation is loaded, the service API
 is built dynamically based on a configuration file, or real functions
 can be replaced with stubs for testing.  To register a function with
 an alternate name, pass the name as the second argument to
-``register_function()``, like this:
+``register_function()``.
 
 .. literalinclude:: xmlrpc_alternate_name.py
    :caption:
    :start-after: #end_pymotw_header
 
 The client should now use the name ``dir()`` instead of
-``list_contents()``:
+``list_contents()``.
 
 .. literalinclude:: xmlrpc_alternate_name_client.py
    :caption:
@@ -156,7 +156,7 @@ dotted name.
    :start-after: #end_pymotw_header
 
 Assuming there is no ``/tmp/EXAMPLE`` file on the current system,
-the output for the sample client script is:
+the output for the sample client script is as follows.
 
 .. code-block:: none
 
@@ -213,13 +213,13 @@ instance with a single method.
    :caption:
    :start-after: #end_pymotw_header
 
-A client can call the method directly:
+A client can call the method directly.
 
 .. literalinclude:: xmlrpc_instance_client.py
    :caption:
    :start-after: #end_pymotw_header
 
-The output is:
+The output shows the contents of the directory.
 
 .. code-block:: none
 
@@ -266,29 +266,27 @@ Dispatching Calls
 By default, ``register_instance()`` finds all callable attributes
 of the instance with names not starting with an underscore ("``_``") and registers
 them with their name. To be more careful about the exposed methods,
-custom dispatching logic can be used. For example:
+custom dispatching logic can be used.
 
 .. literalinclude:: xmlrpc_instance_with_prefix.py
    :caption:
    :start-after: #end_pymotw_header
 
-The ``public()`` method of ``MyService`` is marked as exposed
-to the XML-RPC service while ``private()`` is not. The
-``_dispatch()`` method is invoked when the client tries to access
-a function that is part of ``MyService``. It first enforces the
-use of a prefix ("``prefix.``" in this case, but any string can be
-used).  Then it requires the function to have an attribute called
-``exposed`` with a true value. The exposed flag is set on a function
-using a decorator for convenience.
-
-Here are a few sample client calls:
+The ``public()`` method of ``MyService`` is marked as exposed to the
+XML-RPC service while ``private()`` is not. The ``_dispatch()`` method
+is invoked when the client tries to access a function that is part of
+``MyService``. It first enforces the use of a prefix ("``prefix.``" in
+this case, but any string can be used).  Then it requires the function
+to have an attribute called ``exposed`` with a true value. The exposed
+flag is set on a function using a decorator for convenience. The
+following example includes a few sample client calls.
 
 .. literalinclude:: xmlrpc_instance_with_prefix_client.py
    :caption:
    :start-after: #end_pymotw_header
 
-and the resulting output, with the expected error messages trapped and
-reported:
+The resulting output, with the expected error messages trapped and
+reported, follows.
 
 .. code-block:: none
 
