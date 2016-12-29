@@ -10,9 +10,16 @@
 import compileall
 import glob
 
-print('Before:', glob.glob('examples/__pycache__/*'))
-print()
+
+def show(title):
+    print(title)
+    for filename in glob.glob('examples/**',
+                              recursive=True):
+        print('  {}'.format(filename))
+    print()
+
+show('Before')
 
 compileall.compile_file('examples/a.py')
 
-print('\nAfter:', glob.glob('examples/__pycache__/*'))
+show('\nAfter')

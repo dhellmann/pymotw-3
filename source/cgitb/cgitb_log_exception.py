@@ -10,8 +10,13 @@
 import cgitb
 import os
 
+LOGDIR = os.path.join(os.path.dirname(__file__), 'LOGS')
+
+if not os.path.exists(LOGDIR):
+    os.makedirs(LOGDIR)
+
 cgitb.enable(
-    logdir=os.path.join(os.path.dirname(__file__), 'LOGS'),
+    logdir=LOGDIR,
     display=False,
     format='text',
 )

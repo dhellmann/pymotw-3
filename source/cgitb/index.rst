@@ -81,7 +81,7 @@ the line where the actual exception is generated.
 	
 	ZeroDivisionError
 	Python 3.5.2: .../bin/python3
-	Sat Dec  3 16:19:25 2016
+	Thu Dec 29 09:30:37 2016
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
@@ -229,7 +229,7 @@ error-prone code.
 	
 	ZeroDivisionError
 	Python 3.5.2: .../bin/python3
-	Sat Dec  3 16:19:25 2016
+	Thu Dec 29 09:30:37 2016
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
@@ -364,7 +364,7 @@ standard ``message`` and ``args`` values.
 	
 	MyException
 	Python 3.5.2: .../bin/python3
-	Sat Dec  3 16:19:25 2016
+	Thu Dec 29 09:30:37 2016
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
@@ -469,7 +469,6 @@ describing where to go to find the error log.
 
 .. {{{cog
 .. path('source/cgitb/LOGS').rmtree()
-.. sh('mkdir -p source/cgitb/LOGS')
 .. cog.out(run_script(cog.inFile, 'cgitb_log_exception.py', 
 ..                    ignore_error=True, line_break_mode='fill'))
 .. cog.out(run_script(cog.inFile, 'ls LOGS', interpreter=None, include_prefix=False))
@@ -482,36 +481,36 @@ describing where to go to find the error log.
 	$ python3 cgitb_log_exception.py
 	
 	<p>A problem occurred in a Python script.
-	.../LOGS/tmpswtsoit0.txt contains the description of this error.
+	.../LOGS/tmptxqq_6yx.txt contains the description of this error.
 
 	$ ls LOGS
 	
-	tmpswtsoit0.txt
+	tmptxqq_6yx.txt
 
 	$ cat LOGS/*.txt
 	
 	ZeroDivisionError
 	Python 3.5.2: .../bin/python3
-	Sat Dec  3 16:19:25 2016
+	Thu Dec 29 09:30:38 2016
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
 	occurred.
 	
 	 .../cgitb_log_exception.py in <module>()
-	   19 
-	   20 def func(a, divisor):
-	   21     return a / divisor
-	   22 
-	   23 func(1, 0)
+	   24 
+	   25 def func(a, divisor):
+	   26     return a / divisor
+	   27 
+	   28 func(1, 0)
 	func = <function func>
 	
 	 .../cgitb_log_exception.py in func(a=1, divisor=0)
-	   19 
-	   20 def func(a, divisor):
-	   21     return a / divisor
-	   22 
-	   23 func(1, 0)
+	   24 
+	   25 def func(a, divisor):
+	   26     return a / divisor
+	   27 
+	   28 func(1, 0)
 	a = 1
 	divisor = 0
 	ZeroDivisionError: division by zero
@@ -573,9 +572,9 @@ describing where to go to find the error log.
 	the original traceback:
 	
 	Traceback (most recent call last):
-	  File "cgitb_log_exception.py", line 23, in <module>
+	  File "cgitb_log_exception.py", line 28, in <module>
 	    func(1, 0)
-	  File "cgitb_log_exception.py", line 21, in func
+	  File "cgitb_log_exception.py", line 26, in func
 	    return a / divisor
 	ZeroDivisionError: division by zero
 	
