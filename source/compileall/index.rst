@@ -26,8 +26,10 @@ based on the Python interpreter version.
 
 .. {{{cog
 .. workdir = path(cog.inFile).dirname()
-.. cog.msg('Removing .pyc files from %s' % workdir)
-.. sh("find %s -name '*.pyc' | xargs rm" % workdir) #* fix emacs syntax highlighting
+.. def cleanup():
+..     cog.msg('Removing pycache from {}'.format(workdir))
+..     sh('find {} -name __pycache__ | xargs rm -rf'.format(workdir))
+.. cleanup()
 .. cog.out(run_script(cog.inFile, 'compileall_compile_dir.py'))
 .. }}}
 
@@ -35,14 +37,29 @@ based on the Python interpreter version.
 
 	$ python3 compileall_compile_dir.py
 	
-	Before: []
+	Before
+	  examples/
+	  examples/README
+	  examples/a.py
+	  examples/subdir
+	  examples/subdir/b.py
 	
 	Listing 'examples'...
 	Compiling 'examples/a.py'...
 	Listing 'examples/subdir'...
 	Compiling 'examples/subdir/b.py'...
 	
-	After: ['examples/__pycache__/a.cpython-35.pyc']
+	After
+	  examples/
+	  examples/README
+	  examples/__pycache__
+	  examples/__pycache__/a.cpython-35.pyc
+	  examples/a.py
+	  examples/subdir
+	  examples/subdir/__pycache__
+	  examples/subdir/__pycache__/b.cpython-35.pyc
+	  examples/subdir/b.py
+	
 
 .. {{{end}}}
 
@@ -59,9 +76,7 @@ regular expression to match the names to exclude.
 This version excludes files in the ``subdir`` subdirectory.
 
 .. {{{cog
-.. workdir = path(cog.inFile).dirname()
-.. cog.msg('Removing .pyc files from %s' % workdir)
-.. sh("find %s -name '*.pyc' | xargs rm" % workdir) #* fix emacs syntax highlighting
+.. cleanup()
 .. cog.out(run_script(cog.inFile, 'compileall_exclude_dirs.py'))
 .. }}}
 
@@ -86,9 +101,7 @@ Only files within the directory passed to ``compile_dir()`` are
 compiled.
 
 .. {{{cog
-.. workdir = path(cog.inFile).dirname()
-.. cog.msg('Removing .pyc files from %s' % workdir)
-.. sh("find %s -name '*.pyc' | xargs rm" % workdir) #* fix emacs syntax highlighting
+.. cleanup()
 .. cog.out(run_script(cog.inFile, 'compileall_recursion_depth.py'))
 .. }}}
 
@@ -117,9 +130,7 @@ illustrates the default behavior.  Note that the ``maxlevels`` value
 defaults to ``0``.
 
 .. {{{cog
-.. workdir = path(cog.inFile).dirname()
-.. cog.msg('Removing .pyc files from %s' % workdir)
-.. sh("find %s -name '*.pyc' | xargs rm" % workdir) #* fix emacs syntax highlighting
+.. cleanup()
 .. cog.out(run_script(cog.inFile, 'compileall_path.py'))
 .. }}}
 
@@ -149,9 +160,7 @@ The first argument should be the name to the file, either a full path
 or a relative path.
 
 .. {{{cog
-.. workdir = path(cog.inFile).dirname()
-.. cog.msg('Removing .pyc files from %s' % workdir)
-.. sh("find %s -name '*.pyc' | xargs rm" % workdir) #* fix emacs syntax highlighting
+.. cleanup()
 .. cog.out(run_script(cog.inFile, 'compileall_compile_file.py'))
 .. }}}
 
@@ -159,11 +168,24 @@ or a relative path.
 
 	$ python3 compileall_compile_file.py
 	
-	Before: []
+	Before
+	  examples/
+	  examples/README
+	  examples/a.py
+	  examples/subdir
+	  examples/subdir/b.py
 	
 	Compiling 'examples/a.py'...
 	
-	After: ['examples/__pycache__/a.cpython-35.pyc']
+	After
+	  examples/
+	  examples/README
+	  examples/__pycache__
+	  examples/__pycache__/a.cpython-35.pyc
+	  examples/a.py
+	  examples/subdir
+	  examples/subdir/b.py
+	
 
 .. {{{end}}}
 
@@ -235,9 +257,7 @@ example:
 To recreate the earlier example, skipping the ``subdir`` directory, run:
 
 .. {{{cog
-.. workdir = path(cog.inFile).dirname()
-.. cog.msg('Removing .pyc files from %s' % workdir)
-.. sh("find %s -name '*.pyc' | xargs rm" % workdir) #* fix emacs syntax highlighting
+.. cleanup()
 .. cog.out(run_script(cog.inFile, "-m compileall -x '/subdir' examples"))
 .. }}}
 
