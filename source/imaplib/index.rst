@@ -129,7 +129,7 @@ name* for each mailbox.
 
 Each response string can be split into three parts using :mod:`re` or
 :mod:`csv` (see *IMAP Backup Script* in the references at the end of
-this section for an example using :mod:`csv`).
+this section for an example using ``csv``).
 
 .. literalinclude:: imaplib_list_parse.py
    :caption:
