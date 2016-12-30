@@ -405,12 +405,14 @@ a modified version of the ``HelloWorld`` example.
     :start-after: #end_pymotw_header
 
 With ``use_rawinput`` set to False and ``prompt`` set to an empty
-string, the script can be called on this input file:
+string, the script can be called on an input file with one command on
+each line.
 
 .. literalinclude:: cmd_file.txt
     :caption:
 
-to produce this output:
+Running the example script with the example input produces the
+following output.
 
 .. code-block:: none
 

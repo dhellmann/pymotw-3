@@ -17,7 +17,7 @@ return a number representing the current time. The ``delay`` function
 is called with a single integer argument, using the same scale as the
 time function, and should wait that many time units before
 returning. By default ``monotonic()`` and ``sleep()`` from :mod:`time`
-are used, but the examples in this section use ``time.time()`` , which
+are used, but the examples in this section use ``time.time()``, which
 also meets the requirements, because it makes the output easier to
 understand.
 
@@ -30,7 +30,7 @@ Running Events With a Delay
 
 Events can be scheduled to run after a delay, or at a specific
 time. To schedule them with a delay, use the ``enter()`` method,
-which takes four arguments:
+which takes four arguments.
 
 * A number representing the delay
 * A priority value
