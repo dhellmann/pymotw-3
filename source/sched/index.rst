@@ -32,7 +32,7 @@ Running Events With a Delay
 
 Events can be scheduled to run after a delay, or at a specific
 time. To schedule them with a delay, use the ``enter()`` method,
-which takes four arguments:
+which takes four arguments.
 
 * A number representing the delay
 * A priority value
