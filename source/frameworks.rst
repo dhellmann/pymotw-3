@@ -5,9 +5,9 @@ Application Building Blocks
 The strength of Python's standard library is its size.  It includes
 implementations of so many aspects of a program's structure that
 developers can concentrate on what makes their application unique,
-instead of implementing all the basic pieces over and over again.
-This chapter covers some of the more frequently reused building blocks
-that solve problems common to so many applications.
+instead of having to write all of the basic pieces over and over
+again.  This chapter covers some of the more frequently reused
+building blocks that solve problems common to so many applications.
 
 :mod:`argparse` is an interface for parsing and validating command
 line arguments.  It supports converting arguments from strings to
