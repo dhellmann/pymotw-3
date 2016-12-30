@@ -101,12 +101,13 @@ Unicode Configuration Data
 --------------------------
 
 Configuration files containing Unicode data should be read using the
-proper encoding value.  Changing the password value of the original
-input to contain Unicode characters and saving the results in UTF-8
-encoding gives:
+proper encoding value.  The following example file changes the
+password value of the original input to contain Unicode characters and
+is encoded using UTF-8.
 
 .. literalinclude:: unicode.ini
    :language: none
+   :caption:
 
 The file is opened with the appropriate decoder, converting the UTF-8
 data to native Unicode strings.
@@ -279,9 +280,10 @@ Value Types
 All section and option names are treated as strings, but option values
 can be strings, integers, floating point numbers, or Booleans.  There
 are a range of possible Boolean values that are converted true or
-false.  This example file includes one of each:
+false.  The following example file includes one of each.
 
 .. literalinclude:: types.ini
+   :caption:
 
 ``ConfigParser`` does not make any attempt to understand the
 option type.  The application is expected to use the correct method to
