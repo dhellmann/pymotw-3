@@ -19,7 +19,7 @@ return a number representing the current time. The ``delay`` function
 is called with a single integer argument, using the same scale as the
 time function, and should wait that many time units before
 returning. By default ``monotonic()`` and ``sleep()`` from :mod:`time`
-are used, but the examples in this section use ``time.time()`` , which
+are used, but the examples in this section use ``time.time()``, which
 also meets the requirements, because it makes the output easier to
 understand.
 
