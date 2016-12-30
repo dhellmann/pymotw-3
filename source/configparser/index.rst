@@ -374,15 +374,15 @@ When an option has no explicit value, ``has_option()`` reports that
 the option exists and ``get()`` returns ``None``.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'configparser_allow_no_value.py'))
+.. cog.out(run_script(cog.inFile, 'configparser_allow_no_value.py', line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
 
 	$ python3 configparser_allow_no_value.py
 	
-	Could not parse: Source contains parsing errors: 'allow_no_value
-	.ini'
+	Could not parse: Source contains parsing errors:
+	'allow_no_value.ini'
 		[line  2]: 'turn_feature_on\n'
 	
 	Trying again with allow_no_value=True
@@ -720,16 +720,17 @@ Since no ``server`` value is defined, the ``url`` cannot be
 constructed.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'configparser_interpolation_error.py'))
+.. cog.out(run_script(cog.inFile, 'configparser_interpolation_error.py', line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
 
 	$ python3 configparser_interpolation_error.py
 	
-	ERROR: Bad value substitution: option 'url' in section 'bug_trac
-	ker' contains an interpolation key 'server' which is not a valid
-	 option name. Raw value: 'http://%(server)s:%(port)s/bugs'
+	ERROR: Bad value substitution: option 'url' in section
+	'bug_tracker' contains an interpolation key 'server' which is
+	not a valid option name. Raw value:
+	'http://%(server)s:%(port)s/bugs'
 
 .. {{{end}}}
 
