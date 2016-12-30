@@ -632,7 +632,7 @@ the help output.
 Sharing Parser Rules
 --------------------
 
-Programmers commonly to need to implement a suite of command-line tools
+Programmers commonly need to implement a suite of command-line tools
 that all take a set of arguments, and then specialize in some way.
 For example, if the programs all need to authenticate the user before
 taking any real action, they would all need to support ``--user`` and
@@ -748,7 +748,7 @@ required position-based arguments.
    :start-after: #end_pymotw_header
 
 The grouping is reflected in the separate "positional arguments" and
-"optional arguments" section of the help output.
+"optional arguments" sections of the help output.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'argparse_default_grouping.py -h'))
