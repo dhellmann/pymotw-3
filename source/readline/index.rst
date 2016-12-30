@@ -29,8 +29,11 @@ provide command line text completion, or "tab completion".
    module, after installing the dependencies. A stand-alone version of
    the library is also distributed from the Python Package Index under
    the name gnureadline_. The examples in this section first try to
-   import gnureadline, and then fall back to readline. *Special thanks
-   to Jim Baker for pointing out this package.*
+   import gnureadline, and then fall back to readline.
+
+   .. only:: html
+
+      *Special thanks to Jim Baker for pointing out this package.*
 
 Configuring
 ===========
