@@ -875,7 +875,7 @@ sub-commands, does.
 
 A program to work with directories on the file system might define
 commands for creating, deleting, and listing the contents of a
-directory like this:
+directory.
 
 .. literalinclude:: argparse_subparsers.py
    :caption:
