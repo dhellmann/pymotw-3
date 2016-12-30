@@ -404,13 +404,14 @@ using ``fromfile_prefix_chars``.
    :start-after: #end_pymotw_header
 
 This example stops when it finds an argument prefixed with ``@``, then
-reads the named file to find more arguments.  For example, an input
-file ``argparse_fromfile_prefix_chars.txt`` contains a series of
-arguments, one per line:
+reads the named file to find more arguments.  The file should contain
+one argument per line, as in this example.
 
 .. literalinclude:: argparse_fromfile_prefix_chars.txt
+   :caption:
 
-The output produced when processing the file is:
+The output produced when processing ``argparse_from_prefix_chars.txt``
+follows.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'argparse_fromfile_prefix_chars.py'))
