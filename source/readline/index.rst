@@ -191,11 +191,10 @@ and the screen:
 Accessing the Completion Buffer
 ===============================
 
-The completion algorithm in ``SimpleCompleter`` is simplistic
-because it only looks at the text argument passed to the function, but
-does not use any more of readline's internal state.  It is also
-possible to use ``readline`` functions to manipulate the text of
-the input buffer.
+The completion algorithm in ``SimpleCompleter`` only looks at the text
+argument passed to the function, but does not use any more of
+readline's internal state.  It is also possible to use ``readline``
+functions to manipulate the text of the input buffer.
 
 .. literalinclude:: readline_buffer.py
     :caption:
