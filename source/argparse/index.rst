@@ -402,13 +402,14 @@ using ``fromfile_prefix_chars``.
    :start-after: #end_pymotw_header
 
 This example stops when it finds an argument prefixed with ``@``, then
-reads the named file to find more arguments.  For example, an input
-file ``argparse_fromfile_prefix_chars.txt`` contains a series of
-arguments, one per line:
+reads the named file to find more arguments.  The file should contain
+one argument per line, as in this example.
 
 .. literalinclude:: argparse_fromfile_prefix_chars.txt
+   :caption:
 
-The output produced when processing the file is:
+The output produced when processing ``argparse_from_prefix_chars.txt``
+follows.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'argparse_fromfile_prefix_chars.py'))
@@ -629,7 +630,7 @@ the help output.
 Sharing Parser Rules
 --------------------
 
-Programmers commonly to need to implement a suite of command-line tools
+Programmers commonly need to implement a suite of command-line tools
 that all take a set of arguments, and then specialize in some way.
 For example, if the programs all need to authenticate the user before
 taking any real action, they would all need to support ``--user`` and
@@ -745,7 +746,7 @@ required position-based arguments.
    :start-after: #end_pymotw_header
 
 The grouping is reflected in the separate "positional arguments" and
-"optional arguments" section of the help output.
+"optional arguments" sections of the help output.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'argparse_default_grouping.py -h'))
@@ -872,7 +873,7 @@ sub-commands, does.
 
 A program to work with directories on the file system might define
 commands for creating, deleting, and listing the contents of a
-directory like this:
+directory.
 
 .. literalinclude:: argparse_subparsers.py
    :caption:

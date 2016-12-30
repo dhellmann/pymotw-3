@@ -87,7 +87,7 @@ the long-argument sequence should be ``[ 'noarg', 'witharg=' ]``.
    :caption:
    :start-after: #end_pymotw_header
 
-Since this sample program does not take any short from options, the
+Since this sample program does not take any short form options, the
 second argument to ``getopt()`` is an empty string.
 
 .. {{{cog
