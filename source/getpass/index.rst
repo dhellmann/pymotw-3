@@ -41,7 +41,7 @@ The prompt can be changed to any value needed.
    :caption:
    :start-after: #end_pymotw_header
 
-Some programs ask for a "pass phrase" instead of a simple password, to
+Some programs ask for a pass phrase instead of a simple password, to
 give better security.
 
 .. code-block:: none
