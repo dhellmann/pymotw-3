@@ -389,6 +389,8 @@ keys are created, the sequence is sorted by comparing the keys.
 
 .. {{{end}}}
 
+.. _functools-lru_cache:
+
 Caching
 =======
 

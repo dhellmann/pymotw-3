@@ -205,16 +205,20 @@ If a program uses ``os._exit()``, it can avoid having the
     :start-after: # end_pymotw_header
 
 Because this example bypasses the normal exit path, the callback is
-not run.
+not run. The print output is also not flushed, so the example is run
+with the ``-u`` option to enable unbuffered I/O.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'atexit_os_exit.py'))
+.. cog.out(run_script(cog.inFile, '-u atexit_os_exit.py'))
 .. }}}
 
 .. code-block:: none
 
-	$ python3 atexit_os_exit.py
+	$ python3 -u atexit_os_exit.py
 	
+	Registering
+	Registered
+	Exiting...
 
 .. {{{end}}}
 

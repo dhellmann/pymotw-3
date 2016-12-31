@@ -90,6 +90,8 @@ In a separate terminal, use ``curl`` to access it:
   running the examples produces different output, check the version
   number reported by ``curl``.
 
+.. _http_server_post:
+
 HTTP POST
 =========
 

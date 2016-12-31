@@ -6,11 +6,11 @@
     :synopsis: Implements file I/O and provides classes for working
                with buffers using file-like API.
 
-The ``io`` module provides access to the built-in ``open()``
-function and the classes used to implement file-based input and output
-operations. The classes are decomposed in such a way that they can be
-recombined for alternate purposes, for example to enable writing
-Unicode data to a network socket.
+The ``io`` module implements the classes behind the interpreter's
+built-in ``open()`` for file-based input and output operations. The
+classes are decomposed in such a way that they can be recombined for
+alternate purposes, for example to enable writing Unicode data to a
+network socket.
 
 In-memory Streams
 =================
@@ -104,6 +104,10 @@ using ``TextIOWrapper`` with other types of file-like objects.
 .. seealso::
 
    * :pydoc:`io`
+
+   * :ref:`HTTP POST example <http_server_post>` -- Uses the
+     ``detach()`` of ``TextIOWrapper`` to manage the wrapper
+     separately from the wrapped socket.
 
    * `Efficient String Concatenation in Python
      <http://www.skymind.com/%7Eocrow/python_string/>`_ -- Examines
