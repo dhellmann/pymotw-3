@@ -16,18 +16,17 @@ Operating Model
 ===============
 
 The APIs in ``selectors`` are event-based, similar to ``poll()`` from
-``select``. A selector object provides methods for specifying what
-events to look for on a socket, and then lets the caller wait for
-events in a platform-independent way. There are several
-implementations and the module automatically sets the alias
-``DefaultSelector`` to refer to the most efficient one for the current
-system configuration.
+``select``. There are several implementations and the module
+automatically sets the alias ``DefaultSelector`` to refer to the most
+efficient one for the current system configuration.
 
-Registering interest in an event creates a ``SelectorKey``, which
-holds the socket, information about the events of interest, and
-optional application data.  The owner of the selector calls its
-``select()`` method to learn about events. The return value is a
-sequence of key objects and a bitmask indicating what events have
+A selector object provides methods for specifying what events to look
+for on a socket, and then lets the caller wait for events in a
+platform-independent way.  Registering interest in an event creates a
+``SelectorKey``, which holds the socket, information about the events
+of interest, and optional application data.  The owner of the selector
+calls its ``select()`` method to learn about events. The return value
+is a sequence of key objects and a bitmask indicating what events have
 occurred. A program using a selector should repeatedly call
 ``select()``, then handle the events appropriately.
 
