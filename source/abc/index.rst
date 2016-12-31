@@ -27,7 +27,7 @@ To start, define an abstract base class to represent the API of a set
 of plug-ins for saving and loading data.  Set the metaclass for the
 new base class to ``ABCMeta``, and use decorators to establish
 the public API for the class.  The following examples use
-``abc_base.py``, which contains:
+``abc_base.py``.
 
 .. literalinclude:: abc_base.py
     :caption:
