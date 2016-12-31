@@ -47,6 +47,11 @@ following command has the same effect as the previous example.
 
 	$ pyvenv /tmp/demoenv
 
+Using ``-m venv`` is preferred because it requires explicitly
+selecting a Python interpreter, so there can be no confusion about the
+version number or import path assocated with the resulting virtual
+environment.
+
 Contents of a Virtual Environment
 =================================
 
