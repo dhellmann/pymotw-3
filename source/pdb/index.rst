@@ -1401,8 +1401,8 @@ Changing Execution Flow
 =======================
 
 The ``jump`` command alters the flow of the program at
-runtime, without modifying the code.  It can skip forwards to avoid
-running some code, or backwards to run it again.  This sample program
+runtime, without modifying the code.  It can skip forward to avoid
+running some code, or backward to run it again.  This sample program
 generates a list of numbers.
 
 .. cssclass:: with-linenos
