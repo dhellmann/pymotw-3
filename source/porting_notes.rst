@@ -854,7 +854,8 @@ pickle
 
 The C implementation of the pickle module from Python 2 has been moved
 to a new module that is automatically used to replace the Python
-implementation when possible. The old import idiom of
+implementation when possible. The old import idiom of looking for
+``cPickle`` before ``pickle`` is no longer needed.
 
 ::
 
@@ -863,7 +864,8 @@ implementation when possible. The old import idiom of
     except:
        import pickle
 
-can be replaced with
+With the automatic import of the C implementation, it is only
+necessary to import the ``pickle`` module directly.
 
 ::
 
