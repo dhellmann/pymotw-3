@@ -267,12 +267,11 @@ arbitrary class, function, or module.
      18              print(i)
      19          return
 
-Move between frames within the current call stack using ``up``
-and ``down``.  ``up`` (abbreviated ``u``) moves towards
-older frames on the stack.  ``down`` (abbreviated ``d``)
-moves towards newer frames. Each time you move up or down the stack,
-the debugger prints the current location in the same format as
-produced by ``where``.
+Move between frames within the current call stack using ``up`` and
+``down``.  ``up`` (abbreviated ``u``) moves towards older frames on
+the stack.  ``down`` (``d``) moves towards newer frames. Each time you
+move up or down the stack, the debugger prints the current location in
+the same format as produced by ``where``.
 
 .. code-block:: none
 
@@ -284,8 +283,8 @@ produced by ``where``.
     > .../pdb_set_trace.py(18)go()
     -> print(i)
 
-Pass a numerical argument to either ``up`` or ``down``
-to move that many steps up or down the stack at one time.
+Pass a numerical argument to either ``up`` or ``down`` to move that
+many steps up or down the stack at one time.
 
 Examining Variables on the Stack
 --------------------------------
@@ -301,10 +300,10 @@ variables.
       :linenos:
       :caption:
 
-The ``args`` command (abbreviated ``a``) prints all of
-the arguments to the function active in the current frame.  This
-example also uses a recursive function to show what a deeper stack
-looks like when printed by ``where``.
+The ``args`` command (abbreviated ``a``) prints all of the arguments
+to the function active in the current frame.  This example also uses a
+recursive function to show what a deeper stack looks like when printed
+by ``where``.
 
 .. code-block:: none
 
@@ -339,9 +338,9 @@ looks like when printed by ``where``.
     n = 1
     output = to be printed
 
-The ``p`` command evaluates an expression given as argument and
-prints the result.  Python's ``print()`` function is also available,
-but it is passed through to the interpreter to be executed rather than
+The ``p`` command evaluates an expression given as argument and prints
+the result.  Python's ``print()`` function is also available, but it
+is passed through to the interpreter to be executed rather than
 running as a command in the debugger.
 
 .. code-block:: none
@@ -352,10 +351,10 @@ running as a command in the debugger.
     (Pdb) print(n)
     1
 
-Similarly, prefixing an expression with ``!`` passes it to the
-Python interpreter to be evaluated.  This feature can be used to
-execute arbitrary Python statements, including modifying variables.
-This example changes the value of ``output`` before letting the debugger
+Similarly, prefixing an expression with ``!`` passes it to the Python
+interpreter to be evaluated.  This feature can be used to execute
+arbitrary Python statements, including modifying variables.  This
+example changes the value of ``output`` before letting the debugger
 continue running the program.  The next statement after the call to
 ``set_trace()`` prints the value of ``output``, showing the modified
 value.
@@ -376,8 +375,8 @@ value.
     changed value
 
 For more complicated values such as nested or large data structures,
-use ``pp`` to "pretty print" them.  This program reads several
-lines of text from a file.
+use ``pp`` to "pretty print" them.  This program reads several lines
+of text from a file.
 
 .. cssclass:: with-linenos
 
@@ -385,9 +384,9 @@ lines of text from a file.
       :linenos:
       :caption:
 
-Printing the variable ``lines`` with ``p`` results in output
-that is difficult to read because it may wrap awkwardly.  ``pp``
-uses :mod:`pprint` to format the value for clean printing.
+Printing the variable ``lines`` with ``p`` results in output that is
+difficult to read because it may wrap awkwardly.  ``pp`` uses
+:mod:`pprint` to format the value for clean printing.
 
 .. code-block:: none
 
@@ -495,9 +494,9 @@ program past the point where it enters the debugger.
       :linenos:
       :caption:
 
-Use ``step`` to execute the current line and then stop at the
-next execution point -- either the first statement inside a function
-being called or the next line of the current function.
+Use ``step`` (abbreviated ``s``) to execute the current line and then
+stop at the next execution point -- either the first statement inside
+a function being called or the next line of the current function.
 
 .. code-block:: none
 
@@ -507,8 +506,8 @@ being called or the next line of the current function.
     -> f(5)
 
 The interpreter pauses after the call to ``set_trace()`` and gives
-control to the debugger.  The first ``step`` causes the
-execution to enter ``f()``.
+control to the debugger.  The first ``step`` causes the execution to
+enter ``f()``.
 
 
 .. code-block:: none
@@ -518,8 +517,8 @@ execution to enter ``f()``.
     > .../pdb_step.py(10)f()
     -> def f(n):
 
-One more ``step`` moves execution to the first line of
-``f()`` and starts the loop.
+One more ``step`` moves execution to the first line of ``f()`` and
+starts the loop.
 
 .. code-block:: none
 
@@ -617,10 +616,10 @@ are executed.
     (Pdb)
 
 
-The ``next`` command is like ``step``, but does not
-enter functions called from the statement being executed.  In effect,
-it steps all the way through the function call to the next statement
-in the current function in a single operation.
+The ``next`` command (abbreviated ``n``) is like ``step``, but does
+not enter functions called from the statement being executed.  In
+effect, it steps all the way through the function call to the next
+statement in the current function in a single operation.
 
 .. code-block:: none
 
@@ -636,11 +635,10 @@ in the current function in a single operation.
 
     (Pdb) 
 
-The ``until`` command is like ``next``, except it
-explicitly continues until execution reaches a line in the same
-function with a line number higher than the current value.  That
-means, for example, that ``until`` can be used to step past the
-end of a loop.
+The ``until`` command is like ``next``, except it explicitly continues
+until execution reaches a line in the same function with a line number
+higher than the current value.  That means, for example, that
+``until`` can be used to step past the end of a loop.
 
 .. code-block:: none
 
@@ -736,10 +734,10 @@ skipping over long blocks.
 
     (Pdb)
 
-The ``return`` command is another short-cut for bypassing parts
-of a function.  It continues executing until the function is about to
-execute a ``return`` statement, and then it pauses, providing time
-to look at the return value before the function returns.
+The ``return`` command is another short-cut for bypassing parts of a
+function.  It continues executing until the function is about to
+execute a ``return`` statement, and then it pauses, providing time to
+look at the return value before the function returns.
 
 .. code-block:: none
 
@@ -771,16 +769,16 @@ to look at the return value before the function returns.
 Breakpoints
 ===========
 
-As programs grow longer, even using ``next`` and
-``until`` will become slow and cumbersome.  Instead of stepping
-through the program by hand, a better solution is to let it run
-normally until it reaches a point where the debugger should interrupt
-it.  ``set_trace()`` can start the debugger, but that only works if
-there is a single point in the program where it should pause.  It is
-more convenient to run the program through the debugger, but tell the
-debugger where to stop in advance using *breakpoints*.  The debugger
-monitors the program, and when it reaches the location described by a
-breakpoint the program is paused before the line is executed.
+As programs grow longer, even using ``next`` and ``until`` will become
+slow and cumbersome.  Instead of stepping through the program by hand,
+a better solution is to let it run normally until it reaches a point
+where the debugger should interrupt it.  ``set_trace()`` can start the
+debugger, but that only works if there is a single point in the
+program where it should pause.  It is more convenient to run the
+program through the debugger, but tell the debugger where to stop in
+advance using *breakpoints*.  The debugger monitors the program, and
+when it reaches the location described by a breakpoint the program is
+paused before the line is executed.
 
 .. cssclass:: with-linenos
 
@@ -788,10 +786,10 @@ breakpoint the program is paused before the line is executed.
       :linenos:
       :caption:
 
-There are several options to the ``break`` command used for
-setting break points, including the line number, file, and function
-where processing should pause.  To set a breakpoint on a specific line
-of the current file, use ``break lineno``:
+There are several options to the ``break`` command (abbreviated ``b``)
+used for setting break points, including the line number, file, and
+function where processing should pause.  To set a breakpoint on a
+specific line of the current file, use ``break lineno``.
 
 .. code-block:: none
 
@@ -812,10 +810,10 @@ of the current file, use ``break lineno``:
 
     (Pdb) 
 
-The command ``continue`` tells the debugger to keep running
-the program until the next breakpoint.  In this case, it runs through
-the first iteration of the ``for`` loop in ``f()`` and stops inside
-``calc()`` during the second iteration.
+The command ``continue`` (abbreviated ``c``) tells the debugger to
+keep running the program until the next breakpoint.  In this case, it
+runs through the first iteration of the ``for`` loop in ``f()`` and
+stops inside ``calc()`` during the second iteration.
 
 Breakpoints can also be set to the first line of a function by
 specifying the function name instead of a line number.  This example
