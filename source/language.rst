@@ -34,9 +34,9 @@ by the interpreter for each statement in a program.
 
 The :mod:`inspect` module provides introspection support for all
 objects in the current process.  That includes imported modules, class
-and function definitions, and the "live" objects instantiated from
-them.  Introspection can be used to generate documentation for source
-code, adapt behavior at runtime dynamically, or examine the execution
+and function definitions, and the objects instantiated from them.
+Introspection can be used to generate documentation for source code,
+adapt behavior at runtime dynamically, or examine the execution
 environment for a program.
 
 .. toctree::
