@@ -20,7 +20,7 @@ names, the directories are scanned recursively to find ``.py`` files to
 check.
 
 Running tabnanny across the PyMOTW source code exposed one old
-module with tabs instead of spaces:
+module with tabs instead of spaces.
 
 .. code-block:: none
 
