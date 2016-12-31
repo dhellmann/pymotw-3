@@ -31,7 +31,7 @@ All of the values depend on the actual interpreter used to run the
 sample program.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'sys_version_values.py'))
+.. cog.out(run_script(cog.inFile, 'sys_version_values.py', line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
@@ -40,10 +40,10 @@ sample program.
 	
 	Version info:
 	
-	sys.version      = '3.5.2 (v3.5.2:4def2a2901a5, Jun 26 2016, 10:
-	47:25) \n[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)]'
-	sys.version_info = sys.version_info(major=3, minor=5, micro=2, r
-	eleaselevel='final', serial=0)
+	sys.version      = '3.5.2 (v3.5.2:4def2a2901a5, Jun 26 2016,
+	10:47:25) \n[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)]'
+	sys.version_info = sys.version_info(major=3, minor=5, micro=2,
+	releaselevel='final', serial=0)
 	sys.hexversion   = 0x30502f0
 	sys.api_version  = 1013
 
