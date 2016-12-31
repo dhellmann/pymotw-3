@@ -365,7 +365,7 @@ moved to a new fileystem or if the destination already exists.
 Detecting and Changing the Process Owner
 ========================================
 
-The first set of functions provided by ``os`` are used for
+The next set of functions provided by ``os`` are used for
 determining and changing the process owner ids. These are most
 frequently used by authors of daemons or special system programs that
 need to change permission level rather than running as ``root``. This
