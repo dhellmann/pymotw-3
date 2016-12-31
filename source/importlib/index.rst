@@ -46,7 +46,7 @@ for C modules may also change when using a debug build of the
 interpreter instead of a normal release build, since they can be
 compiled with debug information included as well.  If a C extension
 library or other module is not loading as expected, use the constants
-defined in :mod:`importlib.machinery` to find the supported types for
+defined in ``importlib.machinery`` to find the supported types for
 the current platform, and the parameters for loading them.
 
 .. literalinclude:: importlib_suffixes.py
@@ -158,7 +158,7 @@ Loaders
 
 The lower-level API in ``importlib`` provides access to the loader
 objects, as described in :ref:`sys-imports` from the section on the
-:mod:`sys` module. To get a loader for a module, use
+``sys`` module. To get a loader for a module, use
 ``find_loader()``. Then to retrieve the module, use the loader's
 ``load_module()`` method.
 
@@ -215,9 +215,9 @@ be constrained by the package's path.
 .. seealso::
 
    * :pydoc:`importlib`
-        
+
    * :ref:`sys-imports` -- Import hooks, the module search path, and
-     other related machinery in the :mod:`sys` module.
+     other related machinery in the ``sys`` module.
 
    * :mod:`inspect` -- Load information from a module
      programmatically.
