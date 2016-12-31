@@ -167,7 +167,7 @@ create two virtual environments.
 
 .. {{{end}}}
 
-The install the versions of the tools to test.
+Then install the versions of the tools to test.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '/tmp/sphinx1/bin/pip install Sphinx==1.3.6',
