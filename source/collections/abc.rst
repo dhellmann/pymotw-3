@@ -32,7 +32,7 @@ provided by the ``collections`` module.
      * Is an iterator over the container contents.
    - * Generator
      * Iterator
-     * Extends iterators with the generator protocol from :pep:`342`.
+     * Extends iterators with the generator protocol from PEP 342.
    - * Sized
      * 
      * Adds methods for containers that know how big they are.
@@ -84,7 +84,7 @@ provided by the ``collections`` module.
    - * AsyncIterable
      * 
      * API for iterables compatible with ``async for``, as defined in
-       :pep:`492`.
+       PEP 492.
    - * AsyncIterator
      * AsyncIterable
      * API for asynchronous iterators.
