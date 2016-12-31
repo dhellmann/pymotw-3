@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 #end_pymotw_header
-import imp
+import importlib
 import sys
 import sys_shelve_importer
 
@@ -14,4 +14,4 @@ import package
 
 print()
 print('Reloading "package":')
-imp.reload(package)
+importlib.reload(package)
