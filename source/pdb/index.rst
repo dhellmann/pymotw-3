@@ -1199,7 +1199,7 @@ Ignoring Breakpoints
 --------------------
 
 Programs that loop or use a large number of recursive calls to the
-same function are often easier to debug by "skipping ahead" in the
+same function are often easier to debug by skipping ahead in the
 execution, instead of watching every call or breakpoint.  The
 ``ignore`` command tells the debugger to pass over a breakpoint
 without stopping.  Each time processing encounters the breakpoint, it
