@@ -259,11 +259,11 @@ Data
 There are times when source modules or packages need to be distributed
 with non-code data. Images, configuration files, default data, and
 test fixtures are just a few examples of this. Frequently, the module
-:attr:`__path__` or :attr:`__file__` attributes are used to find these
+``__path__`` or ``__file__`` attributes are used to find these
 data files relative to where the code is installed.
 
 For example, with a "normal" module, the file system path can be
-constructed from the :attr:`__file__` attribute of the imported
+constructed from the ``__file__`` attribute of the imported
 package like this:
 
 .. literalinclude:: zipimport_get_data_nozip.py
@@ -292,13 +292,13 @@ file system.
 .. {{{end}}}
 
 If the ``example_package`` is imported from the ZIP archive instead of
-the file system, using :attr:`__file__` does not work:
+the file system, using ``__file__`` does not work.
 
 .. literalinclude:: zipimport_get_data_zip.py
    :caption:
    :start-after: #end_pymotw_header
 
-The :attr:`__file__` of the package refers to the ZIP archive, and not
+The ``__file__`` of the package refers to the ZIP archive, and not
 a directory, so building up the path to the ``README.txt`` file gives
 the wrong value.
 
@@ -325,7 +325,7 @@ the wrong value.
 
 A more reliable way to retrieve the file is to use the
 ``get_data()`` method. The ``zipimporter`` instance that
-loaded the module can be accessed through the :attr:`__loader__`
+loaded the module can be accessed through the ``__loader__``
 attribute of the imported module:
 
 .. literalinclude:: zipimport_get_data.py
