@@ -444,7 +444,7 @@ array
 The ``'c'`` type used for character bytes in early version of Python 2
 has been removed. Use ``'b'`` or ``'B'`` for bytes instead.
 
-The ``'u'`` type for characters from unicode strings has been
+The ``'u'`` type for characters from Unicode strings has been
 deprecated and will be removed in Python 4.0.
 
 The methods ``tostring()`` and ``fromstring()`` have been renamed
@@ -627,8 +627,8 @@ gettext
 .. index::
    pair: porting; gettext
 
-All of the translation functions in :mod:`gettext` assume unicode
-input and output, and the unicode variants such as ``ugettext()``
+All of the translation functions in :mod:`gettext` assume Unicode
+input and output, and the Unicode variants such as ``ugettext()``
 have been removed.
 
 
@@ -665,7 +665,7 @@ imaplib
    pair: porting; imaplib
 
 Under Python 3, :mod:`imaplib` returns byte-strings encoded as
-UTF-8. There is support for accepting unicode strings and encoding
+UTF-8. There is support for accepting Unicode strings and encoding
 them automatically as outgoing commands are sent or as the username
 and password for logging in to the server.
 
