@@ -18,7 +18,7 @@ each module.
 References
 ==========
 
-The notes in this section are based on the "What's New" documents
+The notes in this section are based on the *What's New* documents
 prepared by the Python development team and release manager for each
 release.
 
