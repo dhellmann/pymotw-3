@@ -9,7 +9,7 @@
 
 Consistent use of indentation is important in a langauge like Python,
 where white-space is significant.  The ``tabnanny`` module provides
-a scanner to report on "ambiguous" use of indentation.
+a scanner to report on ambiguous use of indentation.
 
 Running from the Command Line
 =============================
