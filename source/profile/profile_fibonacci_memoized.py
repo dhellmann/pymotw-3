@@ -5,26 +5,11 @@
 #
 
 #end_pymotw_header
+import functools
 import profile
 
 
-class memoize:
-    # from Avinash Vora's memoize decorator
-    # http://bit.ly/fGzfR7
-
-    def __init__(self, function):
-        self.function = function
-        self.memoized = {}
-
-    def __call__(self, *args):
-        try:
-            return self.memoized[args]
-        except KeyError:
-            self.memoized[args] = self.function(*args)
-            return self.memoized[args]
-
-
-@memoize
+@functools.lru_cache(maxsize=None)
 def fib(n):
     # from literateprograms.org
     # http://bit.ly/hlOQ5m
