@@ -31,8 +31,10 @@ is running.
     installers from python.org. The Linux system is running a version
     in a system package.
 
-    Special thanks is owed to Patrick Kettner (@patrickkettner) for
-    helping collect the example output on Windows.
+    .. only:: html
+
+      *Special thanks to Patrick Kettner (@patrickkettner) for helping
+      to collect the example output on Windows.*
 
 Interpreter
 ===========
