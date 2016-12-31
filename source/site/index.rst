@@ -165,7 +165,7 @@ the interpreter can find the desired module.
    :start-after: #end_pymotw_header
 
 After the directory containing the module is added
-to ``sys.path``, the script can import :mod:`mymodule` without
+to ``sys.path``, the script can import ``mymodule`` without
 issue.
 
 .. {{{cog
@@ -285,7 +285,7 @@ Customizing Site Configuration
 
 The ``site`` module is also responsible for loading site-wide
 customization defined by the local site owner in a
-:mod:`sitecustomize` module.  Uses for :mod:`sitecustomize` include
+``sitecustomize`` module.  Uses for ``sitecustomize`` include
 extending the import path and enabling coverage,
 profiling, or other development tools.
 
@@ -309,7 +309,7 @@ imported before Python starts running your own code.
    :caption:
    :start-after: #end_pymotw_header
 
-Since :mod:`sitecustomize` is meant for system-wide configuration, it
+Since ``sitecustomize`` is meant for system-wide configuration, it
 should be installed somewhere in the default path (usually in the
 ``site-packages`` directory).  This example sets ``PYTHONPATH``
 explicitly to ensure the module is picked up.
@@ -337,9 +337,9 @@ explicitly to ensure the module is picked up.
 Customizing User Configuration
 ==============================
 
-Similar to :mod:`sitecustomize`, the :mod:`usercustomize` module can
+Similar to ``sitecustomize``, the ``usercustomize`` module can
 be used to set up user-specific settings each time the interpreter
-starts up.  :mod:`usercustomize` is loaded after :mod:`sitecustomize`,
+starts up.  ``usercustomize`` is loaded after ``sitecustomize``,
 so site-wide customizations can be overridden.
 
 In environments where a user's home directory is shared on several
@@ -353,14 +353,14 @@ used instead.
    :start-after: #end_pymotw_header
 
 Another simple script, similar to the one used for
-:mod:`sitecustomize`, can be used to show that ``usercustomize.py`` is
+``sitecustomize``, can be used to show that ``usercustomize.py`` is
 imported before Python starts running other code.
 
 .. literalinclude:: with_usercustomize/site_usercustomize.py
    :caption:
    :start-after: #end_pymotw_header
 
-Since :mod:`usercustomize` is meant for user-specific configuration
+Since ``usercustomize`` is meant for user-specific configuration
 for a user, it should be installed somewhere in the user's default
 path, but not on the site-wide path. The default ``USER_BASE``
 directory is a good location.  This example sets ``PYTHONPATH``
@@ -382,7 +382,7 @@ explicitly to ensure the module is picked up.
     End of path: /Users/dhellmann/python/3.5/Darwin-15.5.0-x86_64\
     -i386-64bit
 
-When the user site directory feature is disabled, :mod:`usercustomize`
+When the user site directory feature is disabled, ``usercustomize``
 is not imported, whether it is located in the user site directory or
 elsewhere.
 
@@ -436,7 +436,11 @@ before the automatic import was added, the interpreter accepts an
    * :pydoc:`site`
 
    * :ref:`sys-imports` -- Description of how the import path defined
-     in :mod:`sys` works.
+     in ``sys`` works.
+
+   * `setuptools
+     <https://setuptools.readthedocs.io/en/latest/index.html>`__ --
+     Packaging library and installation tool ``easy_install``.
 
    * `Running code at Python startup
      <http://nedbatchelder.com/blog/201001/running_code_at_python_startup.html>`__

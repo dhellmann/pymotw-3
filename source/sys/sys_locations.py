@@ -3,5 +3,7 @@
 #end_pymotw_header
 import sys
 
-print('Interpreter executable:', sys.executable)
-print('Installation prefix   :', sys.prefix)
+print('Interpreter executable:')
+print(sys.executable)
+print('\nInstallation prefix:')
+print(sys.prefix)

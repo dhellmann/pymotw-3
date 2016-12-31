@@ -112,11 +112,11 @@ and then the global ``site-packages`` directory is listed last.
     $ python3 sys_path_show.py
 
     /Users/dhellmann/Documents/PyMOTW/pymotw-3/source/sys
-    .../python34.zip
-    .../lib/python3.4
-    .../lib/python3.4/plat-darwin
-    .../python3.4/lib-dynload
-    .../lib/python3.4/site-packages
+    .../python35.zip
+    .../lib/python3.5
+    .../lib/python3.5/plat-darwin
+    .../python3.5/lib-dynload
+    .../lib/python3.5/site-packages
 
 
 The import search-path list can be modified before starting the
@@ -126,16 +126,16 @@ colon-separated list of directories.
 .. code-block:: none
 
     $ PYTHONPATH=/my/private/site-packages:/my/shared/site-packages \
-    > python sys_path_show.py
+    > python3 sys_path_show.py
 
     /Users/dhellmann/Documents/PyMOTW/pymotw-3/source/sys
     /my/private/site-packages
     /my/shared/site-packages
-    .../python34.zip
-    .../lib/python3.4
-    .../lib/python3.4/plat-darwin
-    .../python3.4/lib-dynload
-    .../lib/python3.4/site-packages
+    .../python35.zip
+    .../lib/python3.5
+    .../lib/python3.5/plat-darwin
+    .../python3.5/lib-dynload
+    .../lib/python3.5/site-packages
 
 A program can also modify its path by adding elements to
 ``sys.path`` directly.
@@ -197,8 +197,8 @@ real path on the file system. This test prevents the
 ``NoisyImportFinder`` from breaking imports of real modules.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'sys_path_hooks_noisy.py', 
-..                    break_lines_at=65, line_break_mode='wrap'))
+.. cog.out(run_script(cog.inFile, 'sys_path_hooks_noisy.py',
+..                    line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
@@ -278,7 +278,7 @@ new module as the namespace so that names defined in the source are
 preserved as module-level attributes.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'sys_shelve_importer_package.py'))
+.. cog.out(run_script(cog.inFile, 'sys_shelve_importer_package.py', line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
@@ -304,13 +304,13 @@ preserved as module-level attributes.
 	  __package__: package
 	  __file__   : /tmp/pymotw_import_example.shelve/package
 	  __path__   : ['/tmp/pymotw_import_example.shelve']
-	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x102
-	467860>
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at
+	0x101467860>
 	
 	Global settings:
 	sys.modules entry:
-	<module 'package' (<sys_shelve_importer.ShelveLoader object at 0
-	x102467860>)>
+	<module 'package' (<sys_shelve_importer.ShelveLoader object at
+	0x101467860>)>
 
 .. {{{end}}}
 
@@ -367,7 +367,7 @@ constructs and returns a ``module`` instance.
 	  __file__   : /tmp/pymotw_import_example.shelve/package.module1
 	  __path__   : /tmp/pymotw_import_example.shelve
 	  __loader__ : <sys_shelve_importer.ShelveLoader object at
-	0x101c76e10>
+	0x101376e10>
 	
 	Import of "package.subpackage.module2":
 	
@@ -399,7 +399,7 @@ constructs and returns a ``module`` instance.
 	/tmp/pymotw_import_example.shelve/package.subpackage.module2
 	  __path__   : /tmp/pymotw_import_example.shelve
 	  __loader__ : <sys_shelve_importer.ShelveLoader object at
-	0x101ca6c88>
+	0x1013a6c88>
 
 .. {{{end}}}
 
@@ -513,7 +513,7 @@ the data, and returns the contents of the resource "file" as a byte
 string, or raises ``IOError`` if the resource does not exist.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'sys_shelve_importer_get_data.py', 
+.. cog.out(run_script(cog.inFile, 'sys_shelve_importer_get_data.py',
 ..                    ignore_error=True))
 .. }}}
 
@@ -583,31 +583,31 @@ constraints.
 	
 	PATH:
 	  /Users/dhellmann/Documents/PyMOTW/Python3/pymotw-3/source/sys
-	  .../lib/python34.zip
-	  .../lib/python3.4
-	  .../lib/python3.4/plat-darwin
-	  .../lib/python3.4/lib-dynload
-	  .../lib/python3.4/site-packages
+	  .../lib/python35.zip
+	  .../lib/python3.5
+	  .../lib/python3.5/plat-darwin
+	  .../lib/python3.5/lib-dynload
+	  .../lib/python3.5/site-packages
 	
 	IMPORTERS:
 	  sys_path_importer_cache.py: None
-	  .../lib/python3.4/encodings: FileFinder(
-          '.../lib/python3.4/encodings')
-	  .../lib/python3.4/lib-dynload: FileFinder(
-          '.../lib/python3.4/lib-dynload')
-	  .../lib/python3.4/lib-dynload: FileFinder(
-          '.../lib/python3.4/lib-dynload')
-	  .../lib/python3.4/site-packages: FileFinder(
-          '.../lib/python3.4/site-packages')
-	  .../lib/python3.4: FileFinder(
-          '.../lib/python3.4/')
-	  .../lib/python3.4/plat-darwin: FileFinder(
-          '.../lib/python3.4/plat-darwin')
-	  .../lib/python3.4: FileFinder(
-          '.../lib/python3.4')
-	  .../lib/python34.zip: None
-	  .../lib/python3.4/plat-darwin: FileFinder(
-          '.../lib/python3.4/plat-darwin')
+	  .../lib/python3.5/encodings: FileFinder(
+          '.../lib/python3.5/encodings')
+	  .../lib/python3.5/lib-dynload: FileFinder(
+          '.../lib/python3.5/lib-dynload')
+	  .../lib/python3.5/lib-dynload: FileFinder(
+          '.../lib/python3.5/lib-dynload')
+	  .../lib/python3.5/site-packages: FileFinder(
+          '.../lib/python3.5/site-packages')
+	  .../lib/python3.5: FileFinder(
+          '.../lib/python3.5/')
+	  .../lib/python3.5/plat-darwin: FileFinder(
+          '.../lib/python3.5/plat-darwin')
+	  .../lib/python3.5: FileFinder(
+          '.../lib/python3.5')
+	  .../lib/python35.zip: None
+	  .../lib/python3.5/plat-darwin: FileFinder(
+          '.../lib/python3.5/plat-darwin')
 
 Meta Path
 =========

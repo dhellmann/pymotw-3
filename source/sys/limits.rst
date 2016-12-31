@@ -137,9 +137,9 @@ the maximum recursion depth using ``setrecursionlimit()`` and
     :caption:
     :start-after: #end_pymotw_header
 
-Once the recursion limit is reached, the interpreter raises a
-``RuntimeError`` exception so the
-program has an opportunity to handle the situation.
+Once the stack size reaches the recursion limit, the interpreter
+raises a ``RuntimeError`` exception so the program has an opportunity
+to handle the situation.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'sys_recursionlimit.py',

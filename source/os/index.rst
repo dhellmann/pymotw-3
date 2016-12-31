@@ -67,6 +67,7 @@ names of any files in that directory.
 This example shows a recursive directory listing.
 
 .. {{{cog
+.. sh('rm -rf source/zipimport/__pycache__ source/zipimport/example_package/__pycache__')
 .. cog.out(run_script(cog.inFile, 'os_walk.py ../zipimport'))
 .. }}}
 
@@ -76,7 +77,6 @@ This example shows a recursive directory listing.
 	
 	../zipimport
 	  __init__.py
-	  __pycache__/
 	  example_package/
 	  index.rst
 	  zipimport_example.zip
@@ -90,25 +90,9 @@ This example shows a recursive directory listing.
 	  zipimport_load_module.py
 	  zipimport_make_example.py
 	
-	../zipimport/__pycache__
-	  __init__.cpython-35.pyc
-	  zipimport_find_module.cpython-35.pyc
-	  zipimport_get_code.cpython-35.pyc
-	  zipimport_get_data.cpython-35.pyc
-	  zipimport_get_data_nozip.cpython-35.pyc
-	  zipimport_get_data_zip.cpython-35.pyc
-	  zipimport_get_source.cpython-35.pyc
-	  zipimport_is_package.cpython-35.pyc
-	  zipimport_load_module.cpython-35.pyc
-	  zipimport_make_example.cpython-35.pyc
-	
 	../zipimport/example_package
 	  README.txt
 	  __init__.py
-	  __pycache__/
-	
-	../zipimport/example_package/__pycache__
-	  __init__.cpython-35.pyc
 	
 
 .. {{{end}}}
@@ -197,20 +181,20 @@ installed. Try passing different filenames on the command line to
 	  Permissions: 0o100644
 	  Owner: 527
 	  Device: 16777218
-	  Created      : Sat Dec 17 12:03:26 2016
-	  Last modified: Sat Dec 17 12:03:26 2016
-	  Last accessed: Sat Dec 17 12:03:32 2016
+	  Created      : Sat Dec 17 12:09:51 2016
+	  Last modified: Sat Dec 17 12:09:51 2016
+	  Last accessed: Sat Dec 31 12:33:19 2016
 
 	$ python3 os_stat.py index.rst
 	
 	os.stat(index.rst):
-	  Size: 26932
+	  Size: 26878
 	  Permissions: 0o100644
 	  Owner: 527
 	  Device: 16777218
-	  Created      : Sat Dec 17 12:03:21 2016
-	  Last modified: Sat Dec 17 12:03:21 2016
-	  Last accessed: Sat Dec 17 12:03:31 2016
+	  Created      : Sat Dec 31 12:33:10 2016
+	  Last modified: Sat Dec 31 12:33:10 2016
+	  Last accessed: Sat Dec 31 12:33:19 2016
 
 .. {{{end}}}
 
@@ -379,7 +363,7 @@ moved to a new fileystem or if the destination already exists.
 Detecting and Changing the Process Owner
 ========================================
 
-The first set of functions provided by ``os`` are used for
+The next set of functions provided by ``os`` are used for
 determining and changing the process owner ids. These are most
 frequently used by authors of daemons or special system programs that
 need to change permission level rather than running as ``root``. This
@@ -629,9 +613,9 @@ accomplish the same thing.
 	$ python3 -u os_system_background.py
 	
 	Calling...
-	Sat Dec 17 12:03:32 EST 2016
+	Sat Dec 31 12:33:20 EST 2016
 	Sleeping...
-	Sat Dec 17 12:03:35 EST 2016
+	Sat Dec 31 12:33:23 EST 2016
 
 .. {{{end}}}
 
@@ -664,7 +648,7 @@ example is run, but it will look something like:
 
 	$ python3 -u os_fork_example.py
 	
-	Child process id: 23559
+	Child process id: 29190
 	I am the child
 
 .. {{{end}}}
@@ -702,8 +686,8 @@ the parent time to send the signal.
 	PARENT: Pausing before sending signal...
 	CHILD: Setting up signal handler
 	CHILD: Pausing to wait for signal
-	PARENT: Signaling 23562
-	Received USR1 in process 23562
+	PARENT: Signaling 29193
+	Received USR1 in process 29193
 
 .. {{{end}}}
 
@@ -772,16 +756,16 @@ status code returned by the process when it exited.
 
 	$ python3 -u os_wait_example.py
 	
-	PARENT 23613: Forking 0
-	PARENT 23613: Forking 1
+	PARENT 29202: Forking 0
+	PARENT 29202: Forking 1
 	PARENT: Waiting for 0
 	WORKER 0: Starting
 	WORKER 1: Starting
 	WORKER 0: Finishing
-	PARENT: Child done: (23619, 0)
+	PARENT: Child done: (29203, 0)
 	PARENT: Waiting for 1
 	WORKER 1: Finishing
-	PARENT: Child done: (23620, 256)
+	PARENT: Child done: (29204, 256)
 
 .. {{{end}}}
 
@@ -802,16 +786,16 @@ until that process exits.
 
 	$ python3 -u os_waitpid_example.py
 	
-	PARENT 23701: Forking 0
-	PARENT 23701: Forking 1
-	PARENT: Waiting for 23702
+	PARENT 29211: Forking 0
+	PARENT 29211: Forking 1
+	PARENT: Waiting for 29212
 	WORKER 0: Starting
 	WORKER 1: Starting
 	WORKER 0: Finishing
-	PARENT: Child done: (23702, 0)
-	PARENT: Waiting for 23703
+	PARENT: Child done: (29212, 0)
+	PARENT: Waiting for 29213
 	WORKER 1: Finishing
-	PARENT: Child done: (23703, 256)
+	PARENT: Child done: (29213, 256)
 
 .. {{{end}}}
 
