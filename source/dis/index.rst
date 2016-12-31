@@ -382,10 +382,8 @@ a list of words and groups them by their first letter.
    :start-after: #end_pymotw_header
 
 The test driver application ``dis_test_loop.py`` can be used to run
-each incarnation of the ``Dictionary`` class.
-
-A straightforward, but slow, implementation of ``Dictionary``
-starts out like this:
+each incarnation of the ``Dictionary`` class, starting with a
+straightforward, but slow, implementation.
 
 .. cssclass:: with-linenos
 
