@@ -30,7 +30,7 @@ Python is often used as a cross-platform language for creating
 portable programs.  Even in a program intended to run anywhere, it is
 occasionally necessary to know the operating system or hardware
 architecture of the current system.  The :mod:`platform` module
-provides functions to retrieve runtime settings
+provides functions to retrieve those settings
 
 The limits for system resources such as the maximum process stack size
 or number of open files can be probed and changed through the
