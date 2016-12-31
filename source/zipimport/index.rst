@@ -127,7 +127,7 @@ used to create one.
 
 	$ python3 zipimport_get_code.py
 	
-	<code object <module> at 0x1018af8a0, file
+	<code object <module> at 0x1012b4ae0, file
 	"./zipimport_get_code.py", line 6>
 
 .. {{{end}}}
@@ -153,11 +153,11 @@ loaded from a regular import.
 
 	$ python3 zipimport_load_module.py
 	
-	<code object <module> at 0x1018afc90, file
+	<code object <module> at 0x1012b4c00, file
 	"./zipimport_get_code.py", line 6>
 	Name   : zipimport_get_code
 	Loader : <zipimporter object "zipimport_example.zip">
-	Code   : <code object <module> at 0x1018afc90, file
+	Code   : <code object <module> at 0x1012b4c00, file
 	"./zipimport_get_code.py", line 6>
 
 .. {{{end}}}
@@ -189,22 +189,22 @@ returns ``None``.
 
 	$ python3 zipimport_get_source.py
 	
-	=================================================================
+	================================================================
 	zipimport_get_code
-	=================================================================
+	================================================================
 	None
 	
-	=================================================================
+	================================================================
 	zipimport_get_source
-	=================================================================
+	================================================================
 	#!/usr/bin/env python3
 	#
 	# Copyright 2007 Doug Hellmann.
 	#
 	"""Retrieving the source code for a module within a zip archive.
 	"""
-	#end_pymotw_header
 	
+	#end_pymotw_header
 	import zipimport
 	
 	modules = [
