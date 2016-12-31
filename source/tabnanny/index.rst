@@ -28,8 +28,8 @@ module with tabs instead of spaces.
     ./source/queue/fetch_podcasts.py 65 "    \t\tparsed_url = \
     urlparse(enclosure['url'])\n"
 
-Line 65 of ``fetch_podcasts.py`` had two tabs instead of 8 spaces.  This
-wasn't apparent in a text editor editor, which was configured to with
+Line 65 of ``fetch_podcasts.py`` had two tabs instead of 8 spaces.
+This wasn't apparent in a text editor, which was configured to with
 tabstops set to 4 spaces, so visually there was no difference.
 
 .. literalinclude:: ../queue/fetch_podcasts.py
