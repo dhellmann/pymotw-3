@@ -126,7 +126,7 @@ colon-separated list of directories.
 .. code-block:: none
 
     $ PYTHONPATH=/my/private/site-packages:/my/shared/site-packages \
-    > python sys_path_show.py
+    > python3 sys_path_show.py
 
     /Users/dhellmann/Documents/PyMOTW/pymotw-3/source/sys
     /my/private/site-packages
