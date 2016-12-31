@@ -215,7 +215,7 @@ problem.  Passing an integer as the ``context`` argument to
 ``enable()`` controls the amount of code displayed for each line
 of the traceback.
 
-This output show that ``self.a`` and ``self.b`` are involved in the
+This output shows that ``self.a`` and ``self.b`` are involved in the
 error-prone code.
 
 .. {{{cog
