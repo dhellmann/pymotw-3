@@ -36,7 +36,7 @@ not running in a text console environment, :mod:`traceback` can be
 used to prepare similar output for a log file or message dialog.  For
 situations where a standard traceback does not provide enough
 information, use :mod:`cgitb` to see details like local variable
-settings at each level of the stack and source context.  :mod:`cgitb`
+settings at each level of the stack and source context.  ``cgitb``
 can also format tracebacks in HTML, for reporting errors in web
 applications.
 
