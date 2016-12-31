@@ -9,7 +9,7 @@
 
 The ``zipimport`` module implements the ``zipimporter`` class,
 which can be used to find and load Python modules inside ZIP
-archives. The ``zipimporter`` supports the "import hooks" API
+archives. The ``zipimporter`` supports the import hooks API
 specified in PEP 302; this is how Python Eggs work.
 
 It is not usually necessary to use the ``zipimport`` module
@@ -125,7 +125,7 @@ used to create one.
 
 	$ python3 zipimport_get_code.py
 	
-	<code object <module> at 0x1018af8a0, file
+	<code object <module> at 0x1012b4ae0, file
 	"./zipimport_get_code.py", line 6>
 
 .. {{{end}}}
@@ -151,11 +151,11 @@ loaded from a regular import.
 
 	$ python3 zipimport_load_module.py
 	
-	<code object <module> at 0x1018afc90, file
+	<code object <module> at 0x1007b4c00, file
 	"./zipimport_get_code.py", line 6>
 	Name   : zipimport_get_code
 	Loader : <zipimporter object "zipimport_example.zip">
-	Code   : <code object <module> at 0x1018afc90, file
+	Code   : <code object <module> at 0x1007b4c00, file
 	"./zipimport_get_code.py", line 6>
 
 .. {{{end}}}
@@ -187,22 +187,22 @@ returns ``None``.
 
 	$ python3 zipimport_get_source.py
 	
-	=================================================================
+	================================================================
 	zipimport_get_code
-	=================================================================
+	================================================================
 	None
 	
-	=================================================================
+	================================================================
 	zipimport_get_source
-	=================================================================
+	================================================================
 	#!/usr/bin/env python3
 	#
 	# Copyright 2007 Doug Hellmann.
 	#
 	"""Retrieving the source code for a module within a zip archive.
 	"""
-	#end_pymotw_header
 	
+	#end_pymotw_header
 	import zipimport
 	
 	modules = [
@@ -257,11 +257,11 @@ Data
 There are times when source modules or packages need to be distributed
 with non-code data. Images, configuration files, default data, and
 test fixtures are just a few examples of this. Frequently, the module
-:attr:`__path__` or :attr:`__file__` attributes are used to find these
+``__path__`` or ``__file__`` attributes are used to find these
 data files relative to where the code is installed.
 
 For example, with a "normal" module, the file system path can be
-constructed from the :attr:`__file__` attribute of the imported
+constructed from the ``__file__`` attribute of the imported
 package like this:
 
 .. literalinclude:: zipimport_get_data_nozip.py
@@ -281,7 +281,7 @@ file system.
 
 	$ python3 zipimport_get_data_nozip.py
 	
-	example_package/README.txt :
+	.../example_package/README.txt :
 	This file represents sample data which could be embedded in the
 	ZIP archive.  You could include a configuration file, images, or
 	any other sort of noncode data.
@@ -290,13 +290,13 @@ file system.
 .. {{{end}}}
 
 If the ``example_package`` is imported from the ZIP archive instead of
-the file system, using :attr:`__file__` does not work:
+the file system, using ``__file__`` does not work.
 
 .. literalinclude:: zipimport_get_data_zip.py
    :caption:
    :start-after: #end_pymotw_header
 
-The :attr:`__file__` of the package refers to the ZIP archive, and not
+The ``__file__`` of the package refers to the ZIP archive, and not
 a directory, so building up the path to the ``README.txt`` file gives
 the wrong value.
 
@@ -323,7 +323,7 @@ the wrong value.
 
 A more reliable way to retrieve the file is to use the
 ``get_data()`` method. The ``zipimporter`` instance that
-loaded the module can be accessed through the :attr:`__loader__`
+loaded the module can be accessed through the ``__loader__``
 attribute of the imported module:
 
 .. literalinclude:: zipimport_get_data.py

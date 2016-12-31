@@ -19,8 +19,8 @@ This can be used to override installed versions of packages with
 development versions, or to combine platform-specific and shared
 modules into a single package namespace.
 
-The most common way to call ``extend_path()`` is by adding these two
-lines to the ``__init__.py`` inside the package:
+The most common way to call ``extend_path()`` is by adding two
+lines to the ``__init__.py`` inside the package.
 
 .. code-block:: none
 
@@ -166,7 +166,7 @@ and ``demopkg2/__init__.py`` contains
 search path by ``pkgutil`` are scanned for imports *before* the
 default location.
 
-This program imports :mod:`demopkg2.overloaded` and calls ``func()``:
+This program imports :mod:`demopkg2.overloaded` and calls ``func()``.
 
 .. literalinclude:: pkgutil_devel.py
    :caption:
@@ -245,7 +245,7 @@ each operating system, and include a ``.pkg`` file to extend the
 search path.
 
 This example uses the same :mod:`demopkg1` files, and also includes
-the following files:
+the following files.
 
 .. {{{cog
 .. sh("find . -name __pycache__ | xargs rm -rf")
@@ -266,7 +266,9 @@ the following files:
 .. {{{end}}}
 
 The PKG files are named ``demopkg1.pkg`` to match the package
-being extended.  They both contain::
+being extended.  They both contain one line.
+
+::
 
     demopkg
 
@@ -283,8 +285,8 @@ packages.
    :caption:
    :language: bash
 
-And when run with ``"one"`` or ``"two"`` as the arguments, the path is
-adjusted:
+When run with ``"one"`` or ``"two"`` as the arguments, the path is
+adjusted.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'one', interpreter='./with_os.sh'))
@@ -492,7 +494,7 @@ is a byte sequence, so it is decoded from UTF-8 before being printed.
 .. {{{end}}}
 
 ``get_data()`` is distribution format-agnostic because it uses the
-import hooks defined in :pep:`302` to access the package contents.
+import hooks defined in PEP 302 to access the package contents.
 Any loader that provides the hooks can be used, including the ZIP
 archive importer in :mod:`zipfile`.
 
