@@ -453,9 +453,8 @@ values match and the test passes.
 
 .. {{{end}}}
 
-Another pitfall of using text comparisons for tests is that embedded
-whitespace can also cause tricky problems with tests.  This example
-has a single extra space after the ``6``.
+Whitespace within a line can also cause tricky problems with tests.
+This example has a single extra space after the ``6``.
 
 .. literalinclude:: doctest_extra_space.py
    :caption:
