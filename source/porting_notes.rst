@@ -61,6 +61,9 @@ present in Python 2.
 :mod:`ipaddress`
   Classes for working with Internet Protocol (IP) addresses
 
+:mod:`pathlib`
+  An object-oriented API for working with filesystem paths
+
 :mod:`selectors`
   I/O Multiplexing Abstractions
 
