@@ -1527,7 +1527,7 @@ Illegal Jumps
 -------------
 
 Jumping in and out of certain flow control statements is dangerous or
-undefined, and therefore, prevented by the debugger.
+undefined and therefore not allowed by the debugger.
 
 .. cssclass:: with-linenos
 
