@@ -572,7 +572,7 @@ first.
       :linenos:
       :caption:
 
-The :mod:`itertools` version takes only 0.0332 seconds to run, about
+The ``itertools`` version takes only 0.0332 seconds to run, about
 60% of the run time for the original.
 
 .. timing values are sensitive to other operations, so don't cog
