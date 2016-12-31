@@ -84,7 +84,7 @@ related modules. Often, code using these modules can be updated to
 work with Python 3 just by fixing the import statements. A complete
 list of the renames can be found in the dictionary
 ``lib2to3.fixes.fix_imports.MAPPING`` (the keys are the Python 2 name
-and the values are the Python 3 name).
+and the values are the Python 3 name) and in :table:`Renamed Modules`.
 
 .. index::
    single: porting; renamed modules
