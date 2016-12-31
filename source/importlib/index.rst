@@ -6,11 +6,11 @@
     :synopsis: Interface to module import mechanism.
 
 The ``importlib`` module includes functions that implement Python's
-import mechanism for loading code in packages and modules, all
-implemented in Python. It is one access point to importing modules
-dynamically, and useful in some cases where the name of the module
-that needs to be imported is unknown when the code is written (for
-example, for plugins or extensions to an application).
+import mechanism for loading code in packages and modules. It is one
+access point to importing modules dynamically, and useful in some
+cases where the name of the module that needs to be imported is
+unknown when the code is written (for example, for plugins or
+extensions to an application).
 
 Example Package
 ===============
