@@ -19,7 +19,7 @@ thread debugging and control; the import mechanism and imported
 modules; runtime control flow tracing; and standard input and output
 streams for the process.
 
-While :mod:`sys` is focused on interpreter settings, :mod:`os`
+While ``sys`` is focused on interpreter settings, :mod:`os`
 provides access to operating system information.  It can be used for
 portable interfaces to system calls that return details about the
 running process such as its owner and environment variables.  It also
