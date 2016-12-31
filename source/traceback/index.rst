@@ -44,7 +44,7 @@ browse the source.
 Supporting Functions
 ====================
 
-The examples in this section use the module ``traceback_example.py``:
+The examples in this section use the module ``traceback_example.py``.
 
 .. literalinclude:: traceback_example.py
     :caption:
