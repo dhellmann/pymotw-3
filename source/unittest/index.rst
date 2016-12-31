@@ -301,7 +301,7 @@ Containers
 
 In addition to the generic ``assertEqual()`` and
 ``assertNotEqual()``, there are special methods for comparing
-containers like ``list``, ``dict:``, and ``set``
+containers like ``list``, ``dict``, and ``set``
 objects.
 
 .. literalinclude:: unittest_equality_container.py
