@@ -30,6 +30,9 @@ provided by the ``collections`` module.
    - * Iterator
      * Iterable
      * Is an iterator over the container contents.
+   - * Generator
+     * Iterator
+     * Extends iterators with the generator protocol from :pep:`342`.
    - * Sized
      * 
      * Adds methods for containers that know how big they are.
@@ -44,6 +47,9 @@ provided by the ``collections`` module.
      * Sequence
      * Supports adding and removing items to an instance after it has
        been created.
+   - * ByteString
+     * Sequence
+     * Combined API of ``bytes`` and ``bytearray``.
    - * Set
      * Sized, Iterable, Container
      * Supports set operations such as intersection and union.
@@ -68,6 +74,20 @@ provided by the ``collections`` module.
    - * ValuesView
      * MappingView
      * Part of the view API.
+   - * Awaitable
+     * 
+     * API for objects that can be used in ``await`` expressions, such
+       as coroutines.
+   - * Coroutine
+     * Awaitable
+     * API for classes that implement the coroutine protocol.
+   - * AsyncIterable
+     * 
+     * API for iterables compatible with ``async for``, as defined in
+       :pep:`492`.
+   - * AsyncIterator
+     * AsyncIterable
+     * API for asynchronous iterators.
 
 Besides clearly defining the APIs for containers with different
 semantics, these abstract base classes can be used to test whether an
