@@ -438,6 +438,10 @@ before the automatic import was added, the interpreter accepts an
    * :ref:`sys-imports` -- Description of how the import path defined
      in :mod:`sys` works.
 
+   * `setuptools
+     <https://setuptools.readthedocs.io/en/latest/index.html>`__ --
+     Packaging library and installation tool ``easy_install``.
+
    * `Running code at Python startup
      <http://nedbatchelder.com/blog/201001/running_code_at_python_startup.html>`__
      -- Post from Ned Batchelder discussing ways to cause the Python
