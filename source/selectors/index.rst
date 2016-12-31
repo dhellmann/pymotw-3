@@ -5,17 +5,20 @@
 .. module:: selectors
    :synopsis: I/O Multiplexing Abstractions
 
-The ``selectors`` module provides a platform-independent
-abstraction layer on top of the platform-specific I/O monitoring
-functions in :mod:`select`.
+The ``selectors`` module provides a platform-independent abstraction
+layer on top of the platform-specific I/O monitoring functions in
+:mod:`select`.
 
 Operating Model
 ===============
 
-The APIs in ``selectors`` are event-based, similar to ``poll()``
-from ``select``. A selector object provides methods for specifying
-what events to look for on a socket, and then lets the caller wait for
-events in a platform-independent way.
+The APIs in ``selectors`` are event-based, similar to ``poll()`` from
+``select``. A selector object provides methods for specifying what
+events to look for on a socket, and then lets the caller wait for
+events in a platform-independent way. There are several
+implementations and the module automatically sets the alias
+``DefaultSelector`` to refer to the most efficient one for the current
+system configuration.
 
 Registering interest in an event creates a ``SelectorKey``, which
 holds the socket, information about the events of interest, and
