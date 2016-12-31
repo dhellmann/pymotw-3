@@ -16,17 +16,16 @@ test runner to enable automated testing.
 Basic Test Structure
 ====================
 
-Tests, as defined by ``unittest``, have two parts: code to manage
-test dependencies (called *fixtures*), and the test itself. Individual
-tests are created by subclassing ``TestCase`` and overriding or
-adding appropriate methods. For example,
+Tests, as defined by ``unittest``, have two parts: code to manage test
+dependencies (called *fixtures*), and the test itself. Individual
+tests are created by subclassing ``TestCase`` and overriding or adding
+appropriate methods. In the following example, the ``SimplisticTest``
+has a single ``test()`` method, which would fail if ``a`` is ever
+different from ``b``.
 
 .. literalinclude:: unittest_simple.py
     :caption:
     :start-after: #end_pymotw_header
-
-In this case, the ``SimplisticTest`` has a single ``test()``
-method, which would fail if ``a`` is ever different from ``b``.
 
 Running Tests
 =============
