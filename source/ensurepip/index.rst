@@ -22,15 +22,20 @@ This example uses a virtual environment configured without
 ``pip`` installed.
 
 .. {{{cog
+.. INTERP='/Library/Frameworks/Python.framework/Versions/3.5/bin/python3'
+.. def _elide_framework(infile, line):
+..     line = line.replace('/Library/Frameworks/Python.framework/Versions/3.5/bin/', '')
+..     return line
+.. CLEAN=[_elide_framework]
 .. run_script(cog.inFile, 'rm -rf /tmp/demoenv', interpreter='')
-.. cog.out(run_script(cog.inFile, 'pyvenv --without-pip /tmp/demoenv', interpreter='',
-..                    trailing_newlines=False))
+.. cog.out(run_script(cog.inFile, '-m venv --without-pip /tmp/demoenv', interpreter=INTERP,
+..                    trailing_newlines=False, line_cleanups=CLEAN))
 .. cog.out(run_script(cog.inFile, 'ls -F /tmp/demoenv/bin', interpreter='', include_prefix=False))
 .. }}}
 
 .. code-block:: none
 
-	$ pyvenv --without-pip /tmp/demoenv
+	$ python3 -m venv --without-pip /tmp/demoenv
 	$ ls -F /tmp/demoenv/bin
 	
 	activate
@@ -38,7 +43,6 @@ This example uses a virtual environment configured without
 	activate.fish
 	python@
 	python3@
-	python3.5@
 
 .. {{{end}}}
 
@@ -85,7 +89,6 @@ those commands.
 	pip3.5*
 	python@
 	python3@
-	python3.5@
 
 .. {{{end}}}
 
