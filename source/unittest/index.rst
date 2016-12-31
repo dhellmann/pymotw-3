@@ -17,7 +17,7 @@ Basic Test Structure
 ====================
 
 Tests, as defined by ``unittest``, have two parts: code to manage
-test dependencies (called "fixtures"), and the test itself. Individual
+test dependencies (called *fixtures*), and the test itself. Individual
 tests are created by subclassing ``TestCase`` and overriding or
 adding appropriate methods. For example,
 
