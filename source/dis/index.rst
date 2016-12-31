@@ -6,7 +6,7 @@
     :synopsis: Python Bytecode Disassembler
 
 The ``dis`` module includes functions for working with Python
-bytecode by "disassembling" it into a more human-readable form.
+bytecode by *disassembling* it into a more human-readable form.
 Reviewing the bytecodes being executed by the interpreter is a good
 way to hand-tune tight loops and perform other kinds of optimizations.
 It is also useful for finding race conditions in multi-threaded
@@ -35,7 +35,7 @@ A module such as ``dis_simple.py`` can be disassembled by running
       :caption:
 
 The output is organized into columns with the original source line
-number, the instruction "address" within the code object, the opcode
+number, the instruction address within the code object, the opcode
 name, and any arguments passed to the opcode.
 
 .. {{{cog
@@ -321,7 +321,7 @@ divisions it may not be clear which part is zero.
       :linenos:
       :caption:
 
-The bad value is easy to spot when it is loaded onto the stack in the
+The error is easy to spot when it is loaded onto the stack in the
 disassembled version.  The bad operation is highlighted with the
 ``-->``, and the previous line pushes the value for ``j`` onto the
 stack.
@@ -379,10 +379,8 @@ a list of words and groups them by their first letter.
    :start-after: #end_pymotw_header
 
 The test driver application ``dis_test_loop.py`` can be used to run
-each incarnation of the ``Dictionary`` class.
-
-A straightforward, but slow, implementation of ``Dictionary``
-starts out like this:
+each incarnation of the ``Dictionary`` class, starting with a
+straightforward, but slow, implementation.
 
 .. cssclass:: with-linenos
 
@@ -571,7 +569,7 @@ first.
       :linenos:
       :caption:
 
-The :mod:`itertools` version takes only 0.0332 seconds to run, about
+The ``itertools`` version takes only 0.0332 seconds to run, about
 60% of the run time for the original.
 
 .. timing values are sensitive to other operations, so don't cog
