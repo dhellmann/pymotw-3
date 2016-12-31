@@ -324,7 +324,7 @@ divisions it may not be clear which part is zero.
       :linenos:
       :caption:
 
-The bad value is easy to spot when it is loaded onto the stack in the
+The error is easy to spot when it is loaded onto the stack in the
 disassembled version.  The bad operation is highlighted with the
 ``-->``, and the previous line pushes the value for ``j`` onto the
 stack.
