@@ -1154,7 +1154,8 @@ of the assert methods instead.
 
 Several older method aliases have been deprecated and replaced with
 preferred names. Using the deprecated names produces a warning
-(:pyissue:`9424`).
+(:pyissue:`9424`). See :table:`Deprecated unittest.TestCase Methods`
+for a mapping between the old and new names.
 
 .. list-table:: Deprecated unittest.TestCase Methods
    :header-rows: 1
