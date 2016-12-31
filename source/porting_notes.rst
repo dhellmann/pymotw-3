@@ -18,7 +18,7 @@ each module.
 References
 ==========
 
-The notes in this section are based on the "What's New" documents
+The notes in this section are based on the *What's New* documents
 prepared by the Python development team and release manager for each
 release.
 
@@ -44,8 +44,7 @@ New Modules
 ===========
 
 Python 3 includes a number of new modules, providing features not
-present in Python 2. Some of the new modules covered in this text
-are
+present in Python 2.
 
 :mod:`asyncio`
   Asynchronous I/O, event loop, and other concurrency tools
@@ -62,6 +61,9 @@ are
 :mod:`ipaddress`
   Classes for working with Internet Protocol (IP) addresses
 
+:mod:`pathlib`
+  An object-oriented API for working with filesystem paths
+
 :mod:`selectors`
   I/O Multiplexing Abstractions
 
@@ -76,13 +78,13 @@ Renamed Modules
 ===============
 
 Many standard library modules were renamed between Python 2 and 3 as
-part of :pep:`3108` (*Standard Library Reorganization*). All of the
-new module names use consistent lower case, and some have been moved
-into packages to better organize related modules. Often, code using
-these modules can be updated to work with Python 3 just by fixing the
-import statements. A complete list of the renames can be found in the
-dictionary ``lib2to3.fixes.fix_imports.MAPPING`` (the keys are the
-Python 2 name and the values are the Python 3 name).
+part of PEP 3108. All of the new module names use consistent lower
+case, and some have been moved into packages to better organize
+related modules. Often, code using these modules can be updated to
+work with Python 3 just by fixing the import statements. A complete
+list of the renames can be found in the dictionary
+``lib2to3.fixes.fix_imports.MAPPING`` (the keys are the Python 2 name
+and the values are the Python 3 name) and in :table:`Renamed Modules`.
 
 .. index::
    single: porting; renamed modules
@@ -179,9 +181,8 @@ bsddb
 -----
 
 The :mod:`bsddb` and :mod:`dbm.bsd` modules have been
-removed. Bindings for Berkeley DB are now maintained `outside of the
-standard library <https://pypi.python.org/pypi/bsddb3>`__ as
-``bsddb3``.
+removed. Bindings for Berkeley DB are now maintained outside of the
+standard library as `bsddb3 <https://pypi.python.org/pypi/bsddb3>`__.
 
 commands
 --------
@@ -336,9 +337,7 @@ asyncore and asynchat
    pair: porting; asyncore
    pair: porting; asynchat
 
-Asynchronous I/O and protocol handlers.
-
-See :mod:`asyncio` instead.
+Asynchronous I/O and protocol handlers. See :mod:`asyncio` instead.
 
 formatter
 ---------
@@ -346,9 +345,8 @@ formatter
 .. index::
    pair: porting; formatter
 
-Generic output formatter and device interface.
-
-See :pyissue:`18716` for details.
+Generic output formatter and device interface. See :pyissue:`18716`
+for details.
 
 imp
 ---
@@ -357,9 +355,8 @@ imp
    pair: porting; imp
    pair: porting; importlib
 
-Access the implementation of the import statement.
-
-See :mod:`importlib` instead.
+Access the implementation of the import statement. See
+:mod:`importlib` instead.
 
 optparse
 --------
@@ -368,12 +365,10 @@ optparse
    pair: porting; optparse
    pair: porting; argparse
 
-Command-line option parsing library.
-
-The API for :mod:`argparse` is similar to the one provided by
-:mod:`optparse`, and in many cases :mod:`argparse` can be used as a
-straightforward replacement by updating the names of the classes and
-methods used.
+Command-line option parsing library. The API for :mod:`argparse` is
+similar to the one provided by :mod:`optparse`, and in many cases
+:mod:`argparse` can be used as a straightforward replacement by
+updating the names of the classes and methods used.
 
 
 Summary of Changes to Modules
@@ -418,13 +413,17 @@ argparse
 The ``version`` argument to ``ArgumentParser`` has been removed
 in favor of a special ``action`` type (:pyissue:`13248`).
 
-Replace::
+The old form passed ``version`` as an argument.
+
+::
 
   parser = argparse.ArgumentParser(version='1.0')
 
-with something like::
+The new form requires adding an explicit argument definition.
 
-  parser = argparse.ArgumentParser(version='1.0')
+::
+
+  parser = argparse.ArgumentParser()
   parser.add_argument('--version', action='version',
                       version='%(prog)s 1.0')
 
@@ -445,7 +444,7 @@ array
 The ``'c'`` type used for character bytes in early version of Python 2
 has been removed. Use ``'b'`` or ``'B'`` for bytes instead.
 
-The ``'u'`` type for characters from unicode strings has been
+The ``'u'`` type for characters from Unicode strings has been
 deprecated and will be removed in Python 4.0.
 
 The methods ``tostring()`` and ``fromstring()`` have been renamed
@@ -628,8 +627,8 @@ gettext
 .. index::
    pair: porting; gettext
 
-All of the translation functions in :mod:`gettext` assume unicode
-input and output, and the unicode variants such as ``ugettext()``
+All of the translation functions in :mod:`gettext` assume Unicode
+input and output, and the Unicode variants such as ``ugettext()``
 have been removed.
 
 
@@ -666,7 +665,7 @@ imaplib
    pair: porting; imaplib
 
 Under Python 3, :mod:`imaplib` returns byte-strings encoded as
-UTF-8. There is support for accepting unicode strings and encoding
+UTF-8. There is support for accepting Unicode strings and encoding
 them automatically as outgoing commands are sent or as the username
 and password for logging in to the server.
 
@@ -855,7 +854,8 @@ pickle
 
 The C implementation of the pickle module from Python 2 has been moved
 to a new module that is automatically used to replace the Python
-implementation when possible. The old import idiom of
+implementation when possible. The old import idiom of looking for
+``cPickle`` before ``pickle`` is no longer needed.
 
 ::
 
@@ -864,7 +864,8 @@ implementation when possible. The old import idiom of
     except:
        import pickle
 
-can be replaced with
+With the automatic import of the C implementation, it is only
+necessary to import the ``pickle`` module directly.
 
 ::
 
@@ -1079,7 +1080,7 @@ instance with attributes ``major``, ``minor``, ``micro``,
 
 .. http://mail.python.org/pipermail/python-dev/2009-October/093321.html
 
-The "check interval" feature, controlling the number of opcodes to
+The check interval feature, controlling the number of opcodes to
 execute before allowing a thread context switch has been replaced with
 an absolute time value instead, managed with
 ``sys.setswitchinterval()``. The old functions for managing the
@@ -1153,7 +1154,8 @@ of the assert methods instead.
 
 Several older method aliases have been deprecated and replaced with
 preferred names. Using the deprecated names produces a warning
-(:pyissue:`9424`).
+(:pyissue:`9424`). See :table:`Deprecated unittest.TestCase Methods`
+for a mapping between the old and new names.
 
 .. list-table:: Deprecated unittest.TestCase Methods
    :header-rows: 1
