@@ -78,13 +78,13 @@ Renamed Modules
 ===============
 
 Many standard library modules were renamed between Python 2 and 3 as
-part of :pep:`3108` (*Standard Library Reorganization*). All of the
-new module names use consistent lower case, and some have been moved
-into packages to better organize related modules. Often, code using
-these modules can be updated to work with Python 3 just by fixing the
-import statements. A complete list of the renames can be found in the
-dictionary ``lib2to3.fixes.fix_imports.MAPPING`` (the keys are the
-Python 2 name and the values are the Python 3 name).
+part of PEP 3108. All of the new module names use consistent lower
+case, and some have been moved into packages to better organize
+related modules. Often, code using these modules can be updated to
+work with Python 3 just by fixing the import statements. A complete
+list of the renames can be found in the dictionary
+``lib2to3.fixes.fix_imports.MAPPING`` (the keys are the Python 2 name
+and the values are the Python 3 name).
 
 .. index::
    single: porting; renamed modules
