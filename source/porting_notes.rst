@@ -337,9 +337,7 @@ asyncore and asynchat
    pair: porting; asyncore
    pair: porting; asynchat
 
-Asynchronous I/O and protocol handlers.
-
-See :mod:`asyncio` instead.
+Asynchronous I/O and protocol handlers. See :mod:`asyncio` instead.
 
 formatter
 ---------
@@ -347,9 +345,8 @@ formatter
 .. index::
    pair: porting; formatter
 
-Generic output formatter and device interface.
-
-See :pyissue:`18716` for details.
+Generic output formatter and device interface. See :pyissue:`18716`
+for details.
 
 imp
 ---
@@ -358,9 +355,8 @@ imp
    pair: porting; imp
    pair: porting; importlib
 
-Access the implementation of the import statement.
-
-See :mod:`importlib` instead.
+Access the implementation of the import statement. See
+:mod:`importlib` instead.
 
 optparse
 --------
@@ -369,12 +365,10 @@ optparse
    pair: porting; optparse
    pair: porting; argparse
 
-Command-line option parsing library.
-
-The API for :mod:`argparse` is similar to the one provided by
-:mod:`optparse`, and in many cases :mod:`argparse` can be used as a
-straightforward replacement by updating the names of the classes and
-methods used.
+Command-line option parsing library. The API for :mod:`argparse` is
+similar to the one provided by :mod:`optparse`, and in many cases
+:mod:`argparse` can be used as a straightforward replacement by
+updating the names of the classes and methods used.
 
 
 Summary of Changes to Modules
