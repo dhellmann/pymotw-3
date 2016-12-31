@@ -436,7 +436,7 @@ before the automatic import was added, the interpreter accepts an
    * :pydoc:`site`
 
    * :ref:`sys-imports` -- Description of how the import path defined
-     in :mod:`sys` works.
+     in ``sys`` works.
 
    * `setuptools
      <https://setuptools.readthedocs.io/en/latest/index.html>`__ --
