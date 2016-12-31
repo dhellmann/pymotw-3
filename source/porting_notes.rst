@@ -413,13 +413,17 @@ argparse
 The ``version`` argument to ``ArgumentParser`` has been removed
 in favor of a special ``action`` type (:pyissue:`13248`).
 
-Replace::
+The old form passed ``version`` as an argument.
+
+::
 
   parser = argparse.ArgumentParser(version='1.0')
 
-with something like::
+The new form requires adding an explicit argument definition.
 
-  parser = argparse.ArgumentParser(version='1.0')
+::
+
+  parser = argparse.ArgumentParser()
   parser.add_argument('--version', action='version',
                       version='%(prog)s 1.0')
 
