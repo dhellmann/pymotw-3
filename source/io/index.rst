@@ -108,6 +108,10 @@ using ``TextIOWrapper`` with other types of file-like objects.
 
    * :pydoc:`io`
 
+   * :ref:`HTTP POST example <http_server_post>` -- Uses the
+     ``detach()`` of ``TextIOWrapper`` to manage the wrapper
+     separately from the wrapped socket.
+
    * `Efficient String Concatenation in Python
      <http://www.skymind.com/%7Eocrow/python_string/>`_ -- Examines
      various methods of combining strings and their relative merits.
