@@ -14,16 +14,6 @@ import example_package
 pkg_dir = os.path.dirname(example_package.__file__)
 data_filename = os.path.join(pkg_dir, 'README.txt')
 
-# Find the prefix of pkg_dir that represents
-# the portion of the path that does not need
-# to be displayed.
-dir_prefix = os.path.abspath(os.path.dirname(__file__) or
-                             os.getcwd())
-if data_filename.startswith(dir_prefix):
-    display_filename = data_filename[len(dir_prefix) + 1:]
-else:
-    display_filename = data_filename
-
 # Read the file and show its contents.
-print(display_filename, ':')
+print(data_filename, ':')
 print(open(data_filename, 'r').read())

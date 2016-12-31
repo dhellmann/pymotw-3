@@ -153,11 +153,11 @@ loaded from a regular import.
 
 	$ python3 zipimport_load_module.py
 	
-	<code object <module> at 0x1012b4c00, file
+	<code object <module> at 0x1007b4c00, file
 	"./zipimport_get_code.py", line 6>
 	Name   : zipimport_get_code
 	Loader : <zipimporter object "zipimport_example.zip">
-	Code   : <code object <module> at 0x1012b4c00, file
+	Code   : <code object <module> at 0x1007b4c00, file
 	"./zipimport_get_code.py", line 6>
 
 .. {{{end}}}
@@ -283,7 +283,7 @@ file system.
 
 	$ python3 zipimport_get_data_nozip.py
 	
-	example_package/README.txt :
+	.../example_package/README.txt :
 	This file represents sample data which could be embedded in the
 	ZIP archive.  You could include a configuration file, images, or
 	any other sort of noncode data.
