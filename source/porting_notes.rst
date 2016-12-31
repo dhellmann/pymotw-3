@@ -181,9 +181,8 @@ bsddb
 -----
 
 The :mod:`bsddb` and :mod:`dbm.bsd` modules have been
-removed. Bindings for Berkeley DB are now maintained `outside of the
-standard library <https://pypi.python.org/pypi/bsddb3>`__ as
-``bsddb3``.
+removed. Bindings for Berkeley DB are now maintained outside of the
+standard library as `bsddb3 <https://pypi.python.org/pypi/bsddb3>`__.
 
 commands
 --------
