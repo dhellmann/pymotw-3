@@ -278,7 +278,7 @@ new module as the namespace so that names defined in the source are
 preserved as module-level attributes.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'sys_shelve_importer_package.py'))
+.. cog.out(run_script(cog.inFile, 'sys_shelve_importer_package.py', line_break_mode='wrap'))
 .. }}}
 
 .. code-block:: none
@@ -304,13 +304,13 @@ preserved as module-level attributes.
 	  __package__: package
 	  __file__   : /tmp/pymotw_import_example.shelve/package
 	  __path__   : ['/tmp/pymotw_import_example.shelve']
-	  __loader__ : <sys_shelve_importer.ShelveLoader object at 0x102
-	467860>
+	  __loader__ : <sys_shelve_importer.ShelveLoader object at
+	0x101467860>
 	
 	Global settings:
 	sys.modules entry:
-	<module 'package' (<sys_shelve_importer.ShelveLoader object at 0
-	x102467860>)>
+	<module 'package' (<sys_shelve_importer.ShelveLoader object at
+	0x101467860>)>
 
 .. {{{end}}}
 
@@ -367,7 +367,7 @@ constructs and returns a ``module`` instance.
 	  __file__   : /tmp/pymotw_import_example.shelve/package.module1
 	  __path__   : /tmp/pymotw_import_example.shelve
 	  __loader__ : <sys_shelve_importer.ShelveLoader object at
-	0x101c76e10>
+	0x101376e10>
 	
 	Import of "package.subpackage.module2":
 	
@@ -399,7 +399,7 @@ constructs and returns a ``module`` instance.
 	/tmp/pymotw_import_example.shelve/package.subpackage.module2
 	  __path__   : /tmp/pymotw_import_example.shelve
 	  __loader__ : <sys_shelve_importer.ShelveLoader object at
-	0x101ca6c88>
+	0x1013a6c88>
 
 .. {{{end}}}
 
