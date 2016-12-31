@@ -1080,7 +1080,7 @@ instance with attributes ``major``, ``minor``, ``micro``,
 
 .. http://mail.python.org/pipermail/python-dev/2009-October/093321.html
 
-The "check interval" feature, controlling the number of opcodes to
+The check interval feature, controlling the number of opcodes to
 execute before allowing a thread context switch has been replaced with
 an absolute time value instead, managed with
 ``sys.setswitchinterval()``. The old functions for managing the
