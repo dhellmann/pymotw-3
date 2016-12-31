@@ -24,3 +24,7 @@ built-in types ``list``, ``dict``, and ``tuple``.
     * :pydoc:`collections`
 
     * :ref:`Python 2 to 3 porting notes for collections <porting-collections>`
+
+    * :pep:`342` -- Coroutines via Enhanced Generators
+
+    * :pep:`492` -- Coroutines with async and await syntax
