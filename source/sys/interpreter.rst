@@ -349,5 +349,8 @@ installed from python.org.
 
     $ python3 sys_locations.py
 	
-    Interpreter executable: /Library/Frameworks/Python.framework/Versions/3.4/bin/python3
-    Installation prefix   : /Library/Frameworks/Python.framework/Versions/3.4
+    Interpreter executable:
+    /Library/Frameworks/Python.framework/Versions/3.5/bin/python3
+
+    Installation prefix:
+    /Library/Frameworks/Python.framework/Versions/3.5
