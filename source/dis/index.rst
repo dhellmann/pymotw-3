@@ -9,7 +9,7 @@
           the bytecodes for analysis.
 
 The ``dis`` module includes functions for working with Python
-bytecode by "disassembling" it into a more human-readable form.
+bytecode by *disassembling* it into a more human-readable form.
 Reviewing the bytecodes being executed by the interpreter is a good
 way to hand-tune tight loops and perform other kinds of optimizations.
 It is also useful for finding race conditions in multi-threaded
