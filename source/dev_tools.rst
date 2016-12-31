@@ -53,7 +53,7 @@ the slow parts so they can be isolated and improved.
 
 It is important to indent source code consistently in a langauge like
 Python, where white-space is significant.  The :mod:`tabnanny` module
-provides a scanner to report on "ambiguous" use of indentation, and
+provides a scanner to report on ambiguous use of indentation, and
 can be used in tests to ensure that code meets a minimum standard
 before it is checked in to the source repository.
 
