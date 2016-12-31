@@ -526,10 +526,9 @@ subclasses.
     :caption:
     :start-after: #end_pymotw_header
 
-The output from this example is the "tree" of inheritance for the
-``A``, ``B``, ``C``, and ``D`` classes. 
-``D`` appears twice, since it inherits from both ``C`` and
-``A``.
+The output from this example is the tree of inheritance for the ``A``,
+``B``, ``C``, and ``D`` classes.  ``D`` appears twice, since it
+inherits from both ``C`` and ``A``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'inspect_getclasstree.py'))
