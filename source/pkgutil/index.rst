@@ -497,7 +497,7 @@ is a byte sequence, so it is decoded from UTF-8 before being printed.
 .. {{{end}}}
 
 ``get_data()`` is distribution format-agnostic because it uses the
-import hooks defined in :pep:`302` to access the package contents.
+import hooks defined in PEP 302 to access the package contents.
 Any loader that provides the hooks can be used, including the ZIP
 archive importer in :mod:`zipfile`.
 
