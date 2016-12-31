@@ -11,7 +11,7 @@
 
 The ``zipimport`` module implements the ``zipimporter`` class,
 which can be used to find and load Python modules inside ZIP
-archives. The ``zipimporter`` supports the "import hooks" API
+archives. The ``zipimporter`` supports the import hooks API
 specified in PEP 302; this is how Python Eggs work.
 
 It is not usually necessary to use the ``zipimport`` module
