@@ -316,9 +316,9 @@ more precise platform specifier, use ``get_platform()``.
    :caption:
    :start-after: #end_pymotw_header
 
-Although this sample output was prepared on an OS X 10.6 system, the
-interpreter is compiled for 10.5 compatibility, so that is the version
-number included in the platform string.
+The interpreter used to prepare this sample output was compiled for
+Mac OS X 10.6 compatibility, so that is the version number included in
+the platform string.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'sysconfig_get_platform.py'))
