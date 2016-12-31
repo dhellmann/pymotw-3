@@ -445,7 +445,7 @@ globals and locals from the current frame already populated.
     5
 
 Mutable objects such as lists can be changed from the interactive
-debugger.  Immutable objects cannot, and names cannot be rebound to
+interpreter.  Immutable objects cannot, and names cannot be rebound to
 new values.
 
 .. code-block:: none
@@ -464,7 +464,8 @@ new values.
     3
 
 Use the end-of-file sequence Ctrl-D to exit the interactive prompt and
-return to the debugger.
+return to the debugger. In this example, the list ``l`` has been
+changed but the values of ``m`` and ``n`` are not.
 
 .. code-block:: none
 
