@@ -239,4 +239,4 @@ test function.
      performance analysis.
 
    * :ref:`time-monotonic` -- Discussion of the monotonic clock from
-     the :mod:`time` module.
+     the ``time`` module.
