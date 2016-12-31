@@ -19,13 +19,13 @@ Example Package
 ===============
 
 The examples in this section use a package called ``example`` with
-``__init__.py``:
+``__init__.py``.
 
 .. literalinclude:: example/__init__.py
     :caption:
     :start-after: #end_pymotw_header
 
-and module called :mod:`submodule` containing:
+The package also contains ``submodule.py``.
 
 .. literalinclude:: example/submodule.py
     :caption:
