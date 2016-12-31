@@ -29,13 +29,14 @@ Basic Example
 
 To illustrate how the various arguments to ``Timer`` are used,
 here is a simple example that prints an identifying value when each
-statement is executed:
+statement is executed.
 
 .. literalinclude:: timeit_example.py
     :caption:
     :start-after: #end_pymotw_header
 
-When run, the output is:
+When run, the output shows the results of the repeated calls to
+``print()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'timeit_example.py', line_break_mode='wrap'))
@@ -236,4 +237,4 @@ test function.
      performance analysis.
 
    * :ref:`time-monotonic` -- Discussion of the monotonic clock from
-     the :mod:`time` module.
+     the ``time`` module.

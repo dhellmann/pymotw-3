@@ -45,6 +45,11 @@ following command has the same effect as the previous example.
 
 	$ pyvenv /tmp/demoenv
 
+Using ``-m venv`` is preferred because it requires explicitly
+selecting a Python interpreter, so there can be no confusion about the
+version number or import path assocated with the resulting virtual
+environment.
+
 Contents of a Virtual Environment
 =================================
 
@@ -160,7 +165,7 @@ create two virtual environments.
 
 .. {{{end}}}
 
-The install the versions of the tools to test.
+Then install the versions of the tools to test.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '/tmp/sphinx1/bin/pip install Sphinx==1.3.6',

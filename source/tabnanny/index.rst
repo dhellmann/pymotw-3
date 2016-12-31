@@ -7,7 +7,7 @@
 
 Consistent use of indentation is important in a langauge like Python,
 where white-space is significant.  The ``tabnanny`` module provides
-a scanner to report on "ambiguous" use of indentation.
+a scanner to report on ambiguous use of indentation.
 
 Running from the Command Line
 =============================
@@ -18,7 +18,7 @@ names, the directories are scanned recursively to find ``.py`` files to
 check.
 
 Running tabnanny across the PyMOTW source code exposed one old
-module with tabs instead of spaces:
+module with tabs instead of spaces.
 
 .. code-block:: none
 
@@ -26,8 +26,8 @@ module with tabs instead of spaces:
     ./source/queue/fetch_podcasts.py 65 "    \t\tparsed_url = \
     urlparse(enclosure['url'])\n"
 
-Line 65 of ``fetch_podcasts.py`` had two tabs instead of 8 spaces.  This
-wasn't apparent in a text editor editor, which was configured to with
+Line 65 of ``fetch_podcasts.py`` had two tabs instead of 8 spaces.
+This wasn't apparent in a text editor, which was configured to with
 tabstops set to 4 spaces, so visually there was no difference.
 
 .. literalinclude:: ../queue/fetch_podcasts.py

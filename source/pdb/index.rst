@@ -443,7 +443,7 @@ globals and locals from the current frame already populated.
     5
 
 Mutable objects such as lists can be changed from the interactive
-debugger.  Immutable objects cannot, and names cannot be rebound to
+interpreter.  Immutable objects cannot, and names cannot be rebound to
 new values.
 
 .. code-block:: none
@@ -462,7 +462,8 @@ new values.
     3
 
 Use the end-of-file sequence Ctrl-D to exit the interactive prompt and
-return to the debugger.
+return to the debugger. In this example, the list ``l`` has been
+changed but the values of ``m`` and ``n`` are not.
 
 .. code-block:: none
 
@@ -1196,7 +1197,7 @@ Ignoring Breakpoints
 --------------------
 
 Programs that loop or use a large number of recursive calls to the
-same function are often easier to debug by "skipping ahead" in the
+same function are often easier to debug by skipping ahead in the
 execution, instead of watching every call or breakpoint.  The
 ``ignore`` command tells the debugger to pass over a breakpoint
 without stopping.  Each time processing encounters the breakpoint, it
@@ -1398,8 +1399,8 @@ Changing Execution Flow
 =======================
 
 The ``jump`` command alters the flow of the program at
-runtime, without modifying the code.  It can skip forwards to avoid
-running some code, or backwards to run it again.  This sample program
+runtime, without modifying the code.  It can skip forward to avoid
+running some code, or backward to run it again.  This sample program
 generates a list of numbers.
 
 .. cssclass:: with-linenos
@@ -1524,7 +1525,7 @@ Illegal Jumps
 -------------
 
 Jumping in and out of certain flow control statements is dangerous or
-undefined, and therefore, prevented by the debugger.
+undefined and therefore not allowed by the debugger.
 
 .. cssclass:: with-linenos
 

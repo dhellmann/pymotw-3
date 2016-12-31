@@ -10,7 +10,7 @@ functions.  The information about class, method, and function names
 and line numbers is gathered using :mod:`tokenize` *without* importing
 the code.
 
-The examples in this section use this source file as input:
+The examples in this section use the following source file as input.
 
 .. literalinclude:: pyclbr_example.py
     :caption:
@@ -20,8 +20,8 @@ The examples in this section use this source file as input:
 Scanning for Classes
 ====================
 
-There are two public functions exposed by ``pyclbr``.
-The first, ``readmodule()``, takes the name of the module as argument returns a
+There are two public functions exposed by ``pyclbr``.  The first,
+``readmodule()``, takes the name of the module as argument returns a
 mapping of class names to ``Class`` objects containing the metadata
 about the class source.
 

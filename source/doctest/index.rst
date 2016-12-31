@@ -110,9 +110,9 @@ There are other cases where the exact output may not be predictable,
 but should still be testable.  For example, local date and time values
 and object ids change on every test run, the default precision used in
 the representation of floating point values depend on compiler
-options, and object string representations may not be deterministic.
-Although these conditions cannot be controlled, there are techniques
-for dealing with them.
+options, and string representations of container objects like
+dictionaries may not be deterministic.  Although these conditions
+cannot be controlled, there are techniques for dealing with them.
 
 For example, in CPython, object identifiers are based on the memory
 address of the data structure holding the object.
@@ -451,9 +451,8 @@ values match and the test passes.
 
 .. {{{end}}}
 
-Another pitfall of using text comparisons for tests is that embedded
-whitespace can also cause tricky problems with tests.  This example
-has a single extra space after the ``6``.
+Whitespace within a line can also cause tricky problems with tests.
+This example has a single extra space after the ``6``.
 
 .. literalinclude:: doctest_extra_space.py
    :caption:

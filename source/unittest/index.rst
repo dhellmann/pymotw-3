@@ -14,17 +14,16 @@ fixtures, test suites, and a test runner to enable automated testing.
 Basic Test Structure
 ====================
 
-Tests, as defined by ``unittest``, have two parts: code to manage
-test dependencies (called "fixtures"), and the test itself. Individual
-tests are created by subclassing ``TestCase`` and overriding or
-adding appropriate methods. For example,
+Tests, as defined by ``unittest``, have two parts: code to manage test
+dependencies (called *fixtures*), and the test itself. Individual
+tests are created by subclassing ``TestCase`` and overriding or adding
+appropriate methods. In the following example, the ``SimplisticTest``
+has a single ``test()`` method, which would fail if ``a`` is ever
+different from ``b``.
 
 .. literalinclude:: unittest_simple.py
     :caption:
     :start-after: #end_pymotw_header
-
-In this case, the ``SimplisticTest`` has a single ``test()``
-method, which would fail if ``a`` is ever different from ``b``.
 
 Running Tests
 =============
@@ -300,7 +299,7 @@ Containers
 
 In addition to the generic ``assertEqual()`` and
 ``assertNotEqual()``, there are special methods for comparing
-containers like ``list``, ``dict:``, and ``set``
+containers like ``list``, ``dict``, and ``set``
 objects.
 
 .. literalinclude:: unittest_equality_container.py
