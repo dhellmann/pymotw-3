@@ -38,7 +38,7 @@ A module such as ``dis_simple.py`` can be disassembled by running
       :caption:
 
 The output is organized into columns with the original source line
-number, the instruction "address" within the code object, the opcode
+number, the instruction address within the code object, the opcode
 name, and any arguments passed to the opcode.
 
 .. {{{cog
