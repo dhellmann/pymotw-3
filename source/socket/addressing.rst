@@ -41,19 +41,23 @@ when sending data across the network.
   The ``AF_UNIX`` constant is only defined on systems where UDS
   is supported.
 
-The socket type is usually either ``SOCK_DGRAM`` for *user
-datagram protocol* (UDP) or ``SOCK_STREAM`` for *transmission
-control protocol* (TCP).  UDP does not require transmission
-handshaking or other setup, but offers lower reliability of delivery.
-UDP messages may be delivered out of order, more than once, or not at
-all.  TCP, by contrast, ensures that each message is delivered exactly
-once, and in the correct order.  That extra reliability may impose
-additional latency, however, since packets may need to be
-retransmitted.  Most application protocols that deliver a large amount
-of data, such as HTTP, are built on top of TCP.  UDP is commonly used
-for protocols where order is less important (since the message fits in
-a single packet, i.e., DNS), or for *multicasting* (sending the same
-data to several hosts).
+The socket type is usually either ``SOCK_DGRAM`` for message-oriented
+datagram transport or ``SOCK_STREAM`` for stream-oriented
+transport. Datagram sockets are most often associated with UDP, the
+*user datagram protocol*. They provide unreliable delivery of
+individual messages. Stream-oriented sockets are associated with TCP,
+*transmission control protocol*. They provide byte streams between the
+client and server, ensuring message delivery or failure notification
+through timeout management, retransmission, and other features.
+
+Most application protocols that deliver a large amount of data, such
+as HTTP, are built on top of TCP because it makes it simpler to create
+complex applications when message ordering and delivery is handled
+automatically. UDP is commonly used for protocols where order is less
+important (since the messages are self-contained and often small, such
+as name look-ups via DNS), or for *multicasting* (sending the same
+data to several hosts). Both UDP and TCP can be used with either IPv4
+or IPv6 addressing.
 
 .. note::
 
