@@ -11,7 +11,7 @@ have two primary properties controlling the way they send data: the
 Python supports three address families.  The most common,
 ``AF_INET``, is used for IPv4 Internet addressing.  IPv4
 addresses are four bytes long and are usually represented as a
-sequence of four numbers, one per byte, separated by dots (e.g.,
+sequence of four numbers, one per octet, separated by dots (e.g.,
 ``10.1.1.5`` and ``127.0.0.1``).  These values are more commonly
 referred to as "IP addresses."  Almost all Internet networking is done
 using IP version 4 at this time.
@@ -19,10 +19,9 @@ using IP version 4 at this time.
 ``AF_INET6`` is used for IPv6 Internet addressing.  IPv6 is the "next
 generation" version of the Internet protocol, and supports 128-bit
 addresses, traffic shaping, and routing features not available under
-IPv4.  Adoption of IPv6 is still limited, but continues to grow,
-especially with the proliferation of cloud computing and the extra
-devices being added to the network because of Internet-of-things
-projects.
+IPv4.  Adoption of IPv6 continues to grow, especially with the
+proliferation of cloud computing and the extra devices being added to
+the network because of Internet-of-things projects.
 
 ``AF_UNIX`` is the address family for Unix Domain Sockets (UDS),
 an inter-process communication protocol available on POSIX-compliant
