@@ -11,7 +11,7 @@ have two primary properties controlling the way they send data: the
 Python supports three address families.  The most common,
 ``AF_INET``, is used for IPv4 Internet addressing.  IPv4
 addresses are four bytes long and are usually represented as a
-sequence of four numbers, one per byte, separated by dots (e.g.,
+sequence of four numbers, one per octet, separated by dots (e.g.,
 ``10.1.1.5`` and ``127.0.0.1``).  These values are more commonly
 referred to as "IP addresses."  Almost all Internet networking is done
 using IP version 4 at this time.
