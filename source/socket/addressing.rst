@@ -19,10 +19,9 @@ using IP version 4 at this time.
 ``AF_INET6`` is used for IPv6 Internet addressing.  IPv6 is the "next
 generation" version of the Internet protocol, and supports 128-bit
 addresses, traffic shaping, and routing features not available under
-IPv4.  Adoption of IPv6 is still limited, but continues to grow,
-especially with the proliferation of cloud computing and the extra
-devices being added to the network because of Internet-of-things
-projects.
+IPv4.  Adoption of IPv6 continues to grow, especially with the
+proliferation of cloud computing and the extra devices being added to
+the network because of Internet-of-things projects.
 
 ``AF_UNIX`` is the address family for Unix Domain Sockets (UDS),
 an inter-process communication protocol available on POSIX-compliant
