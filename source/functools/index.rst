@@ -289,7 +289,10 @@ some of the methods, and adds the rest of them.
 
 The class must provide implementation of ``__eq__()`` and one other
 rich comparison method.  The decorator adds implementations of the
-rest of the methods that work by using the comparisons provided.
+rest of the methods that work by using the comparisons provided. If a
+comparison cannot be made, the method should return ``NotImplemented``
+so the comparison can be tried using the reverse comparison operators
+on the other object, before failing entirely.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'functools_total_ordering.py'))
