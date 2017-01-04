@@ -7,9 +7,9 @@ TCP is a *stream oriented* protocol, ensuring that all of the data is
 transmitted in the right order, UDP is a *message oriented* protocol.
 UDP does not require a long-lived connection, so setting up a UDP
 socket is a little simpler.  On the other hand, UDP messages must fit
-within a single packet (for IPv4, that means they can only hold 65,507
-bytes because the 65,535 byte packet also includes header information)
-and delivery is not guaranteed as it is with TCP.
+within a single datagram (for IPv4, that means they can only hold
+65,507 bytes because the 65,535 byte packet also includes header
+information) and delivery is not guaranteed as it is with TCP.
 
 Echo Server
 ===========
