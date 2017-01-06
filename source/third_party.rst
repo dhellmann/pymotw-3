@@ -225,10 +225,18 @@ editing, mouse support, and searchable history. It can be used to
 build command-oriented programs with a prompt loop like the :mod:`cmd`
 module, or full-screen applications like text editors.
 
+While INI files such as used by :mod:`configparser` continue to be
+popular for application configuration, the YAML_ file format is also
+very popular. YAML provides many of the data structure features of
+JSON in a format that is easier for people to read. The PyYAML_
+library provides access to a YAML parser and serializer.
+
 .. _click: http://click.pocoo.org
 .. _cliff: http://docs.openstack.org/developer/cliff/
 .. _docopt: http://docopt.org
 .. _prompt_toolkit: http://python-prompt-toolkit.readthedocs.io/en/stable/
+.. _YAML: http://yaml.org
+.. _PyYAML: http://pyyaml.org
 
 Developer Tools
 ===============
