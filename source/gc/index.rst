@@ -130,7 +130,7 @@ three objects with their instance attribute dictionaries.
 	Linking nodes Graph(three).next = Graph(one)
 	
 	Collecting 0 ...
-	Unreachable objects: 6
+	Unreachable objects: 34
 	Remaining Garbage: []
 	
 	Collecting 1 ...
@@ -142,12 +142,12 @@ three objects with their instance attribute dictionaries.
 Finding References to Objects that Cannot be Collected
 ======================================================
 
-Looking for the object holding a reference to something in the garbage
-list is a little trickier than seeing what an object references.
-Because the code asking about the reference needs to hold a reference
-itself, some of the referrers need to be ignored.  This example
-creates a graph cycle, then works through the ``Graph`` instances
-and removes the reference in the "parent" node.
+Looking for the object holding a reference to another object is a
+little trickier than seeing what an object references.  Because the
+code asking about the reference needs to hold a reference itself, some
+of the referrers need to be ignored.  This example creates a graph
+cycle, then works through the ``Graph`` instances and removes the
+reference in the "parent" node.
 
 .. literalinclude:: gc_get_referrers.py
    :caption:
@@ -170,19 +170,31 @@ the unexpected relationship.
 	Linking nodes Graph(three).next = Graph(one)
 	
 	Collecting...
-	Graph(one).__del__()
-	Graph(two).__del__()
-	Graph(three).__del__()
-	Unreachable objects: 6
+	Unreachable objects: 28
 	Remaining Garbage: []
 	
 	Clearing referrers:
+	Looking for references to Graph(one)
+	Looking for references to {'next': Graph(one), 'name': 'three'}
+	Found referrer: Graph(three)
+	Linking nodes Graph(three).next = None
+	Looking for references to Graph(two)
+	Looking for references to {'next': Graph(two), 'name': 'one'}
+	Found referrer: Graph(one)
+	Linking nodes Graph(one).next = None
+	Looking for references to Graph(three)
+	Looking for references to {'next': Graph(three), 'name': 'two'}
+	Found referrer: Graph(two)
+	Linking nodes Graph(two).next = None
 	
 	Clearing gc.garbage:
 	
 	Collecting...
 	Unreachable objects: 0
 	Remaining Garbage: []
+	Graph(one).__del__()
+	Graph(two).__del__()
+	Graph(three).__del__()
 
 .. {{{end}}}
 
