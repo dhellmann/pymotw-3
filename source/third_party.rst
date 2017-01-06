@@ -272,6 +272,14 @@ it to the package index to be shared with other developers.
 .. _git: https://git-scm.com
 .. _twine: https://pypi.python.org/pypi/twine
 
+Tools like :mod:`tabnanny` are good at finding common formatting
+mistakes in Python code. The `Python Code Quality Authority`_
+maintains an extensive range of more advanced *static analysis tools*,
+including tools that enforce style guidelines, find common programming
+errors, and even help avoid excessive complexity.
+
+.. _Python Code Quality Authority: http://meta.pycqa.org/en/latest/
+
 .. seealso::
 
    * `Python Package Index`_ or PyPI -- The site for finding and
