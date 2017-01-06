@@ -11,6 +11,15 @@ them to supplement or even replace the standard library.
 Text
 ====
 
+The :mod:`string` module includes a very basic template tool. Many web
+frameworks include more powerful template tools, but Jinja2_ and Mako_
+are popular standalone alternatives. Both support looping and
+conditional control structures as well as other features for combining
+data with a template to produce text output.
+
+.. _Jinja2: http://jinja.pocoo.org
+.. _Mako: http://docs.makotemplates.org/en/latest/
+
 The :mod:`re` module includes functions for searching and parsing text
 using formally described patterns called regular expressions. It is
 not the only way to parse text, though.
@@ -216,10 +225,18 @@ editing, mouse support, and searchable history. It can be used to
 build command-oriented programs with a prompt loop like the :mod:`cmd`
 module, or full-screen applications like text editors.
 
+While INI files such as used by :mod:`configparser` continue to be
+popular for application configuration, the YAML_ file format is also
+very popular. YAML provides many of the data structure features of
+JSON in a format that is easier for people to read. The PyYAML_
+library provides access to a YAML parser and serializer.
+
 .. _click: http://click.pocoo.org
 .. _cliff: http://docs.openstack.org/developer/cliff/
 .. _docopt: http://docopt.org
 .. _prompt_toolkit: http://python-prompt-toolkit.readthedocs.io/en/stable/
+.. _YAML: http://yaml.org
+.. _PyYAML: http://pyyaml.org
 
 Developer Tools
 ===============
@@ -254,6 +271,14 @@ it to the package index to be shared with other developers.
 .. _setuptools-git: https://pypi.python.org/pypi/setuptools-git
 .. _git: https://git-scm.com
 .. _twine: https://pypi.python.org/pypi/twine
+
+Tools like :mod:`tabnanny` are good at finding common formatting
+mistakes in Python code. The `Python Code Quality Authority`_
+maintains an extensive range of more advanced *static analysis tools*,
+including tools that enforce style guidelines, find common programming
+errors, and even help avoid excessive complexity.
+
+.. _Python Code Quality Authority: http://meta.pycqa.org/en/latest/
 
 .. seealso::
 
