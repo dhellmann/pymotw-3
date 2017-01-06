@@ -5,12 +5,14 @@
 .. module:: sqlite3
     :synopsis: Embedded relational database
 
-The ``sqlite3`` module provides a DB-API 2.0 compliant interface to
-SQLite, an in-process relational database.  SQLite is designed to be
-embedded in applications, instead of using a separate database server
-program such as MySQL, PostgreSQL, or Oracle.  It is fast, rigorously
-tested, and flexible, making it suitable for prototyping and
-production deployment for some applications.
+The ``sqlite3`` module implements a `Python DB-API 2.0`_ compliant
+interface to SQLite, an in-process relational database.  SQLite is
+designed to be embedded in applications, instead of using a separate
+database server program such as MySQL, PostgreSQL, or Oracle.  It is
+fast, rigorously tested, and flexible, making it suitable for
+prototyping and production deployment for some applications.
+
+.. _Python DB-API 2.0: https://www.python.org/dev/peps/pep-0249/
 
 Creating a Database
 ===================
@@ -112,14 +114,15 @@ command line program can be used to examine the contents of the
 database.
 
 .. {{{cog
-.. run_script(cog.inFile, 'rm -f todo.db', interpreter='')
-.. cog.out(run_script(cog.inFile, 'sqlite3_create_schema.py'))
+.. cog.out(run_script(cog.inFile, 'rm -f todo.db', interpreter='', trailing_newlines=False))
+.. cog.out(run_script(cog.inFile, 'sqlite3_create_schema.py', include_prefix=False))
 .. cog.out(run_script(cog.inFile, "sqlite3 todo.db 'select * from task'", 
 ..         interpreter=None, include_prefix=False))
 .. }}}
 
 .. code-block:: none
 
+	$ rm -f todo.db
 	$ python3 sqlite3_create_schema.py
 	
 	Creating schema
