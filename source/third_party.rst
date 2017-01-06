@@ -11,6 +11,15 @@ them to supplement or even replace the standard library.
 Text
 ====
 
+The :mod:`string` module includes a very basic template tool. Many web
+frameworks include more powerful template tools, but Jinja2_ and Mako_
+are popular standalone alternatives. Both support looping and
+conditional control structures as well as other features for combining
+data with a template to produce text output.
+
+.. _Jinja2: http://jinja.pocoo.org
+.. _Mako: http://docs.makotemplates.org/en/latest/
+
 The :mod:`re` module includes functions for searching and parsing text
 using formally described patterns called regular expressions. It is
 not the only way to parse text, though.
