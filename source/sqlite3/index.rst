@@ -7,12 +7,14 @@
 
 :Purpose: Implements an embedded relational database with SQL support.
 
-The ``sqlite3`` module provides a DB-API 2.0 compliant interface to
-SQLite, an in-process relational database.  SQLite is designed to be
-embedded in applications, instead of using a separate database server
-program such as MySQL, PostgreSQL, or Oracle.  It is fast, rigorously
-tested, and flexible, making it suitable for prototyping and
-production deployment for some applications.
+The ``sqlite3`` module implements a `Python DB-API 2.0`_ compliant
+interface to SQLite, an in-process relational database.  SQLite is
+designed to be embedded in applications, instead of using a separate
+database server program such as MySQL, PostgreSQL, or Oracle.  It is
+fast, rigorously tested, and flexible, making it suitable for
+prototyping and production deployment for some applications.
+
+.. _Python DB-API 2.0: https://www.python.org/dev/peps/pep-0249/
 
 Creating a Database
 ===================
