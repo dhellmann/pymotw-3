@@ -116,14 +116,15 @@ command line program can be used to examine the contents of the
 database.
 
 .. {{{cog
-.. run_script(cog.inFile, 'rm -f todo.db', interpreter='')
-.. cog.out(run_script(cog.inFile, 'sqlite3_create_schema.py'))
+.. cog.out(run_script(cog.inFile, 'rm -f todo.db', interpreter='', trailing_newlines=False))
+.. cog.out(run_script(cog.inFile, 'sqlite3_create_schema.py', include_prefix=False))
 .. cog.out(run_script(cog.inFile, "sqlite3 todo.db 'select * from task'", 
 ..         interpreter=None, include_prefix=False))
 .. }}}
 
 .. code-block:: none
 
+	$ rm -f todo.db
 	$ python3 sqlite3_create_schema.py
 	
 	Creating schema
