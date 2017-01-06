@@ -29,7 +29,7 @@ class Graph:
         print('{}.__del__()'.format(self))
 
 
-# Construct two graph cycles
+# Construct a graph cycle
 one = Graph('one')
 two = Graph('two')
 three = Graph('three')
@@ -37,10 +37,8 @@ one.set_next(two)
 two.set_next(three)
 three.set_next(one)
 
-# Remove references to the graph nodes in this module's namespace
-one = two = three = None
-
-# Collecting now keeps the objects as uncollectable
+# Collecting now keeps the objects as uncollectable,
+# but not garbage.
 print()
 print('Collecting...')
 n = gc.collect()
@@ -48,6 +46,8 @@ print('Unreachable objects:', n)
 print('Remaining Garbage:', end=' ')
 pprint.pprint(gc.garbage)
 
+# Ignore references from local variables in this module, global
+# variables, and from the garbage collector's bookkeeping.
 REFERRERS_TO_IGNORE = [locals(), globals(), gc.garbage]
 
 
@@ -65,12 +65,12 @@ def find_referring_graphs(obj):
                 yield parent
 
 
-# Look for objects that refer to the objects that remain in
-# gc.garbage.
+# Look for objects that refer to the objects in the graph.
 print()
 print('Clearing referrers:')
-for obj in gc.garbage:
+for obj in [one, two, three]:
     for ref in find_referring_graphs(obj):
+        print('Found referrer:', ref)
         ref.set_next(None)
         del ref  # remove reference so the node can be deleted
     del obj  # remove reference so the node can be deleted
