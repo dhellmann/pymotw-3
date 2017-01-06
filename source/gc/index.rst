@@ -397,65 +397,12 @@ interpreter exits.
 
 .. {{{end}}}
 
-Enabling ``DEBUG_COLLECTABLE`` and ``DEBUG_UNCOLLECTABLE``
-causes the collector to report on whether each object it examines can
-or cannot be collected.
-
-.. literalinclude:: gc_debug_collectable_objects.py
-   :caption:
-   :start-after: #end_pymotw_header
-
-The two classes ``Graph`` and ``CleanupGraph`` are
-constructed so it is possible to create structures that can be
-collected automatically and structures where cycles need to be
-explicitly broken by the user.
-
-The output shows that the ``Graph`` instances :obj:`one` and
-:obj:`two` create a cycle, but can still be collected because they do
-not have a finalizer and their only incoming references are from other
-objects that can be collected.  Although ``CleanupGraph`` has a
-finalizer, :obj:`three` is reclaimed as soon as its reference count
-goes to zero. In contrast, :obj:`four` and :obj:`five` create a cycle
-and cannot be freed.
-
-.. {{{cog
-.. cog.out(run_script(cog.inFile, '-u gc_debug_collectable_objects.py'))
-.. }}}
-
-.. code-block:: none
-
-	$ python3 -u gc_debug_collectable_objects.py
-	
-	Creating Graph 0x101be71d0 (one)
-	Creating Graph 0x101be7240 (two)
-	Linking nodes Graph(one).next = Graph(two)
-	Linking nodes Graph(two).next = Graph(one)
-	Creating CleanupGraph 0x101be7320 (three)
-	Creating CleanupGraph 0x101be7358 (four)
-	Creating CleanupGraph 0x101be7390 (five)
-	Linking nodes CleanupGraph(four).next = CleanupGraph(five)
-	Linking nodes CleanupGraph(five).next = CleanupGraph(four)
-	CleanupGraph(three).__del__()
-	
-	Collecting
-	gc: collectable <Graph 0x101be71d0>
-	gc: collectable <Graph 0x101be7240>
-	gc: collectable <dict 0x101894108>
-	gc: collectable <dict 0x101894148>
-	gc: collectable <CleanupGraph 0x101be7358>
-	gc: collectable <CleanupGraph 0x101be7390>
-	gc: collectable <dict 0x101bee548>
-	gc: collectable <dict 0x101bee488>
-	CleanupGraph(four).__del__()
-	CleanupGraph(five).__del__()
-	Done
-
-.. {{{end}}}
-
-If seeing the objects that cannot be collected is not enough
-information to understand where data is being retained, enable
-``DEBUG_SAVEALL`` to cause ``gc`` to preserve all objects it
-finds without any references in the :obj:`garbage` list.
+Enabling ``DEBUG_COLLECTABLE`` and ``DEBUG_UNCOLLECTABLE`` causes the
+collector to report on whether each object it examines can or cannot
+be collected.  If seeing the objects that cannot be collected is not
+enough information to understand where data is being retained, enable
+``DEBUG_SAVEALL`` to cause ``gc`` to preserve all objects it finds
+without any references in the :obj:`garbage` list.
 
 .. literalinclude:: gc_debug_saveall.py
    :caption:
