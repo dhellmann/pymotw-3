@@ -25,13 +25,13 @@ Comparing Bodies of Text
 The ``Differ`` class works on sequences of text lines and
 produces human-readable *deltas*, or change instructions, including
 differences within individual lines.  The default output produced by
-``Differ`` is similar to the ``diff`` command line tool
+``Differ`` is similar to the ``diff`` command-line tool
 under Unix.  It includes the original input values from both lists,
-including common values, and markup data to indicate what changes were
+including common values, and markup data to indicate which changes were
 made.
 
-* Lines prefixed with ``-`` indicate that they were in the first
-  sequence, but not the second.
+* Lines prefixed with ``-`` were in the first sequence, but not the
+  second.
 * Lines prefixed with ``+`` were in the second sequence, but not the
   first.
 * If a line has an incremental difference between versions, an extra
@@ -63,7 +63,7 @@ the first line is printed without any extra annotation.
 
 The third line of the data has been changed to include a comma in the
 modified text. Both versions of the line are printed, with the extra
-information on line five showing the column where the text was modified,
+information on line 5 showing the column where the text was modified,
 including the fact that the ``,`` character was added.
 
 .. literalinclude:: output.diff
@@ -98,7 +98,7 @@ Other Output Formats
 --------------------
 
 While the ``Differ`` class shows all of the input lines, a
-*unified diff* only includes modified lines and a bit of context. The
+*unified diff* includes only the modified lines and a bit of context. The
 ``unified_diff()`` function produces this sort of output.
 
 .. literalinclude:: difflib_unified.py
@@ -106,10 +106,10 @@ While the ``Differ`` class shows all of the input lines, a
     :start-after: #end_pymotw_header
 
 The ``lineterm`` argument is used to tell ``unified_diff()`` to skip
-appending newlines to the control lines it returns because the input
+appending newlines to the control lines that it returns because the input
 lines do not include them.  Newlines are added to all of the lines
 when they are printed.  The output should look familiar to users of
-many common version control tools.
+many popular version-control tools.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'difflib_unified.py'))
@@ -158,7 +158,7 @@ file, for example.
     :start-after: #end_pymotw_header
 
 The default for ``Differ`` is to not ignore any lines or
-characters explicitly, but to rely on the ability of
+characters explicitly, but rather to rely on the ability of
 ``SequenceMatcher`` to detect noise. The default for
 ``ndiff()`` is to ignore space and tab characters.
 
@@ -200,23 +200,24 @@ eliminating "junk" values that do not contribute to the real data.
 
 The funct ``get_opcodes()`` returns a list of instructions for
 modifying the first sequence to make it match the second. The
-instructions are encoded as five-element tuples including a string
-instruction (the "opcode") and two pairs of start and stop indexes
-into the sequences (denoted as ``i1``, ``i2``, ``j1``, and ``j2``).
+instructions are encoded as five-element tuples, including a string
+instruction (the "opcode", see :table:`difflib.get_opcodes()
+Instructions`) and two pairs of start and stop indexes into the
+sequences (denoted as ``i1``, ``i2``, ``j1``, and ``j2``).
 
-.. list-table:: difflib.get_opcodes() instructions
+.. list-table:: difflib.get_opcodes() Instructions
    :header-rows: 1
 
    * - Opcode
      - Definition
    * - ``'replace'``
-     - Replace ``a[i1:i2]`` with ``b[j1:j2]``.
+     - Replace ``a[i1:i2]`` with ``b[j1:j2]``
    * - ``'delete'``
-     - Remove ``a[i1:i2]`` entirely.
+     - Remove ``a[i1:i2]`` entirely
    * - ``'insert'``
-     - Insert ``b[j1:j2]`` at ``a[i1:i1]``.
+     - Insert ``b[j1:j2]`` at ``a[i1:i1]``
    * - ``'equal'``
-     - The subsequences are already equal.
+     - The subsequences are already equal
 
 .. literalinclude:: difflib_seq.py
     :caption:
@@ -270,7 +271,7 @@ built-in types, as long as they are hashable.
 
    * :pydoc:`difflib`
 
-   * `Pattern Matching: The Gestalt Approach
+   * `"Pattern Matching: The Gestalt Approach"
      <http://www.drdobbs.com/database/pattern-matching-the-gestalt-approach/184407970>`__
      -- Discussion of a similar algorithm by John W. Ratcliff
-     and D. E. Metzener published in Dr. Dobb’s Journal in July, 1988.
+     and D. E. Metzener published in *Dr. Dobb’s Journal* in July, 1988.
