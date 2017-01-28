@@ -8,10 +8,10 @@
 :Purpose: Contains constants and classes for working with text.
 
 The ``string`` module dates from the earliest versions of
-Python. Many of the functions previously implemented in the module
+Python. Many of the functions previously implemented in this module
 have been moved to methods of ``str`` objects. The ``string``
 module retains several useful constants and classes for working with
-``str`` objects, and this discussion will concentrate on them.
+``str`` objects. This discussion will concentrate on them.
 
 Functions
 =========
@@ -23,8 +23,8 @@ string.
     :caption:
     :start-after: #end_pymotw_header
 
-The results are the same as calling ``split()``, capitalizing the
-words in the resulting list, then calling ``join()`` to combine the
+The results are the same as those obtained by calling ``split()``, capitalizing the
+words in the resulting list, and then calling ``join()`` to combine the
 results.
 
 .. {{{cog
@@ -46,7 +46,7 @@ Templates
 String templates were added as part of :pep:`292` and
 are intended as an alternative to the built-in interpolation
 syntax. With ``string.Template`` interpolation, variables are
-identified by prefixing the name with ``$`` (e.g., ``$var``) or, if
+identified by prefixing the name with ``$`` (e.g., ``$var``). Alternatively, if
 necessary to set them off from surrounding text, they can also be
 wrapped with curly braces (e.g., ``${var}``).
 
@@ -93,10 +93,10 @@ formatting is that the type of the arguments is not taken into
 account. The values are converted to strings, and the strings are
 inserted into the result. No formatting options are available. For
 example, there is no way to control the number of digits used to
-represent a floating point value.
+represent a floating-point value.
 
-A benefit, though, is that by using the ``safe_substitute()``
-method, it is possible to avoid exceptions if not all of the values
+A benefit, though, is that use of the ``safe_substitute()``
+method makes it possible to avoid exceptions if not all of the values
 needed by the template are provided as arguments.
 
 .. literalinclude:: string_template_missing.py
@@ -156,7 +156,7 @@ character.
 
 .. {{{end}}}
 
-For more complex changes, override the :attr:`pattern` attribute and
+For even more complex changes, it is possible to override the :attr:`pattern` attribute and
 define an entirely new regular expression. The pattern provided must
 contain four named groups for capturing the escaped delimiter, the
 named variable, a braced version of the variable name, and invalid
@@ -189,7 +189,7 @@ using ``{{var}}`` as the variable syntax.
 
 Both the :attr:`named` and :attr:`braced` patterns must be provided
 separately, even though they are the same.  Running the sample program
-generates:
+generates the following output:
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'string_template_newsyntax.py'))
@@ -211,7 +211,7 @@ Formatter
 =========
 
 The ``Formatter`` class implements the same layout specification
-language as the ``format()`` method of ``str``. Features
+language as the ``format()`` method of ``str``. Its features
 include type coersion, alignment, attribute and field references,
 named and positional template arguments, and type-specific formatting
 options. Most of the time the ``format()`` method is a more
