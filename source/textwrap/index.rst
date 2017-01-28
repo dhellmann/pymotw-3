@@ -61,7 +61,7 @@ The previous example has embedded tabs and extra spaces mixed into the
 middle of the output, so it is not formatted very cleanly. Removing
 the common whitespace prefix from all of the lines in the sample text
 with ``dedent()`` produces better results and allows the use of
-docstrings or embedded multi-line strings straight from Python code
+docstrings or embedded multiline strings straight from Python code
 while removing the formatting of the code itself. The sample string
 has an artificial indent level introduced for illustrating this
 feature.
@@ -90,7 +90,7 @@ The results are starting to look better.
 
 .. {{{end}}}
 
-Since "dedent" is the opposite of "indent", the result is a block of
+Since "dedent" is the opposite of "indent," the result is a block of
 text with the common initial whitespace from each line removed. If one
 line is already indented more than another, some of the whitespace
 will not be removed.
@@ -226,8 +226,9 @@ number of characters.
 Hanging Indents
 ===============
 
-Just as the width of the output can be set, the indent of the first
-line can be controlled independently of subsequent lines.
+In the same way that it is possible to set the width of the output,
+the indent of the first line can be controlled independently of
+subsequent lines.
 
 .. literalinclude:: textwrap_hanging_indent.py
     :caption:
@@ -254,14 +255,14 @@ first line is indented less than the other lines.
 
 The indent values can include nonwhitespace characters, too. The
 hanging indent can be prefixed with ``*`` to produce bullet points,
-etc.
+for example.
 
 Truncating Long Text
 ====================
 
 To truncate text to create a summary or preview, use
-``shorten()``. All existing whitespace such as tabs, newlines, and
-series of multiple spaces will be standardized to a single space. Then
+``shorten()``. All existing whitespace, such as tabs, newlines, and
+series of multiple spaces, will be standardized to a single space. Then
 the text will be truncated to a length less than or equal to what is
 requested, between word boundaries so that no partial words are
 included.
