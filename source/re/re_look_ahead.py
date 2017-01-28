@@ -21,7 +21,7 @@ address = re.compile(
 
     # LOOKAHEAD
     # Email addresses are wrapped in angle brackets, but only
-    # if they are both present or neither is.
+    # if both are present or neither is.
     (?= (<.*>$)       # remainder wrapped in angle brackets
         |
         ([^<].*[^>]$) # remainder *not* wrapped in angle brackets

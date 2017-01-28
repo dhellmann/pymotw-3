@@ -31,7 +31,7 @@ address = re.compile(
       (?=([^<].*[^>]$))
      )
 
-    # Only look for a bracket if the look-ahead assertion
+    # Look for a bracket only if the look-ahead assertion
     # found both of them.
     (?(brackets)<|\s*)
 
@@ -43,7 +43,7 @@ address = re.compile(
       (com|org|edu)    # limit the allowed top-level domains
      )
 
-    # Only look for a bracket if the look-ahead assertion
+    # Look for a bracket only if the look-ahead assertion
     # found both of them.
     (?(brackets)>|\s*)
 

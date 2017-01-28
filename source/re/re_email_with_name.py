@@ -18,7 +18,7 @@ address = re.compile(
        ([\w.,]+\s+)*[\w.,]+)
        \s*
        # Email addresses are wrapped in angle
-       # brackets: < > but only if a name is
+       # brackets < >, but only if a name is
        # found, so keep the start bracket in this
        # group.
        <

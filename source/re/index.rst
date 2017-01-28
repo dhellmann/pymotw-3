@@ -11,9 +11,9 @@
 formal syntax.  The patterns are interpreted as a set of instructions,
 which are then executed with a string as input to produce a matching
 subset or modified version of the original.  The term "regular
-expressions" is frequently shortened to as "regex" or "regexp" in
+expressions" is frequently shortened to "regex" or "regexp" in
 conversation.  Expressions can include literal text matching,
-repetition, pattern-composition, branching, and other sophisticated
+repetition, pattern composition, branching, and other sophisticated
 rules.  A large number of parsing problems are easier to solve with a
 regular expression than by creating a special-purpose lexer and
 parser.
@@ -22,12 +22,12 @@ Regular expressions are typically used in applications that involve a
 lot of text processing.  For example, they are commonly used as search
 patterns in text editing programs used by developers, including vi,
 emacs, and modern IDEs.  They are also an integral part of Unix
-command line utilities such as sed, grep, and awk.  Many programming
+command-line utilities such as sed, grep, and awk.  Many programming
 languages include support for regular expressions in the language
 syntax (Perl, Ruby, Awk, and Tcl).  Other languages, such as C, C++,
 and Python, support regular expressions through extension libraries.
 
-There are multiple open source implementations of regular expressions,
+Multiple open source implementations of regular expressions exist,
 each sharing a common core syntax but with different extensions or
 modifications to their advanced features.  The syntax used in Python's
 ``re`` module is based on the syntax used for regular expressions
@@ -79,8 +79,8 @@ string showing where the text matched by the pattern occurs.
 Compiling Expressions
 =====================
 
-``re`` includes module-level functions for working with regular
-expressions as text strings, but it is more efficient to *compile* the
+Although ``re`` includes module-level functions for working with regular
+expressions as text strings, it is more efficient to *compile* the
 expressions a program uses frequently.  The ``compile()`` function
 converts an expression string into a ``RegexObject``.
 
@@ -90,10 +90,10 @@ converts an expression string into a ``RegexObject``.
 
 The module-level functions maintain a cache of compiled expressions,
 but the size of the cache is limited and using compiled expressions
-directly avoids the cache lookup overhead.  Another advantage of using
-compiled expressions is that by pre-compiling all of the expressions
+directly avoids the overhead associated with cache lookup.  Another advantage of using
+compiled expressions is that by precompiling all of the expressions
 when the module is loaded, the compilation work is shifted to
-application start time, instead of a point where the program may be
+application start time, instead of occurring at a point where the program may be
 responding to a user action.
 
 .. {{{cog
@@ -123,7 +123,7 @@ pattern without overlapping.
    :caption:
    :start-after: #end_pymotw_header
 
-There are two instances of ``ab`` in the input string.
+This example input string includes two instances of ``ab``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 're_findall.py'))
@@ -138,7 +138,7 @@ There are two instances of ``ab`` in the input string.
 
 .. {{{end}}}
 
-``finditer()`` returns an iterator that produces ``Match``
+The ``finditer()`` function returns an iterator that produces ``Match``
 instances instead of the strings returned by ``findall()``.
 
 .. literalinclude:: re_finditer.py
@@ -146,7 +146,7 @@ instances instead of the strings returned by ``findall()``.
    :start-after: #end_pymotw_header
 
 This example finds the same two occurrences of ``ab``, and the
-``Match`` instance shows where they are in the original input.
+``Match`` instance shows where they are found in the original input.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 're_finditer.py'))
@@ -167,7 +167,7 @@ Pattern Syntax
 Regular expressions support more powerful patterns than simple literal
 text strings.  Patterns can repeat, can be anchored to different
 logical locations within the input, and can be expressed in compact
-forms that do not require every literal character be present in the
+forms that do not require every literal character to be present in the
 pattern.  All of these features are used by combining literal text
 values with *meta-characters* that are part of the regular expression
 pattern syntax implemented by ``re``.
@@ -204,14 +204,14 @@ Repetition
 There are five ways to express repetition in a pattern.  A pattern
 followed by the meta-character ``*`` is repeated zero or more times
 (allowing a pattern to repeat zero times means it does not need to
-appear at all to match).  Replace the ``*`` with ``+`` and the pattern
+appear at all to match).  If the ``*`` is replaced with ``+``, the pattern
 must appear at least once.  Using ``?`` means the pattern appears zero
 or one time.  For a specific number of occurrences, use ``{m}`` after
 the pattern, where ``m`` is the number of times the pattern should
-repeat.  And finally, to allow a variable but limited number of
-repetitions, use ``{m,n}`` where ``m`` is the minimum number of
+repeat.  Finally, to allow a variable but limited number of
+repetitions, use ``{m,n}``, where ``m`` is the minimum number of
 repetitions and ``n`` is the maximum.  Leaving out ``n`` (``{m,}``)
-means the value appears at least ``m`` times, with no maximum.
+means the value must appear at least ``m`` times, with no maximum.
 
 .. literalinclude:: re_repetition.py
    :caption:
@@ -263,7 +263,7 @@ There are more matches for ``ab*`` and ``ab?`` than ``ab+``.
 
 .. {{{end}}}
 
-Normally, when processing a repetition instruction, ``re`` will
+When processing a repetition instruction, ``re`` will usually
 consume as much of the input as possible while matching the pattern.
 This so-called *greedy* behavior may result in fewer individual
 matches, or the matches may include more of the input text than
@@ -373,8 +373,8 @@ character is either ``a`` or ``b``.
 .. {{{end}}}
 
 A character set can also be used to exclude specific characters.  The
-carat (``^``) means to look for characters not in the set
-following.
+carat (``^``) means to look for characters that are not in the set
+following the carat.
 
 .. literalinclude:: re_charset_exclude.py
    :caption:
@@ -407,14 +407,15 @@ characters ``-``, ``.``, or a space.
 As character sets grow larger, typing every character that should (or
 should not) match becomes tedious.  A more compact format using
 *character ranges* can be used to define a character set to include
-all of the contiguous characters between a start and stop point.
+all of the contiguous characters between the specified start and stop
+points.
 
 .. literalinclude:: re_charset_ranges.py
    :caption:
    :start-after: #end_pymotw_header
 
-Here the range ``a-z`` includes the lower case ASCII letters, and the
-range ``A-Z`` includes the upper case ASCII letters.  The ranges can
+Here the range ``a-z`` includes the lowercase ASCII letters, and the
+range ``A-Z`` includes the uppercase ASCII letters.  The ranges can
 also be combined into a single character set.
 
 .. {{{cog
@@ -440,7 +441,7 @@ also be combined into a single character set.
 	  'This is some text -- with punctuation.'
 	  'T'
 	
-	'[a-zA-Z]+' (sequences of lower- or uppercase letters)
+	'[a-zA-Z]+' (sequences of letters of either case)
 	
 	  'This is some text -- with punctuation.'
 	  'This'
@@ -458,7 +459,7 @@ also be combined into a single character set.
 
 .. {{{end}}}
 
-As a special case of a character set the meta-character dot, or period
+As a special case of a character set, the meta-character dot, or period
 (``.``), indicates that the pattern should match any single character
 in that position.
 
@@ -466,7 +467,7 @@ in that position.
    :caption:
    :start-after: #end_pymotw_header
 
-Combining dot with repetition can result in very long matches, unless
+Combining the dot with repetition can result in very long matches, unless
 the non-greedy form is used.
 
 .. {{{cog
@@ -510,7 +511,7 @@ Escape Codes
 ------------
 
 An even more compact representation uses escape codes for several
-pre-defined character sets.  The escape codes recognized by ``re``
+predefined character sets.  The escape codes recognized by ``re``
 are listed in :table:`Regular Expression Escape Codes`.
 
 .. table:: Regular Expression Escape Codes
@@ -530,8 +531,8 @@ are listed in :table:`Regular Expression Escape Codes`.
 
   Escapes are indicated by prefixing the character with a backslash
   (``\``). Unfortunately, a backslash must itself be escaped in normal
-  Python strings, and that results in expressions that are difficult
-  to read.  Using *raw* strings, created by prefixing the literal
+  Python strings, and that results in difficult-to-read expressions.
+  Using *raw* strings, which are created by prefixing the literal
   value with ``r``, eliminates this problem and maintains readability.
 
 .. literalinclude:: re_escape_codes.py
@@ -554,7 +555,7 @@ sequences of like characters in the input string.
 	  'A prime #1 example!'
 	  .........'1'
 	
-	'\D+' (sequence of nondigits)
+	'\D+' (sequence of non-digits)
 	
 	  'A prime #1 example!'
 	  'A prime #'
@@ -567,7 +568,7 @@ sequences of like characters in the input string.
 	  .......' '
 	  ..........' '
 	
-	'\S+' (sequence of nonwhitespace)
+	'\S+' (sequence of non-whitespace)
 	
 	  'A prime #1 example!'
 	  'A'
@@ -583,7 +584,7 @@ sequences of like characters in the input string.
 	  .........'1'
 	  ...........'example'
 	
-	'\W+' (nonalphanumeric)
+	'\W+' (non-alphanumeric)
 	
 	  'A prime #1 example!'
 	  .' '
@@ -602,7 +603,7 @@ syntax, escape the characters in the search pattern.
    :start-after: #end_pymotw_header
 
 The pattern in this example escapes the backslash and plus characters,
-since as meta-characters both have special meaning in a regular
+since both are meta-characters and have special meaning in a regular
 expression.
 
 .. {{{cog
@@ -649,7 +650,7 @@ Expression Anchoring Codes` lists valid anchoring codes.
    :caption:
    :start-after: #end_pymotw_header
 
-The patterns in the example for matching words at the beginning and
+The patterns in the example for matching words at the beginning and the
 end of the string are different because the word at the end of the
 string is followed by punctuation to terminate the sentence.  The
 pattern ``\w+$`` would not match, since ``.`` is not considered an
@@ -895,7 +896,7 @@ groups within the expression that matches the string.
 
 .. {{{end}}}
 
-Ask for the match of a single group with ``group()``.  This is
+To ask for the match of a single group, use the ``group()`` method.  This is
 useful when grouping is being used to find parts of the string, but
 some of the parts matched by groups are not needed in the results.
 
@@ -904,7 +905,7 @@ some of the parts matched by groups are not needed in the results.
    :start-after: #end_pymotw_header
 
 Group ``0`` represents the string matched by the entire expression,
-and sub-groups are numbered starting with ``1`` in the order their
+and subgroups are numbered starting with ``1`` in the order that their
 left parenthesis appears in the expression.
 
 .. {{{cog
@@ -934,7 +935,7 @@ To set the name of a group, use the syntax ``(?P<name>pattern)``.
 
 Use ``groupdict()`` to retrieve the dictionary mapping group names
 to substrings from the match.  Named patterns are included in the
-ordered sequence returned by ``groups()``, as well.
+ordered sequence returned by ``groups()`` as well.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 're_groups_named.py'))
@@ -1003,7 +1004,7 @@ matched value.
 .. {{{end}}}
 
 Groups are also useful for specifying alternative patterns.  Use the
-pipe symbol (``|``) to indicate that one pattern or another should
+pipe symbol (``|``) to separate two patterns and indicate that either pattern should
 match.  Consider the placement of the pipe carefully, though.  The
 first expression in this example matches a sequence of ``a`` followed
 by a sequence consisting entirely of a single letter, ``a`` or ``b``.
@@ -1041,9 +1042,9 @@ the point in the sequence where the alternative group should appear.
 
 .. {{{end}}}
 
-Defining a group containing a sub-pattern is also useful in cases
-where the string matching the sub-pattern is not part of what should
-be extracted from the full text.  These groups are called
+Defining a group containing a subpattern is also useful in cases
+where the string matching the subpattern is not part of what should
+be extracted from the full text.  These kinds of groups are called
 *non-capturing*.  Non-capturing groups can be used to describe
 repetition patterns or alternatives, without isolating the matching
 portion of the string in the value returned.  To create a
@@ -1053,7 +1054,7 @@ non-capturing group, use the syntax ``(?:pattern)``.
    :caption:
    :start-after: #end_pymotw_header
 
-Compare the groups returned for the capturing and non-capturing forms
+In the following example, compare the groups returned for the capturing and non-capturing forms
 of a pattern that matches the same results.
 
 .. {{{cog
@@ -1083,25 +1084,24 @@ of a pattern that matches the same results.
 Search Options
 ==============
 
-The way the matching engine processes an expression can be changed
-using option flags.  The flags can be combined using a bit-wise or
-operation, then passed to ``compile()``, ``search()``,
-``match()``, and other functions that accept a pattern for
-searching.
+Option flags are used to change the way the matching engine processes
+an expression.  The flags can be combined using a bitwise OR
+operation, then passed to ``compile()``, ``search()``, ``match()``,
+and other functions that accept a pattern for searching.
 
 Case-insensitive Matching
 -------------------------
 
 ``IGNORECASE`` causes literal characters and character ranges in
-the pattern to match both upper and lower case characters.
+the pattern to match both uppercase and lowercase characters.
 
 .. literalinclude:: re_flags_ignorecase.py
    :caption:
    :start-after: #end_pymotw_header
 
-Since the pattern includes the literal ``T``, without setting
-``IGNORECASE`` the only match is the word ``This``.  When case is
-ignored, ``text`` also matches.
+Since the pattern includes the literal ``T``, if ``IGNORECASE`` is not
+set, the only match is the word ``This``.  When case is ignored,
+``text`` also matches.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 're_flags_ignorecase.py'))
@@ -1126,7 +1126,7 @@ ignored, ``text`` also matches.
 Input with Multiple Lines
 -------------------------
 
-There are two flags that effect how searching in multi-line input
+Two flags affect how searching in multi-line input
 works: ``MULTILINE`` and ``DOTALL``.  The ``MULTILINE``
 flag controls how the pattern matching code processes anchoring
 instructions for text containing newline characters.  When multiline
@@ -1166,7 +1166,7 @@ there is no newline.
 
 ``DOTALL`` is the other flag related to multiline text.  Normally,
 the dot character (``.``) matches everything in the input text except a
-newline character.  The flag allows dot to match newlines as well.
+newline character.  The flag allows the dot to match newlines as well.
 
 .. literalinclude:: re_flags_dotall.py
    :caption:
@@ -1199,10 +1199,10 @@ Unicode
 -------
 
 Under Python 3, ``str`` objects use the full Unicode character
-set, regular expression processing on a ``str`` assumes that the
+set, and regular expression processing on a ``str`` assumes that the
 pattern and input text are both Unicode.  The escape codes described
 earlier are defined in terms of Unicode by default.  Those assumptions
-mean that the pattern ``\w+`` will match the word "French" and
+mean that the pattern ``\w+`` will match both the words "French" and
 "Français". To restrict escape codes to the ASCII character set, as
 was the default in Python 2, use the ``ASCII`` flag when
 compiling the pattern or when calling the module-level functions
@@ -1215,8 +1215,7 @@ compiling the pattern or when calling the module-level functions
 The other escape sequences (``\W``, ``\b``, ``\B``, ``\d``, ``\D``,
 ``\s``, and ``\S``) are also processed differently for ASCII text.
 Instead of consulting the Unicode database to find the properties of
-each character, ``re`` assumes the members of the character set
-identified by the escape sequence based on their ASCII definition.
+each character, ``re`` uses the ASCII definition of the character set.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 're_flags_ascii.py'))
@@ -1246,8 +1245,8 @@ comments and extra whitespace to be embedded in the pattern.
 
 A pattern to validate email addresses will illustrate how verbose mode
 makes working with regular expressions easier.  The first version
-recognizes addresses that end in one of three top-level domains,
-``.com``, ``.org``, and ``.edu``.
+recognizes addresses that end in one of three top-level domains:
+``.com``, ``.org``, or ``.edu``.
 
 .. literalinclude:: re_email_compact.py
    :caption:
@@ -1299,7 +1298,7 @@ the pattern so that it can be expanded to match more inputs.
 
 This expanded version parses inputs that include a person's name and
 email address, as might appear in an email header.  The name comes
-first and stands on its own, and the email address follows surrounded
+first and stands on its own, and the email address follows, surrounded
 by angle brackets (``<`` and ``>``).
 
 .. literalinclude:: re_email_with_name.py
@@ -1366,7 +1365,7 @@ expression.
    :start-after: #end_pymotw_header
 
 Because the options control the way the entire expression is evaluated
-or parsed, they should always come at the beginning of the expression.
+or parsed, they should always appear at the beginning of the expression.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 're_flags_embedded.py'))
@@ -1405,14 +1404,14 @@ Embedded flags can be combined by placing them within the same group.
 For example, ``(?im)`` turns on case-insensitive matching for
 multiline strings.
 
-Looking Ahead, or Behind
-========================
+Looking Ahead or Behind
+=======================
 
-There are many cases where it is useful to match a part of a pattern
+In many cases, it is useful to match a part of a pattern
 only if some other part will also match.  For example, in the email
-parsing expression the angle brackets were each marked as optional.
-Really, though, the brackets should be paired, and the expression
-should only match if both are present, or neither are.  This modified
+parsing expression, the angle brackets were marked as optional.
+Realistically, the brackets should be paired, and the expression
+should match only if both are present, or neither is.  This modified
 version of the expression uses a *positive look ahead* assertion to
 match the pair.  The look ahead assertion syntax is ``(?=pattern)``.
 
@@ -1424,12 +1423,12 @@ There are several important changes in this version of the expression.
 First, the name portion is no longer optional.  That means stand-alone
 addresses do not match, but it also prevents improperly formatted
 name/address combinations from matching.  The positive look ahead rule
-after the "name" group asserts that the remainder of the string is
-either wrapped with a pair of angle brackets, or there is not a
-mismatched bracket; the brackets are either both present or neither
-is.  The look ahead is expressed as a group, but the match for a look
-ahead group does not consume any of the input text, so the rest of the
-pattern picks up from the same spot after the look ahead matches.
+after the "name" group asserts that either the remainder of the string
+is wrapped with a pair of angle brackets, or there is not a mismatched
+bracket; either both of or neither of the brackets is present.  The look
+ahead is expressed as a group, but the match for a look ahead group
+does not consume any of the input text, so the rest of the pattern
+picks up from the same spot after the look ahead matches.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 're_look_ahead.py'))
@@ -1455,7 +1454,7 @@ pattern picks up from the same spot after the look ahead matches.
 A *negative look ahead* assertion (``(?!pattern)``) says that the
 pattern does not match the text following the current point.  For
 example, the email recognition pattern could be modified to ignore
-``noreply`` mailing addresses commonly used by automated systems.
+the ``noreply`` mailing addresses commonly used by automated systems.
 
 .. literalinclude:: re_negative_look_ahead.py
    :caption:
@@ -1480,7 +1479,7 @@ since the look ahead assertion fails.
 .. {{{end}}}
 
 Instead of looking ahead for ``noreply`` in the username portion of
-the email address, the pattern can also be written using a *negative
+the email address, the pattern can alternatively be written using a *negative
 look behind* assertion after the username is matched using the syntax
 ``(?<!pattern)``.
 
@@ -1488,9 +1487,9 @@ look behind* assertion after the username is matched using the syntax
    :caption:
    :start-after: #end_pymotw_header
 
-Looking backwards works a little differently than looking ahead, in
-that the expression must use a fixed length pattern.  Repetitions are
-allowed, as long as there is a fixed number (no wildcards or ranges).
+Looking backward works a little differently than looking ahead, in
+that the expression must use a fixed-length pattern.  Repetitions are
+allowed, as long as there is a fixed number of them (no wildcards or ranges).
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 're_negative_look_behind.py'))
@@ -1508,7 +1507,7 @@ allowed, as long as there is a fixed number (no wildcards or ranges).
 .. {{{end}}}
 
 A *positive look behind* assertion can be used to find text following
-a pattern using the syntax ``(?<=pattern)``.  For example, this
+a pattern using the syntax ``(?<=pattern)``.  In the following example, the
 expression finds Twitter handles.
 
 .. literalinclude:: re_look_behind.py
@@ -1539,9 +1538,9 @@ Self-referencing Expressions
 
 Matched values can be used in later parts of an expression.  For
 example, the email example can be updated to match only addresses
-composed of the first and last name of the person by including
+composed of the first and last names of the person by including
 back-references to those groups.  The easiest way to achieve this is
-by referring to the previously matched group by id number, using
+by referring to the previously matched group by ID number, using
 ``\num``.
 
 .. literalinclude:: re_refer_to_group.py
@@ -1549,14 +1548,14 @@ by referring to the previously matched group by id number, using
    :start-after: #end_pymotw_header
 
 Although the syntax is simple, creating back-references by numerical
-id has a couple of disadvantages.  From a practical standpoint, as the
+ID has a few disadvantages.  From a practical standpoint, as the
 expression changes, the groups must be counted again and every
-reference may need to be updated.  The other disadvantage is that only
+reference may need to be updated.  Another disadvantage is that only
 99 references can be made using the standard back-reference syntax
-``\n``, because if the id number is three digits long it will be
+``\n``, because if the ID number is three digits long, it will be
 interpreted as an octal character value instead of a group
 reference.  Of course, if there are more than 99 groups in an
-expression, there will be more serious maintenance challenges than not
+expression, there will be more serious maintenance challenges than simply not
 being able to refer to all of them.
 
 .. {{{cog
@@ -1616,13 +1615,13 @@ are not.
 .. {{{end}}}
 
 The other mechanism for using back-references in expressions chooses a
-different pattern based on whether or not a previous group matched.
+different pattern based on whether a previous group matched.
 The email pattern can be corrected so that the angle brackets are
-required if a name is present, and not if the email address is by
-itself.  The syntax for testing to see if a group has matched is
+required if a name is present, and not required if the email address is by
+itself.  The syntax for testing whether if a group has matched is
 ``(?(id)yes-expression|no-expression)``, where ``id`` is the group
 name or number, ``yes-expression`` is the pattern to use if the group
-has a value and ``no-expression`` is the pattern to use otherwise.
+has a value, and ``no-expression`` is the pattern to use otherwise.
 
 .. literalinclude:: re_id.py
    :caption:
@@ -1631,10 +1630,10 @@ has a value and ``no-expression`` is the pattern to use otherwise.
 This version of the email address parser uses two tests.  If the
 ``name`` group matches, then the look ahead assertion requires both
 angle brackets and sets up the ``brackets`` group.  If ``name`` is not
-matched, the assertion requires the rest of the text not have angle
+matched, the assertion requires the rest of the text to not have angle
 brackets around it.  Later, if the ``brackets`` group is set, the
 actual pattern matching code consumes the brackets in the input using
-literal patterns, otherwise it consumes any blank space.
+literal patterns; otherwise, it consumes any blank space.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 're_id.py'))
@@ -1663,7 +1662,7 @@ literal patterns, otherwise it consumes any blank space.
 Modifying Strings with Patterns
 ===============================
 
-In addition to searching through text, ``re`` also supports
+In addition to searching through text, ``re`` supports
 modifying text using regular expressions as the search mechanism, and
 the replacements can reference groups matched in the pattern as part of
 the substitution text.  Use ``sub()`` to replace all occurrences of a
@@ -1760,7 +1759,7 @@ Splitting with Patterns
 =======================
 
 ``str.split()`` is one of the most frequently used methods for
-breaking apart strings to parse them.  It only supports using literal
+breaking apart strings to parse them.  It supports only the use of literal
 values as separators, though, and sometimes a regular expression is
 necessary if the input is not consistently formatted.  For example,
 many plain text markup languages define paragraph separators as two or
