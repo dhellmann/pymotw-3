@@ -9,10 +9,10 @@
     The heapq implements a min-heap sort algorithm suitable for use with
     Python's lists.
 
-A *heap* is a tree-like data structure where the child nodes have a
+A *heap* is a tree-like data structure in which the child nodes have a
 sort-order relationship with the parents. *Binary heaps* can be
 represented using a list or array organized so that the children of
-element N are at positions 2*N+1 and 2*N+2 (for zero-based
+element N are at positions 2 * *N* + 1 and 2 * *N* + 2 (for zero-based
 indexes). This layout makes it possible to rearrange heaps in place,
 so it is not necessary to reallocate as much memory when adding or
 removing items.
@@ -31,7 +31,7 @@ The examples in this section use the data in ``heapq_heapdata.py``.
    :caption:
    :start-after: #end_pymotw_header
 
-The heap output is printed using ``heapq_showtree.py``:
+The heap output is printed using ``heapq_showtree.py``.
 
 .. literalinclude:: heapq_showtree.py
    :caption:
@@ -40,14 +40,14 @@ The heap output is printed using ``heapq_showtree.py``:
 Creating a Heap
 ===============
 
-There are two basic ways to create a heap, ``heappush()`` and
+There are two basic ways to create a heap: ``heappush()`` and
 ``heapify()``.
 
 .. literalinclude:: heapq_heappush.py
    :caption:
    :start-after: #end_pymotw_header
 
-Using ``heappush()``, the heap sort order of the elements is
+When ``heappush()`` is used, the heap sort order of the elements is
 maintained as new items are added from a data source.
 
 .. {{{cog
@@ -102,7 +102,7 @@ If the data is already in memory, it is more efficient to use
    :start-after: #end_pymotw_header
 
 The result of building a list in heap order one item at a time is the
-same as building it unordered and then calling ``heapify()``.
+same as building an unordered list and then calling ``heapify()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'heapq_heapify.py'))
@@ -124,8 +124,8 @@ same as building it unordered and then calling ``heapify()``.
 .. {{{end}}}
 
 
-Accessing Contents of a Heap
-============================
+Accessing the Contents of a Heap
+================================
 
 Once the heap is organized correctly, use ``heappop()`` to remove the
 element with the lowest value. 
@@ -177,7 +177,7 @@ single operation, use ``heapreplace()``.
    :caption:
    :start-after: #end_pymotw_header
 
-Replacing elements in place makes it possible to maintain a fixed size
+Replacing elements in place makes it possible to maintain a fixed-size
 heap, such as a queue of jobs ordered by priority.
 
 .. {{{cog
@@ -212,18 +212,18 @@ heap, such as a queue of jobs ordered by priority.
 
 .. {{{end}}}
 
-Data Extremes From a Heap
+Data Extremes from a Heap
 =========================
 
-``heapq`` also includes two functions to examine an iterable to find
-a range of the largest or smallest values it contains. 
+``heapq`` also includes two functions to examine an iterable and find
+a range of the largest or smallest values it contains.
 
 .. literalinclude:: heapq_extremes.py
    :caption:
    :start-after: #end_pymotw_header
 
-Using ``nlargest()`` and ``nsmallest()`` are only efficient for
-relatively small values of n > 1, but can still come in handy in a few
+Using ``nlargest()`` and ``nsmallest()`` is efficient only for
+relatively small values of *n* > 1, but can still come in handy in a few
 cases.
 
 .. {{{cog
@@ -254,8 +254,8 @@ small data sets.
 
 For larger data sets, this technique can use a considerable amount of
 memory. Instead of sorting the entire combined sequence, ``merge()``
-uses a heap to generate a new sequence one item at a time, and
-determine the next item using a fixed amount of memory.
+uses a heap to generate a new sequence one item at a time, 
+determining the next item using a fixed amount of memory.
 
 .. literalinclude:: heapq_merge.py
    :caption:
@@ -287,7 +287,7 @@ number of items in those sequences.
 
    * :pydoc:`heapq`
 
-   * `WikiPedia: Heap (data structure)
+   * `Wikipedia: Heap (data structure)
      <https://en.wikipedia.org/wiki/Heap_(data_structure)>`__ -- A
      general description of heap data structures.
 
