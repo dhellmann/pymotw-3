@@ -1,5 +1,5 @@
 ===================================================================
- OrderedDict --- remember the order keys are added to a dictionary
+ OrderedDict --- Remember the Order Keys are Added to a Dictionary
 ===================================================================
 
 An ``OrderedDict`` is a dictionary subclass that remembers the
@@ -13,7 +13,7 @@ A regular ``dict`` does not track the insertion order, and
 iterating over it produces the values in order based on how the keys
 are stored in the hash table, which is in turn influenced by a random
 value to reduce collisions.  In an ``OrderedDict``, by contrast,
-the order the items are inserted is remembered and used when creating
+the order in which the items are inserted is remembered and used when creating
 an iterator.
 
 .. {{{cog
@@ -39,9 +39,9 @@ an iterator.
 Equality
 ========
 
-A regular ``dict`` looks at its contents when testing for
-equality.  An ``OrderedDict`` also considers the order the items
-were added.
+A regular ``dict`` looks at its contents when testing for equality.
+An ``OrderedDict`` also considers the order in which the items were
+added.
 
 .. literalinclude:: collections_ordereddict_equality.py
    :caption:
@@ -63,11 +63,11 @@ values in a different order, they are considered to be different.
 
 .. {{{end}}}
 
-Re-ordering
-===========
+Reordering
+==========
 
 It is possible to change the order of the keys in an
-``OrderedDict`` by moving them either to the beginning or the end
+``OrderedDict`` by moving them to either the beginning or the end
 of the sequence using ``move_to_end()``.
 
 .. literalinclude:: collections_ordereddict_move_to_end.py
@@ -75,7 +75,7 @@ of the sequence using ``move_to_end()``.
    :start-after: #end_pymotw_header
 
 The ``last`` argument tells ``move_to_end()`` whether to move the
-item to be the last item in the key sequence (when ``True``), or the
+item to be the last item in the key sequence (when ``True``) or the
 first (when ``False``).
 
 .. {{{cog

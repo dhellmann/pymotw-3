@@ -1,11 +1,11 @@
 .. _deque:
 
 ==============================
- deque --- double-ended queue
+ deque --- Double-Ended Queue
 ==============================
 
 A double-ended queue, or ``deque``, supports adding and removing
-elements from either end. The more commonly used stacks and queues are
+elements from either end of the queue. The more commonly used stacks and queues are
 degenerate forms of deques, where the inputs and outputs are
 restricted to a single end.
 
@@ -16,7 +16,7 @@ restricted to a single end.
 Since deques are a type of sequence container, they support some of
 the same operations as ``list``, such as examining the contents
 with ``__getitem__()``, determining length, and removing elements
-from the middle by matching identity.
+from the middle of the queue by matching identity.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'collections_deque.py'))
@@ -46,7 +46,7 @@ Python implementation.
 
 The ``extendleft()`` function iterates over its input and performs
 the equivalent of an ``appendleft()`` for each item. The end result
-is the ``deque`` contains the input sequence in reverse order.
+is that the ``deque`` contains the input sequence in reverse order.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'collections_deque_populating.py'))
@@ -67,14 +67,14 @@ Consuming
 =========
 
 Similarly, the elements of the ``deque`` can be consumed from
-both or either end, depending on the algorithm being applied.
+both ends or either end, depending on the algorithm being applied.
 
 .. literalinclude:: collections_deque_consuming.py
     :caption:
     :start-after: #end_pymotw_header
 
 Use ``pop()`` to remove an item from the "right" end of the
-``deque`` and ``popleft()`` to take from the "left" end.
+``deque`` and ``popleft()`` to take an item from the "left" end.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'collections_deque_consuming.py'))
@@ -120,8 +120,8 @@ until the ``deque`` is empty.
 Rotating
 ========
 
-Another useful capability of the ``deque`` is to rotate it in
-either direction, to skip over some items.
+Another useful aspect of the ``deque`` is the ability to rotate it in
+either direction, so as to skip over some items.
 
 .. literalinclude:: collections_deque_rotate.py
     :caption:
@@ -193,7 +193,7 @@ added to.
 
 .. seealso::
 
-    * `WikiPedia: Deque <https://en.wikipedia.org/wiki/Deque>`_ -- A
+    * `Wikipedia: Deque <https://en.wikipedia.org/wiki/Deque>`_ -- A
       discussion of the deque data structure.
 
     * `Deque Recipes <https://docs.python.org/3.5/library/collections.html#deque-recipes>`_

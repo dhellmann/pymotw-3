@@ -1,12 +1,12 @@
 ===========================================
- ChainMap --- search multiple dictionaries
+ ChainMap --- Search Multiple Dictionaries
 ===========================================
 
-The ``ChainMap`` class manages a sequence of dictionaries,
-searching them in order to find values associated with keys. A
-``ChainMap`` makes a good "context" container, since it can be
-treated as a stack with changes happening as the stack grows, then
-being discarded again as the stack shrinks.
+The ``ChainMap`` class manages a sequence of dictionaries, and
+searches through them in the order they are given to find values
+associated with keys. A ``ChainMap`` makes a good "context" container,
+since it can be treated as a stack for which changes happen as the stack
+grows, with these changes being discarded again as the stack shrinks.
 
 Accessing Values
 ================
@@ -51,9 +51,9 @@ Reordering
 ==========
 
 The ``ChainMap`` stores the list of mappings over which it
-searches in a list in its :attr:`maps` attribute. The list is mutable,
+searches in a list in its :attr:`maps` attribute. This list is mutable,
 so it is possible to add new mappings directly or to change the order
-of the elements to control look-up and update behavior.
+of the elements to control lookup and update behavior.
 
 .. literalinclude:: collections_chainmap_reorder.py
    :caption:
@@ -81,8 +81,8 @@ When the list of mappings is reversed, the value associated with
 Updating Values
 ===============
 
-A ``ChainMap`` does not cache the values in the child mappings,
-so if their contents are modified the results are reflected when the
+A ``ChainMap`` does not cache the values in the child mappings.
+Thus, if their contents are modified, the results are reflected when the
 ``ChainMap`` is accessed.
 
 .. literalinclude:: collections_chainmap_update_behind.py
@@ -106,7 +106,7 @@ elements works the same way.
 .. {{{end}}}
 
 It is also possible to set values through the ``ChainMap``
-directly, though only the first mapping in the chain is actually
+directly, although only the first mapping in the chain is actually
 modified.
 
 .. literalinclude:: collections_chainmap_update_directly.py
@@ -139,9 +139,9 @@ structures.
    :caption:
    :start-after: #end_pymotw_header
 
-This stacking behavior is what makes it convenient to use
-``ChainMap`` instances as template or application contexts, since
-it is easy to add or update values in one iteration, then discard the
+This stacking behavior is what makes it convenient to use ``ChainMap``
+instances as template or application contexts. Specifically, it is
+easy to add or update values in one iteration, then discard the
 changes for the next iteration.
 
 .. {{{cog
@@ -161,7 +161,7 @@ changes for the next iteration.
 
 .. {{{end}}}
 
-For situations where the new context is known or built in advance it
+For situations where the new context is known or built in advance, it
 is also possible to pass a mapping to ``new_child()``.
 
 .. literalinclude:: collections_chainmap_new_child_explicit.py

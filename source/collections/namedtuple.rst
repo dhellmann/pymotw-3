@@ -1,7 +1,7 @@
 .. _collections-namedtuple:
 
 =================================================
- namedtuple --- tuple subclass with named fields
+ namedtuple --- Tuple Subclass with Named Fields
 =================================================
 
 The standard ``tuple`` uses numerical indexes to access its
@@ -31,7 +31,7 @@ This makes ``tuples`` convenient containers for simple uses.
 
 .. {{{end}}}
 
-On the other hand, remembering which index should be used for each
+In contrast, remembering which index should be used for each
 value can lead to errors, especially if the ``tuple`` has a lot
 of fields and is constructed far from where it is used.  A
 ``namedtuple`` assigns names, as well as the numerical index, to
@@ -42,7 +42,7 @@ Defining
 
 ``namedtuple`` instances are just as memory efficient as regular
 tuples because they do not have per-instance dictionaries.  Each kind
-of ``namedtuple`` is represented by its own class, created by
+of ``namedtuple`` is represented by its own class, which is created by
 using the ``namedtuple()`` factory function.  The arguments are the
 name of the new class and a string containing the names of the
 elements.
@@ -53,7 +53,7 @@ elements.
 
 As the example illustrates, it is possible to access the fields of the
 ``namedtuple`` by name using dotted notation (``obj.attr``) as
-well as using the positional indexes of standard tuples.
+well as by using the positional indexes of standard tuples.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'collections_namedtuple_person.py'))
@@ -74,7 +74,7 @@ well as using the positional indexes of standard tuples.
 
 .. {{{end}}}
 
-Just as with a regular ``tuple``, a ``namedtuple`` is
+Just like a regular ``tuple``, a ``namedtuple`` is
 immutable. This restriction allows ``tuple`` instances to have a
 consistent hash value, which makes it possible to use them as keys in
 dictionaries and to be included in sets.
@@ -130,11 +130,11 @@ As the field names are parsed, invalid values cause
 
 .. {{{end}}}
 
-In situations where a ``namedtuple`` is being created based on
-values outside of the control of the program (such as to represent
-the rows returned by a database query, where the schema is not known
-in advance), set the ``rename`` option to ``True`` so the invalid fields
-are renamed.
+In situations where a ``namedtuple`` is created based on values
+outside the control of the program (such as to represent the rows
+returned by a database query, where the schema is not known in
+advance), the ``rename`` option should be set to ``True`` so the
+invalid fields are renamed.
 
 .. literalinclude:: collections_namedtuple_rename.py
    :caption:
@@ -162,10 +162,10 @@ Special Attributes
 
 ``namedtuple`` provides several useful attributes and methods for
 working with subclasses and instances. All of these built-in
-properties have names prefixed with underscore (``_``), which by
-convention in most Python programs indicates a private
-attribute. However, for ``namedtuple`` the prefix is intended to
-protect the name from collision with user-provided attribute names.
+properties have names prefixed with an underscore (``_``), which by
+convention in most Python programs indicates a private attribute. For
+``namedtuple``, however, the prefix is intended to protect the name
+from collision with user-provided attribute names.
 
 The names of the fields passed to ``namedtuple`` to define the
 new class are saved in the :attr:`_fields` attribute.

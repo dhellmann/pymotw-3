@@ -1,5 +1,5 @@
 ====================================
- Counter --- count hashable objects
+ Counter --- Count Hashable Objects
 ====================================
 
 A ``Counter`` is a container that keeps track of how many times
@@ -12,7 +12,7 @@ Initializing
 
 ``Counter`` supports three forms of initialization.  Its
 constructor can be called with a sequence of items, a dictionary
-containing keys and counts, or using keyword arguments mapping string
+containing keys and counts, or using keyword arguments that map string
 names to counts.
 
 .. literalinclude:: collections_counter_init.py
@@ -43,7 +43,7 @@ populated via the ``update()`` method.
    :start-after: #end_pymotw_header
 
 The count values are increased based on the new data, rather than
-replaced.  In this example, the count for ``a`` goes from ``3`` to
+replaced.  In the preceding example, the count for ``a`` goes from ``3`` to
 ``4``.
 
 .. {{{cog
@@ -148,7 +148,7 @@ Arithmetic
 ``Counter`` instances support arithmetic and set operations for
 aggregating results. This example shows the standard operators for
 creating new ``Counter`` instances, but the in-place operators
-``+=``, ``-=``, ``&=`` and ``|=`` are also supported.
+``+=``, ``-=``, ``&=``, and ``|=`` are also supported.
 
 .. literalinclude:: collections_counter_arithmetic.py
    :caption:

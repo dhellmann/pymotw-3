@@ -1,5 +1,5 @@
 ==========================================================
- collections.abc --- abstract base classes for containers
+ collections.abc --- Abstract Base Classes for Containers
 ==========================================================
 
 .. module:: collections.abc
@@ -9,14 +9,15 @@
 
 The ``collections.abc`` module contains abstract base classes that
 define the APIs for container data structures built into Python and
-provided by the ``collections`` module.
+provided by the ``collections`` module. Refer to :table:`Abstract Base
+Classes` for a list of the classes and their purposes.
 
 .. list-table:: Abstract Base Classes
    :header-rows: 1
    :widths: 20 20 60
 
    - * Class
-     * Base class(es)
+     * Base Class(es)
      * API Purpose
    - * Container
      * 
@@ -89,7 +90,7 @@ provided by the ``collections`` module.
      * AsyncIterable
      * API for asynchronous iterators.
 
-Besides clearly defining the APIs for containers with different
+In addition to clearly defining the APIs for containers with different
 semantics, these abstract base classes can be used to test whether an
 object supports an API before invoking it using
 ``isinstance()``. Some of the classes also provide implementations
