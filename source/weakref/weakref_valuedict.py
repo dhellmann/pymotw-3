@@ -46,7 +46,7 @@ def demo(cache_factory):
         print('    {} = {}'.format(name, value))
         del value  # decref
 
-    # Remove all references to the objects except the cache
+    # remove all references to the objects except the cache
     print('\n  Cleanup:')
     del all_refs
     gc.collect()
