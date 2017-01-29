@@ -1,5 +1,5 @@
 ===========================================
- queue --- Thread-safe FIFO Implementation
+ queue --- Thread-Safe FIFO Implementation
 ===========================================
 
 .. module:: queue
@@ -33,7 +33,7 @@ container.  Elements are added to one "end" of the sequence using
    :start-after: #end_pymotw_header
 
 This example uses a single thread to illustrate that elements are
-removed from the queue in the same order they are inserted.
+removed from the queue in the same order in which they are inserted.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'queue_fifo.py'))
@@ -81,15 +81,15 @@ Priority Queue
 Sometimes the processing order of the items in a queue needs to be
 based on characteristics of those items, rather than just the order
 they are created or added to the queue.  For example, print jobs from
-the payroll department may take precedence over a code listing printed
-by a developer.  ``PriorityQueue`` uses the sort order of the
-contents of the queue to decide which to retrieve.
+the payroll department may take precedence over a code listing that a
+developer wants to print.  ``PriorityQueue`` uses the sort order of
+the contents of the queue to decide which item to retrieve.
 
 .. literalinclude:: queue_priority.py
    :caption:
    :start-after: #end_pymotw_header
 
-This example has multiple threads consuming the jobs, which are be
+This example has multiple threads consuming the jobs, which are
 processed based on the priority of items in the queue at the time
 ``get()`` was called.  The order of processing for items added to
 the queue while the consumer threads are running depends on thread
@@ -121,10 +121,10 @@ program reads one or more RSS feeds, queues up the enclosures for the
 five most recent episodes from each feed to be downloaded, and
 processes several downloads in parallel using threads. It does not
 have enough error handling for production use, but the skeleton
-implementation provides an example of using the ``queue`` module.
+implementation illustrates the use of the ``queue`` module.
 
-First, some operating parameters are established. Normally these would
-come from user inputs (preferences, a database, etc.). The example
+First, some operating parameters are established. Usually, these would
+come from user inputs (e.g., preferences or a database). The example
 uses hard-coded values for the number of threads and list of URLs to
 fetch.
 
@@ -132,8 +132,8 @@ fetch.
    :caption:
    :lines: 6-25
 
-The function ``download_enclosures()`` will run in the worker thread
-and process the downloads using :mod:`urllib`.
+The function ``download_enclosures()`` runs in the worker thread
+and processes the downloads using :mod:`urllib`.
 
 .. literalinclude:: fetch_podcasts.py
    :lines: 28-46
@@ -150,8 +150,8 @@ before there is anything in the queue.
 The next step is to retrieve the feed contents using the
 ``feedparser`` module and enqueue the URLs of the enclosures. As soon
 as the first URL is added to the queue, one of the worker threads
-picks it up and starts downloading it. The loop will continue to add
-items until the feed is exhausted, and the worker threads will take
+picks it up and starts downloading it. The loop continues to add
+items until the feed is exhausted, and the worker threads take
 turns dequeuing URLs to download them.
 
 .. literalinclude:: fetch_podcasts.py
@@ -202,7 +202,7 @@ The actual output will depend on the contents of the RSS feed used.
       Wikipedia article explaining queues.
 
     * `FIFO <https://en.wikipedia.org/wiki/FIFO>`__ -- Wikipedia
-      article explaining first in, first out, data structures.
+      article explaining first-in, first-out, data structures.
 
     * `feedparser module <https://pypi.python.org/pypi/feedparser>`__
       -- A module for parsing RSS and Atom feeds, created by Mark

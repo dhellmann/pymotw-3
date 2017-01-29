@@ -29,7 +29,7 @@ def download_enclosures(q):
     """This is the worker thread function.
     It processes items in the queue one after
     another.  These daemon threads go into an
-    infinite loop, and only exit when
+    infinite loop, and exit only when
     the main thread ends.
     """
     while True:
