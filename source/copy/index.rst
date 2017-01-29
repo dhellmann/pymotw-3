@@ -51,7 +51,7 @@ Deep Copies
 The *deep copy* created by ``deepcopy()`` is a new container
 populated with copies of the contents of the original object. To make
 a deep copy of a ``list``, a new ``list`` is constructed,
-the elements of the original list are copied, then those copies are
+the elements of the original list are copied, and then those copies are
 appended to the new list.
 
 Replacing the call to ``copy()`` with ``deepcopy()`` makes the
@@ -93,20 +93,20 @@ It is possible to control how copies are made using the
 * ``__copy__()`` is called without any arguments and should return a
   shallow copy of the object.
 
-* ``__deepcopy__()`` is called with a memo dictionary, and should
+* ``__deepcopy__()`` is called with a memo dictionary and should
   return a deep copy of the object. Any member attributes that need to
   be deep-copied should be passed to ``copy.deepcopy()``, along with
-  the memo dictionary, to control for recursion (The memo dictionary
-  is explained in more detail later.).
+  the memo dictionary, to control for recursion. (The memo dictionary
+  is explained in more detail later.)
 
-This example illustrates how the methods are called:
+The following example illustrates how the methods are called.
 
 .. literalinclude:: copy_hooks.py
    :caption:
    :start-after: #end_pymotw_header
 
 The memo dictionary is used to keep track of the values that have been
-copied already, to avoid infinite recursion.
+copied already, so as to avoid infinite recursion.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'copy_hooks.py'))
@@ -131,7 +131,7 @@ been copied. This dictionary is passed to the ``__deepcopy__()``
 method so it can be examined there as well.
 
 The next example shows how an interconnected data structure such as a
-directed graph can assist with protecting against recursion by
+directed graph can help protect against recursion by
 implementing a ``__deepcopy__()`` method.
 
 .. literalinclude:: copy_recursion.py
@@ -141,19 +141,19 @@ implementing a ``__deepcopy__()`` method.
 The ``Graph`` class includes a few basic directed graph
 methods. An instance can be initialized with a name and a list of
 existing nodes to which it is connected. The ``add_connection()``
-method is used to set up bi-directional connections. It is also used
-by the deepcopy operator.
+method is used to set up bidirectional connections. It is also used
+by the deep copy operator.
 
 The ``__deepcopy__()`` method prints messages to show how it is
 called, and manages the memo dictionary contents as needed. Instead of
-copying the connection list wholesale, it creates a new list and
-appends copies of the individual connections to it. That ensures that
-the memo dictionary is updated as each new node is duplicated, and
-avoids recursion issues or extra copies of nodes. As before, it
-returns the copied object when it is done.
+copying the entire connection list wholesale, it creates a new list
+and appends copies of the individual connections to it. That ensures
+that the memo dictionary is updated as each new node is duplicated,
+and it avoids recursion issues or extra copies of nodes. As before,
+the method returns the copied object when it is done.
 
 .. digraph:: copy_example
-   :caption: Deep copy for an Object Graph With Cycles
+   :caption: Deep Copy for an Object Graph with Cycles
 
    "root";
    "a" -> "root";
@@ -162,10 +162,10 @@ returns the copied object when it is done.
    "root" -> "a";
    "root" -> "b";
 
-There are several cycles in the graph shown in :figure:`Deep copy for an Object Graph With Cycles`,
-but handling the recursion with the memo dictionary prevents the
-traversal from causing a stack overflow error.  When the *root* node
-is copied, the output is:
+The graph shown in :figure:`Deep Copy for an Object Graph with Cycles`
+includes several cycles, but handling the recursion with the memo
+dictionary prevents the traversal from causing a stack overflow error.
+When the *root* node is copied, it produces the following output.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'copy_recursion.py', line_break_mode='wrap'))
@@ -204,7 +204,7 @@ is copied, the output is:
 .. {{{end}}}
 
 The second time the *root* node is encountered, while the *a* node is
-being copied, ``__deepcopy__()`` detects the recursion and re-uses
+being copied, ``__deepcopy__()`` detects the recursion and reuses
 the existing value from the memo dictionary instead of creating a new
 object.
 
