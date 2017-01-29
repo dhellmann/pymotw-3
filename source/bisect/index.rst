@@ -15,8 +15,8 @@ elements into a list while maintaining the list in sorted order.
 Inserting in Sorted Order
 =========================
 
-Here is a simple example using ``insort()`` to insert items into a
-list in sorted order.
+Here is a simple example in which ``insort()`` is used to insert items
+into a list in sorted order.
 
 .. literalinclude:: bisect_example.py
     :caption:
@@ -52,23 +52,23 @@ list. The remainder of each line is the current sorted list.
 
 .. {{{end}}}
 
-This is a simple example, and for the amount of data being manipulated
-it might be faster to simply build the list and then sort it once. But
-for long lists, significant time and memory savings can be achieved
-using an insertion sort algorithm such as this, especially when the
-operation to compare two members of the list require expensive
-computation.
+This is a simple example,. In fact, given the amount of data being
+manipulated, it might be faster to simply build the list and then sort
+it once. By contrast, for long lists, significant time and memory
+savings can be achieved using an insertion sort algorithm such as
+this, especially when the operation to compare two members of the list
+requires expensive computation.
 
 Handling Duplicates
 ===================
 
-The result set shown previously includes a repeated value,
-``77``. The ``bisect`` module provides two ways to handle repeats. New
-values can be inserted to the left of existing values, or to the
+The result set shown previously includes a repeated value, ``77``. The
+``bisect`` module provides two ways to handle repeats: New values can
+be inserted either to the left of existing values, or to the
 right. The ``insort()`` function is actually an alias for
-``insort_right()``, which inserts after the existing value. The
-corresponding function ``insort_left()`` inserts before the existing
-value.
+``insort_right()``, which inserts an item after the existing
+value. The corresponding function ``insort_left()`` inserts an item
+before the existing value.
 
 .. literalinclude:: bisect_example2.py
     :caption:
@@ -109,6 +109,6 @@ insert positions are different for the duplicate values.
 
     * :pydoc:`bisect`
 
-    * `WikiPedia: Insertion Sort
+    * `Wikipedia: Insertion Sort
       <https://en.wikipedia.org/wiki/Insertion_sort>`_ -- A description
       of the insertion sort algorithm.
