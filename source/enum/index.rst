@@ -72,15 +72,15 @@ definition. The names and values are not used to sort them in any way.
 Comparing Enums
 ===============
 
-Because enumeration members are not ordered, they only support
+Because enumeration members are not ordered, they support only
 comparison by identity and equality.
 
 .. literalinclude:: enum_comparison.py
    :caption:
    :start-after: #end_pymotw_header
 
-The greater-than and less-than comparison operators raise a
-``TypeError`` exception.
+The greater-than and less-than comparison operators raise
+``TypeError`` exceptions.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'enum_comparison.py'))
@@ -97,8 +97,8 @@ The greater-than and less-than comparison operators raise a
 
 .. {{{end}}}
 
-Use the ``IntEnum`` class for enumerations where the members need
-to behave more like numbers, for example to support comparisons.
+Use the ``IntEnum`` class for enumerations where the members need to
+behave more like numbers---for example, to support comparisons.
 
 .. literalinclude:: enum_intenum.py
    :caption:
@@ -192,7 +192,7 @@ when the ``Enum`` class is being interpreted.
 Creating Enumerations Programmatically
 ======================================
 
-There are cases when it is more convenient to create enumerations
+In some cases, it is more convenient to create enumerations
 programmatically, rather than hard-coding them in a class
 definition. For those situations, ``Enum`` also supports passing
 the member names and values to the class constructor.
@@ -201,10 +201,10 @@ the member names and values to the class constructor.
    :caption:
    :start-after: #end_pymotw_header
 
-The ``value`` argument is the name of the enumeration, used to build
+The ``value`` argument is the name of the enumeration, which is used to build
 the representation of members. The ``names`` argument lists the
 members of the enumeration. When a single string is passed, it is
-split on whitespace and commas and the resulting tokens are used as
+split on whitespace and commas, and the resulting tokens are used as
 names for the members, which are automatically assigned values
 starting with ``1``.
 
@@ -237,7 +237,7 @@ a dictionary mapping names to values.
    :caption:
    :start-after: #end_pymotw_header
 
-In this example a list of two-part tuples is given instead of a single
+In this example, a list of two-part tuples is given instead of a single
 string containing only the member names. This makes it possible to
 reconstruct the ``BugStatus`` enumeration with the members in the same
 order as the version defined in ``enum_create.py``.
@@ -264,7 +264,7 @@ order as the version defined in ``enum_create.py``.
 Non-integer Member Values
 =========================
 
-Enum member values are not restricted to integers. Any type of object
+Enum member values are not restricted to integers. In fact, any type of object
 can be associated with a member. If the value is a tuple, the members
 are passed as individual arguments to ``__init__()``.
 
@@ -273,7 +273,7 @@ are passed as individual arguments to ``__init__()``.
    :start-after: #end_pymotw_header
 
 In this example, each member value is a tuple containing the numerical
-id (such as might be stored in a database) and a list of valid
+ID (such as might be stored in a database) and a list of valid
 transitions away from the current state.
 
 .. {{{cog
@@ -292,7 +292,7 @@ transitions away from the current state.
 .. {{{end}}}
 
 For more complex cases, tuples might become unwieldy. Since member
-values can be any type of object, it is possible to use dictionaries
+values can be any type of object, dictionaries can be used
 for cases where there are a lot of separate attributes to track for
 each enum value. Complex values are passed directly to
 ``__init__()`` as the only argument other than ``self``.
