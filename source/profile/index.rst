@@ -373,10 +373,6 @@ output shows the caller, callee, number of calls, and cumulative time.
    * `Gprof2Dot <http://code.google.com/p/jrfonseca/wiki/Gprof2Dot>`__
      -- Visualization tool for profile output data.
 
-   * `Fibonacci numbers (Python) - LiteratePrograms
-     <http://en.literateprograms.org/Fibonacci_numbers_(Python)>`__ --
-     An implementation of a Fibonacci sequence generator in Python.
-
    * `Python Decorators: Syntactic Sugar | avinash.vora
      <http://avinashv.net/2008/04/python-decorators-syntactic-sugar/>`__
      -- Another memoized Fibonacci sequence generator in Python.
