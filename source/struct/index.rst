@@ -11,11 +11,11 @@ The ``struct`` module includes functions for converting between
 strings of bytes and native Python data types such as numbers and
 strings.
 
-Functions vs. Struct Class
-==========================
+Functions versus Struct Class
+=============================
 
-There are a set of module-level functions for working with structured
-values, and there is also the ``Struct`` class.  Format
+A set of module-level functions is available for working with structured
+values, as well as the ``Struct`` class.  Format
 specifiers are converted from their string format to a compiled
 representation, similar to the way regular expressions are handled.
 The conversion takes some resources, so it is typically more efficient
@@ -33,7 +33,7 @@ to the standard library documentation for a complete list of the
 supported format specifiers.
 
 In this example, the specifier calls for an integer or long integer value, a
-two byte string, and a floating point number.  The spaces in the
+two-byte string, and a floating-point number.  The spaces in the
 format specifier are included to separate the type indicators, and are
 ignored when the format is compiled.
 
@@ -149,7 +149,7 @@ Buffers
 =======
 
 Working with binary packed data is typically reserved for 
-performance sensitive situations or passing data into and out of
+performance-sensitive situations or passing data into and out of
 extension modules.  These cases can be optimized by avoiding the
 overhead of allocating a new buffer for each packed structure.  The
 :meth:`pack_into` and :meth:`unpack_from` methods support writing to
