@@ -12,6 +12,10 @@ very much like a ``list``, except that all of the members have to
 be of the same primitive type. The types supported are all numeric or
 other fixed-size primitive types such as bytes.
 
+Refer to :table:`Type Codes for array Members` for some of the
+supported types. The standard library documentation for ``array``
+includes a complete list of type codes.
+
 .. list-table:: Type Codes for array Members
    :header-rows: 1
    :widths: 20 20 30
@@ -55,9 +59,6 @@ other fixed-size primitive types such as bytes.
    * - ``d``
      - double float
      - 8
-
-Refer to the standard library documentation for ``array`` for a
-complete list of type codes.
 
 Initialization
 ==============
@@ -129,7 +130,7 @@ built-in methods coded efficiently for that purpose.
     :caption:
     :start-after: #end_pymotw_header
 
-This example illustrates reading the data "raw", directly from the
+This example illustrates reading the data "raw," meaning directly from the
 binary file, versus reading it into a new array and converting the
 bytes to the appropriate types.
 
@@ -147,7 +148,7 @@ bytes to the appropriate types.
 
 .. {{{end}}}
 
-``tofile()`` uses ``tobytes()`` to format the data and ``fromfile()``
+``tofile()`` uses ``tobytes()`` to format the data, and ``fromfile()``
 uses ``frombytes()`` to convert it back to an array instance.
 
 .. literalinclude:: array_tobytes.py
@@ -155,7 +156,7 @@ uses ``frombytes()`` to convert it back to an array instance.
    :start-after: #end_pymotw_header
 
 Both ``tobytes()`` and ``frombytes()`` work on byte strings, not
-unicode strings.
+Unicode strings.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'array_tobytes.py'))
@@ -171,10 +172,10 @@ unicode strings.
 
 .. {{{end}}}
 
-Alternate Byte Ordering
-=======================
+Alternative Byte Ordering
+=========================
 
-If the data in the array is not in the native byte order, or needs to
+If the data in the array is not in the native byte order, or if the data needs to
 be swapped before being sent to a system with a different byte order
 (or over the network), it is possible to convert the entire array without
 iterating over the elements from Python.
