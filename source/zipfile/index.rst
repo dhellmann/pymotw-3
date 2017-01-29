@@ -479,4 +479,4 @@ than 4 GB that use the ZIP64 extensions.
    * `PKZIP Application Note`_ -- Official specification for the ZIP
      archive format.
 
-.. _PKZIP Application Note: http://www.pkware.com/documents/casestudies/APPNOTE.TXT
+.. _PKZIP Application Note: https://support.pkware.com/display/PKZIP/Application+Note+Archives
