@@ -267,7 +267,7 @@ causes all of the tracked files to be included in the package by
 default. After a package is built, the twine_ application will upload
 it to the package index to be shared with other developers.
 
-.. _setuptools: http://pythonhosted.org/setuptools/
+.. _setuptools: https://setuptools.readthedocs.io/en/latest/
 .. _setuptools-git: https://pypi.python.org/pypi/setuptools-git
 .. _git: https://git-scm.com
 .. _twine: https://pypi.python.org/pypi/twine
