@@ -72,6 +72,10 @@ Translations and Other Versions
 
   Roberto Pauletto has started translating the Python 3 articles into Italian.
 
+`Chinese <http://www.pandacademy.com/pymotw-3-介绍/>`__
+
+  Jaron has translated most of the articles into Chines for pandacademy.com.
+
 .. _copyright:
 
 Copyright and Licensing
