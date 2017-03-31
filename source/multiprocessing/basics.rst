@@ -116,7 +116,7 @@ multiple types of processes running simultaneously.
 
 The debug output includes the name of the current process on each
 line. The lines with ``Process-3`` in the name column correspond to
-the unnamed process ``worker_1``.
+the unnamed process ``worker_2``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'multiprocessing_names.py'))
