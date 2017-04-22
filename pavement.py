@@ -246,7 +246,7 @@ def _get_module(options):
 
 def _flake8(infile):
     """Run flake8 against the input file"""
-    return sh('flake8 %s' % infile)
+    return sh('flake8 -v %s' % infile)
 
 
 @task
