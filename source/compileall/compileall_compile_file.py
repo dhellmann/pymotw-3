@@ -18,6 +18,7 @@ def show(title):
         print('  {}'.format(filename))
     print()
 
+
 show('Before')
 
 compileall.compile_file('examples/a.py')

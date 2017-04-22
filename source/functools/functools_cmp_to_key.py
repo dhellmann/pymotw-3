@@ -29,15 +29,16 @@ def compare_obj(a, b):
         return 1
     return 0
 
+
 # Make a key function using cmp_to_key()
 get_key = functools.cmp_to_key(compare_obj)
-
 
 def get_key_wrapper(o):
     "Wrapper function for get_key to allow for print statements."
     new_key = get_key(o)
     print('key_wrapper({}) -> {!r}'.format(o, new_key))
     return new_key
+
 
 objs = [MyObject(x) for x in range(5, 0, -1)]
 

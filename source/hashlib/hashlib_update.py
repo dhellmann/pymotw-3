@@ -26,6 +26,7 @@ def chunkize(size, text):
         start += size
     return
 
+
 h = hashlib.md5()
 for chunk in chunkize(64, lorem.encode('utf-8')):
     h.update(chunk)

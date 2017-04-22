@@ -94,6 +94,7 @@ def input_loop():
         line = input('Prompt ("stop" to quit): ')
         print('Dispatch {}'.format(line))
 
+
 # Register our completer function
 completer = BufferAwareCompleter({
     'list': ['files', 'directories'],

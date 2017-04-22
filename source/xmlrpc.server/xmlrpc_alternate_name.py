@@ -16,6 +16,8 @@ server = SimpleXMLRPCServer(('localhost', 9000))
 def list_contents(dir_name):
     "Expose a function with an alternate name"
     return os.listdir(dir_name)
+
+
 server.register_function(list_contents, 'dir')
 
 try:

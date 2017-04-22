@@ -19,6 +19,7 @@ def make_context():
     finally:
         print('  exiting')
 
+
 print('Normal:')
 with make_context() as value:
     print('  inside with statement:', value)

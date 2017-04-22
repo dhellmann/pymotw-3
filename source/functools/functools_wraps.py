@@ -58,6 +58,7 @@ def decorated_myfunc(a, b):
     myfunc(a, b)
     return
 
+
 show_details('decorated_myfunc', decorated_myfunc)
 decorated_myfunc()
 decorated_myfunc('args to decorated', 4)

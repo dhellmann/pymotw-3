@@ -13,6 +13,7 @@ def show(msg, l):
         print(' ', v)
     print()
 
+
 input_values = [
     'urn:uuid:f2f84497-b3bf-493a-bba9-7c68e6def80b',
     '{417a5ebb-01f7-4ed5-aeac-3d56cd5037b0}',

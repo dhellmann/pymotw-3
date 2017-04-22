@@ -20,6 +20,7 @@ def show_zone_info():
     print('  Time  :', time.ctime())
     print()
 
+
 print('Default :')
 show_zone_info()
 

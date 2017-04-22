@@ -345,10 +345,10 @@ representation of the warning to be displayed to the user.
 
 	$ python3 -u warnings_formatwarning.py
 	
-	warnings_formatwarning.py:18: UserWarning: Warning message,
+	warnings_formatwarning.py:19: UserWarning: Warning message,
 	before
 	  warnings.warn('Warning message, before')
-	-> warnings_formatwarning.py:20: UserWarning:Warning message,
+	-> warnings_formatwarning.py:21: UserWarning:Warning message,
 	after
 
 .. {{{end}}}

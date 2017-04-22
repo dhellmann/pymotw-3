@@ -2,4 +2,4 @@
 max-line-length = 65
 ignore = E265,E302,F401,E402,F403,F405
 show-source = True
-exclude = source/_exts/
+exclude = source/_exts/,source/cgitb/,source/pdb/

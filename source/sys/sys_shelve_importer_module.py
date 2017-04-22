@@ -13,6 +13,7 @@ def show_module_details(module):
     print('  __path__   :', module.__path__)
     print('  __loader__ :', module.__loader__)
 
+
 filename = '/tmp/pymotw_import_example.shelve'
 sys.path_hooks.append(sys_shelve_importer.ShelveFinder)
 sys.path.insert(0, filename)

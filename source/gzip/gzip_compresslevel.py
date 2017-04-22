@@ -16,6 +16,7 @@ import hashlib
 def get_hash(data):
     return hashlib.md5(data).hexdigest()
 
+
 data = open('lorem.txt', 'r').read() * 1024
 cksum = get_hash(data.encode('utf-8'))
 

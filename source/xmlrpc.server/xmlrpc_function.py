@@ -24,6 +24,8 @@ server = SimpleXMLRPCServer(
 def list_contents(dir_name):
     logging.info('list_contents(%s)', dir_name)
     return os.listdir(dir_name)
+
+
 server.register_function(list_contents)
 
 # Start the server

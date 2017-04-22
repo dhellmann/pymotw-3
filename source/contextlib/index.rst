@@ -77,7 +77,7 @@ returned by ``__enter__()``, which is not necessarily the
 	
 	Context.__init__()
 	Context.__enter__()
-	WithinContext.__init__(<__main__.Context object at 0x1007b1c50>)
+	WithinContext.__init__(<__main__.Context object at 0x1019b2c88>)
 	WithinContext.do_something()
 	Context.__exit__()
 	WithinContext.__del__
@@ -109,16 +109,16 @@ re-raised after ``__exit__()`` returns.
 	__exit__()
 	  exc_type = <class 'RuntimeError'>
 	  exc_val  = error message handled
-	  exc_tb   = <traceback object at 0x10115cc88>
+	  exc_tb   = <traceback object at 0x101b5cc88>
 	
 	__init__(False)
 	__enter__()
 	__exit__()
 	  exc_type = <class 'RuntimeError'>
 	  exc_val  = error message propagated
-	  exc_tb   = <traceback object at 0x10115cc88>
+	  exc_tb   = <traceback object at 0x101b5cc88>
 	Traceback (most recent call last):
-	  File "contextlib_api_error.py", line 33, in <module>
+	  File "contextlib_api_error.py", line 34, in <module>
 	    raise RuntimeError('error message propagated')
 	RuntimeError: error message propagated
 
@@ -207,7 +207,7 @@ re-raised inside the generator, so they can be handled there.
 	  entering
 	  exiting
 	Traceback (most recent call last):
-	  File "contextlib_contextmanager.py", line 32, in <module>
+	  File "contextlib_contextmanager.py", line 33, in <module>
 	    raise ValueError('this exception is not handled')
 	ValueError: this exception is not handled
 

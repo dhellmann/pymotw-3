@@ -20,6 +20,7 @@ def show_results(match):
     print('  A[a:a+size] = {!r}'.format(A[i:i + k]))
     print('  B[b:b+size] = {!r}'.format(B[j:j + k]))
 
+
 A = " abcd"
 B = "abcd abcd"
 

@@ -19,6 +19,7 @@ def time_expired(n, stack):
     print('EXPIRED :', time.ctime())
     raise SystemExit('(time ran out)')
 
+
 signal.signal(signal.SIGXCPU, time_expired)
 
 # Adjust the CPU time limit

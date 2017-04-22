@@ -121,7 +121,7 @@ other systems may vary.  This is from OS X:
 	SIGSEGV    (11): SIG_DFL
 	SIGSYS     (12): SIG_DFL
 	SIGPIPE    (13): SIG_IGN
-	SIGALRM    (14): <function alarm_received at 0x100757f28>
+	SIGALRM    (14): <function alarm_received at 0x1019a6a60>
 	SIGTERM    (15): SIG_DFL
 	SIGURG     (16): SIG_DFL
 	SIGSTOP    (17): None
@@ -175,9 +175,9 @@ as long as the sleep duration.
 
 	$ python3 signal_alarm.py
 	
-	Before: Sun Sep 11 11:31:18 2016
-	Alarm : Sun Sep 11 11:31:20 2016
-	After : Sun Sep 11 11:31:22 2016
+	Before: Sat Apr 22 14:48:57 2017
+	Alarm : Sat Apr 22 14:48:59 2017
+	After : Sat Apr 22 14:49:01 2017
 
 .. {{{end}}}
 
@@ -262,12 +262,12 @@ The alarm does not abort the ``sleep()`` call in
 
 	$ python3 signal_threads_alarm.py
 	
-	Sun Sep 11 11:31:22 2016 Setting alarm in alarm_thread
-	Sun Sep 11 11:31:22 2016 Sleeping in alarm_thread
-	Sun Sep 11 11:31:22 2016 Waiting for alarm_thread
-	Sun Sep 11 11:31:23 2016 Alarm in MainThread
-	Sun Sep 11 11:31:25 2016 Done with sleep in alarm_thread
-	Sun Sep 11 11:31:25 2016 Exiting normally
+	Sat Apr 22 14:49:01 2017 Setting alarm in alarm_thread
+	Sat Apr 22 14:49:01 2017 Sleeping in alarm_thread
+	Sat Apr 22 14:49:01 2017 Waiting for alarm_thread
+	Sat Apr 22 14:49:02 2017 Alarm in MainThread
+	Sat Apr 22 14:49:04 2017 Done with sleep in alarm_thread
+	Sat Apr 22 14:49:04 2017 Exiting normally
 
 .. {{{end}}}
 

@@ -26,5 +26,6 @@ def print_info(archive_name):
             print('  Uncompressed:', info.file_size, 'bytes')
             print()
 
+
 if __name__ == '__main__':
     print_info('example.zip')

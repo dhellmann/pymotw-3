@@ -21,6 +21,7 @@ class MyObj:
     def __repr__(self):
         return 'MyObj({!r}, {!r})'.format(self.a, self.b)
 
+
 server = xmlrpc.client.ServerProxy('http://localhost:9000')
 
 o = MyObj(1, 'b goes here')

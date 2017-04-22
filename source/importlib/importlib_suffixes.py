@@ -26,5 +26,6 @@ def main():
     for name, value in SUFFIXES:
         print(tmpl.format(name, value))
 
+
 if __name__ == '__main__':
     main()

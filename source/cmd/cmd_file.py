@@ -25,6 +25,7 @@ class HelloWorld(cmd.Cmd):
     def do_EOF(self, line):
         return True
 
+
 if __name__ == '__main__':
     import sys
     with open(sys.argv[1], 'rt') as input:

@@ -73,7 +73,7 @@ write to ``sys.stdout``.
 	
 	* Call to a
 	*  on line 32 of sys_settrace_call.py
-	*  from line 37 of sys_settrace_call.py
+	*  from line 38 of sys_settrace_call.py
 	inside a()
 	
 	* Call to b

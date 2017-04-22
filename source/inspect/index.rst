@@ -63,9 +63,9 @@ actually part of the module and the list is long.
 	
 	A : <class 'example.A'>
 	B : <class 'example.B'>
-	instance_of_a : <example.A object at 0x1014814a8>
+	instance_of_a : <example.A object at 0x1014844e0>
 	module_level_function : <function module_level_function at
-	0x10148bc80>
+	0x101486c80>
 
 .. {{{end}}}
 
@@ -122,12 +122,12 @@ methods, slots, and other members of the class.
 	objects>,
 	                '__doc__': 'The A class.',
 	                '__init__': <function A.__init__ at
-	0x101c99510>,
+	0x101b99510>,
 	                '__module__': 'example',
 	                '__weakref__': <attribute '__weakref__' of 'A'
 	objects>,
 	                'get_name': <function A.get_name at
-	0x101c99598>})),
+	0x101b99598>})),
 	 ('__dir__', <method '__dir__' of 'object' objects>),
 	 ('__doc__', 'The A class.'),
 	 ('__eq__', <slot wrapper '__eq__' of 'object' objects>),
@@ -137,7 +137,7 @@ methods, slots, and other members of the class.
 	  <slot wrapper '__getattribute__' of 'object' objects>),
 	 ('__gt__', <slot wrapper '__gt__' of 'object' objects>),
 	 ('__hash__', <slot wrapper '__hash__' of 'object' objects>),
-	 ('__init__', <function A.__init__ at 0x101c99510>),
+	 ('__init__', <function A.__init__ at 0x101b99510>),
 	 ('__le__', <slot wrapper '__le__' of 'object' objects>),
 	 ('__lt__', <slot wrapper '__lt__' of 'object' objects>),
 	 ('__module__', 'example'),
@@ -154,9 +154,9 @@ methods, slots, and other members of the class.
 	 ('__str__', <slot wrapper '__str__' of 'object' objects>),
 	 ('__subclasshook__',
 	  <built-in method __subclasshook__ of type object at
-	0x10061fba8>),
+	0x10045d678>),
 	 ('__weakref__', <attribute '__weakref__' of 'A' objects>),
-	 ('get_name', <function A.get_name at 0x101c99598>)]
+	 ('get_name', <function A.get_name at 0x101b99598>)]
 
 .. {{{end}}}
 
@@ -178,8 +178,8 @@ Only unbound methods are returned now.
 
 	$ python3 inspect_getmembers_class_methods.py
 	
-	[('__init__', <function A.__init__ at 0x10139d510>),
-	 ('get_name', <function A.get_name at 0x10139d598>)]
+	[('__init__', <function A.__init__ at 0x101c8e510>),
+	 ('get_name', <function A.get_name at 0x101c8e598>)]
 
 .. {{{end}}}
 
@@ -202,9 +202,9 @@ identified as being methods of ``B``.
 
 	$ python3 inspect_getmembers_class_methods_b.py
 	
-	[('__init__', <function A.__init__ at 0x10129d510>),
-	 ('do_something', <function B.do_something at 0x10129d620>),
-	 ('get_name', <function B.get_name at 0x10129d6a8>)]
+	[('__init__', <function A.__init__ at 0x101c9d510>),
+	 ('do_something', <function B.do_something at 0x101c9d620>),
+	 ('get_name', <function B.get_name at 0x101c9d6a8>)]
 
 .. {{{end}}}
 
@@ -229,9 +229,9 @@ The predicate ``ismethod()`` recognizes two bound methods from
 	$ python3 inspect_getmembers_instance.py
 	
 	[('__init__', <bound method A.__init__ of <example.A object at 0
-	x101ab1ba8>>),
+	x1012b2be0>>),
 	 ('get_name', <bound method A.get_name of <example.A object at 0
-	x101ab1ba8>>)]
+	x1012b2be0>>)]
 
 .. {{{end}}}
 
@@ -650,7 +650,7 @@ frame's dictionary of local variables.
 	
 	line 14 of inspect_currentframe.py
 	locals:
-	{'frame': <frame object at 0x1022a7b88>,
+	{'frame': <frame object at 0x101ac7b88>,
 	 'keyword': 'changed value of argument',
 	 'kwonly': 'must be named',
 	 'limit': 2,
@@ -658,7 +658,7 @@ frame's dictionary of local variables.
 	
 	line 14 of inspect_currentframe.py
 	locals:
-	{'frame': <frame object at 0x102016b28>,
+	{'frame': <frame object at 0x1007533b8>,
 	 'keyword': 'changed value of argument',
 	 'kwonly': 'must be named',
 	 'limit': 1,
@@ -666,7 +666,7 @@ frame's dictionary of local variables.
 	
 	line 14 of inspect_currentframe.py
 	locals:
-	{'frame': <frame object at 0x1020176b8>,
+	{'frame': <frame object at 0x100753a28>,
 	 'keyword': 'changed value of argument',
 	 'kwonly': 'must be named',
 	 'limit': 0,
@@ -698,7 +698,7 @@ The last part of the output represents the main program, outside of the
 	
 	inspect_stack.py[11]
 	  -> for level in inspect.stack():
-	{'level': FrameInfo(frame=<frame object at 0x10127e5d0>,
+	{'level': FrameInfo(frame=<frame object at 0x101c6f5d0>,
 	filename='inspect_stack.py', lineno=11, function='show_stack',
 	code_context=['    for level in inspect.stack():\n'], index=0)}
 	
@@ -714,22 +714,22 @@ The last part of the output represents the main program, outside of the
 	  -> recurse(limit - 1)
 	{'limit': 2, 'local_variable': '..'}
 	
-	inspect_stack.py[30]
+	inspect_stack.py[31]
 	  -> recurse(2)
 	{'__builtins__': <module 'builtins' (built-in)>,
 	 '__cached__': None,
 	 '__doc__': 'Inspecting the call stack.\n',
 	 '__file__': 'inspect_stack.py',
 	 '__loader__': <_frozen_importlib_external.SourceFileLoader
-	object at 0x1007a97f0>,
+	object at 0x1018a9828>,
 	 '__name__': '__main__',
 	 '__package__': None,
 	 '__spec__': None,
 	 'inspect': <module 'inspect' from
 	'.../lib/python3.5/inspect.py'>,
 	 'pprint': <module 'pprint' from '.../lib/python3.5/pprint.py'>,
-	 'recurse': <function recurse at 0x1012aa400>,
-	 'show_stack': <function show_stack at 0x1007a6a60>}
+	 'recurse': <function recurse at 0x101c9b400>,
+	 'show_stack': <function show_stack at 0x1018a6a60>}
 	
 
 .. {{{end}}}
@@ -763,7 +763,7 @@ to be printed instead of the source.
 	Origin: .../example.py
 	Cached: .../__pycache__/example.cpython-35.pyc
 	Loader: <_frozen_importlib_external.SourceFileLoader object at 0
-	x101527860>
+	x101d27898>
 	
 	
 

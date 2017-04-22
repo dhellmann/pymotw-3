@@ -24,6 +24,7 @@ class Context:
         print('  exc_tb   =', exc_tb)
         return self.handle_error
 
+
 with Context(True):
     raise RuntimeError('error message handled')
 

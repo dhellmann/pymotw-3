@@ -21,6 +21,7 @@ class DirectoryService:
     def list(self, dir_name):
         return os.listdir(dir_name)
 
+
 server.register_instance(DirectoryService())
 
 try:

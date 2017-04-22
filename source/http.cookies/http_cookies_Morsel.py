@@ -23,6 +23,7 @@ def show_cookie(c):
             if morsel[name]:
                 print('  {} = {}'.format(name, morsel[name]))
 
+
 c = cookies.SimpleCookie()
 
 # A cookie with a value that has to be encoded

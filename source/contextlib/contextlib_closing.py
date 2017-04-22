@@ -19,6 +19,7 @@ class Door:
         print('  close()')
         self.status = 'closed'
 
+
 print('Normal Example:')
 with contextlib.closing(Door()) as door:
     print('  inside with statement: {}'.format(door.status))

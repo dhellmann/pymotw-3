@@ -15,5 +15,6 @@ def show(iterable):
         print(''.join(item), end=' ')
     print()
 
+
 print('Unique pairs:\n')
 show(combinations_with_replacement('abcd', r=2))

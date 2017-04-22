@@ -23,6 +23,7 @@ def print_class_tree(tree, indent=-1):
         print('  ' * indent, tree[0].__name__)
     return
 
+
 if __name__ == '__main__':
     print('A, B, C, D:')
     print_class_tree(inspect.getclasstree(

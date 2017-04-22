@@ -11,6 +11,7 @@ import sys
 def not_called():
     print('CHILD: atexit handler should not have been called')
 
+
 print('CHILD: Registering atexit handler')
 sys.stdout.flush()
 atexit.register(not_called)

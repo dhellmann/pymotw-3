@@ -26,6 +26,7 @@ def burn(direction, nextSource):
     print('{:>8} done'.format(direction))
     return
 
+
 left = threading.Thread(target=burn,
                         args=('Left', candle.popleft))
 right = threading.Thread(target=burn,

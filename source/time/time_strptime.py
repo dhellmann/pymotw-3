@@ -21,6 +21,7 @@ def show_struct(s):
     print('  tm_yday :', s.tm_yday)
     print('  tm_isdst:', s.tm_isdst)
 
+
 now = time.ctime(1483391847.433716)
 print('Now:', now)
 

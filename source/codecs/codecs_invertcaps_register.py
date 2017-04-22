@@ -63,6 +63,7 @@ def find_invertcaps(encoding):
         )
     return None
 
+
 codecs.register(find_invertcaps)
 
 if __name__ == '__main__':

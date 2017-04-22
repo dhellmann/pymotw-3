@@ -26,5 +26,6 @@ def recurse(limit):
     recurse(limit - 1)
     return local_variable
 
+
 if __name__ == '__main__':
     recurse(2)

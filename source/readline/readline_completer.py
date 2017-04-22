@@ -62,6 +62,7 @@ def input_loop():
         line = input('Prompt ("stop" to quit): ')
         print('Dispatch {}'.format(line))
 
+
 # Register the completer function
 OPTIONS = ['start', 'stop', 'list', 'print']
 readline.set_completer(SimpleCompleter(OPTIONS).complete)

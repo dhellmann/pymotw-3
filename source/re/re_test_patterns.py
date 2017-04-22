@@ -29,6 +29,7 @@ def test_patterns(text, patterns):
         print()
     return
 
+
 if __name__ == '__main__':
     test_patterns('abbaaabbbbaaaaa',
                   [('ab', "'a' followed by 'b'"),

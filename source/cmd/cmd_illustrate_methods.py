@@ -65,5 +65,6 @@ class Illustrate(cmd.Cmd):
         "Exit"
         return True
 
+
 if __name__ == '__main__':
     Illustrate().cmdloop('Illustrating the methods of cmd.Cmd')

@@ -78,6 +78,7 @@ def input_loop():
         print('Final history:', get_history_items())
         readline.write_history_file(HISTORY_FILENAME)
 
+
 # Register our completer function
 readline.set_completer(HistoryCompleter().complete)
 

@@ -15,6 +15,7 @@ def show(iterable):
         print(''.join(item), end=' ')
     print()
 
+
 print('All permutations:\n')
 show(permutations('abcd'))
 

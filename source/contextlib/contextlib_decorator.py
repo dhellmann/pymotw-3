@@ -27,6 +27,7 @@ class Context(contextlib.ContextDecorator):
 def func(message):
     print(message)
 
+
 print()
 with Context('as context manager'):
     print('Doing work in the context')

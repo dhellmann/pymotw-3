@@ -33,5 +33,6 @@ def a():
     print('inside a()\n')
     b()
 
+
 sys.settrace(trace_calls)
 a()

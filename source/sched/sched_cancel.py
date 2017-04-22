@@ -19,6 +19,7 @@ def increment_counter(name):
     counter += 1
     print('NOW:', counter)
 
+
 print('START:', time.ctime(time.time()))
 e1 = scheduler.enter(2, 1, increment_counter, ('E1',))
 e2 = scheduler.enter(3, 1, increment_counter, ('E2',))

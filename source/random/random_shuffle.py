@@ -35,6 +35,7 @@ def show_deck(deck):
             print(j, end=' ')
         print()
 
+
 # Make a new deck, with the cards in order
 deck = new_deck()
 print('Initial deck:')

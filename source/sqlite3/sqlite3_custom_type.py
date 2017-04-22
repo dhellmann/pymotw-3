@@ -35,6 +35,7 @@ class MyObj:
     def __str__(self):
         return 'MyObj({!r})'.format(self.arg)
 
+
 # Register the functions for manipulating the type.
 sqlite3.register_adapter(MyObj, adapter_func)
 sqlite3.register_converter("MyObj", converter_func)

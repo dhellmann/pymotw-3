@@ -21,6 +21,7 @@ def block(i):
         print(t.name, 'finishing')
     return
 
+
 # Create and start several threads that "block"
 threads = [
     threading.Thread(target=block, args=(i,))

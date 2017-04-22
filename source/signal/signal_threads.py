@@ -18,6 +18,7 @@ def signal_handler(num, stack):
     print('Received signal {} in {}'.format(
         num, threading.currentThread().name))
 
+
 signal.signal(signal.SIGUSR1, signal_handler)
 
 
@@ -26,6 +27,7 @@ def wait_for_signal():
           threading.currentThread().name)
     signal.pause()
     print('Done waiting')
+
 
 # Start a thread that will not receive the signal
 receiver = threading.Thread(
@@ -39,6 +41,7 @@ time.sleep(0.1)
 def send_signal():
     print('Sending signal in', threading.currentThread().name)
     os.kill(os.getpid(), signal.SIGUSR1)
+
 
 sender = threading.Thread(target=send_signal, name='sender')
 sender.start()

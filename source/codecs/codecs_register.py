@@ -20,6 +20,7 @@ def search2(encoding):
     print('search2: Searching for:', encoding)
     return None
 
+
 codecs.register(search1)
 codecs.register(search2)
 

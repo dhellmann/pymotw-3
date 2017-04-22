@@ -13,6 +13,7 @@ def signal_usr1(signum, frame):
     pid = os.getpid()
     print('Received USR1 in process {}'.format(pid))
 
+
 print('Forking...')
 child_pid = os.fork()
 if child_pid:

@@ -17,6 +17,7 @@ def signal_handler(num, stack):
     print(time.ctime(), 'Alarm in',
           threading.currentThread().name)
 
+
 signal.signal(signal.SIGALRM, signal_handler)
 
 
@@ -27,6 +28,7 @@ def use_alarm():
     print(time.ctime(), 'Sleeping in', t_name)
     time.sleep(3)
     print(time.ctime(), 'Done with sleep in', t_name)
+
 
 # Start a thread that will not receive the signal
 alarm_thread = threading.Thread(

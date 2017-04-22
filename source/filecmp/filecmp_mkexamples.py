@@ -46,6 +46,7 @@ def make_example_dir(top):
     os.chdir(curdir)
     return
 
+
 if __name__ == '__main__':
     os.chdir(os.path.dirname(__file__) or os.getcwd())
     make_example_dir('example')

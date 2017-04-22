@@ -19,8 +19,8 @@ data = {
     'floating-point number': 2.5,
     'string': 'some text',
     'datetime': datetime.datetime.now(),
-    'array': ['a', 'list'],
-    'array': ('a', 'tuple'),
+    'array1': ['a', 'list'],
+    'array2': ('a', 'tuple'),
     'structure': {'a': 'dictionary'},
 }
 arg = []

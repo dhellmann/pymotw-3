@@ -25,6 +25,7 @@ def show_deadline(conn):
             col, row[col], type(row[col])))
     return
 
+
 print('Without type detection:')
 with sqlite3.connect(db_filename) as conn:
     show_deadline(conn)

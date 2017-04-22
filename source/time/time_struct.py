@@ -21,6 +21,7 @@ def show_struct(s):
     print('  tm_yday :', s.tm_yday)
     print('  tm_isdst:', s.tm_isdst)
 
+
 print('gmtime:')
 show_struct(time.gmtime())
 print('\nlocaltime:')

@@ -14,6 +14,7 @@ def long_event(name):
     time.sleep(2)
     print('FINISH EVENT:', time.ctime(time.time()), name)
 
+
 print('START:', time.ctime(time.time()))
 scheduler.enter(2, 1, long_event, ('first',))
 scheduler.enter(3, 1, long_event, ('second',))

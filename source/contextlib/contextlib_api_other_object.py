@@ -31,5 +31,6 @@ class Context:
     def __exit__(self, exc_type, exc_val, exc_tb):
         print('Context.__exit__()')
 
+
 with Context() as c:
     c.do_something()

@@ -59,8 +59,8 @@ that clutter up the output in this simple example.
 	recurse.py(11): def recurse(level):
 	recurse.py(17): def not_called():
 	main.py(13): def main():
-	main.py(17): if __name__ == '__main__':
-	main.py(18):     main()
+	main.py(18): if __name__ == '__main__':
+	main.py(19):     main()
 	 --- modulename: main, funcname: main
 	main.py(14):     print('This is the main program.')
 	This is the main program.

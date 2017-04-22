@@ -47,6 +47,7 @@ def process_job(q):
         print('Processing job:', next_job.description)
         q.task_done()
 
+
 workers = [
     threading.Thread(target=process_job, args=(q,)),
     threading.Thread(target=process_job, args=(q,)),

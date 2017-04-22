@@ -24,6 +24,7 @@ class A(object):
         "Returns the name of the instance."
         return self.name
 
+
 instance_of_a = A('sample_instance')
 
 

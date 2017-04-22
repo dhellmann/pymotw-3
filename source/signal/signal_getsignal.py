@@ -14,6 +14,7 @@ import signal
 def alarm_received(n, stack):
     return
 
+
 signal.signal(signal.SIGALRM, alarm_received)
 
 signals_to_names = {

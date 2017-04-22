@@ -16,6 +16,7 @@ import time
 def receive_signal(signum, stack):
     print('Received:', signum)
 
+
 # Register signal handlers
 signal.signal(signal.SIGUSR1, receive_signal)
 signal.signal(signal.SIGUSR2, receive_signal)

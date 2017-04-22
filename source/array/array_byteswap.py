@@ -20,6 +20,7 @@ def to_hex(a):
         end = start + chars_per_item
         yield hex_version[start:end]
 
+
 start = int('0x12345678', 16)
 end = start + 5
 a1 = array.array('i', range(start, end))

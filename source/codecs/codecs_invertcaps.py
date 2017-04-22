@@ -20,6 +20,7 @@ def invertcaps(text):
         for c in text
     )
 
+
 if __name__ == '__main__':
     print(invertcaps('ABCdef'))
     print(invertcaps('abcDEF'))

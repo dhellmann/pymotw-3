@@ -59,6 +59,7 @@ class CustomAction(argparse.Action):
         setattr(namespace, self.dest, values)
         print()
 
+
 parser = argparse.ArgumentParser()
 
 parser.add_argument('-a', action=CustomAction)
