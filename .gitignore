@@ -64,3 +64,4 @@ dist/
 /source/trace/coverdir1/trace_example.main.cover
 /source/trace/trace_report.dat
 /linkcheck.log
+.DS_Store
