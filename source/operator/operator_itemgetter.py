@@ -17,7 +17,7 @@ vals = [g(i) for i in l]
 print('   values:', vals)
 print('   sorted:', sorted(l, key=g))
 
-print
+print()
 l = [(i, i * -2) for i in range(4)]
 print('\nTuples:')
 print(' original:', l)
