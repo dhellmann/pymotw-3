@@ -16,7 +16,7 @@ while True:
         print(d.pop(), end='')
     except IndexError:
         break
-print
+print()
 
 print('\nFrom the left:')
 d = collections.deque(range(6))
@@ -25,4 +25,4 @@ while True:
         print(d.popleft(), end='')
     except IndexError:
         break
-print
+print()

@@ -86,6 +86,7 @@ Use ``pop()`` to remove an item from the "right" end of the
 	
 	From the right:
 	gfedcba
+	
 	From the left:
 	012345
 
