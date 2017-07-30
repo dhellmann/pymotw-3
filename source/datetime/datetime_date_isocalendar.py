@@ -24,7 +24,7 @@ d = datetime.date(2007, 12, 30)
 for i in range(7):
     delta = datetime.timedelta(days=i)
     date = d + delta
-    print
+    print()
     print(day_names[date.weekday()], date)
     print('  ISO Weekday:', day_names[date.isoweekday()])
     print('  ISO Calendar:', date.isocalendar())

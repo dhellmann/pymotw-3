@@ -113,21 +113,21 @@ This example prints the current date in several formats:
 
 	$ python3 datetime_date.py
 	
-	2016-07-10
-	ctime  : Sun Jul 10 00:00:00 2016
-	tuple  : tm_year  = 2016
+	2017-07-30
+	ctime  : Sun Jul 30 00:00:00 2017
+	tuple  : tm_year  = 2017
 	         tm_mon   = 7
-	         tm_mday  = 10
+	         tm_mday  = 30
 	         tm_hour  = 0
 	         tm_min   = 0
 	         tm_sec   = 0
 	         tm_wday  = 6
-	         tm_yday  = 192
+	         tm_yday  = 211
 	         tm_isdst = -1
-	ordinal: 736155
-	Year   : 2016
+	ordinal: 736540
+	Year   : 2017
 	Mon    : 7
-	Day    : 10
+	Day    : 30
 
 .. {{{end}}}
 
@@ -153,8 +153,8 @@ This example illustrates the different value types used by
 	
 	o               : 733114
 	fromordinal(o)  : 2008-03-13
-	t               : 1468161894.788508
-	fromtimestamp(t): 2016-07-10
+	t               : 1501432275.190121
+	fromtimestamp(t): 2017-07-30
 
 .. {{{end}}}
 
@@ -287,10 +287,10 @@ produce timedeltas (including a negative delta value).
 
 	$ python3 datetime_date_math.py
 	
-	Today    : 2016-07-10
+	Today    : 2017-07-30
 	One day  : 1 day, 0:00:00
-	Yesterday: 2016-07-09
-	Tomorrow : 2016-07-11
+	Yesterday: 2017-07-29
+	Tomorrow : 2017-07-31
 	
 	tomorrow - yesterday: 2 days, 0:00:00
 	yesterday - tomorrow: -2 days, 0:00:00
@@ -350,9 +350,10 @@ All comparison operators are supported.
 	  t1: 12:55:00
 	  t2: 13:05:00
 	  t1 < t2: True
+	
 	Dates:
-	  d1: 2016-07-10
-	  d2: 2016-07-11
+	  d1: 2017-07-30
+	  d2: 2017-07-31
 	  d1 > d2: False
 
 .. {{{end}}}
@@ -380,16 +381,17 @@ attributes of both a ``date`` and a ``time`` object.
 
 	$ python3 datetime_datetime.py
 	
-	Now    : 2016-07-10 10:44:55.215677
-	Today  : 2016-07-10 10:44:55.215719
-	UTC Now: 2016-07-10 14:44:55.215732
-	year           : 2016
+	Now    : 2017-07-30 12:31:15.519675
+	Today  : 2017-07-30 12:31:15.519706
+	UTC Now: 2017-07-30 16:31:15.519715
+	
+	year           : 2017
 	month          : 7
-	day            : 10
-	hour           : 10
-	minute         : 44
-	second         : 55
-	microsecond    : 216198
+	day            : 30
+	hour           : 12
+	minute         : 31
+	second         : 15
+	microsecond    : 519852
 
 .. {{{end}}}
 
@@ -413,8 +415,8 @@ class methods for creating new instances. It also includes
 	$ python3 datetime_datetime_combine.py
 	
 	t : 01:02:03
-	d : 2016-07-10
-	dt: 2016-07-10 01:02:03
+	d : 2017-07-30
+	dt: 2017-07-30 01:02:03
 
 .. {{{end}}}
 
@@ -440,9 +442,9 @@ Use ``datetime.strptime()`` to convert formatted strings to
 
 	$ python3 datetime_datetime_strptime.py
 	
-	ISO     : 2016-07-10 10:44:55.325247
-	strftime: Sun Jul 10 10:44:55 2016
-	strptime: Sun Jul 10 10:44:55 2016
+	ISO     : 2017-07-30 12:31:15.601198
+	strftime: Sun Jul 30 12:31:15 2017
+	strptime: Sun Jul 30 12:31:15 2017
 
 .. {{{end}}}
 
@@ -466,8 +468,8 @@ output.
 
 	$ python3 datetime_format.py
 	
-	ISO     : 2016-07-10 10:44:55.389239
-	format(): Sun Jul 10 10:44:55 2016
+	ISO     : 2017-07-30 12:31:15.666149
+	format(): Sun Jul 30 12:31:15 2017
 
 .. {{{end}}}
 
@@ -580,10 +582,10 @@ line shows the value in the system timezone, acquired by calling
 
 	$ python3 datetime_timezone.py
 	
-	UTC-06:00 : 2016-07-10 08:44:55.495995-06:00
-	UTC+00:00 : 2016-07-10 14:44:55.495995+00:00
-	UTC+06:00 : 2016-07-10 20:44:55.495995+06:00
-	EDT       : 2016-07-10 10:44:55.495995-04:00
+	UTC-06:00 : 2017-07-30 10:31:15.734286-06:00
+	UTC+00:00 : 2017-07-30 16:31:15.734286+00:00
+	UTC+06:00 : 2017-07-30 22:31:15.734286+06:00
+	EDT       : 2017-07-30 12:31:15.734286-04:00
 
 .. {{{end}}}
 

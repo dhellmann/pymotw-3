@@ -12,7 +12,7 @@ import datetime
 print('Now    :', datetime.datetime.now())
 print('Today  :', datetime.datetime.today())
 print('UTC Now:', datetime.datetime.utcnow())
-print
+print()
 
 FIELDS = [
     'year', 'month', 'day',

@@ -17,7 +17,7 @@ t2 = datetime.time(13, 5, 0)
 print('  t2:', t2)
 print('  t1 < t2:', t1 < t2)
 
-print
+print()
 print('Dates:')
 d1 = datetime.date.today()
 print('  d1:', d1)
