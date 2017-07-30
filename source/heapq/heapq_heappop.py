@@ -15,7 +15,7 @@ print('random    :', data)
 heapq.heapify(data)
 print('heapified :')
 show_tree(data)
-print
+print()
 
 for i in range(2):
     smallest = heapq.heappop(data)
