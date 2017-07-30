@@ -77,7 +77,7 @@ used. The default is ``hashlib.md5``. This example passes
 
 	$ python3 hmac_sha.py
 	
-	3c3992fa7aefb81b73a52f49713cf3faa272382a
+	dcee20eeee9ef8a453453f510d9b6765921cf099
 
 .. {{{end}}}
 
