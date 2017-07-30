@@ -167,19 +167,19 @@ In this example, two process run the second stage of a job in
 parallel, but only after the first stage is done.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'multiprocessing_condition.py'))
+.. cog.out(run_script(cog.inFile, '-u multiprocessing_condition.py'))
 .. }}}
 
 .. code-block:: none
 
-	$ python3 multiprocessing_condition.py
+	$ python3 -u multiprocessing_condition.py
 	
+	Starting stage_2[1]
+	Starting stage_2[2]
 	Starting s1
 	s1 done and ready for stage 2
-	Starting stage_2[2]
-	stage_2[2] running
-	Starting stage_2[1]
 	stage_2[1] running
+	stage_2[2] running
 
 .. {{{end}}}
 
