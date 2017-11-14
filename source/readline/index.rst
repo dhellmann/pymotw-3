@@ -15,7 +15,7 @@ provide command line text completion, or "tab completion".
 .. note::
 
     Because ``readline`` interacts with the console content,
-    printing debug messages makes it difficult to see what it
+    printing debug messages makes it difficult to see what is
     happening in the sample code versus what readline is doing for
     free.  The following examples use the :mod:`logging` module to
     write debug information to a separate file.  The log output is
