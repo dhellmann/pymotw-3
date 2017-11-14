@@ -14,4 +14,4 @@ diff = difflib.context_diff(
     text2_lines,
     lineterm='',
 )
-print('\n'.join(list(diff)))
+print('\n'.join(diff))
