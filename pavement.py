@@ -115,7 +115,7 @@ def _elide_path_prefix(infile, line):
     line = line.replace(rundir, '...')
     if 'VIRTUAL_ENV' in os.environ:
         line = line.replace(os.environ['VIRTUAL_ENV'], '...')
-    line = line.replace('/Library/Frameworks/Python.framework/Versions/3.5',
+    line = line.replace('/Library/Frameworks/Python.framework/Versions/3.6',
                         '...')
     return line
 
