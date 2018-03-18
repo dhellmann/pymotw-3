@@ -699,15 +699,15 @@ The sequence of events is
 
 	$ python3 subprocess_signal_setpgrp.py
 	
-	Calling os.setpgrp() from 26992
-	Process group is now 26992
-	PARENT      : Pausing before signaling 26992...
-	Shell script in process 26992
+	Calling os.setpgrp() from 75636
+	Process group is now 75636
+	PARENT      : Pausing before signaling 75636...
+	Shell script in process 75636
 	+ python3 signal_child.py
-	CHILD  26993: Setting up signal handler
-	CHILD  26993: Pausing to wait for signal
-	PARENT      : Signaling process group 26992
-	CHILD  26993: Received USR1
+	CHILD  75637: Setting up signal handler
+	CHILD  75637: Pausing to wait for signal
+	PARENT      : Signaling process group 75636
+	CHILD  75637: Received USR1
 
 .. {{{end}}}
 
