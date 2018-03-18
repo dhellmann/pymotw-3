@@ -51,8 +51,8 @@ worker.
 
 	$ python3 multiprocessing_simpleargs.py
 	
-	Worker: 0
 	Worker: 1
+	Worker: 0
 	Worker: 2
 	Worker: 3
 	Worker: 4
@@ -167,9 +167,9 @@ sleep.
 
 	$ python3 multiprocessing_daemon.py
 	
-	Starting: daemon 70880
-	Starting: non-daemon 70881
-	Exiting : non-daemon 70881
+	Starting: daemon 41838
+	Starting: non-daemon 41841
+	Exiting : non-daemon 41841
 
 .. {{{end}}}
 
@@ -307,10 +307,10 @@ Processes that raise an exception automatically get an
 	Starting process for terminated
 	Process raises:
 	Traceback (most recent call last):
-	  File ".../lib/python3.5/multiprocessing/process.py", line 249,
+	  File ".../lib/python3.6/multiprocessing/process.py", line 258,
 	in _bootstrap
 	    self.run()
-	  File ".../lib/python3.5/multiprocessing/process.py", line 93,
+	  File ".../lib/python3.6/multiprocessing/process.py", line 93,
 	in run
 	    self._target(*self._args, **self._kwargs)
 	  File "multiprocessing_exitcode.py", line 28, in raises
@@ -414,8 +414,8 @@ The derived class should override :meth:`run` to do its work.
 	$ python3 multiprocessing_subclass.py
 	
 	In Worker-1
-	In Worker-2
 	In Worker-3
+	In Worker-2
 	In Worker-4
 	In Worker-5
 

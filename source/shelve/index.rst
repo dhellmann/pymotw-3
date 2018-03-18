@@ -44,7 +44,7 @@ Running both sample scripts produces the following output.
 	$ python3 shelve_create.py
 	$ python3 shelve_existing.py
 	
-	{'string': 'Sample data', 'int': 10, 'float': 9.5}
+	{'int': 10, 'float': 9.5, 'string': 'Sample data'}
 
 .. {{{end}}}
 
@@ -70,7 +70,7 @@ database module selected by :mod:`dbm` when the database was created.
 
 	$ python3 shelve_readonly.py
 	
-	Existing: {'string': 'Sample data', 'int': 10, 'float': 9.5}
+	Existing: {'int': 10, 'float': 9.5, 'string': 'Sample data'}
 	ERROR: cannot add item to database
 
 .. {{{end}}}
@@ -100,8 +100,8 @@ shelf is re-opened, the changes have not been preserved.
 	$ python3 shelve_create.py
 	$ python3 shelve_withoutwriteback.py
 	
-	{'string': 'Sample data', 'int': 10, 'float': 9.5}
-	{'string': 'Sample data', 'int': 10, 'float': 9.5}
+	{'int': 10, 'float': 9.5, 'string': 'Sample data'}
+	{'int': 10, 'float': 9.5, 'string': 'Sample data'}
 
 .. {{{end}}}
 

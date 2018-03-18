@@ -48,7 +48,7 @@ that clutter up the output in this simple example.
 
 .. code-block:: none
 
-	$ python3 -m trace --ignore-dir=.../lib/python3.5 \
+	$ python3 -m trace --ignore-dir=.../lib/python3.6 \
 	--trace trace_example/main.py
 	
 	 --- modulename: main, funcname: <module>
@@ -200,7 +200,7 @@ To produce reports once the coverage information is recorded to the
 	trace_example/main.py
 	
 	lines   cov%   module   (path)
-	  537     0%   trace   (.../lib/python3.5/trace.py)
+	  461     0%   trace   (.../lib/python3.6/trace.py)
 	    7   100%   trace_example.main   (trace_example/main.py)
 	    7    85%   trace_example.recurse
 	(trace_example/recurse.py)
@@ -241,7 +241,7 @@ For a simple list of the functions called, use ``--listfuncs``.
 	recurse(0)
 	
 	functions called:
-	filename: .../lib/python3.5/trace.py, modulename: trace,
+	filename: .../lib/python3.6/trace.py, modulename: trace,
 	funcname: _unsettrace
 	filename: trace_example/main.py, modulename: main, funcname:
 	<module>
@@ -272,7 +272,7 @@ For more details about who is doing the calling, use ``--trackcalls``.
 	
 	calling relationships:
 	
-	*** .../lib/python3.5/trace.py ***
+	*** .../lib/python3.6/trace.py ***
 	    trace.Trace.runctx -> trace._unsettrace
 	  --> trace_example/main.py
 	    trace.Trace.runctx -> main.<module>

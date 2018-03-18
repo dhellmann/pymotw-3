@@ -34,12 +34,12 @@ Running the script produces a tree of files under the directory
 ``example``:
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'find example', interpreter=None))
+.. cog.out(run_script(cog.inFile, 'find example | sort', interpreter=None))
 .. }}}
 
 .. code-block:: none
 
-	$ find example
+	$ find example | sort
 	
 	example
 	example/dir1

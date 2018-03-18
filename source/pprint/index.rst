@@ -43,8 +43,8 @@ passed in as an argument (or ``sys.stdout`` by default).
 	$ python3 pprint_pprint.py
 	
 	PRINT:
-	[(1, {'c': 'C', 'b': 'B', 'd': 'D', 'a': 'A'}), (2, {'k': 'K', 'i': 
-	'I', 'g': 'G', 'f': 'F', 'e': 'E', 'h': 'H', 'l': 'L', 'j': 'J'}), (
+	[(1, {'a': 'A', 'b': 'B', 'c': 'C', 'd': 'D'}), (2, {'e': 'E', 'f': 
+	'F', 'g': 'G', 'h': 'H', 'i': 'I', 'j': 'J', 'k': 'K', 'l': 'L'}), (
 	3, ['m', 'n']), (4, ['o', 'p', 'q']), (5, ['r', 's', 'tu', 'v', 'x',
 	 'y', 'z'])]
 	
@@ -153,8 +153,8 @@ creating a recursive reference.
 
 	$ python3 pprint_recursion.py
 	
-	id(local_data) => 4324368136
-	['a', 'b', 1, 2, <Recursion on list with id=4324368136>]
+	id(local_data) => 4358913288
+	['a', 'b', 1, 2, <Recursion on list with id=4358913288>]
 
 .. {{{end}}}
 
@@ -281,6 +281,7 @@ members, they are placed that way.
 
 	$ python3 pprint_compact.py
 	
+	DEFAULT:
 	[(1, {'a': 'A', 'b': 'B', 'c': 'C', 'd': 'D'}),
 	 (2,
 	  {'e': 'E',
@@ -294,6 +295,8 @@ members, they are placed that way.
 	 (3, ['m', 'n']),
 	 (4, ['o', 'p', 'q']),
 	 (5, ['r', 's', 'tu', 'v', 'x', 'y', 'z'])]
+	
+	COMPACT:
 	[(1, {'a': 'A', 'b': 'B', 'c': 'C', 'd': 'D'}),
 	 (2,
 	  {'e': 'E',

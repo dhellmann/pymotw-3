@@ -40,25 +40,25 @@ filename extensions, and version details.
 
 	$ python3 sysconfig_get_config_vars.py
 	
-	Found 665 configuration settings
+	Found 663 configuration settings
 	
 	Some highlights:
 	
 	 Installation prefixes:
-	  prefix=/Library/Frameworks/Python.framework/Versions/3.5
-	  exec_prefix=/Library/Frameworks/Python.framework/Versions/3.5
+	  prefix=/Library/Frameworks/Python.framework/Versions/3.6
+	  exec_prefix=/Library/Frameworks/Python.framework/Versions/3.6
 	
 	 Version info:
-	  py_version=3.5.2
-	  py_version_short=3.5
-	  py_version_nodot=35
+	  py_version=3.6.4
+	  py_version_short=3.6
+	  py_version_nodot=36
 	
 	 Base directories:
-	  base=/Users/dhellmann/Envs/pymotw35
-	  platbase=/Users/dhellmann/Envs/pymotw35
-	  userbase=/Users/dhellmann/Library/Python/3.5
-	  srcdir=/Library/Frameworks/Python.framework/Versions/3.5/lib/p
-	ython3.5/config-3.5m
+	  base=/Users/dhellmann/Envs/pymotw36
+	  platbase=/Users/dhellmann/Envs/pymotw36
+	  userbase=/Users/dhellmann/Library/Python/3.6
+	  srcdir=/Library/Frameworks/Python.framework/Versions/3.6/lib/p
+	ython3.6/config-3.6m-darwin
 	
 	 Compiler and linker flags:
 	  LDFLAGS=-arch i386 -arch x86_64  -g
@@ -89,9 +89,9 @@ where modules can be found on the current system.
 	$ python3 sysconfig_get_config_vars_by_name.py
 	
 	Base directories:
-	   /Users/dhellmann/Envs/pymotw35
-	   /Users/dhellmann/Envs/pymotw35
-	   /Users/dhellmann/Library/Python/3.5
+	   /Users/dhellmann/Envs/pymotw36
+	   /Users/dhellmann/Envs/pymotw36
+	   /Users/dhellmann/Library/Python/3.6
 
 .. {{{end}}}
 
@@ -113,7 +113,7 @@ instead of raising an exception.
 
 	$ python3 sysconfig_get_config_var.py
 	
-	User base directory: /Users/dhellmann/Library/Python/3.5
+	User base directory: /Users/dhellmann/Library/Python/3.6
 	Unknown variable   : None
 
 .. {{{end}}}
@@ -231,43 +231,43 @@ user-specific values for ``posix_user``.
 	
 	posix_prefix
 	============
-	prefix = /Users/dhellmann/Envs/pymotw35
+	prefix = /Users/dhellmann/Envs/pymotw36
 	
 	data
 	  .
 	include
-	  ./include/python3.5m
+	  ./include/python3.6m
 	platinclude
-	  ./include/python3.5m
+	  ./include/python3.6m
 	platlib
-	  ./lib/python3.5/site-packages
+	  ./lib/python3.6/site-packages
 	platstdlib
-	  ./lib/python3.5
+	  ./lib/python3.6
 	purelib
-	  ./lib/python3.5/site-packages
+	  ./lib/python3.6/site-packages
 	scripts
 	  ./bin
 	stdlib
-	  ./lib/python3.5
+	  ./lib/python3.6
 	
 	posix_user
 	==========
-	prefix = /Users/dhellmann/Library/Python/3.5
+	prefix = /Users/dhellmann/Library/Python/3.6
 	
 	data
 	  .
 	include
-	  ./include/python3.5
+	  ./include/python3.6
 	platlib
-	  ./lib/python3.5/site-packages
+	  ./lib/python3.6/site-packages
 	platstdlib
-	  ./lib/python3.5
+	  ./lib/python3.6
 	purelib
-	  ./lib/python3.5/site-packages
+	  ./lib/python3.6/site-packages
 	scripts
 	  ./bin
 	stdlib
-	  ./lib/python3.5
+	  ./lib/python3.6
 	
 
 .. {{{end}}}
@@ -293,12 +293,12 @@ because it does not recompute all of the paths each time.
 	
 	posix_prefix
 	============
-	purelib = /Users/dhellmann/Envs/pymotw35/lib/python3.5/site-pack
+	purelib = /Users/dhellmann/Envs/pymotw36/lib/python3.6/site-pack
 	ages
 	
 	posix_user
 	==========
-	purelib = /Users/dhellmann/Library/Python/3.5/lib/python3.5/site
+	purelib = /Users/dhellmann/Library/Python/3.6/lib/python3.6/site
 	-packages
 	
 
@@ -353,12 +353,12 @@ building a version-specific path.
 
 	$ python3 sysconfig_get_python_version.py
 	
-	sysconfig.get_python_version(): 3.5
+	sysconfig.get_python_version(): 3.6
 	
 	sys.version_info:
 	  major       : 3
-	  minor       : 5
-	  micro       : 2
+	  minor       : 6
+	  micro       : 4
 	  releaselevel: final
 	  serial      : 0
 

@@ -68,7 +68,7 @@ data using the RSS format.
 	  <channel>
 	    <title>Sample podcast feed</title>
 	    <description>Generated for PyMOTW</description>
-	    <pubDate>Sun Jul 10 10:45:01 2016</pubDate>
+	    <pubDate>Sun Mar 18 16:20:44 2018</pubDate>
 	    <generator>https://pymotw.com/</generator>
 	  </channel>
 	  <item>
@@ -222,7 +222,7 @@ The backup file is removed when the input is closed.
 	osts.txt
 	
 	Started processing etc_hosts.txt
-	Directory contains: ['etc_hosts.txt', 'etc_hosts.txt.bak']
+	Directory contains: ['etc_hosts.txt.bak', 'etc_hosts.txt']
 	Finished processing
 	Directory contains: ['etc_hosts.txt']
 

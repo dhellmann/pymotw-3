@@ -356,9 +356,9 @@ represented in bytes.
 	$ python3 ospath_properties.py
 	
 	File         : ospath_properties.py
-	Access time  : Fri Aug 26 16:38:05 2016
-	Modified time: Fri Aug 26 15:50:48 2016
-	Change time  : Fri Aug 26 15:50:49 2016
+	Access time  : Sun Mar 18 16:21:22 2018
+	Modified time: Fri Nov 11 17:18:44 2016
+	Change time  : Fri Nov 11 17:18:44 2016
 	Size         : 481
 
 .. {{{end}}}

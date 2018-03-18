@@ -407,22 +407,25 @@ input (when the row contains headers).
 The dictionary-based reader and writer are implemented as wrappers
 around the sequence-based classes, and use the same methods and
 arguments. The only difference in the reader API is that rows are
-returned as dictionaries instead of lists or tuples.
+returned as :ref:`OrderedDict <OrderedDict>` instances instead of
+lists or tuples (under earlier verison of Python, the rows were
+returned as regular ``dict`` instances).
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'csv_dictreader.py testdata.csv'))
+.. cog.out(run_script(cog.inFile, 'csv_dictreader.py testdata.csv', 
+..                    break_lines_at=61))
 .. }}}
 
 .. code-block:: none
 
 	$ python3 csv_dictreader.py testdata.csv
 	
-	{'Title 2': 'a', 'Title 3': '08/18/07', 'Title 4': 'å', 'Title 1
-	': '1'}
-	{'Title 2': 'b', 'Title 3': '08/19/07', 'Title 4': '∫', 'Title 1
-	': '2'}
-	{'Title 2': 'c', 'Title 3': '08/20/07', 'Title 4': 'ç', 'Title 1
-	': '3'}
+	OrderedDict([('Title 1', '1'), ('Title 2', 'a'), ('Title 3', 
+	'08/18/07'), ('Title 4', 'å')])
+	OrderedDict([('Title 1', '2'), ('Title 2', 'b'), ('Title 3', 
+	'08/19/07'), ('Title 4', '∫')])
+	OrderedDict([('Title 1', '3'), ('Title 2', 'c'), ('Title 3', 
+	'08/20/07'), ('Title 4', 'ç')])
 
 .. {{{end}}}
 

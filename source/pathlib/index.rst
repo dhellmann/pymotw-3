@@ -459,9 +459,9 @@ If the path already exists, ``mkdir()`` raises a
 	Traceback (most recent call last):
 	  File "pathlib_mkdir.py", line 16, in <module>
 	    p.mkdir()
-	  File ".../lib/python3.5/pathlib.py", line 1214, in mkdir
+	  File ".../lib/python3.6/pathlib.py", line 1226, in mkdir
 	    self._accessor.mkdir(self, mode)
-	  File ".../lib/python3.5/pathlib.py", line 371, in wrapped
+	  File ".../lib/python3.6/pathlib.py", line 387, in wrapped
 	    return strfunc(str(pathobj), *args)
 	FileExistsError: [Errno 17] File exists: 'example_dir'
 
@@ -556,21 +556,21 @@ installed. Try passing different filenames on the command line to
 	  Size: 607
 	  Permissions: 0o100644
 	  Owner: 527
-	  Device: 16777218
-	  Created      : Thu Dec 29 12:25:25 2016
-	  Last modified: Thu Dec 29 12:25:25 2016
-	  Last accessed: Thu Dec 29 12:25:34 2016
+	  Device: 16777220
+	  Created      : Thu Dec 29 12:38:23 2016
+	  Last modified: Thu Dec 29 12:38:23 2016
+	  Last accessed: Sun Mar 18 16:21:41 2018
 
 	$ python3 pathlib_stat.py index.rst
 	
 	index.rst:
-	  Size: 19363
+	  Size: 19569
 	  Permissions: 0o100644
 	  Owner: 527
-	  Device: 16777218
-	  Created      : Thu Dec 29 11:27:58 2016
-	  Last modified: Thu Dec 29 11:27:58 2016
-	  Last accessed: Thu Dec 29 12:25:33 2016
+	  Device: 16777220
+	  Created      : Sun Mar 18 16:11:31 2018
+	  Last modified: Sun Mar 18 16:11:31 2018
+	  Last accessed: Sun Mar 18 16:21:40 2018
 
 .. {{{end}}}
 
@@ -618,14 +618,14 @@ subsequent runs.
 	$ python3 pathlib_touch.py
 	
 	creating new
-	Start: Thu Dec 29 12:25:34 2016
-	End  : Thu Dec 29 12:25:35 2016
+	Start: Sun Mar 18 16:21:41 2018
+	End  : Sun Mar 18 16:21:42 2018
 
 	$ python3 pathlib_touch.py
 	
 	already exists
-	Start: Thu Dec 29 12:25:35 2016
-	End  : Thu Dec 29 12:25:36 2016
+	Start: Sun Mar 18 16:21:42 2018
+	End  : Sun Mar 18 16:21:43 2018
 
 .. {{{end}}}
 
@@ -691,9 +691,9 @@ is also an error to try to remove a directory that is not empty.
 	Traceback (most recent call last):
 	  File "pathlib_rmdir.py", line 16, in <module>
 	    p.rmdir()
-	  File ".../lib/python3.5/pathlib.py", line 1262, in rmdir
+	  File ".../lib/python3.6/pathlib.py", line 1270, in rmdir
 	    self._accessor.rmdir(self)
-	  File ".../lib/python3.5/pathlib.py", line 371, in wrapped
+	  File ".../lib/python3.6/pathlib.py", line 387, in wrapped
 	    return strfunc(str(pathobj), *args)
 	FileNotFoundError: [Errno 2] No such file or directory:
 	'example_dir'

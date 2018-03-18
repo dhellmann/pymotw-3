@@ -45,7 +45,6 @@ The output looks like:
 	16 17 18 19 20 21 22
 	23 24 25 26 27 28 29
 	30 31
-	 
 
 .. {{{end}}}
 
@@ -189,7 +188,7 @@ the regular ``TextCalendar``.
 	17 18 19 20 21 22 23
 	24 25 26 27 28 29 30
 	31
-	 
+	
 	    juillet 2017
 	Lu Ma Me Je Ve Sa Di
 	                1  2
@@ -198,7 +197,6 @@ the regular ``TextCalendar``.
 	17 18 19 20 21 22 23
 	24 25 26 27 28 29 30
 	31
-	 
 
 .. {{{end}}}
 

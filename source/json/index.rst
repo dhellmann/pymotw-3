@@ -38,8 +38,8 @@ Values are encoded in a manner superficially similar to Python's
 
 	$ python3 json_simple_types.py
 	
-	DATA: [{'c': 3.0, 'b': (2, 4), 'a': 'A'}]
-	JSON: [{"c": 3.0, "b": [2, 4], "a": "A"}]
+	DATA: [{'a': 'A', 'b': (2, 4), 'c': 3.0}]
+	JSON: [{"a": "A", "b": [2, 4], "c": 3.0}]
 
 .. {{{end}}}
 
@@ -60,9 +60,9 @@ In particular, tuples become lists.
 
 	$ python3 json_simple_types_decode.py
 	
-	DATA   : [{'c': 3.0, 'b': (2, 4), 'a': 'A'}]
-	ENCODED: [{"c": 3.0, "b": [2, 4], "a": "A"}]
-	DECODED: [{'c': 3.0, 'b': [2, 4], 'a': 'A'}]
+	DATA   : [{'a': 'A', 'b': (2, 4), 'c': 3.0}]
+	ENCODED: [{"a": "A", "b": [2, 4], "c": 3.0}]
+	DECODED: [{'a': 'A', 'b': [2, 4], 'c': 3.0}]
 	ORIGINAL: <class 'tuple'>
 	DECODED : <class 'list'>
 
@@ -92,10 +92,10 @@ possible to compare JSON output in tests.
 
 	$ python3 json_sort_keys.py
 	
-	DATA: [{'c': 3.0, 'b': (2, 4), 'a': 'A'}]
-	JSON: [{"c": 3.0, "b": [2, 4], "a": "A"}]
+	DATA: [{'a': 'A', 'b': (2, 4), 'c': 3.0}]
+	JSON: [{"a": "A", "b": [2, 4], "c": 3.0}]
 	SORT: [{"a": "A", "b": [2, 4], "c": 3.0}]
-	UNSORTED MATCH: False
+	UNSORTED MATCH: True
 	SORTED MATCH  : True
 
 .. {{{end}}}
@@ -119,7 +119,7 @@ the data structure matching the indent level.
 
 	$ python3 json_indent.py
 	
-	DATA: [{'c': 3.0, 'b': (2, 4), 'a': 'A'}]
+	DATA: [{'a': 'A', 'b': (2, 4), 'c': 3.0}]
 	NORMAL: [{"a": "A", "b": [2, 4], "c": 3.0}]
 	INDENT: [
 	  {
@@ -157,7 +157,7 @@ the whitespace, a more compact output is produced.
 
 	$ python3 json_compact_encoding.py
 	
-	DATA: [{'c': 3.0, 'b': (2, 4), 'a': 'A'}]
+	DATA: [{'a': 'A', 'b': (2, 4), 'c': 3.0}]
 	repr(data)             : 35
 	dumps(data)            : 35
 	dumps(data, indent=2)  : 73
@@ -192,7 +192,7 @@ Rather than raising an exception, the non-string key is ignored.
 	ERROR: keys must be a string
 	
 	Second attempt
-	[{"c": 3.0, "b": [2, 4], "a": "A"}]
+	[{"a": "A", "b": [2, 4], "c": 3.0}]
 
 .. {{{end}}}
 
@@ -232,12 +232,12 @@ necessary.
 	$ python3 json_dump_default.py
 	
 	First attempt
-	ERROR: <MyObj(instance value goes here)> is not JSON serializable
+	ERROR: Object of type 'MyObj' is not JSON serializable
 	
 	With default
 	default( <MyObj(instance value goes here)> )
-	{"s": "instance value goes here", "__module__": "json_myobj",
-	"__class__": "MyObj"}
+	{"__class__": "MyObj", "__module__": "json_myobj", "s": "instance
+	value goes here"}
 
 .. {{{end}}}
 
@@ -307,9 +307,9 @@ any size value.
 	
 	PART: [
 	PART: {
-	PART: "c"
+	PART: "a"
 	PART: : 
-	PART: 3.0
+	PART: "A"
 	PART: , 
 	PART: "b"
 	PART: : 
@@ -317,9 +317,9 @@ any size value.
 	PART: , 4
 	PART: ]
 	PART: , 
-	PART: "a"
+	PART: "c"
 	PART: : 
-	PART: "A"
+	PART: 3.0
 	PART: }
 	PART: ]
 
@@ -350,8 +350,8 @@ The output is the same as the previous implementation.
 	
 	<MyObj(internal data)>
 	default( <MyObj(internal data)> )
-	{"s": "internal data", "__module__": "json_myobj", "__class__":
-	"MyObj"}
+	{"__class__": "MyObj", "__module__": "json_myobj", "s": "internal
+	data"}
 
 .. {{{end}}}
 
@@ -405,7 +405,7 @@ A socket or normal file handle would work the same way as the
 
 	$ python3 json_dump_file.py
 	
-	[{"c": 3.0, "b": [2, 4], "a": "A"}]
+	[{"a": "A", "b": [2, 4], "c": 3.0}]
 
 .. {{{end}}}
 
@@ -428,7 +428,7 @@ Just as for ``dump()``, any file-like object can be passed to
 
 	$ python3 json_load_file.py
 	
-	[{'c': 3.0, 'b': [2, 4], 'a': 'A'}]
+	[{'a': 'A', 'c': 3.0, 'b': [2, 4]}]
 
 .. {{{end}}}
 
@@ -458,7 +458,7 @@ of the input.
 	$ python3 json_mixed_data.py
 	
 	JSON first:
-	Object              : [{'c': 3.0, 'b': [2, 4], 'a': 'A'}]
+	Object              : [{'a': 'A', 'c': 3.0, 'b': [2, 4]}]
 	End of parsed input : 35
 	Remaining text      : ' This text is not JSON.'
 	

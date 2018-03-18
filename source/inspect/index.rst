@@ -63,9 +63,9 @@ actually part of the module and the list is long.
 	
 	A : <class 'example.A'>
 	B : <class 'example.B'>
-	instance_of_a : <example.A object at 0x1014844e0>
+	instance_of_a : <example.A object at 0x1045a6978>
 	module_level_function : <function module_level_function at
-	0x101486c80>
+	0x1045be8c8>
 
 .. {{{end}}}
 
@@ -122,12 +122,12 @@ methods, slots, and other members of the class.
 	objects>,
 	                '__doc__': 'The A class.',
 	                '__init__': <function A.__init__ at
-	0x101b99510>,
+	0x1045b3158>,
 	                '__module__': 'example',
 	                '__weakref__': <attribute '__weakref__' of 'A'
 	objects>,
 	                'get_name': <function A.get_name at
-	0x101b99598>})),
+	0x1045b31e0>})),
 	 ('__dir__', <method '__dir__' of 'object' objects>),
 	 ('__doc__', 'The A class.'),
 	 ('__eq__', <slot wrapper '__eq__' of 'object' objects>),
@@ -137,13 +137,16 @@ methods, slots, and other members of the class.
 	  <slot wrapper '__getattribute__' of 'object' objects>),
 	 ('__gt__', <slot wrapper '__gt__' of 'object' objects>),
 	 ('__hash__', <slot wrapper '__hash__' of 'object' objects>),
-	 ('__init__', <function A.__init__ at 0x101b99510>),
+	 ('__init__', <function A.__init__ at 0x1045b3158>),
+	 ('__init_subclass__',
+	  <built-in method __init_subclass__ of type object at
+	0x101d12d58>),
 	 ('__le__', <slot wrapper '__le__' of 'object' objects>),
 	 ('__lt__', <slot wrapper '__lt__' of 'object' objects>),
 	 ('__module__', 'example'),
 	 ('__ne__', <slot wrapper '__ne__' of 'object' objects>),
 	 ('__new__',
-	  <built-in method __new__ of type object at 0x10022bb20>),
+	  <built-in method __new__ of type object at 0x100996700>),
 	 ('__reduce__', <method '__reduce__' of 'object' objects>),
 	 ('__reduce_ex__', <method '__reduce_ex__' of 'object'
 	objects>),
@@ -154,9 +157,9 @@ methods, slots, and other members of the class.
 	 ('__str__', <slot wrapper '__str__' of 'object' objects>),
 	 ('__subclasshook__',
 	  <built-in method __subclasshook__ of type object at
-	0x10045d678>),
+	0x101d12d58>),
 	 ('__weakref__', <attribute '__weakref__' of 'A' objects>),
-	 ('get_name', <function A.get_name at 0x101b99598>)]
+	 ('get_name', <function A.get_name at 0x1045b31e0>)]
 
 .. {{{end}}}
 
@@ -178,8 +181,8 @@ Only unbound methods are returned now.
 
 	$ python3 inspect_getmembers_class_methods.py
 	
-	[('__init__', <function A.__init__ at 0x101c8e510>),
-	 ('get_name', <function A.get_name at 0x101c8e598>)]
+	[('__init__', <function A.__init__ at 0x1045b2158>),
+	 ('get_name', <function A.get_name at 0x1045b21e0>)]
 
 .. {{{end}}}
 
@@ -202,9 +205,9 @@ identified as being methods of ``B``.
 
 	$ python3 inspect_getmembers_class_methods_b.py
 	
-	[('__init__', <function A.__init__ at 0x101c9d510>),
-	 ('do_something', <function B.do_something at 0x101c9d620>),
-	 ('get_name', <function B.get_name at 0x101c9d6a8>)]
+	[('__init__', <function A.__init__ at 0x103dc5158>),
+	 ('do_something', <function B.do_something at 0x103dc5268>),
+	 ('get_name', <function B.get_name at 0x103dc52f0>)]
 
 .. {{{end}}}
 
@@ -229,9 +232,9 @@ The predicate ``ismethod()`` recognizes two bound methods from
 	$ python3 inspect_getmembers_instance.py
 	
 	[('__init__', <bound method A.__init__ of <example.A object at 0
-	x1012b2be0>>),
+	x101d9c0f0>>),
 	 ('get_name', <bound method A.get_name of <example.A object at 0
-	x1012b2be0>>)]
+	x101d9c0f0>>)]
 
 .. {{{end}}}
 
@@ -650,7 +653,7 @@ frame's dictionary of local variables.
 	
 	line 14 of inspect_currentframe.py
 	locals:
-	{'frame': <frame object at 0x101ac7b88>,
+	{'frame': <frame object at 0x10458d408>,
 	 'keyword': 'changed value of argument',
 	 'kwonly': 'must be named',
 	 'limit': 2,
@@ -658,7 +661,7 @@ frame's dictionary of local variables.
 	
 	line 14 of inspect_currentframe.py
 	locals:
-	{'frame': <frame object at 0x1007533b8>,
+	{'frame': <frame object at 0x101b1ba18>,
 	 'keyword': 'changed value of argument',
 	 'kwonly': 'must be named',
 	 'limit': 1,
@@ -666,7 +669,7 @@ frame's dictionary of local variables.
 	
 	line 14 of inspect_currentframe.py
 	locals:
-	{'frame': <frame object at 0x100753a28>,
+	{'frame': <frame object at 0x101b2cdc8>,
 	 'keyword': 'changed value of argument',
 	 'kwonly': 'must be named',
 	 'limit': 0,
@@ -698,7 +701,7 @@ The last part of the output represents the main program, outside of the
 	
 	inspect_stack.py[11]
 	  -> for level in inspect.stack():
-	{'level': FrameInfo(frame=<frame object at 0x101c6f5d0>,
+	{'level': FrameInfo(frame=<frame object at 0x1045823f8>,
 	filename='inspect_stack.py', lineno=11, function='show_stack',
 	code_context=['    for level in inspect.stack():\n'], index=0)}
 	
@@ -716,20 +719,21 @@ The last part of the output represents the main program, outside of the
 	
 	inspect_stack.py[31]
 	  -> recurse(2)
-	{'__builtins__': <module 'builtins' (built-in)>,
+	{'__annotations__': {},
+	 '__builtins__': <module 'builtins' (built-in)>,
 	 '__cached__': None,
 	 '__doc__': 'Inspecting the call stack.\n',
 	 '__file__': 'inspect_stack.py',
 	 '__loader__': <_frozen_importlib_external.SourceFileLoader
-	object at 0x1018a9828>,
+	object at 0x101f9c080>,
 	 '__name__': '__main__',
 	 '__package__': None,
 	 '__spec__': None,
 	 'inspect': <module 'inspect' from
-	'.../lib/python3.5/inspect.py'>,
-	 'pprint': <module 'pprint' from '.../lib/python3.5/pprint.py'>,
-	 'recurse': <function recurse at 0x101c9b400>,
-	 'show_stack': <function show_stack at 0x1018a6a60>}
+	'.../lib/python3.6/inspect.py'>,
+	 'pprint': <module 'pprint' from '.../lib/python3.6/pprint.py'>,
+	 'recurse': <function recurse at 0x1045b9f28>,
+	 'show_stack': <function show_stack at 0x101f21e18>}
 	
 
 .. {{{end}}}
@@ -761,9 +765,9 @@ to be printed instead of the source.
 	
 	Target: example
 	Origin: .../example.py
-	Cached: .../__pycache__/example.cpython-35.pyc
+	Cached: .../__pycache__/example.cpython-36.pyc
 	Loader: <_frozen_importlib_external.SourceFileLoader object at 0
-	x101d27898>
+	x103e16fd0>
 	
 	
 
@@ -771,7 +775,7 @@ to be printed instead of the source.
 	
 	Target: example:A
 	Origin: .../example.py
-	Cached: .../__pycache__/example.cpython-35.pyc
+	Cached: .../__pycache__/example.cpython-36.pyc
 	Line: 16
 	
 	

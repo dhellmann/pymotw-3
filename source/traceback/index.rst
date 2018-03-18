@@ -157,7 +157,7 @@ exception message.
 	$ python3 traceback_tracebackexception.py
 	
 	with no exception:
-	None
+	None: None
 	
 	
 	with exception:
@@ -204,7 +204,7 @@ the informational and traceback messages are mingled correctly:
 	$ python3 traceback_print_exc.py
 	
 	print_exc() with no exception:
-	NoneType
+	NoneType: None
 	
 	print_exc():
 	Traceback (most recent call last):

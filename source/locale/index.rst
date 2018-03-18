@@ -470,11 +470,11 @@ the current date and time.
 
 	$ python3 locale_date.py
 	
-	       USA: Fri Aug  5 17:33:31 2016
-	    France: Ven  5 aoû 17:33:31 2016
-	     Spain: vie  5 ago 17:33:31 2016
-	  Portugal: Sex  5 Ago 17:33:31 2016
-	    Poland: ptk  5 sie 17:33:31 2016
+	       USA: Sun Mar 18 16:20:59 2018
+	    France: Dim 18 mar 16:20:59 2018
+	     Spain: dom 18 mar 16:20:59 2018
+	  Portugal: Dom 18 Mar 16:20:59 2018
+	    Poland: ndz 18 mar 16:20:59 2018
 
 .. {{{end}}}
 

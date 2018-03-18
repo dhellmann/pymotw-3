@@ -35,14 +35,19 @@ The contents of ``sys.modules`` change as new modules are imported.
 
 	$ python3 sys_modules.py
 	
-	__main__, _bootlocale, _codecs, _collections_abc,
-	_frozen_importlib, _frozen_importlib_external, _imp, _io,
-	_locale, _signal, _sre, _stat, _thread, _warnings, _weakref,
-	_weakrefset, abc, builtins, codecs, copyreg, encodings,
-	encodings.aliases, encodings.latin_1, encodings.utf_8, errno,
-	genericpath, io, marshal, os, os.path, posix, posixpath, re,
-	site, sre_compile, sre_constants, sre_parse, stat, sys,
-	textwrap, zipimport
+	__main__, _bootlocale, _codecs, _collections, _collections_abc,
+	_frozen_importlib, _frozen_importlib_external, _functools,
+	_heapq, _imp, _io, _locale, _operator, _signal, _sre, _stat,
+	_thread, _warnings, _weakref, _weakrefset, abc, builtins,
+	codecs, collections, collections.abc, contextlib, copyreg,
+	encodings, encodings.aliases, encodings.latin_1,
+	encodings.utf_8, enum, errno, functools, genericpath, heapq,
+	importlib, importlib._bootstrap, importlib._bootstrap_external,
+	importlib.abc, importlib.machinery, importlib.util, io,
+	itertools, keyword, marshal, operator, os, os.path, posix,
+	posixpath, re, reprlib, site, sphinxcontrib, sre_compile,
+	sre_constants, sre_parse, stat, sys, textwrap, types, warnings,
+	weakref, zipimport
 
 .. {{{end}}}
 
@@ -208,7 +213,7 @@ real path on the file system. This test prevents the
 	Path hook: <class 'zipimport.zipimporter'>
 	Path hook: <function
 	FileFinder.path_hook.<locals>.path_hook_for_FileFinder at
-	0x100734950>
+	0x101afb6a8>
 	Path hook: <class '__main__.NoisyImportFinder'>
 	importing target_module
 	Checking NoisyImportFinder_PATH_TRIGGER: works
@@ -305,12 +310,12 @@ preserved as module-level attributes.
 	  __file__   : /tmp/pymotw_import_example.shelve/package
 	  __path__   : ['/tmp/pymotw_import_example.shelve']
 	  __loader__ : <sys_shelve_importer.ShelveLoader object at
-	0x101467860>
+	0x104589b70>
 	
 	Global settings:
 	sys.modules entry:
 	<module 'package' (<sys_shelve_importer.ShelveLoader object at
-	0x101467860>)>
+	0x104589b70>)>
 
 .. {{{end}}}
 
@@ -367,7 +372,7 @@ constructs and returns a ``module`` instance.
 	  __file__   : /tmp/pymotw_import_example.shelve/package.module1
 	  __path__   : /tmp/pymotw_import_example.shelve
 	  __loader__ : <sys_shelve_importer.ShelveLoader object at
-	0x101376e10>
+	0x10457dc18>
 	
 	Import of "package.subpackage.module2":
 	
@@ -399,7 +404,7 @@ constructs and returns a ``module`` instance.
 	/tmp/pymotw_import_example.shelve/package.subpackage.module2
 	  __path__   : /tmp/pymotw_import_example.shelve
 	  __loader__ : <sys_shelve_importer.ShelveLoader object at
-	0x1013a6c88>
+	0x1045b5080>
 
 .. {{{end}}}
 

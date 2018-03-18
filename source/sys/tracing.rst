@@ -72,13 +72,13 @@ write to ``sys.stdout``.
 	$ python3 sys_settrace_call.py
 	
 	* Call to a
-	*  on line 32 of sys_settrace_call.py
-	*  from line 38 of sys_settrace_call.py
+	*  on line 35 of sys_settrace_call.py
+	*  from line 41 of sys_settrace_call.py
 	inside a()
 	
 	* Call to b
-	*  on line 28 of sys_settrace_call.py
-	*  from line 34 of sys_settrace_call.py
+	*  on line 31 of sys_settrace_call.py
+	*  from line 37 of sys_settrace_call.py
 	inside b()
 	
 
@@ -109,14 +109,14 @@ In this example, the list of functions is kept in the variable
 
 	$ python3 sys_settrace_line.py
 	
-	* Call to a on line 46 of sys_settrace_line.py
-	* Call to b on line 40 of sys_settrace_line.py
-	*  b line 41
-	*  b line 42
-	* Call to c on line 35 of sys_settrace_line.py
+	* Call to a on line 49 of sys_settrace_line.py
+	* Call to b on line 43 of sys_settrace_line.py
+	*  b line 44
+	*  b line 45
+	* Call to c on line 38 of sys_settrace_line.py
 	input = 10
 	Leaving c()
-	*  b line 43
+	*  b line 46
 	Leaving b()
 	Leaving a()
 
@@ -148,9 +148,9 @@ when a function is called, so the return value can be monitored.
 
 	$ python3 sys_settrace_return.py
 	
-	* Call to a on line 29 of sys_settrace_return.py
+	* Call to a on line 32 of sys_settrace_return.py
 	inside a()
-	* Call to b on line 24 of sys_settrace_return.py
+	* Call to b on line 27 of sys_settrace_return.py
 	inside b()
 	* b => response_from_b 
 	* a => response_from_b response_from_b 

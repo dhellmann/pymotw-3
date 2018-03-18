@@ -341,7 +341,7 @@ the input type, making test failures easier to understand and correct.
 	  File ".../unittest_equality_container.py", line 21, in
 	testDict
 	    {'a': 1, 'b': 3},
-	AssertionError: {'b': 2, 'a': 1} != {'b': 3, 'a': 1}
+	AssertionError: {'a': 1, 'b': 2} != {'a': 1, 'b': 3}
 	- {'a': 1, 'b': 2}
 	?               ^
 	
@@ -438,7 +438,7 @@ the input type, making test failures easier to understand and correct.
 	
 	
 	----------------------------------------------------------------
-	Ran 7 tests in 0.004s
+	Ran 7 tests in 0.005s
 	
 	FAILED (failures=7)
 
@@ -583,7 +583,7 @@ and test methods is apparent.
 	In tearDownModule()
 	
 	----------------------------------------------------------------
-	Ran 2 tests in 0.001s
+	Ran 2 tests in 0.000s
 	
 	OK
 
@@ -618,7 +618,7 @@ This example test creates a temporary directory and then uses
 	ok
 	
 	----------------------------------------------------------------
-	Ran 2 tests in 0.003s
+	Ran 2 tests in 0.002s
 	
 	OK
 

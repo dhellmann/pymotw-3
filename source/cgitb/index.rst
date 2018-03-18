@@ -80,8 +80,8 @@ the line where the actual exception is generated.
 	$ python3 cgitb_local_vars.py
 	
 	ZeroDivisionError
-	Python 3.5.2: .../bin/python3
-	Thu Dec 29 09:30:37 2016
+	Python 3.6.4: .../bin/python3
+	Sun Mar 18 16:20:19 2018
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
@@ -138,6 +138,8 @@ the line where the actual exception is generated.
 	    object>
 	    __init__ = <method-wrapper '__init__' of ZeroDivisionError
 	    object>
+	    __init_subclass__ = <built-in method __init_subclass__ of
+	    type object>
 	    __le__ = <method-wrapper '__le__' of ZeroDivisionError
 	    object>
 	    __lt__ = <method-wrapper '__lt__' of ZeroDivisionError
@@ -228,8 +230,8 @@ error-prone code.
 	$ python3 cgitb_with_classes.py
 	
 	ZeroDivisionError
-	Python 3.5.2: .../bin/python3
-	Thu Dec 29 09:30:37 2016
+	Python 3.6.4: .../bin/python3
+	Sun Mar 18 16:20:19 2018
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
@@ -294,6 +296,8 @@ error-prone code.
 	    object>
 	    __init__ = <method-wrapper '__init__' of ZeroDivisionError
 	    object>
+	    __init_subclass__ = <built-in method __init_subclass__ of
+	    type object>
 	    __le__ = <method-wrapper '__le__' of ZeroDivisionError
 	    object>
 	    __lt__ = <method-wrapper '__lt__' of ZeroDivisionError
@@ -363,8 +367,8 @@ standard ``message`` and ``args`` values.
 	$ python3 cgitb_exception_properties.py
 	
 	MyException
-	Python 3.5.2: .../bin/python3
-	Thu Dec 29 09:30:37 2016
+	Python 3.6.4: .../bin/python3
+	Sun Mar 18 16:20:19 2018
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
@@ -398,6 +402,8 @@ standard ``message`` and ``args`` values.
 	    __hash__ = <method-wrapper '__hash__' of MyException object>
 	    __init__ = <bound method MyException.__init__ of
 	    MyException('Normal message',)>
+	    __init_subclass__ = <built-in method __init_subclass__ of
+	    type object>
 	    __le__ = <method-wrapper '__le__' of MyException object>
 	    __lt__ = <method-wrapper '__lt__' of MyException object>
 	    __module__ = '__main__'
@@ -481,17 +487,17 @@ describing where to go to find the error log.
 	$ python3 cgitb_log_exception.py
 	
 	<p>A problem occurred in a Python script.
-	.../LOGS/tmptxqq_6yx.txt contains the description of this error.
+	.../LOGS/tmpq7icvee3.txt contains the description of this error.
 
 	$ ls LOGS
 	
-	tmptxqq_6yx.txt
+	tmpq7icvee3.txt
 
 	$ cat LOGS/*.txt
 	
 	ZeroDivisionError
-	Python 3.5.2: .../bin/python3
-	Thu Dec 29 09:30:38 2016
+	Python 3.6.4: .../bin/python3
+	Sun Mar 18 16:20:19 2018
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
@@ -538,6 +544,8 @@ describing where to go to find the error log.
 	    object>
 	    __init__ = <method-wrapper '__init__' of ZeroDivisionError
 	    object>
+	    __init_subclass__ = <built-in method __init_subclass__ of
+	    type object>
 	    __le__ = <method-wrapper '__le__' of ZeroDivisionError
 	    object>
 	    __lt__ = <method-wrapper '__lt__' of ZeroDivisionError

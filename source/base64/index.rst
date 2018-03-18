@@ -44,14 +44,14 @@ expand to 248 bytes after being encoded.
 
 	$ python3 base64_b64encode.py
 	
-	185 bytes before encoding
-	Expect 1 padding bytes
+	184 bytes before encoding
+	Expect 2 padding bytes
 	248 bytes after encoding
 	
-	b'CgppbXBvcnQgYmFzZTY0CmltcG9ydCB0ZXh0d3JhcAoKIyBMb2FkIHRoaXMgc2
-	91cmNlIGZpbGUgYW5kIHN0cmlwIHRoZSBoZWFkZXIuCndpdGggb3BlbihfX2ZpbG
-	VfXywgJ3InLCBlbmNvZGluZz0ndXRmLTgnKSBhcyBpbnB1dDoKICAgIHJhdyA9IG
-	lucHV0LnJlYWQoKQogICAgaW5pdGlhbF9kYXRhID0gcmF3LnNwbGl0KCc='
+	b'CmltcG9ydCBiYXNlNjQKaW1wb3J0IHRleHR3cmFwCgojIExvYWQgdGhpcyBzb3
+	VyY2UgZmlsZSBhbmQgc3RyaXAgdGhlIGhlYWRlci4Kd2l0aCBvcGVuKF9fZmlsZV
+	9fLCAncicsIGVuY29kaW5nPSd1dGYtOCcpIGFzIGlucHV0OgogICAgcmF3ID0gaW
+	5wdXQucmVhZCgpCiAgICBpbml0aWFsX2RhdGEgPSByYXcuc3BsaXQoJw=='
 
 .. {{{end}}}
 

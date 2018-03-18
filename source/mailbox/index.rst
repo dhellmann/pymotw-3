@@ -56,7 +56,7 @@ messages.
 
 	$ python3 mailbox_mbox_create.py
 	
-	From MAILER-DAEMON Thu Dec 29 17:23:56 2016
+	From MAILER-DAEMON Sun Mar 18 20:20:59 2018
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -65,7 +65,7 @@ messages.
 	>From (will not be escaped).
 	There are 3 lines.
 	
-	From MAILER-DAEMON Thu Dec 29 17:23:56 2016
+	From MAILER-DAEMON Sun Mar 18 20:20:59 2018
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 2
@@ -128,7 +128,7 @@ changes to be written to disk.
 	$ python3 mailbox_mbox_remove.py
 	
 	Removing: 1
-	From MAILER-DAEMON Thu Dec 29 17:23:56 2016
+	From MAILER-DAEMON Sun Mar 18 20:20:59 2018
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -184,13 +184,20 @@ subdirectory.
 	$ python3 mailbox_maildir_create.py
 	
 	Example
-	  Directories: ['cur', 'new', 'tmp']
-	Example/cur
-	  Directories: []
+	  Directories: ['new', 'cur', 'tmp']
 	Example/new
 	  Directories: []
 	
-	*** Example/new/1483032236.M378880P24253Q1.hubert.local
+	*** Example/new/1521404460.M306174P41689Q2.hubert.local
+	From: Author <author@example.com>
+	To: Recipient <recipient@example.com>
+	Subject: Sample message 2
+	
+	This is the second body.
+	
+	********************
+	
+	*** Example/new/1521404460.M303200P41689Q1.hubert.local
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -200,15 +207,8 @@ subdirectory.
 	There are 3 lines.
 	
 	********************
-	
-	*** Example/new/1483032236.M381366P24253Q2.hubert.local
-	From: Author <author@example.com>
-	To: Recipient <recipient@example.com>
-	Subject: Sample message 2
-	
-	This is the second body.
-	
-	********************
+	Example/cur
+	  Directories: []
 	Example/tmp
 	  Directories: []
 
@@ -242,13 +242,13 @@ arguments for ``set_subdir()`` are "``cur``" and "``new``".
 	cur    "Sample message 1"
 	
 	Example
-	  Directories: ['cur', 'new', 'tmp']
-	Example/cur
-	  Directories: []
-	Example/cur/1483032236.M378880P24253Q1.hubert.local
-	Example/cur/1483032236.M381366P24253Q2.hubert.local
+	  Directories: ['new', 'cur', 'tmp']
 	Example/new
 	  Directories: []
+	Example/cur
+	  Directories: []
+	Example/cur/1521404460.M306174P41689Q2.hubert.local
+	Example/cur/1521404460.M303200P41689Q1.hubert.local
 	Example/tmp
 	  Directories: []
 
@@ -302,13 +302,15 @@ mailbox at the same time.
 
 	$ python3 mailbox_maildir_remove.py
 	
-	Removing: 1483032236.M381366P24253Q2.hubert.local
+	Removing: 1521404460.M306174P41689Q2.hubert.local
 	Example
-	  Directories: ['cur', 'new', 'tmp']
+	  Directories: ['new', 'cur', 'tmp']
+	Example/new
+	  Directories: []
 	Example/cur
 	  Directories: []
 	
-	*** Example/cur/1483032236.M378880P24253Q1.hubert.local
+	*** Example/cur/1521404460.M303200P41689Q1.hubert.local
 	From: Author <author@example.com>
 	To: Recipient <recipient@example.com>
 	Subject: Sample message 1
@@ -318,8 +320,6 @@ mailbox at the same time.
 	There are 3 lines.
 	
 	********************
-	Example/new
-	  Directories: []
 	Example/tmp
 	  Directories: []
 
@@ -350,44 +350,44 @@ folder name with a period (``.``).
 	$ python3 mailbox_maildir_folders.py
 	
 	Example
-	Example/cur
-	Example/cur/1483032236.M378880P24253Q1.hubert.local
 	Example/new
+	Example/cur
+	Example/cur/1521404460.M303200P41689Q1.hubert.local
 	Example/tmp
 	Example
 	Example/.subfolder
-	Example/.subfolder/cur
 	Example/.subfolder/maildirfolder
 	Example/.subfolder/new
+	Example/.subfolder/cur
 	Example/.subfolder/tmp
-	Example/cur
-	Example/cur/1483032236.M378880P24253Q1.hubert.local
 	Example/new
+	Example/cur
+	Example/cur/1521404460.M303200P41689Q1.hubert.local
 	Example/tmp
 	Example
 	Example/.subfolder
 	Example/.subfolder/.second_level
-	Example/.subfolder/.second_level/cur
 	Example/.subfolder/.second_level/maildirfolder
 	Example/.subfolder/.second_level/new
+	Example/.subfolder/.second_level/cur
 	Example/.subfolder/.second_level/tmp
-	Example/.subfolder/cur
 	Example/.subfolder/maildirfolder
 	Example/.subfolder/new
+	Example/.subfolder/cur
 	Example/.subfolder/tmp
-	Example/cur
-	Example/cur/1483032236.M378880P24253Q1.hubert.local
 	Example/new
+	Example/cur
+	Example/cur/1521404460.M303200P41689Q1.hubert.local
 	Example/tmp
 	Example
 	Example/.subfolder
-	Example/.subfolder/cur
 	Example/.subfolder/maildirfolder
 	Example/.subfolder/new
+	Example/.subfolder/cur
 	Example/.subfolder/tmp
-	Example/cur
-	Example/cur/1483032236.M378880P24253Q1.hubert.local
 	Example/new
+	Example/cur
+	Example/cur/1521404460.M303200P41689Q1.hubert.local
 	Example/tmp
 	Before: []
 	

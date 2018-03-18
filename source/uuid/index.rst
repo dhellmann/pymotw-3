@@ -46,7 +46,7 @@ any one of the values may be returned.
 
 	$ python3 uuid_getnode.py
 	
-	0xc82a14598875
+	0xa860b60304d5
 
 .. {{{end}}}
 
@@ -70,23 +70,23 @@ and ``urn``, are different representations of the UUID value.
 
 	$ python3 uuid_uuid1.py
 	
-	335ea282-cded-11e6-9ede-c82a14598875
+	38332b62-2aea-11e8-b103-a860b60304d5
 	<class 'uuid.UUID'>
-	bytes   : b'3^\xa2\x82\xcd\xed\x11\xe6\x9e\xde\xc8*\x14Y\x88u'
-	hex     : 335ea282cded11e69edec82a14598875
-	int     : 68281999803480928707202152670695098485
-	urn     : urn:uuid:335ea282-cded-11e6-9ede-c82a14598875
+	bytes   : b'83+b*\xea\x11\xe8\xb1\x03\xa8`\xb6\x03\x04\xd5'
+	hex     : 38332b622aea11e8b103a860b60304d5
+	int     : 74702454824994792138317938288475964629
+	urn     : urn:uuid:38332b62-2aea-11e8-b103-a860b60304d5
 	variant : specified in RFC 4122
 	version : 1
-	fields  : (861840002, 52717, 4582, 158, 222, 220083055593589)
-	  time_low            :  861840002
-	  time_mid            :  52717
-	  time_hi_version     :  4582
-	  clock_seq_hi_variant:  158
-	  clock_seq_low       :  222
-	  node                :  220083055593589
-	  time                :  137023257334162050
-	  clock_seq           :  7902
+	fields  : (942877538, 10986, 4584, 177, 3, 185133323977941)
+	  time_low            :  942877538
+	  time_mid            :  10986
+	  time_hi_version     :  4584
+	  clock_seq_hi_variant:  177
+	  clock_seq_low       :  3
+	  node                :  185133323977941
+	  time                :  137406974088391522
+	  clock_seq           :  12547
 
 .. {{{end}}}
 
@@ -108,9 +108,9 @@ string) changes.
 
 	$ python3 uuid_uuid1_repeat.py
 	
-	3369ab5c-cded-11e6-8d5e-c82a14598875
-	336eea22-cded-11e6-9943-c82a14598875
-	336eeb5e-cded-11e6-9e22-c82a14598875
+	3842ca28-2aea-11e8-8fec-a860b60304d5
+	3844cd18-2aea-11e8-aca3-a860b60304d5
+	3844cdf4-2aea-11e8-ac38-a860b60304d5
 
 .. {{{end}}}
 
@@ -134,8 +134,8 @@ of the UUID also changes.
 
 	$ python3 uuid_uuid1_othermac.py
 	
-	337969be-cded-11e6-97fa-001ec200d9e0 0x1ec200d9e0
-	3379b7e6-cded-11e6-9d72-001e5274040e 0x1e5274040e
+	3851ea50-2aea-11e8-936d-001ec200d9e0 0x1ec200d9e0
+	3852caa6-2aea-11e8-a805-001e5274040e 0x1e5274040e
 
 .. {{{end}}}
 
@@ -244,9 +244,9 @@ used.
 
 	$ python3 uuid_uuid4.py
 	
-	7821863a-06f0-4109-9b88-59ba1ca5cc04
-	44846e16-4a59-4a21-8c8e-008f169c2dd5
-	1f3cef3c-e2bc-4877-96c8-eba43bf15bb6
+	74695723-65ed-4170-af77-b9f22608535d
+	db199e25-e292-41cd-b488-80a8f99d163a
+	196750b3-bbb9-488e-b3ec-62ec0e468bbc
 
 .. {{{end}}}
 

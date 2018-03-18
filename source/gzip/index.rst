@@ -64,16 +64,16 @@ storage space.  Results will vary, depending on the input data.
 	Level  Size        Checksum
 	-----  ----------  ---------------------------------
 	data       754688  e4c0f9433723971563f08a458715119c
-	    0      754848  7f050dafb281c7b9d30e5fccf4e0cf19
-	    1        9846  3b1708684b3655d136b8dca292f5bbba
-	    2        8267  48ceb436bf10bc6bbd60489eb285de27
-	    3        8227  4217663bf275f4241a8b73b1a1cfd734
-	    4        4167  1a5d9b968520d64ed10a4c125735d8b4
-	    5        4167  90d85bf6457c2eaf20307deb90d071c6
-	    6        4167  1798ac0cbd77d79973efd8e222bf85d8
-	    7        4167  7fe834b01c164a14c2d2d8e5560402e6
-	    8        4167  03795b47b899384cdb95f99c1b7f9f71
-	    9        4167  a33be56e455f8c787860f23c3b47b6f1
+	    0      754793  ced7189c324eb73a8388492a9024d391
+	    1        9846  5356d357f23e0d5b6d85e920929f0e43
+	    2        8267  8ce46bce238edc095e47e941cebad93d
+	    3        8227  91662517459db94a744671a6b4295b67
+	    4        4167  ad304e3aec585640de9f14306fb32083
+	    5        4167  4381a5d6dff4dd2746387f20411dcfcd
+	    6        4167  ef3a05112ea382abb53bc4a5bee3a52a
+	    7        4167  4723a253d1dc8ddecd4ff7b7adf0bc0b
+	    8        4167  0e1aeba7bdc39f0007039f130d9a28b2
+	    9        4167  eccf47c4c4f1cca3274e57a1b9b9ddd2
 
 .. {{{end}}}
 
@@ -202,7 +202,7 @@ the incremental decompression API in :mod:`zlib`.
 	e line, over and over.\nThe same line, over and over.\nThe same l
 	ine, over and over.\nThe same line, over and over.\n'
 	COMPRESSED: 51
-	b'1f8b08006149aa5702ff0bc94855284ecc4d55c8c9cc4bd551c82f4b2d5248c
+	b'1f8b080022caae5a02ff0bc94855284ecc4d55c8c9cc4bd551c82f4b2d5248c
 	c4b0133f4b8424665916401d3e717802c010000'
 	
 	REREAD: 300

@@ -30,7 +30,7 @@ use ``listdir()``.
    :caption:
    :start-after: #end_pymotw_header
 
-The return value is a list of all of the named members of the
+The return value is an unsorted list of all of the named members of the
 directory given. No distinction is made between files, subdirectories,
 or symlinks.
 

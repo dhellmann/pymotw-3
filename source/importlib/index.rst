@@ -71,7 +71,7 @@ not correspond to single files.
 	Debug:      ['.pyc']
 	Optimized:  ['.pyc']
 	Bytecode:   ['.pyc']
-	Extension:  ['.cpython-35m-darwin.so', '.abi3.so', '.so']
+	Extension:  ['.cpython-36m-darwin.so', '.abi3.so', '.so']
 
 .. {{{end}}}
 
@@ -177,7 +177,7 @@ This example loads the top level of the ``example`` package.
 	$ python3 importlib_find_loader.py
 	
 	Loader: <_frozen_importlib_external.SourceFileLoader object at
-	0x101be0da0>
+	0x101fe1828>
 	Importing example package
 	Module: <module 'example' from '.../example/__init__.py'>
 
@@ -206,7 +206,7 @@ be constrained by the package's path.
 	
 	Importing example package
 	Loader: <_frozen_importlib_external.SourceFileLoader object at
-	0x1012e5390>
+	0x101fe1f28>
 	Importing submodule
 	Module: <module 'submodule' from '.../example/submodule.py'>
 

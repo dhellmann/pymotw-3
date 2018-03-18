@@ -61,10 +61,10 @@ OS X:
 
 	$ python3 platform_python.py
 	
-	Version      : 3.5.2
-	Version tuple: ('3', '5', '2')
+	Version      : 3.6.4
+	Version tuple: ('3', '6', '4')
 	Compiler     : GCC 4.2.1 (Apple Inc. build 5666) (dot 3)
-	Build        : ('v3.5.2:4def2a2901a5', 'Jun 26 2016 10:47:25')
+	Build        : ('v3.6.4:d48ecebad5', 'Dec 18 2017 21:07:28')
 
 .. {{{end}}}
 
@@ -114,9 +114,9 @@ OS X:
 
 	$ python3 platform_platform.py
 	
-	Normal : Darwin-15.6.0-x86_64-i386-64bit
-	Aliased: Darwin-15.6.0-x86_64-i386-64bit
-	Terse  : Darwin-15.6.0
+	Normal : Darwin-17.4.0-x86_64-i386-64bit
+	Aliased: Darwin-17.4.0-x86_64-i386-64bit
+	Terse  : Darwin-17.4.0
 
 .. {{{end}}}
 
@@ -185,15 +185,15 @@ OS X:
 	$ python3 platform_os_info.py
 	
 	uname: uname_result(system='Darwin', node='hubert.local',
-	release='15.6.0', version='Darwin Kernel Version 15.6.0: Thu Jun
-	23 18:25:34 PDT 2016; root:xnu-3248.60.10~1/RELEASE_X86_64',
+	release='17.4.0', version='Darwin Kernel Version 17.4.0: Sun Dec
+	17 09:19:54 PST 2017; root:xnu-4570.41.2~1/RELEASE_X86_64',
 	machine='x86_64', processor='i386')
 	
 	system   : Darwin
 	node     : hubert.local
-	release  : 15.6.0
-	version  : Darwin Kernel Version 15.6.0: Thu Jun 23 18:25:34 PDT
-	2016; root:xnu-3248.60.10~1/RELEASE_X86_64
+	release  : 17.4.0
+	version  : Darwin Kernel Version 17.4.0: Sun Dec 17 09:19:54 PST
+	2017; root:xnu-4570.41.2~1/RELEASE_X86_64
 	machine  : x86_64
 	processor: i386
 

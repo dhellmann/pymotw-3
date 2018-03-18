@@ -146,7 +146,7 @@ into a different part of memory.
 	Expected:
 	    [<doctest_unpredictable.MyClass object at 0x10055a2d0>]
 	Got:
-	    [<doctest_unpredictable.MyClass object at 0x1016a4160>]
+	    [<doctest_unpredictable.MyClass object at 0x1047a2710>]
 	2 items had no tests:
 	    doctest_unpredictable
 	    doctest_unpredictable.MyClass
@@ -995,7 +995,7 @@ instead of being reported individually.
 	Doctest: doctest_in_help.txt ... ok
 	
 	----------------------------------------------------------------
-	Ran 2 tests in 0.002s
+	Ran 2 tests in 0.003s
 	
 	OK
 

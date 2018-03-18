@@ -82,11 +82,11 @@ the ``Graph`` instances, and hold their instance attributes.
 	Linking nodes Graph(three).next = Graph(one)
 	
 	Examining: Graph(three)
-	Examining: {'next': Graph(one), 'name': 'three'}
+	Examining: {'name': 'three', 'next': Graph(one)}
 	Examining: Graph(one)
-	Examining: {'next': Graph(two), 'name': 'one'}
+	Examining: {'name': 'one', 'next': Graph(two)}
 	Examining: Graph(two)
-	Examining: {'next': Graph(three), 'name': 'two'}
+	Examining: {'name': 'two', 'next': Graph(three)}
 	
 	Found a cycle to Graph(three):
 	  0:  Graph(three)
@@ -130,7 +130,7 @@ three objects with their instance attribute dictionaries.
 	Linking nodes Graph(three).next = Graph(one)
 	
 	Collecting 0 ...
-	Unreachable objects: 34
+	Unreachable objects: 6
 	Remaining Garbage: []
 	
 	Collecting 1 ...
@@ -170,20 +170,20 @@ the unexpected relationship.
 	Linking nodes Graph(three).next = Graph(one)
 	
 	Collecting...
-	Unreachable objects: 28
+	Unreachable objects: 0
 	Remaining Garbage: []
 	
 	Clearing referrers:
 	Looking for references to Graph(one)
-	Looking for references to {'next': Graph(one), 'name': 'three'}
+	Looking for references to {'name': 'three', 'next': Graph(one)}
 	Found referrer: Graph(three)
 	Linking nodes Graph(three).next = None
 	Looking for references to Graph(two)
-	Looking for references to {'next': Graph(two), 'name': 'one'}
+	Looking for references to {'name': 'one', 'next': Graph(two)}
 	Found referrer: Graph(one)
 	Linking nodes Graph(one).next = None
 	Looking for references to Graph(three)
-	Looking for references to {'next': Graph(three), 'name': 'two'}
+	Looking for references to {'name': 'two', 'next': Graph(three)}
 	Found referrer: Graph(two)
 	Linking nodes Graph(two).next = None
 	
@@ -251,40 +251,34 @@ different times, shown here because debugging is enabled.
 
 	$ python3 -u gc_threshold.py 5
 	
-	gc: collecting generation 1...
-	gc: objects in each generation: 240 1439 4709
-	gc: done, 0.0013s elapsed
 	Thresholds: (5, 1, 1)
 	Clear the collector by forcing a run
 	gc: collecting generation 2...
-	gc: objects in each generation: 1 0 6282
-	gc: done, 0.0025s elapsed
+	gc: objects in each generation: 505 2161 4858
+	gc: done, 0.0010s elapsed
 	
-	gc: collecting generation 0...
-	gc: objects in each generation: 5 0 6275
-	gc: done, 0.0000s elapsed
 	Creating objects
 	gc: collecting generation 0...
-	gc: objects in each generation: 8 0 6275
+	gc: objects in each generation: 5 0 7323
 	gc: done, 0.0000s elapsed
 	Created 0
 	Created 1
-	Created 2
-	gc: collecting generation 1...
-	gc: objects in each generation: 9 2 6275
+	gc: collecting generation 0...
+	gc: objects in each generation: 4 2 7323
 	gc: done, 0.0000s elapsed
+	Created 2
 	Created 3
 	Created 4
-	Created 5
-	gc: collecting generation 0...
-	gc: objects in each generation: 9 0 6280
+	gc: collecting generation 1...
+	gc: objects in each generation: 6 3 7323
 	gc: done, 0.0000s elapsed
+	Created 5
 	Created 6
 	Created 7
-	Created 8
 	gc: collecting generation 0...
-	gc: objects in each generation: 9 3 6280
+	gc: objects in each generation: 6 0 7329
 	gc: done, 0.0000s elapsed
+	Created 8
 	Created 9
 	Exiting
 
@@ -300,51 +294,48 @@ A smaller threshold causes the sweeps to run more frequently.
 
 	$ python3 -u gc_threshold.py 2
 	
-	gc: collecting generation 1...
-	gc: objects in each generation: 240 1439 4709
-	gc: done, 0.0003s elapsed
 	Thresholds: (2, 1, 1)
 	Clear the collector by forcing a run
 	gc: collecting generation 2...
-	gc: objects in each generation: 1 0 6282
+	gc: objects in each generation: 505 2161 4858
 	gc: done, 0.0010s elapsed
 	gc: collecting generation 0...
-	gc: objects in each generation: 3 0 6275
+	gc: objects in each generation: 2 0 7323
 	gc: done, 0.0000s elapsed
 	
 	Creating objects
 	gc: collecting generation 0...
-	gc: objects in each generation: 6 0 6275
+	gc: objects in each generation: 5 0 7323
 	gc: done, 0.0000s elapsed
 	gc: collecting generation 1...
-	gc: objects in each generation: 3 4 6275
+	gc: objects in each generation: 3 3 7323
 	gc: done, 0.0000s elapsed
 	Created 0
 	Created 1
 	gc: collecting generation 0...
-	gc: objects in each generation: 4 0 6277
+	gc: objects in each generation: 4 0 7325
 	gc: done, 0.0000s elapsed
 	Created 2
 	gc: collecting generation 0...
-	gc: objects in each generation: 8 1 6277
+	gc: objects in each generation: 7 1 7325
 	gc: done, 0.0000s elapsed
 	Created 3
 	Created 4
 	gc: collecting generation 1...
-	gc: objects in each generation: 4 3 6277
+	gc: objects in each generation: 4 3 7325
 	gc: done, 0.0000s elapsed
 	Created 5
 	gc: collecting generation 0...
-	gc: objects in each generation: 8 0 6281
+	gc: objects in each generation: 7 0 7329
 	gc: done, 0.0000s elapsed
 	Created 6
 	Created 7
 	gc: collecting generation 0...
-	gc: objects in each generation: 4 2 6281
+	gc: objects in each generation: 4 2 7329
 	gc: done, 0.0000s elapsed
 	Created 8
 	gc: collecting generation 1...
-	gc: objects in each generation: 8 3 6281
+	gc: objects in each generation: 7 3 7329
 	gc: done, 0.0000s elapsed
 	Created 9
 	Exiting
@@ -382,18 +373,18 @@ interpreter exits.
 	$ python3 gc_debug_stats.py
 	
 	gc: collecting generation 2...
-	gc: objects in each generation: 123 1063 4711
-	gc: done, 0.0008s elapsed
+	gc: objects in each generation: 618 1413 4860
+	gc: done, 0.0009s elapsed
 	Exiting
 	gc: collecting generation 2...
-	gc: objects in each generation: 1 0 5880
-	gc: done, 0.0007s elapsed
+	gc: objects in each generation: 1 0 6746
+	gc: done, 0.0022s elapsed
 	gc: collecting generation 2...
-	gc: objects in each generation: 99 0 5688
-	gc: done, 2114 unreachable, 0 uncollectable, 0.0011s elapsed
+	gc: objects in each generation: 113 0 6570
+	gc: done, 2930 unreachable, 0 uncollectable, 0.0012s elapsed
 	gc: collecting generation 2...
-	gc: objects in each generation: 0 0 3118
-	gc: done, 292 unreachable, 0 uncollectable, 0.0003s elapsed
+	gc: objects in each generation: 0 0 3189
+	gc: done, 151 unreachable, 0 uncollectable, 0.0003s elapsed
 
 .. {{{end}}}
 
@@ -422,21 +413,21 @@ the object id when each object is created.
 	
 	CleanupGraph(three).__del__()
 	Collecting
-	gc: collectable <Graph 0x101be7240>
-	gc: collectable <Graph 0x101be72e8>
-	gc: collectable <dict 0x101994108>
-	gc: collectable <dict 0x101994148>
-	gc: collectable <CleanupGraph 0x101be73c8>
-	gc: collectable <CleanupGraph 0x101be7400>
-	gc: collectable <dict 0x101bee548>
-	gc: collectable <dict 0x101bee488>
+	gc: collectable <Graph 0x101fe1f28>
+	gc: collectable <Graph 0x103d02048>
+	gc: collectable <dict 0x101c92678>
+	gc: collectable <dict 0x101c926c0>
+	gc: collectable <CleanupGraph 0x103d02160>
+	gc: collectable <CleanupGraph 0x103d02198>
+	gc: collectable <dict 0x101fe73f0>
+	gc: collectable <dict 0x101fe7360>
 	CleanupGraph(four).__del__()
 	CleanupGraph(five).__del__()
 	Done
-	Retained: Graph(one) 0x101be7240
-	Retained: Graph(two) 0x101be72e8
-	Retained: CleanupGraph(four) 0x101be73c8
-	Retained: CleanupGraph(five) 0x101be7400
+	Retained: Graph(one) 0x101fe1f28
+	Retained: Graph(two) 0x103d02048
+	Retained: CleanupGraph(four) 0x103d02160
+	Retained: CleanupGraph(five) 0x103d02198
 
 .. {{{end}}}
 
@@ -461,21 +452,21 @@ have been collected and deleted are retained.
 	
 	CleanupGraph(three).__del__()
 	Collecting
-	gc: collectable <Graph 0x1013e7240>
-	gc: collectable <Graph 0x1013e72e8>
-	gc: collectable <dict 0x101194108>
-	gc: collectable <dict 0x101194148>
-	gc: collectable <CleanupGraph 0x1013e73c8>
-	gc: collectable <CleanupGraph 0x1013e7400>
-	gc: collectable <dict 0x1013ee548>
-	gc: collectable <dict 0x1013ee488>
+	gc: collectable <Graph 0x1044e1f28>
+	gc: collectable <Graph 0x1044eb048>
+	gc: collectable <dict 0x101c92678>
+	gc: collectable <dict 0x101c926c0>
+	gc: collectable <CleanupGraph 0x1044eb160>
+	gc: collectable <CleanupGraph 0x1044eb198>
+	gc: collectable <dict 0x1044e7360>
+	gc: collectable <dict 0x1044e72d0>
 	CleanupGraph(four).__del__()
 	CleanupGraph(five).__del__()
 	Done
-	Retained: Graph(one) 0x1013e7240
-	Retained: Graph(two) 0x1013e72e8
-	Retained: CleanupGraph(four) 0x1013e73c8
-	Retained: CleanupGraph(five) 0x1013e7400
+	Retained: Graph(one) 0x1044e1f28
+	Retained: Graph(two) 0x1044eb048
+	Retained: CleanupGraph(four) 0x1044eb160
+	Retained: CleanupGraph(five) 0x1044eb198
 
 .. {{{end}}}
 

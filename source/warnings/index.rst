@@ -123,7 +123,15 @@ module, and line number) separated by colons (``:``). For example, if
 ``UserWarning``, an exception is produced.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, '-u -W "error::UserWarning::0" warnings_warn.py', ignore_error=True))
+.. # For some reason that is not clear, using the interpreter in the virtualenv
+.. # triggers a separate error about being unable to import the enum module
+.. # from within the re module.
+.. INTERP='/Library/Frameworks/Python.framework/Versions/3.6/bin/python3'
+.. def _elide_framework(infile, line):
+..     line = line.replace('/Library/Frameworks/Python.framework/Versions/3.6/bin/', '')
+..     return line
+.. CLEAN=[_elide_framework]
+.. cog.out(run_script(cog.inFile, '-u -W "error::UserWarning::0" warnings_warn.py', ignore_error=True, interpreter=INTERP, line_cleanups=CLEAN))
 .. }}}
 
 .. code-block:: none
@@ -181,7 +189,7 @@ One of the warnings can be ignored using the filter argument on the
 command line.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, '-W "ignore:do not:UserWarning::0" warnings_filter.py'))
+.. cog.out(run_script(cog.inFile, '-W "ignore:do not:UserWarning::0" warnings_filter.py', interpreter=INTERP, line_cleanups=CLEAN))
 .. }}}
 
 .. code-block:: none

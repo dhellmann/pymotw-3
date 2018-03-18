@@ -24,6 +24,9 @@ def trace_calls(frame, event, arg, to_be_traced):
         return
     line_no = frame.f_lineno
     filename = co.co_filename
+    if not filename.endswith('sys_settrace_line.py'):
+        # Ignore calls not in this module
+        return
     print('* Call to {} on line {} of {}'.format(
         func_name, line_no, filename))
     if func_name in to_be_traced:

@@ -68,14 +68,9 @@ event loop is not being properly closed when the program exits.
 	   INFO: inner starting
 	   INFO: inner completed
 	WARNING: Executing <Task finished coro=<inner() done, defined at
-	asyncio_debug.py:34> result=None created at asyncio_debug.py:44>
-	took 0.102 seconds
+	asyncio_debug.py:33> result=None created at asyncio_debug.py:43>
+	took 0.103 seconds
 	   INFO: outer completed
-	.../lib/python3.5/asyncio/base_events.py:429: ResourceWarning:
-	unclosed event loop <_UnixSelectorEventLoop running=False
-	closed=False debug=True>
-	  DEBUG: Close <_UnixSelectorEventLoop running=False
-	closed=False debug=True>
 
 .. {{{end}}}
 

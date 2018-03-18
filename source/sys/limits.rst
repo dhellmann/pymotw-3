@@ -67,13 +67,13 @@ objects are.
 	
 	      list : 64
 	     tuple : 48
-	      dict : 288
+	      dict : 240
 	       str : 50
 	       str : 55
 	     bytes : 38
 	       int : 28
 	     float : 24
-	      type : 1016
+	      type : 1056
 	   MyClass : 56
 
 .. {{{end}}}

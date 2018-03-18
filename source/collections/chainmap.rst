@@ -70,10 +70,10 @@ When the list of mappings is reversed, the value associated with
 
 	$ python3 collections_chainmap_reorder.py
 	
-	[{'c': 'C', 'a': 'A'}, {'c': 'D', 'b': 'B'}]
+	[{'a': 'A', 'c': 'C'}, {'b': 'B', 'c': 'D'}]
 	c = C
 	
-	[{'c': 'D', 'b': 'B'}, {'c': 'C', 'a': 'A'}]
+	[{'b': 'B', 'c': 'D'}, {'a': 'A', 'c': 'C'}]
 	c = D
 
 .. {{{end}}}
@@ -124,9 +124,9 @@ updated.
 
 	$ python3 collections_chainmap_update_directly.py
 	
-	Before: ChainMap({'c': 'C', 'a': 'A'}, {'c': 'D', 'b': 'B'})
-	After : ChainMap({'c': 'E', 'a': 'A'}, {'c': 'D', 'b': 'B'})
-	a: {'c': 'E', 'a': 'A'}
+	Before: ChainMap({'a': 'A', 'c': 'C'}, {'b': 'B', 'c': 'D'})
+	After : ChainMap({'a': 'A', 'c': 'E'}, {'b': 'B', 'c': 'D'})
+	a: {'a': 'A', 'c': 'E'}
 
 .. {{{end}}}
 
@@ -152,12 +152,12 @@ changes for the next iteration.
 
 	$ python3 collections_chainmap_new_child.py
 	
-	m1 before: ChainMap({'c': 'C', 'a': 'A'}, {'c': 'D', 'b': 'B'})
-	m2 before: ChainMap({}, {'c': 'C', 'a': 'A'}, {'c': 'D', 'b':
-	'B'})
-	m1 after: ChainMap({'c': 'C', 'a': 'A'}, {'c': 'D', 'b': 'B'})
-	m2 after: ChainMap({'c': 'E'}, {'c': 'C', 'a': 'A'}, {'c': 'D',
-	'b': 'B'})
+	m1 before: ChainMap({'a': 'A', 'c': 'C'}, {'b': 'B', 'c': 'D'})
+	m2 before: ChainMap({}, {'a': 'A', 'c': 'C'}, {'b': 'B', 'c':
+	'D'})
+	m1 after: ChainMap({'a': 'A', 'c': 'C'}, {'b': 'B', 'c': 'D'})
+	m2 after: ChainMap({'c': 'E'}, {'a': 'A', 'c': 'C'}, {'b': 'B',
+	'c': 'D'})
 
 .. {{{end}}}
 

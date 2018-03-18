@@ -50,11 +50,11 @@ name, and any arguments passed to the opcode.
 	$ python3 -m dis dis_simple.py
 	
 	  4           0 LOAD_CONST               0 ('a')
-	              3 LOAD_CONST               1 (1)
-	              6 BUILD_MAP                1
-	              9 STORE_NAME               0 (my_dict)
-	             12 LOAD_CONST               2 (None)
-	             15 RETURN_VALUE
+	              2 LOAD_CONST               1 (1)
+	              4 BUILD_MAP                1
+	              6 STORE_NAME               0 (my_dict)
+	              8 LOAD_CONST               2 (None)
+	             10 RETURN_VALUE
 
 .. {{{end}}}
 
@@ -94,29 +94,28 @@ it into a function (``LOAD_CONST``, ``MAKE_FUNCTION``), but
 	$ python3 -m dis dis_function.py
 	
 	  5           0 LOAD_CONST               0 (<code object f at
-	0x10141ba50, file "dis_function.py", line 5>)
-	              3 LOAD_CONST               1 ('f')
-	              6 MAKE_FUNCTION            0
-	              9 STORE_NAME               0 (f)
+	0x1044fcf60, file "dis_function.py", line 5>)
+	              2 LOAD_CONST               1 ('f')
+	              4 MAKE_FUNCTION            0
+	              6 STORE_NAME               0 (f)
 	
-	 10          12 LOAD_NAME                1 (__name__)
-	             15 LOAD_CONST               2 ('__main__')
-	             18 COMPARE_OP               2 (==)
-	             21 POP_JUMP_IF_FALSE       49
+	 10           8 LOAD_NAME                1 (__name__)
+	             10 LOAD_CONST               2 ('__main__')
+	             12 COMPARE_OP               2 (==)
+	             14 POP_JUMP_IF_FALSE       34
 	
-	 11          24 LOAD_CONST               3 (0)
-	             27 LOAD_CONST               4 (None)
-	             30 IMPORT_NAME              2 (dis)
-	             33 STORE_NAME               2 (dis)
+	 11          16 LOAD_CONST               3 (0)
+	             18 LOAD_CONST               4 (None)
+	             20 IMPORT_NAME              2 (dis)
+	             22 STORE_NAME               2 (dis)
 	
-	 12          36 LOAD_NAME                2 (dis)
-	             39 LOAD_ATTR                2 (dis)
-	             42 LOAD_NAME                0 (f)
-	             45 CALL_FUNCTION            1 (1 positional, 0
-	keyword pair)
-	             48 POP_TOP
-	        >>   49 LOAD_CONST               4 (None)
-	             52 RETURN_VALUE
+	 12          24 LOAD_NAME                2 (dis)
+	             26 LOAD_ATTR                2 (dis)
+	             28 LOAD_NAME                0 (f)
+	             30 CALL_FUNCTION            1
+	             32 POP_TOP
+	        >>   34 LOAD_CONST               4 (None)
+	             36 RETURN_VALUE
 
 .. {{{end}}}
 
@@ -132,19 +131,17 @@ To see inside the function, the function itself must be passed to
 	$ python3 dis_function.py
 	
 	  6           0 LOAD_GLOBAL              0 (len)
-	              3 LOAD_FAST                0 (args)
-	              6 CALL_FUNCTION            1 (1 positional, 0
-	keyword pair)
-	              9 STORE_FAST               1 (nargs)
+	              2 LOAD_FAST                0 (args)
+	              4 CALL_FUNCTION            1
+	              6 STORE_FAST               1 (nargs)
 	
-	  7          12 LOAD_GLOBAL              1 (print)
-	             15 LOAD_FAST                1 (nargs)
-	             18 LOAD_FAST                0 (args)
-	             21 CALL_FUNCTION            2 (2 positional, 0
-	keyword pair)
-	             24 POP_TOP
-	             25 LOAD_CONST               0 (None)
-	             28 RETURN_VALUE
+	  7           8 LOAD_GLOBAL              1 (print)
+	             10 LOAD_FAST                1 (nargs)
+	             12 LOAD_FAST                0 (args)
+	             14 CALL_FUNCTION            2
+	             16 POP_TOP
+	             18 LOAD_CONST               0 (None)
+	             20 RETURN_VALUE
 
 .. {{{end}}}
 
@@ -209,19 +206,18 @@ appear in the file.
 	
 	Disassembly of __init__:
 	 16           0 LOAD_FAST                1 (name)
-	              3 LOAD_FAST                0 (self)
-	              6 STORE_ATTR               0 (name)
-	              9 LOAD_CONST               0 (None)
-	             12 RETURN_VALUE
+	              2 LOAD_FAST                0 (self)
+	              4 STORE_ATTR               0 (name)
+	              6 LOAD_CONST               0 (None)
+	              8 RETURN_VALUE
 	
 	Disassembly of __str__:
 	 13           0 LOAD_CONST               1 ('MyObject({})')
-	              3 LOAD_ATTR                0 (format)
-	              6 LOAD_FAST                0 (self)
-	              9 LOAD_ATTR                1 (name)
-	             12 CALL_FUNCTION            1 (1 positional, 0
-	keyword pair)
-	             15 RETURN_VALUE
+	              2 LOAD_ATTR                0 (format)
+	              4 LOAD_FAST                0 (self)
+	              6 LOAD_ATTR                1 (name)
+	              8 CALL_FUNCTION            1
+	             10 RETURN_VALUE
 	
 
 .. {{{end}}}
@@ -253,11 +249,11 @@ in cases when statements outside of a function are being examined.
 	Disassembly:
 	
 	  2           0 LOAD_CONST               0 ('a')
-	              3 LOAD_CONST               1 (1)
-	              6 BUILD_MAP                1
-	              9 STORE_NAME               0 (my_dict)
-	             12 LOAD_CONST               2 (None)
-	             15 RETURN_VALUE
+	              2 LOAD_CONST               1 (1)
+	              4 BUILD_MAP                1
+	              6 STORE_NAME               0 (my_dict)
+	              8 LOAD_CONST               2 (None)
+	             10 RETURN_VALUE
 	
 	Code details:
 	
@@ -340,26 +336,26 @@ stack.
 	$ python3 dis_traceback.py
 	
 	  4           0 LOAD_CONST               0 (1)
-	              3 STORE_NAME               0 (i)
+	              2 STORE_NAME               0 (i)
 	
-	  5           6 LOAD_CONST               1 (0)
-	              9 STORE_NAME               1 (j)
+	  5           4 LOAD_CONST               1 (0)
+	              6 STORE_NAME               1 (j)
 	
-	  6          12 LOAD_CONST               2 (3)
-	             15 STORE_NAME               2 (k)
+	  6           8 LOAD_CONST               2 (3)
+	             10 STORE_NAME               2 (k)
 	
-	  8          18 SETUP_EXCEPT            26 (to 47)
+	  8          12 SETUP_EXCEPT            24 (to 38)
 	
-	  9          21 LOAD_NAME                2 (k)
+	  9          14 LOAD_NAME                2 (k)
+	             16 LOAD_NAME                0 (i)
+	             18 LOAD_NAME                1 (j)
+	    -->      20 BINARY_TRUE_DIVIDE
+	             22 BINARY_MULTIPLY
 	             24 LOAD_NAME                0 (i)
-	             27 LOAD_NAME                1 (j)
-	    -->      30 BINARY_TRUE_DIVIDE
-	             31 BINARY_MULTIPLY
-	             32 LOAD_NAME                0 (i)
-	             35 LOAD_NAME                2 (k)
-	             38 BINARY_TRUE_DIVIDE
-	             39 BINARY_ADD
-	             40 STORE_NAME               3 (result)
+	             26 LOAD_NAME                2 (k)
+	             28 BINARY_TRUE_DIVIDE
+	             30 BINARY_ADD
+	             32 STORE_NAME               3 (result)
 
     ...trimmed...
 
@@ -647,36 +643,36 @@ involved, the evaluation has to be delayed to runtime.
 	$ python3 -m dis dis_constant_folding.py
 	
 	  5           0 LOAD_CONST              11 (3)
-	              3 STORE_NAME               0 (i)
+	              2 STORE_NAME               0 (i)
 	
-	  6           6 LOAD_CONST              12 (19.04)
-	              9 STORE_NAME               1 (f)
+	  6           4 LOAD_CONST              12 (19.04)
+	              6 STORE_NAME               1 (f)
 	
-	  7          12 LOAD_CONST              13 ('Hello, World!')
-	             15 STORE_NAME               2 (s)
+	  7           8 LOAD_CONST              13 ('Hello, World!')
+	             10 STORE_NAME               2 (s)
 	
-	 10          18 LOAD_NAME                0 (i)
-	             21 LOAD_CONST               6 (3)
-	             24 BINARY_MULTIPLY
-	             25 LOAD_CONST               7 (4)
-	             28 BINARY_MULTIPLY
-	             29 STORE_NAME               3 (I)
+	 10          12 LOAD_NAME                0 (i)
+	             14 LOAD_CONST               6 (3)
+	             16 BINARY_MULTIPLY
+	             18 LOAD_CONST               7 (4)
+	             20 BINARY_MULTIPLY
+	             22 STORE_NAME               3 (I)
 	
-	 11          32 LOAD_NAME                1 (f)
-	             35 LOAD_CONST               1 (2)
-	             38 BINARY_TRUE_DIVIDE
-	             39 LOAD_CONST               6 (3)
-	             42 BINARY_TRUE_DIVIDE
-	             43 STORE_NAME               4 (F)
+	 11          24 LOAD_NAME                1 (f)
+	             26 LOAD_CONST               1 (2)
+	             28 BINARY_TRUE_DIVIDE
+	             30 LOAD_CONST               6 (3)
+	             32 BINARY_TRUE_DIVIDE
+	             34 STORE_NAME               4 (F)
 	
-	 12          46 LOAD_NAME                2 (s)
-	             49 LOAD_CONST               8 ('\n')
-	             52 BINARY_ADD
-	             53 LOAD_CONST               9 ('Fantastic!')
-	             56 BINARY_ADD
-	             57 STORE_NAME               5 (S)
-	             60 LOAD_CONST              10 (None)
-	             63 RETURN_VALUE
+	 12          36 LOAD_NAME                2 (s)
+	             38 LOAD_CONST               8 ('\n')
+	             40 BINARY_ADD
+	             42 LOAD_CONST               9 ('Fantastic!')
+	             44 BINARY_ADD
+	             46 STORE_NAME               5 (S)
+	             48 LOAD_CONST              10 (None)
+	             50 RETURN_VALUE
 
 .. {{{end}}}
 

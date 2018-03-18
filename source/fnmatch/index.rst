@@ -132,7 +132,7 @@ Some of the characters are escaped to make a valid expression.
 	$ python3 fnmatch_translate.py
 	
 	Pattern : fnmatch_*.py
-	Regex   : fnmatch_.*\.py\Z(?ms)
+	Regex   : (?s:fnmatch_.*\.py)\Z
 
 .. {{{end}}}
 

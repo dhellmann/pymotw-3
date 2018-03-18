@@ -12,6 +12,9 @@ def trace_calls_and_returns(frame, event, arg):
         return
     line_no = frame.f_lineno
     filename = co.co_filename
+    if not filename.endswith('sys_settrace_return.py'):
+        # Ignore calls not in this module
+        return
     if event == 'call':
         print('* Call to {} on line {} of {}'.format(
             func_name, line_no, filename))

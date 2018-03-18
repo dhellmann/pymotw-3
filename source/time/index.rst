@@ -54,35 +54,35 @@ clocks are implemented using the same underlying system call.
 	    implementation: clock()
 	    monotonic     : True
 	    resolution    : 1e-06
-	    current       : 0.028399
+	    current       : 0.046796
 	
 	monotonic:
 	    adjustable    : False
 	    implementation: mach_absolute_time()
 	    monotonic     : True
 	    resolution    : 1e-09
-	    current       : 172336.002232467
+	    current       : 716028.526210432
 	
 	perf_counter:
 	    adjustable    : False
 	    implementation: mach_absolute_time()
 	    monotonic     : True
 	    resolution    : 1e-09
-	    current       : 172336.002280763
+	    current       : 716028.526241605
 	
 	process_time:
 	    adjustable    : False
 	    implementation: getrusage(RUSAGE_SELF)
 	    monotonic     : True
 	    resolution    : 1e-06
-	    current       : 0.028593
+	    current       : 0.046946999999999996
 	
 	time:
 	    adjustable    : True
 	    implementation: gettimeofday()
 	    monotonic     : False
 	    resolution    : 1e-06
-	    current       : 1471198232.045526
+	    current       : 1521404584.966362
 	
 
 .. {{{end}}}
@@ -110,7 +110,7 @@ actual precision is platform-dependent.
 
 	$ python3 time_time.py
 	
-	The time is: 1471198232.091589
+	The time is: 1521404585.0243158
 
 .. {{{end}}}
 
@@ -133,8 +133,8 @@ The second ``print()`` call in this example shows how to use
 
 	$ python3 time_ctime.py
 	
-	The time is      : Sun Aug 14 14:10:32 2016
-	15 secs from now : Sun Aug 14 14:10:47 2016
+	The time is      : Sun Mar 18 16:23:05 2018
+	15 secs from now : Sun Mar 18 16:23:20 2018
 
 .. {{{end}}}
 
@@ -168,8 +168,8 @@ values. In this example the duration of the sleep is measured using
 
 	$ python3 time_monotonic.py
 	
-	start : 172336.14
-	end   : 172336.24
+	start : 716028.72
+	end   : 716028.82
 	span  :      0.10
 
 .. {{{end}}}
@@ -203,11 +203,11 @@ each iteration through the loop.
 
 	$ python3 time_clock.py
 	
-	Sun Aug 14 14:10:32 2016 : 1471198232.327 0.033
-	Sun Aug 14 14:10:32 2016 : 1471198232.705 0.409
-	Sun Aug 14 14:10:33 2016 : 1471198233.086 0.787
-	Sun Aug 14 14:10:33 2016 : 1471198233.466 1.166
-	Sun Aug 14 14:10:33 2016 : 1471198233.842 1.540
+	Sun Mar 18 16:23:05 2018 : 1521404585.328 0.051
+	Sun Mar 18 16:23:05 2018 : 1521404585.632 0.349
+	Sun Mar 18 16:23:05 2018 : 1521404585.935 0.648
+	Sun Mar 18 16:23:06 2018 : 1521404586.234 0.943
+	Sun Mar 18 16:23:06 2018 : 1521404586.539 1.244
 
 .. {{{end}}}
 
@@ -230,13 +230,13 @@ the application is asleep, but the ``clock()`` value does not.
 
 	$ python3 -u time_clock_sleep.py
 	
-	Sun Aug 14 14:10:34 2016 - 1471198234.28 - 0.03
+	Sun Mar 18 16:23:06 2018 - 1521404586.89 - 0.04
 	Sleeping 3
-	Sun Aug 14 14:10:37 2016 - 1471198237.28 - 0.03
+	Sun Mar 18 16:23:09 2018 - 1521404589.90 - 0.04
 	Sleeping 2
-	Sun Aug 14 14:10:39 2016 - 1471198239.29 - 0.03
+	Sun Mar 18 16:23:11 2018 - 1521404591.90 - 0.04
 	Sleeping 1
-	Sun Aug 14 14:10:40 2016 - 1471198240.29 - 0.03
+	Sun Mar 18 16:23:12 2018 - 1521404592.90 - 0.04
 
 .. {{{end}}}
 
@@ -268,11 +268,11 @@ computing values, not as absolute times.
 
 	$ python3 time_perf_counter.py
 	
-	Sun Aug 14 14:10:40 2016 : 0.487 0.487
-	Sun Aug 14 14:10:41 2016 : 0.485 0.973
-	Sun Aug 14 14:10:41 2016 : 0.494 1.466
-	Sun Aug 14 14:10:42 2016 : 0.487 1.953
-	Sun Aug 14 14:10:42 2016 : 0.480 2.434
+	Sun Mar 18 16:23:13 2018 : 0.378 0.378
+	Sun Mar 18 16:23:13 2018 : 0.376 0.754
+	Sun Mar 18 16:23:14 2018 : 0.372 1.126
+	Sun Mar 18 16:23:14 2018 : 0.376 1.502
+	Sun Mar 18 16:23:14 2018 : 0.376 1.879
 
 .. {{{end}}}
 
@@ -304,28 +304,28 @@ converts it to the floating point representation.
 	$ python3 time_struct.py
 	
 	gmtime:
-	  tm_year : 2016
-	  tm_mon  : 8
-	  tm_mday : 14
-	  tm_hour : 18
-	  tm_min  : 10
-	  tm_sec  : 42
+	  tm_year : 2018
+	  tm_mon  : 3
+	  tm_mday : 18
+	  tm_hour : 20
+	  tm_min  : 23
+	  tm_sec  : 14
 	  tm_wday : 6
-	  tm_yday : 227
+	  tm_yday : 77
 	  tm_isdst: 0
 	
 	localtime:
-	  tm_year : 2016
-	  tm_mon  : 8
-	  tm_mday : 14
-	  tm_hour : 14
-	  tm_min  : 10
-	  tm_sec  : 42
+	  tm_year : 2018
+	  tm_mon  : 3
+	  tm_mday : 18
+	  tm_hour : 16
+	  tm_min  : 23
+	  tm_sec  : 14
 	  tm_wday : 6
-	  tm_yday : 227
+	  tm_yday : 77
 	  tm_isdst: 1
 	
-	mktime: 1471198242.0
+	mktime: 1521404594.0
 
 .. {{{end}}}
 
@@ -369,21 +369,21 @@ flag, and timezone offset value.
 	  tzname: ('EST', 'EDT')
 	  Zone  : 18000 (5.0)
 	  DST   : 1
-	  Time  : Sun Aug 14 14:10:42 2016
+	  Time  : Sun Mar 18 16:23:14 2018
 	
 	GMT :
 	  TZ    : GMT
 	  tzname: ('GMT', 'GMT')
 	  Zone  : 0 (0.0)
 	  DST   : 0
-	  Time  : Sun Aug 14 18:10:42 2016
+	  Time  : Sun Mar 18 20:23:14 2018
 	
 	Europe/Amsterdam :
 	  TZ    : Europe/Amsterdam
 	  tzname: ('CET', 'CEST')
 	  Zone  : -3600 (-1.0)
 	  DST   : 1
-	  Time  : Sun Aug 14 20:10:42 2016
+	  Time  : Sun Mar 18 21:23:14 2018
 	
 
 .. {{{end}}}

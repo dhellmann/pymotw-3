@@ -75,6 +75,18 @@ be discarded.
 	Path=/sub/path; Secure
 	Set-Cookie: with_max_age="expires in 5 minutes"; Max-Age=300
 	
+	key = encoded_value_cookie
+	  value = "cookie,value;"
+	  coded_value = "\"cookie\054value\073\""
+	  comment = Has escaped punctuation
+	
+	key = restricted_cookie
+	  value = cookie_value
+	  coded_value = cookie_value
+	  path = /sub/path
+	  domain = PyMOTW
+	  secure = True
+	
 	key = with_max_age
 	  value = expires in 5 minutes
 	  coded_value = "expires in 5 minutes"
@@ -84,18 +96,6 @@ be discarded.
 	  value = cookie_value
 	  coded_value = cookie_value
 	  expires = Sat, 14 Feb 2009 19:30:14
-	
-	key = restricted_cookie
-	  value = cookie_value
-	  coded_value = cookie_value
-	  domain = PyMOTW
-	  path = /sub/path
-	  secure = True
-	
-	key = encoded_value_cookie
-	  value = "cookie,value;"
-	  coded_value = "\"cookie\054value\073\""
-	  comment = Has escaped punctuation
 
 .. {{{end}}}
 

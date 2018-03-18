@@ -14,7 +14,7 @@ import pprint
 pattern = 'fnmatch_*.py'
 print('Pattern :', pattern)
 
-files = os.listdir('.')
+files = list(sorted(os.listdir('.')))
 
 print('\nFiles   :')
 pprint.pprint(files)

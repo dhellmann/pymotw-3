@@ -52,13 +52,13 @@ based on the Python interpreter version.
 	After
 	  examples/
 	  examples/README
-	  examples/__pycache__
-	  examples/__pycache__/a.cpython-35.pyc
 	  examples/a.py
 	  examples/subdir
 	  examples/subdir/__pycache__
-	  examples/subdir/__pycache__/b.cpython-35.pyc
+	  examples/subdir/__pycache__/b.cpython-36.pyc
 	  examples/subdir/b.py
+	  examples/__pycache__
+	  examples/__pycache__/a.cpython-36.pyc
 	
 
 .. {{{end}}}
@@ -180,11 +180,11 @@ or a relative path.
 	After
 	  examples/
 	  examples/README
-	  examples/__pycache__
-	  examples/__pycache__/a.cpython-35.pyc
 	  examples/a.py
 	  examples/subdir
 	  examples/subdir/b.py
+	  examples/__pycache__
+	  examples/__pycache__/a.cpython-36.pyc
 	
 
 .. {{{end}}}

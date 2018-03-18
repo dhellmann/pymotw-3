@@ -40,9 +40,9 @@ many resources.
 
 	$ python3 resource_getrusage.py
 	
-	User time                 (ru_utime  ) = 0.021876
-	System time               (ru_stime  ) = 0.0067269999999999995
-	Max. Resident Set Size    (ru_maxrss ) = 6479872
+	User time                 (ru_utime  ) = 0.032299999999999995
+	System time               (ru_stime  ) = 0.01517
+	Max. Resident Set Size    (ru_maxrss ) = 9945088
 	Shared Memory Size        (ru_ixrss  ) = 0
 	Unshared Memory Size      (ru_idrss  ) = 0
 	Stack Size                (ru_isrss  ) = 0
@@ -80,8 +80,8 @@ the operating system.
 	heap size               9223372036854775807/9223372036854775807
 	stack size              8388608/67104768
 	resident set size       9223372036854775807/9223372036854775807
-	number of processes     709/1064
-	number of open files    7168/9223372036854775807
+	number of processes     1418/2128
+	number of open files    9472/9223372036854775807
 	lockable memory address 9223372036854775807/9223372036854775807
 
 .. {{{end}}}
@@ -103,7 +103,7 @@ files allowed, changing it to a smaller soft limit than the default.
 
 	$ python3 resource_setrlimit_nofile.py
 	
-	Soft limit starts as  : 7168
+	Soft limit starts as  : 9472
 	Soft limit changed to : 4
 	random has fd = 3
 	[Errno 24] Too many open files: '/dev/null'
@@ -132,8 +132,8 @@ them, but in this case it just prints a message and exits.
 	Soft limit starts as  : 9223372036854775807
 	Soft limit changed to : 1
 	
-	Starting: Sun Aug 21 19:18:51 2016
-	EXPIRED : Sun Aug 21 19:18:52 2016
+	Starting: Sun Mar 18 16:21:52 2018
+	EXPIRED : Sun Mar 18 16:21:53 2018
 	(time ran out)
 
 .. {{{end}}}
