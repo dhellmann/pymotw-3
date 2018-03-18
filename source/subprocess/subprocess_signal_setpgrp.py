@@ -18,8 +18,7 @@ import sys
 def show_setting_prgrp():
     print('Calling os.setpgrp() from {}'.format(os.getpid()))
     os.setpgrp()
-    print('Process group is now {}'.format(
-        os.getpid(), os.getpgrp()))
+    print('Process group is now {}'.format(os.getpgrp()))
     sys.stdout.flush()
 
 
