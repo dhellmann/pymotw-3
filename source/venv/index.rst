@@ -22,9 +22,9 @@ The primary command line interface to ``venv`` relies on Python's
 ability to run a "main" function in a module using the ``-m`` option.
 
 .. {{{cog
-.. INTERP='/Library/Frameworks/Python.framework/Versions/3.5/bin/python3'
+.. INTERP='/Library/Frameworks/Python.framework/Versions/3.6/bin/python3'
 .. def _elide_framework(infile, line):
-..     line = line.replace('/Library/Frameworks/Python.framework/Versions/3.5/bin/', '')
+..     line = line.replace('/Library/Frameworks/Python.framework/Versions/3.6/bin/', '')
 ..     return line
 .. CLEAN=[_elide_framework]
 .. run_script(cog.inFile, 'rm -f pyvenv.cfg', interpreter='')
@@ -95,10 +95,10 @@ convenient.
 	activate.csh
 	activate.fish
 	easy_install*
-	easy_install-3.5*
+	easy_install-3.6*
 	pip*
 	pip3*
-	pip3.5*
+	pip3.6*
 	python@
 	python3@
 
@@ -182,62 +182,70 @@ Then install the versions of the tools to test.
 	
 	Collecting Sphinx==1.3.6
 	  Using cached Sphinx-1.3.6-py2.py3-none-any.whl
-	Collecting Jinja2>=2.3 (from Sphinx==1.3.6)
-	  Using cached Jinja2-2.8-py2.py3-none-any.whl
 	Collecting Pygments>=2.0 (from Sphinx==1.3.6)
-	  Using cached Pygments-2.1.3-py2.py3-none-any.whl
+	  Using cached Pygments-2.2.0-py2.py3-none-any.whl
+	Collecting sphinx-rtd-theme<2.0,>=0.1 (from Sphinx==1.3.6)
+	  Using cached sphinx_rtd_theme-0.2.4-py2.py3-none-any.whl
 	Collecting babel!=2.0,>=1.3 (from Sphinx==1.3.6)
-	  Using cached Babel-2.3.4-py2.py3-none-any.whl
+	  Using cached Babel-2.5.3-py2.py3-none-any.whl
+	Collecting alabaster<0.8,>=0.7 (from Sphinx==1.3.6)
+	  Using cached alabaster-0.7.10-py2.py3-none-any.whl
+	Collecting Jinja2>=2.3 (from Sphinx==1.3.6)
+	  Using cached Jinja2-2.10-py2.py3-none-any.whl
+	Collecting docutils>=0.11 (from Sphinx==1.3.6)
+	  Using cached docutils-0.14-py3-none-any.whl
 	Collecting snowballstemmer>=1.1 (from Sphinx==1.3.6)
 	  Using cached snowballstemmer-1.2.1-py2.py3-none-any.whl
-	Collecting alabaster<0.8,>=0.7 (from Sphinx==1.3.6)
-	  Using cached alabaster-0.7.9-py2.py3-none-any.whl
 	Collecting six>=1.4 (from Sphinx==1.3.6)
-	  Using cached six-1.10.0-py2.py3-none-any.whl
-	Collecting sphinx-rtd-theme<2.0,>=0.1 (from Sphinx==1.3.6)
-	  Using cached sphinx_rtd_theme-0.1.9-py3-none-any.whl
-	Collecting docutils>=0.11 (from Sphinx==1.3.6)
-	  Using cached docutils-0.13.1-py3-none-any.whl
-	Collecting MarkupSafe (from Jinja2>=2.3->Sphinx==1.3.6)
+	  Using cached six-1.11.0-py2.py3-none-any.whl
 	Collecting pytz>=0a (from babel!=2.0,>=1.3->Sphinx==1.3.6)
-	  Using cached pytz-2016.10-py2.py3-none-any.whl
-	Installing collected packages: MarkupSafe, Jinja2, Pygments,
-	pytz, babel, snowballstemmer, alabaster, six, sphinx-rtd-theme,
-	docutils, Sphinx
-	Successfully installed Jinja2-2.8 MarkupSafe-0.23 Pygments-2.1.3
-	Sphinx-1.3.6 alabaster-0.7.9 babel-2.3.4 docutils-0.13.1
-	pytz-2016.10 six-1.10.0 snowballstemmer-1.2.1 sphinx-rtd-
-	theme-0.1.9
+	  Using cached pytz-2018.3-py2.py3-none-any.whl
+	Collecting MarkupSafe>=0.23 (from Jinja2>=2.3->Sphinx==1.3.6)
+	  Using cached MarkupSafe-1.0.tar.gz
+	Installing collected packages: Pygments, sphinx-rtd-theme, pytz,
+	babel, alabaster, MarkupSafe, Jinja2, docutils, snowballstemmer,
+	six, Sphinx
+	  Running setup.py install for MarkupSafe: started
+	    Running setup.py install for MarkupSafe: finished with
+	status 'done'
+	Successfully installed Jinja2-2.10 MarkupSafe-1.0 Pygments-2.2.0
+	Sphinx-1.3.6 alabaster-0.7.10 babel-2.5.3 docutils-0.14
+	pytz-2018.3 six-1.11.0 snowballstemmer-1.2.1 sphinx-rtd-
+	theme-0.2.4
 
 	$ /tmp/sphinx2/bin/pip install Sphinx==1.4.4
 	
 	Collecting Sphinx==1.4.4
 	  Using cached Sphinx-1.4.4-py2.py3-none-any.whl
-	Collecting Jinja2>=2.3 (from Sphinx==1.4.4)
-	  Using cached Jinja2-2.8-py2.py3-none-any.whl
 	Collecting imagesize (from Sphinx==1.4.4)
-	  Using cached imagesize-0.7.1-py2.py3-none-any.whl
+	  Using cached imagesize-1.0.0-py2.py3-none-any.whl
 	Collecting Pygments>=2.0 (from Sphinx==1.4.4)
-	  Using cached Pygments-2.1.3-py2.py3-none-any.whl
-	Collecting babel!=2.0,>=1.3 (from Sphinx==1.4.4)
-	  Using cached Babel-2.3.4-py2.py3-none-any.whl
+	  Using cached Pygments-2.2.0-py2.py3-none-any.whl
 	Collecting snowballstemmer>=1.1 (from Sphinx==1.4.4)
 	  Using cached snowballstemmer-1.2.1-py2.py3-none-any.whl
 	Collecting alabaster<0.8,>=0.7 (from Sphinx==1.4.4)
-	  Using cached alabaster-0.7.9-py2.py3-none-any.whl
-	Collecting six>=1.4 (from Sphinx==1.4.4)
-	  Using cached six-1.10.0-py2.py3-none-any.whl
+	  Using cached alabaster-0.7.10-py2.py3-none-any.whl
+	Collecting Jinja2>=2.3 (from Sphinx==1.4.4)
+	  Using cached Jinja2-2.10-py2.py3-none-any.whl
 	Collecting docutils>=0.11 (from Sphinx==1.4.4)
-	  Using cached docutils-0.13.1-py3-none-any.whl
-	Collecting MarkupSafe (from Jinja2>=2.3->Sphinx==1.4.4)
+	  Using cached docutils-0.14-py3-none-any.whl
+	Collecting babel!=2.0,>=1.3 (from Sphinx==1.4.4)
+	  Using cached Babel-2.5.3-py2.py3-none-any.whl
+	Collecting six>=1.4 (from Sphinx==1.4.4)
+	  Using cached six-1.11.0-py2.py3-none-any.whl
+	Collecting MarkupSafe>=0.23 (from Jinja2>=2.3->Sphinx==1.4.4)
+	  Using cached MarkupSafe-1.0.tar.gz
 	Collecting pytz>=0a (from babel!=2.0,>=1.3->Sphinx==1.4.4)
-	  Using cached pytz-2016.10-py2.py3-none-any.whl
-	Installing collected packages: MarkupSafe, Jinja2, imagesize,
-	Pygments, pytz, babel, snowballstemmer, alabaster, six,
-	docutils, Sphinx
-	Successfully installed Jinja2-2.8 MarkupSafe-0.23 Pygments-2.1.3
-	Sphinx-1.4.4 alabaster-0.7.9 babel-2.3.4 docutils-0.13.1
-	imagesize-0.7.1 pytz-2016.10 six-1.10.0 snowballstemmer-1.2.1
+	  Using cached pytz-2018.3-py2.py3-none-any.whl
+	Installing collected packages: imagesize, Pygments,
+	snowballstemmer, alabaster, MarkupSafe, Jinja2, docutils, pytz,
+	babel, six, Sphinx
+	  Running setup.py install for MarkupSafe: started
+	    Running setup.py install for MarkupSafe: finished with
+	status 'done'
+	Successfully installed Jinja2-2.10 MarkupSafe-1.0 Pygments-2.2.0
+	Sphinx-1.4.4 alabaster-0.7.10 babel-2.5.3 docutils-0.14
+	imagesize-1.0.0 pytz-2018.3 six-1.11.0 snowballstemmer-1.2.1
 
 .. {{{end}}}
 
