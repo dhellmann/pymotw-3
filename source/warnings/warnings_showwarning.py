@@ -12,7 +12,7 @@ import logging
 
 
 def send_warnings_to_log(message, category, filename, lineno,
-                         file=None):
+                         file=None, line=None):
     logging.warning(
         '%s:%s: %s:%s',
         filename, lineno,
