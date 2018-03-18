@@ -7,7 +7,7 @@ k = 3
 
 try:
     result = k * (i / j) + (i / k)
-except:
+except Exception:
     import dis
     import sys
     exc_type, exc_value, exc_tb = sys.exc_info()

@@ -8,7 +8,7 @@ import zipfile
 try:
     import zlib
     compression = zipfile.ZIP_DEFLATED
-except:
+except (ImportError, AttributeError):
     compression = zipfile.ZIP_STORED
 
 modes = {

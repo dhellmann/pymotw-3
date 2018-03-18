@@ -1,5 +1,5 @@
 [flake8]
 max-line-length = 65
-ignore = E265,E302,F401,E402,F403,F405
+ignore = E265,E302,E741,F401,E402,F403,F405
 show-source = True
 exclude = source/_exts/,source/cgitb/,source/pdb/

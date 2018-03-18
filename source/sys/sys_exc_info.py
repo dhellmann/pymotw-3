@@ -21,7 +21,7 @@ def cause_exception(delay):
 def thread_target(delay):
     try:
         cause_exception(delay)
-    except:
+    except RuntimeError:
         do_something_with_exception()
 
 
