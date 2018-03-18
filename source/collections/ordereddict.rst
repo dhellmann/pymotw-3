@@ -9,25 +9,51 @@ order in which its contents are added.
    :caption:
    :start-after: #end_pymotw_header
 
-A regular ``dict`` does not track the insertion order, and
-iterating over it produces the values in order based on how the keys
+Before Python 3.6 a regular ``dict`` did not track the insertion order, and
+iterating over it produced the values in order based on how the keys
 are stored in the hash table, which is in turn influenced by a random
 value to reduce collisions.  In an ``OrderedDict``, by contrast,
 the order in which the items are inserted is remembered and used when creating
 an iterator.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'collections_ordereddict_iter.py'))
+.. cog.out(run_script(cog.inFile, 'collections_ordereddict_iter.py',
+..                    interpreter='python3.5'))
 .. }}}
 
 .. code-block:: none
 
-	$ python3 collections_ordereddict_iter.py
+	$ python3.5 collections_ordereddict_iter.py
 	
 	Regular dictionary:
 	c C
 	b B
 	a A
+	
+	OrderedDict:
+	a A
+	b B
+	c C
+
+.. {{{end}}}
+
+Under Python 3.6, the built-in ``dict`` does track insertion order,
+although this behavior is a side-effect of an implementation change
+and should not be relied on.
+
+.. {{{cog
+.. cog.out(run_script(cog.inFile, 'collections_ordereddict_iter.py',
+..                    interpreter='python3.6'))
+.. }}}
+
+.. code-block:: none
+
+	$ python3.6 collections_ordereddict_iter.py
+	
+	Regular dictionary:
+	a A
+	b B
+	c C
 	
 	OrderedDict:
 	a A
