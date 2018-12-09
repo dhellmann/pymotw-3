@@ -77,7 +77,7 @@ returned by ``__enter__()``, which is not necessarily the
 	
 	Context.__init__()
 	Context.__enter__()
-	WithinContext.__init__(<__main__.Context object at 0x101e9c080>)
+	WithinContext.__init__(<__main__.Context object at 0x101f046d8>)
 	WithinContext.do_something()
 	Context.__exit__()
 	WithinContext.__del__
@@ -109,14 +109,14 @@ re-raised after ``__exit__()`` returns.
 	__exit__()
 	  exc_type = <class 'RuntimeError'>
 	  exc_val  = error message handled
-	  exc_tb   = <traceback object at 0x1044ea648>
+	  exc_tb   = <traceback object at 0x101c94948>
 	
 	__init__(False)
 	__enter__()
 	__exit__()
 	  exc_type = <class 'RuntimeError'>
 	  exc_val  = error message propagated
-	  exc_tb   = <traceback object at 0x1044ea648>
+	  exc_tb   = <traceback object at 0x101c94948>
 	Traceback (most recent call last):
 	  File "contextlib_api_error.py", line 34, in <module>
 	    raise RuntimeError('error message propagated')
@@ -252,7 +252,7 @@ the decorated function are still available, as demonstrated by
 	  File "contextlib_contextmanager_decorator.py", line 43, in
 	<module>
 	    throw_error(ValueError('this exception is not handled'))
-	  File ".../lib/python3.6/contextlib.py", line 52, in inner
+	  File ".../lib/python3.7/contextlib.py", line 74, in inner
 	    return func(*args, **kwds)
 	  File "contextlib_contextmanager_decorator.py", line 33, in
 	throw_error
@@ -505,7 +505,7 @@ any other context managers.
 	  HandleError(2): entering
 	  ErrorOnExit(3): entering
 	  ErrorOnExit(3): throwing error
-	  HandleError(2): handling exception RuntimeError('from 3',)
+	  HandleError(2): handling exception RuntimeError('from 3')
 	  HandleError(2): exiting True
 	  HandleError(1): exiting False
 	  outside of stack, any errors were handled
@@ -517,9 +517,9 @@ any other context managers.
 	  HandleError(4): entering
 	  HandleError(4): exiting False
 	  ErrorOnExit(3): throwing error
-	  PassError(2): passing exception RuntimeError('from 3',)
+	  PassError(2): passing exception RuntimeError('from 3')
 	  PassError(2): exiting
-	  HandleError(1): handling exception RuntimeError('from 3',)
+	  HandleError(1): handling exception RuntimeError('from 3')
 	  HandleError(1): exiting True
 	  outside of stack, any errors were handled
 	
@@ -527,7 +527,7 @@ any other context managers.
 	  PassError(1): entering
 	  ErrorOnExit(2): entering
 	  ErrorOnExit(2): throwing error
-	  PassError(1): passing exception RuntimeError('from 2',)
+	  PassError(1): passing exception RuntimeError('from 2')
 	  PassError(1): exiting
 	error handled outside of context
 
@@ -665,14 +665,14 @@ is propagated.
 	Handled error building context manager stack:
 	  HandleError(1): entering
 	  ErrorOnEnter(2): throwing error on enter
-	  HandleError(1): handling exception RuntimeError('from 2',)
+	  HandleError(1): handling exception RuntimeError('from 2')
 	  HandleError(1): exiting True
 	no cleaner returned
 	
 	Unhandled error building context manager stack:
 	  PassError(1): entering
 	  ErrorOnEnter(2): throwing error on enter
-	  PassError(1): passing exception RuntimeError('from 2',)
+	  PassError(1): passing exception RuntimeError('from 2')
 	  PassError(1): exiting
 	caught error from 2
 
