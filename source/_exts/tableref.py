@@ -60,6 +60,10 @@ import functools
 
 from docutils import nodes, utils
 
+from sphinx.util import logging
+
+LOG = logging.getLogger(__name__)
+
 
 class tableref(nodes.reference):
     pass
@@ -100,7 +104,7 @@ def html_depart_tableref(self, node):
 
 
 def builder_inited(app):
-    app.info('defining table role')
+    LOG.info('defining table role')
     app.add_role(
         'table',
         functools.partial(_role, nodeclass=tableref)
@@ -108,7 +112,7 @@ def builder_inited(app):
 
 
 def setup(app):
-    app.info('initializing tableref')
+    LOG.info('initializing tableref')
     app.add_node(
         tableref,
         latex=(latex_visit_tableref, None),

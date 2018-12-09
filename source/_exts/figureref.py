@@ -31,6 +31,10 @@ import functools
 
 from docutils import nodes, utils
 
+from sphinx.util import logging
+
+LOG = logging.getLogger(__name__)
+
 
 class figureref(nodes.reference):
     pass
@@ -68,7 +72,7 @@ def html_depart_figureref(self, node):
 
 
 def builder_inited(app):
-    app.info('defining figure role')
+    LOG.info('defining figure role')
     app.add_role(
         'figure',
         functools.partial(_role, nodeclass=figureref)
@@ -76,7 +80,7 @@ def builder_inited(app):
 
 
 def setup(app):
-    app.info('initializing figureref')
+    LOG.info('initializing figureref')
     app.add_node(
         figureref,
         latex=(latex_visit_figureref, None),

@@ -40,6 +40,9 @@ import sys
 from docutils import nodes, utils
 from docutils.parsers.rst.roles import set_classes
 
+from sphinx.util import logging
+
+LOG = logging.getLogger(__name__)
 
 PYTHON_VERSION = '{}.{}'.format(*(sys.version_info[:2]))
 URL_TEMPLATE = (
@@ -92,7 +95,7 @@ def pydoc_role(name, rawtext, text, lineno, inliner,
         prb = inliner.problematic(rawtext, rawtext, msg)
         return [prb], [msg]
     app = inliner.document.settings.env.app
-    # app.info('stdlib module link {!r}\n'.format(text))
+    # LOG.info('stdlib module link {!r}\n'.format(text))
     node = make_link_node(rawtext, app, module_name, options)
     return [node], []
 
@@ -102,5 +105,5 @@ def setup(app):
 
     :param app: Sphinx application context.
     """
-    app.info('Initializing BitBucket plugin')
+    LOG.info('Initializing BitBucket plugin')
     app.add_role('pydoc', pydoc_role)
