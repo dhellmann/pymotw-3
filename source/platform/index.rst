@@ -25,7 +25,7 @@ is running.
 .. note::
 
     The example output in this section was generated on three systems:
-    a Mac mini running OS X 10.11.6, a Dell PC running Ubuntu Linux
+    a Mac mini running macOS 10.14, a Dell PC running Ubuntu Linux
     14.04, and a VirtualBox VM running Windows 10.  Python was
     installed on the OS X and Windows systems using the pre-compiled
     installers from python.org. The Linux system is running a version
@@ -61,10 +61,10 @@ OS X:
 
 	$ python3 platform_python.py
 	
-	Version      : 3.6.4
-	Version tuple: ('3', '6', '4')
-	Compiler     : GCC 4.2.1 (Apple Inc. build 5666) (dot 3)
-	Build        : ('v3.6.4:d48ecebad5', 'Dec 18 2017 21:07:28')
+	Version      : 3.7.1
+	Version tuple: ('3', '7', '1')
+	Compiler     : Clang 6.0 (clang-600.0.57)
+	Build        : ('v3.7.1:260ec2c36a', 'Oct 20 2018 03:13:28')
 
 .. {{{end}}}
 
@@ -114,9 +114,9 @@ OS X:
 
 	$ python3 platform_platform.py
 	
-	Normal : Darwin-17.4.0-x86_64-i386-64bit
-	Aliased: Darwin-17.4.0-x86_64-i386-64bit
-	Terse  : Darwin-17.4.0
+	Normal : Darwin-18.0.0-x86_64-i386-64bit
+	Aliased: Darwin-18.0.0-x86_64-i386-64bit
+	Terse  : Darwin-18.0.0
 
 .. {{{end}}}
 
@@ -185,15 +185,15 @@ OS X:
 	$ python3 platform_os_info.py
 	
 	uname: uname_result(system='Darwin', node='hubert.local',
-	release='17.4.0', version='Darwin Kernel Version 17.4.0: Sun Dec
-	17 09:19:54 PST 2017; root:xnu-4570.41.2~1/RELEASE_X86_64',
+	release='18.0.0', version='Darwin Kernel Version 18.0.0: Wed Aug
+	22 20:13:40 PDT 2018; root:xnu-4903.201.2~1/RELEASE_X86_64',
 	machine='x86_64', processor='i386')
 	
 	system   : Darwin
 	node     : hubert.local
-	release  : 17.4.0
-	version  : Darwin Kernel Version 17.4.0: Sun Dec 17 09:19:54 PST
-	2017; root:xnu-4570.41.2~1/RELEASE_X86_64
+	release  : 18.0.0
+	version  : Darwin Kernel Version 18.0.0: Wed Aug 22 20:13:40 PDT
+	2018; root:xnu-4903.201.2~1/RELEASE_X86_64
 	machine  : x86_64
 	processor: i386
 
