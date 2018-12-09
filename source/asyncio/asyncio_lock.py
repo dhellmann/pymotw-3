@@ -17,14 +17,14 @@ def unlock(lock):
 
 async def coro1(lock):
     print('coro1 waiting for the lock')
-    with await lock:
+    async with lock:
         print('coro1 acquired lock')
     print('coro1 released lock')
 
 
 async def coro2(lock):
     print('coro2 waiting for the lock')
-    await lock
+    await lock.acquire()
     try:
         print('coro2 acquired lock')
     finally:

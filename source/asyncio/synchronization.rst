@@ -22,10 +22,10 @@ time.
    :caption:
    :start-after: #end_pymotw_header
 
-A lock can be invoked directly, using ``await`` to acquire it and
-calling the ``release()`` method when done as in ``coro2()`` in this
-example. They also can be used as asynchronous context managers with
-the ``with await`` keywords, as in ``coro1()``.
+A lock's ``acquire()`` method can be invoked directly, using
+``await``, and calling the ``release()`` method when done as in
+``coro2()`` in this example. They also can be used as asynchronous
+context managers with the ``with await`` keywords, as in ``coro1()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'asyncio_lock.py'))
@@ -38,13 +38,13 @@ the ``with await`` keywords, as in ``coro1()``.
 	acquiring the lock before starting coroutines
 	lock acquired: True
 	waiting for coroutines
-	coro1 waiting for the lock
 	coro2 waiting for the lock
+	coro1 waiting for the lock
 	callback releasing lock
-	coro1 acquired lock
-	coro1 released lock
 	coro2 acquired lock
 	coro2 released lock
+	coro1 acquired lock
+	coro1 released lock
 
 .. {{{end}}}
 
@@ -109,24 +109,24 @@ consumers, then all of the remaining consumers.
 	
 	starting manipulate_condition
 	consumer 3 is waiting
-	consumer 1 is waiting
-	consumer 2 is waiting
 	consumer 0 is waiting
 	consumer 4 is waiting
+	consumer 1 is waiting
+	consumer 2 is waiting
 	notifying 1 consumers
 	consumer 3 triggered
 	ending consumer 3
 	notifying 2 consumers
-	consumer 1 triggered
-	ending consumer 1
-	consumer 2 triggered
-	ending consumer 2
-	notifying remaining consumers
-	ending manipulate_condition
 	consumer 0 triggered
 	ending consumer 0
 	consumer 4 triggered
 	ending consumer 4
+	notifying remaining consumers
+	ending manipulate_condition
+	consumer 1 triggered
+	ending consumer 1
+	consumer 2 triggered
+	ending consumer 2
 
 .. {{{end}}}
 
