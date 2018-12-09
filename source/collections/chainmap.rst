@@ -35,12 +35,12 @@ constructor, so the value reported for the key ``'c'`` comes from the
 	b = B
 	c = C
 	
-	Keys = ['c', 'b', 'a']
-	Values = ['C', 'B', 'A']
+	Keys = ['b', 'c', 'a']
+	Values = ['B', 'C', 'A']
 	
 	Items:
-	c = C
 	b = B
+	c = C
 	a = A
 	
 	"d" in m: False
