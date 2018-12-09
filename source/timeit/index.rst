@@ -52,7 +52,7 @@ When run, the output shows the results of the repeated calls to
 	setup
 	main statement
 	main statement
-	3.7070130929350853e-06
+	1.8429999999944324e-06
 	REPEAT:
 	setup
 	main statement
@@ -63,8 +63,8 @@ When run, the output shows the results of the repeated calls to
 	setup
 	main statement
 	main statement
-	[1.4499528333544731e-06, 1.1939555406570435e-06,
-	1.1870870366692543e-06]
+	[1.4149999999976681e-06, 1.005999999997842e-06,
+	1.0179999999984646e-06]
 
 .. {{{end}}}
 
@@ -146,10 +146,10 @@ When run, the script produces the following output.
 	1000 items
 	1000 iterations
 	
-	__setitem__:  91.79 usec/pass   0.09 usec/item
-	setdefault : 182.85 usec/pass   0.18 usec/item
-	KeyError   :  80.87 usec/pass   0.08 usec/item
-	"not in"   :  66.77 usec/pass   0.07 usec/item
+	__setitem__:  62.47 usec/pass   0.06 usec/item
+	setdefault : 122.70 usec/pass   0.12 usec/item
+	KeyError   :  60.78 usec/pass   0.06 usec/item
+	"not in"   :  55.79 usec/pass   0.06 usec/item
 
 .. {{{end}}}
 
@@ -203,7 +203,7 @@ string by enclosing it in quotes.
 	"for i in range(1000):" \
 	"  d[str(i)] = i"
 	
-	1000 loops, best of 3: 306 usec per loop
+	1000 loops, best of 5: 332 usec per loop
 
 .. {{{end}}}
 
@@ -226,7 +226,7 @@ test function.
 	$ python3 -m timeit \
 	"import timeit_setitem; timeit_setitem.test_setitem()"
 	
-	1000 loops, best of 3: 401 usec per loop
+	1000 loops, best of 5: 376 usec per loop
 
 .. {{{end}}}
 
