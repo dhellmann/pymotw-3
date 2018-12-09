@@ -668,6 +668,14 @@ UTF-8. There is support for accepting Unicode strings and encoding
 them automatically as outgoing commands are sent or as the username
 and password for logging in to the server.
 
+.. _porting-importlib:
+
+importlib
+---------
+
+The ``find_loader()`` function is deprecated. Use
+``importlib.util.find_spec()`` instead.
+
 .. _porting-inspect:
 
 inspect

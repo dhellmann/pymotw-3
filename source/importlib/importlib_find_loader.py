@@ -6,8 +6,8 @@
 #end_pymotw_header
 import importlib
 
-loader = importlib.find_loader('example')
-print('Loader:', loader)
+spec = importlib.util.find_spec('example')
+print('Loader:', spec.loader)
 
-m = loader.load_module()
+m = spec.loader.load_module()
 print('Module:', m)

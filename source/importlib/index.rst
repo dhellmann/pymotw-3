@@ -71,7 +71,7 @@ not correspond to single files.
 	Debug:      ['.pyc']
 	Optimized:  ['.pyc']
 	Bytecode:   ['.pyc']
-	Extension:  ['.cpython-36m-darwin.so', '.abi3.so', '.so']
+	Extension:  ['.cpython-37m-darwin.so', '.abi3.so', '.so']
 
 .. {{{end}}}
 
@@ -156,11 +156,11 @@ which type of loader was used, it may be the same module instance.
 Loaders
 =======
 
-The lower-level API in ``importlib`` provides access to the loader
-objects, as described in :ref:`sys-imports` from the section on the
-``sys`` module. To get a loader for a module, use
-``find_loader()``. Then to retrieve the module, use the loader's
-``load_module()`` method.
+The lower-level API in ``importlib.util`` provides access to the
+loader objects, as described in :ref:`sys-imports` from the section on
+the ``sys`` module. To get the information needed to load the module
+for a module, use ``find_spec()`` to find the "import spec". Then to
+retrieve the module, use the loader's ``load_module()`` method.
 
 .. literalinclude:: importlib_find_loader.py
    :caption:
@@ -177,24 +177,23 @@ This example loads the top level of the ``example`` package.
 	$ python3 importlib_find_loader.py
 	
 	Loader: <_frozen_importlib_external.SourceFileLoader object at
-	0x101fe1828>
+	0x104d31208>
 	Importing example package
 	Module: <module 'example' from '.../example/__init__.py'>
 
 .. {{{end}}}
 
 Submodules within packages need to be loaded separately using the path
-from the package. In the following example, the package is loaded
-first and then its path is passed to ``find_loader()`` to create a
-loader capable of loading the submodule.
+from the package. In the following example, the ``example`` package is
+is passed to ``find_spec()`` to create a loader capable of loading the
+submodule.
 
 .. literalinclude:: importlib_submodule.py
    :caption:
    :start-after: #end_pymotw_header
 
-Unlike with ``import_module()``, the name of the submodule should be
-given without any relative path prefix, since the loader will already
-be constrained by the package's path.
+As with ``import_module()``, the name of the submodule should be given
+wit the relative path prefix.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'importlib_submodule.py', line_break_mode='wrap'))
@@ -206,9 +205,10 @@ be constrained by the package's path.
 	
 	Importing example package
 	Loader: <_frozen_importlib_external.SourceFileLoader object at
-	0x101fe1f28>
+	0x108b465f8>
 	Importing submodule
-	Module: <module 'submodule' from '.../example/submodule.py'>
+	Module: <module 'example.submodule' from
+	'.../example/submodule.py'>
 
 .. {{{end}}}
 
@@ -227,3 +227,5 @@ be constrained by the package's path.
    * :pep:`369` -- Post import hooks.
 
    * :pep:`488` -- Elimination of PYO files.
+
+    * :ref:`Python 2 to 3 porting notes for importlib <porting-importlib>`
