@@ -35,19 +35,18 @@ The contents of ``sys.modules`` change as new modules are imported.
 
 	$ python3 sys_modules.py
 	
-	__main__, _bootlocale, _codecs, _collections, _collections_abc,
-	_frozen_importlib, _frozen_importlib_external, _functools,
-	_heapq, _imp, _io, _locale, _operator, _signal, _sre, _stat,
-	_thread, _warnings, _weakref, _weakrefset, abc, builtins,
-	codecs, collections, collections.abc, contextlib, copyreg,
-	encodings, encodings.aliases, encodings.latin_1,
-	encodings.utf_8, enum, errno, functools, genericpath, heapq,
-	importlib, importlib._bootstrap, importlib._bootstrap_external,
-	importlib.abc, importlib.machinery, importlib.util, io,
-	itertools, keyword, marshal, operator, os, os.path, posix,
-	posixpath, re, reprlib, site, sphinxcontrib, sre_compile,
-	sre_constants, sre_parse, stat, sys, textwrap, types, warnings,
-	weakref, zipimport
+	__main__, _abc, _bootlocale, _codecs, _collections,
+	_collections_abc, _frozen_importlib, _frozen_importlib_external,
+	_functools, _heapq, _imp, _io, _locale, _operator, _signal,
+	_sre, _stat, _thread, _warnings, _weakref, abc, builtins,
+	codecs, collections, contextlib, copyreg, encodings,
+	encodings.aliases, encodings.latin_1, encodings.utf_8, enum,
+	functools, genericpath, heapq, importlib, importlib._bootstrap,
+	importlib._bootstrap_external, importlib.abc,
+	importlib.machinery, importlib.util, io, itertools, keyword,
+	marshal, operator, os, os.path, posix, posixpath, re, reprlib,
+	site, sphinxcontrib, sre_compile, sre_constants, sre_parse,
+	stat, sys, textwrap, types, warnings, zipimport
 
 .. {{{end}}}
 
@@ -79,11 +78,11 @@ installer for OS X.
 
 	$ python3 sys_builtins.py
 	
-	_ast, _codecs, _collections, _functools, _imp, _io, _locale,
-	_operator, _signal, _sre, _stat, _string, _symtable, _thread,
-	_tracemalloc, _warnings, _weakref, atexit, builtins, errno,
-	faulthandler, gc, itertools, marshal, posix, pwd, sys, time,
-	xxsubtype, zipimport
+	_abc, _ast, _codecs, _collections, _functools, _imp, _io,
+	_locale, _operator, _signal, _sre, _stat, _string, _symtable,
+	_thread, _tracemalloc, _warnings, _weakref, atexit, builtins,
+	errno, faulthandler, gc, itertools, marshal, posix, pwd, sys,
+	time, xxsubtype, zipimport
 
 .. {{{end}}}
 
