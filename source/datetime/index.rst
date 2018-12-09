@@ -113,21 +113,21 @@ This example prints the current date in several formats:
 
 	$ python3 datetime_date.py
 	
-	2018-03-18
-	ctime  : Sun Mar 18 00:00:00 2018
+	2018-12-09
+	ctime  : Sun Dec  9 00:00:00 2018
 	tuple  : tm_year  = 2018
-	         tm_mon   = 3
-	         tm_mday  = 18
+	         tm_mon   = 12
+	         tm_mday  = 9
 	         tm_hour  = 0
 	         tm_min   = 0
 	         tm_sec   = 0
 	         tm_wday  = 6
-	         tm_yday  = 77
+	         tm_yday  = 343
 	         tm_isdst = -1
-	ordinal: 736771
+	ordinal: 737037
 	Year   : 2018
-	Mon    : 3
-	Day    : 18
+	Mon    : 12
+	Day    : 9
 
 .. {{{end}}}
 
@@ -153,8 +153,8 @@ This example illustrates the different value types used by
 	
 	o               : 733114
 	fromordinal(o)  : 2008-03-13
-	t               : 1521404434.262209
-	fromtimestamp(t): 2018-03-18
+	t               : 1544370390.0430489
+	fromtimestamp(t): 2018-12-09
 
 .. {{{end}}}
 
@@ -287,10 +287,10 @@ produce timedeltas (including a negative delta value).
 
 	$ python3 datetime_date_math.py
 	
-	Today    : 2018-03-18
+	Today    : 2018-12-09
 	One day  : 1 day, 0:00:00
-	Yesterday: 2018-03-17
-	Tomorrow : 2018-03-19
+	Yesterday: 2018-12-08
+	Tomorrow : 2018-12-10
 	
 	tomorrow - yesterday: 2 days, 0:00:00
 	yesterday - tomorrow: -2 days, 0:00:00
@@ -352,8 +352,8 @@ All comparison operators are supported.
 	  t1 < t2: True
 	
 	Dates:
-	  d1: 2018-03-18
-	  d2: 2018-03-19
+	  d1: 2018-12-09
+	  d2: 2018-12-10
 	  d1 > d2: False
 
 .. {{{end}}}
@@ -381,17 +381,17 @@ attributes of both a ``date`` and a ``time`` object.
 
 	$ python3 datetime_datetime.py
 	
-	Now    : 2018-03-18 16:20:34.811583
-	Today  : 2018-03-18 16:20:34.811616
-	UTC Now: 2018-03-18 20:20:34.811627
+	Now    : 2018-12-09 10:46:30.494767
+	Today  : 2018-12-09 10:46:30.494806
+	UTC Now: 2018-12-09 15:46:30.494812
 	
 	year           : 2018
-	month          : 3
-	day            : 18
-	hour           : 16
-	minute         : 20
-	second         : 34
-	microsecond    : 811817
+	month          : 12
+	day            : 9
+	hour           : 10
+	minute         : 46
+	second         : 30
+	microsecond    : 495051
 
 .. {{{end}}}
 
@@ -415,8 +415,8 @@ class methods for creating new instances. It also includes
 	$ python3 datetime_datetime_combine.py
 	
 	t : 01:02:03
-	d : 2018-03-18
-	dt: 2018-03-18 01:02:03
+	d : 2018-12-09
+	dt: 2018-12-09 01:02:03
 
 .. {{{end}}}
 
@@ -442,9 +442,9 @@ Use ``datetime.strptime()`` to convert formatted strings to
 
 	$ python3 datetime_datetime_strptime.py
 	
-	ISO     : 2018-03-18 16:20:34.941204
-	strftime: Sun Mar 18 16:20:34 2018
-	strptime: Sun Mar 18 16:20:34 2018
+	ISO     : 2018-12-09 10:46:30.598115
+	strftime: Sun Dec 09 10:46:30 2018
+	strptime: Sun Dec 09 10:46:30 2018
 
 .. {{{end}}}
 
@@ -468,8 +468,8 @@ output.
 
 	$ python3 datetime_format.py
 	
-	ISO     : 2018-03-18 16:20:35.006116
-	format(): Sun Mar 18 16:20:35 2018
+	ISO     : 2018-12-09 10:46:30.659964
+	format(): Sun Dec 09 10:46:30 2018
 
 .. {{{end}}}
 
@@ -582,10 +582,10 @@ line shows the value in the system timezone, acquired by calling
 
 	$ python3 datetime_timezone.py
 	
-	UTC-06:00 : 2018-03-18 14:20:35.123594-06:00
-	UTC : 2018-03-18 20:20:35.123594+00:00
-	UTC+06:00 : 2018-03-19 02:20:35.123594+06:00
-	EDT       : 2018-03-18 16:20:35.123594-04:00
+	UTC-06:00 : 2018-12-09 09:46:30.709455-06:00
+	UTC : 2018-12-09 15:46:30.709455+00:00
+	UTC+06:00 : 2018-12-09 21:46:30.709455+06:00
+	EST       : 2018-12-09 10:46:30.709455-05:00
 
 .. {{{end}}}
 
