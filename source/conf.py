@@ -315,7 +315,7 @@ r'''
 latex_elements = {
     'preamble': '\n'.join(preamble_parts),
 
-    'footer': r'''
+    'atendofbody': r'''
 % footer set by conf.py
 
 % Set up the list of figures so it appears in the TOC
