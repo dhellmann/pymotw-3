@@ -48,7 +48,7 @@ that clutter up the output in this simple example.
 
 .. code-block:: none
 
-	$ python3 -m trace --ignore-dir=.../lib/python3.6 \
+	$ python3 -m trace --ignore-dir=.../lib/python3.7 \
 	--trace trace_example/main.py
 	
 	 --- modulename: main, funcname: <module>
@@ -79,8 +79,6 @@ that clutter up the output in this simple example.
 	recurse.py(12):     print('recurse({})'.format(level))
 	recurse(0)
 	recurse.py(13):     if level:
-	 --- modulename: trace, funcname: _unsettrace
-	trace.py(77):         sys.settrace(None)
 
 .. {{{end}}}
 
@@ -183,6 +181,8 @@ the new results before creating the file.
 	$ ls coverdir1
 	
 	coverage_report.dat
+	main.cover
+	recurse.cover
 
 .. {{{end}}}
 
@@ -200,7 +200,6 @@ To produce reports once the coverage information is recorded to the
 	trace_example/main.py
 	
 	lines   cov%   module   (path)
-	  461     0%   trace   (.../lib/python3.6/trace.py)
 	    7   100%   trace_example.main   (trace_example/main.py)
 	    7    85%   trace_example.recurse
 	(trace_example/recurse.py)
@@ -241,8 +240,6 @@ For a simple list of the functions called, use ``--listfuncs``.
 	recurse(0)
 	
 	functions called:
-	filename: .../lib/python3.6/trace.py, modulename: trace,
-	funcname: _unsettrace
 	filename: trace_example/main.py, modulename: main, funcname:
 	<module>
 	filename: trace_example/main.py, modulename: main, funcname:
@@ -272,8 +269,7 @@ For more details about who is doing the calling, use ``--trackcalls``.
 	
 	calling relationships:
 	
-	*** .../lib/python3.6/trace.py ***
-	    trace.Trace.runctx -> trace._unsettrace
+	*** .../lib/python3.7/trace.py ***
 	  --> trace_example/main.py
 	    trace.Trace.runctx -> main.<module>
 	
@@ -335,8 +331,6 @@ information from ``main.py`` is included in the output.
 	recurse.py(12):     print('recurse({})'.format(level))
 	recurse(0)
 	recurse.py(13):     if level:
-	 --- modulename: trace, funcname: _unsettrace
-	trace.py(77):         sys.settrace(None)
 
 .. {{{end}}}
 
