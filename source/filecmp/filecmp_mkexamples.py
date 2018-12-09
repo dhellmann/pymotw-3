@@ -35,10 +35,14 @@ def make_example_dir(top):
     os.mkdir('dir2/common_dir')
 
     mkfile('dir1/common_file', 'this file is the same')
-    mkfile('dir2/common_file', 'this file is the same')
+    os.link('dir1/common_file', 'dir2/common_file')
 
-    mkfile('dir1/not_the_same')
-    mkfile('dir2/not_the_same')
+    mkfile('dir1/contents_differ')
+    mkfile('dir2/contents_differ')
+    # Update the access and modification times so most of the stat
+    # results will match.
+    st = os.stat('dir1/contents_differ')
+    os.utime('dir2/contents_differ', (st.st_atime, st.st_mtime))
 
     mkfile('dir1/file_in_dir1', 'This is a file in dir1')
     os.mkdir('dir2/file_in_dir1')

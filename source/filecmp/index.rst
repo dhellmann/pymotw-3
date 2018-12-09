@@ -47,43 +47,43 @@ Running the script produces a tree of files under the directory
 	example/dir1/common_dir/dir1
 	example/dir1/common_dir/dir1/common_dir
 	example/dir1/common_dir/dir1/common_file
+	example/dir1/common_dir/dir1/contents_differ
 	example/dir1/common_dir/dir1/dir_only_in_dir1
 	example/dir1/common_dir/dir1/file_in_dir1
 	example/dir1/common_dir/dir1/file_only_in_dir1
-	example/dir1/common_dir/dir1/not_the_same
 	example/dir1/common_dir/dir2
 	example/dir1/common_dir/dir2/common_dir
 	example/dir1/common_dir/dir2/common_file
+	example/dir1/common_dir/dir2/contents_differ
 	example/dir1/common_dir/dir2/dir_only_in_dir2
 	example/dir1/common_dir/dir2/file_in_dir1
 	example/dir1/common_dir/dir2/file_only_in_dir2
-	example/dir1/common_dir/dir2/not_the_same
 	example/dir1/common_file
+	example/dir1/contents_differ
 	example/dir1/dir_only_in_dir1
 	example/dir1/file_in_dir1
 	example/dir1/file_only_in_dir1
-	example/dir1/not_the_same
 	example/dir2
 	example/dir2/common_dir
 	example/dir2/common_dir/dir1
 	example/dir2/common_dir/dir1/common_dir
 	example/dir2/common_dir/dir1/common_file
+	example/dir2/common_dir/dir1/contents_differ
 	example/dir2/common_dir/dir1/dir_only_in_dir1
 	example/dir2/common_dir/dir1/file_in_dir1
 	example/dir2/common_dir/dir1/file_only_in_dir1
-	example/dir2/common_dir/dir1/not_the_same
 	example/dir2/common_dir/dir2
 	example/dir2/common_dir/dir2/common_dir
 	example/dir2/common_dir/dir2/common_file
+	example/dir2/common_dir/dir2/contents_differ
 	example/dir2/common_dir/dir2/dir_only_in_dir2
 	example/dir2/common_dir/dir2/file_in_dir1
 	example/dir2/common_dir/dir2/file_only_in_dir2
-	example/dir2/common_dir/dir2/not_the_same
 	example/dir2/common_file
+	example/dir2/contents_differ
 	example/dir2/dir_only_in_dir2
 	example/dir2/file_in_dir1
 	example/dir2/file_only_in_dir2
-	example/dir2/not_the_same
 
 .. {{{end}}}
 
@@ -103,9 +103,11 @@ The ``shallow`` argument tells ``cmp()`` whether to look at the
 contents of the file, in addition to its metadata. The default is to
 perform a shallow comparison using the information available from
 ``os.stat()``. If the stat results are the same, the files are
-considered the same so files of the same size created at the same time
-are reported as the same, even if their contents differ. When
-``shallow`` is ``False``, the contents of the file are always compared.
+considered the same. Because the stat output includes the inode on
+Linux, separate files are not treated as the same even if all of their
+other metadata (size, creation time, etc.) match. In those cases, the
+file contents are compared.  When ``shallow`` is ``False``, the
+contents of the file are always compared.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'filecmp_cmp.py'))
@@ -115,9 +117,9 @@ are reported as the same, even if their contents differ. When
 
 	$ python3 filecmp_cmp.py
 	
-	common_file : True True
-	not_the_same: True False
-	identical   : True True
+	common_file    : True True
+	contents_differ: False False
+	identical      : True True
 
 .. {{{end}}}
 
@@ -145,9 +147,9 @@ compared (due to permission problems or for any other reason).
 
 	$ python3 filecmp_cmpfiles.py
 	
-	Common files: ['not_the_same', 'file_in_dir1', 'common_file']
-	Match       : ['not_the_same', 'common_file']
-	Mismatch    : ['file_in_dir1']
+	Common files: ['contents_differ', 'file_in_dir1', 'common_file']
+	Match       : ['common_file']
+	Mismatch    : ['contents_differ', 'file_in_dir1']
 	Errors      : []
 
 .. {{{end}}}
@@ -167,10 +169,7 @@ comparing two directories.
    :start-after: #end_pymotw_header
 
 The output is a plain-text report showing the results of just the
-contents of the directories given, without recursing. In this case,
-the file "``not_the_same``" is thought to be the same because the contents
-are not being compared. There is no way to have :mod:`dircmp` compare
-the contents of files like ``cmp()`` does.
+contents of the directories given, without recursing.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'filecmp_dircmp_report.py'))
@@ -183,7 +182,8 @@ the contents of files like ``cmp()`` does.
 	diff example/dir1 example/dir2
 	Only in example/dir1 : ['dir_only_in_dir1', 'file_only_in_dir1']
 	Only in example/dir2 : ['dir_only_in_dir2', 'file_only_in_dir2']
-	Identical files : ['common_file', 'not_the_same']
+	Identical files : ['common_file']
+	Differing files : ['contents_differ']
 	Common subdirectories : ['common_dir']
 	Common funny cases : ['file_in_dir1']
 
@@ -209,7 +209,8 @@ The output includes comparisons of all parallel subdirectories.
 	diff example/dir1 example/dir2
 	Only in example/dir1 : ['dir_only_in_dir1', 'file_only_in_dir1']
 	Only in example/dir2 : ['dir_only_in_dir2', 'file_only_in_dir2']
-	Identical files : ['common_file', 'not_the_same']
+	Identical files : ['common_file']
+	Differing files : ['contents_differ']
 	Common subdirectories : ['common_dir']
 	Common funny cases : ['file_in_dir1']
 	
@@ -217,30 +218,30 @@ The output includes comparisons of all parallel subdirectories.
 	Common subdirectories : ['dir1', 'dir2']
 	
 	diff example/dir1/common_dir/dir1 example/dir2/common_dir/dir1
-	Identical files : ['common_file', 'file_in_dir1',
-	'file_only_in_dir1', 'not_the_same']
+	Identical files : ['common_file', 'contents_differ',
+	'file_in_dir1', 'file_only_in_dir1']
 	Common subdirectories : ['common_dir', 'dir_only_in_dir1']
-	
-	diff example/dir1/common_dir/dir1/dir_only_in_dir1
-	example/dir2/common_dir/dir1/dir_only_in_dir1
 	
 	diff example/dir1/common_dir/dir1/common_dir
 	example/dir2/common_dir/dir1/common_dir
 	
+	diff example/dir1/common_dir/dir1/dir_only_in_dir1
+	example/dir2/common_dir/dir1/dir_only_in_dir1
+	
 	diff example/dir1/common_dir/dir2 example/dir2/common_dir/dir2
-	Identical files : ['common_file', 'file_only_in_dir2',
-	'not_the_same']
+	Identical files : ['common_file', 'contents_differ',
+	'file_only_in_dir2']
 	Common subdirectories : ['common_dir', 'dir_only_in_dir2',
 	'file_in_dir1']
 	
 	diff example/dir1/common_dir/dir2/common_dir
 	example/dir2/common_dir/dir2/common_dir
 	
-	diff example/dir1/common_dir/dir2/file_in_dir1
-	example/dir2/common_dir/dir2/file_in_dir1
-	
 	diff example/dir1/common_dir/dir2/dir_only_in_dir2
 	example/dir2/common_dir/dir2/dir_only_in_dir2
+	
+	diff example/dir1/common_dir/dir2/file_in_dir1
+	example/dir2/common_dir/dir2/file_in_dir1
 
 .. {{{end}}}
 
@@ -270,18 +271,18 @@ compared are listed in :attr:`left_list` and :attr:`right_list`.
 	Left:
 	['common_dir',
 	 'common_file',
+	 'contents_differ',
 	 'dir_only_in_dir1',
 	 'file_in_dir1',
-	 'file_only_in_dir1',
-	 'not_the_same']
+	 'file_only_in_dir1']
 	
 	Right:
 	['common_dir',
 	 'common_file',
+	 'contents_differ',
 	 'dir_only_in_dir2',
 	 'file_in_dir1',
-	 'file_only_in_dir2',
-	 'not_the_same']
+	 'file_only_in_dir2']
 
 .. {{{end}}}
 
@@ -306,17 +307,17 @@ compared.
 	
 	Left:
 	['common_dir',
+	 'contents_differ',
 	 'dir_only_in_dir1',
 	 'file_in_dir1',
-	 'file_only_in_dir1',
-	 'not_the_same']
+	 'file_only_in_dir1']
 	
 	Right:
 	['common_dir',
+	 'contents_differ',
 	 'dir_only_in_dir2',
 	 'file_in_dir1',
-	 'file_only_in_dir2',
-	 'not_the_same']
+	 'file_only_in_dir2']
 
 .. {{{end}}}
 
@@ -340,13 +341,13 @@ The "left" directory is the first argument to ``dircmp()`` and the
 	$ python3 filecmp_dircmp_membership.py
 	
 	Common:
-	['file_in_dir1', 'common_file', 'common_dir', 'not_the_same']
+	['common_dir', 'common_file', 'contents_differ', 'file_in_dir1']
 	
 	Left:
 	['dir_only_in_dir1', 'file_only_in_dir1']
 	
 	Right:
-	['file_only_in_dir2', 'dir_only_in_dir2']
+	['dir_only_in_dir2', 'file_only_in_dir2']
 
 .. {{{end}}}
 
@@ -371,13 +372,13 @@ funny list.
 	$ python3 filecmp_dircmp_common.py
 	
 	Common:
-	['file_in_dir1', 'common_file', 'common_dir', 'not_the_same']
+	['common_dir', 'common_file', 'contents_differ', 'file_in_dir1']
 	
 	Directories:
 	['common_dir']
 	
 	Files:
-	['common_file', 'not_the_same']
+	['common_file', 'contents_differ']
 	
 	Funny:
 	['file_in_dir1']
@@ -402,8 +403,8 @@ and the contents are not examined, so it is included in the
 
 	$ python3 filecmp_dircmp_diff.py
 	
-	Same      : ['common_file', 'not_the_same']
-	Different : []
+	Same      : ['common_file']
+	Different : ['contents_differ']
 	Funny     : []
 
 .. {{{end}}}
@@ -427,7 +428,7 @@ name to new ``dircmp`` objects.
 	$ python3 filecmp_dircmp_subdirs.py
 	
 	Subdirectories:
-	{'common_dir': <filecmp.dircmp object at 0x1019b2be0>}
+	{'common_dir': <filecmp.dircmp object at 0x1101fe710>}
 
 .. {{{end}}}
 
