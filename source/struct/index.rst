@@ -54,7 +54,7 @@ nulls.
 	$ python3 struct_pack.py
 	
 	Original values: (1, b'ab', 2.7)
-	Format string  : b'I 2s f'
+	Format string  : I 2s f
 	Uses           : 12 bytes
 	Packed Value   : b'0100000061620000cdcc2c40'
 
@@ -118,27 +118,27 @@ specifiers used by ``Struct``.
 	
 	Original values: (1, b'ab', 2.7)
 	
-	Format string  : b'@ I 2s f' for native, native
+	Format string  : @ I 2s f for native, native
 	Uses           : 12 bytes
 	Packed Value   : b'0100000061620000cdcc2c40'
 	Unpacked Value : (1, b'ab', 2.700000047683716)
 	
-	Format string  : b'= I 2s f' for native, standard
+	Format string  : = I 2s f for native, standard
 	Uses           : 10 bytes
 	Packed Value   : b'010000006162cdcc2c40'
 	Unpacked Value : (1, b'ab', 2.700000047683716)
 	
-	Format string  : b'< I 2s f' for little-endian
+	Format string  : < I 2s f for little-endian
 	Uses           : 10 bytes
 	Packed Value   : b'010000006162cdcc2c40'
 	Unpacked Value : (1, b'ab', 2.700000047683716)
 	
-	Format string  : b'> I 2s f' for big-endian
+	Format string  : > I 2s f for big-endian
 	Uses           : 10 bytes
 	Packed Value   : b'000000016162402ccccd'
 	Unpacked Value : (1, b'ab', 2.700000047683716)
 	
-	Format string  : b'! I 2s f' for network
+	Format string  : ! I 2s f for network
 	Uses           : 10 bytes
 	Packed Value   : b'000000016162402ccccd'
 	Unpacked Value : (1, b'ab', 2.700000047683716)
