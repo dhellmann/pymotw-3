@@ -27,7 +27,7 @@ for sorting, and working with dates. It does not cover translation
 
 This section covers some of the high-level functions in the
 ``locale`` module. There are others which are lower level
-(``format_string()``) or which relate to managing the locale for an
+or which relate to managing the locale for an
 application (``resetlocale()``).
 
 Probing the Current Locale
@@ -369,7 +369,7 @@ used to separate large numbers into readable chunks changes.
    :caption:
    :start-after: #end_pymotw_header
 
-To format numbers without the currency symbol, use ``format()``
+To format numbers without the currency symbol, use ``format_string()``
 instead of ``currency()``.
 
 .. {{{cog
@@ -470,11 +470,11 @@ the current date and time.
 
 	$ python3 locale_date.py
 	
-	       USA: Sun Mar 18 16:20:59 2018
-	    France: Dim 18 mar 16:20:59 2018
-	     Spain: dom 18 mar 16:20:59 2018
-	  Portugal: Dom 18 Mar 16:20:59 2018
-	    Poland: ndz 18 mar 16:20:59 2018
+	       USA: Sun Dec  9 12:20:00 2018
+	    France: Dim  9 déc 12:20:00 2018
+	     Spain: dom  9 dic 12:20:00 2018
+	  Portugal: Dom  9 Dez 12:20:00 2018
+	    Poland: ndz  9 gru 12:20:00 2018
 
 .. {{{end}}}
 
