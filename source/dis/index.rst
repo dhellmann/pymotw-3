@@ -82,8 +82,8 @@ functions automatically.
 
 The results of disassembling ``dis_function.py`` show the operations
 for loading the function's code object onto the stack and then turning
-it into a function (``LOAD_CONST``, ``MAKE_FUNCTION``), but
-*not* the body of the function.
+it into a function (``LOAD_CONST``, ``MAKE_FUNCTION``), followed by
+the body of the function.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '-m dis dis_function.py', line_break_mode='wrap'))
@@ -94,7 +94,7 @@ it into a function (``LOAD_CONST``, ``MAKE_FUNCTION``), but
 	$ python3 -m dis dis_function.py
 	
 	  5           0 LOAD_CONST               0 (<code object f at
-	0x1044fcf60, file "dis_function.py", line 5>)
+	0x102c2df60, file "dis_function.py", line 5>)
 	              2 LOAD_CONST               1 ('f')
 	              4 MAKE_FUNCTION            0
 	              6 STORE_NAME               0 (f)
@@ -110,17 +110,33 @@ it into a function (``LOAD_CONST``, ``MAKE_FUNCTION``), but
 	             22 STORE_NAME               2 (dis)
 	
 	 12          24 LOAD_NAME                2 (dis)
-	             26 LOAD_ATTR                2 (dis)
+	             26 LOAD_METHOD              2 (dis)
 	             28 LOAD_NAME                0 (f)
-	             30 CALL_FUNCTION            1
+	             30 CALL_METHOD              1
 	             32 POP_TOP
 	        >>   34 LOAD_CONST               4 (None)
 	             36 RETURN_VALUE
+	
+	Disassembly of <code object f at 0x102c2df60, file
+	"dis_function.py", line 5>:
+	  6           0 LOAD_GLOBAL              0 (len)
+	              2 LOAD_FAST                0 (args)
+	              4 CALL_FUNCTION            1
+	              6 STORE_FAST               1 (nargs)
+	
+	  7           8 LOAD_GLOBAL              1 (print)
+	             10 LOAD_FAST                1 (nargs)
+	             12 LOAD_FAST                0 (args)
+	             14 CALL_FUNCTION            2
+	             16 POP_TOP
+	             18 LOAD_CONST               0 (None)
+	             20 RETURN_VALUE
 
 .. {{{end}}}
 
-To see inside the function, the function itself must be passed to
-``dis()``.
+Earlier versions of Python did not include function bodies in module
+disassemblies automatically.  To see the disassembled version of a
+function, pass the function directly to ``dis()``.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, 'dis_function.py', line_break_mode='wrap'))
@@ -213,10 +229,10 @@ appear in the file.
 	
 	Disassembly of __str__:
 	 13           0 LOAD_CONST               1 ('MyObject({})')
-	              2 LOAD_ATTR                0 (format)
+	              2 LOAD_METHOD              0 (format)
 	              4 LOAD_FAST                0 (self)
 	              6 LOAD_ATTR                1 (name)
-	              8 CALL_FUNCTION            1
+	              8 CALL_METHOD              1
 	             10 RETURN_VALUE
 	
 
@@ -642,36 +658,36 @@ involved, the evaluation has to be delayed to runtime.
 
 	$ python3 -m dis dis_constant_folding.py
 	
-	  5           0 LOAD_CONST              11 (3)
+	  5           0 LOAD_CONST               0 (3)
 	              2 STORE_NAME               0 (i)
 	
-	  6           4 LOAD_CONST              12 (19.04)
+	  6           4 LOAD_CONST               1 (19.04)
 	              6 STORE_NAME               1 (f)
 	
-	  7           8 LOAD_CONST              13 ('Hello, World!')
+	  7           8 LOAD_CONST               2 ('Hello, World!')
 	             10 STORE_NAME               2 (s)
 	
 	 10          12 LOAD_NAME                0 (i)
-	             14 LOAD_CONST               6 (3)
+	             14 LOAD_CONST               0 (3)
 	             16 BINARY_MULTIPLY
-	             18 LOAD_CONST               7 (4)
+	             18 LOAD_CONST               3 (4)
 	             20 BINARY_MULTIPLY
 	             22 STORE_NAME               3 (I)
 	
 	 11          24 LOAD_NAME                1 (f)
-	             26 LOAD_CONST               1 (2)
+	             26 LOAD_CONST               4 (2)
 	             28 BINARY_TRUE_DIVIDE
-	             30 LOAD_CONST               6 (3)
+	             30 LOAD_CONST               0 (3)
 	             32 BINARY_TRUE_DIVIDE
 	             34 STORE_NAME               4 (F)
 	
 	 12          36 LOAD_NAME                2 (s)
-	             38 LOAD_CONST               8 ('\n')
+	             38 LOAD_CONST               5 ('\n')
 	             40 BINARY_ADD
-	             42 LOAD_CONST               9 ('Fantastic!')
+	             42 LOAD_CONST               6 ('Fantastic!')
 	             44 BINARY_ADD
 	             46 STORE_NAME               5 (S)
-	             48 LOAD_CONST              10 (None)
+	             48 LOAD_CONST               7 (None)
 	             50 RETURN_VALUE
 
 .. {{{end}}}
