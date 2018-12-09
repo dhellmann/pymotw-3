@@ -40,30 +40,30 @@ filename extensions, and version details.
 
 	$ python3 sysconfig_get_config_vars.py
 	
-	Found 663 configuration settings
+	Found 668 configuration settings
 	
 	Some highlights:
 	
 	 Installation prefixes:
-	  prefix=/Library/Frameworks/Python.framework/Versions/3.6
-	  exec_prefix=/Library/Frameworks/Python.framework/Versions/3.6
+	  prefix=/Library/Frameworks/Python.framework/Versions/3.7
+	  exec_prefix=/Library/Frameworks/Python.framework/Versions/3.7
 	
 	 Version info:
-	  py_version=3.6.4
-	  py_version_short=3.6
-	  py_version_nodot=36
+	  py_version=3.7.1
+	  py_version_short=3.7
+	  py_version_nodot=37
 	
 	 Base directories:
-	  base=/Users/dhellmann/Envs/pymotw36
-	  platbase=/Users/dhellmann/Envs/pymotw36
-	  userbase=/Users/dhellmann/Library/Python/3.6
-	  srcdir=/Library/Frameworks/Python.framework/Versions/3.6/lib/p
-	ython3.6/config-3.6m-darwin
+	  base=/Users/dhellmann/Envs/pymotw37
+	  platbase=/Users/dhellmann/Envs/pymotw37
+	  userbase=/Users/dhellmann/Library/Python/3.7
+	  srcdir=/Library/Frameworks/Python.framework/Versions/3.7/lib/p
+	ython3.7/config-3.7m-darwin
 	
 	 Compiler and linker flags:
-	  LDFLAGS=-arch i386 -arch x86_64  -g
-	  BASECFLAGS=-fno-strict-aliasing -Wsign-compare -fno-common
-	-dynamic
+	  LDFLAGS=-arch x86_64 -g
+	  BASECFLAGS=-Wno-unused-result -Wsign-compare -Wunreachable-
+	code -fno-common -dynamic
 	  Py_ENABLE_SHARED=0
 
 .. {{{end}}}
@@ -89,9 +89,9 @@ where modules can be found on the current system.
 	$ python3 sysconfig_get_config_vars_by_name.py
 	
 	Base directories:
-	   /Users/dhellmann/Envs/pymotw36
-	   /Users/dhellmann/Envs/pymotw36
-	   /Users/dhellmann/Library/Python/3.6
+	   /Users/dhellmann/Envs/pymotw37
+	   /Users/dhellmann/Envs/pymotw37
+	   /Users/dhellmann/Library/Python/3.7
 
 .. {{{end}}}
 
@@ -113,7 +113,7 @@ instead of raising an exception.
 
 	$ python3 sysconfig_get_config_var.py
 	
-	User base directory: /Users/dhellmann/Library/Python/3.6
+	User base directory: /Users/dhellmann/Library/Python/3.7
 	Unknown variable   : None
 
 .. {{{end}}}
@@ -231,43 +231,43 @@ user-specific values for ``posix_user``.
 	
 	posix_prefix
 	============
-	prefix = /Users/dhellmann/Envs/pymotw36
+	prefix = /Users/dhellmann/Envs/pymotw37
 	
 	data
 	  .
 	include
-	  ./include/python3.6m
+	  ./include/python3.7m
 	platinclude
-	  ./include/python3.6m
+	  ./include/python3.7m
 	platlib
-	  ./lib/python3.6/site-packages
+	  ./lib/python3.7/site-packages
 	platstdlib
-	  ./lib/python3.6
+	  ./lib/python3.7
 	purelib
-	  ./lib/python3.6/site-packages
+	  ./lib/python3.7/site-packages
 	scripts
 	  ./bin
 	stdlib
-	  ./lib/python3.6
+	  ./lib/python3.7
 	
 	posix_user
 	==========
-	prefix = /Users/dhellmann/Library/Python/3.6
+	prefix = /Users/dhellmann/Library/Python/3.7
 	
 	data
 	  .
 	include
-	  ./include/python3.6
+	  ./include/python3.7
 	platlib
-	  ./lib/python3.6/site-packages
+	  ./lib/python3.7/site-packages
 	platstdlib
-	  ./lib/python3.6
+	  ./lib/python3.7
 	purelib
-	  ./lib/python3.6/site-packages
+	  ./lib/python3.7/site-packages
 	scripts
 	  ./bin
 	stdlib
-	  ./lib/python3.6
+	  ./lib/python3.7
 	
 
 .. {{{end}}}
@@ -293,12 +293,12 @@ because it does not recompute all of the paths each time.
 	
 	posix_prefix
 	============
-	purelib = /Users/dhellmann/Envs/pymotw36/lib/python3.6/site-pack
+	purelib = /Users/dhellmann/Envs/pymotw37/lib/python3.7/site-pack
 	ages
 	
 	posix_user
 	==========
-	purelib = /Users/dhellmann/Library/Python/3.6/lib/python3.6/site
+	purelib = /Users/dhellmann/Library/Python/3.7/lib/python3.7/site
 	-packages
 	
 
@@ -330,7 +330,7 @@ the platform string.
 
 	$ python3 sysconfig_get_platform.py
 	
-	macosx-10.6-intel
+	macosx-10.9-x86_64
 
 .. {{{end}}}
 
@@ -353,12 +353,12 @@ building a version-specific path.
 
 	$ python3 sysconfig_get_python_version.py
 	
-	sysconfig.get_python_version(): 3.6
+	sysconfig.get_python_version(): 3.7
 	
 	sys.version_info:
 	  major       : 3
-	  minor       : 6
-	  micro       : 4
+	  minor       : 7
+	  micro       : 1
 	  releaselevel: final
 	  serial      : 0
 
