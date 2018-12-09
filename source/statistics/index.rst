@@ -156,16 +156,16 @@ length of every second file found.
 	  count     : 1282
 	  min       :   4.00
 	  max       : 228.00
-	  mean      :  27.78
+	  mean      :  27.79
 	
 	Population variance:
 	  pstdev    :  17.86
-	  pvariance : 318.84
+	  pvariance : 319.04
 	
 	Estimated variance for sample:
 	  count     : 641
 	  stdev     :  16.94
-	  variance  : 286.90
+	  variance  : 286.99
 
 .. {{{end}}}
 
