@@ -741,7 +741,7 @@ two other times in the text, though, so ``search()`` finds it.
 	Text   : This is some text -- with punctuation.
 	Pattern: is
 	Match  : None
-	Search : <_sre.SRE_Match object; span=(2, 4), match='is'>
+	Search : <re.Match object; span=(2, 4), match='is'>
 
 .. {{{end}}}
 
@@ -766,7 +766,7 @@ report a match.
 	
 	Text       : This is some text -- with punctuation.
 	Pattern    : is
-	Search     : <_sre.SRE_Match object; span=(2, 4), match='is'>
+	Search     : <re.Match object; span=(2, 4), match='is'>
 	Full match : None
 
 .. {{{end}}}
