@@ -3,7 +3,7 @@
 """
 """
 #end_pymotw_header
-import imp
+import importlib
 import os
 import sys
 
@@ -24,6 +24,6 @@ package_dir_b = os.path.join(base_dir, 'package_dir_b')
 sys.path.insert(0, package_dir_b)
 
 # Reload the module to get the other version
-imp.reload(example)
+importlib.reload(example)
 print('Reloaded example from:', example.__file__)
 print('  ', example.DATA)

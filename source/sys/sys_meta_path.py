@@ -2,7 +2,7 @@
 # encoding: utf-8
 #end_pymotw_header
 import sys
-import imp
+import types
 
 
 class NoisyMetaImportFinder:
@@ -38,7 +38,7 @@ class NoisyMetaImportLoader:
         else:
             mod = sys.modules.setdefault(
                 fullname,
-                imp.new_module(fullname))
+                types.ModuleType(fullname))
 
         # Set a few properties required by PEP 302
         mod.__file__ = fullname
