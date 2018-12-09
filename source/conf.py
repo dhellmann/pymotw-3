@@ -23,6 +23,8 @@ import sysconfig
 
 from docutils import nodes
 
+from sphinx.environment.adapters import toctree
+
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
@@ -470,7 +472,8 @@ def html_page_context(app, pagename, templatename, context, doctree):
     # Build a list of the local table of contents entries to appear in
     # the sidebar
     try:
-        toc = app.builder.env.get_toc_for(pagename, app.builder)
+        adapter = toctree.TocTree(app.builder.env)
+        toc = adapter.get_toc_for(pagename, app.builder)
     except KeyError:
         # Pages like genindex may not show up in the list of pages
         # with table of contents, and that breaks
