@@ -17,4 +17,4 @@ hash = hmac.new(
 )
 
 digest = hash.digest()
-print(base64.encodestring(digest))
+print(base64.encodebytes(digest))
