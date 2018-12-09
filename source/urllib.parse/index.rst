@@ -367,9 +367,9 @@ about the characters it replaces.
 
 	$ python3 urllib_parse_quote.py
 	
-	urlencode() : url=http%3A%2F%2Flocalhost%3A8080%2F%7Ehellmann%2F
-	quote()     : http%3A//localhost%3A8080/%7Ehellmann/
-	quote_plus(): http%3A%2F%2Flocalhost%3A8080%2F%7Ehellmann%2F
+	urlencode() : url=http%3A%2F%2Flocalhost%3A8080%2F~hellmann%2F
+	quote()     : http%3A//localhost%3A8080/~hellmann/
+	quote_plus(): http%3A%2F%2Flocalhost%3A8080%2F~hellmann%2F
 
 .. {{{end}}}
 
