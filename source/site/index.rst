@@ -77,7 +77,7 @@ platform-specific suffix values described earlier.
 	$ python3 site_user_base.py
 	
 	Base: /Users/dhellmann/.local
-	Site: /Users/dhellmann/.local/lib/python3.6/site-packages
+	Site: /Users/dhellmann/.local/lib/python3.7/site-packages
 
 .. {{{end}}}
 
@@ -95,7 +95,7 @@ non-Windows).
 	$ PYTHONUSERBASE=/tmp/$USER python3 site_user_base.py
 	
 	Base: /tmp/dhellmann
-	Site: /tmp/dhellmann/lib/python3.6/site-packages
+	Site: /tmp/dhellmann/lib/python3.7/site-packages
 
 .. {{{end}}}
 
@@ -324,10 +324,10 @@ explicitly to ensure the module is picked up.
 	e_sitecustomize.py
 	
 	Loading sitecustomize.py
-	Adding new path /opt/python/3.6/Darwin-17.4.0-x86_64-i386-64bit
+	Adding new path /opt/python/3.7/Darwin-18.0.0-x86_64-i386-64bit
 	Running main program from
 	with_sitecustomize/site_sitecustomize.py
-	End of path: /opt/python/3.6/Darwin-17.4.0-x86_64-i386-64bit
+	End of path: /opt/python/3.7/Darwin-18.0.0-x86_64-i386-64bit
 
 .. {{{end}}}
 
@@ -416,12 +416,12 @@ before the automatic import was added, the interpreter accepts an
 	$ python3 -S site_import_path.py
 	
 	Path prefixes:
-	   /Users/dhellmann/Envs/pymotw36/bin/..
-	   /Users/dhellmann/Envs/pymotw36/bin/..
+	   /Users/dhellmann/Envs/pymotw37/bin/..
+	   /Users/dhellmann/Envs/pymotw37/bin/..
 	
-	/Users/dhellmann/Envs/pymotw36/bin/..
+	/Users/dhellmann/Envs/pymotw37/bin/..
 	
-	  lib/python3.6/site-packages
+	  lib/python3.7/site-packages
 	   exists : True
 	   in path: False
 	
