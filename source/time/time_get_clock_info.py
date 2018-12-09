@@ -9,7 +9,6 @@ import textwrap
 import time
 
 available_clocks = [
-    ('clock', time.clock),
     ('monotonic', time.monotonic),
     ('perf_counter', time.perf_counter),
     ('process_time', time.process_time),

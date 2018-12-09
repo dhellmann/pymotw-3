@@ -38,7 +38,7 @@ implementation, including the clock's resolution.
    :caption:
    :start-after: #end_pymotw_header
 
-This output for Mac OS X shows that the monotonic and perf_counter
+This output for macOS shows that the monotonic and perf_counter
 clocks are implemented using the same underlying system call.
 
 .. {{{cog
@@ -49,40 +49,33 @@ clocks are implemented using the same underlying system call.
 
 	$ python3 time_get_clock_info.py
 	
-	clock:
-	    adjustable    : False
-	    implementation: clock()
-	    monotonic     : True
-	    resolution    : 1e-06
-	    current       : 0.046796
-	
 	monotonic:
 	    adjustable    : False
 	    implementation: mach_absolute_time()
 	    monotonic     : True
 	    resolution    : 1e-09
-	    current       : 716028.526210432
+	    current       : 0.047857746
 	
 	perf_counter:
 	    adjustable    : False
 	    implementation: mach_absolute_time()
 	    monotonic     : True
 	    resolution    : 1e-09
-	    current       : 716028.526241605
+	    current       : 0.047930006
 	
 	process_time:
 	    adjustable    : False
 	    implementation: getrusage(RUSAGE_SELF)
 	    monotonic     : True
 	    resolution    : 1e-06
-	    current       : 0.046946999999999996
+	    current       : 0.074122
 	
 	time:
 	    adjustable    : True
 	    implementation: gettimeofday()
 	    monotonic     : False
 	    resolution    : 1e-06
-	    current       : 1521404584.966362
+	    current       : 1544377423.803307
 	
 
 .. {{{end}}}
@@ -110,7 +103,7 @@ actual precision is platform-dependent.
 
 	$ python3 time_time.py
 	
-	The time is: 1521404585.0243158
+	The time is: 1544377423.849656
 
 .. {{{end}}}
 
@@ -133,8 +126,8 @@ The second ``print()`` call in this example shows how to use
 
 	$ python3 time_ctime.py
 	
-	The time is      : Sun Mar 18 16:23:05 2018
-	15 secs from now : Sun Mar 18 16:23:20 2018
+	The time is      : Sun Dec  9 12:43:43 2018
+	15 secs from now : Sun Dec  9 12:43:58 2018
 
 .. {{{end}}}
 
@@ -168,8 +161,8 @@ values. In this example the duration of the sleep is measured using
 
 	$ python3 time_monotonic.py
 	
-	start : 716028.72
-	end   : 716028.82
+	start :      0.02
+	end   :      0.13
 	span  :      0.10
 
 .. {{{end}}}
@@ -177,8 +170,8 @@ values. In this example the duration of the sleep is measured using
 Processor Clock Time
 ====================
 
-While ``time()`` returns a wall clock time, ``clock()`` returns
-processor clock time.  The values returned from ``clock()`` reflect
+While ``time()`` returns a wall clock time, ``process_time()`` returns
+processor clock time.  The values returned from ``process_time()`` reflect
 the actual time used by the program as it runs.
 
 .. literalinclude:: time_clock.py
@@ -196,18 +189,18 @@ each iteration through the loop.
   to actually see a difference in the times.
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'time_clock.py'))
+.. cog.out(run_script(cog.inFile, 'time_process_time.py'))
 .. }}}
 
 .. code-block:: none
 
-	$ python3 time_clock.py
+	$ python3 time_process_time.py
 	
-	Sun Mar 18 16:23:05 2018 : 1521404585.328 0.051
-	Sun Mar 18 16:23:05 2018 : 1521404585.632 0.349
-	Sun Mar 18 16:23:05 2018 : 1521404585.935 0.648
-	Sun Mar 18 16:23:06 2018 : 1521404586.234 0.943
-	Sun Mar 18 16:23:06 2018 : 1521404586.539 1.244
+	Sun Dec  9 12:43:44 2018 : 1544377424.095 0.056
+	Sun Dec  9 12:43:44 2018 : 1544377424.423 0.675
+	Sun Dec  9 12:43:44 2018 : 1544377424.790 1.376
+	Sun Dec  9 12:43:45 2018 : 1544377425.108 1.997
+	Sun Dec  9 12:43:45 2018 : 1544377425.422 2.594
 
 .. {{{end}}}
 
@@ -220,7 +213,7 @@ anything.
 
 In this example, the loop does very little work by going to sleep
 after each iteration. The ``time()`` value increases even while
-the application is asleep, but the ``clock()`` value does not.
+the application is asleep, but the ``process_time()`` value does not.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '-u time_clock_sleep.py'))
@@ -230,13 +223,13 @@ the application is asleep, but the ``clock()`` value does not.
 
 	$ python3 -u time_clock_sleep.py
 	
-	Sun Mar 18 16:23:06 2018 - 1521404586.89 - 0.04
+	Sun Dec  9 12:43:45 2018 - 1544377425.83 - 0.06
 	Sleeping 3
-	Sun Mar 18 16:23:09 2018 - 1521404589.90 - 0.04
+	Sun Dec  9 12:43:48 2018 - 1544377428.83 - 0.06
 	Sleeping 2
-	Sun Mar 18 16:23:11 2018 - 1521404591.90 - 0.04
+	Sun Dec  9 12:43:50 2018 - 1544377430.84 - 0.06
 	Sleeping 1
-	Sun Mar 18 16:23:12 2018 - 1521404592.90 - 0.04
+	Sun Dec  9 12:43:51 2018 - 1544377431.84 - 0.06
 
 .. {{{end}}}
 
@@ -268,11 +261,11 @@ computing values, not as absolute times.
 
 	$ python3 time_perf_counter.py
 	
-	Sun Mar 18 16:23:13 2018 : 0.378 0.378
-	Sun Mar 18 16:23:13 2018 : 0.376 0.754
-	Sun Mar 18 16:23:14 2018 : 0.372 1.126
-	Sun Mar 18 16:23:14 2018 : 0.376 1.502
-	Sun Mar 18 16:23:14 2018 : 0.376 1.879
+	Sun Dec  9 12:43:52 2018 : 0.366 0.366
+	Sun Dec  9 12:43:52 2018 : 0.338 0.704
+	Sun Dec  9 12:43:52 2018 : 0.350 1.054
+	Sun Dec  9 12:43:53 2018 : 0.315 1.369
+	Sun Dec  9 12:43:53 2018 : 0.306 1.675
 
 .. {{{end}}}
 
@@ -305,27 +298,27 @@ converts it to the floating point representation.
 	
 	gmtime:
 	  tm_year : 2018
-	  tm_mon  : 3
-	  tm_mday : 18
-	  tm_hour : 20
-	  tm_min  : 23
-	  tm_sec  : 14
+	  tm_mon  : 12
+	  tm_mday : 9
+	  tm_hour : 17
+	  tm_min  : 43
+	  tm_sec  : 53
 	  tm_wday : 6
-	  tm_yday : 77
+	  tm_yday : 343
 	  tm_isdst: 0
 	
 	localtime:
 	  tm_year : 2018
-	  tm_mon  : 3
-	  tm_mday : 18
-	  tm_hour : 16
-	  tm_min  : 23
-	  tm_sec  : 14
+	  tm_mon  : 12
+	  tm_mday : 9
+	  tm_hour : 12
+	  tm_min  : 43
+	  tm_sec  : 53
 	  tm_wday : 6
-	  tm_yday : 77
-	  tm_isdst: 1
+	  tm_yday : 343
+	  tm_isdst: 0
 	
-	mktime: 1521404594.0
+	mktime: 1544377433.0
 
 .. {{{end}}}
 
@@ -369,21 +362,21 @@ flag, and timezone offset value.
 	  tzname: ('EST', 'EDT')
 	  Zone  : 18000 (5.0)
 	  DST   : 1
-	  Time  : Sun Mar 18 16:23:14 2018
+	  Time  : Sun Dec  9 12:43:53 2018
 	
 	GMT :
 	  TZ    : GMT
 	  tzname: ('GMT', 'GMT')
 	  Zone  : 0 (0.0)
 	  DST   : 0
-	  Time  : Sun Mar 18 20:23:14 2018
+	  Time  : Sun Dec  9 17:43:53 2018
 	
 	Europe/Amsterdam :
 	  TZ    : Europe/Amsterdam
 	  tzname: ('CET', 'CEST')
 	  Zone  : -3600 (-1.0)
 	  DST   : 1
-	  Time  : Sun Mar 18 21:23:14 2018
+	  Time  : Sun Dec  9 18:43:53 2018
 	
 
 .. {{{end}}}
