@@ -3,6 +3,7 @@ import functools
 import http.server
 import os
 import subprocess
+import sys
 
 from paver.easy import options, Bunch, task, consume_args, sh, info, error, cmdopts, dry, needs
 from paver.path import path
@@ -115,8 +116,10 @@ def _elide_path_prefix(infile, line):
     line = line.replace(rundir, '...')
     if 'VIRTUAL_ENV' in os.environ:
         line = line.replace(os.environ['VIRTUAL_ENV'], '...')
-    line = line.replace('/Library/Frameworks/Python.framework/Versions/3.6',
-                        '...')
+    line = line.replace(
+        '/Library/Frameworks/Python.framework/Versions/{}.{}'.format(
+            *sys.version_info[:2]),
+        '...')
     return line
 
 
