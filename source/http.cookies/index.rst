@@ -68,7 +68,7 @@ be discarded.
 	$ python3 http_cookies_Morsel.py
 	
 	Set-Cookie: encoded_value_cookie="\"cookie\054value\073\"";
-	Comment=Has escaped punctuation
+	Comment="Has escaped punctuation"
 	Set-Cookie: expires_at_time=cookie_value; expires=Sat, 14 Feb
 	2009 19:30:14
 	Set-Cookie: restricted_cookie=cookie_value; Domain=PyMOTW;
