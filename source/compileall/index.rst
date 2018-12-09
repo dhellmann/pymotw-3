@@ -55,10 +55,10 @@ based on the Python interpreter version.
 	  examples/a.py
 	  examples/subdir
 	  examples/subdir/__pycache__
-	  examples/subdir/__pycache__/b.cpython-36.pyc
+	  examples/subdir/__pycache__/b.cpython-37.pyc
 	  examples/subdir/b.py
 	  examples/__pycache__
-	  examples/__pycache__/a.cpython-36.pyc
+	  examples/__pycache__/a.cpython-37.pyc
 	
 
 .. {{{end}}}
@@ -184,7 +184,7 @@ or a relative path.
 	  examples/subdir
 	  examples/subdir/b.py
 	  examples/__pycache__
-	  examples/__pycache__/a.cpython-36.pyc
+	  examples/__pycache__/a.cpython-37.pyc
 	
 
 .. {{{end}}}
@@ -199,7 +199,7 @@ example:
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '-m compileall -h', ignore_error=True, 
-..                    line_break_mode='wrap'))
+..                    line_break_mode='wrap-no-breaks'))
 .. }}}
 
 .. code-block:: none
@@ -209,6 +209,8 @@ example:
 	usage: compileall.py [-h] [-l] [-r RECURSION] [-f] [-q] [-b] [-d
 	DESTDIR]
 	                     [-x REGEXP] [-i FILE] [-j WORKERS]
+	                     [--invalidation-mode
+	{checked-hash,timestamp,unchecked-hash}]
 	                     [FILE|DIR [FILE|DIR ...]]
 	
 	Utilities to support installing Python libraries.
@@ -251,6 +253,9 @@ example:
 	                        read from stdin
 	  -j WORKERS, --workers WORKERS
 	                        Run compileall concurrently
+	  --invalidation-mode {checked-hash,timestamp,unchecked-hash}
+	                        How the pycs will be invalidated at
+	runtime
 
 .. {{{end}}}
 
