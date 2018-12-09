@@ -51,12 +51,12 @@ A Mac running OS X 10.11.6 with all of the variables unset produces
 this output:
 
 .. {{{cog
-.. cog.out(run_script(cog.inFile, 'export LANG=; export LC_CTYPE=; python3 locale_env.py', interpreter=None))
+.. cog.out(run_script(cog.inFile, 'LANG= LC_CTYPE= PYTHONCOERCECLOCALE=0 python3 locale_env.py', interpreter=None))
 .. }}}
 
 .. code-block:: none
 
-	$ export LANG=; export LC_CTYPE=; python3 locale_env.py
+	$ LANG= LC_CTYPE= PYTHONCOERCECLOCALE=0 python3 locale_env.py
 	
 	Environment settings:
 	  LC_ALL = 
