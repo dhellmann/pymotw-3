@@ -80,8 +80,8 @@ the line where the actual exception is generated.
 	$ python3 cgitb_local_vars.py
 	
 	ZeroDivisionError
-	Python 3.6.4: .../bin/python3
-	Sun Mar 18 16:20:19 2018
+	Python 3.7.1: .../bin/python3
+	Sun Dec  9 10:46:17 2018
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
@@ -230,8 +230,8 @@ error-prone code.
 	$ python3 cgitb_with_classes.py
 	
 	ZeroDivisionError
-	Python 3.6.4: .../bin/python3
-	Sun Mar 18 16:20:19 2018
+	Python 3.7.1: .../bin/python3
+	Sun Dec  9 10:46:17 2018
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
@@ -367,8 +367,8 @@ standard ``message`` and ``args`` values.
 	$ python3 cgitb_exception_properties.py
 	
 	MyException
-	Python 3.6.4: .../bin/python3
-	Sun Mar 18 16:20:19 2018
+	Python 3.7.1: .../bin/python3
+	Sun Dec  9 10:46:17 2018
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
@@ -401,7 +401,7 @@ standard ``message`` and ``args`` values.
 	    __gt__ = <method-wrapper '__gt__' of MyException object>
 	    __hash__ = <method-wrapper '__hash__' of MyException object>
 	    __init__ = <bound method MyException.__init__ of
-	    MyException('Normal message',)>
+	    MyException('Normal message')>
 	    __init_subclass__ = <built-in method __init_subclass__ of
 	    type object>
 	    __le__ = <method-wrapper '__le__' of MyException object>
@@ -487,17 +487,17 @@ describing where to go to find the error log.
 	$ python3 cgitb_log_exception.py
 	
 	<p>A problem occurred in a Python script.
-	.../LOGS/tmpq7icvee3.txt contains the description of this error.
+	.../LOGS/tmpdl2oafqt.txt contains the description of this error.
 
 	$ ls LOGS
 	
-	tmpq7icvee3.txt
+	tmpdl2oafqt.txt
 
 	$ cat LOGS/*.txt
 	
 	ZeroDivisionError
-	Python 3.6.4: .../bin/python3
-	Sun Mar 18 16:20:19 2018
+	Python 3.7.1: .../bin/python3
+	Sun Dec  9 10:46:17 2018
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
