@@ -174,7 +174,7 @@ While ``time()`` returns a wall clock time, ``process_time()`` returns
 processor clock time.  The values returned from ``process_time()`` reflect
 the actual time used by the program as it runs.
 
-.. literalinclude:: time_clock.py
+.. literalinclude:: time_process_time.py
     :caption:
     :start-after: #end_pymotw_header
 
