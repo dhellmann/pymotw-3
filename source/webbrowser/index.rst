@@ -90,7 +90,7 @@ the command line as well as from within your Python program.
 
 	$ python3 -m webbrowser
 	
-	Usage: .../lib/python3.6/webbrowser.py [-n | -t] url
+	Usage: .../lib/python3.7/webbrowser.py [-n | -t] url
 	    -n: open new window
 	    -t: open new tab
 
