@@ -189,7 +189,7 @@ Rather than raising an exception, the non-string key is ignored.
 	$ python3 json_skipkeys.py
 	
 	First attempt
-	ERROR: keys must be a string
+	ERROR: keys must be str, int, float, bool or None, not tuple
 	
 	Second attempt
 	[{"a": "A", "b": [2, 4], "c": 3.0}]
@@ -232,7 +232,7 @@ necessary.
 	$ python3 json_dump_default.py
 	
 	First attempt
-	ERROR: Object of type 'MyObj' is not JSON serializable
+	ERROR: Object of type MyObj is not JSON serializable
 	
 	With default
 	default( <MyObj(instance value goes here)> )
