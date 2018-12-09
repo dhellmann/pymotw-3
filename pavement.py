@@ -33,7 +33,7 @@ os.environ['PYTHONHASHSEED'] = '19710329'
 setup(
     name="PyMOTW-3",
     packages=[],
-    version="1.0",
+    version="1.1",
     url="https://pymotw.com/3/",
     author="Doug Hellmann",
     author_email="doug@doughellmann.com"
