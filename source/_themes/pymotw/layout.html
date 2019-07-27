@@ -33,6 +33,8 @@
     <link rel="stylesheet" href="{{ pathto('_static/font-awesome/css/font-awesome.min.css', 1) }}" type="text/css" />
     <link rel="stylesheet" href="{{ pathto('_static/pymotw.css', 1) }}" type="text/css">
 
+    <link rel="shortcut icon" type="image/png" href="{{ pathto('_static/favicon.png', 1) }}">
+
     <link rel="alternate" type="application/atom+xml"
           title="Doug Hellmann"
           href="http://feeds.doughellmann.com/DougHellmann" />
@@ -46,7 +48,7 @@
   <body>
 
     <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
-      <a class="pure-menu-heading" href="{{ pathto(master_doc) }}">PyMOTW-3</a>
+      <a class="pure-menu-heading" href="{{ pathto(master_doc) }}"><img src="{{ pathto('_static/logo.png', 1) }}"> PyMOTW-3</a>
 
       <ul id="top-menu">
         <li class="pure-menu-selected"><a href="{{ pathto('py-modindex') }}"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
