@@ -74,7 +74,7 @@ Translations and Other Versions
 
 `Chinese <http://www.pandacademy.com/pymotw-3-介绍/>`__
 
-  Jaron has translated most of the articles into Chines for pandacademy.com.
+  Jaron has translated most of the articles into Chinese for pandacademy.com.
 
 `Spanish <https://rico-schmidt.name/pymotw-3/>`__
 
