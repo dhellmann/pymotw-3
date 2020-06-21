@@ -76,6 +76,10 @@ Translations and Other Versions
 
   Jaron has translated most of the articles into Chines for pandacademy.com.
 
+`Spanish <https://rico-schmidt.name/pymotw-3/>`__
+
+  Ernesto Rico Schmidt has translated all of the articles into Spanish.
+
 .. _copyright:
 
 Copyright and Licensing
