@@ -12,7 +12,7 @@ gnureadline==6.3.8
 idna==2.8
 imagesize==1.1.0
 Jinja2==2.10
-lxml==4.2.5
+lxml==4.6.2
 MarkupSafe==1.1.0
 mccabe==0.6.1
 oauthlib==2.1.0
