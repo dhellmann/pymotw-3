@@ -27,3 +27,7 @@ class ExceptionTest(unittest.TestCase):
             'a',
             b='c',
         )
+
+    def testAssertRaisesContext(self):
+        with self.assertRaises(ValueError):
+            raises_error('a', b='c')
