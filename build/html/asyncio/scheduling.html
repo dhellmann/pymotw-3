@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Scheduling Calls to Regular Functions &mdash; PyMOTW 3</title>
+
+    <link rel="stylesheet" href="../_static/pure-min.css" type="text/css">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pymotw.css" type="text/css">
+
+    <link rel="shortcut icon" type="image/png" href="../_static/favicon.png">
+
+    <link rel="alternate" type="application/atom+xml"
+          title="Doug Hellmann"
+          href="http://feeds.doughellmann.com/DougHellmann" />
+    <link rel="alternate" type="application/atom+xml"
+          title="PyMOTW Updates"
+          href="http://feeds.doughellmann.com/PyMOTW" />
+
+    <meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+
+  </head>
+  <body>
+
+    <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
+      <a class="pure-menu-heading" href="../index.html"><img src="../_static/logo.png"> PyMOTW-3</a>
+
+      <ul id="top-menu">
+        <li class="pure-menu-selected"><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+        <li class="pure-menu-selected"><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a></a>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a></li>
+      </ul>
+
+    </div>
+
+    <div class="pure-menu pure-menu-open pure-menu-vertical" id="breadcrumbs-menu">
+      
+      <ul id="breadcrumbs">
+        <li class="pure-menu-selected"><a href="../concurrency.html"><i class="fa fa-arrow-circle-up"></i> Concurrency with Processes, Threads, and Coroutines</a></li>
+        <li class="pure-menu-selected"><a href="index.html"><i class="fa fa-arrow-circle-up"></i> asyncio — Asynchronous I/O, event loop, and concurrency tools</a></li>
+      </ul>
+    </div>
+
+    <div class="pure-g-r" id="content-container">
+
+      <div class="pure-u-3-4">
+        <div class="content">
+          
+  <div class="section" id="scheduling-calls-to-regular-functions">
+<h1>Scheduling Calls to Regular Functions<a class="headerlink" href="#scheduling-calls-to-regular-functions" title="Permalink to this headline">¶</a></h1>
+<p>In addition to managing coroutines and I/O callbacks, the
+<code class="docutils literal notranslate"><span class="pre">asyncio</span></code> event loop can schedule calls to regular functions
+based on the timer value kept in the loop.</p>
+<div class="section" id="scheduling-a-callback-soon">
+<h2>Scheduling a Callback “Soon”<a class="headerlink" href="#scheduling-a-callback-soon" title="Permalink to this headline">¶</a></h2>
+<p>If the timing of the callback does not matter, <code class="docutils literal notranslate"><span class="pre">call_soon()</span></code> can be
+used to schedule the call for the next iteration of the loop. Any
+extra positional arguments after the function are passed to the
+callback when it is invoked. To pass keyword arguments to the
+callback, use <code class="docutils literal notranslate"><span class="pre">partial()</span></code> from the <a class="reference internal" href="../functools/index.html#module-functools" title="functools: Tools for working with functions."><code class="xref py py-mod docutils literal notranslate"><span class="pre">functools</span></code></a> module.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">asyncio_call_soon.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">kwarg</span><span class="o">=</span><span class="s1">&#39;default&#39;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;callback invoked with </span><span class="si">{}</span><span class="s1"> and </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">kwarg</span><span class="p">))</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">loop</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;registering callbacks&#39;</span><span class="p">)</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">call_soon</span><span class="p">(</span><span class="n">callback</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">wrapped</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">callback</span><span class="p">,</span> <span class="n">kwarg</span><span class="o">=</span><span class="s1">&#39;not default&#39;</span><span class="p">)</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">call_soon</span><span class="p">(</span><span class="n">wrapped</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+
+<span class="n">event_loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;entering event loop&#39;</span><span class="p">)</span>
+    <span class="n">event_loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">main</span><span class="p">(</span><span class="n">event_loop</span><span class="p">))</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;closing event loop&#39;</span><span class="p">)</span>
+    <span class="n">event_loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>The callbacks are invoked in the order they are scheduled.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 asyncio_call_soon.py
+
+entering event loop
+registering callbacks
+callback invoked with 1 and default
+callback invoked with 2 and not default
+closing event loop
+</pre></div>
+</div>
+</div>
+<div class="section" id="scheduling-a-callback-with-a-delay">
+<h2>Scheduling a Callback with a Delay<a class="headerlink" href="#scheduling-a-callback-with-a-delay" title="Permalink to this headline">¶</a></h2>
+<p>To postpone a callback until some time in the future, use
+<code class="docutils literal notranslate"><span class="pre">call_later()</span></code>. The first argument is the delay in seconds and the
+second argument is the callback.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">asyncio_call_later.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;callback </span><span class="si">{}</span><span class="s1"> invoked&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">loop</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;registering callbacks&#39;</span><span class="p">)</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">call_later</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">call_later</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">call_soon</span><span class="p">(</span><span class="n">callback</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.4</span><span class="p">)</span>
+
+
+<span class="n">event_loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;entering event loop&#39;</span><span class="p">)</span>
+    <span class="n">event_loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">main</span><span class="p">(</span><span class="n">event_loop</span><span class="p">))</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;closing event loop&#39;</span><span class="p">)</span>
+    <span class="n">event_loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>In this example, the same callback function is scheduled for several
+different times with different arguments. The final instance, using
+<code class="docutils literal notranslate"><span class="pre">call_soon()</span></code>, results in the callback being invoked with the
+argument <code class="docutils literal notranslate"><span class="pre">3</span></code> before any of the time-scheduled instances, showing
+that “soon” usually implies a minimal delay.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 asyncio_call_later.py
+
+entering event loop
+registering callbacks
+callback 3 invoked
+callback 2 invoked
+callback 1 invoked
+closing event loop
+</pre></div>
+</div>
+</div>
+<div class="section" id="scheduling-a-callback-for-a-specific-time">
+<h2>Scheduling a Callback for a Specific Time<a class="headerlink" href="#scheduling-a-callback-for-a-specific-time" title="Permalink to this headline">¶</a></h2>
+<p>It is also possible to schedule a call to occur at a specific
+time. The loop uses a monotonic clock, rather than a wall-clock time,
+to ensure that the value of “now” never regresses. To choose a time
+for a scheduled callback it is necessary to start from the internal
+state of that clock using the loop’s <code class="docutils literal notranslate"><span class="pre">time()</span></code> method.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">asyncio_call_at.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">loop</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;callback </span><span class="si">{}</span><span class="s1"> invoked at </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">loop</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">loop</span><span class="p">):</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;clock time: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;loop  time: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">now</span><span class="p">))</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;registering callbacks&#39;</span><span class="p">)</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">call_at</span><span class="p">(</span><span class="n">now</span> <span class="o">+</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">loop</span><span class="p">)</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">call_at</span><span class="p">(</span><span class="n">now</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">loop</span><span class="p">)</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">call_soon</span><span class="p">(</span><span class="n">callback</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">loop</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="n">event_loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;entering event loop&#39;</span><span class="p">)</span>
+    <span class="n">event_loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">main</span><span class="p">(</span><span class="n">event_loop</span><span class="p">))</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;closing event loop&#39;</span><span class="p">)</span>
+    <span class="n">event_loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>Note that the time according to the loop does not match the value
+returned by <code class="docutils literal notranslate"><span class="pre">time.time()</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 asyncio_call_at.py
+
+entering event loop
+clock time: 1521404411.833459
+loop  time: 715855.398664185
+registering callbacks
+callback 3 invoked at 715855.398744743
+callback 2 invoked at 715855.503897727
+callback 1 invoked at 715855.601119414
+closing event loop
+</pre></div>
+</div>
+</div>
+</div>
+
+
+
+        <div id="footer-nav">
+<a id="prev-link" href="coroutines.html"
+   title="previous chapter"><i class="fa fa-arrow-circle-left"></i> Cooperative Multitasking with Coroutines</a>
+<a id="next-link" href="futures.html"
+   title="next chapter">Producing Results Asynchronously <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+        </div>
+      </div>
+
+      <div class="pure-u-1-4">
+        <div class="sidebar-wrapper">
+          <div class="sidebar">
+<div id="sidebar-toc">
+  <h5>Quick Links</h5>
+  <ul>
+    
+    <li><a href="#scheduling-a-callback-soon"><i class="fa fa-caret-right"></i>Scheduling a Callback “Soon”</a></li>
+    
+    <li><a href="#scheduling-a-callback-with-a-delay"><i class="fa fa-caret-right"></i>Scheduling a Callback with a Delay</a></li>
+    
+    <li><a href="#scheduling-a-callback-for-a-specific-time"><i class="fa fa-caret-right"></i>Scheduling a Callback for a Specific Time</a></li>
+    
+  </ul>
+</div>
+
+          </div>
+          <div class="sidebar"><div id="sidebar-last-updated">
+  This page was last updated 2018-03-18.
+</div>
+
+          </div>
+          <div class="sidebar">
+<div id="sidebar-nav">
+  <h5>Navigation</h5>
+  <ul>
+    <li><a href="coroutines.html"
+           title="previous chapter"><i class="fa fa-arrow-circle-left"></i>Cooperative Multitasking with Coroutines</a></li>
+    <li><a href="futures.html"
+           title="next chapter"><i class="fa fa-arrow-circle-right"></i>Producing Results Asynchronously</a></li>
+  </ul>
+</div>
+          </div>
+          <div class="sidebar"><div id="sidebar-book"><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/book-cover-image-med.jpg"><br>Get the book</a></div>
+          </div>
+          <div class="sidebar"><div id="sidebar-example-disclaimer">
+<p>The output from all the example programs
+from PyMOTW-3 has been generated with Python 3.7.9, unless
+otherwise noted. Some of the features described here may not be
+available in earlier versions of Python.</p>
+<p>Looking for <a href="/2/">examples for Python 2</a>?</p>
+</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pure-g-r" id="footer">
+
+      <div class="pure-u-1-3">
+        <div class="footer-list">
+            <h4>This Site</h4>
+            <ul>
+              <li><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+              <li><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+            </ul>
+        </div>
+      </div><div class="pure-u-1-3">
+          <div class="footer-content">
+            <div class="socialmedia">
+              <a class="sociallink" href="../index.html"
+       title="Home">
+      <i class="fa fa-home fa-lg"></i></a>
+              <a class="sociallink" href="../about.html"
+       title="About">
+      <i class="fa fa-user fa-lg"></i></a>
+              <a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a>
+              <a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a>
+              <a class="sociallink" href="http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US"
+       title="Subscribe via Email">
+      <i class="fa fa-envelope fa-lg"></i></a>
+            </div>
+
+            <div class="copyright">
+              <a rel="author" href="../about.html">&copy; Copyright 2021, Doug Hellmann</a>
+            </div>
+
+            <div class="cc"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License BY-NC-SA" style="border-width:0; align: center;" width="88" height="31" src="data:image/png;base64,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"/></a>
+            </div>
+
+          </div></div><div class="pure-u-1-3">
+          <div class="footer-list">
+            <h4>Other Writing</h4>
+            <ul>
+              <li><a href="https://doughellmann.com/"><i class="fa fa-pencil fa-lg"></i> Blog</a></li>
+              <li><a href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><i class="fa fa-book fa-lg"></i> The Python Standard Library By Example</a></li>
+            </ul>
+          </div>
+        </div><script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-3', 'pymotw.com');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

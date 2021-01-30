@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Passing Messages to Processes &mdash; PyMOTW 3</title>
+
+    <link rel="stylesheet" href="../_static/pure-min.css" type="text/css">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pymotw.css" type="text/css">
+
+    <link rel="shortcut icon" type="image/png" href="../_static/favicon.png">
+
+    <link rel="alternate" type="application/atom+xml"
+          title="Doug Hellmann"
+          href="http://feeds.doughellmann.com/DougHellmann" />
+    <link rel="alternate" type="application/atom+xml"
+          title="PyMOTW Updates"
+          href="http://feeds.doughellmann.com/PyMOTW" />
+
+    <meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+
+  </head>
+  <body>
+
+    <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
+      <a class="pure-menu-heading" href="../index.html"><img src="../_static/logo.png"> PyMOTW-3</a>
+
+      <ul id="top-menu">
+        <li class="pure-menu-selected"><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+        <li class="pure-menu-selected"><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a></a>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a></li>
+      </ul>
+
+    </div>
+
+    <div class="pure-menu pure-menu-open pure-menu-vertical" id="breadcrumbs-menu">
+      
+      <ul id="breadcrumbs">
+        <li class="pure-menu-selected"><a href="../concurrency.html"><i class="fa fa-arrow-circle-up"></i> Concurrency with Processes, Threads, and Coroutines</a></li>
+        <li class="pure-menu-selected"><a href="index.html"><i class="fa fa-arrow-circle-up"></i> multiprocessing — Manage Processes Like Threads</a></li>
+      </ul>
+    </div>
+
+    <div class="pure-g-r" id="content-container">
+
+      <div class="pure-u-3-4">
+        <div class="content">
+          
+  <div class="section" id="passing-messages-to-processes">
+<span id="multiprocessing-queues"></span><h1>Passing Messages to Processes<a class="headerlink" href="#passing-messages-to-processes" title="Permalink to this headline">¶</a></h1>
+<p>As with threads, a common use pattern for multiple processes is to
+divide a job up among several workers to run in parallel.  Effective
+use of multiple processes usually requires some communication between
+them, so that work can be divided and results can be aggregated.  A
+simple way to communicate between processes with
+<code class="docutils literal notranslate"><span class="pre">multiprocessing</span></code> is to use a <code class="docutils literal notranslate"><span class="pre">Queue</span></code> to pass messages
+back and forth.  Any object that can be serialized with <a class="reference internal" href="../pickle/index.html#module-pickle" title="pickle: Object serialization"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a>
+can pass through a <code class="docutils literal notranslate"><span class="pre">Queue</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">multiprocessing_queue.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">multiprocessing</span>
+
+
+<span class="k">class</span> <span class="nc">MyFancyClass</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="k">def</span> <span class="nf">do_something</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">proc_name</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Doing something fancy in </span><span class="si">{}</span><span class="s1"> for </span><span class="si">{}</span><span class="s1">!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">proc_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">worker</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">do_something</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">queue</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">queue</span><span class="p">,))</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">MyFancyClass</span><span class="p">(</span><span class="s1">&#39;Fancy Dan&#39;</span><span class="p">))</span>
+
+    <span class="c1"># Wait for the worker to finish</span>
+    <span class="n">queue</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">queue</span><span class="o">.</span><span class="n">join_thread</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>This short example only passes a single message to a single worker,
+then the main process waits for the worker to finish.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 multiprocessing_queue.py
+
+Doing something fancy in Process-1 for Fancy Dan!
+</pre></div>
+</div>
+<p>A more complex example shows how to manage several workers consuming
+data from a <code class="docutils literal notranslate"><span class="pre">JoinableQueue</span></code> and passing results back to the
+parent process.  The <em>poison pill</em> technique is used to stop the
+workers.  After setting up the real tasks, the main program adds one
+“stop” value per worker to the job queue.  When a worker encounters
+the special value, it breaks out of its processing loop.  The main
+process uses the task queue’s <code class="docutils literal notranslate"><span class="pre">join()</span></code> method to wait for all of
+the tasks to finish before processing the results.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">multiprocessing_producer_consumer.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+<span class="k">class</span> <span class="nc">Consumer</span><span class="p">(</span><span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_queue</span><span class="p">,</span> <span class="n">result_queue</span><span class="p">):</span>
+        <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">task_queue</span> <span class="o">=</span> <span class="n">task_queue</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result_queue</span> <span class="o">=</span> <span class="n">result_queue</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">proc_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">next_task</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">next_task</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># Poison pill means shutdown</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Exiting&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">proc_name</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">task_queue</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span>
+                <span class="k">break</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">proc_name</span><span class="p">,</span> <span class="n">next_task</span><span class="p">))</span>
+            <span class="n">answer</span> <span class="o">=</span> <span class="n">next_task</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">task_queue</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">result_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Task</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">b</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>  <span class="c1"># pretend to take time to do the work</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{self.a}</span><span class="s1"> * </span><span class="si">{self.b}</span><span class="s1"> = </span><span class="si">{product}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">product</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{self.a}</span><span class="s1"> * </span><span class="si">{self.b}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># Establish communication queues</span>
+    <span class="n">tasks</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">JoinableQueue</span><span class="p">()</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+
+    <span class="c1"># Start consumers</span>
+    <span class="n">num_consumers</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Creating </span><span class="si">{}</span><span class="s1"> consumers&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">num_consumers</span><span class="p">))</span>
+    <span class="n">consumers</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">Consumer</span><span class="p">(</span><span class="n">tasks</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_consumers</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">consumers</span><span class="p">:</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="c1"># Enqueue jobs</span>
+    <span class="n">num_jobs</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_jobs</span><span class="p">):</span>
+        <span class="n">tasks</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">Task</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+
+    <span class="c1"># Add a poison pill for each consumer</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_consumers</span><span class="p">):</span>
+        <span class="n">tasks</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="c1"># Wait for all of the tasks to finish</span>
+    <span class="n">tasks</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
+    <span class="c1"># Start printing results</span>
+    <span class="k">while</span> <span class="n">num_jobs</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Result:&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+        <span class="n">num_jobs</span> <span class="o">-=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<p>Although the jobs enter the queue in order, their execution is
+parallelized so there is no guarantee about the order they will be
+completed.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 -u multiprocessing_producer_consumer.py
+
+Creating 8 consumers
+Consumer-1: 0 * 0
+Consumer-2: 1 * 1
+Consumer-3: 2 * 2
+Consumer-4: 3 * 3
+Consumer-5: 4 * 4
+Consumer-6: 5 * 5
+Consumer-7: 6 * 6
+Consumer-8: 7 * 7
+Consumer-3: 8 * 8
+Consumer-7: 9 * 9
+Consumer-4: Exiting
+Consumer-1: Exiting
+Consumer-2: Exiting
+Consumer-5: Exiting
+Consumer-6: Exiting
+Consumer-8: Exiting
+Consumer-7: Exiting
+Consumer-3: Exiting
+Result: 6 * 6 = 36
+Result: 2 * 2 = 4
+Result: 3 * 3 = 9
+Result: 0 * 0 = 0
+Result: 1 * 1 = 1
+Result: 7 * 7 = 49
+Result: 4 * 4 = 16
+Result: 5 * 5 = 25
+Result: 8 * 8 = 64
+Result: 9 * 9 = 81
+</pre></div>
+</div>
+</div>
+<div class="section" id="signaling-between-processes">
+<h1>Signaling between Processes<a class="headerlink" href="#signaling-between-processes" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">Event</span></code> class provides a simple way to communicate state
+information between processes.  An event can be toggled between set
+and unset states.  Users of the event object can wait for it to change
+from unset to set, using an optional timeout value.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">multiprocessing_event.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+<span class="k">def</span> <span class="nf">wait_for_event</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Wait for the event to be set before doing anything&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;wait_for_event: starting&#39;</span><span class="p">)</span>
+    <span class="n">e</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;wait_for_event: e.is_set()-&gt;&#39;</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">is_set</span><span class="p">())</span>
+
+
+<span class="k">def</span> <span class="nf">wait_for_event_timeout</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Wait t seconds and then timeout&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;wait_for_event_timeout: starting&#39;</span><span class="p">)</span>
+    <span class="n">e</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;wait_for_event_timeout: e.is_set()-&gt;&#39;</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">is_set</span><span class="p">())</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+    <span class="n">w1</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;block&#39;</span><span class="p">,</span>
+        <span class="n">target</span><span class="o">=</span><span class="n">wait_for_event</span><span class="p">,</span>
+        <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">e</span><span class="p">,),</span>
+    <span class="p">)</span>
+    <span class="n">w1</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="n">w2</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;nonblock&#39;</span><span class="p">,</span>
+        <span class="n">target</span><span class="o">=</span><span class="n">wait_for_event_timeout</span><span class="p">,</span>
+        <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">w2</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;main: waiting before calling Event.set()&#39;</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">e</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;main: event is set&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>When <code class="docutils literal notranslate"><span class="pre">wait()</span></code> times out it returns without an error.  The caller
+is responsible for checking the state of the event using
+<code class="docutils literal notranslate"><span class="pre">is_set()</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 -u multiprocessing_event.py
+
+main: waiting before calling Event.set()
+wait_for_event: starting
+wait_for_event_timeout: starting
+wait_for_event_timeout: e.is_set()-&gt; False
+main: event is set
+wait_for_event: e.is_set()-&gt; True
+</pre></div>
+</div>
+</div>
+<div class="section" id="controlling-access-to-resources">
+<h1>Controlling Access to Resources<a class="headerlink" href="#controlling-access-to-resources" title="Permalink to this headline">¶</a></h1>
+<p>In situations when a single resource needs to be shared between
+multiple processes, a <code class="docutils literal notranslate"><span class="pre">Lock</span></code> can be used to avoid conflicting
+accesses.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">multiprocessing_lock.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+
+<span class="k">def</span> <span class="nf">worker_with</span><span class="p">(</span><span class="n">lock</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">lock</span><span class="p">:</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Lock acquired via with</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">worker_no_with</span><span class="p">(</span><span class="n">lock</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
+    <span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Lock acquired directly</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+
+
+<span class="n">lock</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
+    <span class="n">target</span><span class="o">=</span><span class="n">worker_with</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">lock</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">nw</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
+    <span class="n">target</span><span class="o">=</span><span class="n">worker_no_with</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">lock</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">w</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">nw</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="n">w</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<span class="n">nw</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>In this example, the messages printed to the console may be jumbled
+together if the two processes do not synchronize their access of the
+output stream with the lock.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 multiprocessing_lock.py
+
+Lock acquired via with
+Lock acquired directly
+</pre></div>
+</div>
+</div>
+<div class="section" id="synchronizing-operations">
+<h1>Synchronizing Operations<a class="headerlink" href="#synchronizing-operations" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">Condition</span></code> objects can be used to synchronize parts of a
+workflow so that some run in parallel but others run sequentially,
+even if they are in separate processes.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">multiprocessing_condition.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+<span class="k">def</span> <span class="nf">stage_1</span><span class="p">(</span><span class="n">cond</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;perform first stage of work,</span>
+<span class="sd">    then notify stage_2 to continue</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Starting&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">cond</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> done and ready for stage 2&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+        <span class="n">cond</span><span class="o">.</span><span class="n">notify_all</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">stage_2</span><span class="p">(</span><span class="n">cond</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;wait for the condition telling us stage_1 is done&quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Starting&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">cond</span><span class="p">:</span>
+        <span class="n">cond</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> running&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">condition</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Condition</span><span class="p">()</span>
+    <span class="n">s1</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;s1&#39;</span><span class="p">,</span>
+                                 <span class="n">target</span><span class="o">=</span><span class="n">stage_1</span><span class="p">,</span>
+                                 <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">condition</span><span class="p">,))</span>
+    <span class="n">s2_clients</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;stage_2[</span><span class="si">{}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span>
+            <span class="n">target</span><span class="o">=</span><span class="n">stage_2</span><span class="p">,</span>
+            <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">condition</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s2_clients</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">s1</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="n">s1</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s2_clients</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>In this example, two process run the second stage of a job in
+parallel, but only after the first stage is done.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 -u multiprocessing_condition.py
+
+Starting stage_2[1]
+Starting stage_2[2]
+Starting s1
+s1 done and ready for stage 2
+stage_2[1] running
+stage_2[2] running
+</pre></div>
+</div>
+</div>
+<div class="section" id="controlling-concurrent-access-to-resources">
+<h1>Controlling Concurrent Access to Resources<a class="headerlink" href="#controlling-concurrent-access-to-resources" title="Permalink to this headline">¶</a></h1>
+<p>Sometimes it is useful to allow more than one worker access to a
+resource at a time, while still limiting the overall number. For
+example, a connection pool might support a fixed number of
+simultaneous connections, or a network application might support a
+fixed number of concurrent downloads. A <code class="docutils literal notranslate"><span class="pre">Semaphore</span></code> is one way
+to manage those connections.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">multiprocessing_semaphore.py</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+<span class="k">class</span> <span class="nc">ActivePool</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ActivePool</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mgr</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Manager</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mgr</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lock</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">makeActive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">makeInactive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">worker</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">pool</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">with</span> <span class="n">s</span><span class="p">:</span>
+        <span class="n">pool</span><span class="o">.</span><span class="n">makeActive</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Activating </span><span class="si">{}</span><span class="s1"> now running </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">name</span><span class="p">,</span> <span class="n">pool</span><span class="p">))</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">())</span>
+        <span class="n">pool</span><span class="o">.</span><span class="n">makeInactive</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">pool</span> <span class="o">=</span> <span class="n">ActivePool</span><span class="p">()</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Semaphore</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">jobs</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
+            <span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span>
+            <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">pool</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+    <span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">jobs</span><span class="p">:</span>
+        <span class="n">j</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">alive</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">jobs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">j</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
+                <span class="n">alive</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">j</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Now running </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pool</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">alive</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># all done</span>
+            <span class="k">break</span>
+</pre></div>
+</div>
+</div>
+<p>In this example, the <code class="docutils literal notranslate"><span class="pre">ActivePool</span></code> class simply serves as a
+convenient way to track which processes are running at a given
+moment. A real resource pool would probably allocate a connection or
+some other value to the newly active process, and reclaim the value
+when the task is done. Here, the pool is just used to hold the names
+of the active processes to show that only three are running
+concurrently.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 -u multiprocessing_semaphore.py
+
+Activating 0 now running [&#39;0&#39;, &#39;1&#39;, &#39;2&#39;]
+Activating 1 now running [&#39;0&#39;, &#39;1&#39;, &#39;2&#39;]
+Activating 2 now running [&#39;0&#39;, &#39;1&#39;, &#39;2&#39;]
+Now running [&#39;0&#39;, &#39;1&#39;, &#39;2&#39;]
+Now running [&#39;0&#39;, &#39;1&#39;, &#39;2&#39;]
+Now running [&#39;0&#39;, &#39;1&#39;, &#39;2&#39;]
+Now running [&#39;0&#39;, &#39;1&#39;, &#39;2&#39;]
+Activating 3 now running [&#39;0&#39;, &#39;1&#39;, &#39;3&#39;]
+Activating 4 now running [&#39;1&#39;, &#39;3&#39;, &#39;4&#39;]
+Activating 6 now running [&#39;1&#39;, &#39;4&#39;, &#39;6&#39;]
+Now running [&#39;1&#39;, &#39;4&#39;, &#39;6&#39;]
+Now running [&#39;1&#39;, &#39;4&#39;, &#39;6&#39;]
+Activating 5 now running [&#39;1&#39;, &#39;4&#39;, &#39;5&#39;]
+Now running [&#39;1&#39;, &#39;4&#39;, &#39;5&#39;]
+Now running [&#39;1&#39;, &#39;4&#39;, &#39;5&#39;]
+Now running [&#39;1&#39;, &#39;4&#39;, &#39;5&#39;]
+Activating 8 now running [&#39;4&#39;, &#39;5&#39;, &#39;8&#39;]
+Now running [&#39;4&#39;, &#39;5&#39;, &#39;8&#39;]
+Now running [&#39;4&#39;, &#39;5&#39;, &#39;8&#39;]
+Now running [&#39;4&#39;, &#39;5&#39;, &#39;8&#39;]
+Now running [&#39;4&#39;, &#39;5&#39;, &#39;8&#39;]
+Now running [&#39;4&#39;, &#39;5&#39;, &#39;8&#39;]
+Activating 7 now running [&#39;5&#39;, &#39;8&#39;, &#39;7&#39;]
+Now running [&#39;5&#39;, &#39;8&#39;, &#39;7&#39;]
+Activating 9 now running [&#39;8&#39;, &#39;7&#39;, &#39;9&#39;]
+Now running [&#39;8&#39;, &#39;7&#39;, &#39;9&#39;]
+Now running [&#39;8&#39;, &#39;9&#39;]
+Now running [&#39;8&#39;, &#39;9&#39;]
+Now running [&#39;9&#39;]
+Now running [&#39;9&#39;]
+Now running [&#39;9&#39;]
+Now running [&#39;9&#39;]
+Now running []
+</pre></div>
+</div>
+</div>
+<div class="section" id="managing-shared-state">
+<h1>Managing Shared State<a class="headerlink" href="#managing-shared-state" title="Permalink to this headline">¶</a></h1>
+<p>In the previous example, the list of active processes is maintained
+centrally in the <code class="docutils literal notranslate"><span class="pre">ActivePool</span></code> instance via a special type of
+list object created by a <code class="docutils literal notranslate"><span class="pre">Manager</span></code>.  The <code class="docutils literal notranslate"><span class="pre">Manager</span></code> is
+responsible for coordinating shared information state between all of
+its users.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">multiprocessing_manager_dict.py</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+
+<span class="k">def</span> <span class="nf">worker</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="n">d</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">mgr</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Manager</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">mgr</span><span class="o">.</span><span class="n">dict</span><span class="p">()</span>
+    <span class="n">jobs</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
+            <span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">,</span>
+            <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">jobs</span><span class="p">:</span>
+        <span class="n">j</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">jobs</span><span class="p">:</span>
+        <span class="n">j</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Results:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>By creating the list through the manager, it is shared and updates are
+seen in all processes.  Dictionaries are also supported.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 multiprocessing_manager_dict.py
+
+Results: {0: 0, 1: 2, 2: 4, 3: 6, 4: 8, 5: 10, 6: 12, 7: 14,
+8: 16, 9: 18}
+</pre></div>
+</div>
+</div>
+<div class="section" id="shared-namespaces">
+<h1>Shared Namespaces<a class="headerlink" href="#shared-namespaces" title="Permalink to this headline">¶</a></h1>
+<p>In addition to dictionaries and lists, a <code class="docutils literal notranslate"><span class="pre">Manager</span></code> can create a
+shared <code class="docutils literal notranslate"><span class="pre">Namespace</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">multiprocessing_namespaces.py</span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">multiprocessing</span>
+
+
+<span class="k">def</span> <span class="nf">producer</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+    <span class="n">ns</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s1">&#39;This is the value&#39;</span>
+    <span class="n">event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">consumer</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Before event: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ns</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Before event, error:&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+    <span class="n">event</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;After event:&#39;</span><span class="p">,</span> <span class="n">ns</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">mgr</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Manager</span><span class="p">()</span>
+    <span class="n">namespace</span> <span class="o">=</span> <span class="n">mgr</span><span class="o">.</span><span class="n">Namespace</span><span class="p">()</span>
+    <span class="n">event</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
+        <span class="n">target</span><span class="o">=</span><span class="n">producer</span><span class="p">,</span>
+        <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">namespace</span><span class="p">,</span> <span class="n">event</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
+        <span class="n">target</span><span class="o">=</span><span class="n">consumer</span><span class="p">,</span>
+        <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">namespace</span><span class="p">,</span> <span class="n">event</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>Any named value added to the <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> is visible to all of
+the clients that receive the <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> instance.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 multiprocessing_namespaces.py
+
+Before event, error: &#39;Namespace&#39; object has no attribute &#39;value&#39;
+After event: This is the value
+</pre></div>
+</div>
+<p>It is important to know that updates to the contents of mutable
+values in the namespace are not propagated automatically.</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">multiprocessing_namespaces_mutable.py</span><a class="headerlink" href="#id9" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">multiprocessing</span>
+
+
+<span class="k">def</span> <span class="nf">producer</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+    <span class="c1"># DOES NOT UPDATE GLOBAL VALUE!</span>
+    <span class="n">ns</span><span class="o">.</span><span class="n">my_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;This is the value&#39;</span><span class="p">)</span>
+    <span class="n">event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">consumer</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Before event:&#39;</span><span class="p">,</span> <span class="n">ns</span><span class="o">.</span><span class="n">my_list</span><span class="p">)</span>
+    <span class="n">event</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;After event :&#39;</span><span class="p">,</span> <span class="n">ns</span><span class="o">.</span><span class="n">my_list</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">mgr</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Manager</span><span class="p">()</span>
+    <span class="n">namespace</span> <span class="o">=</span> <span class="n">mgr</span><span class="o">.</span><span class="n">Namespace</span><span class="p">()</span>
+    <span class="n">namespace</span><span class="o">.</span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">event</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
+        <span class="n">target</span><span class="o">=</span><span class="n">producer</span><span class="p">,</span>
+        <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">namespace</span><span class="p">,</span> <span class="n">event</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
+        <span class="n">target</span><span class="o">=</span><span class="n">consumer</span><span class="p">,</span>
+        <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">namespace</span><span class="p">,</span> <span class="n">event</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>To update the list, attach it to the namespace object again.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 multiprocessing_namespaces_mutable.py
+
+Before event: []
+After event : []
+</pre></div>
+</div>
+</div>
+<div class="section" id="process-pools">
+<h1>Process Pools<a class="headerlink" href="#process-pools" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">Pool</span></code> class can be used to manage a fixed number of
+workers for simple cases where the work to be done can be broken up
+and distributed between workers independently.  The return values from
+the jobs are collected and returned as a list.  The pool arguments
+include the number of processes and a function to run when starting
+the task process (invoked once per child).</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">multiprocessing_pool.py</span><a class="headerlink" href="#id10" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">multiprocessing</span>
+
+
+<span class="k">def</span> <span class="nf">do_calculation</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">data</span> <span class="o">*</span> <span class="mi">2</span>
+
+
+<span class="k">def</span> <span class="nf">start_process</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Starting&#39;</span><span class="p">,</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Input   :&#39;</span><span class="p">,</span> <span class="n">inputs</span><span class="p">)</span>
+
+    <span class="n">builtin_outputs</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">do_calculation</span><span class="p">,</span> <span class="n">inputs</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Built-in:&#39;</span><span class="p">,</span> <span class="n">builtin_outputs</span><span class="p">)</span>
+
+    <span class="n">pool_size</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">(</span>
+        <span class="n">processes</span><span class="o">=</span><span class="n">pool_size</span><span class="p">,</span>
+        <span class="n">initializer</span><span class="o">=</span><span class="n">start_process</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">pool_outputs</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">do_calculation</span><span class="p">,</span> <span class="n">inputs</span><span class="p">)</span>
+    <span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>  <span class="c1"># no more tasks</span>
+    <span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>  <span class="c1"># wrap up current tasks</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Pool    :&#39;</span><span class="p">,</span> <span class="n">pool_outputs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The result of the <code class="docutils literal notranslate"><span class="pre">map()</span></code> method is functionally equivalent to the
+built-in <code class="docutils literal notranslate"><span class="pre">map()</span></code>, except that individual tasks run in parallel.
+Since the pool is processing its inputs in parallel, <code class="docutils literal notranslate"><span class="pre">close()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">join()</span></code> can be used to synchronize the main process with the task
+processes to ensure proper cleanup.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 multiprocessing_pool.py
+
+Input   : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+Built-in: &lt;map object at 0x1007b2be0&gt;
+Starting ForkPoolWorker-3
+Starting ForkPoolWorker-4
+Starting ForkPoolWorker-5
+Starting ForkPoolWorker-6
+Starting ForkPoolWorker-1
+Starting ForkPoolWorker-7
+Starting ForkPoolWorker-2
+Starting ForkPoolWorker-8
+Pool    : [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
+</pre></div>
+</div>
+<p>By default, <code class="docutils literal notranslate"><span class="pre">Pool</span></code> creates a fixed number of worker processes
+and passes jobs to them until there are no more jobs.  Setting the
+<code class="docutils literal notranslate"><span class="pre">maxtasksperchild</span></code> parameter tells the pool to restart a worker
+process after it has finished a few tasks, preventing long-running
+workers from consuming ever more system resources.</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">multiprocessing_pool_maxtasksperchild.py</span><a class="headerlink" href="#id11" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">multiprocessing</span>
+
+
+<span class="k">def</span> <span class="nf">do_calculation</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">data</span> <span class="o">*</span> <span class="mi">2</span>
+
+
+<span class="k">def</span> <span class="nf">start_process</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Starting&#39;</span><span class="p">,</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Input   :&#39;</span><span class="p">,</span> <span class="n">inputs</span><span class="p">)</span>
+
+    <span class="n">builtin_outputs</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">do_calculation</span><span class="p">,</span> <span class="n">inputs</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Built-in:&#39;</span><span class="p">,</span> <span class="n">builtin_outputs</span><span class="p">)</span>
+
+    <span class="n">pool_size</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">(</span>
+        <span class="n">processes</span><span class="o">=</span><span class="n">pool_size</span><span class="p">,</span>
+        <span class="n">initializer</span><span class="o">=</span><span class="n">start_process</span><span class="p">,</span>
+        <span class="n">maxtasksperchild</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">pool_outputs</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">do_calculation</span><span class="p">,</span> <span class="n">inputs</span><span class="p">)</span>
+    <span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>  <span class="c1"># no more tasks</span>
+    <span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>  <span class="c1"># wrap up current tasks</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Pool    :&#39;</span><span class="p">,</span> <span class="n">pool_outputs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The pool restarts the workers when they have completed their allotted
+tasks, even if there is no more work.  In this output, eight workers
+are created, even though there are only 10 tasks, and each worker can
+complete two of them at a time.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 multiprocessing_pool_maxtasksperchild.py
+
+Input   : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+Built-in: &lt;map object at 0x1007b21d0&gt;
+Starting ForkPoolWorker-1
+Starting ForkPoolWorker-2
+Starting ForkPoolWorker-4
+Starting ForkPoolWorker-5
+Starting ForkPoolWorker-6
+Starting ForkPoolWorker-3
+Starting ForkPoolWorker-7
+Starting ForkPoolWorker-8
+Pool    : [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
+</pre></div>
+</div>
+</div>
+
+
+
+        <div id="footer-nav">
+<a id="prev-link" href="basics.html"
+   title="previous chapter"><i class="fa fa-arrow-circle-left"></i> multiprocessing Basics</a>
+<a id="next-link" href="mapreduce.html"
+   title="next chapter">Implementing MapReduce <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+        </div>
+      </div>
+
+      <div class="pure-u-1-4">
+        <div class="sidebar-wrapper">
+          <div class="sidebar">
+<div id="sidebar-toc">
+  <h5>Quick Links</h5>
+  <ul>
+    
+    <li><a href="#signaling-between-processes"><i class="fa fa-caret-right"></i>Signaling between Processes</a></li>
+    
+    <li><a href="#controlling-access-to-resources"><i class="fa fa-caret-right"></i>Controlling Access to Resources</a></li>
+    
+    <li><a href="#synchronizing-operations"><i class="fa fa-caret-right"></i>Synchronizing Operations</a></li>
+    
+    <li><a href="#controlling-concurrent-access-to-resources"><i class="fa fa-caret-right"></i>Controlling Concurrent Access to Resources</a></li>
+    
+    <li><a href="#managing-shared-state"><i class="fa fa-caret-right"></i>Managing Shared State</a></li>
+    
+    <li><a href="#shared-namespaces"><i class="fa fa-caret-right"></i>Shared Namespaces</a></li>
+    
+    <li><a href="#process-pools"><i class="fa fa-caret-right"></i>Process Pools</a></li>
+    
+  </ul>
+</div>
+
+          </div>
+          <div class="sidebar"><div id="sidebar-last-updated">
+  This page was last updated 2017-07-30.
+</div>
+
+          </div>
+          <div class="sidebar">
+<div id="sidebar-nav">
+  <h5>Navigation</h5>
+  <ul>
+    <li><a href="basics.html"
+           title="previous chapter"><i class="fa fa-arrow-circle-left"></i>multiprocessing Basics</a></li>
+    <li><a href="mapreduce.html"
+           title="next chapter"><i class="fa fa-arrow-circle-right"></i>Implementing MapReduce</a></li>
+  </ul>
+</div>
+          </div>
+          <div class="sidebar"><div id="sidebar-book"><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/book-cover-image-med.jpg"><br>Get the book</a></div>
+          </div>
+          <div class="sidebar"><div id="sidebar-example-disclaimer">
+<p>The output from all the example programs
+from PyMOTW-3 has been generated with Python 3.7.9, unless
+otherwise noted. Some of the features described here may not be
+available in earlier versions of Python.</p>
+<p>Looking for <a href="/2/">examples for Python 2</a>?</p>
+</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pure-g-r" id="footer">
+
+      <div class="pure-u-1-3">
+        <div class="footer-list">
+            <h4>This Site</h4>
+            <ul>
+              <li><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+              <li><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+            </ul>
+        </div>
+      </div><div class="pure-u-1-3">
+          <div class="footer-content">
+            <div class="socialmedia">
+              <a class="sociallink" href="../index.html"
+       title="Home">
+      <i class="fa fa-home fa-lg"></i></a>
+              <a class="sociallink" href="../about.html"
+       title="About">
+      <i class="fa fa-user fa-lg"></i></a>
+              <a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a>
+              <a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a>
+              <a class="sociallink" href="http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US"
+       title="Subscribe via Email">
+      <i class="fa fa-envelope fa-lg"></i></a>
+            </div>
+
+            <div class="copyright">
+              <a rel="author" href="../about.html">&copy; Copyright 2021, Doug Hellmann</a>
+            </div>
+
+            <div class="cc"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License BY-NC-SA" style="border-width:0; align: center;" width="88" height="31" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAfCAMAAABUFvrSAAAABGdBTUEAALGOfPtRkwAAAf5QTFRF////////////AAAADQwNDQ4NDg4OEBAQGRkZGxsbHxscICAgIx8gJCQkKCUmKCgoKCkoKSkpKSopKicnKioqLS0tMDAwMS0uMjExMjMxNTY1Pj8+Pzc5Pzs8QEBAQ0RDUFBQUFFQWldYXV5dYGBgY19haGVmbmxscHBwcHJvdXJzdnN0eHV2eXx5en15fH98fX98fnt8f4F+gICAgoWChIGChIWEhIaEh4aHiYyJjIqLjoeLj4+PkY+PkZORkZSRk5iTlZmUlpmWmJaXmpiZnp2dnqCdn5aan5+fn6Oeoqaho6Gho6ijpqqmq7GqrKurrLKrrbOsrrOtrrStr6+vr7Kvr7Sur7WusLOvsLWvsLavsbewsrexsrixs7iytLmztLqztbW1tbq0tru1t7y2uL23ub64ub65urm5ur+5ur+6u8C6u8C7vMC8vMG7vMG8vcK8vcK9vsK9vsO+v7+/v8O+v8S+wMS/wMW/wMXAwcXAwsfCw8fCw8jDxMfDxMjDxMnExcnExcnFxsrFxsrGx8vHyMfHyMzHyMzIycjIyc3Iyc3Jys3Jy8rLy87Ky8/Ky8/LzM/LzNDLzNDMzdDMzdHMzdHNztHNztLOz8/Pz9PP0NPP0NTQ0dTQ0dTR0tXR0tXS09bS1tXV39/f4N/g4+Pj6Ofn7+/v8fHx////rrSdFQAAAAN0Uk5TAAoO5yEBUwAAA+FJREFUSMe1lo9301QUx6uXUmaf0qJ26iTrRoVinUzjQNR1gAyH6Lqx6XTDoVvXbU7qhA5m7CgYWaTDlLa6AiFsba3t+y+9Sdr8OvVMi7zTnLTf5H7ee9/73n11PA1PpDkcADPRWPwKt8YLG2I2n89m7gh8iluJz0dnpqe+HBsdHRn+7w3JyF1cvpbk05mCJG8Xi9uPpMLdNJ9cXV5UyBNjoyMtkR2A3B9Tt8SCfLTTqUzC2XlMvpcRbnA/IPmryYnzoyM9XuWBt8eI21FBcAy5Qk4KtxkGtQ1I+fRNbnk+evHC5NhJDwATDDIAnhNa1ImdFQTHr6WEvNyFPFeATSTYgAu/dl3/I31jNR6bnZ76eDf4yxRb2Q+71aiz/0JB8JXkrZzCdbFVqrUhRHuu54XkytLczAUvBFADUB6ARwnyqEp/t02prK9XdAXBHC9KyPWVqd6qPhyzlOG55dhsL/hLDTD1A3rYAy+dRu6eXaGKruA75wi2hbqigNd+LYSRW6XUSh64l05dXYruA1OPZfAOD3vhObL/ILDvQkRXynSdvPpaiJB+TVHAfEZuA9d9amlVF7TJd3nu+xgwyu8AqNOnDGAM8/obOLhQpWQotPYReZ/SQdKuKQpY2DwKwFJbGwI4VhCSlxchSFUnNC+CCgaV9RAKoZKh1J4le9FmQv5SFQW88aATXGhEws8wrHb7AANc0CndQS+ag5ERaieke0FXvnkxoYL/1MGi7FSmmVBXMDOu3gLK5J2PMjdXv2tmBX6pDdKSkq39DWXh3G1KI4QYVmS3AHCIPnCXE+4hHy6PcfeQ6sV2lufiL2jJ0wasp4p2k/Z2CEXeeqahDBLS1/c8+dBIXq4IkFAiWQ1QtxtnUMz/wsXfBj+1LzdUKn17dvXXzEqfMoFDNWO57QCe22dskKB5g7zXbVN+i0RKumKxonrfzaIVys2wYu7TVrd0PXn1rOnJC4JTFjF5c19/gnXLFwj6jJJz1rOjoi63LnBRfbmNM+qNunG5baSufhu9OPX5my2VTWEzrHrRbIP8dHl+dnpyrIVDBME/q1u6/E9bGmt9i2AsQmeaFaFwIb22soSlfuL8SEtgOCJKB5BsKkNltWyK7zzWMY3X4exDc6GvsljoX5FzR+BxwdCbf3jAdjTJv5/S39H2B2iXpmgXpWB7iVrB0JuVzpgP07CUO2WKqX+oiVL/benKImhgOIzHf7hx/A/IBdHsQ6Nsmruilo4afVFqB8PLn2U2H8hbxeKWjH9YvuiwxNiMaNhALZptCg5d7zh+Sczmclnx0vEOax6ajdjucSMPTcD/97/Cp54Q929ZZbgcR3o0hAAAAABJRU5ErkJggg=="/></a>
+            </div>
+
+          </div></div><div class="pure-u-1-3">
+          <div class="footer-list">
+            <h4>Other Writing</h4>
+            <ul>
+              <li><a href="https://doughellmann.com/"><i class="fa fa-pencil fa-lg"></i> Blog</a></li>
+              <li><a href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><i class="fa fa-book fa-lg"></i> The Python Standard Library By Example</a></li>
+            </ul>
+          </div>
+        </div><script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-3', 'pymotw.com');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

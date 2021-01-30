@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>configparser — Work with Configuration Files &mdash; PyMOTW 3</title>
+
+    <link rel="stylesheet" href="../_static/pure-min.css" type="text/css">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pymotw.css" type="text/css">
+
+    <link rel="shortcut icon" type="image/png" href="../_static/favicon.png">
+
+    <link rel="alternate" type="application/atom+xml"
+          title="Doug Hellmann"
+          href="http://feeds.doughellmann.com/DougHellmann" />
+    <link rel="alternate" type="application/atom+xml"
+          title="PyMOTW Updates"
+          href="http://feeds.doughellmann.com/PyMOTW" />
+
+    <meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+
+  </head>
+  <body>
+
+    <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
+      <a class="pure-menu-heading" href="../index.html"><img src="../_static/logo.png"> PyMOTW-3</a>
+
+      <ul id="top-menu">
+        <li class="pure-menu-selected"><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+        <li class="pure-menu-selected"><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a></a>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a></li>
+      </ul>
+
+    </div>
+
+    <div class="pure-menu pure-menu-open pure-menu-vertical" id="breadcrumbs-menu">
+      
+      <ul id="breadcrumbs">
+        <li class="pure-menu-selected"><a href="../frameworks.html"><i class="fa fa-arrow-circle-up"></i> Application Building Blocks</a></li>
+      </ul>
+    </div>
+
+    <div class="pure-g-r" id="content-container">
+
+      <div class="pure-u-3-4">
+        <div class="content">
+          
+  <div class="section" id="module-configparser">
+<span id="configparser-work-with-configuration-files"></span><h1>configparser — Work with Configuration Files<a class="headerlink" href="#module-configparser" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Read/write configuration files similar to Windows INI files</td>
+</tr>
+</tbody>
+</table>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">configparser</span></code> module to manage user-editable
+configuration files for an application. The contents of the
+configuration files can be organized into groups and several option
+value types are supported, including integers, floating point values,
+and Booleans.  Option values can be combined using Python formatting
+strings, to build longer values such as URLs from shorter values like
+host names and port numbers.</p>
+<div class="section" id="configuration-file-format">
+<h2>Configuration File Format<a class="headerlink" href="#configuration-file-format" title="Permalink to this headline">¶</a></h2>
+<p>The file format used by <code class="docutils literal notranslate"><span class="pre">configparser</span></code> is similar to the format
+used by older versions of Microsoft Windows.  It consists of one or
+more named <em>sections</em>, each of which can contain individual <em>options</em>
+with names and values.</p>
+<p>Config file sections are identified by looking for lines starting with
+<code class="docutils literal notranslate"><span class="pre">[</span></code> and ending with <code class="docutils literal notranslate"><span class="pre">]</span></code>.  The value between the square brackets is
+the section name, and can contain any characters except square
+brackets.</p>
+<p>Options are listed one per line within a section.  The line starts
+with the name of the option, which is separated from the value by a
+colon (<code class="docutils literal notranslate"><span class="pre">:</span></code>) or equal sign (<code class="docutils literal notranslate"><span class="pre">=</span></code>).  Whitespace around the separator
+is ignored when the file is parsed.</p>
+<p>Lines starting with semi-colon (<code class="docutils literal notranslate"><span class="pre">;</span></code>) or octothorpe (<code class="docutils literal notranslate"><span class="pre">#</span></code>) are
+treated as comments and not visible when accessing the contents of the
+configuration file programmatically.</p>
+<p>This sample configuration file has a section named <code class="docutils literal notranslate"><span class="pre">bug_tracker</span></code> with
+three options, <code class="docutils literal notranslate"><span class="pre">url</span></code>, <code class="docutils literal notranslate"><span class="pre">username</span></code>, and <code class="docutils literal notranslate"><span class="pre">password</span></code>.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is a simple example with comments.</span>
+<span class="p">[</span><span class="n">bug_tracker</span><span class="p">]</span>
+<span class="n">url</span> <span class="o">=</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">bugs</span><span class="o">/</span>
+<span class="n">username</span> <span class="o">=</span> <span class="n">dhellmann</span>
+<span class="p">;</span> <span class="n">You</span> <span class="n">should</span> <span class="ow">not</span> <span class="n">store</span> <span class="n">passwords</span> <span class="ow">in</span> <span class="n">plain</span> <span class="n">text</span>
+<span class="p">;</span> <span class="n">configuration</span> <span class="n">files</span><span class="o">.</span>
+<span class="n">password</span> <span class="o">=</span> <span class="n">SECRET</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reading-configuration-files">
+<h2>Reading Configuration Files<a class="headerlink" href="#reading-configuration-files" title="Permalink to this headline">¶</a></h2>
+<p>The most common use for a configuration file is to have a user or
+system administrator edit the file with a regular text editor to set
+application behavior defaults and then have the application read the
+file, parse it, and act based on its contents.  Use the <code class="docutils literal notranslate"><span class="pre">read()</span></code>
+method of <code class="xref py py-mod docutils literal notranslate"><span class="pre">ConfigParser</span></code> to read the configuration file.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">configparser_read.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">configparser</span> <span class="k">import</span> <span class="n">ConfigParser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;simple.ini&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>This program reads the <code class="docutils literal notranslate"><span class="pre">simple.ini</span></code> file from the previous section
+and prints the value of the <code class="docutils literal notranslate"><span class="pre">url</span></code> option from the
+<code class="docutils literal notranslate"><span class="pre">bug_tracker</span></code> section.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 configparser_read.py
+
+http://localhost:8080/bugs/
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">read()</span></code> method also accepts a list of filenames.  Each name
+in turn is scanned, and if the file exists it is opened and read.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">configparser_read_many.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">configparser</span> <span class="k">import</span> <span class="n">ConfigParser</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+
+<span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;does_not_exist.ini&#39;</span><span class="p">,</span> <span class="s1">&#39;also-does-not-exist.ini&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;simple.ini&#39;</span><span class="p">,</span> <span class="s1">&#39;multisection.ini&#39;</span><span class="p">]</span>
+
+<span class="n">found</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span>
+
+<span class="n">missing</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">found</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Found config files:&#39;</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">found</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Missing files     :&#39;</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">missing</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">read()</span></code> returns a list containing the names of the files
+successfully loaded, so the program can discover which configuration
+files are missing and decide whether to ignore them or treat the
+condition as an error.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 configparser_read_many.py
+
+Found config files: [&#39;multisection.ini&#39;, &#39;simple.ini&#39;]
+Missing files     : [&#39;also-does-not-exist.ini&#39;,
+&#39;does_not_exist.ini&#39;]
+</pre></div>
+</div>
+<div class="section" id="unicode-configuration-data">
+<h3>Unicode Configuration Data<a class="headerlink" href="#unicode-configuration-data" title="Permalink to this headline">¶</a></h3>
+<p>Configuration files containing Unicode data should be read using the
+proper encoding value.  The following example file changes the
+password value of the original input to contain Unicode characters and
+is encoded using UTF-8.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">unicode.ini</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[bug_tracker]
+url = http://localhost:8080/bugs/
+username = dhellmann
+password = ßéç®é†
+</pre></div>
+</div>
+</div>
+<p>The file is opened with the appropriate decoder, converting the UTF-8
+data to native Unicode strings.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">configparser_unicode.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">configparser</span> <span class="k">import</span> <span class="n">ConfigParser</span>
+<span class="kn">import</span> <span class="nn">codecs</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+<span class="c1"># Open the file with the correct encoding</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;unicode.ini&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+<span class="n">password</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Password:&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Type    :&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">password</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;repr()  :&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">password</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>The value returned by <code class="docutils literal notranslate"><span class="pre">get()</span></code> is a Unicode string, so in order to
+print it safely it must be re-encoded as UTF-8.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 configparser_unicode.py
+
+Password: b&#39;\xc3\x9f\xc3\xa9\xc3\xa7\xc2\xae\xc3\xa9\xe2\x80\xa0
+&#39;
+Type    : &lt;class &#39;str&#39;&gt;
+repr()  : &#39;ßéç®é†&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="accessing-configuration-settings">
+<h2>Accessing Configuration Settings<a class="headerlink" href="#accessing-configuration-settings" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">ConfigParser</span></code> includes methods for examining the structure
+of the parsed configuration, including listing the sections and
+options, and getting their values.  This configuration file includes
+two sections for separate web services.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">bug_tracker</span><span class="p">]</span>
+<span class="n">url</span> <span class="o">=</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">bugs</span><span class="o">/</span>
+<span class="n">username</span> <span class="o">=</span> <span class="n">dhellmann</span>
+<span class="n">password</span> <span class="o">=</span> <span class="n">SECRET</span>
+
+<span class="p">[</span><span class="n">wiki</span><span class="p">]</span>
+<span class="n">url</span> <span class="o">=</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">wiki</span><span class="o">/</span>
+<span class="n">username</span> <span class="o">=</span> <span class="n">dhellmann</span>
+<span class="n">password</span> <span class="o">=</span> <span class="n">SECRET</span>
+</pre></div>
+</div>
+<p>And this sample program exercises some of the methods for looking at
+the configuration data, including <code class="docutils literal notranslate"><span class="pre">sections()</span></code>, <code class="docutils literal notranslate"><span class="pre">options()</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">items()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">configparser_structure.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">configparser</span> <span class="k">import</span> <span class="n">ConfigParser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;multisection.ini&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">section_name</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Section:&#39;</span><span class="p">,</span> <span class="n">section_name</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  Options:&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">section_name</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="n">section_name</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  </span><span class="si">{}</span><span class="s1"> = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>Both <code class="docutils literal notranslate"><span class="pre">sections()</span></code> and <code class="docutils literal notranslate"><span class="pre">options()</span></code> return lists of strings,
+while <code class="docutils literal notranslate"><span class="pre">items()</span></code> returns a list of tuples containing the name-value
+pairs.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 configparser_structure.py
+
+Section: bug_tracker
+  Options: [&#39;url&#39;, &#39;username&#39;, &#39;password&#39;]
+  url = http://localhost:8080/bugs/
+  username = dhellmann
+  password = SECRET
+
+Section: wiki
+  Options: [&#39;url&#39;, &#39;username&#39;, &#39;password&#39;]
+  url = http://localhost:8080/wiki/
+  username = dhellmann
+  password = SECRET
+</pre></div>
+</div>
+<p>A <code class="docutils literal notranslate"><span class="pre">ConfigParser</span></code> also supports the same mapping API as <cite>dict</cite>,
+with the <code class="docutils literal notranslate"><span class="pre">ConfigParser</span></code> acting as one dictionary containing
+separate dictionaries for each section.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">configparser_structure_dict.py</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">configparser</span> <span class="k">import</span> <span class="n">ConfigParser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;multisection.ini&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">section_name</span> <span class="ow">in</span> <span class="n">parser</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Section:&#39;</span><span class="p">,</span> <span class="n">section_name</span><span class="p">)</span>
+    <span class="n">section</span> <span class="o">=</span> <span class="n">parser</span><span class="p">[</span><span class="n">section_name</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  Options:&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">section</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">section</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  </span><span class="si">{}</span><span class="s1"> = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">section</span><span class="p">[</span><span class="n">name</span><span class="p">]))</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>Using the mapping API to access the same configuration file produces
+the same output.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 configparser_structure_dict.py
+
+Section: DEFAULT
+  Options: []
+
+Section: bug_tracker
+  Options: [&#39;url&#39;, &#39;username&#39;, &#39;password&#39;]
+  url = http://localhost:8080/bugs/
+  username = dhellmann
+  password = SECRET
+
+Section: wiki
+  Options: [&#39;url&#39;, &#39;username&#39;, &#39;password&#39;]
+  url = http://localhost:8080/wiki/
+  username = dhellmann
+  password = SECRET
+</pre></div>
+</div>
+<div class="section" id="testing-whether-values-are-present">
+<h3>Testing Whether Values Are Present<a class="headerlink" href="#testing-whether-values-are-present" title="Permalink to this headline">¶</a></h3>
+<p>To test if a section exists, use <code class="docutils literal notranslate"><span class="pre">has_section()</span></code>, passing the
+section name.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">configparser_has_section.py</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">configparser</span> <span class="k">import</span> <span class="n">ConfigParser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;multisection.ini&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;wiki&#39;</span><span class="p">,</span> <span class="s1">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s1">&#39;dvcs&#39;</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:&lt;12}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">candidate</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">has_section</span><span class="p">(</span><span class="n">candidate</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<p>Testing if a section exists before calling <code class="docutils literal notranslate"><span class="pre">get()</span></code> avoids
+exceptions for missing data.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 configparser_has_section.py
+
+wiki        : True
+bug_tracker : True
+dvcs        : False
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">has_option()</span></code> to test if an option exists within a section.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">configparser_has_option.py</span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">configparser</span> <span class="k">import</span> <span class="n">ConfigParser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;multisection.ini&#39;</span><span class="p">)</span>
+
+<span class="n">SECTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;wiki&#39;</span><span class="p">,</span> <span class="s1">&#39;none&#39;</span><span class="p">]</span>
+<span class="n">OPTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="n">SECTIONS</span><span class="p">:</span>
+    <span class="n">has_section</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">has_section</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> section exists: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">has_section</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">OPTIONS</span><span class="p">:</span>
+        <span class="n">has_option</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">has_option</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">candidate</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.</span><span class="si">{:&lt;12}</span><span class="s1">  : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">section</span><span class="p">,</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">has_option</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>If the section does not exist, <code class="docutils literal notranslate"><span class="pre">has_option()</span></code> returns <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 configparser_has_option.py
+
+wiki section exists: True
+wiki.username      : True
+wiki.password      : True
+wiki.url           : True
+wiki.description   : False
+
+none section exists: False
+none.username      : False
+none.password      : False
+none.url           : False
+none.description   : False
+</pre></div>
+</div>
+</div>
+<div class="section" id="value-types">
+<h3>Value Types<a class="headerlink" href="#value-types" title="Permalink to this headline">¶</a></h3>
+<p>All section and option names are treated as strings, but option values
+can be strings, integers, floating point numbers, or Booleans.  There
+are a range of possible Boolean values that are converted true or
+false.  The following example file includes one of each.</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">types.ini</span><a class="headerlink" href="#id9" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">ints</span><span class="p">]</span>
+<span class="n">positive</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">negative</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+
+<span class="p">[</span><span class="n">floats</span><span class="p">]</span>
+<span class="n">positive</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">negative</span> <span class="o">=</span> <span class="o">-</span><span class="mf">3.14</span>
+
+<span class="p">[</span><span class="n">booleans</span><span class="p">]</span>
+<span class="n">number_true</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">number_false</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">yn_true</span> <span class="o">=</span> <span class="n">yes</span>
+<span class="n">yn_false</span> <span class="o">=</span> <span class="n">no</span>
+<span class="n">tf_true</span> <span class="o">=</span> <span class="n">true</span>
+<span class="n">tf_false</span> <span class="o">=</span> <span class="n">false</span>
+<span class="n">onoff_true</span> <span class="o">=</span> <span class="n">on</span>
+<span class="n">onoff_false</span> <span class="o">=</span> <span class="n">false</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ConfigParser</span></code> does not make any attempt to understand the
+option type.  The application is expected to use the correct method to
+fetch the value as the desired type.  <code class="docutils literal notranslate"><span class="pre">get()</span></code> always returns a
+string.  Use <code class="docutils literal notranslate"><span class="pre">getint()</span></code> for integers, <code class="docutils literal notranslate"><span class="pre">getfloat()</span></code> for
+floating point numbers, and <code class="docutils literal notranslate"><span class="pre">getboolean()</span></code> for boolean values.</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">configparser_value_types.py</span><a class="headerlink" href="#id10" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">configparser</span> <span class="k">import</span> <span class="n">ConfigParser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;types.ini&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Integers:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="s1">&#39;ints&#39;</span><span class="p">):</span>
+    <span class="n">string_value</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ints&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s1">&#39;ints&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  </span><span class="si">{:&lt;12}</span><span class="s1"> : </span><span class="si">{!r:&lt;7}</span><span class="s1"> -&gt; </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">name</span><span class="p">,</span> <span class="n">string_value</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Floats:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="s1">&#39;floats&#39;</span><span class="p">):</span>
+    <span class="n">string_value</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;floats&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">getfloat</span><span class="p">(</span><span class="s1">&#39;floats&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  </span><span class="si">{:&lt;12}</span><span class="s1"> : </span><span class="si">{!r:&lt;7}</span><span class="s1"> -&gt; </span><span class="si">{:0.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">name</span><span class="p">,</span> <span class="n">string_value</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Booleans:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="s1">&#39;booleans&#39;</span><span class="p">):</span>
+    <span class="n">string_value</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;booleans&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s1">&#39;booleans&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  </span><span class="si">{:&lt;12}</span><span class="s1"> : </span><span class="si">{!r:&lt;7}</span><span class="s1"> -&gt; </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">name</span><span class="p">,</span> <span class="n">string_value</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Running this program with the example input produces the following
+output.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 configparser_value_types.py
+
+Integers:
+  positive     : &#39;1&#39;     -&gt; 1
+  negative     : &#39;-5&#39;    -&gt; -5
+
+Floats:
+  positive     : &#39;0.2&#39;   -&gt; 0.20
+  negative     : &#39;-3.14&#39; -&gt; -3.14
+
+Booleans:
+  number_true  : &#39;1&#39;     -&gt; True
+  number_false : &#39;0&#39;     -&gt; False
+  yn_true      : &#39;yes&#39;   -&gt; True
+  yn_false     : &#39;no&#39;    -&gt; False
+  tf_true      : &#39;true&#39;  -&gt; True
+  tf_false     : &#39;false&#39; -&gt; False
+  onoff_true   : &#39;on&#39;    -&gt; True
+  onoff_false  : &#39;false&#39; -&gt; False
+</pre></div>
+</div>
+<p>Custom type converters can be added by passing conversion functions in
+the <code class="docutils literal notranslate"><span class="pre">converters</span></code> argument to <code class="docutils literal notranslate"><span class="pre">ConfigParser</span></code>. Each converter
+receives a single input value, and should transform that value into
+the appropriate return type.</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">configparser_custom_types.py</span><a class="headerlink" href="#id11" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">configparser</span> <span class="k">import</span> <span class="n">ConfigParser</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+
+<span class="k">def</span> <span class="nf">parse_iso_datetime</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;parse_iso_datetime(</span><span class="si">{!r}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">T%H:%M:%S.</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">)</span>
+
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">(</span>
+    <span class="n">converters</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;datetime&#39;</span><span class="p">:</span> <span class="n">parse_iso_datetime</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;custom_types.ini&#39;</span><span class="p">)</span>
+
+<span class="n">string_value</span> <span class="o">=</span> <span class="n">parser</span><span class="p">[</span><span class="s1">&#39;datetimes&#39;</span><span class="p">][</span><span class="s1">&#39;due_date&#39;</span><span class="p">]</span>
+<span class="n">value</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">getdatetime</span><span class="p">(</span><span class="s1">&#39;datetimes&#39;</span><span class="p">,</span> <span class="s1">&#39;due_date&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;due_date : </span><span class="si">{!r}</span><span class="s1"> -&gt; </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">string_value</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Adding a converter causes <code class="docutils literal notranslate"><span class="pre">ConfigParser</span></code> to automatically
+create a retrieval method for that type, using the name of the type as
+specified in <code class="docutils literal notranslate"><span class="pre">converters</span></code>. In this example, the <code class="docutils literal notranslate"><span class="pre">'datetime'</span></code>
+converter causes a new <code class="docutils literal notranslate"><span class="pre">getdatetime()</span></code> method to be added.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 configparser_custom_types.py
+
+parse_iso_datetime(&#39;2015-11-08T11:30:05.905898&#39;)
+due_date : &#39;2015-11-08T11:30:05.905898&#39; -&gt; datetime.datetime(201
+5, 11, 8, 11, 30, 5, 905898)
+</pre></div>
+</div>
+<p>It is also possible to add converter methods directly to a subclass of
+<code class="docutils literal notranslate"><span class="pre">ConfigParser</span></code>.</p>
+</div>
+<div class="section" id="options-as-flags">
+<h3>Options as Flags<a class="headerlink" href="#options-as-flags" title="Permalink to this headline">¶</a></h3>
+<p>Usually, the parser requires an explicit value for each option, but
+with the <code class="docutils literal notranslate"><span class="pre">ConfigParser</span></code> parameter <code class="docutils literal notranslate"><span class="pre">allow_no_value</span></code> set to
+<code class="docutils literal notranslate"><span class="pre">True</span></code> an option can appear by itself on a line in the input file,
+and be used as a flag.</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-text">configparser_allow_no_value.py</span><a class="headerlink" href="#id12" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">configparser</span>
+
+<span class="c1"># Require values</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;allow_no_value.ini&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ParsingError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Could not parse:&#39;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+
+<span class="c1"># Allow stand-alone option names</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Trying again with allow_no_value=True&#39;</span><span class="p">)</span>
+<span class="n">parser</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">(</span><span class="n">allow_no_value</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;allow_no_value.ini&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">flag</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;turn_feature_on&#39;</span><span class="p">,</span> <span class="s1">&#39;turn_other_feature_on&#39;</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+    <span class="n">exists</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">has_option</span><span class="p">(</span><span class="s1">&#39;flags&#39;</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  has_option:&#39;</span><span class="p">,</span> <span class="n">exists</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">exists</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;         get:&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;flags&#39;</span><span class="p">,</span> <span class="n">flag</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>When an option has no explicit value, <code class="docutils literal notranslate"><span class="pre">has_option()</span></code> reports that
+the option exists and <code class="docutils literal notranslate"><span class="pre">get()</span></code> returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 configparser_allow_no_value.py
+
+Could not parse: Source contains parsing errors:
+&#39;allow_no_value.ini&#39;
+        [line  2]: &#39;turn_feature_on\n&#39;
+
+Trying again with allow_no_value=True
+
+ turn_feature_on
+  has_option: True
+         get: None
+
+ turn_other_feature_on
+  has_option: False
+</pre></div>
+</div>
+</div>
+<div class="section" id="multi-line-strings">
+<h3>Multi-line Strings<a class="headerlink" href="#multi-line-strings" title="Permalink to this headline">¶</a></h3>
+<p>String values can span multiple lines, if subsequent lines are
+indented.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">example</span><span class="p">]</span>
+<span class="n">message</span> <span class="o">=</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">multi</span><span class="o">-</span><span class="n">line</span> <span class="n">string</span><span class="o">.</span>
+  <span class="n">With</span> <span class="n">two</span> <span class="n">paragraphs</span><span class="o">.</span>
+
+  <span class="n">They</span> <span class="n">are</span> <span class="n">separated</span> <span class="n">by</span> <span class="n">a</span> <span class="n">completely</span> <span class="n">empty</span> <span class="n">line</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Within the indented multi-line values, blank lines are treated as part
+of the value and preserved.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 configparser_multiline.py
+
+This is a multi-line string.
+With two paragraphs.
+
+They are separated by a completely empty line.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="modifying-settings">
+<h2>Modifying Settings<a class="headerlink" href="#modifying-settings" title="Permalink to this headline">¶</a></h2>
+<p>While <code class="docutils literal notranslate"><span class="pre">ConfigParser</span></code> is primarily intended to be configured
+by reading settings from files, settings can also be populated by
+calling <code class="docutils literal notranslate"><span class="pre">add_section()</span></code> to create a new section, and <code class="docutils literal notranslate"><span class="pre">set()</span></code>
+to add or change an option.</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-text">configparser_populate.py</span><a class="headerlink" href="#id13" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">configparser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s1">&#39;bug_tracker&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">,</span> <span class="s1">&#39;http://localhost:8080/bugs&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;dhellmann&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="s1">&#39;secret&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="n">section</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  </span><span class="si">{}</span><span class="s1"> = </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>All options must be set as strings, even if they will be retrieved as
+integer, float, or Boolean values.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 configparser_populate.py
+
+bug_tracker
+  url = &#39;http://localhost:8080/bugs&#39;
+  username = &#39;dhellmann&#39;
+  password = &#39;secret&#39;
+</pre></div>
+</div>
+<p>Sections and options can be removed from a <code class="docutils literal notranslate"><span class="pre">ConfigParser</span></code>
+with <code class="docutils literal notranslate"><span class="pre">remove_section()</span></code> and <code class="docutils literal notranslate"><span class="pre">remove_option()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-text">configparser_remove.py</span><a class="headerlink" href="#id14" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">configparser</span> <span class="k">import</span> <span class="n">ConfigParser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;multisection.ini&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Read values:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="n">section</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  </span><span class="si">{}</span><span class="s1"> = </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">remove_option</span><span class="p">(</span><span class="s1">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">remove_section</span><span class="p">(</span><span class="s1">&#39;wiki&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Modified values:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="n">section</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  </span><span class="si">{}</span><span class="s1"> = </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Removing a section deletes any options it contains.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 configparser_remove.py
+
+Read values:
+
+bug_tracker
+  url = &#39;http://localhost:8080/bugs/&#39;
+  username = &#39;dhellmann&#39;
+  password = &#39;SECRET&#39;
+wiki
+  url = &#39;http://localhost:8080/wiki/&#39;
+  username = &#39;dhellmann&#39;
+  password = &#39;SECRET&#39;
+
+Modified values:
+
+bug_tracker
+  url = &#39;http://localhost:8080/bugs/&#39;
+  username = &#39;dhellmann&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="saving-configuration-files">
+<h2>Saving Configuration Files<a class="headerlink" href="#saving-configuration-files" title="Permalink to this headline">¶</a></h2>
+<p>Once a <code class="docutils literal notranslate"><span class="pre">ConfigParser</span></code> is populated with desired data, it
+can be saved to a file by calling the <code class="docutils literal notranslate"><span class="pre">write()</span></code> method.  This
+makes it possible to provide a user interface for editing the
+configuration settings, without having to write any code to manage the
+file.</p>
+<div class="literal-block-wrapper docutils container" id="id15">
+<div class="code-block-caption"><span class="caption-text">configparser_write.py</span><a class="headerlink" href="#id15" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">configparser</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s1">&#39;bug_tracker&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">,</span> <span class="s1">&#39;http://localhost:8080/bugs&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;dhellmann&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="s1">&#39;secret&#39;</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">write()</span></code> method takes a file-like object as argument.  It
+writes the data out in the INI format so it can be parsed again by
+<code class="docutils literal notranslate"><span class="pre">ConfigParser</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 configparser_write.py
+
+[bug_tracker]
+url = http://localhost:8080/bugs
+username = dhellmann
+password = secret
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Comments in the original configuration file are not preserved when
+reading, modifying, and re-writing a configuration file.</p>
+</div>
+</div>
+<div class="section" id="option-search-path">
+<h2>Option Search Path<a class="headerlink" href="#option-search-path" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">ConfigParser</span></code> uses a multi-step search process when
+looking for an option.</p>
+<p>Before starting the option search, the section name is tested.  If the
+section does not exist, and the name is not the special value
+<code class="docutils literal notranslate"><span class="pre">DEFAULT</span></code>, then <code class="docutils literal notranslate"><span class="pre">NoSectionError</span></code> is raised.</p>
+<ol class="arabic simple">
+<li>If the option name appears in the <code class="docutils literal notranslate"><span class="pre">vars</span></code> dictionary passed to
+<code class="docutils literal notranslate"><span class="pre">get()</span></code>, the value from <code class="docutils literal notranslate"><span class="pre">vars</span></code> is returned.</li>
+<li>If the option name appears in the specified section, the value from
+that section is returned.</li>
+<li>If the option name appears in the <code class="docutils literal notranslate"><span class="pre">DEFAULT</span></code> section, that value
+is returned.</li>
+<li>If the option name appears in the <code class="docutils literal notranslate"><span class="pre">defaults</span></code> dictionary passed to
+the constructor, that value is returned.</li>
+</ol>
+<p>If the name is not found in any of those locations,
+<code class="docutils literal notranslate"><span class="pre">NoOptionError</span></code> is raised.</p>
+<p>The search path behavior can be demonstrated using this configuration
+file.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">DEFAULT</span><span class="p">]</span>
+<span class="n">file</span><span class="o">-</span><span class="n">only</span> <span class="o">=</span> <span class="n">value</span> <span class="kn">from</span> <span class="nn">DEFAULT</span> <span class="n">section</span>
+<span class="n">init</span><span class="o">-</span><span class="ow">and</span><span class="o">-</span><span class="n">file</span> <span class="o">=</span> <span class="n">value</span> <span class="kn">from</span> <span class="nn">DEFAULT</span> <span class="n">section</span>
+<span class="n">from</span><span class="o">-</span><span class="n">section</span> <span class="o">=</span> <span class="n">value</span> <span class="kn">from</span> <span class="nn">DEFAULT</span> <span class="n">section</span>
+<span class="n">from</span><span class="o">-</span><span class="nb">vars</span> <span class="o">=</span> <span class="n">value</span> <span class="kn">from</span> <span class="nn">DEFAULT</span> <span class="n">section</span>
+
+<span class="p">[</span><span class="n">sect</span><span class="p">]</span>
+<span class="n">section</span><span class="o">-</span><span class="n">only</span> <span class="o">=</span> <span class="n">value</span> <span class="kn">from</span> <span class="nn">section</span> <span class="ow">in</span> <span class="n">file</span>
+<span class="n">from</span><span class="o">-</span><span class="n">section</span> <span class="o">=</span> <span class="n">value</span> <span class="kn">from</span> <span class="nn">section</span> <span class="ow">in</span> <span class="n">file</span>
+<span class="n">from</span><span class="o">-</span><span class="nb">vars</span> <span class="o">=</span> <span class="n">value</span> <span class="kn">from</span> <span class="nn">section</span> <span class="ow">in</span> <span class="n">file</span>
+</pre></div>
+</div>
+<p>This test program includes default settings for options not specified
+in the configuration file, and overrides some values that are defined
+in the file.</p>
+<div class="literal-block-wrapper docutils container" id="id16">
+<div class="code-block-caption"><span class="caption-text">configparser_defaults.py</span><a class="headerlink" href="#id16" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">configparser</span>
+
+<span class="c1"># Define the names of the options</span>
+<span class="n">option_names</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;from-default&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;from-section&#39;</span><span class="p">,</span> <span class="s1">&#39;section-only&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;file-only&#39;</span><span class="p">,</span> <span class="s1">&#39;init-only&#39;</span><span class="p">,</span> <span class="s1">&#39;init-and-file&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;from-vars&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1"># Initialize the parser with some defaults</span>
+<span class="n">DEFAULTS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;from-default&#39;</span><span class="p">:</span> <span class="s1">&#39;value from defaults passed to init&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;init-only&#39;</span><span class="p">:</span> <span class="s1">&#39;value from defaults passed to init&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;init-and-file&#39;</span><span class="p">:</span> <span class="s1">&#39;value from defaults passed to init&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;from-section&#39;</span><span class="p">:</span> <span class="s1">&#39;value from defaults passed to init&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;from-vars&#39;</span><span class="p">:</span> <span class="s1">&#39;value from defaults passed to init&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">parser</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">(</span><span class="n">defaults</span><span class="o">=</span><span class="n">DEFAULTS</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Defaults before loading file:&#39;</span><span class="p">)</span>
+<span class="n">defaults</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">defaults</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">option_names</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">defaults</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  </span><span class="si">{:&lt;15}</span><span class="s1"> = </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">defaults</span><span class="p">[</span><span class="n">name</span><span class="p">]))</span>
+
+<span class="c1"># Load the configuration file</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;with-defaults.ini&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Defaults after loading file:&#39;</span><span class="p">)</span>
+<span class="n">defaults</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">defaults</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">option_names</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">defaults</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  </span><span class="si">{:&lt;15}</span><span class="s1"> = </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">defaults</span><span class="p">[</span><span class="n">name</span><span class="p">]))</span>
+
+<span class="c1"># Define some local overrides</span>
+<span class="nb">vars</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;from-vars&#39;</span><span class="p">:</span> <span class="s1">&#39;value from vars&#39;</span><span class="p">}</span>
+
+<span class="c1"># Show the values of all the options</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Option lookup:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">option_names</span><span class="p">:</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sect&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">vars</span><span class="o">=</span><span class="nb">vars</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  </span><span class="si">{:&lt;15}</span><span class="s1"> = </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+
+<span class="c1"># Show error messages for options that do not exist</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Error cases:&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No such option :&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sect&#39;</span><span class="p">,</span> <span class="s1">&#39;no-option&#39;</span><span class="p">))</span>
+<span class="k">except</span> <span class="n">configparser</span><span class="o">.</span><span class="n">NoOptionError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No such section:&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;no-sect&#39;</span><span class="p">,</span> <span class="s1">&#39;no-option&#39;</span><span class="p">))</span>
+<span class="k">except</span> <span class="n">configparser</span><span class="o">.</span><span class="n">NoSectionError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The output shows the origin for the value of each option and
+illustrates the way defaults from different sources override existing
+values.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 configparser_defaults.py
+
+Defaults before loading file:
+  from-default    = &#39;value from defaults passed to init&#39;
+  from-section    = &#39;value from defaults passed to init&#39;
+  init-only       = &#39;value from defaults passed to init&#39;
+  init-and-file   = &#39;value from defaults passed to init&#39;
+  from-vars       = &#39;value from defaults passed to init&#39;
+
+Defaults after loading file:
+  from-default    = &#39;value from defaults passed to init&#39;
+  from-section    = &#39;value from DEFAULT section&#39;
+  file-only       = &#39;value from DEFAULT section&#39;
+  init-only       = &#39;value from defaults passed to init&#39;
+  init-and-file   = &#39;value from DEFAULT section&#39;
+  from-vars       = &#39;value from DEFAULT section&#39;
+
+Option lookup:
+  from-default    = &#39;value from defaults passed to init&#39;
+  from-section    = &#39;value from section in file&#39;
+  section-only    = &#39;value from section in file&#39;
+  file-only       = &#39;value from DEFAULT section&#39;
+  init-only       = &#39;value from defaults passed to init&#39;
+  init-and-file   = &#39;value from DEFAULT section&#39;
+  from-vars       = &#39;value from vars&#39;
+
+Error cases:
+No option &#39;no-option&#39; in section: &#39;sect&#39;
+No section: &#39;no-sect&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="combining-values-with-interpolation">
+<h2>Combining Values with Interpolation<a class="headerlink" href="#combining-values-with-interpolation" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">ConfigParser</span></code> provides a feature called <em>interpolation</em>
+that can be used to combine values together.  Values containing
+standard Python format strings trigger the interpolation feature when
+they are retrieved.  Options named within the value
+being fetched are replaced with their values in turn, until no more
+substitution is necessary.</p>
+<p>The URL examples from earlier in this section can be rewritten to use
+interpolation to make it easier to change only part of the value.  For
+example, this configuration file separates the protocol, hostname, and
+port from the URL as separate options.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">bug_tracker</span><span class="p">]</span>
+<span class="n">protocol</span> <span class="o">=</span> <span class="n">http</span>
+<span class="n">server</span> <span class="o">=</span> <span class="n">localhost</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">8080</span>
+<span class="n">url</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">protocol</span><span class="p">)</span><span class="n">s</span><span class="p">:</span><span class="o">//%</span><span class="p">(</span><span class="n">server</span><span class="p">)</span><span class="n">s</span><span class="p">:</span><span class="o">%</span><span class="p">(</span><span class="n">port</span><span class="p">)</span><span class="n">s</span><span class="o">/</span><span class="n">bugs</span><span class="o">/</span>
+<span class="n">username</span> <span class="o">=</span> <span class="n">dhellmann</span>
+<span class="n">password</span> <span class="o">=</span> <span class="n">SECRET</span>
+</pre></div>
+</div>
+<p>Interpolation is performed by default each time <code class="docutils literal notranslate"><span class="pre">get()</span></code> is called.
+Pass a true value in the <code class="docutils literal notranslate"><span class="pre">raw</span></code> argument to retrieve the original
+value, without interpolation.</p>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-text">configparser_interpolation.py</span><a class="headerlink" href="#id17" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">configparser</span> <span class="k">import</span> <span class="n">ConfigParser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;interpolation.ini&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Original value       :&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">))</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s1">&#39;port&#39;</span><span class="p">,</span> <span class="s1">&#39;9090&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Altered port value   :&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Without interpolation:&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">,</span>
+                                           <span class="n">raw</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Because the value is computed by <code class="docutils literal notranslate"><span class="pre">get()</span></code>, changing one of the
+settings being used by the <code class="docutils literal notranslate"><span class="pre">url</span></code> value changes the return value.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 configparser_interpolation.py
+
+Original value       : http://localhost:8080/bugs/
+Altered port value   : http://localhost:9090/bugs/
+Without interpolation: %(protocol)s://%(server)s:%(port)s/bugs/
+</pre></div>
+</div>
+<div class="section" id="using-defaults">
+<h3>Using Defaults<a class="headerlink" href="#using-defaults" title="Permalink to this headline">¶</a></h3>
+<p>Values for interpolation do not need to appear in the same section as
+the original option.  Defaults can be mixed with override values.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">DEFAULT</span><span class="p">]</span>
+<span class="n">url</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">protocol</span><span class="p">)</span><span class="n">s</span><span class="p">:</span><span class="o">//%</span><span class="p">(</span><span class="n">server</span><span class="p">)</span><span class="n">s</span><span class="p">:</span><span class="o">%</span><span class="p">(</span><span class="n">port</span><span class="p">)</span><span class="n">s</span><span class="o">/</span><span class="n">bugs</span><span class="o">/</span>
+<span class="n">protocol</span> <span class="o">=</span> <span class="n">http</span>
+<span class="n">server</span> <span class="o">=</span> <span class="n">bugs</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">80</span>
+
+<span class="p">[</span><span class="n">bug_tracker</span><span class="p">]</span>
+<span class="n">server</span> <span class="o">=</span> <span class="n">localhost</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">8080</span>
+<span class="n">username</span> <span class="o">=</span> <span class="n">dhellmann</span>
+<span class="n">password</span> <span class="o">=</span> <span class="n">SECRET</span>
+</pre></div>
+</div>
+<p>With this configuration, the value for <code class="docutils literal notranslate"><span class="pre">url</span></code> comes from the
+<code class="docutils literal notranslate"><span class="pre">DEFAULT</span></code> section, and the substitution starts by looking in
+<code class="docutils literal notranslate"><span class="pre">bug_tracker</span></code> and falling back to <code class="docutils literal notranslate"><span class="pre">DEFAULT</span></code> for pieces not found.</p>
+<div class="literal-block-wrapper docutils container" id="id18">
+<div class="code-block-caption"><span class="caption-text">configparser_interpolation_defaults.py</span><a class="headerlink" href="#id18" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">configparser</span> <span class="k">import</span> <span class="n">ConfigParser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;interpolation_defaults.ini&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;URL:&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">hostname</span></code> and <code class="docutils literal notranslate"><span class="pre">port</span></code> values come from the <code class="docutils literal notranslate"><span class="pre">bug_tracker</span></code>
+section, but the <code class="docutils literal notranslate"><span class="pre">protocol</span></code> comes from <code class="docutils literal notranslate"><span class="pre">DEFAULT</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 configparser_interpolation_defaults.py
+
+URL: http://localhost:8080/bugs/
+</pre></div>
+</div>
+</div>
+<div class="section" id="substitution-errors">
+<h3>Substitution Errors<a class="headerlink" href="#substitution-errors" title="Permalink to this headline">¶</a></h3>
+<p>Substitution stops after <code class="xref py py-attr docutils literal notranslate"><span class="pre">MAX_INTERPOLATION_DEPTH</span></code> steps to
+avoid problems due to recursive references.</p>
+<div class="literal-block-wrapper docutils container" id="id19">
+<div class="code-block-caption"><span class="caption-text">configparser_interpolation_recursion.py</span><a class="headerlink" href="#id19" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">configparser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s1">&#39;sect&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;sect&#39;</span><span class="p">,</span> <span class="s1">&#39;opt&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%(opt)s</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sect&#39;</span><span class="p">,</span> <span class="s1">&#39;opt&#39;</span><span class="p">))</span>
+<span class="k">except</span> <span class="n">configparser</span><span class="o">.</span><span class="n">InterpolationDepthError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ERROR:&#39;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>An <code class="docutils literal notranslate"><span class="pre">InterpolationDepthError</span></code> exception is raised if there are
+too many substitution steps.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 configparser_interpolation_recursion.py
+
+ERROR: Recursion limit exceeded in value substitution: option &#39;o
+pt&#39; in section &#39;sect&#39; contains an interpolation key which cannot
+ be substituted in 10 steps. Raw value: &#39;%(opt)s&#39;
+</pre></div>
+</div>
+<p>Missing values result in an <code class="docutils literal notranslate"><span class="pre">InterpolationMissingOptionError</span></code>
+exception.</p>
+<div class="literal-block-wrapper docutils container" id="id20">
+<div class="code-block-caption"><span class="caption-text">configparser_interpolation_error.py</span><a class="headerlink" href="#id20" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">configparser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s1">&#39;bug_tracker&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;http://</span><span class="si">%(server)s</span><span class="s1">:</span><span class="si">%(port)s</span><span class="s1">/bugs&#39;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">))</span>
+<span class="k">except</span> <span class="n">configparser</span><span class="o">.</span><span class="n">InterpolationMissingOptionError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ERROR:&#39;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Since no <code class="docutils literal notranslate"><span class="pre">server</span></code> value is defined, the <code class="docutils literal notranslate"><span class="pre">url</span></code> cannot be
+constructed.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 configparser_interpolation_error.py
+
+ERROR: Bad value substitution: option &#39;url&#39; in section
+&#39;bug_tracker&#39; contains an interpolation key &#39;server&#39; which is
+not a valid option name. Raw value:
+&#39;http://%(server)s:%(port)s/bugs&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="escaping-special-characters">
+<h3>Escaping Special Characters<a class="headerlink" href="#escaping-special-characters" title="Permalink to this headline">¶</a></h3>
+<p>Since <code class="docutils literal notranslate"><span class="pre">%</span></code> starts the interpolation instructions, a literal <code class="docutils literal notranslate"><span class="pre">%</span></code> in
+a value must be escaped as <code class="docutils literal notranslate"><span class="pre">%%</span></code>.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">escape</span><span class="p">]</span>
+<span class="n">value</span> <span class="o">=</span> <span class="n">a</span> <span class="n">literal</span> <span class="o">%%</span> <span class="n">must</span> <span class="n">be</span> <span class="n">escaped</span>
+</pre></div>
+</div>
+<p>Reading the value does not require any special consideration.</p>
+<div class="literal-block-wrapper docutils container" id="id21">
+<div class="code-block-caption"><span class="caption-text">configparser_escape.py</span><a class="headerlink" href="#id21" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">configparser</span> <span class="k">import</span> <span class="n">ConfigParser</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;escape.ini&#39;</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+<span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">([</span><span class="n">filename</span><span class="p">])</span>
+
+<span class="n">value</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;escape&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>When the value is read, the <code class="docutils literal notranslate"><span class="pre">%%</span></code> is converted to <code class="docutils literal notranslate"><span class="pre">%</span></code>
+automatically.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 configparser_escape.py
+
+a literal % must be escaped
+</pre></div>
+</div>
+</div>
+<div class="section" id="extended-interpolation">
+<h3>Extended Interpolation<a class="headerlink" href="#extended-interpolation" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">ConfigParser</span></code> supports alternate interpolation implementations
+Passing an object that supports the API defined by
+<code class="docutils literal notranslate"><span class="pre">Interpolation</span></code> to the <code class="docutils literal notranslate"><span class="pre">interpolation</span></code> parameter.  For
+example, using <code class="docutils literal notranslate"><span class="pre">ExtendedInterpolation</span></code> instead of the default
+<code class="docutils literal notranslate"><span class="pre">BasicInterpolation</span></code> enables a different syntax using <code class="docutils literal notranslate"><span class="pre">${}</span></code>
+to indicate variables.</p>
+<div class="literal-block-wrapper docutils container" id="id22">
+<div class="code-block-caption"><span class="caption-text">configparser_extendedinterpolation.py</span><a class="headerlink" href="#id22" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">configparser</span> <span class="k">import</span> <span class="n">ConfigParser</span><span class="p">,</span> <span class="n">ExtendedInterpolation</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">(</span><span class="n">interpolation</span><span class="o">=</span><span class="n">ExtendedInterpolation</span><span class="p">())</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;extended_interpolation.ini&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Original value       :&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">))</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;intranet&#39;</span><span class="p">,</span> <span class="s1">&#39;port&#39;</span><span class="p">,</span> <span class="s1">&#39;9090&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Altered port value   :&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Without interpolation:&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">,</span>
+                                           <span class="n">raw</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Extended interpolation supports accessing values from other sections
+of the configuration file by prefixing the variable name with the
+section name and a colon (<code class="docutils literal notranslate"><span class="pre">:</span></code>).</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[intranet]
+server = localhost
+port = 8080
+
+[bug_tracker]
+url = http://${intranet:server}:${intranet:port}/bugs/
+username = dhellmann
+password = SECRET
+</pre></div>
+</div>
+<p>Referring to values in other sections of the file makes it possible to
+share a hierarchy of values, without placing all defaults in the
+<code class="docutils literal notranslate"><span class="pre">DEFAULTS</span></code> section.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 configparser_extendedinterpolation.py
+
+Original value       : http://localhost:8080/bugs/
+Altered port value   : http://localhost:9090/bugs/
+Without interpolation: http://${intranet:server}:${intranet:port
+}/bugs/
+</pre></div>
+</div>
+</div>
+<div class="section" id="disabling-interpolation">
+<h3>Disabling Interpolation<a class="headerlink" href="#disabling-interpolation" title="Permalink to this headline">¶</a></h3>
+<p>To disable interpolation, pass <code class="docutils literal notranslate"><span class="pre">None</span></code> instead of an
+<code class="docutils literal notranslate"><span class="pre">Interpolation</span></code> object.</p>
+<div class="literal-block-wrapper docutils container" id="id23">
+<div class="code-block-caption"><span class="caption-text">configparser_nointerpolation.py</span><a class="headerlink" href="#id23" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">configparser</span> <span class="k">import</span> <span class="n">ConfigParser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">(</span><span class="n">interpolation</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;interpolation.ini&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Without interpolation:&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>This enables any syntax that might have been processed by the
+interpolation object to be safely ignored.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 configparser_nointerpolation.py
+
+Without interpolation: %(protocol)s://%(server)s:%(port)s/bugs/
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference external" href="https://docs.python.org/3.7/library/configparser.html">Standard library documentation for configparser</a></li>
+<li><a class="reference external" href="http://configobj.readthedocs.org/en/latest/configobj.html">ConfigObj</a>
+– An advanced configuration file parser with support for
+features like content validation.</li>
+<li><a class="reference internal" href="../porting_notes.html#porting-configparser"><span class="std std-ref">Python 2 to 3 porting notes for configparser</span></a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+
+
+        <div id="footer-nav">
+<a id="prev-link" href="../shlex/index.html"
+   title="previous chapter"><i class="fa fa-arrow-circle-left"></i> shlex — Parse Shell-style Syntaxes</a>
+<a id="next-link" href="../logging/index.html"
+   title="next chapter">logging — Report Status, Error, and Informational Messages <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+        </div>
+      </div>
+
+      <div class="pure-u-1-4">
+        <div class="sidebar-wrapper">
+          <div class="sidebar">
+<div id="sidebar-toc">
+  <h5>Quick Links</h5>
+  <ul>
+    
+    <li><a href="#configuration-file-format"><i class="fa fa-caret-right"></i>Configuration File Format</a></li>
+    
+    <li><a href="#reading-configuration-files"><i class="fa fa-caret-right"></i>Reading Configuration Files</a></li>
+    
+    <li><a href="#unicode-configuration-data"><i class="fa fa-caret-right"></i>Unicode Configuration Data</a></li>
+    
+    <li><a href="#accessing-configuration-settings"><i class="fa fa-caret-right"></i>Accessing Configuration Settings</a></li>
+    
+    <li><a href="#testing-whether-values-are-present"><i class="fa fa-caret-right"></i>Testing Whether Values Are Present</a></li>
+    
+    <li><a href="#value-types"><i class="fa fa-caret-right"></i>Value Types</a></li>
+    
+    <li><a href="#options-as-flags"><i class="fa fa-caret-right"></i>Options as Flags</a></li>
+    
+    <li><a href="#multi-line-strings"><i class="fa fa-caret-right"></i>Multi-line Strings</a></li>
+    
+    <li><a href="#modifying-settings"><i class="fa fa-caret-right"></i>Modifying Settings</a></li>
+    
+    <li><a href="#saving-configuration-files"><i class="fa fa-caret-right"></i>Saving Configuration Files</a></li>
+    
+    <li><a href="#option-search-path"><i class="fa fa-caret-right"></i>Option Search Path</a></li>
+    
+    <li><a href="#combining-values-with-interpolation"><i class="fa fa-caret-right"></i>Combining Values with Interpolation</a></li>
+    
+    <li><a href="#using-defaults"><i class="fa fa-caret-right"></i>Using Defaults</a></li>
+    
+    <li><a href="#substitution-errors"><i class="fa fa-caret-right"></i>Substitution Errors</a></li>
+    
+    <li><a href="#escaping-special-characters"><i class="fa fa-caret-right"></i>Escaping Special Characters</a></li>
+    
+    <li><a href="#extended-interpolation"><i class="fa fa-caret-right"></i>Extended Interpolation</a></li>
+    
+    <li><a href="#disabling-interpolation"><i class="fa fa-caret-right"></i>Disabling Interpolation</a></li>
+    
+  </ul>
+</div>
+
+          </div>
+          <div class="sidebar"><div id="sidebar-last-updated">
+  This page was last updated 2016-12-30.
+</div>
+
+          </div>
+          <div class="sidebar">
+<div id="sidebar-nav">
+  <h5>Navigation</h5>
+  <ul>
+    <li><a href="../shlex/index.html"
+           title="previous chapter"><i class="fa fa-arrow-circle-left"></i>shlex — Parse Shell-style Syntaxes</a></li>
+    <li><a href="../logging/index.html"
+           title="next chapter"><i class="fa fa-arrow-circle-right"></i>logging — Report Status, Error, and Informational Messages</a></li>
+  </ul>
+</div>
+          </div>
+          <div class="sidebar"><div id="sidebar-book"><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/book-cover-image-med.jpg"><br>Get the book</a></div>
+          </div>
+          <div class="sidebar"><div id="sidebar-example-disclaimer">
+<p>The output from all the example programs
+from PyMOTW-3 has been generated with Python 3.7.9, unless
+otherwise noted. Some of the features described here may not be
+available in earlier versions of Python.</p>
+<p>Looking for <a href="/2/">examples for Python 2</a>?</p>
+</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pure-g-r" id="footer">
+
+      <div class="pure-u-1-3">
+        <div class="footer-list">
+            <h4>This Site</h4>
+            <ul>
+              <li><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+              <li><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+            </ul>
+        </div>
+      </div><div class="pure-u-1-3">
+          <div class="footer-content">
+            <div class="socialmedia">
+              <a class="sociallink" href="../index.html"
+       title="Home">
+      <i class="fa fa-home fa-lg"></i></a>
+              <a class="sociallink" href="../about.html"
+       title="About">
+      <i class="fa fa-user fa-lg"></i></a>
+              <a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a>
+              <a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a>
+              <a class="sociallink" href="http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US"
+       title="Subscribe via Email">
+      <i class="fa fa-envelope fa-lg"></i></a>
+            </div>
+
+            <div class="copyright">
+              <a rel="author" href="../about.html">&copy; Copyright 2021, Doug Hellmann</a>
+            </div>
+
+            <div class="cc"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License BY-NC-SA" style="border-width:0; align: center;" width="88" height="31" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAfCAMAAABUFvrSAAAABGdBTUEAALGOfPtRkwAAAf5QTFRF////////////AAAADQwNDQ4NDg4OEBAQGRkZGxsbHxscICAgIx8gJCQkKCUmKCgoKCkoKSkpKSopKicnKioqLS0tMDAwMS0uMjExMjMxNTY1Pj8+Pzc5Pzs8QEBAQ0RDUFBQUFFQWldYXV5dYGBgY19haGVmbmxscHBwcHJvdXJzdnN0eHV2eXx5en15fH98fX98fnt8f4F+gICAgoWChIGChIWEhIaEh4aHiYyJjIqLjoeLj4+PkY+PkZORkZSRk5iTlZmUlpmWmJaXmpiZnp2dnqCdn5aan5+fn6Oeoqaho6Gho6ijpqqmq7GqrKurrLKrrbOsrrOtrrStr6+vr7Kvr7Sur7WusLOvsLWvsLavsbewsrexsrixs7iytLmztLqztbW1tbq0tru1t7y2uL23ub64ub65urm5ur+5ur+6u8C6u8C7vMC8vMG7vMG8vcK8vcK9vsK9vsO+v7+/v8O+v8S+wMS/wMW/wMXAwcXAwsfCw8fCw8jDxMfDxMjDxMnExcnExcnFxsrFxsrGx8vHyMfHyMzHyMzIycjIyc3Iyc3Jys3Jy8rLy87Ky8/Ky8/LzM/LzNDLzNDMzdDMzdHMzdHNztHNztLOz8/Pz9PP0NPP0NTQ0dTQ0dTR0tXR0tXS09bS1tXV39/f4N/g4+Pj6Ofn7+/v8fHx////rrSdFQAAAAN0Uk5TAAoO5yEBUwAAA+FJREFUSMe1lo9301QUx6uXUmaf0qJ26iTrRoVinUzjQNR1gAyH6Lqx6XTDoVvXbU7qhA5m7CgYWaTDlLa6AiFsba3t+y+9Sdr8OvVMi7zTnLTf5H7ee9/73n11PA1PpDkcADPRWPwKt8YLG2I2n89m7gh8iluJz0dnpqe+HBsdHRn+7w3JyF1cvpbk05mCJG8Xi9uPpMLdNJ9cXV5UyBNjoyMtkR2A3B9Tt8SCfLTTqUzC2XlMvpcRbnA/IPmryYnzoyM9XuWBt8eI21FBcAy5Qk4KtxkGtQ1I+fRNbnk+evHC5NhJDwATDDIAnhNa1ImdFQTHr6WEvNyFPFeATSTYgAu/dl3/I31jNR6bnZ76eDf4yxRb2Q+71aiz/0JB8JXkrZzCdbFVqrUhRHuu54XkytLczAUvBFADUB6ARwnyqEp/t02prK9XdAXBHC9KyPWVqd6qPhyzlOG55dhsL/hLDTD1A3rYAy+dRu6eXaGKruA75wi2hbqigNd+LYSRW6XUSh64l05dXYruA1OPZfAOD3vhObL/ILDvQkRXynSdvPpaiJB+TVHAfEZuA9d9amlVF7TJd3nu+xgwyu8AqNOnDGAM8/obOLhQpWQotPYReZ/SQdKuKQpY2DwKwFJbGwI4VhCSlxchSFUnNC+CCgaV9RAKoZKh1J4le9FmQv5SFQW88aATXGhEws8wrHb7AANc0CndQS+ag5ERaieke0FXvnkxoYL/1MGi7FSmmVBXMDOu3gLK5J2PMjdXv2tmBX6pDdKSkq39DWXh3G1KI4QYVmS3AHCIPnCXE+4hHy6PcfeQ6sV2lufiL2jJ0wasp4p2k/Z2CEXeeqahDBLS1/c8+dBIXq4IkFAiWQ1QtxtnUMz/wsXfBj+1LzdUKn17dvXXzEqfMoFDNWO57QCe22dskKB5g7zXbVN+i0RKumKxonrfzaIVys2wYu7TVrd0PXn1rOnJC4JTFjF5c19/gnXLFwj6jJJz1rOjoi63LnBRfbmNM+qNunG5baSufhu9OPX5my2VTWEzrHrRbIP8dHl+dnpyrIVDBME/q1u6/E9bGmt9i2AsQmeaFaFwIb22soSlfuL8SEtgOCJKB5BsKkNltWyK7zzWMY3X4exDc6GvsljoX5FzR+BxwdCbf3jAdjTJv5/S39H2B2iXpmgXpWB7iVrB0JuVzpgP07CUO2WKqX+oiVL/benKImhgOIzHf7hx/A/IBdHsQ6Nsmruilo4afVFqB8PLn2U2H8hbxeKWjH9YvuiwxNiMaNhALZptCg5d7zh+Sczmclnx0vEOax6ajdjucSMPTcD/97/Cp54Q929ZZbgcR3o0hAAAAABJRU5ErkJggg=="/></a>
+            </div>
+
+          </div></div><div class="pure-u-1-3">
+          <div class="footer-list">
+            <h4>Other Writing</h4>
+            <ul>
+              <li><a href="https://doughellmann.com/"><i class="fa fa-pencil fa-lg"></i> Blog</a></li>
+              <li><a href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><i class="fa fa-book fa-lg"></i> The Python Standard Library By Example</a></li>
+            </ul>
+          </div>
+        </div><script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-3', 'pymotw.com');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

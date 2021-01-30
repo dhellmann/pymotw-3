@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>array — Sequence of Fixed-type Data &mdash; PyMOTW 3</title>
+
+    <link rel="stylesheet" href="../_static/pure-min.css" type="text/css">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pymotw.css" type="text/css">
+
+    <link rel="shortcut icon" type="image/png" href="../_static/favicon.png">
+
+    <link rel="alternate" type="application/atom+xml"
+          title="Doug Hellmann"
+          href="http://feeds.doughellmann.com/DougHellmann" />
+    <link rel="alternate" type="application/atom+xml"
+          title="PyMOTW Updates"
+          href="http://feeds.doughellmann.com/PyMOTW" />
+
+    <meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+
+  </head>
+  <body>
+
+    <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
+      <a class="pure-menu-heading" href="../index.html"><img src="../_static/logo.png"> PyMOTW-3</a>
+
+      <ul id="top-menu">
+        <li class="pure-menu-selected"><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+        <li class="pure-menu-selected"><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a></a>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a></li>
+      </ul>
+
+    </div>
+
+    <div class="pure-menu pure-menu-open pure-menu-vertical" id="breadcrumbs-menu">
+      
+      <ul id="breadcrumbs">
+        <li class="pure-menu-selected"><a href="../data_structures.html"><i class="fa fa-arrow-circle-up"></i> Data Structures</a></li>
+      </ul>
+    </div>
+
+    <div class="pure-g-r" id="content-container">
+
+      <div class="pure-u-3-4">
+        <div class="content">
+          
+  <div class="section" id="module-array">
+<span id="array-sequence-of-fixed-type-data"></span><h1>array — Sequence of Fixed-type Data<a class="headerlink" href="#module-array" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Manage sequences of fixed-type numerical data efficiently.</td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal notranslate"><span class="pre">array</span></code> module defines a sequence data structure that looks
+very much like a <code class="docutils literal notranslate"><span class="pre">list</span></code>, except that all of the members have to
+be of the same primitive type. The types supported are all numeric or
+other fixed-size primitive types such as bytes.</p>
+<p>Refer to the table below for some of the
+supported types. The standard library documentation for <code class="docutils literal notranslate"><span class="pre">array</span></code>
+includes a complete list of type codes.</p>
+<table border="1" class="colwidths-given docutils" id="id1">
+<caption><span class="caption-text">Type Codes for array Members</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="29%" />
+<col width="29%" />
+<col width="43%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Code</th>
+<th class="head">Type</th>
+<th class="head">Minimum size (bytes)</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">b</span></code></td>
+<td>int</td>
+<td>1</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">B</span></code></td>
+<td>int</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">h</span></code></td>
+<td>signed short</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">H</span></code></td>
+<td>unsigned short</td>
+<td>2</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">i</span></code></td>
+<td>signed int</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">I</span></code></td>
+<td>unsigned int</td>
+<td>2</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">l</span></code></td>
+<td>signed long</td>
+<td>4</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">L</span></code></td>
+<td>unsigned long</td>
+<td>4</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">q</span></code></td>
+<td>signed long long</td>
+<td>8</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">Q</span></code></td>
+<td>unsigned long long</td>
+<td>8</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">f</span></code></td>
+<td>float</td>
+<td>4</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">d</span></code></td>
+<td>double float</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="initialization">
+<h2>Initialization<a class="headerlink" href="#initialization" title="Permalink to this headline">¶</a></h2>
+<p>An <code class="docutils literal notranslate"><span class="pre">array</span></code> is instantiated with an argument describing the type
+of data to be allowed, and possibly an initial sequence of data to
+store in the array.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">array_string.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">array</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;This is the array.&#39;</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;As byte string:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;As array      :&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;As hex        :&#39;</span><span class="p">,</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>In this example, the array is configured to hold a sequence of bytes
+and is initialized with a simple byte string.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 array_string.py
+
+As byte string: b&#39;This is the array.&#39;
+As array      : array(&#39;b&#39;, [84, 104, 105, 115, 32, 105, 115, 32,
+ 116, 104, 101, 32, 97, 114, 114, 97, 121, 46])
+As hex        : b&#39;54686973206973207468652061727261792e&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="manipulating-arrays">
+<h2>Manipulating Arrays<a class="headerlink" href="#manipulating-arrays" title="Permalink to this headline">¶</a></h2>
+<p>An <code class="docutils literal notranslate"><span class="pre">array</span></code> can be extended and otherwise manipulated in the
+same ways as other Python sequences.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">array_sequence.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">array</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Initial :&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+<span class="n">a</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Extended:&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Slice   :&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Iterator:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">a</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<p>The supported operations include slicing, iterating, and adding
+elements to the end.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 array_sequence.py
+
+Initial : array(&#39;i&#39;, [0, 1, 2])
+Extended: array(&#39;i&#39;, [0, 1, 2, 0, 1, 2])
+Slice   : array(&#39;i&#39;, [2, 0, 1])
+Iterator:
+[(0, 0), (1, 1), (2, 2), (3, 0), (4, 1), (5, 2)]
+</pre></div>
+</div>
+</div>
+<div class="section" id="arrays-and-files">
+<h2>Arrays and Files<a class="headerlink" href="#arrays-and-files" title="Permalink to this headline">¶</a></h2>
+<p>The contents of an array can be written to and read from files using
+built-in methods coded efficiently for that purpose.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">array_file.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">array</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;A1:&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+<span class="c1"># Write the array of numbers to a temporary file</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">()</span>
+<span class="n">a</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">file</span><span class="p">)</span>  <span class="c1"># must pass an *actual* file</span>
+<span class="n">output</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="c1"># Read the raw data</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="nb">input</span><span class="p">:</span>
+    <span class="n">raw_data</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Raw Contents:&#39;</span><span class="p">,</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">raw_data</span><span class="p">))</span>
+
+    <span class="c1"># Read the data into an array</span>
+    <span class="nb">input</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">a2</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">)</span>
+    <span class="n">a2</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;A2:&#39;</span><span class="p">,</span> <span class="n">a2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>This example illustrates reading the data “raw,” meaning directly from the
+binary file, versus reading it into a new array and converting the
+bytes to the appropriate types.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 array_file.py
+
+A1: array(&#39;i&#39;, [0, 1, 2, 3, 4])
+Raw Contents: b&#39;0000000001000000020000000300000004000000&#39;
+A2: array(&#39;i&#39;, [0, 1, 2, 3, 4])
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">tofile()</span></code> uses <code class="docutils literal notranslate"><span class="pre">tobytes()</span></code> to format the data, and <code class="docutils literal notranslate"><span class="pre">fromfile()</span></code>
+uses <code class="docutils literal notranslate"><span class="pre">frombytes()</span></code> to convert it back to an array instance.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">array_tobytes.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">array</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;A1:&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+<span class="n">as_bytes</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bytes:&#39;</span><span class="p">,</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">as_bytes</span><span class="p">))</span>
+
+<span class="n">a2</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">)</span>
+<span class="n">a2</span><span class="o">.</span><span class="n">frombytes</span><span class="p">(</span><span class="n">as_bytes</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;A2:&#39;</span><span class="p">,</span> <span class="n">a2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Both <code class="docutils literal notranslate"><span class="pre">tobytes()</span></code> and <code class="docutils literal notranslate"><span class="pre">frombytes()</span></code> work on byte strings, not
+Unicode strings.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 array_tobytes.py
+
+A1: array(&#39;i&#39;, [0, 1, 2, 3, 4])
+Bytes: b&#39;0000000001000000020000000300000004000000&#39;
+A2: array(&#39;i&#39;, [0, 1, 2, 3, 4])
+</pre></div>
+</div>
+</div>
+<div class="section" id="alternative-byte-ordering">
+<h2>Alternative Byte Ordering<a class="headerlink" href="#alternative-byte-ordering" title="Permalink to this headline">¶</a></h2>
+<p>If the data in the array is not in the native byte order, or if the data needs to
+be swapped before being sent to a system with a different byte order
+(or over the network), it is possible to convert the entire array without
+iterating over the elements from Python.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">array_byteswap.py</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">array</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+
+
+<span class="k">def</span> <span class="nf">to_hex</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">chars_per_item</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">itemsize</span> <span class="o">*</span> <span class="mi">2</span>  <span class="c1"># 2 hex digits</span>
+    <span class="n">hex_version</span> <span class="o">=</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">num_chunks</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">hex_version</span><span class="p">)</span> <span class="o">//</span> <span class="n">chars_per_item</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_chunks</span><span class="p">):</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">chars_per_item</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">chars_per_item</span>
+        <span class="k">yield</span> <span class="n">hex_version</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+
+
+<span class="n">start</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;0x12345678&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">5</span>
+<span class="n">a1</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+<span class="n">a2</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+<span class="n">a2</span><span class="o">.</span><span class="n">byteswap</span><span class="p">()</span>
+
+<span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:&gt;12}</span><span class="s1"> </span><span class="si">{:&gt;12}</span><span class="s1"> </span><span class="si">{:&gt;12}</span><span class="s1"> </span><span class="si">{:&gt;12}</span><span class="s1">&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;A1 hex&#39;</span><span class="p">,</span> <span class="s1">&#39;A1&#39;</span><span class="p">,</span> <span class="s1">&#39;A2 hex&#39;</span><span class="p">,</span> <span class="s1">&#39;A2&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">12</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">12</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">12</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{!r:&gt;12}</span><span class="s1"> </span><span class="si">{:12}</span><span class="s1"> </span><span class="si">{!r:&gt;12}</span><span class="s1"> </span><span class="si">{:12}</span><span class="s1">&#39;</span>
+<span class="k">for</span> <span class="n">values</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">to_hex</span><span class="p">(</span><span class="n">a1</span><span class="p">),</span> <span class="n">a1</span><span class="p">,</span> <span class="n">to_hex</span><span class="p">(</span><span class="n">a2</span><span class="p">),</span> <span class="n">a2</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">values</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">byteswap()</span></code> method switches the byte order of the items in
+the array from within C, so it is much more efficient than looping
+over the data in Python.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 array_byteswap.py
+
+      A1 hex           A1       A2 hex           A2
+------------ ------------ ------------ ------------
+ b&#39;78563412&#39;    305419896  b&#39;12345678&#39;   2018915346
+ b&#39;79563412&#39;    305419897  b&#39;12345679&#39;   2035692562
+ b&#39;7a563412&#39;    305419898  b&#39;1234567a&#39;   2052469778
+ b&#39;7b563412&#39;    305419899  b&#39;1234567b&#39;   2069246994
+ b&#39;7c563412&#39;    305419900  b&#39;1234567c&#39;   2086024210
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference external" href="https://docs.python.org/3.7/library/array.html">Standard library documentation for array</a></li>
+<li><a class="reference internal" href="../struct/index.html#module-struct" title="struct: Convert between strings and binary data."><code class="xref py py-mod docutils literal notranslate"><span class="pre">struct</span></code></a> – The <code class="docutils literal notranslate"><span class="pre">struct</span></code> module.</li>
+<li><a class="reference external" href="http://www.scipy.org">Numerical Python</a> – NumPy is a Python
+library for working with large data sets efficiently.</li>
+<li><a class="reference internal" href="../porting_notes.html#porting-array"><span class="std std-ref">Python 2 to 3 porting notes for array</span></a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+        <div id="footer-nav">
+<a id="prev-link" href="../collections/abc.html"
+   title="previous chapter"><i class="fa fa-arrow-circle-left"></i> collections.abc — Abstract Base Classes for Containers</a>
+<a id="next-link" href="../heapq/index.html"
+   title="next chapter">heapq – Heap Sort Algorithm <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+        </div>
+      </div>
+
+      <div class="pure-u-1-4">
+        <div class="sidebar-wrapper">
+          <div class="sidebar">
+<div id="sidebar-toc">
+  <h5>Quick Links</h5>
+  <ul>
+    
+    <li><a href="#initialization"><i class="fa fa-caret-right"></i>Initialization</a></li>
+    
+    <li><a href="#manipulating-arrays"><i class="fa fa-caret-right"></i>Manipulating Arrays</a></li>
+    
+    <li><a href="#arrays-and-files"><i class="fa fa-caret-right"></i>Arrays and Files</a></li>
+    
+    <li><a href="#alternative-byte-ordering"><i class="fa fa-caret-right"></i>Alternative Byte Ordering</a></li>
+    
+  </ul>
+</div>
+
+          </div>
+          <div class="sidebar"><div id="sidebar-last-updated">
+  This page was last updated 2017-01-28.
+</div>
+
+          </div>
+          <div class="sidebar">
+<div id="sidebar-nav">
+  <h5>Navigation</h5>
+  <ul>
+    <li><a href="../collections/abc.html"
+           title="previous chapter"><i class="fa fa-arrow-circle-left"></i>collections.abc — Abstract Base Classes for Containers</a></li>
+    <li><a href="../heapq/index.html"
+           title="next chapter"><i class="fa fa-arrow-circle-right"></i>heapq – Heap Sort Algorithm</a></li>
+  </ul>
+</div>
+          </div>
+          <div class="sidebar"><div id="sidebar-book"><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/book-cover-image-med.jpg"><br>Get the book</a></div>
+          </div>
+          <div class="sidebar"><div id="sidebar-example-disclaimer">
+<p>The output from all the example programs
+from PyMOTW-3 has been generated with Python 3.7.9, unless
+otherwise noted. Some of the features described here may not be
+available in earlier versions of Python.</p>
+<p>Looking for <a href="/2/">examples for Python 2</a>?</p>
+</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pure-g-r" id="footer">
+
+      <div class="pure-u-1-3">
+        <div class="footer-list">
+            <h4>This Site</h4>
+            <ul>
+              <li><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+              <li><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+            </ul>
+        </div>
+      </div><div class="pure-u-1-3">
+          <div class="footer-content">
+            <div class="socialmedia">
+              <a class="sociallink" href="../index.html"
+       title="Home">
+      <i class="fa fa-home fa-lg"></i></a>
+              <a class="sociallink" href="../about.html"
+       title="About">
+      <i class="fa fa-user fa-lg"></i></a>
+              <a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a>
+              <a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a>
+              <a class="sociallink" href="http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US"
+       title="Subscribe via Email">
+      <i class="fa fa-envelope fa-lg"></i></a>
+            </div>
+
+            <div class="copyright">
+              <a rel="author" href="../about.html">&copy; Copyright 2021, Doug Hellmann</a>
+            </div>
+
+            <div class="cc"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License BY-NC-SA" style="border-width:0; align: center;" width="88" height="31" src="data:image/png;base64,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"/></a>
+            </div>
+
+          </div></div><div class="pure-u-1-3">
+          <div class="footer-list">
+            <h4>Other Writing</h4>
+            <ul>
+              <li><a href="https://doughellmann.com/"><i class="fa fa-pencil fa-lg"></i> Blog</a></li>
+              <li><a href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><i class="fa fa-book fa-lg"></i> The Python Standard Library By Example</a></li>
+            </ul>
+          </div>
+        </div><script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-3', 'pymotw.com');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

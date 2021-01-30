@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>itertools — Iterator Functions &mdash; PyMOTW 3</title>
+
+    <link rel="stylesheet" href="../_static/pure-min.css" type="text/css">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pymotw.css" type="text/css">
+
+    <link rel="shortcut icon" type="image/png" href="../_static/favicon.png">
+
+    <link rel="alternate" type="application/atom+xml"
+          title="Doug Hellmann"
+          href="http://feeds.doughellmann.com/DougHellmann" />
+    <link rel="alternate" type="application/atom+xml"
+          title="PyMOTW Updates"
+          href="http://feeds.doughellmann.com/PyMOTW" />
+
+    <meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+
+  </head>
+  <body>
+
+    <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
+      <a class="pure-menu-heading" href="../index.html"><img src="../_static/logo.png"> PyMOTW-3</a>
+
+      <ul id="top-menu">
+        <li class="pure-menu-selected"><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+        <li class="pure-menu-selected"><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a></a>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a></li>
+      </ul>
+
+    </div>
+
+    <div class="pure-menu pure-menu-open pure-menu-vertical" id="breadcrumbs-menu">
+      
+      <ul id="breadcrumbs">
+        <li class="pure-menu-selected"><a href="../algorithm_tools.html"><i class="fa fa-arrow-circle-up"></i> Algorithms</a></li>
+      </ul>
+    </div>
+
+    <div class="pure-g-r" id="content-container">
+
+      <div class="pure-u-3-4">
+        <div class="content">
+          
+  <div class="section" id="module-itertools">
+<span id="itertools-iterator-functions"></span><h1>itertools — Iterator Functions<a class="headerlink" href="#module-itertools" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">The itertools module includes a set of functions for working with
+sequence data sets.</td>
+</tr>
+</tbody>
+</table>
+<p>The functions provided by <code class="docutils literal notranslate"><span class="pre">itertools</span></code> are inspired by similar
+features of functional programming languages such as Clojure, Haskell,
+APL, and SML. They are intended to be fast and use memory efficiently,
+and also to be hooked together to express more complicated
+iteration-based algorithms.</p>
+<p>Iterator-based code offers better memory consumption characteristics
+than code that uses lists.  Since data is not produced from the
+iterator until it is needed, all of the data does not need to be
+stored in memory at the same time.  This “lazy” processing model can
+reduce swapping and other side-effects of large data sets, improving
+performance.</p>
+<p>In addition to the functions defined in <code class="docutils literal notranslate"><span class="pre">itertools</span></code>, the examples
+in this section also rely on some of the built-in functions for
+iteration.</p>
+<div class="section" id="merging-and-splitting-iterators">
+<h2>Merging and Splitting Iterators<a class="headerlink" href="#merging-and-splitting-iterators" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">chain()</span></code> function takes several iterators as arguments and
+returns a single iterator that produces the contents of all of the
+inputs as though they came from a single iterator.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">itertools_chain.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chain</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">chain()</span></code> makes it easy to process several sequences without
+constructing one large list.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_chain.py
+
+1 2 3 a b c
+</pre></div>
+</div>
+<p>If the iterables to be combined are not all known in advance, or need
+to be evaluated lazily, <code class="docutils literal notranslate"><span class="pre">chain.from_iterable()</span></code> can be used to
+construct the chain instead.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">itertools_chain_from_iterable.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<span class="k">def</span> <span class="nf">make_iterables_to_chain</span><span class="p">():</span>
+    <span class="k">yield</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+    <span class="k">yield</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">]</span>
+
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">make_iterables_to_chain</span><span class="p">()):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_chain_from_iterable.py
+
+1 2 3 a b c
+</pre></div>
+</div>
+<p>The built-in function <code class="docutils literal notranslate"><span class="pre">zip()</span></code> returns an iterator that combines
+the elements of several iterators into tuples.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">itertools_zip.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>As with the other functions in this module, the return value is an
+iterable object that produces values one at a time.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_zip.py
+
+(1, &#39;a&#39;)
+(2, &#39;b&#39;)
+(3, &#39;c&#39;)
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">zip()</span></code> stops when the first input iterator is exhausted. To
+process all of the inputs, even if the iterators produce different
+numbers of values, use <code class="docutils literal notranslate"><span class="pre">zip_longest()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">itertools_zip_longest.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="n">r1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;zip stops early:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)))</span>
+
+<span class="n">r1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">zip_longest processes all of the values:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">zip_longest</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<p>By default, <code class="docutils literal notranslate"><span class="pre">zip_longest()</span></code> substitutes <code class="docutils literal notranslate"><span class="pre">None</span></code> for any missing
+values. Use the <code class="docutils literal notranslate"><span class="pre">fillvalue</span></code> argument to use a different substitute
+value.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_zip_longest.py
+
+zip stops early:
+[(0, 0), (1, 1)]
+
+zip_longest processes all of the values:
+[(0, 0), (1, 1), (2, None)]
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">islice()</span></code> function returns an iterator which returns selected
+items from the input iterator, by index.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">itertools_islice.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Stop at 5:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">islice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="mi">5</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Start at 5, Stop at 10:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">islice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;By tens to 100:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">islice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">islice()</span></code> takes the same arguments as the slice operator for
+lists: <code class="docutils literal notranslate"><span class="pre">start</span></code>, <code class="docutils literal notranslate"><span class="pre">stop</span></code>, and <code class="docutils literal notranslate"><span class="pre">step</span></code>. The start and step arguments
+are optional.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_islice.py
+
+Stop at 5:
+0 1 2 3 4
+
+Start at 5, Stop at 10:
+5 6 7 8 9
+
+By tens to 100:
+0 10 20 30 40 50 60 70 80 90
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">tee()</span></code> function returns several independent iterators (defaults
+to 2) based on a single original input.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">itertools_tee.py</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">islice</span><span class="p">(</span><span class="n">count</span><span class="p">(),</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">i1</span><span class="p">,</span> <span class="n">i2</span> <span class="o">=</span> <span class="n">tee</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;i1:&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">i1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;i2:&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">i2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">tee()</span></code> has semantics similar to the Unix <code class="docutils literal notranslate"><span class="pre">tee</span></code> utility,
+which repeats the values it reads from its input and writes them to a
+named file and standard output.  The iterators returned by <code class="docutils literal notranslate"><span class="pre">tee()</span></code>
+can be used to feed the same set of data into multiple algorithms to
+be processed in parallel.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_tee.py
+
+i1: [0, 1, 2, 3, 4]
+i2: [0, 1, 2, 3, 4]
+</pre></div>
+</div>
+<p>The new iterators created by <code class="docutils literal notranslate"><span class="pre">tee()</span></code> share their input, so the
+original iterator should not be used after the new ones are created.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">itertools_tee_error.py</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">islice</span><span class="p">(</span><span class="n">count</span><span class="p">(),</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">i1</span><span class="p">,</span> <span class="n">i2</span> <span class="o">=</span> <span class="n">tee</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;r:&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">r</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">break</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;i1:&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">i1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;i2:&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">i2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>If values are consumed from the original input, the new iterators will
+not produce those values:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_tee_error.py
+
+r: 0 1 2
+i1: [3, 4]
+i2: [3, 4]
+</pre></div>
+</div>
+</div>
+<div class="section" id="converting-inputs">
+<h2>Converting Inputs<a class="headerlink" href="#converting-inputs" title="Permalink to this headline">¶</a></h2>
+<p>The built-in <code class="docutils literal notranslate"><span class="pre">map()</span></code> function returns an iterator that calls a
+function on the values in the input iterators, and returns the
+results. It stops when any input iterator is exhausted.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">itertools_map.py</span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span>
+<span class="k">def</span> <span class="nf">times_two</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x</span>
+
+
+<span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Doubles:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">map</span><span class="p">(</span><span class="n">times_two</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Multiples:&#39;</span><span class="p">)</span>
+<span class="n">r1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">map</span><span class="p">(</span><span class="n">multiply</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}</span><span class="s1"> * </span><span class="si">{:d}</span><span class="s1"> = </span><span class="si">{:d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">i</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Stopping:&#39;</span><span class="p">)</span>
+<span class="n">r1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">map</span><span class="p">(</span><span class="n">multiply</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>In the first example, the lambda function multiplies the input values
+by 2. In a second example, the lambda function multiplies two
+arguments, taken from separate iterators, and returns a tuple with the
+original arguments and the computed value. The third example stops
+after producing two tuples because the second range is exhausted.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_map.py
+
+Doubles:
+0
+2
+4
+6
+8
+
+Multiples:
+0 * 5 = 0
+1 * 6 = 6
+2 * 7 = 14
+3 * 8 = 24
+4 * 9 = 36
+
+Stopping:
+(0, 0, 0)
+(1, 1, 1)
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">starmap()</span></code> function is similar to <code class="docutils literal notranslate"><span class="pre">map()</span></code>, but instead of
+constructing a tuple from multiple iterators, it splits up the items
+in a single iterator as arguments to the mapping function using the
+<code class="docutils literal notranslate"><span class="pre">*</span></code> syntax.</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">itertools_starmap.py</span><a class="headerlink" href="#id9" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="n">values</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">)]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">starmap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">),</span> <span class="n">values</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> * </span><span class="si">{}</span><span class="s1"> = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">i</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Where the mapping function to <code class="docutils literal notranslate"><span class="pre">map()</span></code> is called <code class="docutils literal notranslate"><span class="pre">f(i1,</span> <span class="pre">i2)</span></code>, the
+mapping function passed to <code class="docutils literal notranslate"><span class="pre">starmap()</span></code> is called <code class="docutils literal notranslate"><span class="pre">f(*i)</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_starmap.py
+
+0 * 5 = 0
+1 * 6 = 6
+2 * 7 = 14
+3 * 8 = 24
+4 * 9 = 36
+</pre></div>
+</div>
+</div>
+<div class="section" id="producing-new-values">
+<h2>Producing New Values<a class="headerlink" href="#producing-new-values" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">count()</span></code> function returns an iterator that produces
+consecutive integers, indefinitely. The first number can be passed as
+an argument (the default is zero). There is no upper bound argument
+(see the built-in <code class="docutils literal notranslate"><span class="pre">range()</span></code> for more control over the result set).</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">itertools_count.py</span><a class="headerlink" href="#id10" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">count</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>This example stops because the list argument is consumed.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_count.py
+
+(1, &#39;a&#39;)
+(2, &#39;b&#39;)
+(3, &#39;c&#39;)
+</pre></div>
+</div>
+<p>The start and step arguments to <code class="docutils literal notranslate"><span class="pre">count()</span></code> can be any numerical
+values that can be added together.</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">itertools_count_step.py</span><a class="headerlink" href="#id11" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">fractions</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="n">start</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">step</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">count</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">step</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">i</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>In this example, the start point and steps are <code class="docutils literal notranslate"><span class="pre">Fraction</span></code>
+objects from the <code class="xref py py-mod docutils literal notranslate"><span class="pre">fraction</span></code> module.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_count_step.py
+
+1/3: a
+2/3: b
+1: c
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">cycle()</span></code> function returns an iterator that repeats the
+contents of the arguments it is given indefinitely. Since it has to
+remember the entire contents of the input iterator, it may consume
+quite a bit of memory if the iterator is long.</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-text">itertools_cycle.py</span><a class="headerlink" href="#id12" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span> <span class="n">cycle</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">])):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>A counter variable is used to break out of the loop after a few cycles
+in this example.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_cycle.py
+
+(0, &#39;a&#39;)
+(1, &#39;b&#39;)
+(2, &#39;c&#39;)
+(3, &#39;a&#39;)
+(4, &#39;b&#39;)
+(5, &#39;c&#39;)
+(6, &#39;a&#39;)
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">repeat()</span></code> function returns an iterator that produces the same
+value each time it is accessed.</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-text">itertools_repeat.py</span><a class="headerlink" href="#id13" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;over-and-over&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The iterator returned by <code class="docutils literal notranslate"><span class="pre">repeat()</span></code> keeps returning data forever,
+unless the optional <code class="docutils literal notranslate"><span class="pre">times</span></code> argument is provided to limit it.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_repeat.py
+
+over-and-over
+over-and-over
+over-and-over
+over-and-over
+over-and-over
+</pre></div>
+</div>
+<p>It is useful to combine <code class="docutils literal notranslate"><span class="pre">repeat()</span></code> with <code class="docutils literal notranslate"><span class="pre">zip()</span></code> or <code class="docutils literal notranslate"><span class="pre">map()</span></code>
+when invariant values need to be included with the values from the
+other iterators.</p>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-text">itertools_repeat_zip.py</span><a class="headerlink" href="#id14" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">count</span><span class="p">(),</span> <span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;over-and-over&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>A counter value is combined with the constant returned by
+<code class="docutils literal notranslate"><span class="pre">repeat()</span></code> in this example.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_repeat_zip.py
+
+0 over-and-over
+1 over-and-over
+2 over-and-over
+3 over-and-over
+4 over-and-over
+</pre></div>
+</div>
+<p>This example uses <code class="docutils literal notranslate"><span class="pre">map()</span></code> to multiply the numbers in the range 0
+through 4 by 2.</p>
+<div class="literal-block-wrapper docutils container" id="id15">
+<div class="code-block-caption"><span class="caption-text">itertools_repeat_map.py</span><a class="headerlink" href="#id15" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">),</span> <span class="n">repeat</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}</span><span class="s1"> * </span><span class="si">{:d}</span><span class="s1"> = </span><span class="si">{:d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">i</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">repeat()</span></code> iterator does not need to be explicitly limited,
+since <code class="docutils literal notranslate"><span class="pre">map()</span></code> stops processing when any of its inputs ends, and
+the <code class="docutils literal notranslate"><span class="pre">range()</span></code> returns only five elements.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_repeat_map.py
+
+2 * 0 = 0
+2 * 1 = 2
+2 * 2 = 4
+2 * 3 = 6
+2 * 4 = 8
+</pre></div>
+</div>
+</div>
+<div class="section" id="filtering">
+<h2>Filtering<a class="headerlink" href="#filtering" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">dropwhile()</span></code> function returns an iterator that produces
+elements of the input iterator after a condition becomes false for the
+first time.</p>
+<div class="literal-block-wrapper docutils container" id="id16">
+<div class="code-block-caption"><span class="caption-text">itertools_dropwhile.py</span><a class="headerlink" href="#id16" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<span class="k">def</span> <span class="nf">should_drop</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Testing:&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">1</span>
+
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dropwhile</span><span class="p">(</span><span class="n">should_drop</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Yielding:&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">dropwhile()</span></code> does not filter every item of the input; after the
+condition is false the first time, all of the remaining items in the
+input are returned.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_dropwhile.py
+
+Testing: -1
+Testing: 0
+Testing: 1
+Yielding: 1
+Yielding: 2
+Yielding: -2
+</pre></div>
+</div>
+<p>The opposite of <code class="docutils literal notranslate"><span class="pre">dropwhile()</span></code> is <code class="docutils literal notranslate"><span class="pre">takewhile()</span></code>.  It returns an
+iterator that returns items from the input iterator as long as the
+test function returns true.</p>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-text">itertools_takewhile.py</span><a class="headerlink" href="#id17" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<span class="k">def</span> <span class="nf">should_take</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Testing:&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">2</span>
+
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">takewhile</span><span class="p">(</span><span class="n">should_take</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Yielding:&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>As soon as <code class="docutils literal notranslate"><span class="pre">should_take()</span></code> returns <code class="docutils literal notranslate"><span class="pre">False</span></code>, <code class="docutils literal notranslate"><span class="pre">takewhile()</span></code>
+stops processing the input.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_takewhile.py
+
+Testing: -1
+Yielding: -1
+Testing: 0
+Yielding: 0
+Testing: 1
+Yielding: 1
+Testing: 2
+</pre></div>
+</div>
+<p>The built-in function <code class="docutils literal notranslate"><span class="pre">filter()</span></code> returns an iterator that includes
+only items for which the test function returns true.</p>
+<div class="literal-block-wrapper docutils container" id="id18">
+<div class="code-block-caption"><span class="caption-text">itertools_filter.py</span><a class="headerlink" href="#id18" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<span class="k">def</span> <span class="nf">check_item</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Testing:&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">1</span>
+
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="n">check_item</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Yielding:&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">filter()</span></code> is different from <code class="docutils literal notranslate"><span class="pre">dropwhile()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">takewhile()</span></code> in that every item is tested before it is returned.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_filter.py
+
+Testing: -1
+Yielding: -1
+Testing: 0
+Yielding: 0
+Testing: 1
+Testing: 2
+Testing: -2
+Yielding: -2
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">filterfalse()</span></code> returns an iterator that includes only items
+where the test function returns false.</p>
+<div class="literal-block-wrapper docutils container" id="id19">
+<div class="code-block-caption"><span class="caption-text">itertools_filterfalse.py</span><a class="headerlink" href="#id19" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<span class="k">def</span> <span class="nf">check_item</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Testing:&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">1</span>
+
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">filterfalse</span><span class="p">(</span><span class="n">check_item</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Yielding:&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The test expression in <code class="docutils literal notranslate"><span class="pre">check_item()</span></code> is the same, so the results
+in this example with <code class="docutils literal notranslate"><span class="pre">filterfalse()</span></code> are the opposite of the
+results from the previous example.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_filterfalse.py
+
+Testing: -1
+Testing: 0
+Testing: 1
+Yielding: 1
+Testing: 2
+Yielding: 2
+Testing: -2
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">compress()</span></code> offers another way to filter the contents of an
+iterable. Instead of calling a function, it uses the values in another
+iterable to indicate when to accept a value and when to ignore it.</p>
+<div class="literal-block-wrapper docutils container" id="id20">
+<div class="code-block-caption"><span class="caption-text">itertools_compress.py</span><a class="headerlink" href="#id20" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="n">every_third</span> <span class="o">=</span> <span class="n">cycle</span><span class="p">([</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">])</span>
+<span class="n">data</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">compress</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">every_third</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>The first argument is the data iterable to process and the second is a
+selector iterable producing Boolean values indicating which elements
+to take from the data input (a true value causes the value to be
+produced, a false value causes it to be ignored).</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_compress.py
+
+3 6 9
+</pre></div>
+</div>
+</div>
+<div class="section" id="grouping-data">
+<span id="itertools-groupby"></span><h2>Grouping Data<a class="headerlink" href="#grouping-data" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">groupby()</span></code> function returns an iterator that produces sets of
+values organized by a common key.  This example illustrates grouping
+related values based on an attribute.</p>
+<div class="literal-block-wrapper docutils container" id="id21">
+<div class="code-block-caption"><span class="caption-text">itertools_groupby_seq.py</span><a class="headerlink" href="#id21" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+
+<span class="nd">@functools</span><span class="o">.</span><span class="n">total_ordering</span>
+<span class="k">class</span> <span class="nc">Point</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;(</span><span class="si">{}</span><span class="s1">, </span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+
+
+<span class="c1"># Create a dataset of Point instances</span>
+<span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">Point</span><span class="p">,</span>
+                <span class="n">cycle</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">count</span><span class="p">(),</span> <span class="mi">3</span><span class="p">)),</span>
+                <span class="n">islice</span><span class="p">(</span><span class="n">count</span><span class="p">(),</span> <span class="mi">7</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Data:&#39;</span><span class="p">)</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">35</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># Try to group the unsorted data based on X values</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Grouped, unsorted:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">groupby</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">operator</span><span class="o">.</span><span class="n">attrgetter</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># Sort the data</span>
+<span class="n">data</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sorted:&#39;</span><span class="p">)</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">35</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># Group the sorted data based on X values</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Grouped, sorted:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">groupby</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">operator</span><span class="o">.</span><span class="n">attrgetter</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>The input sequence needs to be sorted on the key value in order for
+the groupings to work out as expected.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_groupby_seq.py
+
+Data:
+[(0, 0),
+ (1, 1),
+ (2, 2),
+ (0, 3),
+ (1, 4),
+ (2, 5),
+ (0, 6)]
+
+Grouped, unsorted:
+0 [(0, 0)]
+1 [(1, 1)]
+2 [(2, 2)]
+0 [(0, 3)]
+1 [(1, 4)]
+2 [(2, 5)]
+0 [(0, 6)]
+
+Sorted:
+[(0, 0),
+ (0, 3),
+ (0, 6),
+ (1, 1),
+ (1, 4),
+ (2, 2),
+ (2, 5)]
+
+Grouped, sorted:
+0 [(0, 0), (0, 3), (0, 6)]
+1 [(1, 1), (1, 4)]
+2 [(2, 2), (2, 5)]
+</pre></div>
+</div>
+</div>
+<div class="section" id="combining-inputs">
+<h2>Combining Inputs<a class="headerlink" href="#combining-inputs" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">accumulate()</span></code> function processes the input iterable, passing
+the nth and n+1st item to a function and producing the return value
+instead of either input. The default function used to combine the two
+values adds them, so <code class="docutils literal notranslate"><span class="pre">accumulate()</span></code> can be used to produce the
+cumulative sum of a series of numerical inputs.</p>
+<div class="literal-block-wrapper docutils container" id="id22">
+<div class="code-block-caption"><span class="caption-text">itertools_accumulate.py</span><a class="headerlink" href="#id22" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">accumulate</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">))))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">accumulate</span><span class="p">(</span><span class="s1">&#39;abcde&#39;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<p>When used with a sequence of non-integer values, the results depend on
+what it means to “add” two items together. The second example in this
+script shows that when <code class="docutils literal notranslate"><span class="pre">accumulate()</span></code> receives a string input each
+response is a progressively longer prefix of that string.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_accumulate.py
+
+[0, 1, 3, 6, 10]
+[&#39;a&#39;, &#39;ab&#39;, &#39;abc&#39;, &#39;abcd&#39;, &#39;abcde&#39;]
+</pre></div>
+</div>
+<p>It is possible to combine <code class="docutils literal notranslate"><span class="pre">accumulate()</span></code> with any other function
+that takes two input values to achieve different results.</p>
+<div class="literal-block-wrapper docutils container" id="id23">
+<div class="code-block-caption"><span class="caption-text">itertools_accumulate_custom.py</span><a class="headerlink" href="#id23" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">b</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">accumulate</span><span class="p">(</span><span class="s1">&#39;abcde&#39;</span><span class="p">,</span> <span class="n">f</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<p>This example combines the string values in a way that makes a series
+of (nonsensical) palindromes. Each step of the way when <code class="docutils literal notranslate"><span class="pre">f()</span></code> is
+called, it prints the input values passed to it by <code class="docutils literal notranslate"><span class="pre">accumulate()</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_accumulate_custom.py
+
+a b
+bab c
+cbabc d
+dcbabcd e
+[&#39;a&#39;, &#39;bab&#39;, &#39;cbabc&#39;, &#39;dcbabcd&#39;, &#39;edcbabcde&#39;]
+</pre></div>
+</div>
+<p>Nested <code class="docutils literal notranslate"><span class="pre">for</span></code> loops that iterate over multiple sequences can often be
+replaced with <code class="docutils literal notranslate"><span class="pre">product()</span></code>, which produces a single iterable whose
+values are the Cartesian product of the set of input values.</p>
+<div class="literal-block-wrapper docutils container" id="id24">
+<div class="code-block-caption"><span class="caption-text">itertools_product.py</span><a class="headerlink" href="#id24" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="n">FACE_CARDS</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;J&#39;</span><span class="p">,</span> <span class="s1">&#39;Q&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">)</span>
+<span class="n">SUITS</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span>
+
+<span class="n">DECK</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+    <span class="n">product</span><span class="p">(</span>
+        <span class="n">chain</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="n">FACE_CARDS</span><span class="p">),</span>
+        <span class="n">SUITS</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="n">DECK</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:&gt;2}{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">card</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">card</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">SUITS</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>The values produced by <code class="docutils literal notranslate"><span class="pre">product()</span></code> are tuples, with the members
+taken from each of the iterables passed in as arguments in the order
+they are passed. The first tuple returned includes the first value
+from each iterable. The <em>last</em> iterable passed to <code class="docutils literal notranslate"><span class="pre">product()</span></code> is
+processed first, followed by the next to last, and so on. The result
+is that the return values are in order based on the first iterable,
+then the next iterable, etc.</p>
+<p>In this example, the cards are ordered by value and then by suit.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_product.py
+
+ 2H  2D  2C  2S
+ 3H  3D  3C  3S
+ 4H  4D  4C  4S
+ 5H  5D  5C  5S
+ 6H  6D  6C  6S
+ 7H  7D  7C  7S
+ 8H  8D  8C  8S
+ 9H  9D  9C  9S
+10H 10D 10C 10S
+ JH  JD  JC  JS
+ QH  QD  QC  QS
+ KH  KD  KC  KS
+ AH  AD  AC  AS
+</pre></div>
+</div>
+<p>To change the order of the cards, change the order of the arguments to
+<code class="docutils literal notranslate"><span class="pre">product()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id25">
+<div class="code-block-caption"><span class="caption-text">itertools_product_ordering.py</span><a class="headerlink" href="#id25" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="n">FACE_CARDS</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;J&#39;</span><span class="p">,</span> <span class="s1">&#39;Q&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">)</span>
+<span class="n">SUITS</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span>
+
+<span class="n">DECK</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+    <span class="n">product</span><span class="p">(</span>
+        <span class="n">SUITS</span><span class="p">,</span>
+<span class="hll">        <span class="n">chain</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="n">FACE_CARDS</span><span class="p">),</span>
+</span><span class="hll">    <span class="p">)</span>
+</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="n">DECK</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:&gt;2}{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">card</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">card</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">card</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">FACE_CARDS</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+<span class="hll">        <span class="nb">print</span><span class="p">()</span>
+</span></pre></div>
+</div>
+</div>
+<p>The print loop in this example looks for an Ace card, instead of the
+spade suit, and then adds a newline to break up the output.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_product_ordering.py
+
+ 2H  3H  4H  5H  6H  7H  8H  9H 10H  JH  QH  KH  AH
+ 2D  3D  4D  5D  6D  7D  8D  9D 10D  JD  QD  KD  AD
+ 2C  3C  4C  5C  6C  7C  8C  9C 10C  JC  QC  KC  AC
+ 2S  3S  4S  5S  6S  7S  8S  9S 10S  JS  QS  KS  AS
+</pre></div>
+</div>
+<p>To compute the product of a sequence with itself, specify how many
+times the input should be repeated.</p>
+<div class="literal-block-wrapper docutils container" id="id26">
+<div class="code-block-caption"><span class="caption-text">itertools_product_repeat.py</span><a class="headerlink" href="#id26" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Repeat 2:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">show</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">2</span><span class="p">)))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Repeat 3:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">show</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">3</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<p>Since repeating a single iterable is like passing the same iterable
+multiple times, each tuple produced by <code class="docutils literal notranslate"><span class="pre">product()</span></code> will contain a
+number of items equal to the repeat counter.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_product_repeat.py
+
+Repeat 2:
+
+(0, 0) (0, 1) (0, 2)
+(1, 0) (1, 1) (1, 2)
+(2, 0) (2, 1) (2, 2)
+
+Repeat 3:
+
+(0, 0, 0) (0, 0, 1) (0, 0, 2)
+(0, 1, 0) (0, 1, 1) (0, 1, 2)
+(0, 2, 0) (0, 2, 1) (0, 2, 2)
+(1, 0, 0) (1, 0, 1) (1, 0, 2)
+(1, 1, 0) (1, 1, 1) (1, 1, 2)
+(1, 2, 0) (1, 2, 1) (1, 2, 2)
+(2, 0, 0) (2, 0, 1) (2, 0, 2)
+(2, 1, 0) (2, 1, 1) (2, 1, 2)
+(2, 2, 0) (2, 2, 1) (2, 2, 2)
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">permutations()</span></code> function produces items from the input
+iterable combined in the possible permutations of the given length. It
+defaults to producing the full set of all permutations.</p>
+<div class="literal-block-wrapper docutils container" id="id27">
+<div class="code-block-caption"><span class="caption-text">itertools_permutations.py</span><a class="headerlink" href="#id27" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+    <span class="n">first</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">first</span> <span class="o">!=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">first</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">()</span>
+            <span class="n">first</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">item</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;All permutations:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">show</span><span class="p">(</span><span class="n">permutations</span><span class="p">(</span><span class="s1">&#39;abcd&#39;</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Pairs:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">show</span><span class="p">(</span><span class="n">permutations</span><span class="p">(</span><span class="s1">&#39;abcd&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">r</span></code> argument to limit the length and number of the
+individual permutations returned.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_permutations.py
+
+All permutations:
+
+abcd abdc acbd acdb adbc adcb
+bacd badc bcad bcda bdac bdca
+cabd cadb cbad cbda cdab cdba
+dabc dacb dbac dbca dcab dcba
+
+Pairs:
+
+ab ac ad
+ba bc bd
+ca cb cd
+da db dc
+</pre></div>
+</div>
+<p>To limit the values to unique combinations rather than permutations,
+use <code class="docutils literal notranslate"><span class="pre">combinations()</span></code>. As long as the members of the input are
+unique, the output will not include any repeated values.</p>
+<div class="literal-block-wrapper docutils container" id="id28">
+<div class="code-block-caption"><span class="caption-text">itertools_combinations.py</span><a class="headerlink" href="#id28" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+    <span class="n">first</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">first</span> <span class="o">!=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">first</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">()</span>
+            <span class="n">first</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">item</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Unique pairs:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">show</span><span class="p">(</span><span class="n">combinations</span><span class="p">(</span><span class="s1">&#39;abcd&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Unlike with permutations, the <code class="docutils literal notranslate"><span class="pre">r</span></code> argument to <code class="docutils literal notranslate"><span class="pre">combinations()</span></code>
+is required.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_combinations.py
+
+Unique pairs:
+
+ab ac ad
+bc bd
+cd
+</pre></div>
+</div>
+<p>While <code class="docutils literal notranslate"><span class="pre">combinations()</span></code> does not repeat individual input elements,
+sometimes it is useful to consider combinations that do include
+repeated elements. For those cases, use
+<code class="docutils literal notranslate"><span class="pre">combinations_with_replacement()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id29">
+<div class="code-block-caption"><span class="caption-text">itertools_combinations_with_replacement.py</span><a class="headerlink" href="#id29" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+    <span class="n">first</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">first</span> <span class="o">!=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">first</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">()</span>
+            <span class="n">first</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">item</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Unique pairs:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">show</span><span class="p">(</span><span class="n">combinations_with_replacement</span><span class="p">(</span><span class="s1">&#39;abcd&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>In this output, each input item is paired with itself as well as all
+of the other members of the input sequence.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 itertools_combinations_with_replacement.py
+
+Unique pairs:
+
+aa ab ac ad
+bb bc bd
+cc cd
+dd
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference external" href="https://docs.python.org/3.7/library/itertools.html">Standard library documentation for itertools</a></li>
+<li><a class="reference internal" href="../porting_notes.html#porting-itertools"><span class="std std-ref">Python 2 to 3 porting notes for itertools</span></a></li>
+<li><a class="reference external" href="http://www.standardml.org/Basis/">The Standard ML Basis Library</a>) – The library for SML.</li>
+<li><a class="reference external" href="http://www.haskell.org/definition/">Definition of Haskell and the Standard Libraries</a> – Standard library
+specification for the functional language Haskell.</li>
+<li><a class="reference external" href="http://clojure.org/">Clojure</a> – Clojure is a dynamic
+functional language that runs on the Java Virtual Machine.</li>
+<li><a class="reference external" href="http://man7.org/linux/man-pages/man1/tee.1.html">tee</a> – Unix
+command line tool for splitting one input into multiple identical
+output streams.</li>
+<li><a class="reference external" href="https://en.wikipedia.org/wiki/Cartesian_product">Cartesian product</a> –
+Mathematical definition of the Cartesian product of two
+sequences.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+        <div id="footer-nav">
+<a id="prev-link" href="../functools/index.html"
+   title="previous chapter"><i class="fa fa-arrow-circle-left"></i> functools — Tools for Manipulating Functions</a>
+<a id="next-link" href="../operator/index.html"
+   title="next chapter">operator — Functional Interface to Built-in Operators <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+        </div>
+      </div>
+
+      <div class="pure-u-1-4">
+        <div class="sidebar-wrapper">
+          <div class="sidebar">
+<div id="sidebar-toc">
+  <h5>Quick Links</h5>
+  <ul>
+    
+    <li><a href="#merging-and-splitting-iterators"><i class="fa fa-caret-right"></i>Merging and Splitting Iterators</a></li>
+    
+    <li><a href="#converting-inputs"><i class="fa fa-caret-right"></i>Converting Inputs</a></li>
+    
+    <li><a href="#producing-new-values"><i class="fa fa-caret-right"></i>Producing New Values</a></li>
+    
+    <li><a href="#filtering"><i class="fa fa-caret-right"></i>Filtering</a></li>
+    
+    <li><a href="#grouping-data"><i class="fa fa-caret-right"></i>Grouping Data</a></li>
+    
+    <li><a href="#combining-inputs"><i class="fa fa-caret-right"></i>Combining Inputs</a></li>
+    
+  </ul>
+</div>
+
+          </div>
+          <div class="sidebar"><div id="sidebar-last-updated">
+  This page was last updated 2016-12-28.
+</div>
+
+          </div>
+          <div class="sidebar">
+<div id="sidebar-nav">
+  <h5>Navigation</h5>
+  <ul>
+    <li><a href="../functools/index.html"
+           title="previous chapter"><i class="fa fa-arrow-circle-left"></i>functools — Tools for Manipulating Functions</a></li>
+    <li><a href="../operator/index.html"
+           title="next chapter"><i class="fa fa-arrow-circle-right"></i>operator — Functional Interface to Built-in Operators</a></li>
+  </ul>
+</div>
+          </div>
+          <div class="sidebar"><div id="sidebar-book"><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/book-cover-image-med.jpg"><br>Get the book</a></div>
+          </div>
+          <div class="sidebar"><div id="sidebar-example-disclaimer">
+<p>The output from all the example programs
+from PyMOTW-3 has been generated with Python 3.7.9, unless
+otherwise noted. Some of the features described here may not be
+available in earlier versions of Python.</p>
+<p>Looking for <a href="/2/">examples for Python 2</a>?</p>
+</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pure-g-r" id="footer">
+
+      <div class="pure-u-1-3">
+        <div class="footer-list">
+            <h4>This Site</h4>
+            <ul>
+              <li><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+              <li><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+            </ul>
+        </div>
+      </div><div class="pure-u-1-3">
+          <div class="footer-content">
+            <div class="socialmedia">
+              <a class="sociallink" href="../index.html"
+       title="Home">
+      <i class="fa fa-home fa-lg"></i></a>
+              <a class="sociallink" href="../about.html"
+       title="About">
+      <i class="fa fa-user fa-lg"></i></a>
+              <a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a>
+              <a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a>
+              <a class="sociallink" href="http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US"
+       title="Subscribe via Email">
+      <i class="fa fa-envelope fa-lg"></i></a>
+            </div>
+
+            <div class="copyright">
+              <a rel="author" href="../about.html">&copy; Copyright 2021, Doug Hellmann</a>
+            </div>
+
+            <div class="cc"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License BY-NC-SA" style="border-width:0; align: center;" width="88" height="31" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAfCAMAAABUFvrSAAAABGdBTUEAALGOfPtRkwAAAf5QTFRF////////////AAAADQwNDQ4NDg4OEBAQGRkZGxsbHxscICAgIx8gJCQkKCUmKCgoKCkoKSkpKSopKicnKioqLS0tMDAwMS0uMjExMjMxNTY1Pj8+Pzc5Pzs8QEBAQ0RDUFBQUFFQWldYXV5dYGBgY19haGVmbmxscHBwcHJvdXJzdnN0eHV2eXx5en15fH98fX98fnt8f4F+gICAgoWChIGChIWEhIaEh4aHiYyJjIqLjoeLj4+PkY+PkZORkZSRk5iTlZmUlpmWmJaXmpiZnp2dnqCdn5aan5+fn6Oeoqaho6Gho6ijpqqmq7GqrKurrLKrrbOsrrOtrrStr6+vr7Kvr7Sur7WusLOvsLWvsLavsbewsrexsrixs7iytLmztLqztbW1tbq0tru1t7y2uL23ub64ub65urm5ur+5ur+6u8C6u8C7vMC8vMG7vMG8vcK8vcK9vsK9vsO+v7+/v8O+v8S+wMS/wMW/wMXAwcXAwsfCw8fCw8jDxMfDxMjDxMnExcnExcnFxsrFxsrGx8vHyMfHyMzHyMzIycjIyc3Iyc3Jys3Jy8rLy87Ky8/Ky8/LzM/LzNDLzNDMzdDMzdHMzdHNztHNztLOz8/Pz9PP0NPP0NTQ0dTQ0dTR0tXR0tXS09bS1tXV39/f4N/g4+Pj6Ofn7+/v8fHx////rrSdFQAAAAN0Uk5TAAoO5yEBUwAAA+FJREFUSMe1lo9301QUx6uXUmaf0qJ26iTrRoVinUzjQNR1gAyH6Lqx6XTDoVvXbU7qhA5m7CgYWaTDlLa6AiFsba3t+y+9Sdr8OvVMi7zTnLTf5H7ee9/73n11PA1PpDkcADPRWPwKt8YLG2I2n89m7gh8iluJz0dnpqe+HBsdHRn+7w3JyF1cvpbk05mCJG8Xi9uPpMLdNJ9cXV5UyBNjoyMtkR2A3B9Tt8SCfLTTqUzC2XlMvpcRbnA/IPmryYnzoyM9XuWBt8eI21FBcAy5Qk4KtxkGtQ1I+fRNbnk+evHC5NhJDwATDDIAnhNa1ImdFQTHr6WEvNyFPFeATSTYgAu/dl3/I31jNR6bnZ76eDf4yxRb2Q+71aiz/0JB8JXkrZzCdbFVqrUhRHuu54XkytLczAUvBFADUB6ARwnyqEp/t02prK9XdAXBHC9KyPWVqd6qPhyzlOG55dhsL/hLDTD1A3rYAy+dRu6eXaGKruA75wi2hbqigNd+LYSRW6XUSh64l05dXYruA1OPZfAOD3vhObL/ILDvQkRXynSdvPpaiJB+TVHAfEZuA9d9amlVF7TJd3nu+xgwyu8AqNOnDGAM8/obOLhQpWQotPYReZ/SQdKuKQpY2DwKwFJbGwI4VhCSlxchSFUnNC+CCgaV9RAKoZKh1J4le9FmQv5SFQW88aATXGhEws8wrHb7AANc0CndQS+ag5ERaieke0FXvnkxoYL/1MGi7FSmmVBXMDOu3gLK5J2PMjdXv2tmBX6pDdKSkq39DWXh3G1KI4QYVmS3AHCIPnCXE+4hHy6PcfeQ6sV2lufiL2jJ0wasp4p2k/Z2CEXeeqahDBLS1/c8+dBIXq4IkFAiWQ1QtxtnUMz/wsXfBj+1LzdUKn17dvXXzEqfMoFDNWO57QCe22dskKB5g7zXbVN+i0RKumKxonrfzaIVys2wYu7TVrd0PXn1rOnJC4JTFjF5c19/gnXLFwj6jJJz1rOjoi63LnBRfbmNM+qNunG5baSufhu9OPX5my2VTWEzrHrRbIP8dHl+dnpyrIVDBME/q1u6/E9bGmt9i2AsQmeaFaFwIb22soSlfuL8SEtgOCJKB5BsKkNltWyK7zzWMY3X4exDc6GvsljoX5FzR+BxwdCbf3jAdjTJv5/S39H2B2iXpmgXpWB7iVrB0JuVzpgP07CUO2WKqX+oiVL/benKImhgOIzHf7hx/A/IBdHsQ6Nsmruilo4afVFqB8PLn2U2H8hbxeKWjH9YvuiwxNiMaNhALZptCg5d7zh+Sczmclnx0vEOax6ajdjucSMPTcD/97/Cp54Q929ZZbgcR3o0hAAAAABJRU5ErkJggg=="/></a>
+            </div>
+
+          </div></div><div class="pure-u-1-3">
+          <div class="footer-list">
+            <h4>Other Writing</h4>
+            <ul>
+              <li><a href="https://doughellmann.com/"><i class="fa fa-pencil fa-lg"></i> Blog</a></li>
+              <li><a href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><i class="fa fa-book fa-lg"></i> The Python Standard Library By Example</a></li>
+            </ul>
+          </div>
+        </div><script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-3', 'pymotw.com');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

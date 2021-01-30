@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>argparse — Command-Line Option and Argument Parsing &mdash; PyMOTW 3</title>
+
+    <link rel="stylesheet" href="../_static/pure-min.css" type="text/css">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pymotw.css" type="text/css">
+
+    <link rel="shortcut icon" type="image/png" href="../_static/favicon.png">
+
+    <link rel="alternate" type="application/atom+xml"
+          title="Doug Hellmann"
+          href="http://feeds.doughellmann.com/DougHellmann" />
+    <link rel="alternate" type="application/atom+xml"
+          title="PyMOTW Updates"
+          href="http://feeds.doughellmann.com/PyMOTW" />
+
+    <meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+
+  </head>
+  <body>
+
+    <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
+      <a class="pure-menu-heading" href="../index.html"><img src="../_static/logo.png"> PyMOTW-3</a>
+
+      <ul id="top-menu">
+        <li class="pure-menu-selected"><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+        <li class="pure-menu-selected"><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a></a>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a></li>
+      </ul>
+
+    </div>
+
+    <div class="pure-menu pure-menu-open pure-menu-vertical" id="breadcrumbs-menu">
+      
+      <ul id="breadcrumbs">
+        <li class="pure-menu-selected"><a href="../frameworks.html"><i class="fa fa-arrow-circle-up"></i> Application Building Blocks</a></li>
+      </ul>
+    </div>
+
+    <div class="pure-g-r" id="content-container">
+
+      <div class="pure-u-3-4">
+        <div class="content">
+          
+  <div class="section" id="module-argparse">
+<span id="argparse-command-line-option-and-argument-parsing"></span><h1>argparse — Command-Line Option and Argument Parsing<a class="headerlink" href="#module-argparse" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Command-line option and argument parsing.</td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal notranslate"><span class="pre">argparse</span></code> module includes tools for building command line
+argument and option processors. It was added to Python 2.7 as a
+replacement for <code class="xref py py-mod docutils literal notranslate"><span class="pre">optparse</span></code>.  The implementation of
+<code class="docutils literal notranslate"><span class="pre">argparse</span></code> supports features that would not have been easy to add
+to <code class="xref py py-mod docutils literal notranslate"><span class="pre">optparse</span></code>, and that would have required
+backwards-incompatible API changes, so a new module was brought into
+the library instead. <code class="xref py py-mod docutils literal notranslate"><span class="pre">optparse</span></code> is now deprecated.</p>
+<div class="section" id="setting-up-a-parser">
+<h2>Setting Up a Parser<a class="headerlink" href="#setting-up-a-parser" title="Permalink to this headline">¶</a></h2>
+<p>The first step when using <code class="docutils literal notranslate"><span class="pre">argparse</span></code> is to create a parser object
+and tell it what arguments to expect.  The parser can then be used to
+process the command-line arguments when the program runs.  The
+constructor for the parser class (<code class="docutils literal notranslate"><span class="pre">ArgumentParser</span></code>) takes
+several arguments to set up the description used in the help text for
+the program and other global behaviors or settings.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;This is a PyMOTW sample program&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="defining-arguments">
+<h2>Defining Arguments<a class="headerlink" href="#defining-arguments" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">argparse</span></code> is a complete argument processing library. Arguments
+can trigger different actions, specified by the <code class="docutils literal notranslate"><span class="pre">action</span></code> argument to
+<code class="docutils literal notranslate"><span class="pre">add_argument()</span></code>. Supported actions include storing the argument
+(singly, or as part of a list), storing a constant value when the
+argument is encountered (including special handling for true/false
+values for Boolean switches), counting the number of times an argument
+is seen, and calling a callback to use custom processing instructions.</p>
+<p>The default action is to store the argument value. If a type is
+provided, the value is converted to that type before it is stored. If
+the <code class="docutils literal notranslate"><span class="pre">dest</span></code> argument is provided, the value is saved using that name
+when the command-line arguments are parsed.</p>
+</div>
+<div class="section" id="parsing-a-command-line">
+<h2>Parsing a Command-Line<a class="headerlink" href="#parsing-a-command-line" title="Permalink to this headline">¶</a></h2>
+<p>After all of the arguments are defined, parse the command-line by
+passing a sequence of argument strings to <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code>. By
+default, the arguments are taken from <code class="docutils literal notranslate"><span class="pre">sys.argv[1:]</span></code>, but any list
+of strings can be used. The options are processed using the GNU/POSIX
+syntax, so option and argument values can be mixed in the sequence.</p>
+<p>The return value from <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code> is a <code class="docutils literal notranslate"><span class="pre">Namespace</span></code>
+containing the arguments to the command. The object holds the argument
+values as attributes, so if the argument’s <code class="docutils literal notranslate"><span class="pre">dest</span></code> is set to
+<code class="docutils literal notranslate"><span class="pre">&quot;myoption&quot;</span></code>, the value is accessible as <code class="docutils literal notranslate"><span class="pre">args.myoption</span></code>.</p>
+</div>
+<div class="section" id="simple-examples">
+<h2>Simple Examples<a class="headerlink" href="#simple-examples" title="Permalink to this headline">¶</a></h2>
+<p>Here is a simple example with three different options: a Boolean option
+(<code class="docutils literal notranslate"><span class="pre">-a</span></code>), a simple string option (<code class="docutils literal notranslate"><span class="pre">-b</span></code>), and an integer option
+(<code class="docutils literal notranslate"><span class="pre">-c</span></code>).</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">argparse_short.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;Short sample app&#39;</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-a&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-b&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">([</span><span class="s1">&#39;-a&#39;</span><span class="p">,</span> <span class="s1">&#39;-bval&#39;</span><span class="p">,</span> <span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<p>There are a few ways to pass values to single character options. The
+previous example uses two different forms, <code class="docutils literal notranslate"><span class="pre">-bval</span></code> and <code class="docutils literal notranslate"><span class="pre">-c</span> <span class="pre">val</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_short.py
+
+Namespace(a=True, b=&#39;val&#39;, c=3)
+</pre></div>
+</div>
+<p>The type of the value associated with <code class="docutils literal notranslate"><span class="pre">'c'</span></code> in the output is an
+integer, since the <code class="docutils literal notranslate"><span class="pre">ArgumentParser</span></code> was told to convert the
+argument before storing it.</p>
+<p>“Long” option names, with more than a single character in their name,
+are handled in the same way.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">argparse_long.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Example with long option names&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--noarg&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+                    <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--witharg&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+                    <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;witharg&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--witharg2&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+                    <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;witharg2&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span>
+        <span class="p">[</span><span class="s1">&#39;--noarg&#39;</span><span class="p">,</span> <span class="s1">&#39;--witharg&#39;</span><span class="p">,</span> <span class="s1">&#39;val&#39;</span><span class="p">,</span> <span class="s1">&#39;--witharg2=3&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The results are similar.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_long.py
+
+Namespace(noarg=True, witharg=&#39;val&#39;, witharg2=3)
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">argparse</span></code> is a full command-line argument parser tool, and
+handles both optional and required arguments.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">argparse_arguments.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Example with nonoptional arguments&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;units&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<p>In this example, the “count” argument is an integer and the “units”
+argument is saved as a string.  If either is left off of the
+command-line, or the value given cannot be converted to the right
+type, an error is reported.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_arguments.py 3 inches
+
+Namespace(count=3, units=&#39;inches&#39;)
+
+$ python3 argparse_arguments.py some inches
+
+usage: argparse_arguments.py [-h] count units
+argparse_arguments.py: error: argument count: invalid int value:
+&#39;some&#39;
+
+$ python3 argparse_arguments.py
+
+usage: argparse_arguments.py [-h] count units
+argparse_arguments.py: error: the following arguments are
+required: count, units
+</pre></div>
+</div>
+<div class="section" id="argument-actions">
+<h3>Argument Actions<a class="headerlink" href="#argument-actions" title="Permalink to this headline">¶</a></h3>
+<p>Any of six built-in actions can be triggered when an argument is
+encountered.</p>
+<dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">store</span></code></dt>
+<dd>Save the value, after optionally converting it to a different type.
+This is the default action taken if none is specified explicitly.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">store_const</span></code></dt>
+<dd>Save a value defined as part of the argument specification, rather
+than a value that comes from the arguments being parsed.  This is
+typically used to implement command-line flags that are not Booleans.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">store_true</span></code> / <code class="docutils literal notranslate"><span class="pre">store_false</span></code></dt>
+<dd>Save the appropriate Boolean value.  These actions are used to
+implement Boolean switches.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">append</span></code></dt>
+<dd>Save the value to a list.  Multiple values are saved if the argument
+is repeated.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">append_const</span></code></dt>
+<dd>Save a value defined in the argument specification to a list.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">version</span></code></dt>
+<dd>Prints version details about the program and then exits.</dd>
+</dl>
+<p>This example program demonstrates each action type, with the minimum
+configuration needed for each to work.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">argparse_action.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-s&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store&#39;</span><span class="p">,</span>
+                    <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;simple_value&#39;</span><span class="p">,</span>
+                    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Store a simple value&#39;</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_const&#39;</span><span class="p">,</span>
+                    <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;constant_value&#39;</span><span class="p">,</span>
+                    <span class="n">const</span><span class="o">=</span><span class="s1">&#39;value-to-store&#39;</span><span class="p">,</span>
+                    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Store a constant value&#39;</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-t&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+                    <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;boolean_t&#39;</span><span class="p">,</span>
+                    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Set a switch to true&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-f&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_false&#39;</span><span class="p">,</span>
+                    <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;boolean_f&#39;</span><span class="p">,</span>
+                    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Set a switch to false&#39;</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-a&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;append&#39;</span><span class="p">,</span>
+                    <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;collection&#39;</span><span class="p">,</span>
+                    <span class="n">default</span><span class="o">=</span><span class="p">[],</span>
+                    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Add repeated values to a list&#39;</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-A&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;append_const&#39;</span><span class="p">,</span>
+                    <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;const_collection&#39;</span><span class="p">,</span>
+                    <span class="n">const</span><span class="o">=</span><span class="s1">&#39;value-1-to-append&#39;</span><span class="p">,</span>
+                    <span class="n">default</span><span class="o">=</span><span class="p">[],</span>
+                    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Add different values to list&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-B&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;append_const&#39;</span><span class="p">,</span>
+                    <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;const_collection&#39;</span><span class="p">,</span>
+                    <span class="n">const</span><span class="o">=</span><span class="s1">&#39;value-2-to-append&#39;</span><span class="p">,</span>
+                    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Add different values to list&#39;</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--version&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span>
+                    <span class="n">version</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(prog)s</span><span class="s1"> 1.0&#39;</span><span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;simple_value     = </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">simple_value</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;constant_value   = </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">constant_value</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;boolean_t        = </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">boolean_t</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;boolean_f        = </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">boolean_f</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;collection       = </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">collection</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;const_collection = </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">const_collection</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">-t</span></code> and <code class="docutils literal notranslate"><span class="pre">-f</span></code> options are configured to modify different
+option values, each storing either True or False.  The <code class="docutils literal notranslate"><span class="pre">dest</span></code> values
+for <code class="docutils literal notranslate"><span class="pre">-A</span></code> and <code class="docutils literal notranslate"><span class="pre">-B</span></code> are the same so that their constant values are
+appended to the same list.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_action.py -h
+
+usage: argparse_action.py [-h] [-s SIMPLE_VALUE] [-c] [-t] [-f]
+                          [-a COLLECTION] [-A] [-B] [--version]
+
+optional arguments:
+  -h, --help       show this help message and exit
+  -s SIMPLE_VALUE  Store a simple value
+  -c               Store a constant value
+  -t               Set a switch to true
+  -f               Set a switch to false
+  -a COLLECTION    Add repeated values to a list
+  -A               Add different values to list
+  -B               Add different values to list
+  --version        show program&#39;s version number and exit
+
+$ python3 argparse_action.py -s value
+
+simple_value     = &#39;value&#39;
+constant_value   = None
+boolean_t        = False
+boolean_f        = True
+collection       = []
+const_collection = []
+
+$ python3 argparse_action.py -c
+
+simple_value     = None
+constant_value   = &#39;value-to-store&#39;
+boolean_t        = False
+boolean_f        = True
+collection       = []
+const_collection = []
+
+$ python3 argparse_action.py -t
+
+simple_value     = None
+constant_value   = None
+boolean_t        = True
+boolean_f        = True
+collection       = []
+const_collection = []
+
+$ python3 argparse_action.py -f
+
+simple_value     = None
+constant_value   = None
+boolean_t        = False
+boolean_f        = False
+collection       = []
+const_collection = []
+
+$ python3 argparse_action.py -a one -a two -a three
+
+simple_value     = None
+constant_value   = None
+boolean_t        = False
+boolean_f        = True
+collection       = [&#39;one&#39;, &#39;two&#39;, &#39;three&#39;]
+const_collection = []
+
+$ python3 argparse_action.py -B -A
+
+simple_value     = None
+constant_value   = None
+boolean_t        = False
+boolean_f        = True
+collection       = []
+const_collection = [&#39;value-2-to-append&#39;, &#39;value-1-to-append&#39;]
+
+$ python3 argparse_action.py --version
+
+argparse_action.py 1.0
+</pre></div>
+</div>
+</div>
+<div class="section" id="option-prefixes">
+<h3>Option Prefixes<a class="headerlink" href="#option-prefixes" title="Permalink to this headline">¶</a></h3>
+<p>The default syntax for options is based on the Unix convention of
+signifying command-line switches using a dash prefix (“<code class="docutils literal notranslate"><span class="pre">-</span></code>“).
+<code class="docutils literal notranslate"><span class="pre">argparse</span></code> supports other prefixes, so a program can conform to
+the local platform default (i.e., use “<code class="docutils literal notranslate"><span class="pre">/</span></code>” on Windows) or follow a
+different convention.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">argparse_prefix_chars.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Change the option prefix characters&#39;</span><span class="p">,</span>
+    <span class="n">prefix_chars</span><span class="o">=</span><span class="s1">&#39;-+/&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-a&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_false&quot;</span><span class="p">,</span>
+                    <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Turn A off&#39;</span><span class="p">,</span>
+                    <span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;+a&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+                    <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Turn A on&#39;</span><span class="p">,</span>
+                    <span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;//noarg&#39;</span><span class="p">,</span> <span class="s1">&#39;++noarg&#39;</span><span class="p">,</span>
+                    <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+                    <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<p>Set the <code class="docutils literal notranslate"><span class="pre">prefix_chars</span></code> parameter for the <code class="docutils literal notranslate"><span class="pre">ArgumentParser</span></code> to a
+string containing all of the characters that should be allowed to
+signify options.  It is important to understand that although
+<code class="docutils literal notranslate"><span class="pre">prefix_chars</span></code> establishes the allowed switch characters, the
+individual argument definitions specify the syntax for a given switch.
+This gives explicit control over whether options using different
+prefixes are aliases (such as might be the case for
+platform-independent command-line syntax) or alternatives (e.g., using
+“<code class="docutils literal notranslate"><span class="pre">+</span></code>” to indicate turning a switch on and “<code class="docutils literal notranslate"><span class="pre">-</span></code>” to turn it off).
+In the previous example, <code class="docutils literal notranslate"><span class="pre">+a</span></code> and <code class="docutils literal notranslate"><span class="pre">-a</span></code> are separate arguments, and
+<code class="docutils literal notranslate"><span class="pre">//noarg</span></code> can also be given as <code class="docutils literal notranslate"><span class="pre">++noarg</span></code>, but not <code class="docutils literal notranslate"><span class="pre">--noarg</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_prefix_chars.py -h
+
+usage: argparse_prefix_chars.py [-h] [-a] [+a] [//noarg]
+
+Change the option prefix characters
+
+optional arguments:
+  -h, --help        show this help message and exit
+  -a                Turn A off
+  +a                Turn A on
+  //noarg, ++noarg
+
+$ python3 argparse_prefix_chars.py +a
+
+Namespace(a=True, noarg=False)
+
+$ python3 argparse_prefix_chars.py -a
+
+Namespace(a=False, noarg=False)
+
+$ python3 argparse_prefix_chars.py //noarg
+
+Namespace(a=None, noarg=True)
+
+$ python3 argparse_prefix_chars.py ++noarg
+
+Namespace(a=None, noarg=True)
+
+$ python3 argparse_prefix_chars.py --noarg
+
+usage: argparse_prefix_chars.py [-h] [-a] [+a] [//noarg]
+argparse_prefix_chars.py: error: unrecognized arguments: --noarg
+</pre></div>
+</div>
+</div>
+<div class="section" id="sources-of-arguments">
+<h3>Sources of Arguments<a class="headerlink" href="#sources-of-arguments" title="Permalink to this headline">¶</a></h3>
+<p>In the examples so far, the list of arguments given to the parser has
+come from a list passed in explicitly, or were taken implicitly from
+<code class="docutils literal notranslate"><span class="pre">sys.argv</span></code>.  Passing the list explicitly is useful
+when using <code class="docutils literal notranslate"><span class="pre">argparse</span></code> to process command-line-like instructions
+that do not come from the command-line (such as in a configuration
+file).</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">argparse_with_shlex.py</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">from</span> <span class="nn">configparser</span> <span class="k">import</span> <span class="n">ConfigParser</span>
+<span class="kn">import</span> <span class="nn">shlex</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;Short sample app&#39;</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-a&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-b&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+<span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;argparse_with_shlex.ini&#39;</span><span class="p">)</span>
+<span class="n">config_value</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cli&#39;</span><span class="p">,</span> <span class="s1">&#39;options&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Config  :&#39;</span><span class="p">,</span> <span class="n">config_value</span><span class="p">)</span>
+
+<span class="n">argument_list</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">config_value</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Arg List:&#39;</span><span class="p">,</span> <span class="n">argument_list</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Results :&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">argument_list</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>This example uses <a class="reference internal" href="../configparser/index.html#module-configparser" title="configparser: Read/write configuration files similar to Windows INI files"><code class="xref py py-mod docutils literal notranslate"><span class="pre">configparser</span></code></a> to read a configuration file.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">cli</span><span class="p">]</span>
+<span class="n">options</span> <span class="o">=</span> <span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">b</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="../shlex/index.html#module-shlex" title="shlex: Lexical analysis of shell-style syntaxes."><code class="xref py py-mod docutils literal notranslate"><span class="pre">shlex</span></code></a> makes it easy to split the string stored in the
+configuration file.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_with_shlex.py
+
+Config  : -a -b 2
+Arg List: [&#39;-a&#39;, &#39;-b&#39;, &#39;2&#39;]
+Results : Namespace(a=True, b=&#39;2&#39;, c=None)
+</pre></div>
+</div>
+<p>An alternative to processing the configuration file in application
+code is to tell <code class="docutils literal notranslate"><span class="pre">argparse</span></code> how to recognize an argument that
+specifies an input file containing a set of arguments to be processed
+using <code class="docutils literal notranslate"><span class="pre">fromfile_prefix_chars</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">argparse_fromfile_prefix_chars.py</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">shlex</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;Short sample app&#39;</span><span class="p">,</span>
+                                 <span class="n">fromfile_prefix_chars</span><span class="o">=</span><span class="s1">&#39;@&#39;</span><span class="p">,</span>
+                                 <span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-a&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-b&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">([</span><span class="s1">&#39;@argparse_fromfile_prefix_chars.txt&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<p>This example stops when it finds an argument prefixed with <code class="docutils literal notranslate"><span class="pre">&#64;</span></code>, then
+reads the named file to find more arguments.  The file should contain
+one argument per line, as in this example.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">argparse_fromfile_prefix_chars.txt</span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">a</span>
+<span class="o">-</span><span class="n">b</span>
+<span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+<p>The output produced when processing <code class="docutils literal notranslate"><span class="pre">argparse_from_prefix_chars.txt</span></code>
+follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_fromfile_prefix_chars.py
+
+Namespace(a=True, b=&#39;2&#39;, c=None)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="help-output">
+<h2>Help Output<a class="headerlink" href="#help-output" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="automatically-generated-help">
+<h3>Automatically Generated Help<a class="headerlink" href="#automatically-generated-help" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">argparse</span></code> will automatically add options to generate help, if
+configured to do so.  The <code class="docutils literal notranslate"><span class="pre">add_help</span></code> argument to
+<code class="docutils literal notranslate"><span class="pre">ArgumentParser</span></code> controls the help-related options.</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">argparse_with_help.py</span><a class="headerlink" href="#id9" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">add_help</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-a&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-b&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<p>The help options (<code class="docutils literal notranslate"><span class="pre">-h</span></code> and <code class="docutils literal notranslate"><span class="pre">--help</span></code>) are added by default, but can
+be disabled by setting <code class="docutils literal notranslate"><span class="pre">add_help</span></code> to false.</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">argparse_without_help.py</span><a class="headerlink" href="#id10" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">add_help</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-a&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-b&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<p>Although <code class="docutils literal notranslate"><span class="pre">-h</span></code> and <code class="docutils literal notranslate"><span class="pre">--help</span></code> are defacto standard option names for
+requesting help, some applications or uses of <code class="docutils literal notranslate"><span class="pre">argparse</span></code> either
+do not need to provide help or need to use those option names for
+other purposes.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_with_help.py -h
+
+usage: argparse_with_help.py [-h] [-a] [-b B] [-c C]
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -a
+  -b B
+  -c C
+
+$ python3 argparse_without_help.py -h
+
+usage: argparse_without_help.py [-a] [-b B] [-c C]
+argparse_without_help.py: error: unrecognized arguments: -h
+</pre></div>
+</div>
+</div>
+<div class="section" id="customizing-help">
+<h3>Customizing Help<a class="headerlink" href="#customizing-help" title="Permalink to this headline">¶</a></h3>
+<p>For applications that need to handle the help output directly, some of
+the utility methods of <code class="docutils literal notranslate"><span class="pre">ArgumentParser</span></code> will be useful in
+creating <a class="reference internal" href="#argparse-custom-actions"><span class="std std-ref">custom actions</span></a> to print help
+with extra information.</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">argparse_custom_help.py</span><a class="headerlink" href="#id11" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">add_help</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-a&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-b&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;print_usage output:&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">print_usage</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;print_help output:&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">print_usage()</span></code> prints the short usage message for an argument
+parser, and <code class="xref py py-meth docutils literal notranslate"><span class="pre">print_help()</span></code> prints the full help output.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_custom_help.py
+
+print_usage output:
+usage: argparse_custom_help.py [-h] [-a] [-b B] [-c C]
+
+print_help output:
+usage: argparse_custom_help.py [-h] [-a] [-b B] [-c C]
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -a
+  -b B
+  -c C
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">ArgumentParser</span></code> uses a formatter class to control the
+appearance of the help output. To change the class, pass
+<code class="docutils literal notranslate"><span class="pre">formatter_class</span></code> when instantiating the
+<code class="docutils literal notranslate"><span class="pre">ArgumentParser</span></code>.</p>
+<p>For example, the <code class="docutils literal notranslate"><span class="pre">RawDescriptionHelpFormatter</span></code> bypasses the
+line wrapping provided by the default formatter.</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-text">argparse_raw_description_help_formatter.py</span><a class="headerlink" href="#id12" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+    <span class="n">add_help</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">RawDescriptionHelpFormatter</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    description</span>
+<span class="s2">        not</span>
+<span class="s2">           wrapped&quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="n">epilog</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    epilog</span>
+<span class="s2">      not</span>
+<span class="s2">         wrapped&quot;&quot;&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+    <span class="s1">&#39;-a&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;argument</span>
+<span class="s2">    help is</span>
+<span class="s2">    wrapped</span>
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>All text in the description and epilog of the command will be left
+unchanged.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_raw_description_help_formatter.py
+
+usage: argparse_raw_description_help_formatter.py [-h] [-a]
+
+    description
+        not
+           wrapped
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -a          argument help is wrapped
+
+    epilog
+      not
+         wrapped
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">RawTextHelpFormatter</span></code> treats all help text as pre-formatted.</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-text">argparse_raw_text_help_formatter.py</span><a class="headerlink" href="#id13" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+    <span class="n">add_help</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">RawTextHelpFormatter</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    description</span>
+<span class="s2">        not</span>
+<span class="s2">           wrapped&quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="n">epilog</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    epilog</span>
+<span class="s2">      not</span>
+<span class="s2">         wrapped&quot;&quot;&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+    <span class="s1">&#39;-a&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;argument</span>
+<span class="s2">    help is not</span>
+<span class="s2">    wrapped</span>
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>The help text for the <code class="docutils literal notranslate"><span class="pre">-a</span></code> argument is no longer wrapped neatly.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_raw_text_help_formatter.py
+
+usage: argparse_raw_text_help_formatter.py [-h] [-a]
+
+    description
+        not
+           wrapped
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -a          argument
+                  help is not
+                  wrapped
+
+
+    epilog
+      not
+         wrapped
+</pre></div>
+</div>
+<p>Raw formatters may be useful for applications with examples in the
+description or epilog, where changing the format of the text may make
+the examples invalid.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">MetavarTypeHelpFormatter</span></code> prints the name of the type for
+each option, instead of the destination variable, which can be useful
+for applications with a lot of options of different types.</p>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-text">argparse_metavar_type_help_formatter.py</span><a class="headerlink" href="#id14" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+    <span class="n">add_help</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">MetavarTypeHelpFormatter</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-i&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;notshown1&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-f&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;notshown2&#39;</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>Rather than display the value of <code class="docutils literal notranslate"><span class="pre">dest</span></code>, the name of the type
+associated with the option is printed.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_metavar_type_help_formatter.py
+
+usage: argparse_metavar_type_help_formatter.py [-h] [-i int] [-f
+ float]
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -i int
+  -f float
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="parser-organization">
+<h2>Parser Organization<a class="headerlink" href="#parser-organization" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">argparse</span></code> includes several features for organizing argument
+parsers, to make implementation easier or to improve the usability of
+the help output.</p>
+<div class="section" id="sharing-parser-rules">
+<h3>Sharing Parser Rules<a class="headerlink" href="#sharing-parser-rules" title="Permalink to this headline">¶</a></h3>
+<p>Programmers commonly need to implement a suite of command-line tools
+that all take a set of arguments, and then specialize in some way.
+For example, if the programs all need to authenticate the user before
+taking any real action, they would all need to support <code class="docutils literal notranslate"><span class="pre">--user</span></code> and
+<code class="docutils literal notranslate"><span class="pre">--password</span></code> options.  Rather than add the options explicitly to
+every <code class="docutils literal notranslate"><span class="pre">ArgumentParser</span></code>, it is possible to define a parent
+parser with the shared options, and then have the parsers for the
+individual programs inherit from its options.</p>
+<p>The first step is to set up the parser with the shared argument
+definitions.  Since each subsequent user of the parent parser is going
+to try to add the same help options, causing an exception, automatic
+help generation is turned off in the base parser.</p>
+<div class="literal-block-wrapper docutils container" id="id15">
+<div class="code-block-caption"><span class="caption-text">argparse_parent_base.py</span><a class="headerlink" href="#id15" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">add_help</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--user&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--password&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Next, create another parser with <code class="docutils literal notranslate"><span class="pre">parents</span></code> set:</p>
+<div class="literal-block-wrapper docutils container" id="id16">
+<div class="code-block-caption"><span class="caption-text">argparse_uses_parent.py</span><a class="headerlink" href="#id16" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">argparse_parent_base</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+    <span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">argparse_parent_base</span><span class="o">.</span><span class="n">parser</span><span class="p">],</span>
+<span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--local-arg&#39;</span><span class="p">,</span>
+                    <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+                    <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<p>And the resulting program takes all three options:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_uses_parent.py -h
+
+usage: argparse_uses_parent.py [-h] [--user USER]
+                               [--password PASSWORD]
+                               [--local-arg]
+
+optional arguments:
+  -h, --help           show this help message and exit
+  --user USER
+  --password PASSWORD
+  --local-arg
+</pre></div>
+</div>
+</div>
+<div class="section" id="conflicting-options">
+<h3>Conflicting Options<a class="headerlink" href="#conflicting-options" title="Permalink to this headline">¶</a></h3>
+<p>The previous example pointed out that adding two argument handlers to
+a parser using the same argument name causes an exception.  The
+conflict resolution behavior can be changed by passing a
+<code class="docutils literal notranslate"><span class="pre">conflict_handler</span></code>.  The two built-in handlers are <code class="docutils literal notranslate"><span class="pre">error</span></code> (the
+default), and <code class="docutils literal notranslate"><span class="pre">resolve</span></code>, which picks a handler based on the order
+they are added.</p>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-text">argparse_conflict_handler_resolve.py</span><a class="headerlink" href="#id17" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">conflict_handler</span><span class="o">=</span><span class="s1">&#39;resolve&#39;</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-a&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-b&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Short alone&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--long-b&#39;</span><span class="p">,</span> <span class="s1">&#39;-b&#39;</span><span class="p">,</span>
+                    <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+                    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Long and short together&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">([</span><span class="s1">&#39;-h&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<p>Since the last handler with a given argument name is used, in this
+example, the stand-alone option <code class="docutils literal notranslate"><span class="pre">-b</span></code> is masked by the alias for
+<code class="docutils literal notranslate"><span class="pre">--long-b</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_conflict_handler_resolve.py
+
+usage: argparse_conflict_handler_resolve.py [-h] [-a A]
+[--long-b LONG_B]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -a A
+  --long-b LONG_B, -b LONG_B
+                        Long and short together
+</pre></div>
+</div>
+<p>Switching the order of the calls to <code class="docutils literal notranslate"><span class="pre">add_argument()</span></code> unmasks the
+stand-alone option:</p>
+<div class="literal-block-wrapper docutils container" id="id18">
+<div class="code-block-caption"><span class="caption-text">argparse_conflict_handler_resolve2.py</span><a class="headerlink" href="#id18" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">conflict_handler</span><span class="o">=</span><span class="s1">&#39;resolve&#39;</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-a&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--long-b&#39;</span><span class="p">,</span> <span class="s1">&#39;-b&#39;</span><span class="p">,</span>
+                    <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+                    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Long and short together&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-b&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Short alone&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">([</span><span class="s1">&#39;-h&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<p>Now both options can be used together.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_conflict_handler_resolve2.py
+
+usage: argparse_conflict_handler_resolve2.py [-h] [-a A]
+                                             [--long-b LONG_B]
+                                             [-b B]
+
+optional arguments:
+  -h, --help       show this help message and exit
+  -a A
+  --long-b LONG_B  Long and short together
+  -b B             Short alone
+</pre></div>
+</div>
+</div>
+<div class="section" id="argument-groups">
+<h3>Argument Groups<a class="headerlink" href="#argument-groups" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">argparse</span></code> combines the argument definitions into “groups.”  By
+default, it uses two groups, with one for options and another for
+required position-based arguments.</p>
+<div class="literal-block-wrapper docutils container" id="id19">
+<div class="code-block-caption"><span class="caption-text">argparse_default_grouping.py</span><a class="headerlink" href="#id19" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;Short sample app&#39;</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--optional&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+                    <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;positional&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<p>The grouping is reflected in the separate “positional arguments” and
+“optional arguments” sections of the help output.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_default_grouping.py -h
+
+usage: argparse_default_grouping.py [-h] [--optional] positional
+
+Short sample app
+
+positional arguments:
+  positional
+
+optional arguments:
+  -h, --help  show this help message and exit
+  --optional
+</pre></div>
+</div>
+<p>The grouping can be adjusted to make it more logical in the help, so
+that related options or values are documented together.  The
+shared-option example from earlier could be written using custom
+grouping so that the authentication options are shown together in the
+help.</p>
+<p>Create the “authentication” group with <code class="docutils literal notranslate"><span class="pre">add_argument_group()</span></code> and
+then add each of the authentication-related options to the group,
+instead of the base parser.</p>
+<div class="literal-block-wrapper docutils container" id="id20">
+<div class="code-block-caption"><span class="caption-text">argparse_parent_with_group.py</span><a class="headerlink" href="#id20" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">add_help</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">group</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s1">&#39;authentication&#39;</span><span class="p">)</span>
+
+<span class="n">group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--user&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">)</span>
+<span class="n">group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--password&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The program using the group-based parent lists it in the <code class="docutils literal notranslate"><span class="pre">parents</span></code>
+value, just as before.</p>
+<div class="literal-block-wrapper docutils container" id="id21">
+<div class="code-block-caption"><span class="caption-text">argparse_uses_parent_with_group.py</span><a class="headerlink" href="#id21" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">argparse_parent_with_group</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+    <span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">argparse_parent_with_group</span><span class="o">.</span><span class="n">parser</span><span class="p">],</span>
+<span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--local-arg&#39;</span><span class="p">,</span>
+                    <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+                    <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<p>The help output now shows the authentication options together.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_uses_parent_with_group.py -h
+
+usage: argparse_uses_parent_with_group.py [-h] [--user USER]
+                                          [--password PASSWORD]
+                                          [--local-arg]
+
+optional arguments:
+  -h, --help           show this help message and exit
+  --local-arg
+
+authentication:
+  --user USER
+  --password PASSWORD
+</pre></div>
+</div>
+</div>
+<div class="section" id="mutually-exclusive-options">
+<h3>Mutually Exclusive Options<a class="headerlink" href="#mutually-exclusive-options" title="Permalink to this headline">¶</a></h3>
+<p>Defining mutually exclusive options is a special case of the option
+grouping feature, and uses <code class="docutils literal notranslate"><span class="pre">add_mutually_exclusive_group()</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">add_argument_group()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id22">
+<div class="code-block-caption"><span class="caption-text">argparse_mutually_exclusive.py</span><a class="headerlink" href="#id22" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+
+<span class="n">group</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_mutually_exclusive_group</span><span class="p">()</span>
+<span class="n">group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-a&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">)</span>
+<span class="n">group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-b&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">argparse</span></code> enforces the mutual exclusivity, so that only one of
+the options from the group can be given.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_mutually_exclusive.py -h
+
+usage: argparse_mutually_exclusive.py [-h] [-a | -b]
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -a
+  -b
+
+$ python3 argparse_mutually_exclusive.py -a
+
+Namespace(a=True, b=False)
+
+$ python3 argparse_mutually_exclusive.py -b
+
+Namespace(a=False, b=True)
+
+$ python3 argparse_mutually_exclusive.py -a -b
+
+usage: argparse_mutually_exclusive.py [-h] [-a | -b]
+argparse_mutually_exclusive.py: error: argument -b: not allowed
+with argument -a
+</pre></div>
+</div>
+</div>
+<div class="section" id="nesting-parsers">
+<h3>Nesting Parsers<a class="headerlink" href="#nesting-parsers" title="Permalink to this headline">¶</a></h3>
+<p>The parent parser approach described earlier is one way to share
+options between related commands.  An alternate approach is to combine
+the commands into a single program, and use sub-parsers to handle each
+portion of the command-line.  The result works in the way <code class="docutils literal notranslate"><span class="pre">svn</span></code>,
+<code class="docutils literal notranslate"><span class="pre">hg</span></code>, and other programs with multiple command-line actions, or
+sub-commands, does.</p>
+<p>A program to work with directories on the file system might define
+commands for creating, deleting, and listing the contents of a
+directory.</p>
+<div class="literal-block-wrapper docutils container" id="id23">
+<div class="code-block-caption"><span class="caption-text">argparse_subparsers.py</span><a class="headerlink" href="#id23" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+
+<span class="n">subparsers</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s1">&#39;commands&#39;</span><span class="p">)</span>
+
+<span class="c1"># A list command</span>
+<span class="n">list_parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+    <span class="s1">&#39;list&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;List contents&#39;</span><span class="p">)</span>
+<span class="n">list_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+    <span class="s1">&#39;dirname&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store&#39;</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Directory to list&#39;</span><span class="p">)</span>
+
+<span class="c1"># A create command</span>
+<span class="n">create_parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+    <span class="s1">&#39;create&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Create a directory&#39;</span><span class="p">)</span>
+<span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+    <span class="s1">&#39;dirname&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store&#39;</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;New directory to create&#39;</span><span class="p">)</span>
+<span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+    <span class="s1">&#39;--read-only&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Set permissions to prevent writing to the directory&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># A delete command</span>
+<span class="n">delete_parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+    <span class="s1">&#39;delete&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Remove a directory&#39;</span><span class="p">)</span>
+<span class="n">delete_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+    <span class="s1">&#39;dirname&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The directory to remove&#39;</span><span class="p">)</span>
+<span class="n">delete_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+    <span class="s1">&#39;--recursive&#39;</span><span class="p">,</span> <span class="s1">&#39;-r&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Remove the contents of the directory, too&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<p>The help output shows the named sub-parsers as “commands” that can be
+specified on the command-line as positional arguments.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_subparsers.py -h
+
+usage: argparse_subparsers.py [-h] {list,create,delete} ...
+
+positional arguments:
+  {list,create,delete}  commands
+    list                List contents
+    create              Create a directory
+    delete              Remove a directory
+
+optional arguments:
+  -h, --help            show this help message and exit
+</pre></div>
+</div>
+<p>Each sub-parser also has its own help, describing the arguments and
+options for that command.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_subparsers.py create -h
+
+usage: argparse_subparsers.py create [-h] [--read-only] dirname
+
+positional arguments:
+  dirname      New directory to create
+
+optional arguments:
+  -h, --help   show this help message and exit
+  --read-only  Set permissions to prevent writing to the directo
+ry
+</pre></div>
+</div>
+<p>And when the arguments are parsed, the <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object
+returned by <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code> includes only the values related to the
+command specified.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_subparsers.py delete -r foo
+
+Namespace(dirname=&#39;foo&#39;, recursive=True)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="advanced-argument-processing">
+<h2>Advanced Argument Processing<a class="headerlink" href="#advanced-argument-processing" title="Permalink to this headline">¶</a></h2>
+<p>The examples so far have shown simple Boolean flags, options with
+string or numerical arguments, and positional arguments.
+<code class="docutils literal notranslate"><span class="pre">argparse</span></code> also supports sophisticated argument specification for
+variable-length argument list, enumerations, and constant values.</p>
+<div class="section" id="variable-argument-lists">
+<h3>Variable Argument Lists<a class="headerlink" href="#variable-argument-lists" title="Permalink to this headline">¶</a></h3>
+<p>A single argument definition can be configured to consume multiple
+arguments on the command-line being parsed.  Set <code class="docutils literal notranslate"><span class="pre">nargs</span></code> to one of the
+flag values from the table below, based on the number of required or expected arguments.</p>
+<table border="1" class="docutils" id="id24">
+<caption><span class="caption-text">Flags for Variable Argument Definitions in argparse</span><a class="headerlink" href="#id24" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="13%" />
+<col width="87%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Value</th>
+<th class="head">Meaning</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">N</span></code></td>
+<td>The absolute number of arguments (e.g., <code class="docutils literal notranslate"><span class="pre">3</span></code>).</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">?</span></code></td>
+<td>0 or 1 arguments</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">*</span></code></td>
+<td>0 or all arguments</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">+</span></code></td>
+<td>All, and at least one, argument</td>
+</tr>
+</tbody>
+</table>
+<div class="literal-block-wrapper docutils container" id="id25">
+<div class="code-block-caption"><span class="caption-text">argparse_nargs.py</span><a class="headerlink" href="#id25" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--three&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--optional&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--all&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--one-or-more&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<p>The parser enforces the argument count instructions and generates an
+accurate syntax diagram as part of the command help text.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_nargs.py -h
+
+usage: argparse_nargs.py [-h] [--three THREE THREE THREE]
+                [--optional [OPTIONAL]]
+                [--all [ALL [ALL ...]]]
+                [--one-or-more ONE_OR_MORE [ONE_OR_MORE ...]]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --three THREE THREE THREE
+  --optional [OPTIONAL]
+  --all [ALL [ALL ...]]
+  --one-or-more ONE_OR_MORE [ONE_OR_MORE ...]
+
+$ python3 argparse_nargs.py
+
+Namespace(all=None, one_or_more=None, optional=None, three=None)
+
+$ python3 argparse_nargs.py --three
+
+usage: argparse_nargs.py [-h] [--three THREE THREE THREE]
+                [--optional [OPTIONAL]]
+                [--all [ALL [ALL ...]]]
+                [--one-or-more ONE_OR_MORE [ONE_OR_MORE ...]]
+argparse_nargs.py: error: argument --three: expected 3
+argument(s)
+
+$ python3 argparse_nargs.py --three a b c
+
+Namespace(all=None, one_or_more=None, optional=None,
+three=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;])
+
+$ python3 argparse_nargs.py --optional
+
+Namespace(all=None, one_or_more=None, optional=None, three=None)
+
+$ python3 argparse_nargs.py --optional with_value
+
+Namespace(all=None, one_or_more=None, optional=&#39;with_value&#39;,
+three=None)
+
+$ python3 argparse_nargs.py --all with multiple values
+
+Namespace(all=[&#39;with&#39;, &#39;multiple&#39;, &#39;values&#39;], one_or_more=None,
+optional=None, three=None)
+
+$ python3 argparse_nargs.py --one-or-more with_value
+
+Namespace(all=None, one_or_more=[&#39;with_value&#39;], optional=None,
+three=None)
+
+$ python3 argparse_nargs.py --one-or-more with multiple values
+
+Namespace(all=None, one_or_more=[&#39;with&#39;, &#39;multiple&#39;, &#39;values&#39;],
+optional=None, three=None)
+
+$ python3 argparse_nargs.py --one-or-more
+
+usage: argparse_nargs.py [-h] [--three THREE THREE THREE]
+                [--optional [OPTIONAL]]
+                [--all [ALL [ALL ...]]]
+                [--one-or-more ONE_OR_MORE [ONE_OR_MORE ...]]
+argparse_nargs.py: error: argument --one-or-more: expected
+at least one argument
+</pre></div>
+</div>
+</div>
+<div class="section" id="argument-types">
+<h3>Argument Types<a class="headerlink" href="#argument-types" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">argparse</span></code> treats all argument values as strings, unless it is
+told to convert the string to another type.  The <code class="docutils literal notranslate"><span class="pre">type</span></code> parameter to
+<code class="docutils literal notranslate"><span class="pre">add_argument()</span></code> defines a converter function, which is used by the
+<code class="docutils literal notranslate"><span class="pre">ArgumentParser</span></code> to transform the argument value from a string
+to some other type.</p>
+<div class="literal-block-wrapper docutils container" id="id26">
+<div class="code-block-caption"><span class="caption-text">argparse_type.py</span><a class="headerlink" href="#id26" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-i&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-f&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--file&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">open</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">())</span>
+<span class="k">except</span> <span class="ne">IOError</span> <span class="k">as</span> <span class="n">msg</span><span class="p">:</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Any callable that takes a single string argument can be passed as
+<code class="docutils literal notranslate"><span class="pre">type</span></code>, including built-in types like <code class="docutils literal notranslate"><span class="pre">int</span></code> and <code class="docutils literal notranslate"><span class="pre">float</span></code> or even
+<code class="docutils literal notranslate"><span class="pre">open()</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_type.py -i 1
+
+Namespace(f=None, file=None, i=1)
+
+$ python3 argparse_type.py -f 3.14
+
+Namespace(f=3.14, file=None, i=None)
+
+$ python3 argparse_type.py --file argparse_type.py
+
+Namespace(f=None, file=&lt;_io.TextIOWrapper
+name=&#39;argparse_type.py&#39; mode=&#39;r&#39; encoding=&#39;UTF-8&#39;&gt;, i=None)
+</pre></div>
+</div>
+<p>If the type conversion fails, <code class="docutils literal notranslate"><span class="pre">argparse</span></code> raises an exception.
+<code class="docutils literal notranslate"><span class="pre">TypeError</span></code> and <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> exceptions are trapped
+automatically and converted to a simple error message for the user.
+Other exceptions, such as the <code class="docutils literal notranslate"><span class="pre">IOError</span></code> in the next example
+where the input file does not exist, must be handled by the caller.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_type.py -i a
+
+usage: argparse_type.py [-h] [-i I] [-f F] [--file FILE]
+argparse_type.py: error: argument -i: invalid int value: &#39;a&#39;
+
+$ python3 argparse_type.py -f 3.14.15
+
+usage: argparse_type.py [-h] [-i I] [-f F] [--file FILE]
+argparse_type.py: error: argument -f: invalid float value:
+&#39;3.14.15&#39;
+
+$ python3 argparse_type.py --file does_not_exist.txt
+
+usage: argparse_type.py [-h] [-i I] [-f F] [--file FILE]
+argparse_type.py: error: [Errno 2] No such file or directory:
+&#39;does_not_exist.txt&#39;
+</pre></div>
+</div>
+<p>To limit an input argument to a value within a pre-defined set, use
+the <code class="docutils literal notranslate"><span class="pre">choices</span></code> parameter.</p>
+<div class="literal-block-wrapper docutils container" id="id27">
+<div class="code-block-caption"><span class="caption-text">argparse_choices.py</span><a class="headerlink" href="#id27" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+    <span class="s1">&#39;--mode&#39;</span><span class="p">,</span>
+    <span class="n">choices</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;read-only&#39;</span><span class="p">,</span> <span class="s1">&#39;read-write&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<p>If the argument to <code class="docutils literal notranslate"><span class="pre">--mode</span></code> is not one of the allowed values, an
+error is generated and processing stops.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_choices.py -h
+
+usage: argparse_choices.py [-h] [--mode {read-only,read-write}]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --mode {read-only,read-write}
+
+$ python3 argparse_choices.py --mode read-only
+
+Namespace(mode=&#39;read-only&#39;)
+
+$ python3 argparse_choices.py --mode invalid
+
+usage: argparse_choices.py [-h] [--mode {read-only,read-write}]
+argparse_choices.py: error: argument --mode: invalid choice:
+&#39;invalid&#39; (choose from &#39;read-only&#39;, &#39;read-write&#39;)
+</pre></div>
+</div>
+</div>
+<div class="section" id="file-arguments">
+<h3>File Arguments<a class="headerlink" href="#file-arguments" title="Permalink to this headline">¶</a></h3>
+<p>Although <code class="docutils literal notranslate"><span class="pre">file</span></code> objects can be instantiated with a single
+string argument, that does not include the access mode argument.
+<code class="docutils literal notranslate"><span class="pre">FileType</span></code> provides a more flexible way of specifying that an
+argument should be a file, including the mode and buffer size.</p>
+<div class="literal-block-wrapper docutils container" id="id28">
+<div class="code-block-caption"><span class="caption-text">argparse_FileType.py</span><a class="headerlink" href="#id28" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-i&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;in-file&#39;</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">FileType</span><span class="p">(</span><span class="s1">&#39;rt&#39;</span><span class="p">))</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;out-file&#39;</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">FileType</span><span class="p">(</span><span class="s1">&#39;wt&#39;</span><span class="p">))</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Input file:&#39;</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">i</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Output file:&#39;</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">o</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">IOError</span> <span class="k">as</span> <span class="n">msg</span><span class="p">:</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>The value associated with the argument name is the open file handle.
+The application is responsible for closing the file when it is no
+longer being used.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_FileType.py -h
+
+usage: argparse_FileType.py [-h] [-i in-file] [-o out-file]
+
+optional arguments:
+  -h, --help   show this help message and exit
+  -i in-file
+  -o out-file
+
+$ python3 argparse_FileType.py -i argparse_FileType.py -o tmp_\
+file.txt
+
+Input file: &lt;_io.TextIOWrapper name=&#39;argparse_FileType.py&#39;
+mode=&#39;rt&#39; encoding=&#39;UTF-8&#39;&gt;
+Output file: &lt;_io.TextIOWrapper name=&#39;tmp_file.txt&#39; mode=&#39;wt&#39;
+encoding=&#39;UTF-8&#39;&gt;
+
+$ python3 argparse_FileType.py -i no_such_file.txt
+
+usage: argparse_FileType.py [-h] [-i in-file] [-o out-file]
+argparse_FileType.py: error: argument -i: can&#39;t open
+&#39;no_such_file.txt&#39;: [Errno 2] No such file or directory:
+&#39;no_such_file.txt&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="custom-actions">
+<span id="argparse-custom-actions"></span><h3>Custom Actions<a class="headerlink" href="#custom-actions" title="Permalink to this headline">¶</a></h3>
+<p>In addition to the built-in actions described earlier, custom actions
+can be defined by providing an object that implements the Action API.
+The object passed to <code class="docutils literal notranslate"><span class="pre">add_argument()</span></code> as <code class="docutils literal notranslate"><span class="pre">action</span></code> should take
+parameters describing the argument being defined (all the same
+arguments given to <code class="docutils literal notranslate"><span class="pre">add_argument()</span></code>) and return a callable object
+that takes as parameters the <code class="docutils literal notranslate"><span class="pre">parser</span></code> processing the arguments, the
+<code class="docutils literal notranslate"><span class="pre">namespace</span></code> holding the parse results, the <code class="docutils literal notranslate"><span class="pre">value</span></code> of the argument
+being acted on, and the <code class="docutils literal notranslate"><span class="pre">option_string</span></code> that triggered the action.</p>
+<p>A class <code class="docutils literal notranslate"><span class="pre">Action</span></code> is provided as a convenient starting point for
+defining new actions.  The constructor handles the argument
+definitions, so only <code class="docutils literal notranslate"><span class="pre">__call__()</span></code> needs to be overridden in the
+subclass.</p>
+<div class="literal-block-wrapper docutils container" id="id29">
+<div class="code-block-caption"><span class="caption-text">argparse_custom_action.py</span><a class="headerlink" href="#id29" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+
+<span class="k">class</span> <span class="nc">CustomAction</span><span class="p">(</span><span class="n">argparse</span><span class="o">.</span><span class="n">Action</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">option_strings</span><span class="p">,</span>
+                 <span class="n">dest</span><span class="p">,</span>
+                 <span class="n">nargs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="nb">type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">choices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">help</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">metavar</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">argparse</span><span class="o">.</span><span class="n">Action</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                 <span class="n">option_strings</span><span class="o">=</span><span class="n">option_strings</span><span class="p">,</span>
+                                 <span class="n">dest</span><span class="o">=</span><span class="n">dest</span><span class="p">,</span>
+                                 <span class="n">nargs</span><span class="o">=</span><span class="n">nargs</span><span class="p">,</span>
+                                 <span class="n">const</span><span class="o">=</span><span class="n">const</span><span class="p">,</span>
+                                 <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+                                 <span class="nb">type</span><span class="o">=</span><span class="nb">type</span><span class="p">,</span>
+                                 <span class="n">choices</span><span class="o">=</span><span class="n">choices</span><span class="p">,</span>
+                                 <span class="n">required</span><span class="o">=</span><span class="n">required</span><span class="p">,</span>
+                                 <span class="n">help</span><span class="o">=</span><span class="n">help</span><span class="p">,</span>
+                                 <span class="n">metavar</span><span class="o">=</span><span class="n">metavar</span><span class="p">,</span>
+                                 <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Initializing CustomAction&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">locals</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;self&#39;</span> <span class="ow">or</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  </span><span class="si">{}</span><span class="s1"> = </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">()</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">,</span> <span class="n">namespace</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span>
+                 <span class="n">option_string</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Processing CustomAction for </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dest</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  parser = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">parser</span><span class="p">)))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  values = </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  option_string = </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">option_string</span><span class="p">))</span>
+
+        <span class="c1"># Do some arbitrary processing of the input values</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+        <span class="c1"># Save the results in the namespace using the destination</span>
+        <span class="c1"># variable given to our constructor.</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">namespace</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dest</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">()</span>
+
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-a&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="n">CustomAction</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-m&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="n">CustomAction</span><span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">([</span><span class="s1">&#39;-a&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;-m&#39;</span><span class="p">,</span> <span class="s1">&#39;multivalue&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;second&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The type of <code class="docutils literal notranslate"><span class="pre">values</span></code> depends on the value of <code class="docutils literal notranslate"><span class="pre">nargs</span></code>.  If the argument
+allows multiple values, <code class="docutils literal notranslate"><span class="pre">values</span></code> will be a list even if it only
+contains one item.</p>
+<p>The value of <code class="docutils literal notranslate"><span class="pre">option_string</span></code> also depends on the original argument
+specification.  For positional required arguments, <code class="docutils literal notranslate"><span class="pre">option_string</span></code> is
+always <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 argparse_custom_action.py
+
+Initializing CustomAction
+  dest = &#39;a&#39;
+  option_strings = [&#39;-a&#39;]
+  required = False
+
+Initializing CustomAction
+  dest = &#39;m&#39;
+  nargs = &#39;*&#39;
+  option_strings = [&#39;-m&#39;]
+  required = False
+
+Processing CustomAction for a
+  parser = 4315836992
+  values = &#39;value&#39;
+  option_string = &#39;-a&#39;
+
+Processing CustomAction for m
+  parser = 4315836992
+  values = [&#39;multivalue&#39;, &#39;second&#39;]
+  option_string = &#39;-m&#39;
+
+Namespace(a=&#39;VALUE&#39;, m=[&#39;MULTIVALUE&#39;, &#39;SECOND&#39;])
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference external" href="https://docs.python.org/3.7/library/argparse.html">Standard library documentation for argparse</a></li>
+<li><a class="reference internal" href="../configparser/index.html#module-configparser" title="configparser: Read/write configuration files similar to Windows INI files"><code class="xref py py-mod docutils literal notranslate"><span class="pre">configparser</span></code></a> – Read and write configuration files.</li>
+<li><a class="reference internal" href="../shlex/index.html#module-shlex" title="shlex: Lexical analysis of shell-style syntaxes."><code class="xref py py-mod docutils literal notranslate"><span class="pre">shlex</span></code></a> – Parse shell-like syntaxes.</li>
+<li><a class="reference internal" href="../porting_notes.html#porting-argparse"><span class="std std-ref">Python 2 to 3 porting notes for argparse</span></a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+
+
+        <div id="footer-nav">
+<a id="prev-link" href="../frameworks.html"
+   title="previous chapter"><i class="fa fa-arrow-circle-left"></i> Application Building Blocks</a>
+<a id="next-link" href="../getopt/index.html"
+   title="next chapter">getopt — Command Line Option Parsing <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+        </div>
+      </div>
+
+      <div class="pure-u-1-4">
+        <div class="sidebar-wrapper">
+          <div class="sidebar">
+<div id="sidebar-toc">
+  <h5>Quick Links</h5>
+  <ul>
+    
+    <li><a href="#setting-up-a-parser"><i class="fa fa-caret-right"></i>Setting Up a Parser</a></li>
+    
+    <li><a href="#defining-arguments"><i class="fa fa-caret-right"></i>Defining Arguments</a></li>
+    
+    <li><a href="#parsing-a-command-line"><i class="fa fa-caret-right"></i>Parsing a Command-Line</a></li>
+    
+    <li><a href="#simple-examples"><i class="fa fa-caret-right"></i>Simple Examples</a></li>
+    
+    <li><a href="#argument-actions"><i class="fa fa-caret-right"></i>Argument Actions</a></li>
+    
+    <li><a href="#option-prefixes"><i class="fa fa-caret-right"></i>Option Prefixes</a></li>
+    
+    <li><a href="#sources-of-arguments"><i class="fa fa-caret-right"></i>Sources of Arguments</a></li>
+    
+    <li><a href="#help-output"><i class="fa fa-caret-right"></i>Help Output</a></li>
+    
+    <li><a href="#automatically-generated-help"><i class="fa fa-caret-right"></i>Automatically Generated Help</a></li>
+    
+    <li><a href="#customizing-help"><i class="fa fa-caret-right"></i>Customizing Help</a></li>
+    
+    <li><a href="#parser-organization"><i class="fa fa-caret-right"></i>Parser Organization</a></li>
+    
+    <li><a href="#sharing-parser-rules"><i class="fa fa-caret-right"></i>Sharing Parser Rules</a></li>
+    
+    <li><a href="#conflicting-options"><i class="fa fa-caret-right"></i>Conflicting Options</a></li>
+    
+    <li><a href="#argument-groups"><i class="fa fa-caret-right"></i>Argument Groups</a></li>
+    
+    <li><a href="#mutually-exclusive-options"><i class="fa fa-caret-right"></i>Mutually Exclusive Options</a></li>
+    
+    <li><a href="#nesting-parsers"><i class="fa fa-caret-right"></i>Nesting Parsers</a></li>
+    
+    <li><a href="#advanced-argument-processing"><i class="fa fa-caret-right"></i>Advanced Argument Processing</a></li>
+    
+    <li><a href="#variable-argument-lists"><i class="fa fa-caret-right"></i>Variable Argument Lists</a></li>
+    
+    <li><a href="#argument-types"><i class="fa fa-caret-right"></i>Argument Types</a></li>
+    
+    <li><a href="#file-arguments"><i class="fa fa-caret-right"></i>File Arguments</a></li>
+    
+    <li><a href="#custom-actions"><i class="fa fa-caret-right"></i>Custom Actions</a></li>
+    
+  </ul>
+</div>
+
+          </div>
+          <div class="sidebar"><div id="sidebar-last-updated">
+  This page was last updated 2016-12-30.
+</div>
+
+          </div>
+          <div class="sidebar">
+<div id="sidebar-nav">
+  <h5>Navigation</h5>
+  <ul>
+    <li><a href="../frameworks.html"
+           title="previous chapter"><i class="fa fa-arrow-circle-left"></i>Application Building Blocks</a></li>
+    <li><a href="../getopt/index.html"
+           title="next chapter"><i class="fa fa-arrow-circle-right"></i>getopt — Command Line Option Parsing</a></li>
+  </ul>
+</div>
+          </div>
+          <div class="sidebar"><div id="sidebar-book"><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/book-cover-image-med.jpg"><br>Get the book</a></div>
+          </div>
+          <div class="sidebar"><div id="sidebar-example-disclaimer">
+<p>The output from all the example programs
+from PyMOTW-3 has been generated with Python 3.7.9, unless
+otherwise noted. Some of the features described here may not be
+available in earlier versions of Python.</p>
+<p>Looking for <a href="/2/">examples for Python 2</a>?</p>
+</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pure-g-r" id="footer">
+
+      <div class="pure-u-1-3">
+        <div class="footer-list">
+            <h4>This Site</h4>
+            <ul>
+              <li><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+              <li><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+            </ul>
+        </div>
+      </div><div class="pure-u-1-3">
+          <div class="footer-content">
+            <div class="socialmedia">
+              <a class="sociallink" href="../index.html"
+       title="Home">
+      <i class="fa fa-home fa-lg"></i></a>
+              <a class="sociallink" href="../about.html"
+       title="About">
+      <i class="fa fa-user fa-lg"></i></a>
+              <a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a>
+              <a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a>
+              <a class="sociallink" href="http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US"
+       title="Subscribe via Email">
+      <i class="fa fa-envelope fa-lg"></i></a>
+            </div>
+
+            <div class="copyright">
+              <a rel="author" href="../about.html">&copy; Copyright 2021, Doug Hellmann</a>
+            </div>
+
+            <div class="cc"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License BY-NC-SA" style="border-width:0; align: center;" width="88" height="31" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAfCAMAAABUFvrSAAAABGdBTUEAALGOfPtRkwAAAf5QTFRF////////////AAAADQwNDQ4NDg4OEBAQGRkZGxsbHxscICAgIx8gJCQkKCUmKCgoKCkoKSkpKSopKicnKioqLS0tMDAwMS0uMjExMjMxNTY1Pj8+Pzc5Pzs8QEBAQ0RDUFBQUFFQWldYXV5dYGBgY19haGVmbmxscHBwcHJvdXJzdnN0eHV2eXx5en15fH98fX98fnt8f4F+gICAgoWChIGChIWEhIaEh4aHiYyJjIqLjoeLj4+PkY+PkZORkZSRk5iTlZmUlpmWmJaXmpiZnp2dnqCdn5aan5+fn6Oeoqaho6Gho6ijpqqmq7GqrKurrLKrrbOsrrOtrrStr6+vr7Kvr7Sur7WusLOvsLWvsLavsbewsrexsrixs7iytLmztLqztbW1tbq0tru1t7y2uL23ub64ub65urm5ur+5ur+6u8C6u8C7vMC8vMG7vMG8vcK8vcK9vsK9vsO+v7+/v8O+v8S+wMS/wMW/wMXAwcXAwsfCw8fCw8jDxMfDxMjDxMnExcnExcnFxsrFxsrGx8vHyMfHyMzHyMzIycjIyc3Iyc3Jys3Jy8rLy87Ky8/Ky8/LzM/LzNDLzNDMzdDMzdHMzdHNztHNztLOz8/Pz9PP0NPP0NTQ0dTQ0dTR0tXR0tXS09bS1tXV39/f4N/g4+Pj6Ofn7+/v8fHx////rrSdFQAAAAN0Uk5TAAoO5yEBUwAAA+FJREFUSMe1lo9301QUx6uXUmaf0qJ26iTrRoVinUzjQNR1gAyH6Lqx6XTDoVvXbU7qhA5m7CgYWaTDlLa6AiFsba3t+y+9Sdr8OvVMi7zTnLTf5H7ee9/73n11PA1PpDkcADPRWPwKt8YLG2I2n89m7gh8iluJz0dnpqe+HBsdHRn+7w3JyF1cvpbk05mCJG8Xi9uPpMLdNJ9cXV5UyBNjoyMtkR2A3B9Tt8SCfLTTqUzC2XlMvpcRbnA/IPmryYnzoyM9XuWBt8eI21FBcAy5Qk4KtxkGtQ1I+fRNbnk+evHC5NhJDwATDDIAnhNa1ImdFQTHr6WEvNyFPFeATSTYgAu/dl3/I31jNR6bnZ76eDf4yxRb2Q+71aiz/0JB8JXkrZzCdbFVqrUhRHuu54XkytLczAUvBFADUB6ARwnyqEp/t02prK9XdAXBHC9KyPWVqd6qPhyzlOG55dhsL/hLDTD1A3rYAy+dRu6eXaGKruA75wi2hbqigNd+LYSRW6XUSh64l05dXYruA1OPZfAOD3vhObL/ILDvQkRXynSdvPpaiJB+TVHAfEZuA9d9amlVF7TJd3nu+xgwyu8AqNOnDGAM8/obOLhQpWQotPYReZ/SQdKuKQpY2DwKwFJbGwI4VhCSlxchSFUnNC+CCgaV9RAKoZKh1J4le9FmQv5SFQW88aATXGhEws8wrHb7AANc0CndQS+ag5ERaieke0FXvnkxoYL/1MGi7FSmmVBXMDOu3gLK5J2PMjdXv2tmBX6pDdKSkq39DWXh3G1KI4QYVmS3AHCIPnCXE+4hHy6PcfeQ6sV2lufiL2jJ0wasp4p2k/Z2CEXeeqahDBLS1/c8+dBIXq4IkFAiWQ1QtxtnUMz/wsXfBj+1LzdUKn17dvXXzEqfMoFDNWO57QCe22dskKB5g7zXbVN+i0RKumKxonrfzaIVys2wYu7TVrd0PXn1rOnJC4JTFjF5c19/gnXLFwj6jJJz1rOjoi63LnBRfbmNM+qNunG5baSufhu9OPX5my2VTWEzrHrRbIP8dHl+dnpyrIVDBME/q1u6/E9bGmt9i2AsQmeaFaFwIb22soSlfuL8SEtgOCJKB5BsKkNltWyK7zzWMY3X4exDc6GvsljoX5FzR+BxwdCbf3jAdjTJv5/S39H2B2iXpmgXpWB7iVrB0JuVzpgP07CUO2WKqX+oiVL/benKImhgOIzHf7hx/A/IBdHsQ6Nsmruilo4afVFqB8PLn2U2H8hbxeKWjH9YvuiwxNiMaNhALZptCg5d7zh+Sczmclnx0vEOax6ajdjucSMPTcD/97/Cp54Q929ZZbgcR3o0hAAAAABJRU5ErkJggg=="/></a>
+            </div>
+
+          </div></div><div class="pure-u-1-3">
+          <div class="footer-list">
+            <h4>Other Writing</h4>
+            <ul>
+              <li><a href="https://doughellmann.com/"><i class="fa fa-pencil fa-lg"></i> Blog</a></li>
+              <li><a href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><i class="fa fa-book fa-lg"></i> The Python Standard Library By Example</a></li>
+            </ul>
+          </div>
+        </div><script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-3', 'pymotw.com');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

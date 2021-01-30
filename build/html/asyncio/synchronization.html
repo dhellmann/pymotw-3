@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Synchronization Primitives &mdash; PyMOTW 3</title>
+
+    <link rel="stylesheet" href="../_static/pure-min.css" type="text/css">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pymotw.css" type="text/css">
+
+    <link rel="shortcut icon" type="image/png" href="../_static/favicon.png">
+
+    <link rel="alternate" type="application/atom+xml"
+          title="Doug Hellmann"
+          href="http://feeds.doughellmann.com/DougHellmann" />
+    <link rel="alternate" type="application/atom+xml"
+          title="PyMOTW Updates"
+          href="http://feeds.doughellmann.com/PyMOTW" />
+
+    <meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+
+  </head>
+  <body>
+
+    <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
+      <a class="pure-menu-heading" href="../index.html"><img src="../_static/logo.png"> PyMOTW-3</a>
+
+      <ul id="top-menu">
+        <li class="pure-menu-selected"><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+        <li class="pure-menu-selected"><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a></a>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a></li>
+      </ul>
+
+    </div>
+
+    <div class="pure-menu pure-menu-open pure-menu-vertical" id="breadcrumbs-menu">
+      
+      <ul id="breadcrumbs">
+        <li class="pure-menu-selected"><a href="../concurrency.html"><i class="fa fa-arrow-circle-up"></i> Concurrency with Processes, Threads, and Coroutines</a></li>
+        <li class="pure-menu-selected"><a href="index.html"><i class="fa fa-arrow-circle-up"></i> asyncio — Asynchronous I/O, event loop, and concurrency tools</a></li>
+      </ul>
+    </div>
+
+    <div class="pure-g-r" id="content-container">
+
+      <div class="pure-u-3-4">
+        <div class="content">
+          
+  <div class="section" id="synchronization-primitives">
+<h1>Synchronization Primitives<a class="headerlink" href="#synchronization-primitives" title="Permalink to this headline">¶</a></h1>
+<p>Although <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> applications usually run as a single-threaded
+process, they are still built as concurrent applications. Each
+coroutine or task may execute in an unpredictable order, based on
+delays and interrupts from I/O and other external events. To support
+safe concurrency, <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> includes implementations of some of
+the same low-level primitives found in the <a class="reference internal" href="../threading/index.html#module-threading" title="threading: Manage concurrent operations"><code class="xref py py-mod docutils literal notranslate"><span class="pre">threading</span></code></a> and
+<a class="reference internal" href="../multiprocessing/index.html#module-multiprocessing" title="multiprocessing: Manage processes like threads."><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing</span></code></a> modules.</p>
+<div class="section" id="locks">
+<h2>Locks<a class="headerlink" href="#locks" title="Permalink to this headline">¶</a></h2>
+<p>A <code class="docutils literal notranslate"><span class="pre">Lock</span></code> can be used to guard access to a shared resource. Only
+the holder of the lock can use the resource. Multiple attempts to
+acquire the lock will block so that there is only one holder at a
+time.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">asyncio_lock.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+
+
+<span class="k">def</span> <span class="nf">unlock</span><span class="p">(</span><span class="n">lock</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;callback releasing lock&#39;</span><span class="p">)</span>
+    <span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">coro1</span><span class="p">(</span><span class="n">lock</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;coro1 waiting for the lock&#39;</span><span class="p">)</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">lock</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;coro1 acquired lock&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;coro1 released lock&#39;</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">coro2</span><span class="p">(</span><span class="n">lock</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;coro2 waiting for the lock&#39;</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;coro2 acquired lock&#39;</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;coro2 released lock&#39;</span><span class="p">)</span>
+        <span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">loop</span><span class="p">):</span>
+    <span class="c1"># Create and acquire a shared lock.</span>
+    <span class="n">lock</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;acquiring the lock before starting coroutines&#39;</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;lock acquired: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lock</span><span class="o">.</span><span class="n">locked</span><span class="p">()))</span>
+
+    <span class="c1"># Schedule a callback to unlock the lock.</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">call_later</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">unlock</span><span class="p">,</span> <span class="n">lock</span><span class="p">))</span>
+
+    <span class="c1"># Run the coroutines that want to use the lock.</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;waiting for coroutines&#39;</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait</span><span class="p">([</span><span class="n">coro1</span><span class="p">(</span><span class="n">lock</span><span class="p">),</span> <span class="n">coro2</span><span class="p">(</span><span class="n">lock</span><span class="p">)]),</span>
+
+
+<span class="n">event_loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">event_loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">main</span><span class="p">(</span><span class="n">event_loop</span><span class="p">))</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">event_loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>A lock’s <code class="docutils literal notranslate"><span class="pre">acquire()</span></code> method can be invoked directly, using
+<code class="docutils literal notranslate"><span class="pre">await</span></code>, and calling the <code class="docutils literal notranslate"><span class="pre">release()</span></code> method when done as in
+<code class="docutils literal notranslate"><span class="pre">coro2()</span></code> in this example. They also can be used as asynchronous
+context managers with the <code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">await</span></code> keywords, as in <code class="docutils literal notranslate"><span class="pre">coro1()</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 asyncio_lock.py
+
+acquiring the lock before starting coroutines
+lock acquired: True
+waiting for coroutines
+coro2 waiting for the lock
+coro1 waiting for the lock
+callback releasing lock
+coro2 acquired lock
+coro2 released lock
+coro1 acquired lock
+coro1 released lock
+</pre></div>
+</div>
+</div>
+<div class="section" id="events">
+<h2>Events<a class="headerlink" href="#events" title="Permalink to this headline">¶</a></h2>
+<p>An <code class="docutils literal notranslate"><span class="pre">asyncio.Event</span></code> is based on <code class="docutils literal notranslate"><span class="pre">threading.Event</span></code>, and is
+used to allow multiple consumers to wait for something to happen
+without looking for a specific value to be associated with the
+notification.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">asyncio_event.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+
+
+<span class="k">def</span> <span class="nf">set_event</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;setting event in callback&#39;</span><span class="p">)</span>
+    <span class="n">event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">coro1</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;coro1 waiting for event&#39;</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">event</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;coro1 triggered&#39;</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">coro2</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;coro2 waiting for event&#39;</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">event</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;coro2 triggered&#39;</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">loop</span><span class="p">):</span>
+    <span class="c1"># Create a shared event</span>
+    <span class="n">event</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;event start state: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">is_set</span><span class="p">()))</span>
+
+    <span class="n">loop</span><span class="o">.</span><span class="n">call_later</span><span class="p">(</span>
+        <span class="mf">0.1</span><span class="p">,</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">set_event</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait</span><span class="p">([</span><span class="n">coro1</span><span class="p">(</span><span class="n">event</span><span class="p">),</span> <span class="n">coro2</span><span class="p">(</span><span class="n">event</span><span class="p">)])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;event end state: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">is_set</span><span class="p">()))</span>
+
+
+<span class="n">event_loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">event_loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">main</span><span class="p">(</span><span class="n">event_loop</span><span class="p">))</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">event_loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>As with the <code class="docutils literal notranslate"><span class="pre">Lock</span></code>, both <code class="docutils literal notranslate"><span class="pre">coro1()</span></code> and <code class="docutils literal notranslate"><span class="pre">coro2()</span></code> wait
+for the event to be set. The difference is that both can start as soon
+as the event state changes, and they do not need to acquire a unique
+hold on the event object.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 asyncio_event.py
+
+event start state: False
+coro2 waiting for event
+coro1 waiting for event
+setting event in callback
+coro2 triggered
+coro1 triggered
+event end state: True
+</pre></div>
+</div>
+</div>
+<div class="section" id="conditions">
+<h2>Conditions<a class="headerlink" href="#conditions" title="Permalink to this headline">¶</a></h2>
+<p>A <code class="docutils literal notranslate"><span class="pre">Condition</span></code> works similarly to an <code class="docutils literal notranslate"><span class="pre">Event</span></code> except that
+rather than notifying all waiting coroutines the number of waiters
+awakened is controlled with an argument to <code class="docutils literal notranslate"><span class="pre">notify()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">asyncio_condition.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">consumer</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">condition</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;consumer </span><span class="si">{}</span><span class="s1"> is waiting&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+        <span class="k">await</span> <span class="n">condition</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;consumer </span><span class="si">{}</span><span class="s1"> triggered&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ending consumer </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">manipulate_condition</span><span class="p">(</span><span class="n">condition</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;starting manipulate_condition&#39;</span><span class="p">)</span>
+
+    <span class="c1"># pause to let consumers start</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">condition</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;notifying </span><span class="si">{}</span><span class="s1"> consumers&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+            <span class="n">condition</span><span class="o">.</span><span class="n">notify</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">with</span> <span class="n">condition</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;notifying remaining consumers&#39;</span><span class="p">)</span>
+        <span class="n">condition</span><span class="o">.</span><span class="n">notify_all</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ending manipulate_condition&#39;</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">loop</span><span class="p">):</span>
+    <span class="c1"># Create a condition</span>
+    <span class="n">condition</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Condition</span><span class="p">()</span>
+
+    <span class="c1"># Set up tasks watching the condition</span>
+    <span class="n">consumers</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">consumer</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="p">]</span>
+
+    <span class="c1"># Schedule a task to manipulate the condition variable</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">manipulate_condition</span><span class="p">(</span><span class="n">condition</span><span class="p">))</span>
+
+    <span class="c1"># Wait for the consumers to be done</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">consumers</span><span class="p">)</span>
+
+
+<span class="n">event_loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">event_loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">main</span><span class="p">(</span><span class="n">event_loop</span><span class="p">))</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">event_loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>This example starts five consumers of the <code class="docutils literal notranslate"><span class="pre">Condition</span></code>. Each
+uses the <code class="docutils literal notranslate"><span class="pre">wait()</span></code> method to wait for a notification that they can
+proceed. <code class="docutils literal notranslate"><span class="pre">manipulate_condition()</span></code> notifies one consumer, then two
+consumers, then all of the remaining consumers.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 asyncio_condition.py
+
+starting manipulate_condition
+consumer 3 is waiting
+consumer 0 is waiting
+consumer 4 is waiting
+consumer 1 is waiting
+consumer 2 is waiting
+notifying 1 consumers
+consumer 3 triggered
+ending consumer 3
+notifying 2 consumers
+consumer 0 triggered
+ending consumer 0
+consumer 4 triggered
+ending consumer 4
+notifying remaining consumers
+ending manipulate_condition
+consumer 1 triggered
+ending consumer 1
+consumer 2 triggered
+ending consumer 2
+</pre></div>
+</div>
+</div>
+<div class="section" id="queues">
+<h2>Queues<a class="headerlink" href="#queues" title="Permalink to this headline">¶</a></h2>
+<p>An <code class="docutils literal notranslate"><span class="pre">asyncio.Queue</span></code> provides a first-in, first-out data
+structure for coroutines like a <code class="docutils literal notranslate"><span class="pre">queue.Queue</span></code> does for threads
+or a <code class="docutils literal notranslate"><span class="pre">multiprocessing.Queue</span></code> does for processes.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">asyncio_queue.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">consumer</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;consumer </span><span class="si">{}</span><span class="s1">: starting&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;consumer </span><span class="si">{}</span><span class="s1">: waiting for item&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="k">await</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;consumer </span><span class="si">{}</span><span class="s1">: has item </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">item</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># None is the signal to stop.</span>
+            <span class="n">q</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span>
+            <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span> <span class="o">*</span> <span class="n">item</span><span class="p">)</span>
+            <span class="n">q</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;consumer </span><span class="si">{}</span><span class="s1">: ending&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">producer</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">num_workers</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;producer: starting&#39;</span><span class="p">)</span>
+    <span class="c1"># Add some numbers to the queue to simulate jobs</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_workers</span> <span class="o">*</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="k">await</span> <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;producer: added task </span><span class="si">{}</span><span class="s1"> to the queue&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="c1"># Add None entries in the queue</span>
+    <span class="c1"># to signal the consumers to exit</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;producer: adding stop signals to the queue&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_workers</span><span class="p">):</span>
+        <span class="k">await</span> <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;producer: waiting for queue to empty&#39;</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">q</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;producer: ending&#39;</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="n">num_consumers</span><span class="p">):</span>
+    <span class="c1"># Create the queue with a fixed size so the producer</span>
+    <span class="c1"># will block until the consumers pull some items out.</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="n">num_consumers</span><span class="p">)</span>
+
+    <span class="c1"># Scheduled the consumer tasks.</span>
+    <span class="n">consumers</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">loop</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">consumer</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">q</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_consumers</span><span class="p">)</span>
+    <span class="p">]</span>
+
+    <span class="c1"># Schedule the producer task.</span>
+    <span class="n">prod</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">producer</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">num_consumers</span><span class="p">))</span>
+
+    <span class="c1"># Wait for all of the coroutines to finish.</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">consumers</span> <span class="o">+</span> <span class="p">[</span><span class="n">prod</span><span class="p">])</span>
+
+
+<span class="n">event_loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">event_loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">main</span><span class="p">(</span><span class="n">event_loop</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">event_loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>Adding items with <code class="docutils literal notranslate"><span class="pre">put()</span></code> or removing items with <code class="docutils literal notranslate"><span class="pre">get()</span></code> are
+both asynchronous operations, since the queue size might be fixed
+(blocking an addition) or the queue might be empty (blocking a call to
+fetch an item).</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 asyncio_queue.py
+
+consumer 0: starting
+consumer 0: waiting for item
+consumer 1: starting
+consumer 1: waiting for item
+producer: starting
+producer: added task 0 to the queue
+producer: added task 1 to the queue
+consumer 0: has item 0
+consumer 1: has item 1
+producer: added task 2 to the queue
+producer: added task 3 to the queue
+consumer 0: waiting for item
+consumer 0: has item 2
+producer: added task 4 to the queue
+consumer 1: waiting for item
+consumer 1: has item 3
+producer: added task 5 to the queue
+producer: adding stop signals to the queue
+consumer 0: waiting for item
+consumer 0: has item 4
+consumer 1: waiting for item
+consumer 1: has item 5
+producer: waiting for queue to empty
+consumer 0: waiting for item
+consumer 0: has item None
+consumer 0: ending
+consumer 1: waiting for item
+consumer 1: has item None
+consumer 1: ending
+producer: ending
+</pre></div>
+</div>
+</div>
+</div>
+
+
+
+        <div id="footer-nav">
+<a id="prev-link" href="control.html"
+   title="previous chapter"><i class="fa fa-arrow-circle-left"></i> Composing Coroutines with Control Structures</a>
+<a id="next-link" href="io_protocol.html"
+   title="next chapter">Asynchronous I/O with Protocol Class Abstractions <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+        </div>
+      </div>
+
+      <div class="pure-u-1-4">
+        <div class="sidebar-wrapper">
+          <div class="sidebar">
+<div id="sidebar-toc">
+  <h5>Quick Links</h5>
+  <ul>
+    
+    <li><a href="#locks"><i class="fa fa-caret-right"></i>Locks</a></li>
+    
+    <li><a href="#events"><i class="fa fa-caret-right"></i>Events</a></li>
+    
+    <li><a href="#conditions"><i class="fa fa-caret-right"></i>Conditions</a></li>
+    
+    <li><a href="#queues"><i class="fa fa-caret-right"></i>Queues</a></li>
+    
+  </ul>
+</div>
+
+          </div>
+          <div class="sidebar"><div id="sidebar-last-updated">
+  This page was last updated 2018-12-09.
+</div>
+
+          </div>
+          <div class="sidebar">
+<div id="sidebar-nav">
+  <h5>Navigation</h5>
+  <ul>
+    <li><a href="control.html"
+           title="previous chapter"><i class="fa fa-arrow-circle-left"></i>Composing Coroutines with Control Structures</a></li>
+    <li><a href="io_protocol.html"
+           title="next chapter"><i class="fa fa-arrow-circle-right"></i>Asynchronous I/O with Protocol Class Abstractions</a></li>
+  </ul>
+</div>
+          </div>
+          <div class="sidebar"><div id="sidebar-book"><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/book-cover-image-med.jpg"><br>Get the book</a></div>
+          </div>
+          <div class="sidebar"><div id="sidebar-example-disclaimer">
+<p>The output from all the example programs
+from PyMOTW-3 has been generated with Python 3.7.9, unless
+otherwise noted. Some of the features described here may not be
+available in earlier versions of Python.</p>
+<p>Looking for <a href="/2/">examples for Python 2</a>?</p>
+</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pure-g-r" id="footer">
+
+      <div class="pure-u-1-3">
+        <div class="footer-list">
+            <h4>This Site</h4>
+            <ul>
+              <li><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+              <li><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+            </ul>
+        </div>
+      </div><div class="pure-u-1-3">
+          <div class="footer-content">
+            <div class="socialmedia">
+              <a class="sociallink" href="../index.html"
+       title="Home">
+      <i class="fa fa-home fa-lg"></i></a>
+              <a class="sociallink" href="../about.html"
+       title="About">
+      <i class="fa fa-user fa-lg"></i></a>
+              <a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a>
+              <a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a>
+              <a class="sociallink" href="http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US"
+       title="Subscribe via Email">
+      <i class="fa fa-envelope fa-lg"></i></a>
+            </div>
+
+            <div class="copyright">
+              <a rel="author" href="../about.html">&copy; Copyright 2021, Doug Hellmann</a>
+            </div>
+
+            <div class="cc"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License BY-NC-SA" style="border-width:0; align: center;" width="88" height="31" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAfCAMAAABUFvrSAAAABGdBTUEAALGOfPtRkwAAAf5QTFRF////////////AAAADQwNDQ4NDg4OEBAQGRkZGxsbHxscICAgIx8gJCQkKCUmKCgoKCkoKSkpKSopKicnKioqLS0tMDAwMS0uMjExMjMxNTY1Pj8+Pzc5Pzs8QEBAQ0RDUFBQUFFQWldYXV5dYGBgY19haGVmbmxscHBwcHJvdXJzdnN0eHV2eXx5en15fH98fX98fnt8f4F+gICAgoWChIGChIWEhIaEh4aHiYyJjIqLjoeLj4+PkY+PkZORkZSRk5iTlZmUlpmWmJaXmpiZnp2dnqCdn5aan5+fn6Oeoqaho6Gho6ijpqqmq7GqrKurrLKrrbOsrrOtrrStr6+vr7Kvr7Sur7WusLOvsLWvsLavsbewsrexsrixs7iytLmztLqztbW1tbq0tru1t7y2uL23ub64ub65urm5ur+5ur+6u8C6u8C7vMC8vMG7vMG8vcK8vcK9vsK9vsO+v7+/v8O+v8S+wMS/wMW/wMXAwcXAwsfCw8fCw8jDxMfDxMjDxMnExcnExcnFxsrFxsrGx8vHyMfHyMzHyMzIycjIyc3Iyc3Jys3Jy8rLy87Ky8/Ky8/LzM/LzNDLzNDMzdDMzdHMzdHNztHNztLOz8/Pz9PP0NPP0NTQ0dTQ0dTR0tXR0tXS09bS1tXV39/f4N/g4+Pj6Ofn7+/v8fHx////rrSdFQAAAAN0Uk5TAAoO5yEBUwAAA+FJREFUSMe1lo9301QUx6uXUmaf0qJ26iTrRoVinUzjQNR1gAyH6Lqx6XTDoVvXbU7qhA5m7CgYWaTDlLa6AiFsba3t+y+9Sdr8OvVMi7zTnLTf5H7ee9/73n11PA1PpDkcADPRWPwKt8YLG2I2n89m7gh8iluJz0dnpqe+HBsdHRn+7w3JyF1cvpbk05mCJG8Xi9uPpMLdNJ9cXV5UyBNjoyMtkR2A3B9Tt8SCfLTTqUzC2XlMvpcRbnA/IPmryYnzoyM9XuWBt8eI21FBcAy5Qk4KtxkGtQ1I+fRNbnk+evHC5NhJDwATDDIAnhNa1ImdFQTHr6WEvNyFPFeATSTYgAu/dl3/I31jNR6bnZ76eDf4yxRb2Q+71aiz/0JB8JXkrZzCdbFVqrUhRHuu54XkytLczAUvBFADUB6ARwnyqEp/t02prK9XdAXBHC9KyPWVqd6qPhyzlOG55dhsL/hLDTD1A3rYAy+dRu6eXaGKruA75wi2hbqigNd+LYSRW6XUSh64l05dXYruA1OPZfAOD3vhObL/ILDvQkRXynSdvPpaiJB+TVHAfEZuA9d9amlVF7TJd3nu+xgwyu8AqNOnDGAM8/obOLhQpWQotPYReZ/SQdKuKQpY2DwKwFJbGwI4VhCSlxchSFUnNC+CCgaV9RAKoZKh1J4le9FmQv5SFQW88aATXGhEws8wrHb7AANc0CndQS+ag5ERaieke0FXvnkxoYL/1MGi7FSmmVBXMDOu3gLK5J2PMjdXv2tmBX6pDdKSkq39DWXh3G1KI4QYVmS3AHCIPnCXE+4hHy6PcfeQ6sV2lufiL2jJ0wasp4p2k/Z2CEXeeqahDBLS1/c8+dBIXq4IkFAiWQ1QtxtnUMz/wsXfBj+1LzdUKn17dvXXzEqfMoFDNWO57QCe22dskKB5g7zXbVN+i0RKumKxonrfzaIVys2wYu7TVrd0PXn1rOnJC4JTFjF5c19/gnXLFwj6jJJz1rOjoi63LnBRfbmNM+qNunG5baSufhu9OPX5my2VTWEzrHrRbIP8dHl+dnpyrIVDBME/q1u6/E9bGmt9i2AsQmeaFaFwIb22soSlfuL8SEtgOCJKB5BsKkNltWyK7zzWMY3X4exDc6GvsljoX5FzR+BxwdCbf3jAdjTJv5/S39H2B2iXpmgXpWB7iVrB0JuVzpgP07CUO2WKqX+oiVL/benKImhgOIzHf7hx/A/IBdHsQ6Nsmruilo4afVFqB8PLn2U2H8hbxeKWjH9YvuiwxNiMaNhALZptCg5d7zh+Sczmclnx0vEOax6ajdjucSMPTcD/97/Cp54Q929ZZbgcR3o0hAAAAABJRU5ErkJggg=="/></a>
+            </div>
+
+          </div></div><div class="pure-u-1-3">
+          <div class="footer-list">
+            <h4>Other Writing</h4>
+            <ul>
+              <li><a href="https://doughellmann.com/"><i class="fa fa-pencil fa-lg"></i> Blog</a></li>
+              <li><a href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><i class="fa fa-book fa-lg"></i> The Python Standard Library By Example</a></li>
+            </ul>
+          </div>
+        </div><script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-3', 'pymotw.com');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

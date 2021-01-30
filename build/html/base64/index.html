@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>base64 — Encode Binary Data with ASCII &mdash; PyMOTW 3</title>
+
+    <link rel="stylesheet" href="../_static/pure-min.css" type="text/css">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pymotw.css" type="text/css">
+
+    <link rel="shortcut icon" type="image/png" href="../_static/favicon.png">
+
+    <link rel="alternate" type="application/atom+xml"
+          title="Doug Hellmann"
+          href="http://feeds.doughellmann.com/DougHellmann" />
+    <link rel="alternate" type="application/atom+xml"
+          title="PyMOTW Updates"
+          href="http://feeds.doughellmann.com/PyMOTW" />
+
+    <meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+
+  </head>
+  <body>
+
+    <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
+      <a class="pure-menu-heading" href="../index.html"><img src="../_static/logo.png"> PyMOTW-3</a>
+
+      <ul id="top-menu">
+        <li class="pure-menu-selected"><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+        <li class="pure-menu-selected"><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a></a>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a></li>
+      </ul>
+
+    </div>
+
+    <div class="pure-menu pure-menu-open pure-menu-vertical" id="breadcrumbs-menu">
+      
+      <ul id="breadcrumbs">
+        <li class="pure-menu-selected"><a href="../internet_protocols.html"><i class="fa fa-arrow-circle-up"></i> The Internet</a></li>
+      </ul>
+    </div>
+
+    <div class="pure-g-r" id="content-container">
+
+      <div class="pure-u-3-4">
+        <div class="content">
+          
+  <div class="section" id="module-base64">
+<span id="base64-encode-binary-data-with-ascii"></span><h1>base64 — Encode Binary Data with ASCII<a class="headerlink" href="#module-base64" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">The base64 module contains functions for translating binary
+data into a subset of ASCII suitable for transmission using
+plaintext protocols.</td>
+</tr>
+</tbody>
+</table>
+<p>The base64, base32, base16, and base85 encodings convert 8 bit bytes
+to values that fit inside the ASCII range of printable characters,
+trading more bits to represent the data for compatibility with systems
+that only support ASCII data, such as SMTP.  The <em>base</em> values
+correspond to the length of the alphabet used in each encoding.  There
+are also URL-safe variations of the original encodings that use
+slightly different alphabets.</p>
+<div class="section" id="base-64-encoding">
+<h2>Base 64 Encoding<a class="headerlink" href="#base-64-encoding" title="Permalink to this headline">¶</a></h2>
+<p>This is a basic example of encoding some text.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">base64_b64encode.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">textwrap</span>
+
+<span class="c1"># Load this source file and strip the header.</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="vm">__file__</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="nb">input</span><span class="p">:</span>
+    <span class="n">raw</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">initial_data</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;#end_pymotw_header&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">byte_string</span> <span class="o">=</span> <span class="n">initial_data</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="n">encoded_data</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">byte_string</span><span class="p">)</span>
+
+<span class="n">num_initial</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">byte_string</span><span class="p">)</span>
+
+<span class="c1"># There will never be more than 2 padding bytes.</span>
+<span class="n">padding</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">-</span> <span class="p">(</span><span class="n">num_initial</span> <span class="o">%</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> bytes before encoding&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">num_initial</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Expect </span><span class="si">{}</span><span class="s1"> padding bytes&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">padding</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> bytes after encoding</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">encoded_data</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">encoded_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The input must be a byte string, so the unicode string is first
+encoded to UTF-8. The output shows the 185 bytes of the UTF-8 source
+expand to 248 bytes after being encoded.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There are no carriage returns in the encoded data produced by the
+library, but the output has been wrapped artificially to make it
+fit better on the page.</p>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 base64_b64encode.py
+
+184 bytes before encoding
+Expect 2 padding bytes
+248 bytes after encoding
+
+b&#39;CmltcG9ydCBiYXNlNjQKaW1wb3J0IHRleHR3cmFwCgojIExvYWQgdGhpcyBzb3
+VyY2UgZmlsZSBhbmQgc3RyaXAgdGhlIGhlYWRlci4Kd2l0aCBvcGVuKF9fZmlsZV
+9fLCAncicsIGVuY29kaW5nPSd1dGYtOCcpIGFzIGlucHV0OgogICAgcmF3ID0gaW
+5wdXQucmVhZCgpCiAgICBpbml0aWFsX2RhdGEgPSByYXcuc3BsaXQoJw==&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="base-64-decoding">
+<h2>Base 64 Decoding<a class="headerlink" href="#base-64-decoding" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">b64decode()</span></code> converts an encoded string back to the original
+form by taking four bytes and converting them to the original three, using a
+lookup table.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">base64_b64decode.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">base64</span>
+
+<span class="n">encoded_data</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;VGhpcyBpcyB0aGUgZGF0YSwgaW4gdGhlIGNsZWFyLg==&#39;</span>
+<span class="n">decoded_data</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">encoded_data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Encoded :&#39;</span><span class="p">,</span> <span class="n">encoded_data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Decoded :&#39;</span><span class="p">,</span> <span class="n">decoded_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The encoding process looks at each sequence of 24 bits in the input
+(three bytes) and encodes those same 24 bits spread over four bytes in
+the output.  The equal signs at the end of the output are padding
+inserted because the number of bits in the original string was not
+evenly divisible by 24, in this example.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 base64_b64decode.py
+
+Encoded : b&#39;VGhpcyBpcyB0aGUgZGF0YSwgaW4gdGhlIGNsZWFyLg==&#39;
+Decoded : b&#39;This is the data, in the clear.&#39;
+</pre></div>
+</div>
+<p>The value returned from <code class="docutils literal notranslate"><span class="pre">b64decode()</span></code> is a byte string. If the
+contents are known to be text, the byte string can be converted to a
+unicode object. However, the point of using base 64 encoding is to be
+able to transmit binary data, and so it is not always safe to assume
+that the decoded value is text.</p>
+</div>
+<div class="section" id="url-safe-variations">
+<h2>URL-safe Variations<a class="headerlink" href="#url-safe-variations" title="Permalink to this headline">¶</a></h2>
+<p>Because the default base64 alphabet may use <code class="docutils literal notranslate"><span class="pre">+</span></code> and <code class="docutils literal notranslate"><span class="pre">/</span></code>, and those
+two characters are used in URLs, it is often necessary to use an
+alternate encoding with substitutes for those characters.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">base64_urlsafe.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">base64</span>
+
+<span class="n">encodes_with_pluses</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xfb\xef</span><span class="s1">&#39;</span>
+<span class="n">encodes_with_slashes</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xff\xff</span><span class="s1">&#39;</span>
+
+<span class="k">for</span> <span class="n">original</span> <span class="ow">in</span> <span class="p">[</span><span class="n">encodes_with_pluses</span><span class="p">,</span> <span class="n">encodes_with_slashes</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Original         :&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">original</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Standard encoding:&#39;</span><span class="p">,</span>
+          <span class="n">base64</span><span class="o">.</span><span class="n">standard_b64encode</span><span class="p">(</span><span class="n">original</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;URL-safe encoding:&#39;</span><span class="p">,</span>
+          <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">original</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">+</span></code> is replaced with a <code class="docutils literal notranslate"><span class="pre">-</span></code>, and <code class="docutils literal notranslate"><span class="pre">/</span></code> is replaced with
+underscore (<code class="docutils literal notranslate"><span class="pre">_</span></code>).  Otherwise, the alphabet is the same.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 base64_urlsafe.py
+
+Original         : b&#39;\xfb\xef&#39;
+Standard encoding: b&#39;++8=&#39;
+URL-safe encoding: b&#39;--8=&#39;
+
+Original         : b&#39;\xff\xff&#39;
+Standard encoding: b&#39;//8=&#39;
+URL-safe encoding: b&#39;__8=&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="other-encodings">
+<h2>Other Encodings<a class="headerlink" href="#other-encodings" title="Permalink to this headline">¶</a></h2>
+<p>Besides Base64, the module provides functions for working with Base85,
+Base32, and Base16 (hex) encoded data.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">base64_base32.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">base64</span>
+
+<span class="n">original_data</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;This is the data, in the clear.&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Original:&#39;</span><span class="p">,</span> <span class="n">original_data</span><span class="p">)</span>
+
+<span class="n">encoded_data</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b32encode</span><span class="p">(</span><span class="n">original_data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Encoded :&#39;</span><span class="p">,</span> <span class="n">encoded_data</span><span class="p">)</span>
+
+<span class="n">decoded_data</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b32decode</span><span class="p">(</span><span class="n">encoded_data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Decoded :&#39;</span><span class="p">,</span> <span class="n">decoded_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The Base32 alphabet includes the 26 uppercase letters from the ASCII
+set and the digits 2 through 7.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 base64_base32.py
+
+Original: b&#39;This is the data, in the clear.&#39;
+Encoded : b&#39;KRUGS4ZANFZSA5DIMUQGIYLUMEWCA2LOEB2GQZJAMNWGKYLSFY==
+====&#39;
+Decoded : b&#39;This is the data, in the clear.&#39;
+</pre></div>
+</div>
+<p>The Base16 functions work with the hexadecimal alphabet.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">base64_base16.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">base64</span>
+
+<span class="n">original_data</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;This is the data, in the clear.&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Original:&#39;</span><span class="p">,</span> <span class="n">original_data</span><span class="p">)</span>
+
+<span class="n">encoded_data</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b16encode</span><span class="p">(</span><span class="n">original_data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Encoded :&#39;</span><span class="p">,</span> <span class="n">encoded_data</span><span class="p">)</span>
+
+<span class="n">decoded_data</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b16decode</span><span class="p">(</span><span class="n">encoded_data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Decoded :&#39;</span><span class="p">,</span> <span class="n">decoded_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Each time the number of encoding bits goes down, the output in the
+encoded format takes up more space.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 base64_base16.py
+
+Original: b&#39;This is the data, in the clear.&#39;
+Encoded : b&#39;546869732069732074686520646174612C20696E207468652063
+6C6561722E&#39;
+Decoded : b&#39;This is the data, in the clear.&#39;
+</pre></div>
+</div>
+<p>The Base85 functions use an expanded alphabet that is more
+space-efficient than base 64.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">base64_base85.py</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">base64</span>
+
+<span class="n">original_data</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;This is the data, in the clear.&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Original    : </span><span class="si">{}</span><span class="s1"> bytes </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="nb">len</span><span class="p">(</span><span class="n">original_data</span><span class="p">),</span> <span class="n">original_data</span><span class="p">))</span>
+
+<span class="n">b64_data</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">original_data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;b64 Encoded : </span><span class="si">{}</span><span class="s1"> bytes </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="nb">len</span><span class="p">(</span><span class="n">b64_data</span><span class="p">),</span> <span class="n">b64_data</span><span class="p">))</span>
+
+<span class="n">b85_data</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b85encode</span><span class="p">(</span><span class="n">original_data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;b85 Encoded : </span><span class="si">{}</span><span class="s1"> bytes </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="nb">len</span><span class="p">(</span><span class="n">b85_data</span><span class="p">),</span> <span class="n">b85_data</span><span class="p">))</span>
+
+<span class="n">a85_data</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">a85encode</span><span class="p">(</span><span class="n">original_data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a85 Encoded : </span><span class="si">{}</span><span class="s1"> bytes </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="nb">len</span><span class="p">(</span><span class="n">a85_data</span><span class="p">),</span> <span class="n">a85_data</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>There are several Base85 encodings and different variations are used
+in Mercurial, git, and the PDF file format. Python includes two
+implementations, <code class="docutils literal notranslate"><span class="pre">b85encode()</span></code> implements the version used in Git
+and Mercurial while <code class="docutils literal notranslate"><span class="pre">a85encode()</span></code> implements the Ascii85 variant
+used by PDF files.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 base64_base85.py
+
+Original    : 31 bytes b&#39;This is the data, in the clear.&#39;
+b64 Encoded : 44 bytes b&#39;VGhpcyBpcyB0aGUgZGF0YSwgaW4gdGhlIGNsZWF
+yLg==&#39;
+b85 Encoded : 39 bytes b&#39;RA^~)AZc?TbZBKDWMOn+EFfuaAarPDAY*K0VR9}
+&#39;
+a85 Encoded : 39 bytes b&#39;&lt;+oue+DGm&gt;FD,5.A79Rg/0JYE+EV:.+Cf5!@&lt;*t
+&#39;
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference external" href="https://docs.python.org/3.7/library/base64.html">Standard library documentation for base64</a></li>
+<li><span class="target" id="index-0"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc3548.html"><strong>RFC 3548</strong></a> – The Base16, Base32, and Base64 Data Encodings</li>
+<li><span class="target" id="index-1"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc1924.html"><strong>RFC 1924</strong></a> – A Compact Representation of IPv6 Addresses
+(suggests base-85 encoding for IPv6 network addresses)</li>
+<li><a class="reference external" href="https://en.wikipedia.org/wiki/Ascii85">Ascii85</a></li>
+<li><a class="reference internal" href="../porting_notes.html#porting-base64"><span class="std std-ref">Python 2 to 3 porting notes for base64</span></a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+        <div id="footer-nav">
+<a id="prev-link" href="../urllib.robotparser/index.html"
+   title="previous chapter"><i class="fa fa-arrow-circle-left"></i> urllib.robotparser — Internet Spider Access Control</a>
+<a id="next-link" href="../http.server/index.html"
+   title="next chapter">http.server — Base Classes for Implementing Web Servers <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+        </div>
+      </div>
+
+      <div class="pure-u-1-4">
+        <div class="sidebar-wrapper">
+          <div class="sidebar">
+<div id="sidebar-toc">
+  <h5>Quick Links</h5>
+  <ul>
+    
+    <li><a href="#base-64-encoding"><i class="fa fa-caret-right"></i>Base 64 Encoding</a></li>
+    
+    <li><a href="#base-64-decoding"><i class="fa fa-caret-right"></i>Base 64 Decoding</a></li>
+    
+    <li><a href="#url-safe-variations"><i class="fa fa-caret-right"></i>URL-safe Variations</a></li>
+    
+    <li><a href="#other-encodings"><i class="fa fa-caret-right"></i>Other Encodings</a></li>
+    
+  </ul>
+</div>
+
+          </div>
+          <div class="sidebar"><div id="sidebar-last-updated">
+  This page was last updated 2018-03-18.
+</div>
+
+          </div>
+          <div class="sidebar">
+<div id="sidebar-nav">
+  <h5>Navigation</h5>
+  <ul>
+    <li><a href="../urllib.robotparser/index.html"
+           title="previous chapter"><i class="fa fa-arrow-circle-left"></i>urllib.robotparser — Internet Spider Access Control</a></li>
+    <li><a href="../http.server/index.html"
+           title="next chapter"><i class="fa fa-arrow-circle-right"></i>http.server — Base Classes for Implementing Web Servers</a></li>
+  </ul>
+</div>
+          </div>
+          <div class="sidebar"><div id="sidebar-book"><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/book-cover-image-med.jpg"><br>Get the book</a></div>
+          </div>
+          <div class="sidebar"><div id="sidebar-example-disclaimer">
+<p>The output from all the example programs
+from PyMOTW-3 has been generated with Python 3.7.9, unless
+otherwise noted. Some of the features described here may not be
+available in earlier versions of Python.</p>
+<p>Looking for <a href="/2/">examples for Python 2</a>?</p>
+</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pure-g-r" id="footer">
+
+      <div class="pure-u-1-3">
+        <div class="footer-list">
+            <h4>This Site</h4>
+            <ul>
+              <li><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+              <li><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+            </ul>
+        </div>
+      </div><div class="pure-u-1-3">
+          <div class="footer-content">
+            <div class="socialmedia">
+              <a class="sociallink" href="../index.html"
+       title="Home">
+      <i class="fa fa-home fa-lg"></i></a>
+              <a class="sociallink" href="../about.html"
+       title="About">
+      <i class="fa fa-user fa-lg"></i></a>
+              <a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a>
+              <a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a>
+              <a class="sociallink" href="http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US"
+       title="Subscribe via Email">
+      <i class="fa fa-envelope fa-lg"></i></a>
+            </div>
+
+            <div class="copyright">
+              <a rel="author" href="../about.html">&copy; Copyright 2021, Doug Hellmann</a>
+            </div>
+
+            <div class="cc"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License BY-NC-SA" style="border-width:0; align: center;" width="88" height="31" src="data:image/png;base64,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"/></a>
+            </div>
+
+          </div></div><div class="pure-u-1-3">
+          <div class="footer-list">
+            <h4>Other Writing</h4>
+            <ul>
+              <li><a href="https://doughellmann.com/"><i class="fa fa-pencil fa-lg"></i> Blog</a></li>
+              <li><a href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><i class="fa fa-book fa-lg"></i> The Python Standard Library By Example</a></li>
+            </ul>
+          </div>
+        </div><script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-3', 'pymotw.com');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

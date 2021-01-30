@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>unittest — Automated Testing Framework &mdash; PyMOTW 3</title>
+
+    <link rel="stylesheet" href="../_static/pure-min.css" type="text/css">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pymotw.css" type="text/css">
+
+    <link rel="shortcut icon" type="image/png" href="../_static/favicon.png">
+
+    <link rel="alternate" type="application/atom+xml"
+          title="Doug Hellmann"
+          href="http://feeds.doughellmann.com/DougHellmann" />
+    <link rel="alternate" type="application/atom+xml"
+          title="PyMOTW Updates"
+          href="http://feeds.doughellmann.com/PyMOTW" />
+
+    <meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+
+  </head>
+  <body>
+
+    <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
+      <a class="pure-menu-heading" href="../index.html"><img src="../_static/logo.png"> PyMOTW-3</a>
+
+      <ul id="top-menu">
+        <li class="pure-menu-selected"><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+        <li class="pure-menu-selected"><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a></a>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a></li>
+      </ul>
+
+    </div>
+
+    <div class="pure-menu pure-menu-open pure-menu-vertical" id="breadcrumbs-menu">
+      
+      <ul id="breadcrumbs">
+        <li class="pure-menu-selected"><a href="../dev_tools.html"><i class="fa fa-arrow-circle-up"></i> Developer Tools</a></li>
+      </ul>
+    </div>
+
+    <div class="pure-g-r" id="content-container">
+
+      <div class="pure-u-3-4">
+        <div class="content">
+          
+  <div class="section" id="module-unittest">
+<span id="unittest-automated-testing-framework"></span><h1>unittest — Automated Testing Framework<a class="headerlink" href="#module-unittest" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Automated testing framework</td>
+</tr>
+</tbody>
+</table>
+<p>Python’s <code class="docutils literal notranslate"><span class="pre">unittest</span></code> module is based on the XUnit framework design
+by Kent Beck and Erich Gamma. The same pattern is repeated in many
+other languages, including C, Perl, Java, and Smalltalk. The framework
+implemented by <code class="docutils literal notranslate"><span class="pre">unittest</span></code> supports fixtures, test suites, and a
+test runner to enable automated testing.</p>
+<div class="section" id="basic-test-structure">
+<h2>Basic Test Structure<a class="headerlink" href="#basic-test-structure" title="Permalink to this headline">¶</a></h2>
+<p>Tests, as defined by <code class="docutils literal notranslate"><span class="pre">unittest</span></code>, have two parts: code to manage test
+dependencies (called <em>fixtures</em>), and the test itself. Individual
+tests are created by subclassing <code class="docutils literal notranslate"><span class="pre">TestCase</span></code> and overriding or adding
+appropriate methods. In the following example, the <code class="docutils literal notranslate"><span class="pre">SimplisticTest</span></code>
+has a single <code class="docutils literal notranslate"><span class="pre">test()</span></code> method, which would fail if <code class="docutils literal notranslate"><span class="pre">a</span></code> is ever
+different from <code class="docutils literal notranslate"><span class="pre">b</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">unittest_simple.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+
+
+<span class="k">class</span> <span class="nc">SimplisticTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="running-tests">
+<h2>Running Tests<a class="headerlink" href="#running-tests" title="Permalink to this headline">¶</a></h2>
+<p>The easiest way to run unittest tests is use the automatic discovery
+available through the command line interface.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 -m unittest unittest_simple.py
+
+.
+----------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+</pre></div>
+</div>
+<p>This abbreviated output includes the amount of time the tests took,
+along with a status indicator for each test (the “.” on the first line
+of output means that a test passed). For more detailed test results,
+include the <code class="docutils literal notranslate"><span class="pre">-v</span></code> option.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 -m unittest -v unittest_simple.py
+
+test (unittest_simple.SimplisticTest) ... ok
+
+----------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+</pre></div>
+</div>
+</div>
+<div class="section" id="test-outcomes">
+<h2>Test Outcomes<a class="headerlink" href="#test-outcomes" title="Permalink to this headline">¶</a></h2>
+<p>Tests have 3 possible outcomes, described in the table below.</p>
+<table border="1" class="docutils" id="id2">
+<caption><span class="caption-text">Test Case Outcomes</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Outcome</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>ok</td>
+<td>The test passes.</td>
+</tr>
+<tr class="row-odd"><td>FAIL</td>
+<td>The test does not pass, and raises an AssertionError exception.</td>
+</tr>
+<tr class="row-even"><td>ERROR</td>
+<td>The test raises any exception other than AssertionError.</td>
+</tr>
+</tbody>
+</table>
+<p>There is no explicit way to cause a test to “pass”, so a test’s status
+depends on the presence (or absence) of an exception.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">unittest_outcomes.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+
+
+<span class="k">class</span> <span class="nc">OutcomesTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">testPass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">testFail</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testError</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Test error!&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>When a test fails or generates an error, the traceback is included in the
+output.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 -m unittest unittest_outcomes.py
+
+EF.
+================================================================
+ERROR: testError (unittest_outcomes.OutcomesTest)
+----------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;.../unittest_outcomes.py&quot;, line 18, in testError
+    raise RuntimeError(&#39;Test error!&#39;)
+RuntimeError: Test error!
+
+================================================================
+FAIL: testFail (unittest_outcomes.OutcomesTest)
+----------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;.../unittest_outcomes.py&quot;, line 15, in testFail
+    self.assertFalse(True)
+AssertionError: True is not false
+
+----------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+FAILED (failures=1, errors=1)
+</pre></div>
+</div>
+<p>In the previous example, <code class="docutils literal notranslate"><span class="pre">testFail()</span></code> fails and the traceback
+shows the line with the failure code. It is up to the person reading
+the test output to look at the code to figure out the meaning of the
+failed test, though.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">unittest_failwithmessage.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+
+
+<span class="k">class</span> <span class="nc">FailureMessageTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">testFail</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;failure message goes here&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>To make it easier to understand the nature of a test failure, the
+<code class="docutils literal notranslate"><span class="pre">fail*()</span></code> and <code class="docutils literal notranslate"><span class="pre">assert*()</span></code> methods all accept an argument
+<code class="docutils literal notranslate"><span class="pre">msg</span></code>, which can be used to produce a more detailed error message.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 -m unittest -v unittest_failwithmessage.py
+
+testFail (unittest_failwithmessage.FailureMessageTest) ... FAIL
+
+================================================================
+FAIL: testFail (unittest_failwithmessage.FailureMessageTest)
+----------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;.../unittest_failwithmessage.py&quot;, line 12, in testFail
+    self.assertFalse(True, &#39;failure message goes here&#39;)
+AssertionError: True is not false : failure message goes here
+
+----------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)
+</pre></div>
+</div>
+</div>
+<div class="section" id="asserting-truth">
+<h2>Asserting Truth<a class="headerlink" href="#asserting-truth" title="Permalink to this headline">¶</a></h2>
+<p>Most tests assert the truth of some condition. There are two different
+ways to write truth-checking tests, depending on the perspective of
+the test author and the desired outcome of the code being tested.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">unittest_truth.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+
+
+<span class="k">class</span> <span class="nc">TruthTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">testAssertTrue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testAssertFalse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>If the code produces a value which can be evaluated as true, the
+method <code class="docutils literal notranslate"><span class="pre">assertTrue()</span></code> should be used. If the code produces a false
+value, the method <code class="docutils literal notranslate"><span class="pre">assertFalse()</span></code> make more sense.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 -m unittest -v unittest_truth.py
+
+testAssertFalse (unittest_truth.TruthTest) ... ok
+testAssertTrue (unittest_truth.TruthTest) ... ok
+
+----------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing-equality">
+<h2>Testing Equality<a class="headerlink" href="#testing-equality" title="Permalink to this headline">¶</a></h2>
+<p>As a special case, <code class="docutils literal notranslate"><span class="pre">unittest</span></code> includes methods for testing the
+equality of two values.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">unittest_equality.py</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+
+
+<span class="k">class</span> <span class="nc">EqualityTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">testExpectEqual</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testExpectEqualFails</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testExpectNotEqual</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testExpectNotEqualFails</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>When they fail, these special test methods produce error messages
+including the values being compared.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 -m unittest -v unittest_equality.py
+
+testExpectEqual (unittest_equality.EqualityTest) ... ok
+testExpectEqualFails (unittest_equality.EqualityTest) ... FAIL
+testExpectNotEqual (unittest_equality.EqualityTest) ... ok
+testExpectNotEqualFails (unittest_equality.EqualityTest) ...
+FAIL
+
+================================================================
+FAIL: testExpectEqualFails (unittest_equality.EqualityTest)
+----------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;.../unittest_equality.py&quot;, line 15, in
+testExpectEqualFails
+    self.assertEqual(2, 3 - 2)
+AssertionError: 2 != 1
+
+================================================================
+FAIL: testExpectNotEqualFails (unittest_equality.EqualityTest)
+----------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;.../unittest_equality.py&quot;, line 21, in
+testExpectNotEqualFails
+    self.assertNotEqual(1, 3 - 2)
+AssertionError: 1 == 1
+
+----------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+FAILED (failures=2)
+</pre></div>
+</div>
+</div>
+<div class="section" id="almost-equal">
+<h2>Almost Equal?<a class="headerlink" href="#almost-equal" title="Permalink to this headline">¶</a></h2>
+<p>In addition to strict equality, it is possible to test for near
+equality of floating point numbers using <code class="docutils literal notranslate"><span class="pre">assertAlmostEqual()</span></code>
+and <code class="docutils literal notranslate"><span class="pre">assertNotAlmostEqual()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">unittest_almostequal.py</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+
+
+<span class="k">class</span> <span class="nc">AlmostEqualTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">testEqual</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">3.3</span> <span class="o">-</span> <span class="mf">2.2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testAlmostEqual</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">3.3</span> <span class="o">-</span> <span class="mf">2.2</span><span class="p">,</span> <span class="n">places</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testNotAlmostEqual</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertNotAlmostEqual</span><span class="p">(</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">3.3</span> <span class="o">-</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">places</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The arguments are the values to be compared, and the number of decimal
+places to use for the test.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 -m unittest unittest_almostequal.py
+
+.F.
+================================================================
+FAIL: testEqual (unittest_almostequal.AlmostEqualTest)
+----------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;.../unittest_almostequal.py&quot;, line 12, in testEqual
+    self.assertEqual(1.1, 3.3 - 2.2)
+AssertionError: 1.1 != 1.0999999999999996
+
+----------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+FAILED (failures=1)
+</pre></div>
+</div>
+</div>
+<div class="section" id="containers">
+<h2>Containers<a class="headerlink" href="#containers" title="Permalink to this headline">¶</a></h2>
+<p>In addition to the generic <code class="docutils literal notranslate"><span class="pre">assertEqual()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">assertNotEqual()</span></code>, there are special methods for comparing
+containers like <code class="docutils literal notranslate"><span class="pre">list</span></code>, <code class="docutils literal notranslate"><span class="pre">dict</span></code>, and <code class="docutils literal notranslate"><span class="pre">set</span></code>
+objects.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">unittest_equality_container.py</span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">textwrap</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+
+
+<span class="k">class</span> <span class="nc">ContainerEqualityTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">testCount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertCountEqual</span><span class="p">(</span>
+            <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testDict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span>
+            <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+            <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testList</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertListEqual</span><span class="p">(</span>
+            <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testMultiLineString</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertMultiLineEqual</span><span class="p">(</span>
+            <span class="n">textwrap</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            This string</span>
+<span class="s2">            has more than one</span>
+<span class="s2">            line.</span>
+<span class="s2">            &quot;&quot;&quot;</span><span class="p">),</span>
+            <span class="n">textwrap</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            This string has</span>
+<span class="s2">            more than two</span>
+<span class="s2">            lines.</span>
+<span class="s2">            &quot;&quot;&quot;</span><span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testSequence</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span>
+            <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testSet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSetEqual</span><span class="p">(</span>
+            <span class="nb">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span>
+            <span class="nb">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]),</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testTuple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTupleEqual</span><span class="p">(</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">),</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Each method reports inequality using a format that is meaningful for
+the input type, making test failures easier to understand and correct.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 -m unittest unittest_equality_container.py
+
+FFFFFFF
+================================================================
+FAIL: testCount
+(unittest_equality_container.ContainerEqualityTest)
+----------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;.../unittest_equality_container.py&quot;, line 15, in
+testCount
+    [1, 3, 2, 3],
+AssertionError: Element counts were not equal:
+First has 2, Second has 1:  2
+First has 1, Second has 2:  3
+
+================================================================
+FAIL: testDict
+(unittest_equality_container.ContainerEqualityTest)
+----------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;.../unittest_equality_container.py&quot;, line 21, in
+testDict
+    {&#39;a&#39;: 1, &#39;b&#39;: 3},
+AssertionError: {&#39;a&#39;: 1, &#39;b&#39;: 2} != {&#39;a&#39;: 1, &#39;b&#39;: 3}
+- {&#39;a&#39;: 1, &#39;b&#39;: 2}
+?               ^
+
++ {&#39;a&#39;: 1, &#39;b&#39;: 3}
+?               ^
+
+
+================================================================
+FAIL: testList
+(unittest_equality_container.ContainerEqualityTest)
+----------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;.../unittest_equality_container.py&quot;, line 27, in
+testList
+    [1, 3, 2],
+AssertionError: Lists differ: [1, 2, 3] != [1, 3, 2]
+
+First differing element 1:
+2
+3
+
+- [1, 2, 3]
++ [1, 3, 2]
+
+================================================================
+FAIL: testMultiLineString
+(unittest_equality_container.ContainerEqualityTest)
+----------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;.../unittest_equality_container.py&quot;, line 41, in
+testMultiLineString
+    &quot;&quot;&quot;),
+AssertionError: &#39;\nThis string\nhas more than one\nline.\n&#39; !=
+&#39;\nThis string has\nmore than two\nlines.\n&#39;
+
+- This string
++ This string has
+?            ++++
+- has more than one
+? ----           --
++ more than two
+?           ++
+- line.
++ lines.
+?     +
+
+
+================================================================
+FAIL: testSequence
+(unittest_equality_container.ContainerEqualityTest)
+----------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;.../unittest_equality_container.py&quot;, line 47, in
+testSequence
+    [1, 3, 2],
+AssertionError: Sequences differ: [1, 2, 3] != [1, 3, 2]
+
+First differing element 1:
+2
+3
+
+- [1, 2, 3]
++ [1, 3, 2]
+
+================================================================
+FAIL: testSet
+(unittest_equality_container.ContainerEqualityTest)
+----------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;.../unittest_equality_container.py&quot;, line 53, in testSet
+    set([1, 3, 2, 4]),
+AssertionError: Items in the second set but not the first:
+4
+
+================================================================
+FAIL: testTuple
+(unittest_equality_container.ContainerEqualityTest)
+----------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;.../unittest_equality_container.py&quot;, line 59, in
+testTuple
+    (1, &#39;b&#39;),
+AssertionError: Tuples differ: (1, &#39;a&#39;) != (1, &#39;b&#39;)
+
+First differing element 1:
+&#39;a&#39;
+&#39;b&#39;
+
+- (1, &#39;a&#39;)
+?      ^
+
++ (1, &#39;b&#39;)
+?      ^
+
+
+----------------------------------------------------------------
+Ran 7 tests in 0.005s
+
+FAILED (failures=7)
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">assertIn()</span></code> to test container membership.</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">unittest_in.py</span><a class="headerlink" href="#id9" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+
+
+<span class="k">class</span> <span class="nc">ContainerMembershipTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">testDict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s1">&#39;c&#39;</span><span class="p">})</span>
+
+    <span class="k">def</span> <span class="nf">testList</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">testSet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="nb">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<p>Any object that supports the <code class="docutils literal notranslate"><span class="pre">in</span></code> operator or the container API can
+be used with <code class="docutils literal notranslate"><span class="pre">assertIn()</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 -m unittest unittest_in.py
+
+FFF
+================================================================
+FAIL: testDict (unittest_in.ContainerMembershipTest)
+----------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;.../unittest_in.py&quot;, line 12, in testDict
+    self.assertIn(4, {1: &#39;a&#39;, 2: &#39;b&#39;, 3: &#39;c&#39;})
+AssertionError: 4 not found in {1: &#39;a&#39;, 2: &#39;b&#39;, 3: &#39;c&#39;}
+
+================================================================
+FAIL: testList (unittest_in.ContainerMembershipTest)
+----------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;.../unittest_in.py&quot;, line 15, in testList
+    self.assertIn(4, [1, 2, 3])
+AssertionError: 4 not found in [1, 2, 3]
+
+================================================================
+FAIL: testSet (unittest_in.ContainerMembershipTest)
+----------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;.../unittest_in.py&quot;, line 18, in testSet
+    self.assertIn(4, set([1, 2, 3]))
+AssertionError: 4 not found in {1, 2, 3}
+
+----------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+FAILED (failures=3)
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing-for-exceptions">
+<h2>Testing for Exceptions<a class="headerlink" href="#testing-for-exceptions" title="Permalink to this headline">¶</a></h2>
+<p>As previously mentioned, if a test raises an exception other than
+<code class="docutils literal notranslate"><span class="pre">AssertionError</span></code> it is treated as an error. This is very useful
+for uncovering mistakes while modifying code that has existing test
+coverage. There are circumstances, however, in which the test should
+verify that some code does produce an exception. For example, if an
+invalid value is given to an attribute of an object. In such cases,
+<code class="docutils literal notranslate"><span class="pre">assertRaises()</span></code> makes the code more clear than trapping the
+exception in the test. Compare these two tests:</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">unittest_exception.py</span><a class="headerlink" href="#id10" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+
+
+<span class="k">def</span> <span class="nf">raises_error</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid value: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">kwds</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">ExceptionTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">testTrapLocally</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">raises_error</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s1">&#39;Did not see ValueError&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testAssertRaises</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span>
+            <span class="ne">ValueError</span><span class="p">,</span>
+            <span class="n">raises_error</span><span class="p">,</span>
+            <span class="s1">&#39;a&#39;</span><span class="p">,</span>
+            <span class="n">b</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The results for both are the same, but the second test using
+<code class="docutils literal notranslate"><span class="pre">assertRaises()</span></code> is more succinct.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 -m unittest -v unittest_exception.py
+
+testAssertRaises (unittest_exception.ExceptionTest) ... ok
+testTrapLocally (unittest_exception.ExceptionTest) ... ok
+
+----------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+</pre></div>
+</div>
+</div>
+<div class="section" id="test-fixtures">
+<h2>Test Fixtures<a class="headerlink" href="#test-fixtures" title="Permalink to this headline">¶</a></h2>
+<p>Fixtures are outside resources needed by a test. For example, tests
+for one class may all need an instance of another class that provides
+configuration settings or another shared resource. Other test fixtures
+include database connections and temporary files (many people would
+argue that using external resources makes such tests not “unit” tests,
+but they are still tests and still useful).</p>
+<p><code class="docutils literal notranslate"><span class="pre">unittest</span></code> includes special hooks to configure and clean up any
+fixtures needed by tests. To establish fixtures for each individual
+test case, override <code class="docutils literal notranslate"><span class="pre">setUp()</span></code> on the <code class="docutils literal notranslate"><span class="pre">TestCase</span></code>. To clean
+them up, override <code class="docutils literal notranslate"><span class="pre">tearDown()</span></code>. To manage one set of fixtures for
+all instances of a test class, override the class methods
+<code class="docutils literal notranslate"><span class="pre">setUpClass()</span></code> and <code class="docutils literal notranslate"><span class="pre">tearDownClass()</span></code> for the
+<code class="docutils literal notranslate"><span class="pre">TestCase</span></code>. And to handle especially expensive setup operations
+for all of the tests within a module, use the module-level functions
+<code class="docutils literal notranslate"><span class="pre">setUpModule()</span></code> and <code class="docutils literal notranslate"><span class="pre">tearDownModule()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">unittest_fixtures.py</span><a class="headerlink" href="#id11" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+
+
+<span class="k">def</span> <span class="nf">setUpModule</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;In setUpModule()&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">tearDownModule</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;In tearDownModule()&#39;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">FixturesTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">setUpClass</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;In setUpClass()&#39;</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">good_range</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">tearDownClass</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;In tearDownClass()&#39;</span><span class="p">)</span>
+        <span class="k">del</span> <span class="bp">cls</span><span class="o">.</span><span class="n">good_range</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">In setUp()&#39;</span><span class="p">)</span>
+        <span class="c1"># Pick a number sure to be in the range. The range is</span>
+        <span class="c1"># defined as not including the &quot;stop&quot; value, so make</span>
+        <span class="c1"># sure it is not included in the set of allowed values</span>
+        <span class="c1"># for our choice.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">good_range</span><span class="o">.</span><span class="n">start</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">good_range</span><span class="o">.</span><span class="n">stop</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;In tearDown()&#39;</span><span class="p">)</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">tearDown</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">test1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;In test1()&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">good_range</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;In test2()&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">good_range</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>When this sample test is run, the order of execution of the fixture
+and test methods is apparent.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 -u -m unittest -v unittest_fixtures.py
+
+In setUpModule()
+In setUpClass()
+test1 (unittest_fixtures.FixturesTest) ...
+In setUp()
+In test1()
+In tearDown()
+ok
+test2 (unittest_fixtures.FixturesTest) ...
+In setUp()
+In test2()
+In tearDown()
+ok
+In tearDownClass()
+In tearDownModule()
+
+----------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">tearDown</span></code> methods may not all be invoked if there are errors in
+the process of cleaning up fixtures. To ensure that a fixture is
+always released correctly, use <code class="docutils literal notranslate"><span class="pre">addCleanup()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-text">unittest_addcleanup.py</span><a class="headerlink" href="#id12" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+
+
+<span class="k">def</span> <span class="nf">remove_tmpdir</span><span class="p">(</span><span class="n">dirname</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;In remove_tmpdir()&#39;</span><span class="p">)</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">dirname</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">FixturesTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tmpdir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addCleanup</span><span class="p">(</span><span class="n">remove_tmpdir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tmpdir</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">In test1()&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">In test2()&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>This example test creates a temporary directory and then uses
+<a class="reference internal" href="../shutil/index.html#module-shutil" title="shutil: High-level file operations."><code class="xref py py-mod docutils literal notranslate"><span class="pre">shutil</span></code></a> to clean it up when the test is done.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 -u -m unittest -v unittest_addcleanup.py
+
+test1 (unittest_addcleanup.FixturesTest) ...
+In test1()
+In remove_tmpdir()
+ok
+test2 (unittest_addcleanup.FixturesTest) ...
+In test2()
+In remove_tmpdir()
+ok
+
+----------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+OK
+</pre></div>
+</div>
+</div>
+<div class="section" id="repeating-tests-with-different-inputs">
+<h2>Repeating Tests with Different Inputs<a class="headerlink" href="#repeating-tests-with-different-inputs" title="Permalink to this headline">¶</a></h2>
+<p>It is frequently useful to run the same test logic with different
+inputs. Rather than defining a separate test method for each small
+case, a common way of doing this is to use one test method containing
+several related assertion calls. The problem with this approach is
+that as soon as one assertion fails, the rest are skipped. A better
+solution is to use <code class="docutils literal notranslate"><span class="pre">subTest()</span></code> to create a context for a test
+within a test method. If the test fails, the failure is reported and
+the remaining tests continue.</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-text">unittest_subtest.py</span><a class="headerlink" href="#id13" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+
+
+<span class="k">class</span> <span class="nc">SubTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_combined</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRegex</span><span class="p">(</span><span class="s1">&#39;abc&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRegex</span><span class="p">(</span><span class="s1">&#39;abc&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">)</span>
+        <span class="c1"># The next assertions are not verified!</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRegex</span><span class="p">(</span><span class="s1">&#39;abc&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRegex</span><span class="p">(</span><span class="s1">&#39;abc&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_with_subtest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">pat</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">]:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">subTest</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">pat</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertRegex</span><span class="p">(</span><span class="s1">&#39;abc&#39;</span><span class="p">,</span> <span class="n">pat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>In this example, the <code class="docutils literal notranslate"><span class="pre">test_combined()</span></code> method never runs the
+assertions for the patterns <code class="docutils literal notranslate"><span class="pre">'c'</span></code> and <code class="docutils literal notranslate"><span class="pre">'d'</span></code>. The
+<code class="docutils literal notranslate"><span class="pre">test_with_subtest()</span></code> method does, and correctly reports the
+additional failure. Note that the test runner still considers there to
+only be two test cases, even though there are three failures reported.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 -m unittest -v unittest_subtest.py
+
+test_combined (unittest_subtest.SubTest) ... FAIL
+test_with_subtest (unittest_subtest.SubTest) ...
+================================================================
+FAIL: test_combined (unittest_subtest.SubTest)
+----------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;.../unittest_subtest.py&quot;, line 13, in test_combined
+    self.assertRegex(&#39;abc&#39;, &#39;B&#39;)
+AssertionError: Regex didn&#39;t match: &#39;B&#39; not found in &#39;abc&#39;
+
+================================================================
+FAIL: test_with_subtest (unittest_subtest.SubTest) (pattern=&#39;B&#39;)
+----------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;.../unittest_subtest.py&quot;, line 21, in test_with_subtest
+    self.assertRegex(&#39;abc&#39;, pat)
+AssertionError: Regex didn&#39;t match: &#39;B&#39; not found in &#39;abc&#39;
+
+================================================================
+FAIL: test_with_subtest (unittest_subtest.SubTest) (pattern=&#39;d&#39;)
+----------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;.../unittest_subtest.py&quot;, line 21, in test_with_subtest
+    self.assertRegex(&#39;abc&#39;, pat)
+AssertionError: Regex didn&#39;t match: &#39;d&#39; not found in &#39;abc&#39;
+
+----------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (failures=3)
+</pre></div>
+</div>
+</div>
+<div class="section" id="skipping-tests">
+<h2>Skipping Tests<a class="headerlink" href="#skipping-tests" title="Permalink to this headline">¶</a></h2>
+<p>It is frequently useful to be able to skip a test if some external
+condition is not met. For example, when writing tests to check
+behavior of a library under a specific version of Python there is no
+reason to run those tests under other versions of Python. Test classes
+and methods can be decorated with <code class="docutils literal notranslate"><span class="pre">skip()</span></code> to always skip the
+tests. The decorators <code class="docutils literal notranslate"><span class="pre">skipIf()</span></code> and <code class="docutils literal notranslate"><span class="pre">skipUnless()</span></code> can be
+used to check a condition before skipping.</p>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-text">unittest_skip.py</span><a class="headerlink" href="#id14" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+
+
+<span class="k">class</span> <span class="nc">SkippingTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="nd">@unittest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s1">&#39;always skipped&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="nd">@unittest</span><span class="o">.</span><span class="n">skipIf</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">,</span>
+                     <span class="s1">&#39;only runs on python 2&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_python2_only</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="nd">@unittest</span><span class="o">.</span><span class="n">skipUnless</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;Darwin&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;only runs on macOS&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_macos_only</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_raise_skiptest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">unittest</span><span class="o">.</span><span class="n">SkipTest</span><span class="p">(</span><span class="s1">&#39;skipping via exception&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>For complex conditions that are difficult to express in a single
+expression to be passed to <code class="docutils literal notranslate"><span class="pre">skipIf()</span></code> or <code class="docutils literal notranslate"><span class="pre">skipUnless()</span></code>, a
+test case may raise <code class="docutils literal notranslate"><span class="pre">SkipTest</span></code> directly to cause the test to be
+skipped.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 -m unittest -v unittest_skip.py
+
+test (unittest_skip.SkippingTest) ... skipped &#39;always skipped&#39;
+test_macos_only (unittest_skip.SkippingTest) ... skipped &#39;only
+runs on macOS&#39;
+test_python2_only (unittest_skip.SkippingTest) ... skipped &#39;only
+runs on python 2&#39;
+test_raise_skiptest (unittest_skip.SkippingTest) ... skipped
+&#39;skipping via exception&#39;
+
+----------------------------------------------------------------
+Ran 4 tests in 0.000s
+
+OK (skipped=4)
+</pre></div>
+</div>
+</div>
+<div class="section" id="ignoring-failing-tests">
+<h2>Ignoring Failing Tests<a class="headerlink" href="#ignoring-failing-tests" title="Permalink to this headline">¶</a></h2>
+<p>Rather than deleting tests that are persistently broken, they can be
+marked with the <code class="docutils literal notranslate"><span class="pre">expectedFailure()</span></code> decorator so the failure is
+ignored.</p>
+<div class="literal-block-wrapper docutils container" id="id15">
+<div class="code-block-caption"><span class="caption-text">unittest_expectedfailure.py</span><a class="headerlink" href="#id15" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+
+
+<span class="k">class</span> <span class="nc">Test</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="nd">@unittest</span><span class="o">.</span><span class="n">expectedFailure</span>
+    <span class="k">def</span> <span class="nf">test_never_passes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="nd">@unittest</span><span class="o">.</span><span class="n">expectedFailure</span>
+    <span class="k">def</span> <span class="nf">test_always_passes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>If a test that is expected to fail does in fact pass, that condition
+is treated as a special sort of failure and reported as an “unexpected
+success”.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 -m unittest -v unittest_expectedfailure.py
+
+test_always_passes (unittest_expectedfailure.Test) ...
+unexpected success
+test_never_passes (unittest_expectedfailure.Test) ... expected
+failure
+
+----------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (expected failures=1, unexpected successes=1)
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference external" href="https://docs.python.org/3.7/library/unittest.html">Standard library documentation for unittest</a></li>
+<li><a class="reference internal" href="../doctest/index.html#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><code class="xref py py-mod docutils literal notranslate"><span class="pre">doctest</span></code></a> – An alternate means of running tests embedded in
+docstrings or external documentation files.</li>
+<li><a class="reference external" href="https://nose.readthedocs.io/en/latest/">nose</a> – Third-party
+test runner with sophisticated discovery features.</li>
+<li><a class="reference external" href="http://doc.pytest.org/en/latest/">pytest</a> – A popular
+third-party test runner with support for distributed execution
+and an alternate fixture management system.</li>
+<li><a class="reference external" href="http://testrepository.readthedocs.io/en/latest/">testrepository</a> –
+Third-party test runner used by the OpenStack project, with
+support for parallel execution andtracking failures.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+        <div id="footer-nav">
+<a id="prev-link" href="../doctest/index.html"
+   title="previous chapter"><i class="fa fa-arrow-circle-left"></i> doctest — Testing Through Documentation</a>
+<a id="next-link" href="../trace/index.html"
+   title="next chapter">trace — Follow Program Flow <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+        </div>
+      </div>
+
+      <div class="pure-u-1-4">
+        <div class="sidebar-wrapper">
+          <div class="sidebar">
+<div id="sidebar-toc">
+  <h5>Quick Links</h5>
+  <ul>
+    
+    <li><a href="#basic-test-structure"><i class="fa fa-caret-right"></i>Basic Test Structure</a></li>
+    
+    <li><a href="#running-tests"><i class="fa fa-caret-right"></i>Running Tests</a></li>
+    
+    <li><a href="#test-outcomes"><i class="fa fa-caret-right"></i>Test Outcomes</a></li>
+    
+    <li><a href="#asserting-truth"><i class="fa fa-caret-right"></i>Asserting Truth</a></li>
+    
+    <li><a href="#testing-equality"><i class="fa fa-caret-right"></i>Testing Equality</a></li>
+    
+    <li><a href="#almost-equal"><i class="fa fa-caret-right"></i>Almost Equal?</a></li>
+    
+    <li><a href="#containers"><i class="fa fa-caret-right"></i>Containers</a></li>
+    
+    <li><a href="#testing-for-exceptions"><i class="fa fa-caret-right"></i>Testing for Exceptions</a></li>
+    
+    <li><a href="#test-fixtures"><i class="fa fa-caret-right"></i>Test Fixtures</a></li>
+    
+    <li><a href="#repeating-tests-with-different-inputs"><i class="fa fa-caret-right"></i>Repeating Tests with Different Inputs</a></li>
+    
+    <li><a href="#skipping-tests"><i class="fa fa-caret-right"></i>Skipping Tests</a></li>
+    
+    <li><a href="#ignoring-failing-tests"><i class="fa fa-caret-right"></i>Ignoring Failing Tests</a></li>
+    
+  </ul>
+</div>
+
+          </div>
+          <div class="sidebar"><div id="sidebar-last-updated">
+  This page was last updated 2018-03-18.
+</div>
+
+          </div>
+          <div class="sidebar">
+<div id="sidebar-nav">
+  <h5>Navigation</h5>
+  <ul>
+    <li><a href="../doctest/index.html"
+           title="previous chapter"><i class="fa fa-arrow-circle-left"></i>doctest — Testing Through Documentation</a></li>
+    <li><a href="../trace/index.html"
+           title="next chapter"><i class="fa fa-arrow-circle-right"></i>trace — Follow Program Flow</a></li>
+  </ul>
+</div>
+          </div>
+          <div class="sidebar"><div id="sidebar-book"><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/book-cover-image-med.jpg"><br>Get the book</a></div>
+          </div>
+          <div class="sidebar"><div id="sidebar-example-disclaimer">
+<p>The output from all the example programs
+from PyMOTW-3 has been generated with Python 3.7.9, unless
+otherwise noted. Some of the features described here may not be
+available in earlier versions of Python.</p>
+<p>Looking for <a href="/2/">examples for Python 2</a>?</p>
+</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pure-g-r" id="footer">
+
+      <div class="pure-u-1-3">
+        <div class="footer-list">
+            <h4>This Site</h4>
+            <ul>
+              <li><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+              <li><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+            </ul>
+        </div>
+      </div><div class="pure-u-1-3">
+          <div class="footer-content">
+            <div class="socialmedia">
+              <a class="sociallink" href="../index.html"
+       title="Home">
+      <i class="fa fa-home fa-lg"></i></a>
+              <a class="sociallink" href="../about.html"
+       title="About">
+      <i class="fa fa-user fa-lg"></i></a>
+              <a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a>
+              <a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a>
+              <a class="sociallink" href="http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US"
+       title="Subscribe via Email">
+      <i class="fa fa-envelope fa-lg"></i></a>
+            </div>
+
+            <div class="copyright">
+              <a rel="author" href="../about.html">&copy; Copyright 2021, Doug Hellmann</a>
+            </div>
+
+            <div class="cc"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License BY-NC-SA" style="border-width:0; align: center;" width="88" height="31" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAfCAMAAABUFvrSAAAABGdBTUEAALGOfPtRkwAAAf5QTFRF////////////AAAADQwNDQ4NDg4OEBAQGRkZGxsbHxscICAgIx8gJCQkKCUmKCgoKCkoKSkpKSopKicnKioqLS0tMDAwMS0uMjExMjMxNTY1Pj8+Pzc5Pzs8QEBAQ0RDUFBQUFFQWldYXV5dYGBgY19haGVmbmxscHBwcHJvdXJzdnN0eHV2eXx5en15fH98fX98fnt8f4F+gICAgoWChIGChIWEhIaEh4aHiYyJjIqLjoeLj4+PkY+PkZORkZSRk5iTlZmUlpmWmJaXmpiZnp2dnqCdn5aan5+fn6Oeoqaho6Gho6ijpqqmq7GqrKurrLKrrbOsrrOtrrStr6+vr7Kvr7Sur7WusLOvsLWvsLavsbewsrexsrixs7iytLmztLqztbW1tbq0tru1t7y2uL23ub64ub65urm5ur+5ur+6u8C6u8C7vMC8vMG7vMG8vcK8vcK9vsK9vsO+v7+/v8O+v8S+wMS/wMW/wMXAwcXAwsfCw8fCw8jDxMfDxMjDxMnExcnExcnFxsrFxsrGx8vHyMfHyMzHyMzIycjIyc3Iyc3Jys3Jy8rLy87Ky8/Ky8/LzM/LzNDLzNDMzdDMzdHMzdHNztHNztLOz8/Pz9PP0NPP0NTQ0dTQ0dTR0tXR0tXS09bS1tXV39/f4N/g4+Pj6Ofn7+/v8fHx////rrSdFQAAAAN0Uk5TAAoO5yEBUwAAA+FJREFUSMe1lo9301QUx6uXUmaf0qJ26iTrRoVinUzjQNR1gAyH6Lqx6XTDoVvXbU7qhA5m7CgYWaTDlLa6AiFsba3t+y+9Sdr8OvVMi7zTnLTf5H7ee9/73n11PA1PpDkcADPRWPwKt8YLG2I2n89m7gh8iluJz0dnpqe+HBsdHRn+7w3JyF1cvpbk05mCJG8Xi9uPpMLdNJ9cXV5UyBNjoyMtkR2A3B9Tt8SCfLTTqUzC2XlMvpcRbnA/IPmryYnzoyM9XuWBt8eI21FBcAy5Qk4KtxkGtQ1I+fRNbnk+evHC5NhJDwATDDIAnhNa1ImdFQTHr6WEvNyFPFeATSTYgAu/dl3/I31jNR6bnZ76eDf4yxRb2Q+71aiz/0JB8JXkrZzCdbFVqrUhRHuu54XkytLczAUvBFADUB6ARwnyqEp/t02prK9XdAXBHC9KyPWVqd6qPhyzlOG55dhsL/hLDTD1A3rYAy+dRu6eXaGKruA75wi2hbqigNd+LYSRW6XUSh64l05dXYruA1OPZfAOD3vhObL/ILDvQkRXynSdvPpaiJB+TVHAfEZuA9d9amlVF7TJd3nu+xgwyu8AqNOnDGAM8/obOLhQpWQotPYReZ/SQdKuKQpY2DwKwFJbGwI4VhCSlxchSFUnNC+CCgaV9RAKoZKh1J4le9FmQv5SFQW88aATXGhEws8wrHb7AANc0CndQS+ag5ERaieke0FXvnkxoYL/1MGi7FSmmVBXMDOu3gLK5J2PMjdXv2tmBX6pDdKSkq39DWXh3G1KI4QYVmS3AHCIPnCXE+4hHy6PcfeQ6sV2lufiL2jJ0wasp4p2k/Z2CEXeeqahDBLS1/c8+dBIXq4IkFAiWQ1QtxtnUMz/wsXfBj+1LzdUKn17dvXXzEqfMoFDNWO57QCe22dskKB5g7zXbVN+i0RKumKxonrfzaIVys2wYu7TVrd0PXn1rOnJC4JTFjF5c19/gnXLFwj6jJJz1rOjoi63LnBRfbmNM+qNunG5baSufhu9OPX5my2VTWEzrHrRbIP8dHl+dnpyrIVDBME/q1u6/E9bGmt9i2AsQmeaFaFwIb22soSlfuL8SEtgOCJKB5BsKkNltWyK7zzWMY3X4exDc6GvsljoX5FzR+BxwdCbf3jAdjTJv5/S39H2B2iXpmgXpWB7iVrB0JuVzpgP07CUO2WKqX+oiVL/benKImhgOIzHf7hx/A/IBdHsQ6Nsmruilo4afVFqB8PLn2U2H8hbxeKWjH9YvuiwxNiMaNhALZptCg5d7zh+Sczmclnx0vEOax6ajdjucSMPTcD/97/Cp54Q929ZZbgcR3o0hAAAAABJRU5ErkJggg=="/></a>
+            </div>
+
+          </div></div><div class="pure-u-1-3">
+          <div class="footer-list">
+            <h4>Other Writing</h4>
+            <ul>
+              <li><a href="https://doughellmann.com/"><i class="fa fa-pencil fa-lg"></i> Blog</a></li>
+              <li><a href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><i class="fa fa-book fa-lg"></i> The Python Standard Library By Example</a></li>
+            </ul>
+          </div>
+        </div><script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-3', 'pymotw.com');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

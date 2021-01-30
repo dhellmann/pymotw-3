@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>selectors — I/O Multiplexing Abstractions &mdash; PyMOTW 3</title>
+
+    <link rel="stylesheet" href="../_static/pure-min.css" type="text/css">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pymotw.css" type="text/css">
+
+    <link rel="shortcut icon" type="image/png" href="../_static/favicon.png">
+
+    <link rel="alternate" type="application/atom+xml"
+          title="Doug Hellmann"
+          href="http://feeds.doughellmann.com/DougHellmann" />
+    <link rel="alternate" type="application/atom+xml"
+          title="PyMOTW Updates"
+          href="http://feeds.doughellmann.com/PyMOTW" />
+
+    <meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+
+  </head>
+  <body>
+
+    <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
+      <a class="pure-menu-heading" href="../index.html"><img src="../_static/logo.png"> PyMOTW-3</a>
+
+      <ul id="top-menu">
+        <li class="pure-menu-selected"><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+        <li class="pure-menu-selected"><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a></a>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a></li>
+      </ul>
+
+    </div>
+
+    <div class="pure-menu pure-menu-open pure-menu-vertical" id="breadcrumbs-menu">
+      
+      <ul id="breadcrumbs">
+        <li class="pure-menu-selected"><a href="../networking.html"><i class="fa fa-arrow-circle-up"></i> Networking</a></li>
+      </ul>
+    </div>
+
+    <div class="pure-g-r" id="content-container">
+
+      <div class="pure-u-3-4">
+        <div class="content">
+          
+  <div class="section" id="module-selectors">
+<span id="selectors-i-o-multiplexing-abstractions"></span><h1>selectors — I/O Multiplexing Abstractions<a class="headerlink" href="#module-selectors" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Provide platform-independent abstractions for I/O
+multiplexing based on the <code class="docutils literal notranslate"><span class="pre">select</span></code> module.</td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal notranslate"><span class="pre">selectors</span></code> module provides a platform-independent abstraction
+layer on top of the platform-specific I/O monitoring functions in
+<a class="reference internal" href="../select/index.html#module-select" title="select: Wait for I/O Efficiently"><code class="xref py py-mod docutils literal notranslate"><span class="pre">select</span></code></a>.</p>
+<div class="section" id="operating-model">
+<h2>Operating Model<a class="headerlink" href="#operating-model" title="Permalink to this headline">¶</a></h2>
+<p>The APIs in <code class="docutils literal notranslate"><span class="pre">selectors</span></code> are event-based, similar to <code class="docutils literal notranslate"><span class="pre">poll()</span></code> from
+<code class="docutils literal notranslate"><span class="pre">select</span></code>. There are several implementations and the module
+automatically sets the alias <code class="docutils literal notranslate"><span class="pre">DefaultSelector</span></code> to refer to the most
+efficient one for the current system configuration.</p>
+<p>A selector object provides methods for specifying what events to look
+for on a socket, and then lets the caller wait for events in a
+platform-independent way.  Registering interest in an event creates a
+<code class="docutils literal notranslate"><span class="pre">SelectorKey</span></code>, which holds the socket, information about the events
+of interest, and optional application data.  The owner of the selector
+calls its <code class="docutils literal notranslate"><span class="pre">select()</span></code> method to learn about events. The return value
+is a sequence of key objects and a bitmask indicating what events have
+occurred. A program using a selector should repeatedly call
+<code class="docutils literal notranslate"><span class="pre">select()</span></code>, then handle the events appropriately.</p>
+</div>
+<div class="section" id="echo-server">
+<h2>Echo Server<a class="headerlink" href="#echo-server" title="Permalink to this headline">¶</a></h2>
+<p>The echo server example below uses the application data in the
+<code class="docutils literal notranslate"><span class="pre">SelectorKey</span></code> to register a callback function to be invoked on
+the new event. The main loop gets the callback from the key and passes
+the socket and event mask to it. As the server starts, it registers
+the <code class="docutils literal notranslate"><span class="pre">accept()</span></code> function to be called for read events on the main
+server socket. Accepting the connection produces a new socket, which
+is then registered with the <code class="docutils literal notranslate"><span class="pre">read()</span></code> function as a callback for
+read events.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">selectors_echo_server.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">selectors</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="n">mysel</span> <span class="o">=</span> <span class="n">selectors</span><span class="o">.</span><span class="n">DefaultSelector</span><span class="p">()</span>
+<span class="n">keep_running</span> <span class="o">=</span> <span class="kc">True</span>
+
+
+<span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">mask</span><span class="p">):</span>
+    <span class="s2">&quot;Callback for read events&quot;</span>
+    <span class="k">global</span> <span class="n">keep_running</span>
+
+    <span class="n">client_address</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">getpeername</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;read(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">client_address</span><span class="p">))</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+        <span class="c1"># A readable client socket has data</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  received </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+        <span class="n">connection</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Interpret empty result as closed connection</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  closing&#39;</span><span class="p">)</span>
+        <span class="n">mysel</span><span class="o">.</span><span class="n">unregister</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
+        <span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="c1"># Tell the main loop to stop</span>
+        <span class="n">keep_running</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<span class="k">def</span> <span class="nf">accept</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">mask</span><span class="p">):</span>
+    <span class="s2">&quot;Callback for new connections&quot;</span>
+    <span class="n">new_connection</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;accept(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">addr</span><span class="p">))</span>
+    <span class="n">new_connection</span><span class="o">.</span><span class="n">setblocking</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">mysel</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">new_connection</span><span class="p">,</span> <span class="n">selectors</span><span class="o">.</span><span class="n">EVENT_READ</span><span class="p">,</span> <span class="n">read</span><span class="p">)</span>
+
+
+<span class="n">server_address</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;starting up on </span><span class="si">{}</span><span class="s1"> port </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">server_address</span><span class="p">))</span>
+<span class="n">server</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+<span class="n">server</span><span class="o">.</span><span class="n">setblocking</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">server</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">server_address</span><span class="p">)</span>
+<span class="n">server</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">mysel</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="n">selectors</span><span class="o">.</span><span class="n">EVENT_READ</span><span class="p">,</span> <span class="n">accept</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="n">keep_running</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;waiting for I/O&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">mysel</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">callback</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">callback</span><span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">fileobj</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;shutting down&#39;</span><span class="p">)</span>
+<span class="n">mysel</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>When <code class="docutils literal notranslate"><span class="pre">read()</span></code> receives no data from the socket, it interprets the
+read event as the other side of the connection being closed instead of
+sending data. It removes the socket from the selector and closes
+it. In order to avoid an infinite loop, this server also shuts itself
+down after it has finished communicating with a single client.</p>
+</div>
+<div class="section" id="echo-client">
+<h2>Echo Client<a class="headerlink" href="#echo-client" title="Permalink to this headline">¶</a></h2>
+<p>The echo client example below processes all of the I/O events in the
+main loop, instead of using callbacks. It sets up the selector to
+report read events on the socket, and to report when the socket is
+ready to send data. Because it is looking at two types of events, the
+client must check which occurred by examining the mask value.  After
+all of its outgoing data has been sent, it changes the selector
+configuration to only report when there is data to read.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">selectors_echo_client.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">selectors</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="n">mysel</span> <span class="o">=</span> <span class="n">selectors</span><span class="o">.</span><span class="n">DefaultSelector</span><span class="p">()</span>
+<span class="n">keep_running</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">outgoing</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="sa">b</span><span class="s1">&#39;It will be repeated.&#39;</span><span class="p">,</span>
+    <span class="sa">b</span><span class="s1">&#39;This is the message.  &#39;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">bytes_sent</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">bytes_received</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># Connecting is a blocking operation, so call setblocking()</span>
+<span class="c1"># after it returns.</span>
+<span class="n">server_address</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;connecting to </span><span class="si">{}</span><span class="s1"> port </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">server_address</span><span class="p">))</span>
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">server_address</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">setblocking</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Set up the selector to watch for when the socket is ready</span>
+<span class="c1"># to send data as well as when there is data to read.</span>
+<span class="n">mysel</span><span class="o">.</span><span class="n">register</span><span class="p">(</span>
+    <span class="n">sock</span><span class="p">,</span>
+    <span class="n">selectors</span><span class="o">.</span><span class="n">EVENT_READ</span> <span class="o">|</span> <span class="n">selectors</span><span class="o">.</span><span class="n">EVENT_WRITE</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="k">while</span> <span class="n">keep_running</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;waiting for I/O&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">mysel</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">connection</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">fileobj</span>
+        <span class="n">client_address</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">getpeername</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;client(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">client_address</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">mask</span> <span class="o">&amp;</span> <span class="n">selectors</span><span class="o">.</span><span class="n">EVENT_READ</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  ready to read&#39;</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+                <span class="c1"># A readable client socket has data</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  received </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+                <span class="n">bytes_received</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+            <span class="c1"># Interpret empty result as closed connection,</span>
+            <span class="c1"># and also close when we have received a copy</span>
+            <span class="c1"># of all of the data sent.</span>
+            <span class="n">keep_running</span> <span class="o">=</span> <span class="ow">not</span> <span class="p">(</span>
+                <span class="n">data</span> <span class="ow">or</span>
+                <span class="p">(</span><span class="n">bytes_received</span> <span class="ow">and</span>
+                 <span class="p">(</span><span class="n">bytes_received</span> <span class="o">==</span> <span class="n">bytes_sent</span><span class="p">))</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">mask</span> <span class="o">&amp;</span> <span class="n">selectors</span><span class="o">.</span><span class="n">EVENT_WRITE</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  ready to write&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">outgoing</span><span class="p">:</span>
+                <span class="c1"># We are out of messages, so we no longer need to</span>
+                <span class="c1"># write anything. Change our registration to let</span>
+                <span class="c1"># us keep reading responses from the server.</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  switching to read-only&#39;</span><span class="p">)</span>
+                <span class="n">mysel</span><span class="o">.</span><span class="n">modify</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">selectors</span><span class="o">.</span><span class="n">EVENT_READ</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Send the next message.</span>
+                <span class="n">next_msg</span> <span class="o">=</span> <span class="n">outgoing</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  sending </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">next_msg</span><span class="p">))</span>
+                <span class="n">sock</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">next_msg</span><span class="p">)</span>
+                <span class="n">bytes_sent</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">next_msg</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;shutting down&#39;</span><span class="p">)</span>
+<span class="n">mysel</span><span class="o">.</span><span class="n">unregister</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
+<span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">mysel</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>The client tracks the amount of data it has sent, and the amount it
+has received. When those values match and are non-zero, the client
+exits the processing loop and cleanly shuts down by removing the
+socket from the selector and closing both the socket and the selector.</p>
+</div>
+<div class="section" id="server-and-client-together">
+<h2>Server and Client Together<a class="headerlink" href="#server-and-client-together" title="Permalink to this headline">¶</a></h2>
+<p>The client and server should be run in separate terminal windows, so
+they can communicate with each other.  The server output shows the
+incoming connection and data, as well as the response sent back to
+the client.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 source/selectors/selectors_echo_server.py
+starting up on localhost port 10000
+waiting for I/O
+waiting for I/O
+accept((&#39;127.0.0.1&#39;, 59850))
+waiting for I/O
+read((&#39;127.0.0.1&#39;, 59850))
+  received b&#39;This is the message.  It will be repeated.&#39;
+waiting for I/O
+read((&#39;127.0.0.1&#39;, 59850))
+  closing
+shutting down
+</pre></div>
+</div>
+<p>The client output shows the outgoing message and the response from the
+server.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 source/selectors/selectors_echo_client.py
+connecting to localhost port 10000
+waiting for I/O
+client((&#39;127.0.0.1&#39;, 10000))
+  ready to write
+  sending b&#39;This is the message.  &#39;
+waiting for I/O
+client((&#39;127.0.0.1&#39;, 10000))
+  ready to write
+  sending b&#39;It will be repeated.&#39;
+waiting for I/O
+client((&#39;127.0.0.1&#39;, 10000))
+  ready to write
+  switching to read-only
+waiting for I/O
+client((&#39;127.0.0.1&#39;, 10000))
+  ready to read
+  received b&#39;This is the message.  It will be repeated.&#39;
+shutting down
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference external" href="https://docs.python.org/3.7/library/selectors.html">Standard library documentation for selectors</a></li>
+<li><a class="reference internal" href="../select/index.html#module-select" title="select: Wait for I/O Efficiently"><code class="xref py py-mod docutils literal notranslate"><span class="pre">select</span></code></a> – Lower-level APIs for handling I/O efficiently.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+        <div id="footer-nav">
+<a id="prev-link" href="../socket/nonblocking.html"
+   title="previous chapter"><i class="fa fa-arrow-circle-left"></i> Non-blocking Communication and Timeouts</a>
+<a id="next-link" href="../select/index.html"
+   title="next chapter">select — Wait for I/O Efficiently <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+        </div>
+      </div>
+
+      <div class="pure-u-1-4">
+        <div class="sidebar-wrapper">
+          <div class="sidebar">
+<div id="sidebar-toc">
+  <h5>Quick Links</h5>
+  <ul>
+    
+    <li><a href="#operating-model"><i class="fa fa-caret-right"></i>Operating Model</a></li>
+    
+    <li><a href="#echo-server"><i class="fa fa-caret-right"></i>Echo Server</a></li>
+    
+    <li><a href="#echo-client"><i class="fa fa-caret-right"></i>Echo Client</a></li>
+    
+    <li><a href="#server-and-client-together"><i class="fa fa-caret-right"></i>Server and Client Together</a></li>
+    
+  </ul>
+</div>
+
+          </div>
+          <div class="sidebar"><div id="sidebar-last-updated">
+  This page was last updated 2016-12-31.
+</div>
+
+          </div>
+          <div class="sidebar">
+<div id="sidebar-nav">
+  <h5>Navigation</h5>
+  <ul>
+    <li><a href="../socket/nonblocking.html"
+           title="previous chapter"><i class="fa fa-arrow-circle-left"></i>Non-blocking Communication and Timeouts</a></li>
+    <li><a href="../select/index.html"
+           title="next chapter"><i class="fa fa-arrow-circle-right"></i>select — Wait for I/O Efficiently</a></li>
+  </ul>
+</div>
+          </div>
+          <div class="sidebar"><div id="sidebar-book"><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/book-cover-image-med.jpg"><br>Get the book</a></div>
+          </div>
+          <div class="sidebar"><div id="sidebar-example-disclaimer">
+<p>The output from all the example programs
+from PyMOTW-3 has been generated with Python 3.7.9, unless
+otherwise noted. Some of the features described here may not be
+available in earlier versions of Python.</p>
+<p>Looking for <a href="/2/">examples for Python 2</a>?</p>
+</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pure-g-r" id="footer">
+
+      <div class="pure-u-1-3">
+        <div class="footer-list">
+            <h4>This Site</h4>
+            <ul>
+              <li><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+              <li><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+            </ul>
+        </div>
+      </div><div class="pure-u-1-3">
+          <div class="footer-content">
+            <div class="socialmedia">
+              <a class="sociallink" href="../index.html"
+       title="Home">
+      <i class="fa fa-home fa-lg"></i></a>
+              <a class="sociallink" href="../about.html"
+       title="About">
+      <i class="fa fa-user fa-lg"></i></a>
+              <a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a>
+              <a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a>
+              <a class="sociallink" href="http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US"
+       title="Subscribe via Email">
+      <i class="fa fa-envelope fa-lg"></i></a>
+            </div>
+
+            <div class="copyright">
+              <a rel="author" href="../about.html">&copy; Copyright 2021, Doug Hellmann</a>
+            </div>
+
+            <div class="cc"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License BY-NC-SA" style="border-width:0; align: center;" width="88" height="31" src="data:image/png;base64,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"/></a>
+            </div>
+
+          </div></div><div class="pure-u-1-3">
+          <div class="footer-list">
+            <h4>Other Writing</h4>
+            <ul>
+              <li><a href="https://doughellmann.com/"><i class="fa fa-pencil fa-lg"></i> Blog</a></li>
+              <li><a href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><i class="fa fa-book fa-lg"></i> The Python Standard Library By Example</a></li>
+            </ul>
+          </div>
+        </div><script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-3', 'pymotw.com');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,701 @@
+/* -*- mode: css -*- */
+
+@import 'vars.less';
+
+/*
+** Reusable styles
+*/
+.centered-block {
+	margin: 0 auto;
+	display: block;
+}
+
+.monospaced-font {
+	font-family: monospace,serif;
+}
+
+.hidden-phone {
+	visibility: visible;
+}
+
+/*
+** Main content area
+*/
+
+html {
+	height: 100%;
+	width: 100%;
+}
+
+body {
+	height: 100%;
+	width: 100%;
+	color: @footer-foreground;
+	background-color: @footer-background;
+}
+
+#content-container {
+	color: @foreground;
+	background-color: @background;
+	padding-bottom: 1em;
+}
+
+.section img {
+	.centered-block;
+}
+
+a {
+	color: @link-foreground;
+	background-color: @link-background;
+	/* .body-font; */
+}
+
+a:link:hover {
+	color: @link-hover-foreground;
+	background-color: @link-hover-background;
+}
+
+a:visited {
+	color: @link-visited-foreground;
+	background-color: @link-visited-background;
+}
+
+a:visited:hover {
+	color: @link-hover-foreground;
+	background-color: @link-hover-background;
+}
+
+.content {
+	padding: 0 1em;
+	margin: 0 0.25em;
+	background: @background;
+	color: @foreground;
+}
+
+/*
+** Menu bar and footer
+*/
+
+#site-menu {
+	background: @menu-background;
+}
+#breadcrumbs-menu {
+	background: @menu-background;
+	border: 0;
+}
+
+#site-menu li {
+	background: @menu-background;
+}
+#breadcrumbs-menu li {
+	background: @menu-background;
+	border: 0;
+}
+
+#site-menu a {
+	color: @menu-foreground;
+	background-color: @menu-background;
+}
+#breadcrumbs-menu a {
+	color: @menu-foreground;
+	background-color: @menu-background;
+}
+
+/* only change the hover settings for items *in* the menu list, which
+   doesn't include the site tile link on the left */
+#site-menu li a:hover {
+	color: @menu-foreground;
+	background-color: @menu-background;
+}
+#top-menu .pure-menu-separator {
+	color: @menu-foreground;
+	background: @menu-foreground;
+}
+
+#site-menu .pure-menu-heading {
+    text-transform: none;
+    font-size: 130%;
+    padding-right: 0;
+}
+/* for the logo image */
+#site-menu .pure-menu-heading img {
+ padding-right: 4px;
+ position:relative;
+ top:2px;
+}
+
+
+#top-menu {
+	float: right;
+}
+
+.pure-menu li a {
+	padding: 5px 10px;
+}
+
+/* The menu in the sidebar is invisible in the default configuration
+   and made visible when the viewport shrinks (see media query
+   below). */
+#sidebar-menu {
+	visibility: hidden !important;
+}
+.sidebar .pure-menu {
+	visibility: hidden !important;
+	height: 0;
+	width: 0;
+}
+
+#footer {
+	padding: 0.5em;
+	border-top: 1px solid @footer-background;
+	padding: 1em 0;
+	background: @footer-background;
+	color: @footer-foreground;
+}
+#footer a {
+	color: @footer-link-foreground;
+	background: @footer-link-background;
+	text-decoration: none;
+}
+
+.footer-content {
+	text-align: center;
+}
+
+.footer-list {
+	margin-left: 2em;
+	margin-right: 2em;
+}
+
+.footer-list h4 {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.footer-list ul {
+	list-style-type: none;
+}
+
+.footer-list ul li {
+	padding-bottom: 0.5em;
+}
+
+.footer-list ul i {
+	margin-left: -1em;
+}
+
+#footer-menu ul {
+	width: 100%;
+	background-color: @footer-background;
+	color: @footer-foreground;
+}
+
+.socialmedia {
+	font-size: 150%;
+	margin-bottom: 0.75em;
+}
+
+.socialmedia .sociallink {
+	padding: 5px 5px;
+}
+
+.copyright {
+	margin-bottom: 1em;
+}
+
+#footer-nav #next-link {
+	float: right;
+}
+
+/*
+** Page structure
+*/
+
+/* The links associated with the section headers should be invisible
+   unless the mouse is over them.  */
+a.headerlink {
+	visibility: hidden;
+	color: @foreground;
+	font-size: 0.8em;
+	padding: 0 4px 0 4px;
+	text-decoration: none;
+	margin-left: 0.2em;
+
+	font-weight: normal;
+	font-style: normal;
+}
+p.caption:hover > a.headerlink,
+h1:hover > a.headerlink,
+h2:hover > a.headerlink,
+h3:hover > a.headerlink,
+h4:hover > a.headerlink,
+h5:hover > a.headerlink,
+h6:hover > a.headerlink,
+dt:hover > a.headerlink {
+	visibility: visible;
+}
+
+/* hide header permalinks on index page */
+#index a.headerlink {
+	visibility: hidden;
+}
+#index a.headerlink:hover {
+	visibility: hidden;
+}
+
+h1 a {
+	text-decoration: none;
+}
+
+.content h1 {
+	text-align: left;
+}
+
+.content .aggregated h1 {
+	margin-top: 0.5em;
+}
+
+.field-name {
+	padding-right: 0.3em;
+}
+
+/*
+** Tables
+*/
+.table-cell {
+	padding: 0.25em;
+}
+/* normal tables have borders, so we want to set the text off from the
+   lines */
+table.docutils tbody tr th {
+	.table-cell;
+}
+table.docutils tbody tr td {
+	.table-cell;
+}
+/* field lists don't have borders, so we don't want them indented by
+   any padding, so remove it */
+table.field-list tbody tr th {
+	padding-left: 0;
+}
+table.field-list tbody tr td {
+	padding-left: 0;
+}
+
+/*
+** Code samples and program output
+*/
+
+.highlight {
+	/* Remove the default yellow background from highlighted source code
+	   and output. */
+	background-color: @source-block-background;
+}
+
+.code-sample {
+	margin-left: 2em;
+	margin-right: 2em;
+	padding: 0.5em 0.5em;
+	overflow: auto;
+	word-wrap: normal;
+	white-space: pre;
+	.monospaced-font;
+	/* Emphasize code blocks with a line down the left side. */
+	border-left: @trim-thickness solid @source-block-border-color;
+}
+
+pre {
+	.code-sample;
+	margin-top: 0;
+}
+
+div.linenodiv pre {
+	/* remove extra spacing and border around line numbers */
+	border-left: none;
+	margin-left: 0;
+	margin-right: -1.5em;
+	padding: 0;
+	text-align: right;
+}
+
+.code-block-caption {
+	/* captions with filenames for included files */
+	.code-sample;
+	color: @code-comment;
+	font-style: italic;
+	margin-bottom: 0;
+	padding-bottom: 1em;
+	/* use the same border thickness to get the alignment right,
+       but color it based on the background */
+	/* border-left: @trim-thickness solid @source-block-background; */
+}
+
+.with-linenos .code-block-caption {
+	margin-left: 2.2em;
+}
+
+.code-block-caption .caption-text:before {
+	/* insert a # before the filename in the caption to make it look like
+       a code comment */
+	content: "# ";
+}
+
+.sql-caption .code-block-caption .caption-text:before {
+	/* insert a -- before the filename in the caption to make it look like
+       a SQL comment */
+	content: "-- ";
+}
+
+.xml-caption .code-block-caption .caption-text:before {
+	/* insert a <!-- before the filename in the caption to make it look like
+       a SQL comment */
+	content: "<!-- ";
+}
+
+.xml-caption .code-block-caption .caption-text:after {
+	/* insert a --> after the filename in the caption to make it look like
+       a SQL comment */
+	content: " -->";
+}
+
+/* center captions for figures under their image */
+div.figure p.caption {
+	text-align: center;
+	font-weight: bold;
+}
+
+/* inline literals */
+.pre {
+	.monospaced-font;
+}
+
+/*
+** Inline Tables
+*/
+table {
+	margin: 2em;
+}
+
+table.field-list {
+	margin: 0 2em;
+}
+
+table.highlighttable {
+	/* remove all margins and bump the table up one row to join the
+       highlight bar with the caption */
+	margin: -1px 0 0 0;
+}
+
+/*
+** Admonitions such as "seealso", "note", and "warning".
+*/
+
+div.admonition {
+	margin: 1em;
+	border-radius: @border-radius-large;
+	padding: 0.5em;
+}
+
+div.admonition p.admonition-title {
+	font-size: 120%;
+	margin-top: 0;
+	margin-bottom: 0.5em;
+}
+
+/* seealso blocks typically have dictionary lists, clean up the margins */
+div.admonition dl {
+	padding: 0 1em;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+div.admonition dt {
+	font-weight: bold;
+}
+
+div.note {
+	background: @note-background;
+}
+
+div.note a {
+	background: @note-background;
+}
+
+div.seealso {
+	background-color: @seealso-background;
+}
+
+.see-also-link {
+	background-color: @seealso-link-background;
+	color: @seealso-link-foreground;
+}
+
+div.seealso a {
+	.see-also-link;
+}
+
+div.seealso a:hover {
+	.see-also-link;
+}
+
+div.warning {
+	background-color: @warning-background;
+}
+
+div.warning a {
+	background-color: @warning-background;
+}
+
+p.admonition-title {
+	color: @admonition-title-foreground;
+	font-weight: bold;
+}
+
+/* seealso blocks typically have dictionary lists, clean up the margins */
+div.admonition dl {
+	padding: 0 1em;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+div.admonition dt {
+	font-weight: bold;
+}
+
+/*
+** Page sidebars
+*/
+
+.sidebar-wrapper {
+	margin: 0 0.5em;
+	padding-top: 0.5em;
+}
+
+.sidebar {
+	margin-top: 1em;
+}
+
+/* example version disclaimer in the sidebar */
+#sidebar-example-disclaimer {
+	font-style: italic;
+	margin-left: 1em;
+	margin-right: 1em;
+	font-size: 85%;
+	border-top: 2px solid @grey-highlight;
+	border-bottom: 2px solid @grey-highlight;
+}
+
+#sidebar-book {
+	text-align: center;
+}
+
+#sidebar-ads {
+	text-align: center;
+}
+
+#sidebar-last-updated {
+	font-style: italic;
+	padding-left: 1em;
+	padding-right: 1em;
+	font-size: 85%;
+}
+
+#sidebar-toc {
+	border-top: 2px solid @grey-highlight;
+	border-bottom: 2px solid @grey-highlight;
+}
+#sidebar-toc h5 {
+	margin: 0.25em 0;  /* reduce margin from pure defaults */
+}
+#sidebar-toc ul {
+	padding: 0;  /* turn off padding from pure defaults */
+	margin-top: 0;  /* turn off margin from pure defaults */
+}
+#sidebar-toc ul li {
+	font-size: 90%;
+	list-style-type: none;
+	/* produce a hanging indent by shifting the whole element right and
+	   then changing the indent setting to move the first line back to
+	   the left */
+	padding-left: 1em;
+	text-indent: -1em;
+}
+#sidebar-toc ul li a {
+	text-decoration: none;
+}
+
+#sidebar-nav {
+	border-top: 2px solid @grey-highlight;
+	border-bottom: 2px solid @grey-highlight;
+}
+#sidebar-nav h5 {
+	margin: 0.25em 0;  /* reduce margin from pure defaults */
+}
+#sidebar-nav ul {
+	padding: 0;  /* turn off padding from pure defaults */
+	margin-top: 0;  /* turn off margin from pure defaults */
+}
+#sidebar-nav ul li {
+	font-size: 90%;
+	list-style-type: none;
+	/* produce a hanging indent by shifting the whole element right and
+	   then changing the indent setting to move the first line back to
+	   the left */
+	padding-left: 1em;
+	text-indent: -1em;
+}
+#sidebar-nav ul li a {
+	text-decoration: none;
+}
+
+#sidebar-subscribe {
+	padding-left: 4em;
+}
+
+#sidebar-subscribe a.subscribe-link {
+	font-size: 120%;
+	text-decoration: none;
+}
+
+/*
+** Index pages
+*/
+.index-link {
+	color: @index-link-foreground;
+	background: @index-link-background;
+	text-decoration: none;
+	padding: 0.5em;
+	border-radius: @border-radius-small;
+}
+.index-link-hover {
+	color: @index-link-hover-foreground;
+	background: @index-link-hover-background;
+}
+
+.genindex-jumpbox a {
+	.index-link;
+}
+.genindex-jumpbox a:hover {
+	.index-link-hover;
+}
+
+.modindex-jumpbox a {
+	/* the module index is generated with lower-case letters, so make it
+	   look consistent with the regular index */
+	text-transform: uppercase;
+	.index-link;
+}
+.modindex-jumpbox a:hover {
+	.index-link-hover;
+}
+
+.indextable strong {
+	/* the module index is generated with lower-case letters, so make it
+	   look consistent with the regular index */
+	text-transform: uppercase;
+}
+
+/*
+** Table of contents
+*/
+.toctree-wrapper a.internal {
+	/* Links to other pages in PyMOTW do not need to be underlined in the
+	   table of contents. */
+	text-decoration: none;
+}
+
+
+/* Handle screen resizing in the menu. When it gets too narrow, turn
+   off the menu in the title bar and make the one in the sidebar
+   visible. */
+@width-breakpoint: 750px;
+@media only screen and (max-width: @width-breakpoint){
+
+	.hidden-phone {
+		visibility: hidden !important;
+		height: 0px;
+		width: 0px;
+		padding: 0;
+		margin: 0;
+		line-height: 0;
+	}
+
+	#site-menu {
+		.hidden-phone;
+		border-bottom: none;
+	}
+
+	#breadcrumbs-menu {
+		.hidden-phone;
+		border-bottom: none;
+	}
+
+	#breadcrumbs {
+		.hidden-phone;
+	}
+
+	#sidebar-book {
+		.hidden-phone;
+	}
+
+	/* #sidebar-ads { */
+	/* 	.hidden-phone; */
+	/* } */
+
+	#top-menu {
+		.hidden-phone;
+	}
+
+	.content {
+		padding: 0.5em;
+	}
+
+	h1 {
+		margin: 0 !important;
+		text-align: left;
+		font-size: 1.5em;
+		/* allow word breaks between any 2 characters so long project names do
+		   not cause layout issues on small screens */
+		/* word-break: break-all; */
+	}
+
+	.footer-content {
+		margin-top: 1em;
+	}
+
+	.footer-list {
+		margin-top: 1em;
+	}
+
+	.callout {
+		.hidden-phone;
+	}
+
+	div.admonition {
+		margin: 0;
+		padding: 0.5em;
+	}
+
+	div.admonition p.admonition-title {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+
+	/* Set width of pre boxes so they scroll instead of growing */
+	div.highlight {
+		width: 290px !important;
+	}
+
+	pre {
+		/* Emphasize code blocks with a line down the left side. */
+		margin-left: 0.5em;
+		margin-right: 0.5em;
+		padding: 0 0 0 0.5em;
+	}
+
+	div.linenodiv pre {
+		/* remove extra spacing and border around line numbers */
+		border-left: none;
+		margin-left: 0;
+		margin-right: -0.5em;
+	}
+
+}

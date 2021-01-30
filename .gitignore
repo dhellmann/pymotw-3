@@ -1,4 +1,4 @@
-build
+build/doctrees
 module
 source/_themes/pymotw/static/pymotw.css
 /order.txt

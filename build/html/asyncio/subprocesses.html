@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Working with Subprocesses &mdash; PyMOTW 3</title>
+
+    <link rel="stylesheet" href="../_static/pure-min.css" type="text/css">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pymotw.css" type="text/css">
+
+    <link rel="shortcut icon" type="image/png" href="../_static/favicon.png">
+
+    <link rel="alternate" type="application/atom+xml"
+          title="Doug Hellmann"
+          href="http://feeds.doughellmann.com/DougHellmann" />
+    <link rel="alternate" type="application/atom+xml"
+          title="PyMOTW Updates"
+          href="http://feeds.doughellmann.com/PyMOTW" />
+
+    <meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+
+  </head>
+  <body>
+
+    <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
+      <a class="pure-menu-heading" href="../index.html"><img src="../_static/logo.png"> PyMOTW-3</a>
+
+      <ul id="top-menu">
+        <li class="pure-menu-selected"><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+        <li class="pure-menu-selected"><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a></a>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a></li>
+      </ul>
+
+    </div>
+
+    <div class="pure-menu pure-menu-open pure-menu-vertical" id="breadcrumbs-menu">
+      
+      <ul id="breadcrumbs">
+        <li class="pure-menu-selected"><a href="../concurrency.html"><i class="fa fa-arrow-circle-up"></i> Concurrency with Processes, Threads, and Coroutines</a></li>
+        <li class="pure-menu-selected"><a href="index.html"><i class="fa fa-arrow-circle-up"></i> asyncio — Asynchronous I/O, event loop, and concurrency tools</a></li>
+      </ul>
+    </div>
+
+    <div class="pure-g-r" id="content-container">
+
+      <div class="pure-u-3-4">
+        <div class="content">
+          
+  <div class="section" id="working-with-subprocesses">
+<h1>Working with Subprocesses<a class="headerlink" href="#working-with-subprocesses" title="Permalink to this headline">¶</a></h1>
+<p>It is frequently necessary to work with other programs and processes,
+to take advantage of existing code without rewriting it or to access
+libraries or features not available from within Python. As with
+network I/O, <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> includes two abstractions for starting
+another program and then interacting with it.</p>
+<div class="section" id="using-the-protocol-abstraction-with-subprocesses">
+<h2>Using the Protocol Abstraction with Subprocesses<a class="headerlink" href="#using-the-protocol-abstraction-with-subprocesses" title="Permalink to this headline">¶</a></h2>
+<p>This example uses a coroutine to launch a process to run the Unix
+command <code class="docutils literal notranslate"><span class="pre">df</span></code> to find the free space on local disks. It uses
+<code class="docutils literal notranslate"><span class="pre">subprocess_exec()</span></code> to launch the process and tie it to a protocol
+class that knows how to read the <code class="docutils literal notranslate"><span class="pre">df</span></code> command output and parse
+it. The methods of the protocol class are called automatically based
+on I/O events for the subprocess. Because both the <code class="docutils literal notranslate"><span class="pre">stdin</span></code> and
+<code class="docutils literal notranslate"><span class="pre">stderr</span></code> arguments are set to <code class="docutils literal notranslate"><span class="pre">None</span></code>, those communication channels
+are not connected to the new process.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">asyncio_subprocess_protocol.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">run_df</span><span class="p">(</span><span class="n">loop</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;in run_df&#39;</span><span class="p">)</span>
+
+    <span class="n">cmd_done</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">(</span><span class="n">loop</span><span class="o">=</span><span class="n">loop</span><span class="p">)</span>
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">DFProtocol</span><span class="p">,</span> <span class="n">cmd_done</span><span class="p">)</span>
+    <span class="n">proc</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">subprocess_exec</span><span class="p">(</span>
+        <span class="n">factory</span><span class="p">,</span>
+        <span class="s1">&#39;df&#39;</span><span class="p">,</span> <span class="s1">&#39;-hl&#39;</span><span class="p">,</span>
+        <span class="n">stdin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">stderr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;launching process&#39;</span><span class="p">)</span>
+        <span class="n">transport</span><span class="p">,</span> <span class="n">protocol</span> <span class="o">=</span> <span class="k">await</span> <span class="n">proc</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;waiting for process to complete&#39;</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">cmd_done</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">transport</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">cmd_done</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>The class <code class="docutils literal notranslate"><span class="pre">DFProtocol</span></code> is derived from
+<code class="docutils literal notranslate"><span class="pre">SubprocessProtocol</span></code>, which defines the API for a class to
+communicate with another process through pipes. The <code class="docutils literal notranslate"><span class="pre">done</span></code> argument
+is expected to be a <code class="docutils literal notranslate"><span class="pre">Future</span></code> that the caller will use to watch
+for the process to finish.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DFProtocol</span><span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">SubprocessProtocol</span><span class="p">):</span>
+
+    <span class="n">FD_NAMES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;stdin&#39;</span><span class="p">,</span> <span class="s1">&#39;stdout&#39;</span><span class="p">,</span> <span class="s1">&#39;stderr&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">done_future</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">done</span> <span class="o">=</span> <span class="n">done_future</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>As with socket communication, <code class="docutils literal notranslate"><span class="pre">connection_made()</span></code> is invoked when
+the input channels to the new process are set up. The <code class="docutils literal notranslate"><span class="pre">transport</span></code>
+argument is an instance of a subclass of
+<code class="docutils literal notranslate"><span class="pre">BaseSubprocessTransport</span></code>. It can read data output by the
+process and write data to the input stream for the process, if the
+process was configured to receive input.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">connection_made</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transport</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;process started </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">transport</span><span class="o">.</span><span class="n">get_pid</span><span class="p">()))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span> <span class="o">=</span> <span class="n">transport</span>
+</pre></div>
+</div>
+<p>When the process has generated output, <code class="docutils literal notranslate"><span class="pre">pipe_data_received()</span></code> is
+invoked with the file descriptor where the data was emitted and the
+actual data read from the pipe. The protocol class saves the output
+from the standard output channel of the process in a buffer for later
+processing.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">pipe_data_received</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;read </span><span class="si">{}</span><span class="s1"> bytes from </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+                                             <span class="bp">self</span><span class="o">.</span><span class="n">FD_NAMES</span><span class="p">[</span><span class="n">fd</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">fd</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When the process terminates, <code class="docutils literal notranslate"><span class="pre">process_exited()</span></code> is called. The
+exit code of the process is available from the transport object by
+calling <code class="docutils literal notranslate"><span class="pre">get_returncode()</span></code>. In this case, if there is no error
+reported the available output is decoded and parsed before being
+returned through the <code class="docutils literal notranslate"><span class="pre">Future</span></code> instance. If there is an error,
+the results are assumed to be empty. Setting the result of the future
+tells <code class="docutils literal notranslate"><span class="pre">run_df()</span></code> that the process has exited, so it cleans up and
+then returns the results.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">process_exited</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;process exited&#39;</span><span class="p">)</span>
+        <span class="n">return_code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">get_returncode</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;return code </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">return_code</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">return_code</span><span class="p">:</span>
+            <span class="n">cmd_output</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_results</span><span class="p">(</span><span class="n">cmd_output</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">done</span><span class="o">.</span><span class="n">set_result</span><span class="p">((</span><span class="n">return_code</span><span class="p">,</span> <span class="n">results</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The command output is parsed into a sequence of dictionaries mapping
+the header names to their values for each line of output, and the
+resulting list is returned.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">_parse_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;parsing results&#39;</span><span class="p">)</span>
+        <span class="c1"># Output has one row of headers, all single words.  The</span>
+        <span class="c1"># remaining rows are one per filesystem, with columns</span>
+        <span class="c1"># matching the headers (assuming that none of the</span>
+        <span class="c1"># mount points have whitespace in the names).</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">output</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">devices</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">devices</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="n">results</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">run_df()</span></code> coroutine is run using <code class="docutils literal notranslate"><span class="pre">run_until_complete()</span></code>,
+then the results are examined and the free space on each device is
+printed.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">event_loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">return_code</span><span class="p">,</span> <span class="n">results</span> <span class="o">=</span> <span class="n">event_loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span>
+        <span class="n">run_df</span><span class="p">(</span><span class="n">event_loop</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">event_loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">return_code</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;error exit </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">return_code</span><span class="p">))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Free space:&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{Mounted:25}</span><span class="s1">: </span><span class="si">{Avail}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">r</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The output below shows the sequence of steps taken, and the free space
+on three drives on the system where it was run.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 asyncio_subprocess_protocol.py
+
+in run_df
+launching process
+process started 49675
+waiting for process to complete
+read 332 bytes from stdout
+process exited
+return code 0
+parsing results
+
+Free space:
+/                        : 233Gi
+/Volumes/hubertinternal  : 157Gi
+/Volumes/hubert-tm       : 2.3Ti
+</pre></div>
+</div>
+</div>
+<div class="section" id="calling-subprocesses-with-coroutines-and-streams">
+<h2>Calling Subprocesses with Coroutines and Streams<a class="headerlink" href="#calling-subprocesses-with-coroutines-and-streams" title="Permalink to this headline">¶</a></h2>
+<p>To use coroutines to run a process directly, instead of accessing it
+through a <code class="docutils literal notranslate"><span class="pre">Protocol</span></code> subclass, call
+<code class="docutils literal notranslate"><span class="pre">create_subprocess_exec()</span></code> and specify which of <code class="docutils literal notranslate"><span class="pre">stdout</span></code>,
+<code class="docutils literal notranslate"><span class="pre">stderr</span></code>, and <code class="docutils literal notranslate"><span class="pre">stdin</span></code> to connect to a pipe. The result of the
+coroutine to spawn the subprocess is a <code class="docutils literal notranslate"><span class="pre">Process</span></code> instance that
+can be used to manipulate the subprocess or communicate with it.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">asyncio_subprocess_coroutine.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">asyncio.subprocess</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">run_df</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;in run_df&#39;</span><span class="p">)</span>
+
+    <span class="n">buffer</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+
+    <span class="n">create</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_subprocess_exec</span><span class="p">(</span>
+        <span class="s1">&#39;df&#39;</span><span class="p">,</span> <span class="s1">&#39;-hl&#39;</span><span class="p">,</span>
+        <span class="n">stdout</span><span class="o">=</span><span class="n">asyncio</span><span class="o">.</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;launching process&#39;</span><span class="p">)</span>
+    <span class="n">proc</span> <span class="o">=</span> <span class="k">await</span> <span class="n">create</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;process started </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">proc</span><span class="o">.</span><span class="n">pid</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>In this example, <code class="docutils literal notranslate"><span class="pre">df</span></code> does not need any input other than its command
+line arguments, so the next step is to read all of the output. With
+the <code class="docutils literal notranslate"><span class="pre">Protocol</span></code> there is no control over how much data is read
+at a time. This example uses <code class="docutils literal notranslate"><span class="pre">readline()</span></code> but it could also call
+<code class="docutils literal notranslate"><span class="pre">read()</span></code> directly to read data that is not line-oriented. The
+output of the command is buffered, as with the protocol example, so it
+can be parsed later.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="k">await</span> <span class="n">proc</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;read </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;no more output from command&#39;</span><span class="p">)</span>
+            <span class="k">break</span>
+        <span class="n">buffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">readline()</span></code> method returns an empty byte string when there is
+no more output because the program has finished. To ensure the process
+is cleaned up properly, the next step is to wait for the process to
+exit fully.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;waiting for process to complete&#39;</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">proc</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>At that point the exit status can be examined to determine whether to
+parse the output or treat the error as it produced no output. The
+parsing logic is the same as in the previous example, but is in a
+stand-alone function (not shown here) because there is no protocol
+class to hide it in. After the data is parsed, the results and exit
+code are then returned to the caller.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span>    <span class="n">return_code</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">returncode</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;return code </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">return_code</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">return_code</span><span class="p">:</span>
+        <span class="n">cmd_output</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">_parse_results</span><span class="p">(</span><span class="n">cmd_output</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">return_code</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The main program looks similar to the protocol-based example, because
+the implementation changes are isolated in <code class="docutils literal notranslate"><span class="pre">run_df()</span></code>.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">event_loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">return_code</span><span class="p">,</span> <span class="n">results</span> <span class="o">=</span> <span class="n">event_loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span>
+        <span class="n">run_df</span><span class="p">()</span>
+    <span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">event_loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">return_code</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;error exit </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">return_code</span><span class="p">))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Free space:&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{Mounted:25}</span><span class="s1">: </span><span class="si">{Avail}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">r</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Since the output from <code class="docutils literal notranslate"><span class="pre">df</span></code> can be read one line at a time, it is
+echoed to show the progress of the program. Otherwise, the output
+looks similar to the previous example.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 asyncio_subprocess_coroutine.py
+
+in run_df
+launching process
+process started 49678
+read b&#39;Filesystem     Size   Used  Avail Capacity   iused
+ifree %iused  Mounted on\n&#39;
+read b&#39;/dev/disk2s2  446Gi  213Gi  233Gi    48%  55955082
+61015132   48%   /\n&#39;
+read b&#39;/dev/disk1    465Gi  307Gi  157Gi    67%  80514922
+41281172   66%   /Volumes/hubertinternal\n&#39;
+read b&#39;/dev/disk3s2  3.6Ti  1.4Ti  2.3Ti    38% 181837749
+306480579   37%   /Volumes/hubert-tm\n&#39;
+read b&#39;&#39;
+no more output from command
+waiting for process to complete
+return code 0
+parsing results
+
+Free space:
+/                        : 233Gi
+/Volumes/hubertinternal  : 157Gi
+/Volumes/hubert-tm       : 2.3Ti
+</pre></div>
+</div>
+</div>
+<div class="section" id="sending-data-to-a-subprocess">
+<h2>Sending Data to a Subprocess<a class="headerlink" href="#sending-data-to-a-subprocess" title="Permalink to this headline">¶</a></h2>
+<p>Both of the previous examples used only a single communication channel
+to read data from a second process. It is often necessary to send data
+into a command for processing. This example defines a coroutine to
+execute the Unix command <code class="docutils literal notranslate"><span class="pre">tr</span></code> for translating characters in its
+input stream. In this case, <code class="docutils literal notranslate"><span class="pre">tr</span></code> is used to convert lower-case
+letters to upper-case letters.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">to_upper()</span></code> coroutine takes as argument an event loop and an
+input string. It spawns a second process running <code class="docutils literal notranslate"><span class="pre">&quot;tr</span> <span class="pre">[:lower:]</span>
+<span class="pre">[:upper:]&quot;</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">asyncio_subprocess_coroutine_write.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">asyncio.subprocess</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">to_upper</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;in to_upper&#39;</span><span class="p">)</span>
+
+    <span class="n">create</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_subprocess_exec</span><span class="p">(</span>
+        <span class="s1">&#39;tr&#39;</span><span class="p">,</span> <span class="s1">&#39;[:lower:]&#39;</span><span class="p">,</span> <span class="s1">&#39;[:upper:]&#39;</span><span class="p">,</span>
+        <span class="n">stdout</span><span class="o">=</span><span class="n">asyncio</span><span class="o">.</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+        <span class="n">stdin</span><span class="o">=</span><span class="n">asyncio</span><span class="o">.</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;launching process&#39;</span><span class="p">)</span>
+    <span class="n">proc</span> <span class="o">=</span> <span class="k">await</span> <span class="n">create</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;pid </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">proc</span><span class="o">.</span><span class="n">pid</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Next <code class="docutils literal notranslate"><span class="pre">to_upper()</span></code> uses the <code class="docutils literal notranslate"><span class="pre">communicate()</span></code> method of the
+<code class="docutils literal notranslate"><span class="pre">Process</span></code> to send the input string to the command and read all
+of the resulting output, asynchronously. As with the
+<code class="docutils literal notranslate"><span class="pre">subprocess.Popen</span></code> version of the same method,
+<code class="docutils literal notranslate"><span class="pre">communicate()</span></code> returns the complete output byte strings. If a
+command is likely to produce more data than can fit comfortably into
+memory, the input cannot be produced all at once, or the output must
+be processed incrementally, it is possible to use the stdin, stdout,
+and stderr handles of the <code class="docutils literal notranslate"><span class="pre">Process</span></code> directly instead of calling
+<code class="docutils literal notranslate"><span class="pre">communicate()</span></code>.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;communicating with process&#39;</span><span class="p">)</span>
+    <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span> <span class="o">=</span> <span class="k">await</span> <span class="n">proc</span><span class="o">.</span><span class="n">communicate</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>After the I/O is done, waiting for the process to completely exit
+ensures it is cleaned up properly.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;waiting for process to complete&#39;</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">proc</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The return code can then be examined, and the output byte string
+decoded, to prepare the return value from the coroutine.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span>    <span class="n">return_code</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">returncode</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;return code </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">return_code</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">return_code</span><span class="p">:</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">stdout</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">return_code</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The main part of the program establishes a message string to be
+transformed, and then sets up the event loop to run <code class="docutils literal notranslate"><span class="pre">to_upper()</span></code>
+and prints the results.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">MESSAGE</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">This message will be converted</span>
+<span class="s2">to all caps.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">event_loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">return_code</span><span class="p">,</span> <span class="n">results</span> <span class="o">=</span> <span class="n">event_loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span>
+        <span class="n">to_upper</span><span class="p">(</span><span class="n">MESSAGE</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">event_loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">return_code</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;error exit </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">return_code</span><span class="p">))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Original: </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">MESSAGE</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Changed : </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">results</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The output shows the sequence of operations and then how the simple
+text message is transformed.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 asyncio_subprocess_coroutine_write.py
+
+in to_upper
+launching process
+pid 49684
+communicating with process
+waiting for process to complete
+return code 0
+Original: &#39;\nThis message will be converted\nto all caps.\n&#39;
+Changed : &#39;\nTHIS MESSAGE WILL BE CONVERTED\nTO ALL CAPS.\n&#39;
+</pre></div>
+</div>
+</div>
+</div>
+
+
+
+        <div id="footer-nav">
+<a id="prev-link" href="dns.html"
+   title="previous chapter"><i class="fa fa-arrow-circle-left"></i> Interacting with Domain Name Services</a>
+<a id="next-link" href="unix_signals.html"
+   title="next chapter">Receiving Unix Signals <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+        </div>
+      </div>
+
+      <div class="pure-u-1-4">
+        <div class="sidebar-wrapper">
+          <div class="sidebar">
+<div id="sidebar-toc">
+  <h5>Quick Links</h5>
+  <ul>
+    
+    <li><a href="#using-the-protocol-abstraction-with-subprocesses"><i class="fa fa-caret-right"></i>Using the Protocol Abstraction with Subprocesses</a></li>
+    
+    <li><a href="#calling-subprocesses-with-coroutines-and-streams"><i class="fa fa-caret-right"></i>Calling Subprocesses with Coroutines and Streams</a></li>
+    
+    <li><a href="#sending-data-to-a-subprocess"><i class="fa fa-caret-right"></i>Sending Data to a Subprocess</a></li>
+    
+  </ul>
+</div>
+
+          </div>
+          <div class="sidebar"><div id="sidebar-last-updated">
+  This page was last updated 2016-12-18.
+</div>
+
+          </div>
+          <div class="sidebar">
+<div id="sidebar-nav">
+  <h5>Navigation</h5>
+  <ul>
+    <li><a href="dns.html"
+           title="previous chapter"><i class="fa fa-arrow-circle-left"></i>Interacting with Domain Name Services</a></li>
+    <li><a href="unix_signals.html"
+           title="next chapter"><i class="fa fa-arrow-circle-right"></i>Receiving Unix Signals</a></li>
+  </ul>
+</div>
+          </div>
+          <div class="sidebar"><div id="sidebar-book"><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/book-cover-image-med.jpg"><br>Get the book</a></div>
+          </div>
+          <div class="sidebar"><div id="sidebar-example-disclaimer">
+<p>The output from all the example programs
+from PyMOTW-3 has been generated with Python 3.7.9, unless
+otherwise noted. Some of the features described here may not be
+available in earlier versions of Python.</p>
+<p>Looking for <a href="/2/">examples for Python 2</a>?</p>
+</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pure-g-r" id="footer">
+
+      <div class="pure-u-1-3">
+        <div class="footer-list">
+            <h4>This Site</h4>
+            <ul>
+              <li><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+              <li><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+            </ul>
+        </div>
+      </div><div class="pure-u-1-3">
+          <div class="footer-content">
+            <div class="socialmedia">
+              <a class="sociallink" href="../index.html"
+       title="Home">
+      <i class="fa fa-home fa-lg"></i></a>
+              <a class="sociallink" href="../about.html"
+       title="About">
+      <i class="fa fa-user fa-lg"></i></a>
+              <a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a>
+              <a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a>
+              <a class="sociallink" href="http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US"
+       title="Subscribe via Email">
+      <i class="fa fa-envelope fa-lg"></i></a>
+            </div>
+
+            <div class="copyright">
+              <a rel="author" href="../about.html">&copy; Copyright 2021, Doug Hellmann</a>
+            </div>
+
+            <div class="cc"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License BY-NC-SA" style="border-width:0; align: center;" width="88" height="31" src="data:image/png;base64,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"/></a>
+            </div>
+
+          </div></div><div class="pure-u-1-3">
+          <div class="footer-list">
+            <h4>Other Writing</h4>
+            <ul>
+              <li><a href="https://doughellmann.com/"><i class="fa fa-pencil fa-lg"></i> Blog</a></li>
+              <li><a href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><i class="fa fa-book fa-lg"></i> The Python Standard Library By Example</a></li>
+            </ul>
+          </div>
+        </div><script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-3', 'pymotw.com');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

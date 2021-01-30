@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>contextlib — Context Manager Utilities &mdash; PyMOTW 3</title>
+
+    <link rel="stylesheet" href="../_static/pure-min.css" type="text/css">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pymotw.css" type="text/css">
+
+    <link rel="shortcut icon" type="image/png" href="../_static/favicon.png">
+
+    <link rel="alternate" type="application/atom+xml"
+          title="Doug Hellmann"
+          href="http://feeds.doughellmann.com/DougHellmann" />
+    <link rel="alternate" type="application/atom+xml"
+          title="PyMOTW Updates"
+          href="http://feeds.doughellmann.com/PyMOTW" />
+
+    <meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+
+  </head>
+  <body>
+
+    <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
+      <a class="pure-menu-heading" href="../index.html"><img src="../_static/logo.png"> PyMOTW-3</a>
+
+      <ul id="top-menu">
+        <li class="pure-menu-selected"><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+        <li class="pure-menu-selected"><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a></a>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a></li>
+      </ul>
+
+    </div>
+
+    <div class="pure-menu pure-menu-open pure-menu-vertical" id="breadcrumbs-menu">
+      
+      <ul id="breadcrumbs">
+        <li class="pure-menu-selected"><a href="../algorithm_tools.html"><i class="fa fa-arrow-circle-up"></i> Algorithms</a></li>
+      </ul>
+    </div>
+
+    <div class="pure-g-r" id="content-container">
+
+      <div class="pure-u-3-4">
+        <div class="content">
+          
+  <div class="section" id="module-contextlib">
+<span id="contextlib-context-manager-utilities"></span><h1>contextlib — Context Manager Utilities<a class="headerlink" href="#module-contextlib" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Utilities for creating and working with context managers.</td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal notranslate"><span class="pre">contextlib</span></code> module contains utilities for working with
+context managers and the <code class="docutils literal notranslate"><span class="pre">with</span></code> statement.</p>
+<div class="section" id="context-manager-api">
+<h2>Context Manager API<a class="headerlink" href="#context-manager-api" title="Permalink to this headline">¶</a></h2>
+<p>A <em>context manager</em> is responsible for a resource within a code block,
+possibly creating it when the block is entered and then cleaning it up
+after the block is exited.  For example, files support the context
+manager API to make it easy to ensure they are closed after all
+reading or writing is done.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">contextlib_file.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/tmp/pymotw.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;wt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;contents go here&#39;</span><span class="p">)</span>
+<span class="c1"># file is automatically closed</span>
+</pre></div>
+</div>
+</div>
+<p>A context manager is enabled by the <code class="docutils literal notranslate"><span class="pre">with</span></code> statement, and the
+API involves two methods.  The <code class="docutils literal notranslate"><span class="pre">__enter__()</span></code> method is run when
+execution flow enters the code block inside the <code class="docutils literal notranslate"><span class="pre">with</span></code>.  It
+returns an object to be used within the context.  When execution flow
+leaves the <code class="docutils literal notranslate"><span class="pre">with</span></code> block, the <code class="docutils literal notranslate"><span class="pre">__exit__()</span></code> method of the
+context manager is called to clean up any resources being used.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">contextlib_api.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Context</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;__init__()&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;__enter__()&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;__exit__()&#39;</span><span class="p">)</span>
+
+
+<span class="k">with</span> <span class="n">Context</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Doing work in the context&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Combining a context manager and the <code class="docutils literal notranslate"><span class="pre">with</span></code> statement is a
+more compact way of writing a <code class="docutils literal notranslate"><span class="pre">try:finally</span></code> block, since the
+context manager’s <code class="docutils literal notranslate"><span class="pre">__exit__()</span></code> method is always called, even if an
+exception is raised.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 contextlib_api.py
+
+__init__()
+__enter__()
+Doing work in the context
+__exit__()
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">__enter__()</span></code> method can return any object to be associated
+with a name specified in the <code class="docutils literal notranslate"><span class="pre">as</span></code> clause of the
+<code class="docutils literal notranslate"><span class="pre">with</span></code> statement.  In this example, the <code class="docutils literal notranslate"><span class="pre">Context</span></code>
+returns an object that uses the open context.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">contextlib_api_other_object.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">WithinContext</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;WithinContext.__init__(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">context</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">do_something</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;WithinContext.do_something()&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;WithinContext.__del__&#39;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Context</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Context.__init__()&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Context.__enter__()&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">WithinContext</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Context.__exit__()&#39;</span><span class="p">)</span>
+
+
+<span class="k">with</span> <span class="n">Context</span><span class="p">()</span> <span class="k">as</span> <span class="n">c</span><span class="p">:</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">do_something</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>The value associated with the variable <code class="docutils literal notranslate"><span class="pre">c</span></code> is the object
+returned by <code class="docutils literal notranslate"><span class="pre">__enter__()</span></code>, which is not necessarily the
+<code class="docutils literal notranslate"><span class="pre">Context</span></code> instance created in the <code class="docutils literal notranslate"><span class="pre">with</span></code> statement.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 contextlib_api_other_object.py
+
+Context.__init__()
+Context.__enter__()
+WithinContext.__init__(&lt;__main__.Context object at 0x101f046d8&gt;)
+WithinContext.do_something()
+Context.__exit__()
+WithinContext.__del__
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">__exit__()</span></code> method receives arguments containing details of
+any exception raised in the <code class="docutils literal notranslate"><span class="pre">with</span></code> block.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">contextlib_api_error.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Context</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handle_error</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;__init__(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">handle_error</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_error</span> <span class="o">=</span> <span class="n">handle_error</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;__enter__()&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;__exit__()&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  exc_type =&#39;</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  exc_val  =&#39;</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  exc_tb   =&#39;</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_error</span>
+
+
+<span class="k">with</span> <span class="n">Context</span><span class="p">(</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;error message handled&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="n">Context</span><span class="p">(</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;error message propagated&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>If the context manager can handle the exception, <code class="docutils literal notranslate"><span class="pre">__exit__()</span></code>
+should return a true value to indicate that the exception does not
+need to be propagated.  Returning false causes the exception to be
+re-raised after <code class="docutils literal notranslate"><span class="pre">__exit__()</span></code> returns.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 contextlib_api_error.py
+
+__init__(True)
+__enter__()
+__exit__()
+  exc_type = &lt;class &#39;RuntimeError&#39;&gt;
+  exc_val  = error message handled
+  exc_tb   = &lt;traceback object at 0x101c94948&gt;
+
+__init__(False)
+__enter__()
+__exit__()
+  exc_type = &lt;class &#39;RuntimeError&#39;&gt;
+  exc_val  = error message propagated
+  exc_tb   = &lt;traceback object at 0x101c94948&gt;
+Traceback (most recent call last):
+  File &quot;contextlib_api_error.py&quot;, line 34, in &lt;module&gt;
+    raise RuntimeError(&#39;error message propagated&#39;)
+RuntimeError: error message propagated
+</pre></div>
+</div>
+</div>
+<div class="section" id="context-managers-as-function-decorators">
+<h2>Context Managers as Function Decorators<a class="headerlink" href="#context-managers-as-function-decorators" title="Permalink to this headline">¶</a></h2>
+<p>The class <code class="docutils literal notranslate"><span class="pre">ContextDecorator</span></code> adds support to regular context
+manager classes to let them be used as function decorators as well as
+context managers.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">contextlib_decorator.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">contextlib</span>
+
+
+<span class="k">class</span> <span class="nc">Context</span><span class="p">(</span><span class="n">contextlib</span><span class="o">.</span><span class="n">ContextDecorator</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">how_used</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">how_used</span> <span class="o">=</span> <span class="n">how_used</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;__init__(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">how_used</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;__enter__(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">how_used</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;__exit__(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">how_used</span><span class="p">))</span>
+
+
+<span class="nd">@Context</span><span class="p">(</span><span class="s1">&#39;as decorator&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">Context</span><span class="p">(</span><span class="s1">&#39;as context manager&#39;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Doing work in the context&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="n">func</span><span class="p">(</span><span class="s1">&#39;Doing work in the wrapped function&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>One difference with using the context manager as a decorator is that
+the value returned by <code class="docutils literal notranslate"><span class="pre">__enter__()</span></code> is not available inside the
+function being decorated, unlike when using <code class="docutils literal notranslate"><span class="pre">with</span></code> and
+<code class="docutils literal notranslate"><span class="pre">as</span></code>. Arguments passed to the decorated function are
+available in the usual way.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 contextlib_decorator.py
+
+__init__(as decorator)
+
+__init__(as context manager)
+__enter__(as context manager)
+Doing work in the context
+__exit__(as context manager)
+
+__enter__(as decorator)
+Doing work in the wrapped function
+__exit__(as decorator)
+</pre></div>
+</div>
+</div>
+<div class="section" id="from-generator-to-context-manager">
+<h2>From Generator to Context Manager<a class="headerlink" href="#from-generator-to-context-manager" title="Permalink to this headline">¶</a></h2>
+<p>Creating context managers the traditional way, by writing a class with
+<code class="docutils literal notranslate"><span class="pre">__enter__()</span></code> and <code class="docutils literal notranslate"><span class="pre">__exit__()</span></code> methods, is not
+difficult. But sometimes writing everything out fully is extra
+overhead for a trivial bit of context. In those sorts of situations,
+use the <code class="docutils literal notranslate"><span class="pre">contextmanager()</span></code> decorator to convert a generator
+function into a context manager.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">contextlib_contextmanager.py</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">contextlib</span>
+
+
+<span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+<span class="k">def</span> <span class="nf">make_context</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  entering&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="p">{}</span>
+    <span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  ERROR:&#39;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  exiting&#39;</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Normal:&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">make_context</span><span class="p">()</span> <span class="k">as</span> <span class="n">value</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  inside with statement:&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Handled error:&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">make_context</span><span class="p">()</span> <span class="k">as</span> <span class="n">value</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;showing example of handling an error&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Unhandled error:&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">make_context</span><span class="p">()</span> <span class="k">as</span> <span class="n">value</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;this exception is not handled&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The generator should initialize the context, yield exactly one time,
+then clean up the context. The value yielded, if any, is bound to the
+variable in the <code class="docutils literal notranslate"><span class="pre">as</span></code> clause of the <code class="docutils literal notranslate"><span class="pre">with</span></code>
+statement. Exceptions from within the <code class="docutils literal notranslate"><span class="pre">with</span></code> block are
+re-raised inside the generator, so they can be handled there.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 contextlib_contextmanager.py
+
+Normal:
+  entering
+  inside with statement: {}
+  exiting
+
+Handled error:
+  entering
+  ERROR: showing example of handling an error
+  exiting
+
+Unhandled error:
+  entering
+  exiting
+Traceback (most recent call last):
+  File &quot;contextlib_contextmanager.py&quot;, line 33, in &lt;module&gt;
+    raise ValueError(&#39;this exception is not handled&#39;)
+ValueError: this exception is not handled
+</pre></div>
+</div>
+<p>The context manager returned by <code class="docutils literal notranslate"><span class="pre">contextmanager()</span></code> is derived from
+<code class="docutils literal notranslate"><span class="pre">ContextDecorator</span></code>, so it also works as a function decorator.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">contextlib_contextmanager_decorator.py</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">contextlib</span>
+
+
+<span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+<span class="k">def</span> <span class="nf">make_context</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  entering&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Yield control, but not a value, because any value</span>
+        <span class="c1"># yielded is not available when the context manager</span>
+        <span class="c1"># is used as a decorator.</span>
+        <span class="k">yield</span>
+    <span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  ERROR:&#39;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  exiting&#39;</span><span class="p">)</span>
+
+
+<span class="nd">@make_context</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">normal</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  inside with statement&#39;</span><span class="p">)</span>
+
+
+<span class="nd">@make_context</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">throw_error</span><span class="p">(</span><span class="n">err</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="n">err</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Normal:&#39;</span><span class="p">)</span>
+<span class="n">normal</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Handled error:&#39;</span><span class="p">)</span>
+<span class="n">throw_error</span><span class="p">(</span><span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;showing example of handling an error&#39;</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Unhandled error:&#39;</span><span class="p">)</span>
+<span class="n">throw_error</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;this exception is not handled&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>As in the <code class="docutils literal notranslate"><span class="pre">ContextDecorator</span></code> example above, when the context
+manager is used as a decorator the value yielded by the generator is
+not available inside the function being decorated. Arguments passed to
+the decorated function are still available, as demonstrated by
+<code class="docutils literal notranslate"><span class="pre">throw_error()</span></code> in this example.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 contextlib_contextmanager_decorator.py
+
+Normal:
+  entering
+  inside with statement
+  exiting
+
+Handled error:
+  entering
+  ERROR: showing example of handling an error
+  exiting
+
+Unhandled error:
+  entering
+  exiting
+Traceback (most recent call last):
+  File &quot;contextlib_contextmanager_decorator.py&quot;, line 43, in
+&lt;module&gt;
+    throw_error(ValueError(&#39;this exception is not handled&#39;))
+  File &quot;.../lib/python3.7/contextlib.py&quot;, line 74, in inner
+    return func(*args, **kwds)
+  File &quot;contextlib_contextmanager_decorator.py&quot;, line 33, in
+throw_error
+    raise err
+ValueError: this exception is not handled
+</pre></div>
+</div>
+</div>
+<div class="section" id="closing-open-handles">
+<h2>Closing Open Handles<a class="headerlink" href="#closing-open-handles" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">file</span></code> class supports the context manager API directly, but
+some other objects that represent open handles do not. The example
+given in the standard library documentation for <code class="docutils literal notranslate"><span class="pre">contextlib</span></code> is
+the object returned from <code class="docutils literal notranslate"><span class="pre">urllib.urlopen()</span></code>.  There are other
+legacy classes that use a <code class="docutils literal notranslate"><span class="pre">close()</span></code> method but do not support the
+context manager API. To ensure that a handle is closed, use
+<code class="docutils literal notranslate"><span class="pre">closing()</span></code> to create a context manager for it.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">contextlib_closing.py</span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">contextlib</span>
+
+
+<span class="k">class</span> <span class="nc">Door</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  __init__()&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;open&#39;</span>
+
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  close()&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;closed&#39;</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Normal Example:&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">closing</span><span class="p">(</span><span class="n">Door</span><span class="p">())</span> <span class="k">as</span> <span class="n">door</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  inside with statement: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">door</span><span class="o">.</span><span class="n">status</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  outside with statement: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">door</span><span class="o">.</span><span class="n">status</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Error handling example:&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">closing</span><span class="p">(</span><span class="n">Door</span><span class="p">())</span> <span class="k">as</span> <span class="n">door</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  raising from inside with statement&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;error message&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  Had an error:&#39;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The handle is closed whether there is an error in the <code class="docutils literal notranslate"><span class="pre">with</span></code>
+block or not.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 contextlib_closing.py
+
+Normal Example:
+  __init__()
+  inside with statement: open
+  close()
+  outside with statement: closed
+
+Error handling example:
+  __init__()
+  raising from inside with statement
+  close()
+  Had an error: error message
+</pre></div>
+</div>
+</div>
+<div class="section" id="ignoring-exceptions">
+<h2>Ignoring Exceptions<a class="headerlink" href="#ignoring-exceptions" title="Permalink to this headline">¶</a></h2>
+<p>It is frequently useful to ignore exceptions raised by libraries,
+because the error indicates that the desired state has already been
+achieved, or it can otherwise be ignored. The most common way to
+ignore exceptions is with a <code class="docutils literal notranslate"><span class="pre">try:except</span></code> statement with only a
+<code class="docutils literal notranslate"><span class="pre">pass</span></code> statement in the <code class="docutils literal notranslate"><span class="pre">except</span></code> block.</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">contextlib_ignore_error.py</span><a class="headerlink" href="#id9" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">contextlib</span>
+
+
+<span class="k">class</span> <span class="nc">NonFatalError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">non_idempotent_operation</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="n">NonFatalError</span><span class="p">(</span>
+        <span class="s1">&#39;The operation failed because of existing state&#39;</span>
+    <span class="p">)</span>
+
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;trying non-idempotent operation&#39;</span><span class="p">)</span>
+    <span class="n">non_idempotent_operation</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;succeeded!&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">NonFatalError</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;done&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>In this case, the operation fails and the error is ignored.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 contextlib_ignore_error.py
+
+trying non-idempotent operation
+done
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">try:except</span></code> form can be replaced with
+<code class="docutils literal notranslate"><span class="pre">contextlib.suppress()</span></code> to more explicitly suppress a class of
+exceptions happening anywhere in the <code class="docutils literal notranslate"><span class="pre">with</span></code> block.</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">contextlib_suppress.py</span><a class="headerlink" href="#id10" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">contextlib</span>
+
+
+<span class="k">class</span> <span class="nc">NonFatalError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">non_idempotent_operation</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="n">NonFatalError</span><span class="p">(</span>
+        <span class="s1">&#39;The operation failed because of existing state&#39;</span>
+    <span class="p">)</span>
+
+
+<span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">suppress</span><span class="p">(</span><span class="n">NonFatalError</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;trying non-idempotent operation&#39;</span><span class="p">)</span>
+    <span class="n">non_idempotent_operation</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;succeeded!&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;done&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>In this updated version, the exception is discarded entirely.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 contextlib_suppress.py
+
+trying non-idempotent operation
+done
+</pre></div>
+</div>
+</div>
+<div class="section" id="redirecting-output-streams">
+<h2>Redirecting Output Streams<a class="headerlink" href="#redirecting-output-streams" title="Permalink to this headline">¶</a></h2>
+<p>Poorly designed library code may write directly to <code class="docutils literal notranslate"><span class="pre">sys.stdout</span></code> or
+<code class="docutils literal notranslate"><span class="pre">sys.stderr</span></code>, without providing arguments to configure different
+output destinations. The <code class="docutils literal notranslate"><span class="pre">redirect_stdout()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">redirect_stderr()</span></code> context managers can be used to capture output
+from functions like this, for which the source cannot be changed to
+accept a new output argument.</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">contextlib_redirect.py</span><a class="headerlink" href="#id11" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">contextlib</span> <span class="k">import</span> <span class="n">redirect_stdout</span><span class="p">,</span> <span class="n">redirect_stderr</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+
+<span class="k">def</span> <span class="nf">misbehaving_function</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;(stdout) A: </span><span class="si">{!r}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;(stderr) A: </span><span class="si">{!r}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+
+
+<span class="n">capture</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">redirect_stdout</span><span class="p">(</span><span class="n">capture</span><span class="p">),</span> <span class="n">redirect_stderr</span><span class="p">(</span><span class="n">capture</span><span class="p">):</span>
+    <span class="n">misbehaving_function</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">capture</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<p>In this example, <code class="docutils literal notranslate"><span class="pre">misbehaving_function()</span></code> writes to both <code class="docutils literal notranslate"><span class="pre">stdout</span></code>
+and <code class="docutils literal notranslate"><span class="pre">stderr</span></code>, but the two context managers send that output to the
+same <code class="docutils literal notranslate"><span class="pre">io.StringIO</span></code> instance where it is saved to be used later.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 contextlib_redirect.py
+
+(stdout) A: 5
+(stderr) A: 5
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Both <code class="docutils literal notranslate"><span class="pre">redirect_stdout()</span></code> and <code class="docutils literal notranslate"><span class="pre">redirect_stderr()</span></code> modify
+global state by replacing objects in the <a class="reference internal" href="../sys/index.html#module-sys" title="sys: System-specific configuration"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys</span></code></a> module, and
+should be used with care. The functions are not thread-safe, and
+may interfere with other operations that expect the standard output
+streams to be attached to terminal devices.</p>
+</div>
+</div>
+<div class="section" id="dynamic-context-manager-stacks">
+<h2>Dynamic Context Manager Stacks<a class="headerlink" href="#dynamic-context-manager-stacks" title="Permalink to this headline">¶</a></h2>
+<p>Most context managers operate on one object at a time, such as a
+single file or database handle. In these cases, the object is known in
+advance and the code using the context manager can be built around
+that one object. In other cases, a program may need to create an
+unknown number of objects in a context, while wanting all of them to
+be cleaned up when control flow exits the context. <code class="docutils literal notranslate"><span class="pre">ExitStack</span></code>
+was created to handle these more dynamic cases.</p>
+<p>An <code class="docutils literal notranslate"><span class="pre">ExitStack</span></code> instance maintains a stack data structure of
+cleanup callbacks. The callbacks are populated explicitly within the
+context, and any registered callbacks are called in the reverse order
+when control flow exits the context. The result is like having multple
+nested <code class="docutils literal notranslate"><span class="pre">with</span></code> statements, except they are established
+dynamically.</p>
+<div class="section" id="stacking-context-managers">
+<h3>Stacking Context Managers<a class="headerlink" href="#stacking-context-managers" title="Permalink to this headline">¶</a></h3>
+<p>There are several ways to populate the <code class="docutils literal notranslate"><span class="pre">ExitStack</span></code>.  This
+example uses <code class="docutils literal notranslate"><span class="pre">enter_context()</span></code> to add a new context manager to the
+stack.</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-text">contextlib_exitstack_enter_context.py</span><a class="headerlink" href="#id12" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">contextlib</span>
+
+
+<span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+<span class="k">def</span> <span class="nf">make_context</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> entering&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="k">yield</span> <span class="p">{}</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> exiting&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">variable_stack</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">ExitStack</span><span class="p">()</span> <span class="k">as</span> <span class="n">stack</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">stack</span><span class="o">.</span><span class="n">enter_context</span><span class="p">(</span><span class="n">make_context</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+
+<span class="n">variable_stack</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;inside context&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">enter_context()</span></code> first calls <code class="docutils literal notranslate"><span class="pre">__enter__()</span></code> on the context
+manager, and then registers its <code class="docutils literal notranslate"><span class="pre">__exit__()</span></code> method as a callback
+to be invoked as the stack is undone.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 contextlib_exitstack_enter_context.py
+
+0 entering
+1 entering
+inside context
+1 exiting
+0 exiting
+</pre></div>
+</div>
+<p>The context managers given to <code class="docutils literal notranslate"><span class="pre">ExitStack</span></code> are treated as though
+they are in a series of nested <code class="docutils literal notranslate"><span class="pre">with</span></code> statements. Errors that
+happen anywhere within the context propagate through the normal error
+handling of the context managers. These context manager classes
+illustrate the way errors propagate.</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-text">contextlib_context_managers.py</span><a class="headerlink" href="#id13" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">contextlib</span>
+
+
+<span class="k">class</span> <span class="nc">Tracker</span><span class="p">:</span>
+    <span class="s2">&quot;Base class for noisy context managers.&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">=</span> <span class="n">i</span>
+
+    <span class="k">def</span> <span class="nf">msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  </span><span class="si">{}</span><span class="s1">(</span><span class="si">{}</span><span class="s1">): </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">(</span><span class="s1">&#39;entering&#39;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">HandleError</span><span class="p">(</span><span class="n">Tracker</span><span class="p">):</span>
+    <span class="s2">&quot;If an exception is received, treat it as handled.&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">exc_details</span><span class="p">):</span>
+        <span class="n">received_exc</span> <span class="o">=</span> <span class="n">exc_details</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">received_exc</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">(</span><span class="s1">&#39;handling exception </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">exc_details</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">(</span><span class="s1">&#39;exiting </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">received_exc</span><span class="p">))</span>
+        <span class="c1"># Return Boolean value indicating whether the exception</span>
+        <span class="c1"># was handled.</span>
+        <span class="k">return</span> <span class="n">received_exc</span>
+
+
+<span class="k">class</span> <span class="nc">PassError</span><span class="p">(</span><span class="n">Tracker</span><span class="p">):</span>
+    <span class="s2">&quot;If an exception is received, propagate it.&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">exc_details</span><span class="p">):</span>
+        <span class="n">received_exc</span> <span class="o">=</span> <span class="n">exc_details</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">received_exc</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">(</span><span class="s1">&#39;passing exception </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">exc_details</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">(</span><span class="s1">&#39;exiting&#39;</span><span class="p">)</span>
+        <span class="c1"># Return False, indicating any exception was not handled.</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="k">class</span> <span class="nc">ErrorOnExit</span><span class="p">(</span><span class="n">Tracker</span><span class="p">):</span>
+    <span class="s2">&quot;Cause an exception.&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">exc_details</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">(</span><span class="s1">&#39;throwing error&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;from </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">i</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">ErrorOnEnter</span><span class="p">(</span><span class="n">Tracker</span><span class="p">):</span>
+    <span class="s2">&quot;Cause an exception.&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">(</span><span class="s1">&#39;throwing error on enter&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;from </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">i</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">exc_info</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">(</span><span class="s1">&#39;exiting&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The examples using these classes are based around
+<code class="docutils literal notranslate"><span class="pre">variable_stack()</span></code>, which uses the context managers passed to
+construct an <code class="docutils literal notranslate"><span class="pre">ExitStack</span></code>, building up the overall context one
+by one. The examples below pass different context managers to explore
+the error handling behavior. First, the normal case of no exceptions.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No errors:&#39;</span><span class="p">)</span>
+<span class="n">variable_stack</span><span class="p">([</span>
+    <span class="n">HandleError</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">PassError</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+<p>Then, an example of handling exceptions within the context managers at
+the end of the stack, in which all of the open contexts are closed as
+the stack is unwound.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Error at the end of the context stack:&#39;</span><span class="p">)</span>
+<span class="n">variable_stack</span><span class="p">([</span>
+    <span class="n">HandleError</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">HandleError</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="n">ErrorOnExit</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+<p>Next, an example of handling exceptions within the context managers in
+the middle of the stack, in which the error does not occur until some
+contexts are already closed, so those contexts do not see the error.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Error in the middle of the context stack:&#39;</span><span class="p">)</span>
+<span class="n">variable_stack</span><span class="p">([</span>
+    <span class="n">HandleError</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">PassError</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="n">ErrorOnExit</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+    <span class="n">HandleError</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+<p>Finally, an example of the exception remaining unhandled and
+propagating up to the calling code.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Error ignored:&#39;</span><span class="p">)</span>
+    <span class="n">variable_stack</span><span class="p">([</span>
+        <span class="n">PassError</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+        <span class="n">ErrorOnExit</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="p">])</span>
+<span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;error handled outside of context&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If any context manager in the stack receives an exception and returns
+a <code class="docutils literal notranslate"><span class="pre">True</span></code> value, it prevents that exception from propagating up to
+any other context managers.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 contextlib_exitstack_enter_context_errors.py
+
+No errors:
+  HandleError(1): entering
+  PassError(2): entering
+  PassError(2): exiting
+  HandleError(1): exiting False
+  outside of stack, any errors were handled
+
+Error at the end of the context stack:
+  HandleError(1): entering
+  HandleError(2): entering
+  ErrorOnExit(3): entering
+  ErrorOnExit(3): throwing error
+  HandleError(2): handling exception RuntimeError(&#39;from 3&#39;)
+  HandleError(2): exiting True
+  HandleError(1): exiting False
+  outside of stack, any errors were handled
+
+Error in the middle of the context stack:
+  HandleError(1): entering
+  PassError(2): entering
+  ErrorOnExit(3): entering
+  HandleError(4): entering
+  HandleError(4): exiting False
+  ErrorOnExit(3): throwing error
+  PassError(2): passing exception RuntimeError(&#39;from 3&#39;)
+  PassError(2): exiting
+  HandleError(1): handling exception RuntimeError(&#39;from 3&#39;)
+  HandleError(1): exiting True
+  outside of stack, any errors were handled
+
+Error ignored:
+  PassError(1): entering
+  ErrorOnExit(2): entering
+  ErrorOnExit(2): throwing error
+  PassError(1): passing exception RuntimeError(&#39;from 2&#39;)
+  PassError(1): exiting
+error handled outside of context
+</pre></div>
+</div>
+</div>
+<div class="section" id="arbitrary-context-callbacks">
+<h3>Arbitrary Context Callbacks<a class="headerlink" href="#arbitrary-context-callbacks" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">ExitStack</span></code> also supports arbitrary callbacks for closing a
+context, making it easy to clean up resources that are not controlled
+via a context manager.</p>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-text">contextlib_exitstack_callbacks.py</span><a class="headerlink" href="#id14" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">contextlib</span>
+
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;closing callback(</span><span class="si">{}</span><span class="s1">, </span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">kwds</span><span class="p">))</span>
+
+
+<span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">ExitStack</span><span class="p">()</span> <span class="k">as</span> <span class="n">stack</span><span class="p">:</span>
+    <span class="n">stack</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="n">callback</span><span class="p">,</span> <span class="s1">&#39;arg1&#39;</span><span class="p">,</span> <span class="s1">&#39;arg2&#39;</span><span class="p">)</span>
+    <span class="n">stack</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="n">callback</span><span class="p">,</span> <span class="n">arg3</span><span class="o">=</span><span class="s1">&#39;val3&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Just as with the <code class="docutils literal notranslate"><span class="pre">__exit__()</span></code> methods of full context managers,
+the callbacks are invoked in the reverse order that they are
+registered.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 contextlib_exitstack_callbacks.py
+
+closing callback((), {&#39;arg3&#39;: &#39;val3&#39;})
+closing callback((&#39;arg1&#39;, &#39;arg2&#39;), {})
+</pre></div>
+</div>
+<p>The callbacks are invoked regardless of whether an error occurred, and
+they are not given any information about whether an error
+occurred. Their return value is ignored.</p>
+<div class="literal-block-wrapper docutils container" id="id15">
+<div class="code-block-caption"><span class="caption-text">contextlib_exitstack_callbacks_error.py</span><a class="headerlink" href="#id15" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">contextlib</span>
+
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;closing callback(</span><span class="si">{}</span><span class="s1">, </span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">kwds</span><span class="p">))</span>
+
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">ExitStack</span><span class="p">()</span> <span class="k">as</span> <span class="n">stack</span><span class="p">:</span>
+        <span class="n">stack</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="n">callback</span><span class="p">,</span> <span class="s1">&#39;arg1&#39;</span><span class="p">,</span> <span class="s1">&#39;arg2&#39;</span><span class="p">)</span>
+        <span class="n">stack</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="n">callback</span><span class="p">,</span> <span class="n">arg3</span><span class="o">=</span><span class="s1">&#39;val3&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;thrown error&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ERROR: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Because they do not have access to the error, callbacks are unable to
+suppress exceptions from propagating through the rest of the stack of
+context managers.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 contextlib_exitstack_callbacks_error.py
+
+closing callback((), {&#39;arg3&#39;: &#39;val3&#39;})
+closing callback((&#39;arg1&#39;, &#39;arg2&#39;), {})
+ERROR: thrown error
+</pre></div>
+</div>
+<p>Callbacks make a convenient way to clearly define cleanup logic
+without the overhead of creating a new context manager class. To
+improve code readability, that logic can be encapsulated in an inline
+function, and <code class="docutils literal notranslate"><span class="pre">callback()</span></code> can be used as a decorator.</p>
+<div class="literal-block-wrapper docutils container" id="id16">
+<div class="code-block-caption"><span class="caption-text">contextlib_exitstack_callbacks_decorator.py</span><a class="headerlink" href="#id16" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">contextlib</span>
+
+
+<span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">ExitStack</span><span class="p">()</span> <span class="k">as</span> <span class="n">stack</span><span class="p">:</span>
+
+    <span class="nd">@stack</span><span class="o">.</span><span class="n">callback</span>
+    <span class="k">def</span> <span class="nf">inline_cleanup</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;inline_cleanup()&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;local_resource = </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">local_resource</span><span class="p">))</span>
+
+    <span class="n">local_resource</span> <span class="o">=</span> <span class="s1">&#39;resource created in context&#39;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;within the context&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>There is no way to specify the arguments for functions registered
+using the decorator form of <code class="docutils literal notranslate"><span class="pre">callback()</span></code>. However, if the cleanup
+callback is defined inline, scope rules give it access to variables
+defined in the calling code.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 contextlib_exitstack_callbacks_decorator.py
+
+within the context
+inline_cleanup()
+local_resource = &#39;resource created in context&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="partial-stacks">
+<h3>Partial Stacks<a class="headerlink" href="#partial-stacks" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes when building complex contexts it is useful to be able to
+abort an operation if the context cannot be completely constructed,
+but to delay the cleanup of all resources until a later time if they
+can all be set up properly. For example, if an operation needs several
+long-lived network connections, it may be best to not start the
+operation if one connection fails. However, if all of the connections
+can be opened they need to stay open longer than the duration of a
+single context manager. The <code class="docutils literal notranslate"><span class="pre">pop_all()</span></code> method of
+<code class="docutils literal notranslate"><span class="pre">ExitStack</span></code> can be used in this scenario.</p>
+<p><code class="docutils literal notranslate"><span class="pre">pop_all()</span></code> clears all of the context managers and callbacks from
+the stack on which it is called, and returns a new stack pre-populated
+with those same context managers and callbacks. The <code class="docutils literal notranslate"><span class="pre">close()</span></code>
+method of the new stack can be invoked later, after the original stack
+is gone, to clean up the resources.</p>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-text">contextlib_exitstack_pop_all.py</span><a class="headerlink" href="#id17" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">contextlib</span>
+
+<span class="kn">from</span> <span class="nn">contextlib_context_managers</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<span class="k">def</span> <span class="nf">variable_stack</span><span class="p">(</span><span class="n">contexts</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">ExitStack</span><span class="p">()</span> <span class="k">as</span> <span class="n">stack</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">contexts</span><span class="p">:</span>
+            <span class="n">stack</span><span class="o">.</span><span class="n">enter_context</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="c1"># Return the close() method of a new stack as a clean-up</span>
+        <span class="c1"># function.</span>
+        <span class="k">return</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop_all</span><span class="p">()</span><span class="o">.</span><span class="n">close</span>
+    <span class="c1"># Explicitly return None, indicating that the ExitStack could</span>
+    <span class="c1"># not be initialized cleanly but that cleanup has already</span>
+    <span class="c1"># occurred.</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No errors:&#39;</span><span class="p">)</span>
+<span class="n">cleaner</span> <span class="o">=</span> <span class="n">variable_stack</span><span class="p">([</span>
+    <span class="n">HandleError</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">HandleError</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+<span class="p">])</span>
+<span class="n">cleaner</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Handled error building context manager stack:&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">cleaner</span> <span class="o">=</span> <span class="n">variable_stack</span><span class="p">([</span>
+        <span class="n">HandleError</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+        <span class="n">ErrorOnEnter</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="p">])</span>
+<span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;caught error </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">cleaner</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">cleaner</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;no cleaner returned&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Unhandled error building context manager stack:&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">cleaner</span> <span class="o">=</span> <span class="n">variable_stack</span><span class="p">([</span>
+        <span class="n">PassError</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+        <span class="n">ErrorOnEnter</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="p">])</span>
+<span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;caught error </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">cleaner</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">cleaner</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;no cleaner returned&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>This example uses the same context manager classes defined earlier,
+with the difference that <code class="docutils literal notranslate"><span class="pre">ErrorOnEnter</span></code> produces an error on
+<code class="docutils literal notranslate"><span class="pre">__enter__()</span></code> instead of <code class="docutils literal notranslate"><span class="pre">__exit__()</span></code>. Inside
+<code class="docutils literal notranslate"><span class="pre">variable_stack()</span></code>, if all of the contexts are entered without
+error then the <code class="docutils literal notranslate"><span class="pre">close()</span></code> method of a new <code class="docutils literal notranslate"><span class="pre">ExitStack</span></code> is
+returned. If a handled error occurs, <code class="docutils literal notranslate"><span class="pre">variable_stack()</span></code> returns
+<code class="docutils literal notranslate"><span class="pre">None</span></code> to indicate that the cleanup work is already done. And if an
+unhandled error occurs, the partial stack is cleaned up and the error
+is propagated.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 contextlib_exitstack_pop_all.py
+
+No errors:
+  HandleError(1): entering
+  HandleError(2): entering
+  HandleError(2): exiting False
+  HandleError(1): exiting False
+
+Handled error building context manager stack:
+  HandleError(1): entering
+  ErrorOnEnter(2): throwing error on enter
+  HandleError(1): handling exception RuntimeError(&#39;from 2&#39;)
+  HandleError(1): exiting True
+no cleaner returned
+
+Unhandled error building context manager stack:
+  PassError(1): entering
+  ErrorOnEnter(2): throwing error on enter
+  PassError(1): passing exception RuntimeError(&#39;from 2&#39;)
+  PassError(1): exiting
+caught error from 2
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference external" href="https://docs.python.org/3.7/library/contextlib.html">Standard library documentation for contextlib</a></li>
+<li><span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0343"><strong>PEP 343</strong></a> – The <code class="docutils literal notranslate"><span class="pre">with</span></code> statement.</li>
+<li><a class="reference external" href="https://docs.python.org/library/stdtypes.html#typecontextmanager">Context Manager Types</a>
+– Description of the context manager API from the standard
+library documentation.</li>
+<li><a class="reference external" href="https://docs.python.org/reference/datamodel.html#context-managers">With Statement Context Managers</a>
+– Description of the context manager API from the Python
+Reference Guide.</li>
+<li><a class="reference external" href="http://www.wefearchange.org/2013/05/resource-management-in-python-33-or.html">Resource management in Python 3.3, or contextlib.ExitStack FTW!</a>
+– Description of using <code class="docutils literal notranslate"><span class="pre">ExitStack</span></code> to deploy safe code
+from Barry Warsaw.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+
+
+        <div id="footer-nav">
+<a id="prev-link" href="../operator/index.html"
+   title="previous chapter"><i class="fa fa-arrow-circle-left"></i> operator — Functional Interface to Built-in Operators</a>
+<a id="next-link" href="../dates.html"
+   title="next chapter">Dates and Times <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+        </div>
+      </div>
+
+      <div class="pure-u-1-4">
+        <div class="sidebar-wrapper">
+          <div class="sidebar">
+<div id="sidebar-toc">
+  <h5>Quick Links</h5>
+  <ul>
+    
+    <li><a href="#context-manager-api"><i class="fa fa-caret-right"></i>Context Manager API</a></li>
+    
+    <li><a href="#context-managers-as-function-decorators"><i class="fa fa-caret-right"></i>Context Managers as Function Decorators</a></li>
+    
+    <li><a href="#from-generator-to-context-manager"><i class="fa fa-caret-right"></i>From Generator to Context Manager</a></li>
+    
+    <li><a href="#closing-open-handles"><i class="fa fa-caret-right"></i>Closing Open Handles</a></li>
+    
+    <li><a href="#ignoring-exceptions"><i class="fa fa-caret-right"></i>Ignoring Exceptions</a></li>
+    
+    <li><a href="#redirecting-output-streams"><i class="fa fa-caret-right"></i>Redirecting Output Streams</a></li>
+    
+    <li><a href="#dynamic-context-manager-stacks"><i class="fa fa-caret-right"></i>Dynamic Context Manager Stacks</a></li>
+    
+    <li><a href="#stacking-context-managers"><i class="fa fa-caret-right"></i>Stacking Context Managers</a></li>
+    
+    <li><a href="#arbitrary-context-callbacks"><i class="fa fa-caret-right"></i>Arbitrary Context Callbacks</a></li>
+    
+    <li><a href="#partial-stacks"><i class="fa fa-caret-right"></i>Partial Stacks</a></li>
+    
+  </ul>
+</div>
+
+          </div>
+          <div class="sidebar"><div id="sidebar-last-updated">
+  This page was last updated 2018-12-09.
+</div>
+
+          </div>
+          <div class="sidebar">
+<div id="sidebar-nav">
+  <h5>Navigation</h5>
+  <ul>
+    <li><a href="../operator/index.html"
+           title="previous chapter"><i class="fa fa-arrow-circle-left"></i>operator — Functional Interface to Built-in Operators</a></li>
+    <li><a href="../dates.html"
+           title="next chapter"><i class="fa fa-arrow-circle-right"></i>Dates and Times</a></li>
+  </ul>
+</div>
+          </div>
+          <div class="sidebar"><div id="sidebar-book"><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/book-cover-image-med.jpg"><br>Get the book</a></div>
+          </div>
+          <div class="sidebar"><div id="sidebar-example-disclaimer">
+<p>The output from all the example programs
+from PyMOTW-3 has been generated with Python 3.7.9, unless
+otherwise noted. Some of the features described here may not be
+available in earlier versions of Python.</p>
+<p>Looking for <a href="/2/">examples for Python 2</a>?</p>
+</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pure-g-r" id="footer">
+
+      <div class="pure-u-1-3">
+        <div class="footer-list">
+            <h4>This Site</h4>
+            <ul>
+              <li><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+              <li><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+            </ul>
+        </div>
+      </div><div class="pure-u-1-3">
+          <div class="footer-content">
+            <div class="socialmedia">
+              <a class="sociallink" href="../index.html"
+       title="Home">
+      <i class="fa fa-home fa-lg"></i></a>
+              <a class="sociallink" href="../about.html"
+       title="About">
+      <i class="fa fa-user fa-lg"></i></a>
+              <a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a>
+              <a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a>
+              <a class="sociallink" href="http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US"
+       title="Subscribe via Email">
+      <i class="fa fa-envelope fa-lg"></i></a>
+            </div>
+
+            <div class="copyright">
+              <a rel="author" href="../about.html">&copy; Copyright 2021, Doug Hellmann</a>
+            </div>
+
+            <div class="cc"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License BY-NC-SA" style="border-width:0; align: center;" width="88" height="31" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAfCAMAAABUFvrSAAAABGdBTUEAALGOfPtRkwAAAf5QTFRF////////////AAAADQwNDQ4NDg4OEBAQGRkZGxsbHxscICAgIx8gJCQkKCUmKCgoKCkoKSkpKSopKicnKioqLS0tMDAwMS0uMjExMjMxNTY1Pj8+Pzc5Pzs8QEBAQ0RDUFBQUFFQWldYXV5dYGBgY19haGVmbmxscHBwcHJvdXJzdnN0eHV2eXx5en15fH98fX98fnt8f4F+gICAgoWChIGChIWEhIaEh4aHiYyJjIqLjoeLj4+PkY+PkZORkZSRk5iTlZmUlpmWmJaXmpiZnp2dnqCdn5aan5+fn6Oeoqaho6Gho6ijpqqmq7GqrKurrLKrrbOsrrOtrrStr6+vr7Kvr7Sur7WusLOvsLWvsLavsbewsrexsrixs7iytLmztLqztbW1tbq0tru1t7y2uL23ub64ub65urm5ur+5ur+6u8C6u8C7vMC8vMG7vMG8vcK8vcK9vsK9vsO+v7+/v8O+v8S+wMS/wMW/wMXAwcXAwsfCw8fCw8jDxMfDxMjDxMnExcnExcnFxsrFxsrGx8vHyMfHyMzHyMzIycjIyc3Iyc3Jys3Jy8rLy87Ky8/Ky8/LzM/LzNDLzNDMzdDMzdHMzdHNztHNztLOz8/Pz9PP0NPP0NTQ0dTQ0dTR0tXR0tXS09bS1tXV39/f4N/g4+Pj6Ofn7+/v8fHx////rrSdFQAAAAN0Uk5TAAoO5yEBUwAAA+FJREFUSMe1lo9301QUx6uXUmaf0qJ26iTrRoVinUzjQNR1gAyH6Lqx6XTDoVvXbU7qhA5m7CgYWaTDlLa6AiFsba3t+y+9Sdr8OvVMi7zTnLTf5H7ee9/73n11PA1PpDkcADPRWPwKt8YLG2I2n89m7gh8iluJz0dnpqe+HBsdHRn+7w3JyF1cvpbk05mCJG8Xi9uPpMLdNJ9cXV5UyBNjoyMtkR2A3B9Tt8SCfLTTqUzC2XlMvpcRbnA/IPmryYnzoyM9XuWBt8eI21FBcAy5Qk4KtxkGtQ1I+fRNbnk+evHC5NhJDwATDDIAnhNa1ImdFQTHr6WEvNyFPFeATSTYgAu/dl3/I31jNR6bnZ76eDf4yxRb2Q+71aiz/0JB8JXkrZzCdbFVqrUhRHuu54XkytLczAUvBFADUB6ARwnyqEp/t02prK9XdAXBHC9KyPWVqd6qPhyzlOG55dhsL/hLDTD1A3rYAy+dRu6eXaGKruA75wi2hbqigNd+LYSRW6XUSh64l05dXYruA1OPZfAOD3vhObL/ILDvQkRXynSdvPpaiJB+TVHAfEZuA9d9amlVF7TJd3nu+xgwyu8AqNOnDGAM8/obOLhQpWQotPYReZ/SQdKuKQpY2DwKwFJbGwI4VhCSlxchSFUnNC+CCgaV9RAKoZKh1J4le9FmQv5SFQW88aATXGhEws8wrHb7AANc0CndQS+ag5ERaieke0FXvnkxoYL/1MGi7FSmmVBXMDOu3gLK5J2PMjdXv2tmBX6pDdKSkq39DWXh3G1KI4QYVmS3AHCIPnCXE+4hHy6PcfeQ6sV2lufiL2jJ0wasp4p2k/Z2CEXeeqahDBLS1/c8+dBIXq4IkFAiWQ1QtxtnUMz/wsXfBj+1LzdUKn17dvXXzEqfMoFDNWO57QCe22dskKB5g7zXbVN+i0RKumKxonrfzaIVys2wYu7TVrd0PXn1rOnJC4JTFjF5c19/gnXLFwj6jJJz1rOjoi63LnBRfbmNM+qNunG5baSufhu9OPX5my2VTWEzrHrRbIP8dHl+dnpyrIVDBME/q1u6/E9bGmt9i2AsQmeaFaFwIb22soSlfuL8SEtgOCJKB5BsKkNltWyK7zzWMY3X4exDc6GvsljoX5FzR+BxwdCbf3jAdjTJv5/S39H2B2iXpmgXpWB7iVrB0JuVzpgP07CUO2WKqX+oiVL/benKImhgOIzHf7hx/A/IBdHsQ6Nsmruilo4afVFqB8PLn2U2H8hbxeKWjH9YvuiwxNiMaNhALZptCg5d7zh+Sczmclnx0vEOax6ajdjucSMPTcD/97/Cp54Q929ZZbgcR3o0hAAAAABJRU5ErkJggg=="/></a>
+            </div>
+
+          </div></div><div class="pure-u-1-3">
+          <div class="footer-list">
+            <h4>Other Writing</h4>
+            <ul>
+              <li><a href="https://doughellmann.com/"><i class="fa fa-pencil fa-lg"></i> Blog</a></li>
+              <li><a href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><i class="fa fa-book fa-lg"></i> The Python Standard Library By Example</a></li>
+            </ul>
+          </div>
+        </div><script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-3', 'pymotw.com');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

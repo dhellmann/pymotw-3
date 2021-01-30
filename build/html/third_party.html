@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Outside of the Standard Library &mdash; PyMOTW 3</title>
+
+    <link rel="stylesheet" href="_static/pure-min.css" type="text/css">
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pymotw.css" type="text/css">
+
+    <link rel="shortcut icon" type="image/png" href="_static/favicon.png">
+
+    <link rel="alternate" type="application/atom+xml"
+          title="Doug Hellmann"
+          href="http://feeds.doughellmann.com/DougHellmann" />
+    <link rel="alternate" type="application/atom+xml"
+          title="PyMOTW Updates"
+          href="http://feeds.doughellmann.com/PyMOTW" />
+
+    <meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+
+  </head>
+  <body>
+
+    <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
+      <a class="pure-menu-heading" href="index.html"><img src="_static/logo.png"> PyMOTW-3</a>
+
+      <ul id="top-menu">
+        <li class="pure-menu-selected"><a href="py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+        <li class="pure-menu-selected"><a href="genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a></a>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a></li>
+      </ul>
+
+    </div>
+
+    <div class="pure-menu pure-menu-open pure-menu-vertical" id="breadcrumbs-menu">
+      
+      <ul id="breadcrumbs">
+      </ul>
+    </div>
+
+    <div class="pure-g-r" id="content-container">
+
+      <div class="pure-u-3-4">
+        <div class="content">
+          
+  <div class="section" id="outside-of-the-standard-library">
+<h1>Outside of the Standard Library<a class="headerlink" href="#outside-of-the-standard-library" title="Permalink to this headline">¶</a></h1>
+<p>Although the Python standard library is extensive, there is also a
+robust ecosystem of modules provided by third-party developers and
+available from the <a class="reference external" href="https://pypi.python.org/pypi">Python Package Index</a>. This appendix describes
+some of these modules, and the situations when you might want to use
+them to supplement or even replace the standard library.</p>
+<div class="section" id="text">
+<h2>Text<a class="headerlink" href="#text" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="string/index.html#module-string" title="string: Contains constants and classes for working with text."><code class="xref py py-mod docutils literal notranslate"><span class="pre">string</span></code></a> module includes a very basic template tool. Many web
+frameworks include more powerful template tools, but <a class="reference external" href="http://jinja.pocoo.org">Jinja2</a> and <a class="reference external" href="http://docs.makotemplates.org/en/latest/">Mako</a>
+are popular standalone alternatives. Both support looping and
+conditional control structures as well as other features for combining
+data with a template to produce text output.</p>
+<p>The <a class="reference internal" href="re/index.html#module-re" title="re: Searching within and changing text using formal patterns."><code class="xref py py-mod docutils literal notranslate"><span class="pre">re</span></code></a> module includes functions for searching and parsing text
+using formally described patterns called regular expressions. It is
+not the only way to parse text, though.</p>
+<p>The <a class="reference external" href="http://www.dabeaz.com/ply/">PLY</a> package supports building parsers in the style of the GNU
+tools lexx and yacc, commonly used for building language compilers. By
+providing inputs describing the valid tokens, a grammar, and actions
+to take when each are encountered, it is possible to build fully
+functional compilers and interpreters, as well as more straightforward
+data parsers.</p>
+<p><a class="reference external" href="http://pyparsing.wikispaces.com">PyParsing</a> is a another tool for building parsers. The inputs are
+instances of classes that can be chained together using operators and
+method calls to build up a grammar.</p>
+<p>Finally, <a class="reference external" href="http://www.nltk.org">NLTK</a> is a package for processing natural language text –
+human languages instead of computer languages. It supports parsing
+sentences into parts of speech, finding the root form of words, and
+basic semantic processing.</p>
+</div>
+<div class="section" id="algorithms">
+<h2>Algorithms<a class="headerlink" href="#algorithms" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="functools/index.html#module-functools" title="functools: Tools for working with functions."><code class="xref py py-mod docutils literal notranslate"><span class="pre">functools</span></code></a> module includes some tools for creating
+decorators, functions that wrap other functions to change how they
+behave. The <a class="reference external" href="http://wrapt.readthedocs.org/">wrapt</a> package goes further than <code class="docutils literal notranslate"><span class="pre">functools.wrap()</span></code> to
+ensure that a decorator is constructed properly and works for all
+edge-cases.</p>
+</div>
+<div class="section" id="dates-and-times">
+<h2>Dates and Times<a class="headerlink" href="#dates-and-times" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="time/index.html#module-time" title="time: Clock time"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code></a> and <a class="reference internal" href="datetime/index.html#module-datetime" title="datetime: Date and time value manipulation."><code class="xref py py-mod docutils literal notranslate"><span class="pre">datetime</span></code></a> modules provide functions and
+classes for manipulating time and date values. Both include functions
+for parsing strings to turn them into internal representations. The
+<a class="reference external" href="https://dateutil.readthedocs.io/">dateutil</a> package includes a more flexible parser that makes it easier
+to build robust applications that are more forgiving of different
+input formats.</p>
+<p>The <a class="reference internal" href="datetime/index.html#module-datetime" title="datetime: Date and time value manipulation."><code class="xref py py-mod docutils literal notranslate"><span class="pre">datetime</span></code></a> module includes a timezone-aware class for
+representing a specific time on a specific day. It does not, however,
+include a full timezone database. The <a class="reference external" href="http://pythonhosted.org/pytz/">pytz</a> package does provide such
+a database. It is distributed separately from the standard library
+because it is maintained by other authors and it is updated frequently
+when timezone and daylight savings time values are changed by the
+political institutions that control them.</p>
+</div>
+<div class="section" id="mathematics">
+<h2>Mathematics<a class="headerlink" href="#mathematics" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="math/index.html#module-math" title="math: Mathematical functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code></a> module contains fast implementations of advanced
+mathematical functions. <a class="reference external" href="http://www.numpy.org">NumPy</a> expands the set of functions supported
+to include linear algebra and Fourier transform functions. It also
+includes a fast multi-dimensional array implementation, improving on
+the version in <a class="reference internal" href="array/index.html#module-array" title="array: Manage sequences of fixed-type data efficiently."><code class="xref py py-mod docutils literal notranslate"><span class="pre">array</span></code></a>.</p>
+</div>
+<div class="section" id="data-persistence-and-exchange">
+<h2>Data Persistence and Exchange<a class="headerlink" href="#data-persistence-and-exchange" title="Permalink to this headline">¶</a></h2>
+<p>The examples in the <a class="reference internal" href="sqlite3/index.html#module-sqlite3" title="sqlite3: Embedded relational database"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlite3</span></code></a> section run SQL statements directly
+and work with low-level data structures. For large applications, it is
+often desirable to map classes to tables in the database using an
+<em>object relational mapper</em> or ORM. The <a class="reference external" href="http://www.sqlalchemy.org">sqlalchemy</a> ORM library
+provides APIs for associating classes with tables, building queries,
+and connecting to different types of production-grade relational
+databases.</p>
+<p>The <a class="reference external" href="http://lxml.de">lxml</a> package wraps the libxml2 and libxslt libraries to create an
+alternative to the XML parser in
+<a class="reference internal" href="xml.etree.ElementTree/index.html#module-xml.etree.ElementTree" title="xml.etree.ElementTree: XML Manipulation API"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.etree.ElementTree</span></code></a>. Developers familiar with using those
+libraries from other languages may find lxml easier to adopt in
+Python.</p>
+<p>The <a class="reference external" href="https://pypi.python.org/pypi/defusedxml">defusedxml</a> package contains fixes for “<a class="reference external" href="http://en.wikipedia.org/wiki/Billion_laughs">Billion Laughs</a>” and
+other entity expansion denial of service vulnerabilities in Python’s
+XML libraries and makes working with untrusted XML safer than using
+the standard library alone.</p>
+</div>
+<div class="section" id="cryptography">
+<h2>Cryptography<a class="headerlink" href="#cryptography" title="Permalink to this headline">¶</a></h2>
+<p>The team building the <a class="reference external" href="https://cryptography.io/en/latest/">cryptography</a> package says “Our goal is for it
+to be your ‘cryptographic standard library’.” The cryptography package
+exposes high-level APIs to make it easy to add cryptographic features
+to applications and the package is actively maintained with frequent
+releases to address vulnerabilities in the underlying libraries such
+as OpenSSL.</p>
+</div>
+<div class="section" id="concurrency-with-processes-threads-and-coroutines">
+<h2>Concurrency with Processes, Threads, and Coroutines<a class="headerlink" href="#concurrency-with-processes-threads-and-coroutines" title="Permalink to this headline">¶</a></h2>
+<p>The event loop built into <a class="reference internal" href="asyncio/index.html#module-asyncio" title="asyncio: Asynchronous I/O, event loop, and concurrency tools"><code class="xref py py-mod docutils literal notranslate"><span class="pre">asyncio</span></code></a> is a reference implementation
+based on the abstract API defined by the module. It is possible to
+replace the event loop with a library such as <a class="reference external" href="http://uvloop.readthedocs.io">uvloop</a>, which gives
+better performance in exchange for adding extra application
+dependencies.</p>
+<p>The <a class="reference external" href="https://github.com/dabeaz/curio">curio</a> package is another concurrency package similar to asyncio
+but with a smaller API that treats everything as a coroutine and does
+not support callbacks in the way asyncio does.</p>
+<p>The <a class="reference external" href="https://twistedmatrix.com/">Twisted</a> library provides an extensible framework for Python
+programming, with special focus on event-based network programming and
+multiprotocol integration. It is mature, robust, and well-documented.</p>
+</div>
+<div class="section" id="the-internet">
+<h2>The Internet<a class="headerlink" href="#the-internet" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="http://docs.python-requests.org/">requests</a> package is a very popular replacement for
+<a class="reference internal" href="urllib.request/index.html#module-urllib.request" title="urllib.request: Network Resource Access"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.request</span></code></a>. It provides a consistent API for working with
+remote resources addressable via HTTP, includes robust SSL support,
+and can use connection pooling for better performance in
+multi-threaded applications. It also provides features that make it
+well suited for accessing REST APIs, such as built-in JSON parsing.</p>
+<p>Python’s <code class="xref py py-mod docutils literal notranslate"><span class="pre">html</span></code> module includes a basic parser for well-formed
+HTML data. However, real world data is rarely well structured, making
+parsing it problematic. The <a class="reference external" href="https://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a> and <a class="reference external" href="http://pyquery.rtfd.org/">PyQuery</a> libraries are
+alternatives to <code class="xref py py-mod docutils literal notranslate"><span class="pre">html</span></code> that are more robust in the face of messy
+data. Both define APIs for parsing, modifying, and constructing HTML.</p>
+<p>The built-in <a class="reference internal" href="http.server/index.html#module-http.server" title="http.server: Base classes for implementing web servers."><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.server</span></code></a> package includes base classes for
+creating simple HTTP servers from scratch. It does not offer much
+support beyond that for building web-based applications, though. The
+<a class="reference external" href="http://www.djangoproject.com/">Django</a> and <a class="reference external" href="https://trypyramid.com/">Pyramid</a> packages are two popular web application
+frameworks that provide more support for advanced features like
+request parsing, URL routing, and cookie handling.</p>
+<p>Many existing libraries do not work with <a class="reference internal" href="asyncio/index.html#module-asyncio" title="asyncio: Asynchronous I/O, event loop, and concurrency tools"><code class="xref py py-mod docutils literal notranslate"><span class="pre">asyncio</span></code></a> because they
+do not integrate with the event loop. A new set of libraries such as
+<a class="reference external" href="http://aiohttp.readthedocs.io/">aiohttp</a> is being created to fill this gap as part of the <a class="reference external" href="https://github.com/aio-libs">aio-libs</a>
+project.</p>
+</div>
+<div class="section" id="email">
+<h2>Email<a class="headerlink" href="#email" title="Permalink to this headline">¶</a></h2>
+<p>The API for <a class="reference internal" href="imaplib/index.html#module-imaplib" title="imaplib: IMAP4 client library"><code class="xref py py-mod docutils literal notranslate"><span class="pre">imaplib</span></code></a> is relatively low-level, requiring the
+caller to understand the IMAP protocol to build queries and parse
+results. The <a class="reference external" href="http://imapclient.freshfoo.com/">imapclient</a> package provides a higher-level API that is
+easier to work with for building applications that need to manipulate
+IMAP mailboxes.</p>
+</div>
+<div class="section" id="application-building-blocks">
+<h2>Application Building Blocks<a class="headerlink" href="#application-building-blocks" title="Permalink to this headline">¶</a></h2>
+<p>The two standard library modules for building command line interfaces,
+<a class="reference internal" href="argparse/index.html#module-argparse" title="argparse: Command-line option and argument parsing."><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a> and <a class="reference internal" href="getopt/index.html#module-getopt" title="getopt: Command line option parsing"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code></a>, both separate the definition of
+command line arguments from their parsing and value
+processing. Alternatively, <a class="reference external" href="http://click.pocoo.org">click</a> (the “Command Line Interface
+Construction Kit”), works by defining command processing functions and
+then associating option and prompt definitions with those commands
+using decorators.</p>
+<p><a class="reference external" href="http://docs.openstack.org/developer/cliff/">cliff</a> (“Command Line Interface Formulation Framework”) provides a set
+of base classes for defining commands and a plugin system for
+extending applications with multiple sub-commands that can be
+distributed in separate packages. It uses <a class="reference internal" href="argparse/index.html#module-argparse" title="argparse: Command-line option and argument parsing."><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a> to build the
+help text and argument parser, so the command line processing is
+familiar.</p>
+<p>The <a class="reference external" href="http://docopt.org">docopt</a> package reverses the typical flow by asking the developer
+to write the help text for a program, which it then parses to
+understand the sub-commands, valid combinations of options, and
+sub-commands.</p>
+<p>For interactive terminal-based programs, <a class="reference external" href="http://python-prompt-toolkit.readthedocs.io/en/stable/">prompt_toolkit</a> includes
+advanced features like color support, syntax highlighting, input
+editing, mouse support, and searchable history. It can be used to
+build command-oriented programs with a prompt loop like the <a class="reference internal" href="cmd/index.html#module-cmd" title="cmd: Create line-oriented command processors."><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmd</span></code></a>
+module, or full-screen applications like text editors.</p>
+<p>While INI files such as used by <a class="reference internal" href="configparser/index.html#module-configparser" title="configparser: Read/write configuration files similar to Windows INI files"><code class="xref py py-mod docutils literal notranslate"><span class="pre">configparser</span></code></a> continue to be
+popular for application configuration, the <a class="reference external" href="http://yaml.org">YAML</a> file format is also
+very popular. YAML provides many of the data structure features of
+JSON in a format that is easier for people to read. The <a class="reference external" href="http://pyyaml.org">PyYAML</a>
+library provides access to a YAML parser and serializer.</p>
+</div>
+<div class="section" id="developer-tools">
+<h2>Developer Tools<a class="headerlink" href="#developer-tools" title="Permalink to this headline">¶</a></h2>
+<p>The standard library module <a class="reference internal" href="venv/index.html#module-venv" title="venv: Create isolated installation and execution contexts."><code class="xref py py-mod docutils literal notranslate"><span class="pre">venv</span></code></a> is new in Python 3. For
+similar application isolation under both Python 2 and 3, use
+<a class="reference external" href="https://virtualenv.pypa.io/">virtualenv</a>.</p>
+<p>The <a class="reference external" href="https://pypi.python.org/pypi/fixtures">fixtures</a> package provides several test resource management
+classes tailor made to work with the <code class="docutils literal notranslate"><span class="pre">addCleanup()</span></code> method of test
+cases from the <a class="reference internal" href="unittest/index.html#module-unittest" title="unittest: Automated testing framework"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest</span></code></a> module. The provided fixture classes
+can manage loggers, environment variables, temporary files, and more
+in a consistent and safe way that ensures each test case is completely
+isolated from others in the suite.</p>
+<p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">distutils</span></code> module in the standard library for packaging
+Python modules for distribution and reuse is deprecated. The
+replacement, <a class="reference external" href="https://setuptools.readthedocs.io/en/latest/">setuptools</a>, is packaged separately from the standard
+library to make it easier to deliver new versions frequently. The API
+for setuptools includes tools for building the list of files to
+include in a package. There are extensions to automatically build the
+list from the set of files managed by a version control system. For
+example, using <a class="reference external" href="https://pypi.python.org/pypi/setuptools-git">setuptools-git</a> with source in a <a class="reference external" href="https://git-scm.com">git</a> repository
+causes all of the tracked files to be included in the package by
+default. After a package is built, the <a class="reference external" href="https://pypi.python.org/pypi/twine">twine</a> application will upload
+it to the package index to be shared with other developers.</p>
+<p>Tools like <a class="reference internal" href="tabnanny/index.html#module-tabnanny" title="tabnanny: Scan Python source code looking for suspicious indentation."><code class="xref py py-mod docutils literal notranslate"><span class="pre">tabnanny</span></code></a> are good at finding common formatting
+mistakes in Python code. The <a class="reference external" href="http://meta.pycqa.org/en/latest/">Python Code Quality Authority</a>
+maintains an extensive range of more advanced <em>static analysis tools</em>,
+including tools that enforce style guidelines, find common programming
+errors, and even help avoid excessive complexity.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference external" href="https://pypi.python.org/pypi">Python Package Index</a> or PyPI – The site for finding and
+downloading extension modules distributed separately from the
+Python runtime.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+        <div id="footer-nav">
+<a id="prev-link" href="porting_notes.html"
+   title="previous chapter"><i class="fa fa-arrow-circle-left"></i> Porting Notes</a>
+<a id="next-link" href="about.html"
+   title="next chapter">About Python Module of the Week <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+        </div>
+      </div>
+
+      <div class="pure-u-1-4">
+        <div class="sidebar-wrapper">
+          <div class="sidebar">
+<div id="sidebar-toc">
+  <h5>Quick Links</h5>
+  <ul>
+    
+    <li><a href="#text"><i class="fa fa-caret-right"></i>Text</a></li>
+    
+    <li><a href="#algorithms"><i class="fa fa-caret-right"></i>Algorithms</a></li>
+    
+    <li><a href="#dates-and-times"><i class="fa fa-caret-right"></i>Dates and Times</a></li>
+    
+    <li><a href="#mathematics"><i class="fa fa-caret-right"></i>Mathematics</a></li>
+    
+    <li><a href="#data-persistence-and-exchange"><i class="fa fa-caret-right"></i>Data Persistence and Exchange</a></li>
+    
+    <li><a href="#cryptography"><i class="fa fa-caret-right"></i>Cryptography</a></li>
+    
+    <li><a href="#concurrency-with-processes-threads-and-coroutines"><i class="fa fa-caret-right"></i>Concurrency with Processes, Threads, and Coroutines</a></li>
+    
+    <li><a href="#the-internet"><i class="fa fa-caret-right"></i>The Internet</a></li>
+    
+    <li><a href="#email"><i class="fa fa-caret-right"></i>Email</a></li>
+    
+    <li><a href="#application-building-blocks"><i class="fa fa-caret-right"></i>Application Building Blocks</a></li>
+    
+    <li><a href="#developer-tools"><i class="fa fa-caret-right"></i>Developer Tools</a></li>
+    
+  </ul>
+</div>
+
+          </div>
+          <div class="sidebar"><div id="sidebar-last-updated">
+  This page was last updated 2017-01-29.
+</div>
+
+          </div>
+          <div class="sidebar">
+<div id="sidebar-nav">
+  <h5>Navigation</h5>
+  <ul>
+    <li><a href="porting_notes.html"
+           title="previous chapter"><i class="fa fa-arrow-circle-left"></i>Porting Notes</a></li>
+    <li><a href="about.html"
+           title="next chapter"><i class="fa fa-arrow-circle-right"></i>About Python Module of the Week</a></li>
+  </ul>
+</div>
+          </div>
+          <div class="sidebar"><div id="sidebar-book"><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="_static/book-cover-image-med.jpg"><br>Get the book</a></div>
+          </div>
+          <div class="sidebar"><div id="sidebar-example-disclaimer">
+<p>The output from all the example programs
+from PyMOTW-3 has been generated with Python 3.7.9, unless
+otherwise noted. Some of the features described here may not be
+available in earlier versions of Python.</p>
+<p>Looking for <a href="/2/">examples for Python 2</a>?</p>
+</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pure-g-r" id="footer">
+
+      <div class="pure-u-1-3">
+        <div class="footer-list">
+            <h4>This Site</h4>
+            <ul>
+              <li><a href="py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+              <li><a href="genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+            </ul>
+        </div>
+      </div><div class="pure-u-1-3">
+          <div class="footer-content">
+            <div class="socialmedia">
+              <a class="sociallink" href="index.html"
+       title="Home">
+      <i class="fa fa-home fa-lg"></i></a>
+              <a class="sociallink" href="about.html"
+       title="About">
+      <i class="fa fa-user fa-lg"></i></a>
+              <a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a>
+              <a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a>
+              <a class="sociallink" href="http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US"
+       title="Subscribe via Email">
+      <i class="fa fa-envelope fa-lg"></i></a>
+            </div>
+
+            <div class="copyright">
+              <a rel="author" href="about.html">&copy; Copyright 2021, Doug Hellmann</a>
+            </div>
+
+            <div class="cc"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License BY-NC-SA" style="border-width:0; align: center;" width="88" height="31" src="data:image/png;base64,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"/></a>
+            </div>
+
+          </div></div><div class="pure-u-1-3">
+          <div class="footer-list">
+            <h4>Other Writing</h4>
+            <ul>
+              <li><a href="https://doughellmann.com/"><i class="fa fa-pencil fa-lg"></i> Blog</a></li>
+              <li><a href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><i class="fa fa-book fa-lg"></i> The Python Standard Library By Example</a></li>
+            </ul>
+          </div>
+        </div><script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-3', 'pymotw.com');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>calendar — Work with Dates &mdash; PyMOTW 3</title>
+
+    <link rel="stylesheet" href="../_static/pure-min.css" type="text/css">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pymotw.css" type="text/css">
+
+    <link rel="shortcut icon" type="image/png" href="../_static/favicon.png">
+
+    <link rel="alternate" type="application/atom+xml"
+          title="Doug Hellmann"
+          href="http://feeds.doughellmann.com/DougHellmann" />
+    <link rel="alternate" type="application/atom+xml"
+          title="PyMOTW Updates"
+          href="http://feeds.doughellmann.com/PyMOTW" />
+
+    <meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+
+  </head>
+  <body>
+
+    <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
+      <a class="pure-menu-heading" href="../index.html"><img src="../_static/logo.png"> PyMOTW-3</a>
+
+      <ul id="top-menu">
+        <li class="pure-menu-selected"><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+        <li class="pure-menu-selected"><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a></a>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a></li>
+      </ul>
+
+    </div>
+
+    <div class="pure-menu pure-menu-open pure-menu-vertical" id="breadcrumbs-menu">
+      
+      <ul id="breadcrumbs">
+        <li class="pure-menu-selected"><a href="../dates.html"><i class="fa fa-arrow-circle-up"></i> Dates and Times</a></li>
+      </ul>
+    </div>
+
+    <div class="pure-g-r" id="content-container">
+
+      <div class="pure-u-3-4">
+        <div class="content">
+          
+  <div class="section" id="module-calendar">
+<span id="calendar-work-with-dates"></span><h1>calendar — Work with Dates<a class="headerlink" href="#module-calendar" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">The calendar module implements classes for working with
+dates to manage year/month/week oriented values.</td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal notranslate"><span class="pre">calendar</span></code> module defines the <code class="docutils literal notranslate"><span class="pre">Calendar</span></code> class, which
+encapsulates calculations for values such as the dates of the weeks in
+a given month or year. In addition, the <code class="docutils literal notranslate"><span class="pre">TextCalendar</span></code> and
+<code class="docutils literal notranslate"><span class="pre">HTMLCalendar</span></code> classes can produce pre-formatted output.</p>
+<div class="section" id="formatting-examples">
+<h2>Formatting Examples<a class="headerlink" href="#formatting-examples" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">prmonth()</span></code> method is a simple function that produces the
+formatted text output for a month.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">calendar_textcalendar.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">calendar</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">TextCalendar</span><span class="p">(</span><span class="n">calendar</span><span class="o">.</span><span class="n">SUNDAY</span><span class="p">)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">prmonth</span><span class="p">(</span><span class="mi">2017</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The example configures <code class="docutils literal notranslate"><span class="pre">TextCalendar</span></code> to start weeks on Sunday,
+following the American convention. The default is to use the European
+convention of starting a week on Monday.</p>
+<p>The output looks like:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 calendar_textcalendar.py
+
+     July 2017
+Su Mo Tu We Th Fr Sa
+                   1
+ 2  3  4  5  6  7  8
+ 9 10 11 12 13 14 15
+16 17 18 19 20 21 22
+23 24 25 26 27 28 29
+30 31
+</pre></div>
+</div>
+<p>A similar HTML table can be produced with <code class="docutils literal notranslate"><span class="pre">HTMLCalendar</span></code> and
+<code class="docutils literal notranslate"><span class="pre">formatmonth()</span></code>.  The rendered output looks roughly the same as
+the plain text version, but is wrapped with HTML tags.  Each table
+cell has a class attribute corresponding to the day of the week, so
+the HTML can be styled through CSS.</p>
+<p>To produce output in a format other than one of the available
+defaults, use <code class="docutils literal notranslate"><span class="pre">calendar</span></code> to calculate the dates and organize the
+values into week and month ranges, then iterate over the result.  The
+<code class="docutils literal notranslate"><span class="pre">weekheader()</span></code>, <code class="docutils literal notranslate"><span class="pre">monthcalendar()</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">yeardays2calendar()</span></code> methods of <code class="docutils literal notranslate"><span class="pre">Calendar</span></code> are especially
+useful for that.</p>
+<p>Calling <code class="docutils literal notranslate"><span class="pre">yeardays2calendar()</span></code> produces a sequence of “month row”
+lists. Each list includes the months as another list of weeks. The
+weeks are lists of tuples made up of day number (1-31) and weekday
+number (0-6). Days that fall outside of the month have a day number of
+0.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">calendar_yeardays2calendar.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">calendar</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="n">cal</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">Calendar</span><span class="p">(</span><span class="n">calendar</span><span class="o">.</span><span class="n">SUNDAY</span><span class="p">)</span>
+
+<span class="n">cal_data</span> <span class="o">=</span> <span class="n">cal</span><span class="o">.</span><span class="n">yeardays2calendar</span><span class="p">(</span><span class="mi">2017</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;len(cal_data)      :&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">cal_data</span><span class="p">))</span>
+
+<span class="n">top_months</span> <span class="o">=</span> <span class="n">cal_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;len(top_months)    :&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">top_months</span><span class="p">))</span>
+
+<span class="n">first_month</span> <span class="o">=</span> <span class="n">top_months</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;len(first_month)   :&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">first_month</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;first_month:&#39;</span><span class="p">)</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">first_month</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">65</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Calling <code class="docutils literal notranslate"><span class="pre">yeardays2calendar(2017,</span> <span class="pre">3)</span></code> returns data for 2017,
+organized with three months per row.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 calendar_yeardays2calendar.py
+
+len(cal_data)      : 4
+len(top_months)    : 3
+len(first_month)   : 5
+first_month:
+[[(1, 6), (2, 0), (3, 1), (4, 2), (5, 3), (6, 4), (7, 5)],
+ [(8, 6), (9, 0), (10, 1), (11, 2), (12, 3), (13, 4), (14, 5)],
+ [(15, 6), (16, 0), (17, 1), (18, 2), (19, 3), (20, 4), (21,
+5)],
+ [(22, 6), (23, 0), (24, 1), (25, 2), (26, 3), (27, 4), (28,
+5)],
+ [(29, 6), (30, 0), (31, 1), (0, 2), (0, 3), (0, 4), (0, 5)]]
+</pre></div>
+</div>
+<p>This is equivalent to the data used by <code class="docutils literal notranslate"><span class="pre">formatyear()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">calendar_formatyear.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">calendar</span>
+
+<span class="n">cal</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">TextCalendar</span><span class="p">(</span><span class="n">calendar</span><span class="o">.</span><span class="n">SUNDAY</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cal</span><span class="o">.</span><span class="n">formatyear</span><span class="p">(</span><span class="mi">2017</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>For the same arguments, <code class="docutils literal notranslate"><span class="pre">formatyear()</span></code> produces this output:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 calendar_formatyear.py
+
+                              2017
+
+      January               February               March
+Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa
+ 1  2  3  4  5  6  7            1  2  3  4            1  2  3  4
+ 8  9 10 11 12 13 14   5  6  7  8  9 10 11   5  6  7  8  9 10 11
+15 16 17 18 19 20 21  12 13 14 15 16 17 18  12 13 14 15 16 17 18
+22 23 24 25 26 27 28  19 20 21 22 23 24 25  19 20 21 22 23 24 25
+29 30 31              26 27 28              26 27 28 29 30 31
+
+       April                  May                   June
+Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa
+                   1      1  2  3  4  5  6               1  2  3
+ 2  3  4  5  6  7  8   7  8  9 10 11 12 13   4  5  6  7  8  9 10
+ 9 10 11 12 13 14 15  14 15 16 17 18 19 20  11 12 13 14 15 16 17
+16 17 18 19 20 21 22  21 22 23 24 25 26 27  18 19 20 21 22 23 24
+23 24 25 26 27 28 29  28 29 30 31           25 26 27 28 29 30
+30
+
+        July                 August              September
+Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa
+                   1         1  2  3  4  5                  1  2
+ 2  3  4  5  6  7  8   6  7  8  9 10 11 12   3  4  5  6  7  8  9
+ 9 10 11 12 13 14 15  13 14 15 16 17 18 19  10 11 12 13 14 15 16
+16 17 18 19 20 21 22  20 21 22 23 24 25 26  17 18 19 20 21 22 23
+23 24 25 26 27 28 29  27 28 29 30 31        24 25 26 27 28 29 30
+30 31
+
+      October               November              December
+Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa
+ 1  2  3  4  5  6  7            1  2  3  4                  1  2
+ 8  9 10 11 12 13 14   5  6  7  8  9 10 11   3  4  5  6  7  8  9
+15 16 17 18 19 20 21  12 13 14 15 16 17 18  10 11 12 13 14 15 16
+22 23 24 25 26 27 28  19 20 21 22 23 24 25  17 18 19 20 21 22 23
+29 30 31              26 27 28 29 30        24 25 26 27 28 29 30
+                                            31
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">day_name</span></code>, <code class="docutils literal notranslate"><span class="pre">day_abbr</span></code>, <code class="docutils literal notranslate"><span class="pre">month_name</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">month_abbr</span></code> module attributes useful for producing custom
+formatted output (i.e., to include links in the HTML output). They are
+automatically configured correctly for the current locale.</p>
+</div>
+<div class="section" id="locales">
+<h2>Locales<a class="headerlink" href="#locales" title="Permalink to this headline">¶</a></h2>
+<p>To produce a calendar formatted for a locale other than the current
+default, use <code class="docutils literal notranslate"><span class="pre">LocaleTextCalendar</span></code> or
+<code class="docutils literal notranslate"><span class="pre">LocaleHTMLCalendar</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">calendar_locale.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">calendar</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">LocaleTextCalendar</span><span class="p">(</span><span class="n">locale</span><span class="o">=</span><span class="s1">&#39;en_US&#39;</span><span class="p">)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">prmonth</span><span class="p">(</span><span class="mi">2017</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">LocaleTextCalendar</span><span class="p">(</span><span class="n">locale</span><span class="o">=</span><span class="s1">&#39;fr_FR&#39;</span><span class="p">)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">prmonth</span><span class="p">(</span><span class="mi">2017</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The first day of the week is not part of the locale settings, and the
+value is taken from the argument to the calendar class just as with
+the regular <code class="docutils literal notranslate"><span class="pre">TextCalendar</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 calendar_locale.py
+
+     July 2017
+Mo Tu We Th Fr Sa Su
+                1  2
+ 3  4  5  6  7  8  9
+10 11 12 13 14 15 16
+17 18 19 20 21 22 23
+24 25 26 27 28 29 30
+31
+
+    juillet 2017
+Lu Ma Me Je Ve Sa Di
+                1  2
+ 3  4  5  6  7  8  9
+10 11 12 13 14 15 16
+17 18 19 20 21 22 23
+24 25 26 27 28 29 30
+31
+</pre></div>
+</div>
+</div>
+<div class="section" id="calculating-dates">
+<h2>Calculating Dates<a class="headerlink" href="#calculating-dates" title="Permalink to this headline">¶</a></h2>
+<p>Although the calendar module focuses mostly on printing full calendars
+in various formats, it also provides functions useful for working with
+dates in other ways, such as calculating dates for a recurring
+event. For example, the Python Atlanta User’s Group meets on the
+second Thursday of every month. To calculate the dates for the
+meetings for a year, use the return value of <code class="docutils literal notranslate"><span class="pre">monthcalendar()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">calendar_monthcalendar.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">calendar</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">calendar</span><span class="o">.</span><span class="n">monthcalendar</span><span class="p">(</span><span class="mi">2017</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Some days have a 0 value. Those are days of the week that overlap with
+the given month, but that are part of another month.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 calendar_monthcalendar.py
+
+[[0, 0, 0, 0, 0, 1, 2],
+ [3, 4, 5, 6, 7, 8, 9],
+ [10, 11, 12, 13, 14, 15, 16],
+ [17, 18, 19, 20, 21, 22, 23],
+ [24, 25, 26, 27, 28, 29, 30],
+ [31, 0, 0, 0, 0, 0, 0]]
+</pre></div>
+</div>
+<p>The first day of the week defaults to Monday. It is possible to change
+that by calling <code class="docutils literal notranslate"><span class="pre">setfirstweekday()</span></code>, but since the calendar module
+includes constants for indexing into the date ranges returned by
+<code class="docutils literal notranslate"><span class="pre">monthcalendar()</span></code>, it is more convenient to skip that step in this
+case.</p>
+<p>To calculate the group meeting dates for a year, assuming they are
+always on the second Thursday of every month, look at the output of
+<code class="docutils literal notranslate"><span class="pre">monthcalendar()</span></code> to find the dates on which Thursdays fall. The
+first and last week of the month are padded with 0 values as
+placeholders for the days falling in the preceding or subsequent
+month. For example, if a month starts on a Friday, the value in the
+first week in the Thursday position will be 0.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">calendar_secondthursday.py</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">calendar</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">year</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># Show every month</span>
+<span class="k">for</span> <span class="n">month</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">):</span>
+
+    <span class="c1"># Compute the dates for each week that overlaps the month</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">monthcalendar</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">)</span>
+    <span class="n">first_week</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">second_week</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">third_week</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="c1"># If there is a Thursday in the first week,</span>
+    <span class="c1"># the second Thursday is # in the second week.</span>
+    <span class="c1"># Otherwise, the second Thursday must be in</span>
+    <span class="c1"># the third week.</span>
+    <span class="k">if</span> <span class="n">first_week</span><span class="p">[</span><span class="n">calendar</span><span class="o">.</span><span class="n">THURSDAY</span><span class="p">]:</span>
+        <span class="n">meeting_date</span> <span class="o">=</span> <span class="n">second_week</span><span class="p">[</span><span class="n">calendar</span><span class="o">.</span><span class="n">THURSDAY</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">meeting_date</span> <span class="o">=</span> <span class="n">third_week</span><span class="p">[</span><span class="n">calendar</span><span class="o">.</span><span class="n">THURSDAY</span><span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:&gt;3}</span><span class="s1">: </span><span class="si">{:&gt;2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">calendar</span><span class="o">.</span><span class="n">month_abbr</span><span class="p">[</span><span class="n">month</span><span class="p">],</span>
+                                <span class="n">meeting_date</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>So the meeting schedule for the year is:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 calendar_secondthursday.py 2017
+
+Jan: 12
+Feb:  9
+Mar:  9
+Apr: 13
+May: 11
+Jun:  8
+Jul: 13
+Aug: 10
+Sep: 14
+Oct: 12
+Nov:  9
+Dec: 14
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference external" href="https://docs.python.org/3.7/library/calendar.html">Standard library documentation for calendar</a></li>
+<li><a class="reference internal" href="../time/index.html#module-time" title="time: Clock time"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code></a> – Lower-level time functions.</li>
+<li><a class="reference internal" href="../datetime/index.html#module-datetime" title="datetime: Date and time value manipulation."><code class="xref py py-mod docutils literal notranslate"><span class="pre">datetime</span></code></a> – Manipulate date values, including timestamps
+and time zones.</li>
+<li><a class="reference internal" href="../locale/index.html#module-locale" title="locale: POSIX cultural localization API"><code class="xref py py-mod docutils literal notranslate"><span class="pre">locale</span></code></a> – Locale settings.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+        <div id="footer-nav">
+<a id="prev-link" href="../datetime/index.html"
+   title="previous chapter"><i class="fa fa-arrow-circle-left"></i> datetime — Date and Time Value Manipulation</a>
+<a id="next-link" href="../numeric.html"
+   title="next chapter">Mathematics <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+        </div>
+      </div>
+
+      <div class="pure-u-1-4">
+        <div class="sidebar-wrapper">
+          <div class="sidebar">
+<div id="sidebar-toc">
+  <h5>Quick Links</h5>
+  <ul>
+    
+    <li><a href="#formatting-examples"><i class="fa fa-caret-right"></i>Formatting Examples</a></li>
+    
+    <li><a href="#locales"><i class="fa fa-caret-right"></i>Locales</a></li>
+    
+    <li><a href="#calculating-dates"><i class="fa fa-caret-right"></i>Calculating Dates</a></li>
+    
+  </ul>
+</div>
+
+          </div>
+          <div class="sidebar"><div id="sidebar-last-updated">
+  This page was last updated 2018-03-18.
+</div>
+
+          </div>
+          <div class="sidebar">
+<div id="sidebar-nav">
+  <h5>Navigation</h5>
+  <ul>
+    <li><a href="../datetime/index.html"
+           title="previous chapter"><i class="fa fa-arrow-circle-left"></i>datetime — Date and Time Value Manipulation</a></li>
+    <li><a href="../numeric.html"
+           title="next chapter"><i class="fa fa-arrow-circle-right"></i>Mathematics</a></li>
+  </ul>
+</div>
+          </div>
+          <div class="sidebar"><div id="sidebar-book"><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/book-cover-image-med.jpg"><br>Get the book</a></div>
+          </div>
+          <div class="sidebar"><div id="sidebar-example-disclaimer">
+<p>The output from all the example programs
+from PyMOTW-3 has been generated with Python 3.7.9, unless
+otherwise noted. Some of the features described here may not be
+available in earlier versions of Python.</p>
+<p>Looking for <a href="/2/">examples for Python 2</a>?</p>
+</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pure-g-r" id="footer">
+
+      <div class="pure-u-1-3">
+        <div class="footer-list">
+            <h4>This Site</h4>
+            <ul>
+              <li><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+              <li><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+            </ul>
+        </div>
+      </div><div class="pure-u-1-3">
+          <div class="footer-content">
+            <div class="socialmedia">
+              <a class="sociallink" href="../index.html"
+       title="Home">
+      <i class="fa fa-home fa-lg"></i></a>
+              <a class="sociallink" href="../about.html"
+       title="About">
+      <i class="fa fa-user fa-lg"></i></a>
+              <a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a>
+              <a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a>
+              <a class="sociallink" href="http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US"
+       title="Subscribe via Email">
+      <i class="fa fa-envelope fa-lg"></i></a>
+            </div>
+
+            <div class="copyright">
+              <a rel="author" href="../about.html">&copy; Copyright 2021, Doug Hellmann</a>
+            </div>
+
+            <div class="cc"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License BY-NC-SA" style="border-width:0; align: center;" width="88" height="31" src="data:image/png;base64,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"/></a>
+            </div>
+
+          </div></div><div class="pure-u-1-3">
+          <div class="footer-list">
+            <h4>Other Writing</h4>
+            <ul>
+              <li><a href="https://doughellmann.com/"><i class="fa fa-pencil fa-lg"></i> Blog</a></li>
+              <li><a href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><i class="fa fa-book fa-lg"></i> The Python Standard Library By Example</a></li>
+            </ul>
+          </div>
+        </div><script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-3', 'pymotw.com');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

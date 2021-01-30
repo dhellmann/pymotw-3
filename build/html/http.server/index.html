@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>http.server — Base Classes for Implementing Web Servers &mdash; PyMOTW 3</title>
+
+    <link rel="stylesheet" href="../_static/pure-min.css" type="text/css">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pymotw.css" type="text/css">
+
+    <link rel="shortcut icon" type="image/png" href="../_static/favicon.png">
+
+    <link rel="alternate" type="application/atom+xml"
+          title="Doug Hellmann"
+          href="http://feeds.doughellmann.com/DougHellmann" />
+    <link rel="alternate" type="application/atom+xml"
+          title="PyMOTW Updates"
+          href="http://feeds.doughellmann.com/PyMOTW" />
+
+    <meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+
+  </head>
+  <body>
+
+    <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
+      <a class="pure-menu-heading" href="../index.html"><img src="../_static/logo.png"> PyMOTW-3</a>
+
+      <ul id="top-menu">
+        <li class="pure-menu-selected"><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+        <li class="pure-menu-selected"><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a></a>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a></li>
+      </ul>
+
+    </div>
+
+    <div class="pure-menu pure-menu-open pure-menu-vertical" id="breadcrumbs-menu">
+      
+      <ul id="breadcrumbs">
+        <li class="pure-menu-selected"><a href="../internet_protocols.html"><i class="fa fa-arrow-circle-up"></i> The Internet</a></li>
+      </ul>
+    </div>
+
+    <div class="pure-g-r" id="content-container">
+
+      <div class="pure-u-3-4">
+        <div class="content">
+          
+  <div class="section" id="module-http.server">
+<span id="http-server-base-classes-for-implementing-web-servers"></span><h1>http.server — Base Classes for Implementing Web Servers<a class="headerlink" href="#module-http.server" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">http.server includes classes that can form the basis of a
+web server.</td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">http.server</span></code> uses classes from <a class="reference internal" href="../socketserver/index.html#module-socketserver" title="socketserver: Creating network servers."><code class="xref py py-mod docutils literal notranslate"><span class="pre">socketserver</span></code></a> to create
+base classes for making HTTP servers. <code class="docutils literal notranslate"><span class="pre">HTTPServer</span></code> can be used
+directly, but the <code class="docutils literal notranslate"><span class="pre">BaseHTTPRequestHandler</span></code> is intended to be
+extended to handle each protocol method (GET, POST, etc.).</p>
+<div class="section" id="http-get">
+<h2>HTTP GET<a class="headerlink" href="#http-get" title="Permalink to this headline">¶</a></h2>
+<p>To add support for an HTTP method in a request handler class,
+implement the method <code class="docutils literal notranslate"><span class="pre">do_METHOD()</span></code>, replacing <code class="docutils literal notranslate"><span class="pre">METHOD</span></code> with the
+name of the HTTP method (e.g., <code class="docutils literal notranslate"><span class="pre">do_GET()</span></code>, <code class="docutils literal notranslate"><span class="pre">do_POST()</span></code>,
+etc.). For consistency, the request handler methods take no
+arguments. All of the parameters for the request are parsed by
+<code class="docutils literal notranslate"><span class="pre">BaseHTTPRequestHandler</span></code> and stored as instance attributes of
+the request instance.</p>
+<p>This example request handler illustrates how to return a response to the
+client, and some of the local attributes that can be useful in building the
+response.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">http_server_GET.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">http.server</span> <span class="k">import</span> <span class="n">BaseHTTPRequestHandler</span>
+<span class="kn">from</span> <span class="nn">urllib</span> <span class="k">import</span> <span class="n">parse</span>
+
+
+<span class="k">class</span> <span class="nc">GetHandler</span><span class="p">(</span><span class="n">BaseHTTPRequestHandler</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">do_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">parsed_path</span> <span class="o">=</span> <span class="n">parse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">message_parts</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;CLIENT VALUES:&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;client_address=</span><span class="si">{}</span><span class="s1"> (</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">client_address</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">address_string</span><span class="p">()),</span>
+            <span class="s1">&#39;command=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="p">),</span>
+            <span class="s1">&#39;path=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">),</span>
+            <span class="s1">&#39;real path=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parsed_path</span><span class="o">.</span><span class="n">path</span><span class="p">),</span>
+            <span class="s1">&#39;query=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parsed_path</span><span class="o">.</span><span class="n">query</span><span class="p">),</span>
+            <span class="s1">&#39;request_version=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request_version</span><span class="p">),</span>
+            <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;SERVER VALUES:&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;server_version=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">server_version</span><span class="p">),</span>
+            <span class="s1">&#39;sys_version=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sys_version</span><span class="p">),</span>
+            <span class="s1">&#39;protocol_version=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">protocol_version</span><span class="p">),</span>
+            <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;HEADERS RECEIVED:&#39;</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">message_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>
+            <span class="p">)</span>
+        <span class="n">message_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">message_parts</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_response</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_header</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;text/plain; charset=utf-8&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_headers</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">http.server</span> <span class="k">import</span> <span class="n">HTTPServer</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">HTTPServer</span><span class="p">((</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">8080</span><span class="p">),</span> <span class="n">GetHandler</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Starting server, use &lt;Ctrl-C&gt; to stop&#39;</span><span class="p">)</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>The message text is assembled and then written to <code class="xref py py-attr docutils literal notranslate"><span class="pre">wfile</span></code>, the
+file handle wrapping the response socket. Each response needs a
+response code, set via <code class="docutils literal notranslate"><span class="pre">send_response()</span></code>. If an error code is used
+(404, 501, etc.), an appropriate default error message is included in
+the header, or a message can be passed with the error code.</p>
+<p>To run the request handler in a server, pass it to the constructor of
+<code class="docutils literal notranslate"><span class="pre">HTTPServer</span></code>, as in the <code class="docutils literal notranslate"><span class="pre">__main__</span></code> processing portion of the
+sample script.</p>
+<p>Then start the server:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 http_server_GET.py
+
+Starting server, use &lt;Ctrl-C&gt; to stop
+</pre></div>
+</div>
+<p>In a separate terminal, use <code class="docutils literal notranslate"><span class="pre">curl</span></code> to access it:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl -v -i http://127.0.0.1:8080/?foo=bar
+
+*   Trying 127.0.0.1...
+* Connected to 127.0.0.1 (127.0.0.1) port 8080 (#0)
+&gt; GET /?foo=bar HTTP/1.1
+&gt; Host: 127.0.0.1:8080
+&gt; User-Agent: curl/7.43.0
+&gt; Accept: */*
+&gt;
+HTTP/1.0 200 OK
+Content-Type: text/plain; charset=utf-8
+Server: BaseHTTP/0.6 Python/3.5.2
+Date: Thu, 06 Oct 2016 20:44:11 GMT
+
+CLIENT VALUES:
+client_address=(&#39;127.0.0.1&#39;, 52934) (127.0.0.1)
+command=GET
+path=/?foo=bar
+real path=/
+query=foo=bar
+request_version=HTTP/1.1
+
+SERVER VALUES:
+server_version=BaseHTTP/0.6
+sys_version=Python/3.5.2
+protocol_version=HTTP/1.0
+
+HEADERS RECEIVED:
+Accept=*/*
+Host=127.0.0.1:8080
+User-Agent=curl/7.43.0
+* Connection #0 to host 127.0.0.1 left intact
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The output produced by different versions of <code class="docutils literal notranslate"><span class="pre">curl</span></code> may vary. If
+running the examples produces different output, check the version
+number reported by <code class="docutils literal notranslate"><span class="pre">curl</span></code>.</p>
+</div>
+</div>
+<div class="section" id="http-post">
+<span id="http-server-post"></span><h2>HTTP POST<a class="headerlink" href="#http-post" title="Permalink to this headline">¶</a></h2>
+<p>Supporting POST requests is a little more work, because the base class
+does not parse the form data automatically. The <code class="xref py py-mod docutils literal notranslate"><span class="pre">cgi</span></code> module
+provides the <code class="docutils literal notranslate"><span class="pre">FieldStorage</span></code> class which knows how to parse the
+form, if it is given the correct inputs.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">http_server_POST.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cgi</span>
+<span class="kn">from</span> <span class="nn">http.server</span> <span class="k">import</span> <span class="n">BaseHTTPRequestHandler</span>
+<span class="kn">import</span> <span class="nn">io</span>
+
+
+<span class="k">class</span> <span class="nc">PostHandler</span><span class="p">(</span><span class="n">BaseHTTPRequestHandler</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">do_POST</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Parse the form data posted</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">cgi</span><span class="o">.</span><span class="n">FieldStorage</span><span class="p">(</span>
+            <span class="n">fp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rfile</span><span class="p">,</span>
+            <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span>
+            <span class="n">environ</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;REQUEST_METHOD&#39;</span><span class="p">:</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;CONTENT_TYPE&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">],</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Begin the response</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_response</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_header</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;text/plain; charset=utf-8&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_headers</span><span class="p">()</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">TextIOWrapper</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">wfile</span><span class="p">,</span>
+            <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span>
+            <span class="n">line_buffering</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">write_through</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Client: </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client_address</span><span class="p">))</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;User-agent: </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;user-agent&#39;</span><span class="p">]))</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Path: </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Form data:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Echo back information about what was posted in the form</span>
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">form</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">field_item</span> <span class="o">=</span> <span class="n">form</span><span class="p">[</span><span class="n">field</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">field_item</span><span class="o">.</span><span class="n">filename</span><span class="p">:</span>
+                <span class="c1"># The field contains an uploaded file</span>
+                <span class="n">file_data</span> <span class="o">=</span> <span class="n">field_item</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                <span class="n">file_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_data</span><span class="p">)</span>
+                <span class="k">del</span> <span class="n">file_data</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Uploaded </span><span class="si">{}</span><span class="s1"> as </span><span class="si">{!r}</span><span class="s1"> (</span><span class="si">{}</span><span class="s1"> bytes)</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">field</span><span class="p">,</span> <span class="n">field_item</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">file_len</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Regular form value</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="si">{}</span><span class="s1">=</span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">field</span><span class="p">,</span> <span class="n">form</span><span class="p">[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+
+        <span class="c1"># Disconnect our encoding wrapper from the underlying</span>
+        <span class="c1"># buffer so that deleting the wrapper doesn&#39;t close</span>
+        <span class="c1"># the socket, which is still being used by the server.</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">http.server</span> <span class="k">import</span> <span class="n">HTTPServer</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">HTTPServer</span><span class="p">((</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">8080</span><span class="p">),</span> <span class="n">PostHandler</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Starting server, use &lt;Ctrl-C&gt; to stop&#39;</span><span class="p">)</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>Run the server in one window:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 http_server_POST.py
+
+Starting server, use &lt;Ctrl-C&gt; to stop
+</pre></div>
+</div>
+<p>The arguments to <code class="docutils literal notranslate"><span class="pre">curl</span></code> can include form data to be posted to
+the server by using the <code class="docutils literal notranslate"><span class="pre">-F</span></code> option. The last argument, <code class="docutils literal notranslate"><span class="pre">-F</span>
+<span class="pre">datafile=&#64;http_server_GET.py</span></code>, posts the contents of the file
+<code class="docutils literal notranslate"><span class="pre">http_server_GET.py</span></code> to illustrate reading file data from the
+form.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl -v http://127.0.0.1:8080/ -F name=dhellmann -F foo=bar \
+-F datafile=@http_server_GET.py
+
+*   Trying 127.0.0.1...
+* Connected to 127.0.0.1 (127.0.0.1) port 8080 (#0)
+&gt; POST / HTTP/1.1
+&gt; Host: 127.0.0.1:8080
+&gt; User-Agent: curl/7.43.0
+&gt; Accept: */*
+&gt; Content-Length: 1974
+&gt; Expect: 100-continue
+&gt; Content-Type: multipart/form-data;
+boundary=------------------------a2b3c7485cf8def2
+&gt;
+* Done waiting for 100-continue
+HTTP/1.0 200 OK
+Content-Type: text/plain; charset=utf-8
+Server: BaseHTTP/0.6 Python/3.5.2
+Date: Thu, 06 Oct 2016 20:53:48 GMT
+
+Client: (&#39;127.0.0.1&#39;, 53121)
+User-agent: curl/7.43.0
+Path: /
+Form data:
+    name=dhellmann
+    Uploaded datafile as &#39;http_server_GET.py&#39; (1612 bytes)
+    foo=bar
+* Connection #0 to host 127.0.0.1 left intact
+</pre></div>
+</div>
+</div>
+<div class="section" id="threading-and-forking">
+<h2>Threading and Forking<a class="headerlink" href="#threading-and-forking" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">HTTPServer</span></code> is a simple subclass of
+<code class="docutils literal notranslate"><span class="pre">socketserver.TCPServer</span></code>, and does not use multiple threads or
+processes to handle requests. To add threading or forking, create a
+new class using the appropriate mix-in from <a class="reference internal" href="../socketserver/index.html#module-socketserver" title="socketserver: Creating network servers."><code class="xref py py-mod docutils literal notranslate"><span class="pre">socketserver</span></code></a>.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">http_server_threads.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">http.server</span> <span class="k">import</span> <span class="n">HTTPServer</span><span class="p">,</span> <span class="n">BaseHTTPRequestHandler</span>
+<span class="kn">from</span> <span class="nn">socketserver</span> <span class="k">import</span> <span class="n">ThreadingMixIn</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+
+
+<span class="k">class</span> <span class="nc">Handler</span><span class="p">(</span><span class="n">BaseHTTPRequestHandler</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">do_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_response</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_header</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;text/plain; charset=utf-8&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_headers</span><span class="p">()</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">currentThread</span><span class="p">()</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">ThreadedHTTPServer</span><span class="p">(</span><span class="n">ThreadingMixIn</span><span class="p">,</span> <span class="n">HTTPServer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Handle requests in a separate thread.&quot;&quot;&quot;</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">ThreadedHTTPServer</span><span class="p">((</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">8080</span><span class="p">),</span> <span class="n">Handler</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Starting server, use &lt;Ctrl-C&gt; to stop&#39;</span><span class="p">)</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>Run the server in the same way as the other examples.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 http_server_threads.py
+
+Starting server, use &lt;Ctrl-C&gt; to stop
+</pre></div>
+</div>
+<p>Each time the server receives a request, it starts a new thread or
+process to handle it:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl http://127.0.0.1:8080/
+
+Thread-1
+
+$ curl http://127.0.0.1:8080/
+
+Thread-2
+
+$ curl http://127.0.0.1:8080/
+
+Thread-3
+</pre></div>
+</div>
+<p>Swapping <code class="docutils literal notranslate"><span class="pre">ForkingMixIn</span></code> for <code class="docutils literal notranslate"><span class="pre">ThreadingMixIn</span></code> would
+achieve similar results, using separate processes instead of threads.</p>
+</div>
+<div class="section" id="handling-errors">
+<h2>Handling Errors<a class="headerlink" href="#handling-errors" title="Permalink to this headline">¶</a></h2>
+<p>Handle errors by calling <code class="xref py py-meth docutils literal notranslate"><span class="pre">send_error()</span></code>, passing the
+appropriate error code and an optional error message.  The entire
+response (with headers, status code, and body) is generated
+automatically.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">http_server_errors.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">http.server</span> <span class="k">import</span> <span class="n">BaseHTTPRequestHandler</span>
+
+
+<span class="k">class</span> <span class="nc">ErrorHandler</span><span class="p">(</span><span class="n">BaseHTTPRequestHandler</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">do_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_error</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">http.server</span> <span class="k">import</span> <span class="n">HTTPServer</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">HTTPServer</span><span class="p">((</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">8080</span><span class="p">),</span> <span class="n">ErrorHandler</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Starting server, use &lt;Ctrl-C&gt; to stop&#39;</span><span class="p">)</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>In this case, a 404 error is always returned.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 http_server_errors.py
+
+Starting server, use &lt;Ctrl-C&gt; to stop
+</pre></div>
+</div>
+<p>The error message is reported to the client using an HTML document as
+well as the header to indicate an error code.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl -i http://127.0.0.1:8080/
+
+HTTP/1.0 404 Not Found
+Server: BaseHTTP/0.6 Python/3.5.2
+Date: Thu, 06 Oct 2016 20:58:08 GMT
+Connection: close
+Content-Type: text/html;charset=utf-8
+Content-Length: 447
+
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01//EN&quot;
+        &quot;http://www.w3.org/TR/html4/strict.dtd&quot;&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta http-equiv=&quot;Content-Type&quot;
+        content=&quot;text/html;charset=utf-8&quot;&gt;
+        &lt;title&gt;Error response&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;Error response&lt;/h1&gt;
+        &lt;p&gt;Error code: 404&lt;/p&gt;
+        &lt;p&gt;Message: Not Found.&lt;/p&gt;
+        &lt;p&gt;Error code explanation: 404 - Nothing matches the
+        given URI.&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="setting-headers">
+<h2>Setting Headers<a class="headerlink" href="#setting-headers" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">send_header</span></code> method adds header data to the HTTP response.
+It takes two arguments: the name of the header and the value.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">http_server_send_header.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">http.server</span> <span class="k">import</span> <span class="n">BaseHTTPRequestHandler</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+<span class="k">class</span> <span class="nc">GetHandler</span><span class="p">(</span><span class="n">BaseHTTPRequestHandler</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">do_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_response</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_header</span><span class="p">(</span>
+            <span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;text/plain; charset=utf-8&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_header</span><span class="p">(</span>
+            <span class="s1">&#39;Last-Modified&#39;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">date_time_string</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_headers</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Response body</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">http.server</span> <span class="k">import</span> <span class="n">HTTPServer</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">HTTPServer</span><span class="p">((</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">8080</span><span class="p">),</span> <span class="n">GetHandler</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Starting server, use &lt;Ctrl-C&gt; to stop&#39;</span><span class="p">)</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>This example sets the <code class="docutils literal notranslate"><span class="pre">Last-Modified</span></code> header to the current
+timestamp, formatted according to RFC 7231.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl -i http://127.0.0.1:8080/
+
+HTTP/1.0 200 OK
+Server: BaseHTTP/0.6 Python/3.5.2
+Date: Thu, 06 Oct 2016 21:00:54 GMT
+Content-Type: text/plain; charset=utf-8
+Last-Modified: Thu, 06 Oct 2016 21:00:54 GMT
+
+Response body
+</pre></div>
+</div>
+<p>The server logs the request to the terminal, like in the other
+examples.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 http_server_send_header.py
+
+Starting server, use &lt;Ctrl-C&gt; to stop
+127.0.0.1 - - [06/Oct/2016 17:00:54] &quot;GET / HTTP/1.1&quot; 200 -
+</pre></div>
+</div>
+</div>
+<div class="section" id="command-line-use">
+<h2>Command Line Use<a class="headerlink" href="#command-line-use" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">http.server</span></code> includes a built-in server for serving files from
+the local file system. Start it from the command line using the <code class="docutils literal notranslate"><span class="pre">-m</span></code>
+option for the Python interpreter.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 -m http.server 8080
+
+Serving HTTP on 0.0.0.0 port 8080 ...
+127.0.0.1 - - [06/Oct/2016 17:12:48] &quot;HEAD /index.rst HTTP/1.1&quot; 200 -
+</pre></div>
+</div>
+<p>The root directory of the server is the working directory where the
+server is started.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl -I http://127.0.0.1:8080/index.rst
+
+HTTP/1.0 200 OK
+Server: SimpleHTTP/0.6 Python/3.5.2
+Date: Thu, 06 Oct 2016 21:12:48 GMT
+Content-type: application/octet-stream
+Content-Length: 8285
+Last-Modified: Thu, 06 Oct 2016 21:12:10 GMT
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference external" href="https://docs.python.org/3.7/library/http.server.html">Standard library documentation for http.server</a></li>
+<li><a class="reference internal" href="../socketserver/index.html#module-socketserver" title="socketserver: Creating network servers."><code class="xref py py-mod docutils literal notranslate"><span class="pre">socketserver</span></code></a> – The <code class="docutils literal notranslate"><span class="pre">socketserver</span></code> module provides the
+base class that handles the raw socket connection.</li>
+<li><span class="target" id="index-0"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc7231.html"><strong>RFC 7231</strong></a> – “Hypertext Transfer Protocol (HTTP/1.1): Semantics
+and Content” includes a specification for the format of HTTP
+headers and dates.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+        <div id="footer-nav">
+<a id="prev-link" href="../base64/index.html"
+   title="previous chapter"><i class="fa fa-arrow-circle-left"></i> base64 — Encode Binary Data with ASCII</a>
+<a id="next-link" href="../http.cookies/index.html"
+   title="next chapter">http.cookies — HTTP Cookies <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+        </div>
+      </div>
+
+      <div class="pure-u-1-4">
+        <div class="sidebar-wrapper">
+          <div class="sidebar">
+<div id="sidebar-toc">
+  <h5>Quick Links</h5>
+  <ul>
+    
+    <li><a href="#http-get"><i class="fa fa-caret-right"></i>HTTP GET</a></li>
+    
+    <li><a href="#http-post"><i class="fa fa-caret-right"></i>HTTP POST</a></li>
+    
+    <li><a href="#threading-and-forking"><i class="fa fa-caret-right"></i>Threading and Forking</a></li>
+    
+    <li><a href="#handling-errors"><i class="fa fa-caret-right"></i>Handling Errors</a></li>
+    
+    <li><a href="#setting-headers"><i class="fa fa-caret-right"></i>Setting Headers</a></li>
+    
+    <li><a href="#command-line-use"><i class="fa fa-caret-right"></i>Command Line Use</a></li>
+    
+  </ul>
+</div>
+
+          </div>
+          <div class="sidebar"><div id="sidebar-last-updated">
+  This page was last updated 2016-12-31.
+</div>
+
+          </div>
+          <div class="sidebar">
+<div id="sidebar-nav">
+  <h5>Navigation</h5>
+  <ul>
+    <li><a href="../base64/index.html"
+           title="previous chapter"><i class="fa fa-arrow-circle-left"></i>base64 — Encode Binary Data with ASCII</a></li>
+    <li><a href="../http.cookies/index.html"
+           title="next chapter"><i class="fa fa-arrow-circle-right"></i>http.cookies — HTTP Cookies</a></li>
+  </ul>
+</div>
+          </div>
+          <div class="sidebar"><div id="sidebar-book"><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/book-cover-image-med.jpg"><br>Get the book</a></div>
+          </div>
+          <div class="sidebar"><div id="sidebar-example-disclaimer">
+<p>The output from all the example programs
+from PyMOTW-3 has been generated with Python 3.7.9, unless
+otherwise noted. Some of the features described here may not be
+available in earlier versions of Python.</p>
+<p>Looking for <a href="/2/">examples for Python 2</a>?</p>
+</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pure-g-r" id="footer">
+
+      <div class="pure-u-1-3">
+        <div class="footer-list">
+            <h4>This Site</h4>
+            <ul>
+              <li><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+              <li><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+            </ul>
+        </div>
+      </div><div class="pure-u-1-3">
+          <div class="footer-content">
+            <div class="socialmedia">
+              <a class="sociallink" href="../index.html"
+       title="Home">
+      <i class="fa fa-home fa-lg"></i></a>
+              <a class="sociallink" href="../about.html"
+       title="About">
+      <i class="fa fa-user fa-lg"></i></a>
+              <a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a>
+              <a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a>
+              <a class="sociallink" href="http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US"
+       title="Subscribe via Email">
+      <i class="fa fa-envelope fa-lg"></i></a>
+            </div>
+
+            <div class="copyright">
+              <a rel="author" href="../about.html">&copy; Copyright 2021, Doug Hellmann</a>
+            </div>
+
+            <div class="cc"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License BY-NC-SA" style="border-width:0; align: center;" width="88" height="31" src="data:image/png;base64,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"/></a>
+            </div>
+
+          </div></div><div class="pure-u-1-3">
+          <div class="footer-list">
+            <h4>Other Writing</h4>
+            <ul>
+              <li><a href="https://doughellmann.com/"><i class="fa fa-pencil fa-lg"></i> Blog</a></li>
+              <li><a href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><i class="fa fa-book fa-lg"></i> The Python Standard Library By Example</a></li>
+            </ul>
+          </div>
+        </div><script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-3', 'pymotw.com');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

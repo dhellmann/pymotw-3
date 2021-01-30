@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>atexit — Program Shutdown Callbacks &mdash; PyMOTW 3</title>
+
+    <link rel="stylesheet" href="../_static/pure-min.css" type="text/css">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pymotw.css" type="text/css">
+
+    <link rel="shortcut icon" type="image/png" href="../_static/favicon.png">
+
+    <link rel="alternate" type="application/atom+xml"
+          title="Doug Hellmann"
+          href="http://feeds.doughellmann.com/DougHellmann" />
+    <link rel="alternate" type="application/atom+xml"
+          title="PyMOTW Updates"
+          href="http://feeds.doughellmann.com/PyMOTW" />
+
+    <meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+
+  </head>
+  <body>
+
+    <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
+      <a class="pure-menu-heading" href="../index.html"><img src="../_static/logo.png"> PyMOTW-3</a>
+
+      <ul id="top-menu">
+        <li class="pure-menu-selected"><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+        <li class="pure-menu-selected"><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a></a>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a></li>
+      </ul>
+
+    </div>
+
+    <div class="pure-menu pure-menu-open pure-menu-vertical" id="breadcrumbs-menu">
+      
+      <ul id="breadcrumbs">
+        <li class="pure-menu-selected"><a href="../frameworks.html"><i class="fa fa-arrow-circle-up"></i> Application Building Blocks</a></li>
+      </ul>
+    </div>
+
+    <div class="pure-g-r" id="content-container">
+
+      <div class="pure-u-3-4">
+        <div class="content">
+          
+  <div class="section" id="module-atexit">
+<span id="atexit-program-shutdown-callbacks"></span><h1>atexit — Program Shutdown Callbacks<a class="headerlink" href="#module-atexit" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Register function(s) to be called when a program is closing down.</td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal notranslate"><span class="pre">atexit</span></code> module provides an interface to register
+functions to be called when a program closes down normally.</p>
+<div class="section" id="registering-exit-callbacks">
+<h2>Registering Exit Callbacks<a class="headerlink" href="#registering-exit-callbacks" title="Permalink to this headline">¶</a></h2>
+<p id="index-0">This is an example of registering a function explicitly by calling
+<code class="docutils literal notranslate"><span class="pre">register()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">atexit_simple.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">atexit</span>
+
+
+<span class="k">def</span> <span class="nf">all_done</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;all_done()&#39;</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Registering&#39;</span><span class="p">)</span>
+<span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">all_done</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Registered&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Because the program does not do anything else, <code class="docutils literal notranslate"><span class="pre">all_done()</span></code> is
+called right away.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 atexit_simple.py
+
+Registering
+Registered
+all_done()
+</pre></div>
+</div>
+<p>It is also possible to register more than one function and to pass
+arguments to the registered functions.  That can be useful to cleanly
+disconnect from databases, remove temporary files, etc.  Instead of
+keeping a list of resources that need to be freed, a separate clean-up
+function can be registered for each resource.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">atexit_multiple.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">atexit</span>
+
+
+<span class="k">def</span> <span class="nf">my_cleanup</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;my_cleanup(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+
+
+<span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">my_cleanup</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span><span class="p">)</span>
+<span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">my_cleanup</span><span class="p">,</span> <span class="s1">&#39;second&#39;</span><span class="p">)</span>
+<span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">my_cleanup</span><span class="p">,</span> <span class="s1">&#39;third&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The exit functions are called in the reverse of the order in which
+they are registered. This method allows modules to be cleaned up in
+the reverse order from which they are imported (and therefore register
+their <code class="docutils literal notranslate"><span class="pre">atexit</span></code> functions), which should reduce dependency
+conflicts.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 atexit_multiple.py
+
+my_cleanup(third)
+my_cleanup(second)
+my_cleanup(first)
+</pre></div>
+</div>
+</div>
+<div class="section" id="decorator-syntax">
+<h2>Decorator Syntax<a class="headerlink" href="#decorator-syntax" title="Permalink to this headline">¶</a></h2>
+<p id="index-1">Functions that require no arguments can be registered by using
+<code class="docutils literal notranslate"><span class="pre">register()</span></code> as a decorator.  This alternative syntax is
+convenient for cleanup functions that operate on module-level global
+data.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">atexit_decorator.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">atexit</span>
+
+
+<span class="nd">@atexit</span><span class="o">.</span><span class="n">register</span>
+<span class="k">def</span> <span class="nf">all_done</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;all_done()&#39;</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;starting main program&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Because the function is registered as it is defined, it is also
+important to ensure that it works properly even if no other work is
+performed by the module. If the resources it is supposed to clean up
+were never initialized, calling the exit callback should not produce
+an error.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 atexit_decorator.py
+
+starting main program
+all_done()
+</pre></div>
+</div>
+</div>
+<div class="section" id="canceling-callbacks">
+<h2>Canceling Callbacks<a class="headerlink" href="#canceling-callbacks" title="Permalink to this headline">¶</a></h2>
+<p>To cancel an exit callback, remove it from the registry using
+<code class="docutils literal notranslate"><span class="pre">unregister()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">atexit_unregister.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">atexit</span>
+
+
+<span class="k">def</span> <span class="nf">my_cleanup</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;my_cleanup(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+
+
+<span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">my_cleanup</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span><span class="p">)</span>
+<span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">my_cleanup</span><span class="p">,</span> <span class="s1">&#39;second&#39;</span><span class="p">)</span>
+<span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">my_cleanup</span><span class="p">,</span> <span class="s1">&#39;third&#39;</span><span class="p">)</span>
+
+<span class="n">atexit</span><span class="o">.</span><span class="n">unregister</span><span class="p">(</span><span class="n">my_cleanup</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>All calls to the same callback are canceled, regardless of how many
+times it has been registered.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 atexit_unregister.py
+</pre></div>
+</div>
+<p>Removing a callback that was not previously registered is not
+considered an error.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">atexit_unregister_not_registered.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">atexit</span>
+
+
+<span class="k">def</span> <span class="nf">my_cleanup</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;my_cleanup(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+
+
+<span class="k">if</span> <span class="kc">False</span><span class="p">:</span>
+    <span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">my_cleanup</span><span class="p">,</span> <span class="s1">&#39;never registered&#39;</span><span class="p">)</span>
+
+<span class="n">atexit</span><span class="o">.</span><span class="n">unregister</span><span class="p">(</span><span class="n">my_cleanup</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Because it silently ignores unknown callbacks, <code class="docutils literal notranslate"><span class="pre">unregister()</span></code> can
+be used even when the sequence of registrations might not be known.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 atexit_unregister_not_registered.py
+</pre></div>
+</div>
+</div>
+<div class="section" id="when-are-atexit-callbacks-not-called">
+<h2>When Are atexit Callbacks Not Called?<a class="headerlink" href="#when-are-atexit-callbacks-not-called" title="Permalink to this headline">¶</a></h2>
+<p>The callbacks registered with <code class="docutils literal notranslate"><span class="pre">atexit</span></code> are not invoked if any of
+these conditions is met:</p>
+<ul class="simple">
+<li>The program dies because of a signal.</li>
+<li><code class="docutils literal notranslate"><span class="pre">os._exit()</span></code> is invoked directly.</li>
+<li>A fatal error is detected in the interpreter.</li>
+</ul>
+<p>An example from the <a class="reference internal" href="../subprocess/index.html#module-subprocess" title="subprocess: Spawning additional processes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code></a> section can be updated to show
+what happens when a program is killed by a signal. Two files are
+involved, the parent and the child programs. The parent starts the
+child, pauses, then kills it.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">atexit_signal_parent.py</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="s1">&#39;./atexit_signal_child.py&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;PARENT: Pausing before sending signal...&#39;</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;PARENT: Signaling child&#39;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">proc</span><span class="o">.</span><span class="n">pid</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGTERM</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The child sets up an <code class="docutils literal notranslate"><span class="pre">atexit</span></code> callback, and then sleeps until the
+signal arrives.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">atexit_signal_child.py</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">atexit</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+
+<span class="k">def</span> <span class="nf">not_called</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;CHILD: atexit handler should not have been called&#39;</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;CHILD: Registering atexit handler&#39;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">not_called</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;CHILD: Pausing to wait for signal&#39;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>When run, this is the output.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 atexit_signal_parent.py
+
+CHILD: Registering atexit handler
+CHILD: Pausing to wait for signal
+PARENT: Pausing before sending signal...
+PARENT: Signaling child
+</pre></div>
+</div>
+<p>The child does not print the message embedded in <code class="docutils literal notranslate"><span class="pre">not_called()</span></code>.</p>
+<p>If a program uses <code class="docutils literal notranslate"><span class="pre">os._exit()</span></code>, it can avoid having the
+<code class="docutils literal notranslate"><span class="pre">atexit</span></code> callbacks invoked.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">atexit_os_exit.py</span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">atexit</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<span class="k">def</span> <span class="nf">not_called</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;This should not be called&#39;</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Registering&#39;</span><span class="p">)</span>
+<span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">not_called</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Registered&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Exiting...&#39;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">_exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Because this example bypasses the normal exit path, the callback is
+not run. The print output is also not flushed, so the example is run
+with the <code class="docutils literal notranslate"><span class="pre">-u</span></code> option to enable unbuffered I/O.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 -u atexit_os_exit.py
+
+Registering
+Registered
+Exiting...
+</pre></div>
+</div>
+<p>To ensure that the callbacks are run, allow the program to terminate
+by running out of statements to execute or by calling
+<code class="docutils literal notranslate"><span class="pre">sys.exit()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">atexit_sys_exit.py</span><a class="headerlink" href="#id9" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">atexit</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+
+<span class="k">def</span> <span class="nf">all_done</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;all_done()&#39;</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Registering&#39;</span><span class="p">)</span>
+<span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">all_done</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Registered&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Exiting...&#39;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>This example calls <code class="docutils literal notranslate"><span class="pre">sys.exit()</span></code>, so the registered callbacks are
+invoked.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 atexit_sys_exit.py
+
+Registering
+Registered
+Exiting...
+all_done()
+</pre></div>
+</div>
+</div>
+<div class="section" id="handling-exceptions">
+<h2>Handling Exceptions<a class="headerlink" href="#handling-exceptions" title="Permalink to this headline">¶</a></h2>
+<p>Tracebacks for exceptions raised in <code class="docutils literal notranslate"><span class="pre">atexit</span></code> callbacks are
+printed to the console and the last exception raised is re-raised to
+be the final error message of the program.</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">atexit_exception.py</span><a class="headerlink" href="#id10" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">atexit</span>
+
+
+<span class="k">def</span> <span class="nf">exit_with_exception</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+
+<span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">exit_with_exception</span><span class="p">,</span> <span class="s1">&#39;Registered first&#39;</span><span class="p">)</span>
+<span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">exit_with_exception</span><span class="p">,</span> <span class="s1">&#39;Registered second&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The registration order controls the execution order. If an error in
+one callback introduces an error in another (registered earlier, but
+called later), the final error message might not be the most useful
+error message to show the user.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 atexit_exception.py
+
+Error in atexit._run_exitfuncs:
+Traceback (most recent call last):
+  File &quot;atexit_exception.py&quot;, line 11, in exit_with_exception
+    raise RuntimeError(message)
+RuntimeError: Registered second
+Error in atexit._run_exitfuncs:
+Traceback (most recent call last):
+  File &quot;atexit_exception.py&quot;, line 11, in exit_with_exception
+    raise RuntimeError(message)
+RuntimeError: Registered first
+</pre></div>
+</div>
+<p>It is usually best to handle and quietly log all exceptions in cleanup
+functions, since it is messy to have a program dump errors on exit.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference external" href="https://docs.python.org/3.7/library/atexit.html">Standard library documentation for atexit</a></li>
+<li><a class="reference internal" href="../sys/exceptions.html#sys-exceptions"><span class="std std-ref">Exception Handling</span></a> – Global handling for uncaught
+exceptions.</li>
+<li><a class="reference internal" href="../porting_notes.html#porting-atexit"><span class="std std-ref">Python 2 to 3 porting notes for atexit</span></a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+        <div id="footer-nav">
+<a id="prev-link" href="../fileinput/index.html"
+   title="previous chapter"><i class="fa fa-arrow-circle-left"></i> fileinput — Command-Line Filter Framework</a>
+<a id="next-link" href="../sched/index.html"
+   title="next chapter">sched — Timed Event Scheduler <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+        </div>
+      </div>
+
+      <div class="pure-u-1-4">
+        <div class="sidebar-wrapper">
+          <div class="sidebar">
+<div id="sidebar-toc">
+  <h5>Quick Links</h5>
+  <ul>
+    
+    <li><a href="#registering-exit-callbacks"><i class="fa fa-caret-right"></i>Registering Exit Callbacks</a></li>
+    
+    <li><a href="#decorator-syntax"><i class="fa fa-caret-right"></i>Decorator Syntax</a></li>
+    
+    <li><a href="#canceling-callbacks"><i class="fa fa-caret-right"></i>Canceling Callbacks</a></li>
+    
+    <li><a href="#when-are-atexit-callbacks-not-called"><i class="fa fa-caret-right"></i>When Are atexit Callbacks Not Called?</a></li>
+    
+    <li><a href="#handling-exceptions"><i class="fa fa-caret-right"></i>Handling Exceptions</a></li>
+    
+  </ul>
+</div>
+
+          </div>
+          <div class="sidebar"><div id="sidebar-last-updated">
+  This page was last updated 2016-12-31.
+</div>
+
+          </div>
+          <div class="sidebar">
+<div id="sidebar-nav">
+  <h5>Navigation</h5>
+  <ul>
+    <li><a href="../fileinput/index.html"
+           title="previous chapter"><i class="fa fa-arrow-circle-left"></i>fileinput — Command-Line Filter Framework</a></li>
+    <li><a href="../sched/index.html"
+           title="next chapter"><i class="fa fa-arrow-circle-right"></i>sched — Timed Event Scheduler</a></li>
+  </ul>
+</div>
+          </div>
+          <div class="sidebar"><div id="sidebar-book"><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/book-cover-image-med.jpg"><br>Get the book</a></div>
+          </div>
+          <div class="sidebar"><div id="sidebar-example-disclaimer">
+<p>The output from all the example programs
+from PyMOTW-3 has been generated with Python 3.7.9, unless
+otherwise noted. Some of the features described here may not be
+available in earlier versions of Python.</p>
+<p>Looking for <a href="/2/">examples for Python 2</a>?</p>
+</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pure-g-r" id="footer">
+
+      <div class="pure-u-1-3">
+        <div class="footer-list">
+            <h4>This Site</h4>
+            <ul>
+              <li><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+              <li><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+            </ul>
+        </div>
+      </div><div class="pure-u-1-3">
+          <div class="footer-content">
+            <div class="socialmedia">
+              <a class="sociallink" href="../index.html"
+       title="Home">
+      <i class="fa fa-home fa-lg"></i></a>
+              <a class="sociallink" href="../about.html"
+       title="About">
+      <i class="fa fa-user fa-lg"></i></a>
+              <a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a>
+              <a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a>
+              <a class="sociallink" href="http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US"
+       title="Subscribe via Email">
+      <i class="fa fa-envelope fa-lg"></i></a>
+            </div>
+
+            <div class="copyright">
+              <a rel="author" href="../about.html">&copy; Copyright 2021, Doug Hellmann</a>
+            </div>
+
+            <div class="cc"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License BY-NC-SA" style="border-width:0; align: center;" width="88" height="31" src="data:image/png;base64,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"/></a>
+            </div>
+
+          </div></div><div class="pure-u-1-3">
+          <div class="footer-list">
+            <h4>Other Writing</h4>
+            <ul>
+              <li><a href="https://doughellmann.com/"><i class="fa fa-pencil fa-lg"></i> Blog</a></li>
+              <li><a href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><i class="fa fa-book fa-lg"></i> The Python Standard Library By Example</a></li>
+            </ul>
+          </div>
+        </div><script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-3', 'pymotw.com');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

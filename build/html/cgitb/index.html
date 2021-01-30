@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>cgitb — Detailed Traceback Reports &mdash; PyMOTW 3</title>
+
+    <link rel="stylesheet" href="../_static/pure-min.css" type="text/css">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pymotw.css" type="text/css">
+
+    <link rel="shortcut icon" type="image/png" href="../_static/favicon.png">
+
+    <link rel="alternate" type="application/atom+xml"
+          title="Doug Hellmann"
+          href="http://feeds.doughellmann.com/DougHellmann" />
+    <link rel="alternate" type="application/atom+xml"
+          title="PyMOTW Updates"
+          href="http://feeds.doughellmann.com/PyMOTW" />
+
+    <meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+
+  </head>
+  <body>
+
+    <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
+      <a class="pure-menu-heading" href="../index.html"><img src="../_static/logo.png"> PyMOTW-3</a>
+
+      <ul id="top-menu">
+        <li class="pure-menu-selected"><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+        <li class="pure-menu-selected"><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a></a>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a></li>
+      </ul>
+
+    </div>
+
+    <div class="pure-menu pure-menu-open pure-menu-vertical" id="breadcrumbs-menu">
+      
+      <ul id="breadcrumbs">
+        <li class="pure-menu-selected"><a href="../dev_tools.html"><i class="fa fa-arrow-circle-up"></i> Developer Tools</a></li>
+      </ul>
+    </div>
+
+    <div class="pure-g-r" id="content-container">
+
+      <div class="pure-u-3-4">
+        <div class="content">
+          
+  <div class="section" id="module-cgitb">
+<span id="cgitb-detailed-traceback-reports"></span><h1>cgitb — Detailed Traceback Reports<a class="headerlink" href="#module-cgitb" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">cgitb provides more detailed traceback information than <a class="reference internal" href="../traceback/index.html#module-traceback" title="traceback: Exceptions and stack traces"><code class="xref py py-mod docutils literal notranslate"><span class="pre">traceback</span></code></a>.</td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">cgitb</span></code> is a valuable debugging tool in the standard library.  It
+was originally designed for showing errors and debugging information
+in web applications and was later updated to include plain-text output
+as well, but unfortunately was never renamed.  This has led to
+obscurity, and the module is not used as often as it could be.</p>
+<div class="section" id="standard-traceback-dumps">
+<h2>Standard Traceback Dumps<a class="headerlink" href="#standard-traceback-dumps" title="Permalink to this headline">¶</a></h2>
+<p>Python’s default exception handling behavior is to print a traceback
+to the standard error output stream with the call stack leading up to
+the error position.  This basic output frequently contains enough
+information to understand the cause of the exception and permit a fix.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">cgitb_basic_traceback.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">divisor</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">divisor</span>
+
+
+<span class="k">def</span> <span class="nf">func1</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="mi">5</span>
+    <span class="k">return</span> <span class="n">func2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+
+<span class="n">func1</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>This sample program has a subtle error in <code class="docutils literal notranslate"><span class="pre">func2()</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 cgitb_basic_traceback.py
+
+Traceback (most recent call last):
+  File &quot;cgitb_basic_traceback.py&quot;, line 18, in &lt;module&gt;
+    func1(1, 5)
+  File &quot;cgitb_basic_traceback.py&quot;, line 16, in func1
+    return func2(a, c)
+  File &quot;cgitb_basic_traceback.py&quot;, line 11, in func2
+    return a / divisor
+ZeroDivisionError: division by zero
+</pre></div>
+</div>
+</div>
+<div class="section" id="enabling-detailed-tracebacks">
+<h2>Enabling Detailed Tracebacks<a class="headerlink" href="#enabling-detailed-tracebacks" title="Permalink to this headline">¶</a></h2>
+<p>While the basic traceback includes enough information to spot the
+error, enabling <code class="docutils literal notranslate"><span class="pre">cgitb</span></code> gives more detail.  <code class="docutils literal notranslate"><span class="pre">cgitb</span></code>
+replaces <code class="docutils literal notranslate"><span class="pre">sys.excepthook</span></code> with a function that gives extended
+tracebacks.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">cgitb_local_vars.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cgitb</span>
+<span class="n">cgitb</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;text&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The error report from this example is much more extensive than the
+original.  Each frame of the stack is listed, along with:</p>
+<ul class="simple">
+<li>The full path to the source file, instead of just the base name</li>
+<li>The values of the arguments to each function in the stack</li>
+<li>A few lines of source context from around the line in the error path</li>
+<li>The values of variables in the expression causing the error</li>
+</ul>
+<p>Having access to the variables involved in the error stack can help
+find a logical error that occurs somewhere higher in the stack than
+the line where the actual exception is generated.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 cgitb_local_vars.py
+
+ZeroDivisionError
+Python 3.7.1: .../bin/python3
+Sun Dec  9 10:46:17 2018
+
+A problem occurred in a Python script.  Here is the sequence of
+function calls leading up to the error, in the order they
+occurred.
+
+ .../cgitb_local_vars.py in &lt;module&gt;()
+   18 def func1(a, b):
+   19     c = b - 5
+   20     return func2(a, c)
+   21
+   22 func1(1, 5)
+func1 = &lt;function func1&gt;
+
+ .../cgitb_local_vars.py in func1(a=1, b=5)
+   18 def func1(a, b):
+   19     c = b - 5
+   20     return func2(a, c)
+   21
+   22 func1(1, 5)
+global func2 = &lt;function func2&gt;
+a = 1
+c = 0
+
+ .../cgitb_local_vars.py in func2(a=1, divisor=0)
+   13
+   14 def func2(a, divisor):
+   15     return a / divisor
+   16
+   17
+a = 1
+divisor = 0
+ZeroDivisionError: division by zero
+    __cause__ = None
+    __class__ = &lt;class &#39;ZeroDivisionError&#39;&gt;
+    __context__ = None
+    __delattr__ = &lt;method-wrapper &#39;__delattr__&#39; of
+    ZeroDivisionError object&gt;
+    __dict__ = {}
+    __dir__ = &lt;built-in method __dir__ of ZeroDivisionError
+    object&gt;
+    __doc__ = &#39;Second argument to a division or modulo operation
+    was zero.&#39;
+    __eq__ = &lt;method-wrapper &#39;__eq__&#39; of ZeroDivisionError
+    object&gt;
+    __format__ = &lt;built-in method __format__ of
+    ZeroDivisionError object&gt;
+    __ge__ = &lt;method-wrapper &#39;__ge__&#39; of ZeroDivisionError
+    object&gt;
+    __getattribute__ = &lt;method-wrapper &#39;__getattribute__&#39; of
+    ZeroDivisionError object&gt;
+    __gt__ = &lt;method-wrapper &#39;__gt__&#39; of ZeroDivisionError
+    object&gt;
+    __hash__ = &lt;method-wrapper &#39;__hash__&#39; of ZeroDivisionError
+    object&gt;
+    __init__ = &lt;method-wrapper &#39;__init__&#39; of ZeroDivisionError
+    object&gt;
+    __init_subclass__ = &lt;built-in method __init_subclass__ of
+    type object&gt;
+    __le__ = &lt;method-wrapper &#39;__le__&#39; of ZeroDivisionError
+    object&gt;
+    __lt__ = &lt;method-wrapper &#39;__lt__&#39; of ZeroDivisionError
+    object&gt;
+    __ne__ = &lt;method-wrapper &#39;__ne__&#39; of ZeroDivisionError
+    object&gt;
+    __new__ = &lt;built-in method __new__ of type object&gt;
+    __reduce__ = &lt;built-in method __reduce__ of
+    ZeroDivisionError object&gt;
+    __reduce_ex__ = &lt;built-in method __reduce_ex__ of
+    ZeroDivisionError object&gt;
+    __repr__ = &lt;method-wrapper &#39;__repr__&#39; of ZeroDivisionError
+    object&gt;
+    __setattr__ = &lt;method-wrapper &#39;__setattr__&#39; of
+    ZeroDivisionError object&gt;
+    __setstate__ = &lt;built-in method __setstate__ of
+    ZeroDivisionError object&gt;
+    __sizeof__ = &lt;built-in method __sizeof__ of
+    ZeroDivisionError object&gt;
+    __str__ = &lt;method-wrapper &#39;__str__&#39; of ZeroDivisionError
+    object&gt;
+    __subclasshook__ = &lt;built-in method __subclasshook__ of type
+    object&gt;
+    __suppress_context__ = False
+    __traceback__ = &lt;traceback object&gt;
+    args = (&#39;division by zero&#39;,)
+    with_traceback = &lt;built-in method with_traceback of
+    ZeroDivisionError object&gt;
+
+The above is a description of an error in a Python program.
+Here is
+the original traceback:
+
+Traceback (most recent call last):
+  File &quot;cgitb_local_vars.py&quot;, line 22, in &lt;module&gt;
+    func1(1, 5)
+  File &quot;cgitb_local_vars.py&quot;, line 20, in func1
+    return func2(a, c)
+  File &quot;cgitb_local_vars.py&quot;, line 15, in func2
+    return a / divisor
+ZeroDivisionError: division by zero
+</pre></div>
+</div>
+<p>In the case of this code with a <code class="docutils literal notranslate"><span class="pre">ZeroDivisionError</span></code>, it is
+apparent that the problem is introduced in the computation of the
+value of <code class="docutils literal notranslate"><span class="pre">c</span></code> in <code class="docutils literal notranslate"><span class="pre">func1()</span></code>, rather than where the value is used
+in <code class="docutils literal notranslate"><span class="pre">func2()</span></code>.</p>
+<p>The end of the output also includes the full details of the exception
+object (in case it has attributes other than <code class="docutils literal notranslate"><span class="pre">message</span></code> that would be
+useful for debugging) and the original form of a traceback dump.</p>
+</div>
+<div class="section" id="local-variables-in-tracebacks">
+<h2>Local Variables in Tracebacks<a class="headerlink" href="#local-variables-in-tracebacks" title="Permalink to this headline">¶</a></h2>
+<p>The code in <code class="docutils literal notranslate"><span class="pre">cgitb</span></code> that examines the variables used in the stack
+frame leading to the error is smart enough to evaluate object
+attributes to display them, too.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">cgitb_with_classes.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cgitb</span>
+<span class="n">cgitb</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">BrokenClass</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;This class has an error.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Be careful passing arguments in here.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">b</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>
+        <span class="c1"># Really</span>
+        <span class="c1"># long</span>
+        <span class="c1"># comment</span>
+        <span class="c1"># goes</span>
+        <span class="c1"># here.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>
+        <span class="k">return</span>
+
+<span class="n">o</span> <span class="o">=</span> <span class="n">BrokenClass</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>If a function or method includes a lot of in-line comments,
+whitespace, or other code that makes it very long, then having the
+default of five lines of context may not provide enough direction.
+When the body of the function is pushed out of the code window
+displayed, there is not enough context to understand the location of
+the error.  Using a larger context value with <code class="docutils literal notranslate"><span class="pre">cgitb</span></code> solves this
+problem.  Passing an integer as the <code class="docutils literal notranslate"><span class="pre">context</span></code> argument to
+<code class="docutils literal notranslate"><span class="pre">enable()</span></code> controls the amount of code displayed for each line
+of the traceback.</p>
+<p>This output shows that <code class="docutils literal notranslate"><span class="pre">self.a</span></code> and <code class="docutils literal notranslate"><span class="pre">self.b</span></code> are involved in the
+error-prone code.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 cgitb_with_classes.py
+
+ZeroDivisionError
+Python 3.7.1: .../bin/python3
+Sun Dec  9 10:46:17 2018
+
+A problem occurred in a Python script.  Here is the sequence of
+function calls leading up to the error, in the order they
+occurred.
+
+ .../cgitb_with_classes.py in &lt;module&gt;()
+   21         self.a = a
+   22         self.b = b
+   23         self.c = self.a * self.b
+   24         # Really
+   25         # long
+   26         # comment
+   27         # goes
+   28         # here.
+   29         self.d = self.a / self.b
+   30         return
+   31
+   32 o = BrokenClass(1, 0)
+o undefined
+BrokenClass = &lt;class &#39;__main__.BrokenClass&#39;&gt;
+
+ .../cgitb_with_classes.py in
+ __init__(self=&lt;__main__.BrokenClass object&gt;, a=1, b=0)
+   21         self.a = a
+   22         self.b = b
+   23         self.c = self.a * self.b
+   24         # Really
+   25         # long
+   26         # comment
+   27         # goes
+   28         # here.
+   29         self.d = self.a / self.b
+   30         return
+   31
+   32 o = BrokenClass(1, 0)
+self = &lt;__main__.BrokenClass object&gt;
+self.d undefined
+self.a = 1
+self.b = 0
+ZeroDivisionError: division by zero
+    __cause__ = None
+    __class__ = &lt;class &#39;ZeroDivisionError&#39;&gt;
+    __context__ = None
+    __delattr__ = &lt;method-wrapper &#39;__delattr__&#39; of
+    ZeroDivisionError object&gt;
+    __dict__ = {}
+    __dir__ = &lt;built-in method __dir__ of ZeroDivisionError
+    object&gt;
+    __doc__ = &#39;Second argument to a division or modulo operation
+    was zero.&#39;
+    __eq__ = &lt;method-wrapper &#39;__eq__&#39; of ZeroDivisionError
+    object&gt;
+    __format__ = &lt;built-in method __format__ of
+    ZeroDivisionError object&gt;
+    __ge__ = &lt;method-wrapper &#39;__ge__&#39; of ZeroDivisionError
+    object&gt;
+    __getattribute__ = &lt;method-wrapper &#39;__getattribute__&#39; of
+    ZeroDivisionError object&gt;
+    __gt__ = &lt;method-wrapper &#39;__gt__&#39; of ZeroDivisionError
+    object&gt;
+    __hash__ = &lt;method-wrapper &#39;__hash__&#39; of ZeroDivisionError
+    object&gt;
+    __init__ = &lt;method-wrapper &#39;__init__&#39; of ZeroDivisionError
+    object&gt;
+    __init_subclass__ = &lt;built-in method __init_subclass__ of
+    type object&gt;
+    __le__ = &lt;method-wrapper &#39;__le__&#39; of ZeroDivisionError
+    object&gt;
+    __lt__ = &lt;method-wrapper &#39;__lt__&#39; of ZeroDivisionError
+    object&gt;
+    __ne__ = &lt;method-wrapper &#39;__ne__&#39; of ZeroDivisionError
+    object&gt;
+    __new__ = &lt;built-in method __new__ of type object&gt;
+    __reduce__ = &lt;built-in method __reduce__ of
+    ZeroDivisionError object&gt;
+    __reduce_ex__ = &lt;built-in method __reduce_ex__ of
+    ZeroDivisionError object&gt;
+    __repr__ = &lt;method-wrapper &#39;__repr__&#39; of ZeroDivisionError
+    object&gt;
+    __setattr__ = &lt;method-wrapper &#39;__setattr__&#39; of
+    ZeroDivisionError object&gt;
+    __setstate__ = &lt;built-in method __setstate__ of
+    ZeroDivisionError object&gt;
+    __sizeof__ = &lt;built-in method __sizeof__ of
+    ZeroDivisionError object&gt;
+    __str__ = &lt;method-wrapper &#39;__str__&#39; of ZeroDivisionError
+    object&gt;
+    __subclasshook__ = &lt;built-in method __subclasshook__ of type
+    object&gt;
+    __suppress_context__ = False
+    __traceback__ = &lt;traceback object&gt;
+    args = (&#39;division by zero&#39;,)
+    with_traceback = &lt;built-in method with_traceback of
+    ZeroDivisionError object&gt;
+
+The above is a description of an error in a Python program.
+Here is
+the original traceback:
+
+Traceback (most recent call last):
+  File &quot;cgitb_with_classes.py&quot;, line 32, in &lt;module&gt;
+    o = BrokenClass(1, 0)
+  File &quot;cgitb_with_classes.py&quot;, line 29, in __init__
+    self.d = self.a / self.b
+ZeroDivisionError: division by zero
+</pre></div>
+</div>
+</div>
+<div class="section" id="exception-properties">
+<h2>Exception Properties<a class="headerlink" href="#exception-properties" title="Permalink to this headline">¶</a></h2>
+<p>In addition to the local variables from each stack frame, <code class="docutils literal notranslate"><span class="pre">cgitb</span></code>
+shows all properties of the exception object.  Extra properties on
+custom exception types are printed as part of the error report.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">cgitb_exception_properties.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cgitb</span>
+<span class="n">cgitb</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;text&#39;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">MyException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Add extra properties to a special exception</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">bad_value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bad_value</span> <span class="o">=</span> <span class="n">bad_value</span>
+        <span class="ne">Exception</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+        <span class="k">return</span>
+
+<span class="k">raise</span> <span class="n">MyException</span><span class="p">(</span><span class="s1">&#39;Normal message&#39;</span><span class="p">,</span> <span class="n">bad_value</span><span class="o">=</span><span class="mi">99</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>In this example, the <code class="docutils literal notranslate"><span class="pre">bad_value</span></code> property is included along with the
+standard <code class="docutils literal notranslate"><span class="pre">message</span></code> and <code class="docutils literal notranslate"><span class="pre">args</span></code> values.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 cgitb_exception_properties.py
+
+MyException
+Python 3.7.1: .../bin/python3
+Sun Dec  9 10:46:17 2018
+
+A problem occurred in a Python script.  Here is the sequence of
+function calls leading up to the error, in the order they
+occurred.
+
+ .../cgitb_exception_properties.py in &lt;module&gt;()
+   19         self.bad_value = bad_value
+   20         Exception.__init__(self, message)
+   21         return
+   22
+   23 raise MyException(&#39;Normal message&#39;, bad_value=99)
+MyException = &lt;class &#39;__main__.MyException&#39;&gt;
+bad_value undefined
+MyException: Normal message
+    __cause__ = None
+    __class__ = &lt;class &#39;__main__.MyException&#39;&gt;
+    __context__ = None
+    __delattr__ = &lt;method-wrapper &#39;__delattr__&#39; of MyException
+    object&gt;
+    __dict__ = {&#39;bad_value&#39;: 99}
+    __dir__ = &lt;built-in method __dir__ of MyException object&gt;
+    __doc__ = &#39;Add extra properties to a special exception\n
+    &#39;
+    __eq__ = &lt;method-wrapper &#39;__eq__&#39; of MyException object&gt;
+    __format__ = &lt;built-in method __format__ of MyException
+    object&gt;
+    __ge__ = &lt;method-wrapper &#39;__ge__&#39; of MyException object&gt;
+    __getattribute__ = &lt;method-wrapper &#39;__getattribute__&#39; of
+    MyException object&gt;
+    __gt__ = &lt;method-wrapper &#39;__gt__&#39; of MyException object&gt;
+    __hash__ = &lt;method-wrapper &#39;__hash__&#39; of MyException object&gt;
+    __init__ = &lt;bound method MyException.__init__ of
+    MyException(&#39;Normal message&#39;)&gt;
+    __init_subclass__ = &lt;built-in method __init_subclass__ of
+    type object&gt;
+    __le__ = &lt;method-wrapper &#39;__le__&#39; of MyException object&gt;
+    __lt__ = &lt;method-wrapper &#39;__lt__&#39; of MyException object&gt;
+    __module__ = &#39;__main__&#39;
+    __ne__ = &lt;method-wrapper &#39;__ne__&#39; of MyException object&gt;
+    __new__ = &lt;built-in method __new__ of type object&gt;
+    __reduce__ = &lt;built-in method __reduce__ of MyException
+    object&gt;
+    __reduce_ex__ = &lt;built-in method __reduce_ex__ of
+    MyException object&gt;
+    __repr__ = &lt;method-wrapper &#39;__repr__&#39; of MyException object&gt;
+    __setattr__ = &lt;method-wrapper &#39;__setattr__&#39; of MyException
+    object&gt;
+    __setstate__ = &lt;built-in method __setstate__ of MyException
+    object&gt;
+    __sizeof__ = &lt;built-in method __sizeof__ of MyException
+    object&gt;
+    __str__ = &lt;method-wrapper &#39;__str__&#39; of MyException object&gt;
+    __subclasshook__ = &lt;built-in method __subclasshook__ of type
+    object&gt;
+    __suppress_context__ = False
+    __traceback__ = &lt;traceback object&gt;
+    __weakref__ = None
+    args = (&#39;Normal message&#39;,)
+    bad_value = 99
+    with_traceback = &lt;built-in method with_traceback of
+    MyException object&gt;
+
+The above is a description of an error in a Python program.
+Here is
+the original traceback:
+
+Traceback (most recent call last):
+  File &quot;cgitb_exception_properties.py&quot;, line 23, in &lt;module&gt;
+    raise MyException(&#39;Normal message&#39;, bad_value=99)
+MyException: Normal message
+</pre></div>
+</div>
+</div>
+<div class="section" id="html-output">
+<h2>HTML Output<a class="headerlink" href="#html-output" title="Permalink to this headline">¶</a></h2>
+<p>Because <code class="docutils literal notranslate"><span class="pre">cgitb</span></code> was originally developed for handling exceptions
+in web applications, no discussion would be complete without
+mentioning its original HTML output format.  The earlier examples all
+shows plain text output.  To produce HTML instead, leave out the
+<code class="docutils literal notranslate"><span class="pre">format</span></code> argument (or specify <code class="docutils literal notranslate"><span class="pre">&quot;html&quot;</span></code>).  Most modern web
+applications are constructed using a framework that includes an error
+reporting facility, so the HTML form is largely obsolete.</p>
+</div>
+<div class="section" id="logging-tracebacks">
+<h2>Logging Tracebacks<a class="headerlink" href="#logging-tracebacks" title="Permalink to this headline">¶</a></h2>
+<p>For many situations, printing the traceback details to standard error
+is the best resolution.  In a production system, however, logging the
+errors is even better.  The <code class="docutils literal notranslate"><span class="pre">enable()</span></code> function includes an optional
+argument, <code class="docutils literal notranslate"><span class="pre">logdir</span></code>, to enable error logging.  When a directory name is
+provided, each exception is logged to its own file in the given
+directory.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">cgitb_log_exception.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cgitb</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">LOGDIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;LOGS&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">LOGDIR</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">LOGDIR</span><span class="p">)</span>
+
+<span class="n">cgitb</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span>
+    <span class="n">logdir</span><span class="o">=</span><span class="n">LOGDIR</span><span class="p">,</span>
+    <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;text&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">divisor</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">divisor</span>
+
+<span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Even though the error display is suppressed, a message is printed
+describing where to go to find the error log.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 cgitb_log_exception.py
+
+&lt;p&gt;A problem occurred in a Python script.
+.../LOGS/tmpdl2oafqt.txt contains the description of this error.
+
+$ ls LOGS
+
+tmpdl2oafqt.txt
+
+$ cat LOGS/*.txt
+
+ZeroDivisionError
+Python 3.7.1: .../bin/python3
+Sun Dec  9 10:46:17 2018
+
+A problem occurred in a Python script.  Here is the sequence of
+function calls leading up to the error, in the order they
+occurred.
+
+ .../cgitb_log_exception.py in &lt;module&gt;()
+   24
+   25 def func(a, divisor):
+   26     return a / divisor
+   27
+   28 func(1, 0)
+func = &lt;function func&gt;
+
+ .../cgitb_log_exception.py in func(a=1, divisor=0)
+   24
+   25 def func(a, divisor):
+   26     return a / divisor
+   27
+   28 func(1, 0)
+a = 1
+divisor = 0
+ZeroDivisionError: division by zero
+    __cause__ = None
+    __class__ = &lt;class &#39;ZeroDivisionError&#39;&gt;
+    __context__ = None
+    __delattr__ = &lt;method-wrapper &#39;__delattr__&#39; of
+    ZeroDivisionError object&gt;
+    __dict__ = {}
+    __dir__ = &lt;built-in method __dir__ of ZeroDivisionError
+    object&gt;
+    __doc__ = &#39;Second argument to a division or modulo operation
+    was zero.&#39;
+    __eq__ = &lt;method-wrapper &#39;__eq__&#39; of ZeroDivisionError
+    object&gt;
+    __format__ = &lt;built-in method __format__ of
+    ZeroDivisionError object&gt;
+    __ge__ = &lt;method-wrapper &#39;__ge__&#39; of ZeroDivisionError
+    object&gt;
+    __getattribute__ = &lt;method-wrapper &#39;__getattribute__&#39; of
+    ZeroDivisionError object&gt;
+    __gt__ = &lt;method-wrapper &#39;__gt__&#39; of ZeroDivisionError
+    object&gt;
+    __hash__ = &lt;method-wrapper &#39;__hash__&#39; of ZeroDivisionError
+    object&gt;
+    __init__ = &lt;method-wrapper &#39;__init__&#39; of ZeroDivisionError
+    object&gt;
+    __init_subclass__ = &lt;built-in method __init_subclass__ of
+    type object&gt;
+    __le__ = &lt;method-wrapper &#39;__le__&#39; of ZeroDivisionError
+    object&gt;
+    __lt__ = &lt;method-wrapper &#39;__lt__&#39; of ZeroDivisionError
+    object&gt;
+    __ne__ = &lt;method-wrapper &#39;__ne__&#39; of ZeroDivisionError
+    object&gt;
+    __new__ = &lt;built-in method __new__ of type object&gt;
+    __reduce__ = &lt;built-in method __reduce__ of
+    ZeroDivisionError object&gt;
+    __reduce_ex__ = &lt;built-in method __reduce_ex__ of
+    ZeroDivisionError object&gt;
+    __repr__ = &lt;method-wrapper &#39;__repr__&#39; of ZeroDivisionError
+    object&gt;
+    __setattr__ = &lt;method-wrapper &#39;__setattr__&#39; of
+    ZeroDivisionError object&gt;
+    __setstate__ = &lt;built-in method __setstate__ of
+    ZeroDivisionError object&gt;
+    __sizeof__ = &lt;built-in method __sizeof__ of
+    ZeroDivisionError object&gt;
+    __str__ = &lt;method-wrapper &#39;__str__&#39; of ZeroDivisionError
+    object&gt;
+    __subclasshook__ = &lt;built-in method __subclasshook__ of type
+    object&gt;
+    __suppress_context__ = False
+    __traceback__ = &lt;traceback object&gt;
+    args = (&#39;division by zero&#39;,)
+    with_traceback = &lt;built-in method with_traceback of
+    ZeroDivisionError object&gt;
+
+The above is a description of an error in a Python program.
+Here is
+the original traceback:
+
+Traceback (most recent call last):
+  File &quot;cgitb_log_exception.py&quot;, line 28, in &lt;module&gt;
+    func(1, 0)
+  File &quot;cgitb_log_exception.py&quot;, line 26, in func
+    return a / divisor
+ZeroDivisionError: division by zero
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference external" href="https://docs.python.org/3.7/library/cgitb.html">Standard library documentation for cgitb</a></li>
+<li><a class="reference internal" href="../traceback/index.html#module-traceback" title="traceback: Exceptions and stack traces"><code class="xref py py-mod docutils literal notranslate"><span class="pre">traceback</span></code></a> – Standard library module for working with
+tracebacks.</li>
+<li><a class="reference internal" href="../inspect/index.html#module-inspect" title="inspect: Inspect live objects"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code></a> – The <code class="docutils literal notranslate"><span class="pre">inspect</span></code> module includes more functions
+for examining the stack.</li>
+<li><a class="reference internal" href="../sys/index.html#module-sys" title="sys: System-specific configuration"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys</span></code></a> – The <code class="docutils literal notranslate"><span class="pre">sys</span></code> module provides access to the current
+exception value and the <code class="docutils literal notranslate"><span class="pre">excepthook</span></code> handler invoked when an
+exception occurs.</li>
+<li><a class="reference external" href="http://thread.gmane.org/gmane.comp.python.devel/110326">Improved traceback module</a> –
+Discussion on the Python development mailing list about
+improvements to the traceback module and related enhancements
+other developers use locally.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+        <div id="footer-nav">
+<a id="prev-link" href="../traceback/index.html"
+   title="previous chapter"><i class="fa fa-arrow-circle-left"></i> traceback — Exceptions and Stack Traces</a>
+<a id="next-link" href="../pdb/index.html"
+   title="next chapter">pdb — Interactive Debugger <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+        </div>
+      </div>
+
+      <div class="pure-u-1-4">
+        <div class="sidebar-wrapper">
+          <div class="sidebar">
+<div id="sidebar-toc">
+  <h5>Quick Links</h5>
+  <ul>
+    
+    <li><a href="#standard-traceback-dumps"><i class="fa fa-caret-right"></i>Standard Traceback Dumps</a></li>
+    
+    <li><a href="#enabling-detailed-tracebacks"><i class="fa fa-caret-right"></i>Enabling Detailed Tracebacks</a></li>
+    
+    <li><a href="#local-variables-in-tracebacks"><i class="fa fa-caret-right"></i>Local Variables in Tracebacks</a></li>
+    
+    <li><a href="#exception-properties"><i class="fa fa-caret-right"></i>Exception Properties</a></li>
+    
+    <li><a href="#html-output"><i class="fa fa-caret-right"></i>HTML Output</a></li>
+    
+    <li><a href="#logging-tracebacks"><i class="fa fa-caret-right"></i>Logging Tracebacks</a></li>
+    
+  </ul>
+</div>
+
+          </div>
+          <div class="sidebar"><div id="sidebar-last-updated">
+  This page was last updated 2018-12-09.
+</div>
+
+          </div>
+          <div class="sidebar">
+<div id="sidebar-nav">
+  <h5>Navigation</h5>
+  <ul>
+    <li><a href="../traceback/index.html"
+           title="previous chapter"><i class="fa fa-arrow-circle-left"></i>traceback — Exceptions and Stack Traces</a></li>
+    <li><a href="../pdb/index.html"
+           title="next chapter"><i class="fa fa-arrow-circle-right"></i>pdb — Interactive Debugger</a></li>
+  </ul>
+</div>
+          </div>
+          <div class="sidebar"><div id="sidebar-book"><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/book-cover-image-med.jpg"><br>Get the book</a></div>
+          </div>
+          <div class="sidebar"><div id="sidebar-example-disclaimer">
+<p>The output from all the example programs
+from PyMOTW-3 has been generated with Python 3.7.9, unless
+otherwise noted. Some of the features described here may not be
+available in earlier versions of Python.</p>
+<p>Looking for <a href="/2/">examples for Python 2</a>?</p>
+</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pure-g-r" id="footer">
+
+      <div class="pure-u-1-3">
+        <div class="footer-list">
+            <h4>This Site</h4>
+            <ul>
+              <li><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+              <li><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+            </ul>
+        </div>
+      </div><div class="pure-u-1-3">
+          <div class="footer-content">
+            <div class="socialmedia">
+              <a class="sociallink" href="../index.html"
+       title="Home">
+      <i class="fa fa-home fa-lg"></i></a>
+              <a class="sociallink" href="../about.html"
+       title="About">
+      <i class="fa fa-user fa-lg"></i></a>
+              <a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a>
+              <a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a>
+              <a class="sociallink" href="http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US"
+       title="Subscribe via Email">
+      <i class="fa fa-envelope fa-lg"></i></a>
+            </div>
+
+            <div class="copyright">
+              <a rel="author" href="../about.html">&copy; Copyright 2021, Doug Hellmann</a>
+            </div>
+
+            <div class="cc"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License BY-NC-SA" style="border-width:0; align: center;" width="88" height="31" src="data:image/png;base64,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"/></a>
+            </div>
+
+          </div></div><div class="pure-u-1-3">
+          <div class="footer-list">
+            <h4>Other Writing</h4>
+            <ul>
+              <li><a href="https://doughellmann.com/"><i class="fa fa-pencil fa-lg"></i> Blog</a></li>
+              <li><a href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><i class="fa fa-book fa-lg"></i> The Python Standard Library By Example</a></li>
+            </ul>
+          </div>
+        </div><script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-3', 'pymotw.com');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

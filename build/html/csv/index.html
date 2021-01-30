@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>csv — Comma-separated Value Files &mdash; PyMOTW 3</title>
+
+    <link rel="stylesheet" href="../_static/pure-min.css" type="text/css">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pymotw.css" type="text/css">
+
+    <link rel="shortcut icon" type="image/png" href="../_static/favicon.png">
+
+    <link rel="alternate" type="application/atom+xml"
+          title="Doug Hellmann"
+          href="http://feeds.doughellmann.com/DougHellmann" />
+    <link rel="alternate" type="application/atom+xml"
+          title="PyMOTW Updates"
+          href="http://feeds.doughellmann.com/PyMOTW" />
+
+    <meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+
+  </head>
+  <body>
+
+    <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
+      <a class="pure-menu-heading" href="../index.html"><img src="../_static/logo.png"> PyMOTW-3</a>
+
+      <ul id="top-menu">
+        <li class="pure-menu-selected"><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+        <li class="pure-menu-selected"><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a></a>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a></li>
+      </ul>
+
+    </div>
+
+    <div class="pure-menu pure-menu-open pure-menu-vertical" id="breadcrumbs-menu">
+      
+      <ul id="breadcrumbs">
+        <li class="pure-menu-selected"><a href="../persistence.html"><i class="fa fa-arrow-circle-up"></i> Data Persistence and Exchange</a></li>
+      </ul>
+    </div>
+
+    <div class="pure-g-r" id="content-container">
+
+      <div class="pure-u-3-4">
+        <div class="content">
+          
+  <div class="section" id="module-csv">
+<span id="csv-comma-separated-value-files"></span><h1>csv — Comma-separated Value Files<a class="headerlink" href="#module-csv" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Read and write comma separated value files.</td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal notranslate"><span class="pre">csv</span></code> module can be used to work with data exported from
+spreadsheets and databases into text files formatted with fields and
+records, commonly referred to as <em>comma-separated value</em> (CSV) format
+because commas are often used to separate the fields in a record.</p>
+<div class="section" id="reading">
+<h2>Reading<a class="headerlink" href="#reading" title="Permalink to this headline">¶</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">reader()</span></code> to create a an object for reading data from a CSV
+file.  The reader can be used as an iterator to process the rows of
+the file in order. For example</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">csv_reader.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The first argument to <code class="docutils literal notranslate"><span class="pre">reader()</span></code> is the source of text lines. In
+this case, it is a file, but any iterable is accepted (a <code class="xref py py-mod docutils literal notranslate"><span class="pre">StringIO</span></code>
+instance, <code class="docutils literal notranslate"><span class="pre">list</span></code>, etc.).  Other optional arguments can be given to
+control how the input data is parsed.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;Title 1&quot;</span><span class="p">,</span><span class="s2">&quot;Title 2&quot;</span><span class="p">,</span><span class="s2">&quot;Title 3&quot;</span><span class="p">,</span><span class="s2">&quot;Title 4&quot;</span>
+<span class="mi">1</span><span class="p">,</span><span class="s2">&quot;a&quot;</span><span class="p">,</span><span class="mi">08</span><span class="o">/</span><span class="mi">18</span><span class="o">/</span><span class="mi">07</span><span class="p">,</span><span class="s2">&quot;å&quot;</span>
+<span class="mi">2</span><span class="p">,</span><span class="s2">&quot;b&quot;</span><span class="p">,</span><span class="mi">08</span><span class="o">/</span><span class="mi">19</span><span class="o">/</span><span class="mi">07</span><span class="p">,</span><span class="s2">&quot;∫&quot;</span>
+<span class="mi">3</span><span class="p">,</span><span class="s2">&quot;c&quot;</span><span class="p">,</span><span class="mi">08</span><span class="o">/</span><span class="mi">20</span><span class="o">/</span><span class="mi">07</span><span class="p">,</span><span class="s2">&quot;ç&quot;</span>
+</pre></div>
+</div>
+<p>As it is read, each row of the input data is parsed and converted to a
+<code class="docutils literal notranslate"><span class="pre">list</span></code> of strings.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 csv_reader.py testdata.csv
+
+[&#39;Title 1&#39;, &#39;Title 2&#39;, &#39;Title 3&#39;, &#39;Title 4&#39;]
+[&#39;1&#39;, &#39;a&#39;, &#39;08/18/07&#39;, &#39;å&#39;]
+[&#39;2&#39;, &#39;b&#39;, &#39;08/19/07&#39;, &#39;∫&#39;]
+[&#39;3&#39;, &#39;c&#39;, &#39;08/20/07&#39;, &#39;ç&#39;]
+</pre></div>
+</div>
+<p>The parser handles line breaks embedded within strings in a row, which
+is why a “row” is not always the same as a “line” of input from the
+file.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;Title 1&quot;</span><span class="p">,</span><span class="s2">&quot;Title 2&quot;</span><span class="p">,</span><span class="s2">&quot;Title 3&quot;</span>
+<span class="mi">1</span><span class="p">,</span><span class="s2">&quot;first line</span>
+<span class="n">second</span> <span class="n">line</span><span class="s2">&quot;,08/18/07</span>
+</pre></div>
+</div>
+<p>Fields with line breaks in the input retain the internal line breaks
+when they are returned by the parser.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 csv_reader.py testlinebreak.csv
+
+[&#39;Title 1&#39;, &#39;Title 2&#39;, &#39;Title 3&#39;]
+[&#39;1&#39;, &#39;first line\nsecond line&#39;, &#39;08/18/07&#39;]
+</pre></div>
+</div>
+</div>
+<div class="section" id="writing">
+<h2>Writing<a class="headerlink" href="#writing" title="Permalink to this headline">¶</a></h2>
+<p>Writing CSV files is just as easy as reading them. Use <code class="docutils literal notranslate"><span class="pre">writer()</span></code>
+to create an object for writing, then iterate over the rows, using
+<code class="docutils literal notranslate"><span class="pre">writerow()</span></code> to print them.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">csv_writer.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">unicode_chars</span> <span class="o">=</span> <span class="s1">&#39;å∫ç&#39;</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;wt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">((</span><span class="s1">&#39;Title 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Title 2&#39;</span><span class="p">,</span> <span class="s1">&#39;Title 3&#39;</span><span class="p">,</span> <span class="s1">&#39;Title 4&#39;</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">i</span><span class="p">),</span>
+            <span class="s1">&#39;08/</span><span class="si">{:02d}</span><span class="s1">/07&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="n">unicode_chars</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;rt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<p>The output does not look exactly like the exported data used in the reader
+example because it lacks quotes around some of the values.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 csv_writer.py testout.csv
+
+Title 1,Title 2,Title 3,Title 4
+1,a,08/01/07,å
+2,b,08/02/07,∫
+3,c,08/03/07,ç
+</pre></div>
+</div>
+<div class="section" id="quoting">
+<span id="csv-quoting"></span><h3>Quoting<a class="headerlink" href="#quoting" title="Permalink to this headline">¶</a></h3>
+<p>The default quoting behavior is different for the writer, so the
+second and third columns in the previous example are not quoted. To
+add quoting, set the <code class="docutils literal notranslate"><span class="pre">quoting</span></code> argument to one of the other quoting
+modes.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>writer = csv.writer(f, quoting=csv.QUOTE_NONNUMERIC)
+</pre></div>
+</div>
+<p>In this case, <code class="docutils literal notranslate"><span class="pre">QUOTE_NONNUMERIC</span></code> adds quotes around all columns
+that contain values that are not numbers.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 csv_writer_quoted.py testout_quoted.csv
+
+&quot;Title 1&quot;,&quot;Title 2&quot;,&quot;Title 3&quot;,&quot;Title 4&quot;
+1,&quot;a&quot;,&quot;08/01/07&quot;,&quot;å&quot;
+2,&quot;b&quot;,&quot;08/02/07&quot;,&quot;∫&quot;
+3,&quot;c&quot;,&quot;08/03/07&quot;,&quot;ç&quot;
+</pre></div>
+</div>
+<p>There are four different quoting options, defined as constants in the csv
+module.</p>
+<dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">QUOTE_ALL</span></code></dt>
+<dd>Quote everything, regardless of type.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">QUOTE_MINIMAL</span></code></dt>
+<dd>Quote fields with special characters (anything that would confuse a parser
+configured with the same dialect and options). This is the default</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">QUOTE_NONNUMERIC</span></code></dt>
+<dd>Quote all fields that are not integers or floats. When used with the reader,
+input fields that are not quoted are converted to floats.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">QUOTE_NONE</span></code></dt>
+<dd>Do not quote anything on output. When used with the reader, quote characters
+are included in the field values (normally, they are treated as delimiters and
+stripped).</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="dialects">
+<h2>Dialects<a class="headerlink" href="#dialects" title="Permalink to this headline">¶</a></h2>
+<p>There is no well-defined standard for comma-separated value files, so
+the parser needs to be flexible.  This flexibility means there are
+many parameters to control how <code class="docutils literal notranslate"><span class="pre">csv</span></code> parses or writes data.
+Rather than passing each of these parameters to the reader and writer
+separately, they are grouped together into a <em>dialect</em> object.</p>
+<p>Dialect classes can be registered by name, so that callers of the <code class="docutils literal notranslate"><span class="pre">csv</span></code>
+module do not need to know the parameter settings in advance.  The
+complete list of registered dialects can be retrieved with
+<code class="docutils literal notranslate"><span class="pre">list_dialects()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">csv_list_dialects.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">csv</span><span class="o">.</span><span class="n">list_dialects</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<p>The standard library includes three dialects: <code class="docutils literal notranslate"><span class="pre">excel</span></code>,
+<code class="docutils literal notranslate"><span class="pre">excel-tabs</span></code>, and <code class="docutils literal notranslate"><span class="pre">unix</span></code>. The <code class="docutils literal notranslate"><span class="pre">excel</span></code> dialect is for working
+with data in the default export format for Microsoft Excel, and also
+works with <a class="reference external" href="http://www.libreoffice.org">LibreOffice</a>. The <code class="docutils literal notranslate"><span class="pre">unix</span></code> dialect quotes all fields with
+double-quotes and uses <code class="docutils literal notranslate"><span class="pre">\n</span></code> as the record separator.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 csv_list_dialects.py
+
+[&#39;excel&#39;, &#39;excel-tab&#39;, &#39;unix&#39;]
+</pre></div>
+</div>
+<div class="section" id="creating-a-dialect">
+<h3>Creating a Dialect<a class="headerlink" href="#creating-a-dialect" title="Permalink to this headline">¶</a></h3>
+<p>If, instead of using commas to delimit fields, the input file uses
+pipes (<code class="docutils literal notranslate"><span class="pre">|</span></code>), like this</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;Title 1&quot;</span><span class="o">|</span><span class="s2">&quot;Title 2&quot;</span><span class="o">|</span><span class="s2">&quot;Title 3&quot;</span>
+<span class="mi">1</span><span class="o">|</span><span class="s2">&quot;first line</span>
+<span class="n">second</span> <span class="n">line</span><span class="s2">&quot;|08/18/07</span>
+</pre></div>
+</div>
+<p>a new dialect can be registered using the appropriate delimiter.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">csv_dialect.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+
+<span class="n">csv</span><span class="o">.</span><span class="n">register_dialect</span><span class="p">(</span><span class="s1">&#39;pipes&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;testdata.pipes&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">dialect</span><span class="o">=</span><span class="s1">&#39;pipes&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Using the “pipes” dialect, the file can be read just as with the
+comma-delimited file.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 csv_dialect.py
+
+[&#39;Title 1&#39;, &#39;Title 2&#39;, &#39;Title 3&#39;]
+[&#39;1&#39;, &#39;first line\nsecond line&#39;, &#39;08/18/07&#39;]
+</pre></div>
+</div>
+</div>
+<div class="section" id="dialect-parameters">
+<h3>Dialect Parameters<a class="headerlink" href="#dialect-parameters" title="Permalink to this headline">¶</a></h3>
+<p>A dialect specifies all of the tokens used when parsing or writing a
+data file.  the table below lists the aspects of the
+file format that can be specified, from the way columns are delimited
+to the character used to escape a token.</p>
+<table border="1" class="colwidths-given docutils" id="id5">
+<caption><span class="caption-text">CSV Dialect Parameters</span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Attribute</th>
+<th class="head">Default</th>
+<th class="head">Meaning</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>delimiter</td>
+<td><code class="docutils literal notranslate"><span class="pre">,</span></code></td>
+<td>Field separator (one character)</td>
+</tr>
+<tr class="row-odd"><td>doublequote</td>
+<td>True</td>
+<td>Flag controlling whether quotechar instances are doubled</td>
+</tr>
+<tr class="row-even"><td>escapechar</td>
+<td>None</td>
+<td>Character used to indicate an escape sequence</td>
+</tr>
+<tr class="row-odd"><td>lineterminator</td>
+<td><code class="docutils literal notranslate"><span class="pre">\r\n</span></code></td>
+<td>String used by writer to terminate a line</td>
+</tr>
+<tr class="row-even"><td>quotechar</td>
+<td><code class="docutils literal notranslate"><span class="pre">&quot;</span></code></td>
+<td>String to surround fields containing special values (one character)</td>
+</tr>
+<tr class="row-odd"><td>quoting</td>
+<td><code class="docutils literal notranslate"><span class="pre">QUOTE_MINIMAL</span></code></td>
+<td>Controls quoting behavior described earlier</td>
+</tr>
+<tr class="row-even"><td>skipinitialspace</td>
+<td>False</td>
+<td>Ignore whitespace after the field delimiter</td>
+</tr>
+</tbody>
+</table>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">csv_dialect_variations.py</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">csv</span><span class="o">.</span><span class="n">register_dialect</span><span class="p">(</span><span class="s1">&#39;escaped&#39;</span><span class="p">,</span>
+                     <span class="n">escapechar</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span>
+                     <span class="n">doublequote</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                     <span class="n">quoting</span><span class="o">=</span><span class="n">csv</span><span class="o">.</span><span class="n">QUOTE_NONE</span><span class="p">,</span>
+                     <span class="p">)</span>
+<span class="n">csv</span><span class="o">.</span><span class="n">register_dialect</span><span class="p">(</span><span class="s1">&#39;singlequote&#39;</span><span class="p">,</span>
+                     <span class="n">quotechar</span><span class="o">=</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span>
+                     <span class="n">quoting</span><span class="o">=</span><span class="n">csv</span><span class="o">.</span><span class="n">QUOTE_ALL</span><span class="p">,</span>
+                     <span class="p">)</span>
+
+<span class="n">quoting_modes</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nb">getattr</span><span class="p">(</span><span class="n">csv</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span> <span class="n">n</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">csv</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">n</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;QUOTE_&#39;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">TEMPLATE</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span><span class="se">\</span>
+<span class="s1">Dialect: &quot;</span><span class="si">{name}</span><span class="s1">&quot;</span>
+
+<span class="s1">  delimiter   = </span><span class="si">{dl!r:&lt;6}</span><span class="s1">    skipinitialspace = </span><span class="si">{si!r}</span><span class="s1"></span>
+<span class="s1">  doublequote = </span><span class="si">{dq!r:&lt;6}</span><span class="s1">    quoting          = </span><span class="si">{qu}</span><span class="s1"></span>
+<span class="s1">  quotechar   = </span><span class="si">{qc!r:&lt;6}</span><span class="s1">    lineterminator   = </span><span class="si">{lt!r}</span><span class="s1"></span>
+<span class="s1">  escapechar  = </span><span class="si">{ec!r:&lt;6}</span><span class="s1"></span>
+<span class="s1">&#39;&#39;&#39;</span>
+
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">csv</span><span class="o">.</span><span class="n">list_dialects</span><span class="p">()):</span>
+    <span class="n">dialect</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">get_dialect</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">TEMPLATE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">dl</span><span class="o">=</span><span class="n">dialect</span><span class="o">.</span><span class="n">delimiter</span><span class="p">,</span>
+        <span class="n">si</span><span class="o">=</span><span class="n">dialect</span><span class="o">.</span><span class="n">skipinitialspace</span><span class="p">,</span>
+        <span class="n">dq</span><span class="o">=</span><span class="n">dialect</span><span class="o">.</span><span class="n">doublequote</span><span class="p">,</span>
+        <span class="n">qu</span><span class="o">=</span><span class="n">quoting_modes</span><span class="p">[</span><span class="n">dialect</span><span class="o">.</span><span class="n">quoting</span><span class="p">],</span>
+        <span class="n">qc</span><span class="o">=</span><span class="n">dialect</span><span class="o">.</span><span class="n">quotechar</span><span class="p">,</span>
+        <span class="n">lt</span><span class="o">=</span><span class="n">dialect</span><span class="o">.</span><span class="n">lineterminator</span><span class="p">,</span>
+        <span class="n">ec</span><span class="o">=</span><span class="n">dialect</span><span class="o">.</span><span class="n">escapechar</span><span class="p">,</span>
+    <span class="p">))</span>
+
+    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">dialect</span><span class="o">=</span><span class="n">dialect</span><span class="p">)</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span>
+        <span class="p">(</span><span class="s1">&#39;col1&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;10/01/2010&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;Special chars: &quot; </span><span class="se">\&#39;</span><span class="s1"> </span><span class="si">{}</span><span class="s1"> to parse&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+             <span class="n">dialect</span><span class="o">.</span><span class="n">delimiter</span><span class="p">))</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>This program shows how the same data appears when formatted using
+several different dialects.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 csv_dialect_variations.py
+
+Dialect: &quot;escaped&quot;
+
+  delimiter   = &#39;,&#39;       skipinitialspace = 0
+  doublequote = 0         quoting          = QUOTE_NONE
+  quotechar   = &#39;&quot;&#39;       lineterminator   = &#39;\r\n&#39;
+  escapechar  = &#39;\\&#39;
+
+col1,1,10/01/2010,Special chars: \&quot; &#39; \, to parse
+
+Dialect: &quot;excel&quot;
+
+  delimiter   = &#39;,&#39;       skipinitialspace = 0
+  doublequote = 1         quoting          = QUOTE_MINIMAL
+  quotechar   = &#39;&quot;&#39;       lineterminator   = &#39;\r\n&#39;
+  escapechar  = None
+
+col1,1,10/01/2010,&quot;Special chars: &quot;&quot; &#39; , to parse&quot;
+
+Dialect: &quot;excel-tab&quot;
+
+  delimiter   = &#39;\t&#39;      skipinitialspace = 0
+  doublequote = 1         quoting          = QUOTE_MINIMAL
+  quotechar   = &#39;&quot;&#39;       lineterminator   = &#39;\r\n&#39;
+  escapechar  = None
+
+col1    1       10/01/2010      &quot;Special chars: &quot;&quot; &#39;     to parse&quot;
+
+Dialect: &quot;singlequote&quot;
+
+  delimiter   = &#39;,&#39;       skipinitialspace = 0
+  doublequote = 1         quoting          = QUOTE_ALL
+  quotechar   = &quot;&#39;&quot;       lineterminator   = &#39;\r\n&#39;
+  escapechar  = None
+
+&#39;col1&#39;,&#39;1&#39;,&#39;10/01/2010&#39;,&#39;Special chars: &quot; &#39;&#39; , to parse&#39;
+
+Dialect: &quot;unix&quot;
+
+  delimiter   = &#39;,&#39;       skipinitialspace = 0
+  doublequote = 1         quoting          = QUOTE_ALL
+  quotechar   = &#39;&quot;&#39;       lineterminator   = &#39;\n&#39;
+  escapechar  = None
+
+&quot;col1&quot;,&quot;1&quot;,&quot;10/01/2010&quot;,&quot;Special chars: &quot;&quot; &#39; , to parse&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="automatically-detecting-dialects">
+<h3>Automatically Detecting Dialects<a class="headerlink" href="#automatically-detecting-dialects" title="Permalink to this headline">¶</a></h3>
+<p>The best way to configure a dialect for parsing an input file is to
+know the correct settings in advance.  For data where the dialect
+parameters are unknown, the <code class="docutils literal notranslate"><span class="pre">Sniffer</span></code> class can be used to make
+an educated guess.  The <code class="docutils literal notranslate"><span class="pre">sniff()</span></code> method takes a sample of the
+input data and an optional argument giving the possible delimiter
+characters.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">csv_dialect_sniffer.py</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="k">import</span> <span class="n">StringIO</span>
+<span class="kn">import</span> <span class="nn">textwrap</span>
+
+<span class="n">csv</span><span class="o">.</span><span class="n">register_dialect</span><span class="p">(</span><span class="s1">&#39;escaped&#39;</span><span class="p">,</span>
+                     <span class="n">escapechar</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span>
+                     <span class="n">doublequote</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                     <span class="n">quoting</span><span class="o">=</span><span class="n">csv</span><span class="o">.</span><span class="n">QUOTE_NONE</span><span class="p">)</span>
+<span class="n">csv</span><span class="o">.</span><span class="n">register_dialect</span><span class="p">(</span><span class="s1">&#39;singlequote&#39;</span><span class="p">,</span>
+                     <span class="n">quotechar</span><span class="o">=</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span>
+                     <span class="n">quoting</span><span class="o">=</span><span class="n">csv</span><span class="o">.</span><span class="n">QUOTE_ALL</span><span class="p">)</span>
+
+<span class="c1"># Generate sample data for all known dialects</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">csv</span><span class="o">.</span><span class="n">list_dialects</span><span class="p">()):</span>
+    <span class="n">buffer</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+    <span class="n">dialect</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">get_dialect</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">dialect</span><span class="o">=</span><span class="n">dialect</span><span class="p">)</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span>
+        <span class="p">(</span><span class="s1">&#39;col1&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;10/01/2010&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;Special chars &quot; </span><span class="se">\&#39;</span><span class="s1"> </span><span class="si">{}</span><span class="s1"> to parse&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+             <span class="n">dialect</span><span class="o">.</span><span class="n">delimiter</span><span class="p">))</span>
+    <span class="p">)</span>
+    <span class="n">samples</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">name</span><span class="p">,</span> <span class="n">dialect</span><span class="p">,</span> <span class="n">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()))</span>
+
+<span class="c1"># Guess the dialect for a given sample, and then use the results</span>
+<span class="c1"># to parse the data.</span>
+<span class="n">sniffer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">Sniffer</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">expected</span><span class="p">,</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Dialect: &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;In: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()))</span>
+    <span class="n">dialect</span> <span class="o">=</span> <span class="n">sniffer</span><span class="o">.</span><span class="n">sniff</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">delimiters</span><span class="o">=</span><span class="s1">&#39;,</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="n">sample</span><span class="p">),</span> <span class="n">dialect</span><span class="o">=</span><span class="n">dialect</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Parsed:</span><span class="se">\n</span><span class="s1">  </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+          <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">  &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">))))</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">sniff()</span></code> returns a <code class="docutils literal notranslate"><span class="pre">Dialect</span></code> instance with the settings to
+be used for parsing the data.  The results are not always perfect, as
+demonstrated by the “escaped” dialect in the example.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 csv_dialect_sniffer.py
+
+Dialect: &quot;escaped&quot;
+In: col1,1,10/01/2010,Special chars \&quot; &#39; \, to parse
+Parsed:
+  &#39;col1&#39;
+  &#39;1&#39;
+  &#39;10/01/2010&#39;
+  &#39;Special chars \\&quot; \&#39; \\&#39;
+  &#39; to parse&#39;
+
+Dialect: &quot;excel&quot;
+In: col1,1,10/01/2010,&quot;Special chars &quot;&quot; &#39; , to parse&quot;
+Parsed:
+  &#39;col1&#39;
+  &#39;1&#39;
+  &#39;10/01/2010&#39;
+  &#39;Special chars &quot; \&#39; , to parse&#39;
+
+Dialect: &quot;excel-tab&quot;
+In: col1        1       10/01/2010      &quot;Special chars &quot;&quot; &#39;      to parse&quot;
+Parsed:
+  &#39;col1&#39;
+  &#39;1&#39;
+  &#39;10/01/2010&#39;
+  &#39;Special chars &quot; \&#39; \t to parse&#39;
+
+Dialect: &quot;singlequote&quot;
+In: &#39;col1&#39;,&#39;1&#39;,&#39;10/01/2010&#39;,&#39;Special chars &quot; &#39;&#39; , to parse&#39;
+Parsed:
+  &#39;col1&#39;
+  &#39;1&#39;
+  &#39;10/01/2010&#39;
+  &#39;Special chars &quot; \&#39; , to parse&#39;
+
+Dialect: &quot;unix&quot;
+In: &quot;col1&quot;,&quot;1&quot;,&quot;10/01/2010&quot;,&quot;Special chars &quot;&quot; &#39; , to parse&quot;
+Parsed:
+  &#39;col1&#39;
+  &#39;1&#39;
+  &#39;10/01/2010&#39;
+  &#39;Special chars &quot; \&#39; , to parse&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="using-field-names">
+<h2>Using Field Names<a class="headerlink" href="#using-field-names" title="Permalink to this headline">¶</a></h2>
+<p>In addition to working with sequences of data, the <code class="docutils literal notranslate"><span class="pre">csv</span></code> module
+includes classes for working with rows as dictionaries so that the
+fields can be named. The <code class="docutils literal notranslate"><span class="pre">DictReader</span></code> and <code class="docutils literal notranslate"><span class="pre">DictWriter</span></code>
+classes translate rows to dictionaries instead of lists. Keys for the
+dictionary can be passed in, or inferred from the first row in the
+input (when the row contains headers).</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">csv_dictreader.py</span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The dictionary-based reader and writer are implemented as wrappers
+around the sequence-based classes, and use the same methods and
+arguments. The only difference in the reader API is that rows are
+returned as <a class="reference internal" href="../collections/ordereddict.html#ordereddict"><span class="std std-ref">OrderedDict</span></a> instances instead of
+lists or tuples (under earlier verison of Python, the rows were
+returned as regular <code class="docutils literal notranslate"><span class="pre">dict</span></code> instances).</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 csv_dictreader.py testdata.csv
+
+OrderedDict([(&#39;Title 1&#39;, &#39;1&#39;), (&#39;Title 2&#39;, &#39;a&#39;), (&#39;Title 3&#39;,
+&#39;08/18/07&#39;), (&#39;Title 4&#39;, &#39;å&#39;)])
+OrderedDict([(&#39;Title 1&#39;, &#39;2&#39;), (&#39;Title 2&#39;, &#39;b&#39;), (&#39;Title 3&#39;,
+&#39;08/19/07&#39;), (&#39;Title 4&#39;, &#39;∫&#39;)])
+OrderedDict([(&#39;Title 1&#39;, &#39;3&#39;), (&#39;Title 2&#39;, &#39;c&#39;), (&#39;Title 3&#39;,
+&#39;08/20/07&#39;), (&#39;Title 4&#39;, &#39;ç&#39;)])
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">DictWriter</span></code> must be given a list of field names so it
+knows how to order the columns in the output.</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">csv_dictwriter.py</span><a class="headerlink" href="#id9" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">fieldnames</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Title 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Title 2&#39;</span><span class="p">,</span> <span class="s1">&#39;Title 3&#39;</span><span class="p">,</span> <span class="s1">&#39;Title 4&#39;</span><span class="p">)</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">n</span><span class="p">:</span> <span class="n">n</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">fieldnames</span>
+<span class="p">}</span>
+<span class="n">unicode_chars</span> <span class="o">=</span> <span class="s1">&#39;å∫ç&#39;</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;wt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+
+    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictWriter</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="n">fieldnames</span><span class="p">)</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">writeheader</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">({</span>
+            <span class="s1">&#39;Title 1&#39;</span><span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s1">&#39;Title 2&#39;</span><span class="p">:</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">i</span><span class="p">),</span>
+            <span class="s1">&#39;Title 3&#39;</span><span class="p">:</span> <span class="s1">&#39;08/</span><span class="si">{:02d}</span><span class="s1">/07&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="s1">&#39;Title 4&#39;</span><span class="p">:</span> <span class="n">unicode_chars</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+        <span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;rt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<p>The field names are not written to the file automatically, but they
+can be written explicitly using the <code class="docutils literal notranslate"><span class="pre">writeheader()</span></code> method.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 csv_dictwriter.py testout.csv
+
+Title 1,Title 2,Title 3,Title 4
+1,a,08/01/07,å
+2,b,08/02/07,∫
+3,c,08/03/07,ç
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference external" href="https://docs.python.org/3.7/library/csv.html">Standard library documentation for csv</a></li>
+<li><span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0305"><strong>PEP 305</strong></a> – CSV File API</li>
+<li><a class="reference internal" href="../porting_notes.html#porting-csv"><span class="std std-ref">Python 2 to 3 porting notes for csv</span></a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+        <div id="footer-nav">
+<a id="prev-link" href="../xml.etree.ElementTree/create.html"
+   title="previous chapter"><i class="fa fa-arrow-circle-left"></i> Building Documents With Element Nodes</a>
+<a id="next-link" href="../compression.html"
+   title="next chapter">Data Compression and Archiving <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+        </div>
+      </div>
+
+      <div class="pure-u-1-4">
+        <div class="sidebar-wrapper">
+          <div class="sidebar">
+<div id="sidebar-toc">
+  <h5>Quick Links</h5>
+  <ul>
+    
+    <li><a href="#reading"><i class="fa fa-caret-right"></i>Reading</a></li>
+    
+    <li><a href="#writing"><i class="fa fa-caret-right"></i>Writing</a></li>
+    
+    <li><a href="#quoting"><i class="fa fa-caret-right"></i>Quoting</a></li>
+    
+    <li><a href="#dialects"><i class="fa fa-caret-right"></i>Dialects</a></li>
+    
+    <li><a href="#creating-a-dialect"><i class="fa fa-caret-right"></i>Creating a Dialect</a></li>
+    
+    <li><a href="#dialect-parameters"><i class="fa fa-caret-right"></i>Dialect Parameters</a></li>
+    
+    <li><a href="#automatically-detecting-dialects"><i class="fa fa-caret-right"></i>Automatically Detecting Dialects</a></li>
+    
+    <li><a href="#using-field-names"><i class="fa fa-caret-right"></i>Using Field Names</a></li>
+    
+  </ul>
+</div>
+
+          </div>
+          <div class="sidebar"><div id="sidebar-last-updated">
+  This page was last updated 2018-03-18.
+</div>
+
+          </div>
+          <div class="sidebar">
+<div id="sidebar-nav">
+  <h5>Navigation</h5>
+  <ul>
+    <li><a href="../xml.etree.ElementTree/create.html"
+           title="previous chapter"><i class="fa fa-arrow-circle-left"></i>Building Documents With Element Nodes</a></li>
+    <li><a href="../compression.html"
+           title="next chapter"><i class="fa fa-arrow-circle-right"></i>Data Compression and Archiving</a></li>
+  </ul>
+</div>
+          </div>
+          <div class="sidebar"><div id="sidebar-book"><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/book-cover-image-med.jpg"><br>Get the book</a></div>
+          </div>
+          <div class="sidebar"><div id="sidebar-example-disclaimer">
+<p>The output from all the example programs
+from PyMOTW-3 has been generated with Python 3.7.9, unless
+otherwise noted. Some of the features described here may not be
+available in earlier versions of Python.</p>
+<p>Looking for <a href="/2/">examples for Python 2</a>?</p>
+</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pure-g-r" id="footer">
+
+      <div class="pure-u-1-3">
+        <div class="footer-list">
+            <h4>This Site</h4>
+            <ul>
+              <li><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+              <li><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+            </ul>
+        </div>
+      </div><div class="pure-u-1-3">
+          <div class="footer-content">
+            <div class="socialmedia">
+              <a class="sociallink" href="../index.html"
+       title="Home">
+      <i class="fa fa-home fa-lg"></i></a>
+              <a class="sociallink" href="../about.html"
+       title="About">
+      <i class="fa fa-user fa-lg"></i></a>
+              <a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a>
+              <a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a>
+              <a class="sociallink" href="http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US"
+       title="Subscribe via Email">
+      <i class="fa fa-envelope fa-lg"></i></a>
+            </div>
+
+            <div class="copyright">
+              <a rel="author" href="../about.html">&copy; Copyright 2021, Doug Hellmann</a>
+            </div>
+
+            <div class="cc"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License BY-NC-SA" style="border-width:0; align: center;" width="88" height="31" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAfCAMAAABUFvrSAAAABGdBTUEAALGOfPtRkwAAAf5QTFRF////////////AAAADQwNDQ4NDg4OEBAQGRkZGxsbHxscICAgIx8gJCQkKCUmKCgoKCkoKSkpKSopKicnKioqLS0tMDAwMS0uMjExMjMxNTY1Pj8+Pzc5Pzs8QEBAQ0RDUFBQUFFQWldYXV5dYGBgY19haGVmbmxscHBwcHJvdXJzdnN0eHV2eXx5en15fH98fX98fnt8f4F+gICAgoWChIGChIWEhIaEh4aHiYyJjIqLjoeLj4+PkY+PkZORkZSRk5iTlZmUlpmWmJaXmpiZnp2dnqCdn5aan5+fn6Oeoqaho6Gho6ijpqqmq7GqrKurrLKrrbOsrrOtrrStr6+vr7Kvr7Sur7WusLOvsLWvsLavsbewsrexsrixs7iytLmztLqztbW1tbq0tru1t7y2uL23ub64ub65urm5ur+5ur+6u8C6u8C7vMC8vMG7vMG8vcK8vcK9vsK9vsO+v7+/v8O+v8S+wMS/wMW/wMXAwcXAwsfCw8fCw8jDxMfDxMjDxMnExcnExcnFxsrFxsrGx8vHyMfHyMzHyMzIycjIyc3Iyc3Jys3Jy8rLy87Ky8/Ky8/LzM/LzNDLzNDMzdDMzdHMzdHNztHNztLOz8/Pz9PP0NPP0NTQ0dTQ0dTR0tXR0tXS09bS1tXV39/f4N/g4+Pj6Ofn7+/v8fHx////rrSdFQAAAAN0Uk5TAAoO5yEBUwAAA+FJREFUSMe1lo9301QUx6uXUmaf0qJ26iTrRoVinUzjQNR1gAyH6Lqx6XTDoVvXbU7qhA5m7CgYWaTDlLa6AiFsba3t+y+9Sdr8OvVMi7zTnLTf5H7ee9/73n11PA1PpDkcADPRWPwKt8YLG2I2n89m7gh8iluJz0dnpqe+HBsdHRn+7w3JyF1cvpbk05mCJG8Xi9uPpMLdNJ9cXV5UyBNjoyMtkR2A3B9Tt8SCfLTTqUzC2XlMvpcRbnA/IPmryYnzoyM9XuWBt8eI21FBcAy5Qk4KtxkGtQ1I+fRNbnk+evHC5NhJDwATDDIAnhNa1ImdFQTHr6WEvNyFPFeATSTYgAu/dl3/I31jNR6bnZ76eDf4yxRb2Q+71aiz/0JB8JXkrZzCdbFVqrUhRHuu54XkytLczAUvBFADUB6ARwnyqEp/t02prK9XdAXBHC9KyPWVqd6qPhyzlOG55dhsL/hLDTD1A3rYAy+dRu6eXaGKruA75wi2hbqigNd+LYSRW6XUSh64l05dXYruA1OPZfAOD3vhObL/ILDvQkRXynSdvPpaiJB+TVHAfEZuA9d9amlVF7TJd3nu+xgwyu8AqNOnDGAM8/obOLhQpWQotPYReZ/SQdKuKQpY2DwKwFJbGwI4VhCSlxchSFUnNC+CCgaV9RAKoZKh1J4le9FmQv5SFQW88aATXGhEws8wrHb7AANc0CndQS+ag5ERaieke0FXvnkxoYL/1MGi7FSmmVBXMDOu3gLK5J2PMjdXv2tmBX6pDdKSkq39DWXh3G1KI4QYVmS3AHCIPnCXE+4hHy6PcfeQ6sV2lufiL2jJ0wasp4p2k/Z2CEXeeqahDBLS1/c8+dBIXq4IkFAiWQ1QtxtnUMz/wsXfBj+1LzdUKn17dvXXzEqfMoFDNWO57QCe22dskKB5g7zXbVN+i0RKumKxonrfzaIVys2wYu7TVrd0PXn1rOnJC4JTFjF5c19/gnXLFwj6jJJz1rOjoi63LnBRfbmNM+qNunG5baSufhu9OPX5my2VTWEzrHrRbIP8dHl+dnpyrIVDBME/q1u6/E9bGmt9i2AsQmeaFaFwIb22soSlfuL8SEtgOCJKB5BsKkNltWyK7zzWMY3X4exDc6GvsljoX5FzR+BxwdCbf3jAdjTJv5/S39H2B2iXpmgXpWB7iVrB0JuVzpgP07CUO2WKqX+oiVL/benKImhgOIzHf7hx/A/IBdHsQ6Nsmruilo4afVFqB8PLn2U2H8hbxeKWjH9YvuiwxNiMaNhALZptCg5d7zh+Sczmclnx0vEOax6ajdjucSMPTcD/97/Cp54Q929ZZbgcR3o0hAAAAABJRU5ErkJggg=="/></a>
+            </div>
+
+          </div></div><div class="pure-u-1-3">
+          <div class="footer-list">
+            <h4>Other Writing</h4>
+            <ul>
+              <li><a href="https://doughellmann.com/"><i class="fa fa-pencil fa-lg"></i> Blog</a></li>
+              <li><a href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><i class="fa fa-book fa-lg"></i> The Python Standard Library By Example</a></li>
+            </ul>
+          </div>
+        </div><script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-3', 'pymotw.com');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

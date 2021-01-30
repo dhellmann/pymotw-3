@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>math — Mathematical Functions &mdash; PyMOTW 3</title>
+
+    <link rel="stylesheet" href="../_static/pure-min.css" type="text/css">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pymotw.css" type="text/css">
+
+    <link rel="shortcut icon" type="image/png" href="../_static/favicon.png">
+
+    <link rel="alternate" type="application/atom+xml"
+          title="Doug Hellmann"
+          href="http://feeds.doughellmann.com/DougHellmann" />
+    <link rel="alternate" type="application/atom+xml"
+          title="PyMOTW Updates"
+          href="http://feeds.doughellmann.com/PyMOTW" />
+
+    <meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+
+  </head>
+  <body>
+
+    <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
+      <a class="pure-menu-heading" href="../index.html"><img src="../_static/logo.png"> PyMOTW-3</a>
+
+      <ul id="top-menu">
+        <li class="pure-menu-selected"><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+        <li class="pure-menu-selected"><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a></a>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a></li>
+      </ul>
+
+    </div>
+
+    <div class="pure-menu pure-menu-open pure-menu-vertical" id="breadcrumbs-menu">
+      
+      <ul id="breadcrumbs">
+        <li class="pure-menu-selected"><a href="../numeric.html"><i class="fa fa-arrow-circle-up"></i> Mathematics</a></li>
+      </ul>
+    </div>
+
+    <div class="pure-g-r" id="content-container">
+
+      <div class="pure-u-3-4">
+        <div class="content">
+          
+  <div class="section" id="module-math">
+<span id="math-mathematical-functions"></span><h1>math — Mathematical Functions<a class="headerlink" href="#module-math" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Provides functions for specialized mathematical operations.</td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal notranslate"><span class="pre">math</span></code> module implements many of the IEEE functions that
+would normally be found in the native platform C libraries for complex
+mathematical operations using floating point values, including
+logarithms and trigonometric operations.</p>
+<div class="section" id="special-constants">
+<h2>Special Constants<a class="headerlink" href="#special-constants" title="Permalink to this headline">¶</a></h2>
+<p>Many math operations depend on special constants.  <code class="docutils literal notranslate"><span class="pre">math</span></code>
+includes values for π (pi), e, nan (not a number), and infinity.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">math_constants.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  π: </span><span class="si">{:.30f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  e: </span><span class="si">{:.30f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">e</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;nan: </span><span class="si">{:.30f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">nan</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;inf: </span><span class="si">{:.30f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Both π and e are limited in precision only by the platform’s floating
+point C library.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_constants.py
+
+  π: 3.141592653589793115997963468544
+  e: 2.718281828459045090795598298428
+nan: nan
+inf: inf
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing-for-exceptional-values">
+<h2>Testing for Exceptional Values<a class="headerlink" href="#testing-for-exceptional-values" title="Permalink to this headline">¶</a></h2>
+<p>Floating point calculations can result in two types of exceptional
+values.  The first of these, <code class="docutils literal notranslate"><span class="pre">inf</span></code> (infinity), appears when the
+<code class="docutils literal notranslate"><span class="pre">double</span></code> used to hold a floating point value overflows from a
+value with a large absolute value.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">math_isinf.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:^3}</span><span class="s1"> </span><span class="si">{:6}</span><span class="s1"> </span><span class="si">{:6}</span><span class="s1"> </span><span class="si">{:6}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;x**2&#39;</span><span class="p">,</span> <span class="s1">&#39;isinf&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:-^3}</span><span class="s1"> </span><span class="si">{:-^6}</span><span class="s1"> </span><span class="si">{:-^6}</span><span class="s1"> </span><span class="si">{:-^6}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">201</span><span class="p">,</span> <span class="mi">20</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="o">**</span> <span class="n">e</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:3d}</span><span class="s1"> </span><span class="si">{:&lt;6g}</span><span class="s1"> </span><span class="si">{:&lt;6g}</span><span class="s1"> </span><span class="si">{!s:6}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">e</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">y</span><span class="p">),</span>
+    <span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>When the exponent in this example grows large enough, the square of
+<code class="docutils literal notranslate"><span class="pre">x</span></code> no longer fits inside a <code class="docutils literal notranslate"><span class="pre">double</span></code>, and the value is recorded as
+infinite.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_isinf.py
+
+ e  x      x**2   isinf
+--- ------ ------ ------
+  0 1      1      False
+ 20 1e+20  1e+40  False
+ 40 1e+40  1e+80  False
+ 60 1e+60  1e+120 False
+ 80 1e+80  1e+160 False
+100 1e+100 1e+200 False
+120 1e+120 1e+240 False
+140 1e+140 1e+280 False
+160 1e+160 inf    True
+180 1e+180 inf    True
+200 1e+200 inf    True
+</pre></div>
+</div>
+<p>Not all floating point overflows result in <code class="docutils literal notranslate"><span class="pre">inf</span></code> values, however.
+Calculating an exponent with floating point values, in particular,
+raises <code class="docutils literal notranslate"><span class="pre">OverflowError</span></code> instead of preserving the <code class="docutils literal notranslate"><span class="pre">inf</span></code>
+result.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">math_overflow.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="o">**</span> <span class="mi">200</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;x    =&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;x*x  =&#39;</span><span class="p">,</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;x**2 =&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">OverflowError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>This discrepancy is caused by an implementation difference in the
+library used by C Python.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_overflow.py
+
+x    = 1e+200
+x*x  = inf
+x**2 = (34, &#39;Result too large&#39;)
+</pre></div>
+</div>
+<p>Division operations using infinite values are undefined.  The result
+of dividing a number by infinity is <code class="docutils literal notranslate"><span class="pre">nan</span></code> (not a number).</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">math_isnan.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="mf">10.0</span> <span class="o">**</span> <span class="mi">200</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">10.0</span> <span class="o">**</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="n">x</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;x =&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;isnan(x) =&#39;</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;y = x / x =&#39;</span><span class="p">,</span> <span class="n">x</span> <span class="o">/</span> <span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;y == nan =&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">==</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;isnan(y) =&#39;</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">nan</span></code> does not compare as equal to any value, even itself, so to
+check for <code class="docutils literal notranslate"><span class="pre">nan</span></code> use <code class="docutils literal notranslate"><span class="pre">isnan()</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_isnan.py
+
+x = inf
+isnan(x) = False
+y = x / x = nan
+y == nan = False
+isnan(y) = True
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">isfinite()</span></code> to check for regular numbers or either of the
+special values <code class="docutils literal notranslate"><span class="pre">inf</span></code> or <code class="docutils literal notranslate"><span class="pre">nan</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">math_isfinite.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">e</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">nan</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:5.2f}</span><span class="s1"> </span><span class="si">{!s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">f</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">isfinite()</span></code> returns false for either of the exceptional cases,
+and true otherwise.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_isfinite.py
+
+ 0.00 True
+ 1.00 True
+ 3.14 True
+ 2.72 True
+  inf False
+  nan False
+</pre></div>
+</div>
+</div>
+<div class="section" id="comparing">
+<h2>Comparing<a class="headerlink" href="#comparing" title="Permalink to this headline">¶</a></h2>
+<p>Comparisons for floating point values can be error prone, with each
+step of the computation potentially introducing errors due to the
+numerical representation. The <code class="docutils literal notranslate"><span class="pre">isclose()</span></code> function uses a stable
+algorithm to minimize these errors and provide a way for relative as
+well as absolute comparisons. The formula used is equivalent to</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>abs(a-b) &lt;= max(rel_tol * max(abs(a), abs(b)), abs_tol)
+</pre></div>
+</div>
+<p>By default, <code class="docutils literal notranslate"><span class="pre">isclose()</span></code> uses relative comparison with the
+tolerance set to <code class="docutils literal notranslate"><span class="pre">1e-09</span></code>, meaning that the difference between the
+values must be less than or equal to <code class="docutils literal notranslate"><span class="pre">1e-09</span></code> times the larger
+absolute value between <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code>. Passing a keyword argument
+<code class="docutils literal notranslate"><span class="pre">rel_tol</span></code> to <code class="docutils literal notranslate"><span class="pre">isclose()</span></code> changes the tolerance. In this example,
+the values must be within 10% of each other.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">math_isclose.py</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">INPUTS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">900</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.09</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:^8}</span><span class="s1"> </span><span class="si">{:^8}</span><span class="s1"> </span><span class="si">{:^8}</span><span class="s1"> </span><span class="si">{:^8}</span><span class="s1"> </span><span class="si">{:^8}</span><span class="s1"> </span><span class="si">{:^8}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;rel_tol&#39;</span><span class="p">,</span> <span class="s1">&#39;abs(a-b)&#39;</span><span class="p">,</span> <span class="s1">&#39;tolerance&#39;</span><span class="p">,</span> <span class="s1">&#39;close&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:-^8}</span><span class="s1"> </span><span class="si">{:-^8}</span><span class="s1"> </span><span class="si">{:-^8}</span><span class="s1"> </span><span class="si">{:-^8}</span><span class="s1"> </span><span class="si">{:-^8}</span><span class="s1"> </span><span class="si">{:-^8}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:8.2f}</span><span class="s1"> </span><span class="si">{:8.2f}</span><span class="s1"> </span><span class="si">{:8.2f}</span><span class="s1"> </span><span class="si">{:8.2f}</span><span class="s1"> </span><span class="si">{:8.2f}</span><span class="s1"> </span><span class="si">{!s:&gt;8}</span><span class="s1">&#39;</span>
+
+<span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">rel_tol</span> <span class="ow">in</span> <span class="n">INPUTS</span><span class="p">:</span>
+    <span class="n">close</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">rel_tol</span><span class="o">=</span><span class="n">rel_tol</span><span class="p">)</span>
+    <span class="n">tolerance</span> <span class="o">=</span> <span class="n">rel_tol</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+    <span class="n">abs_diff</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">rel_tol</span><span class="p">,</span> <span class="n">abs_diff</span><span class="p">,</span> <span class="n">tolerance</span><span class="p">,</span> <span class="n">close</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>The comparison between <code class="docutils literal notranslate"><span class="pre">0.1</span></code> and <code class="docutils literal notranslate"><span class="pre">0.09</span></code> fails because of the error
+representing <code class="docutils literal notranslate"><span class="pre">0.1</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_isclose.py
+
+   a        b     rel_tol  abs(a-b) tolerance  close
+-------- -------- -------- -------- -------- --------
+ 1000.00   900.00     0.10   100.00   100.00     True
+  100.00    90.00     0.10    10.00    10.00     True
+   10.00     9.00     0.10     1.00     1.00     True
+    1.00     0.90     0.10     0.10     0.10     True
+    0.10     0.09     0.10     0.01     0.01    False
+</pre></div>
+</div>
+<p>To use a fixed or “absolute” tolerance, pass <code class="docutils literal notranslate"><span class="pre">abs_tol</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">rel_tol</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">math_isclose_abs_tol.py</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">INPUTS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="mf">1e-07</span><span class="p">,</span> <span class="mf">1e-08</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="mf">1e-08</span><span class="p">,</span> <span class="mf">1e-08</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="mf">1e-09</span><span class="p">,</span> <span class="mf">1e-08</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:^8}</span><span class="s1"> </span><span class="si">{:^11}</span><span class="s1"> </span><span class="si">{:^8}</span><span class="s1"> </span><span class="si">{:^10}</span><span class="s1"> </span><span class="si">{:^8}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;abs_tol&#39;</span><span class="p">,</span> <span class="s1">&#39;abs(a-b)&#39;</span><span class="p">,</span> <span class="s1">&#39;close&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:-^8}</span><span class="s1"> </span><span class="si">{:-^11}</span><span class="s1"> </span><span class="si">{:-^8}</span><span class="s1"> </span><span class="si">{:-^10}</span><span class="s1"> </span><span class="si">{:-^8}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">abs_tol</span> <span class="ow">in</span> <span class="n">INPUTS</span><span class="p">:</span>
+    <span class="n">close</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">abs_tol</span><span class="o">=</span><span class="n">abs_tol</span><span class="p">)</span>
+    <span class="n">abs_diff</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:8.2f}</span><span class="s1"> </span><span class="si">{:11}</span><span class="s1"> </span><span class="si">{:8}</span><span class="s1"> </span><span class="si">{:0.9f}</span><span class="s1"> </span><span class="si">{!s:&gt;8}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">abs_tol</span><span class="p">,</span> <span class="n">abs_diff</span><span class="p">,</span> <span class="n">close</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>For an absolute tolerance, the difference between the input values
+must be less than the tolerance given.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_isclose_abs_tol.py
+
+   a          b      abs_tol   abs(a-b)   close
+-------- ----------- -------- ---------- --------
+    1.00   1.0000001    1e-08 0.000000100    False
+    1.00  1.00000001    1e-08 0.000000010     True
+    1.00 1.000000001    1e-08 0.000000001     True
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">nan</span></code> and <code class="docutils literal notranslate"><span class="pre">inf</span></code> are special cases.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">math_isclose_inf.py</span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;nan, nan:&#39;</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">nan</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;nan, 1.0:&#39;</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;inf, inf:&#39;</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;inf, 1.0:&#39;</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">nan</span></code> is never close to another value, including itself. <code class="docutils literal notranslate"><span class="pre">inf</span></code> is
+only close to itself.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_isclose_inf.py
+
+nan, nan: False
+nan, 1.0: False
+inf, inf: True
+inf, 1.0: False
+</pre></div>
+</div>
+</div>
+<div class="section" id="converting-floating-point-values-to-integers">
+<h2>Converting Floating Point Values to Integers<a class="headerlink" href="#converting-floating-point-values-to-integers" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">math</span></code> module includes three functions for converting
+floating point values to whole numbers.  Each takes a different
+approach, and will be useful in different circumstances.</p>
+<p>The simplest is <code class="docutils literal notranslate"><span class="pre">trunc()</span></code>, which truncates the digits following
+the decimal, leaving only the significant digits making up the whole
+number portion of the value.  <code class="docutils literal notranslate"><span class="pre">floor()</span></code> converts its input to the
+largest preceding integer, and <code class="docutils literal notranslate"><span class="pre">ceil()</span></code> (ceiling) produces the
+largest integer following sequentially after the input value.</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">math_integers.py</span><a class="headerlink" href="#id9" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">HEADINGS</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span> <span class="s1">&#39;trunk&#39;</span><span class="p">,</span> <span class="s1">&#39;floor&#39;</span><span class="p">,</span> <span class="s1">&#39;ceil&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:^5}</span><span class="s1"> </span><span class="si">{:^5}</span><span class="s1"> </span><span class="si">{:^5}</span><span class="s1"> </span><span class="si">{:^5}</span><span class="s1"> </span><span class="si">{:^5}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">HEADINGS</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:-^5}</span><span class="s1"> </span><span class="si">{:-^5}</span><span class="s1"> </span><span class="si">{:-^5}</span><span class="s1"> </span><span class="si">{:-^5}</span><span class="s1"> </span><span class="si">{:-^5}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+<span class="p">))</span>
+
+<span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:5.1f}</span><span class="s1"> </span><span class="si">{:5.1f}</span><span class="s1"> </span><span class="si">{:5.1f}</span><span class="s1"> </span><span class="si">{:5.1f}</span><span class="s1"> </span><span class="si">{:5.1f}</span><span class="s1">&#39;</span>
+
+<span class="n">TEST_VALUES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="o">-</span><span class="mf">1.5</span><span class="p">,</span>
+    <span class="o">-</span><span class="mf">0.8</span><span class="p">,</span>
+    <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="o">-</span><span class="mf">0.2</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span>
+    <span class="mf">0.2</span><span class="p">,</span>
+    <span class="mf">0.5</span><span class="p">,</span>
+    <span class="mf">0.8</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">TEST_VALUES</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">i</span><span class="p">,</span>
+        <span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">),</span>
+        <span class="n">math</span><span class="o">.</span><span class="n">trunc</span><span class="p">(</span><span class="n">i</span><span class="p">),</span>
+        <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">i</span><span class="p">),</span>
+        <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">i</span><span class="p">),</span>
+    <span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">trunc()</span></code> is equivalent to converting to <code class="docutils literal notranslate"><span class="pre">int</span></code> directly.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_integers.py
+
+  i    int  trunk floor ceil
+----- ----- ----- ----- -----
+ -1.5  -1.0  -1.0  -2.0  -1.0
+ -0.8   0.0   0.0  -1.0   0.0
+ -0.5   0.0   0.0  -1.0   0.0
+ -0.2   0.0   0.0  -1.0   0.0
+  0.0   0.0   0.0   0.0   0.0
+  0.2   0.0   0.0   0.0   1.0
+  0.5   0.0   0.0   0.0   1.0
+  0.8   0.0   0.0   0.0   1.0
+  1.0   1.0   1.0   1.0   1.0
+</pre></div>
+</div>
+</div>
+<div class="section" id="alternate-representations-of-floating-point-values">
+<h2>Alternate Representations of Floating Point Values<a class="headerlink" href="#alternate-representations-of-floating-point-values" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">modf()</span></code> takes a single floating point number and returns a tuple
+containing the fractional and whole number parts of the input value.</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">math_modf.py</span><a class="headerlink" href="#id10" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/2 = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">modf</span><span class="p">(</span><span class="n">i</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<p>Both numbers in the return value are floats.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_modf.py
+
+0/2 = (0.0, 0.0)
+1/2 = (0.5, 0.0)
+2/2 = (0.0, 1.0)
+3/2 = (0.5, 1.0)
+4/2 = (0.0, 2.0)
+5/2 = (0.5, 2.0)
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">frexp()</span></code> returns the mantissa and exponent of a floating point
+number, and can be used to create a more portable representation of
+the value.</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">math_frexp.py</span><a class="headerlink" href="#id11" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:^7}</span><span class="s1"> </span><span class="si">{:^7}</span><span class="s1"> </span><span class="si">{:^7}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:-^7}</span><span class="s1"> </span><span class="si">{:-^7}</span><span class="s1"> </span><span class="si">{:-^7}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">]:</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">e</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">frexp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:7.2f}</span><span class="s1"> </span><span class="si">{:7.2f}</span><span class="s1"> </span><span class="si">{:7d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">frexp()</span></code> uses the formula <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">m</span> <span class="pre">*</span> <span class="pre">2**e</span></code>, and returns the
+values <code class="docutils literal notranslate"><span class="pre">m</span></code> and <code class="docutils literal notranslate"><span class="pre">e</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_frexp.py
+
+   x       m       e
+------- ------- -------
+   0.10    0.80      -3
+   0.50    0.50       0
+   4.00    0.50       3
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ldexp()</span></code> is the inverse of <code class="docutils literal notranslate"><span class="pre">frexp()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-text">math_ldexp.py</span><a class="headerlink" href="#id12" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:^7}</span><span class="s1"> </span><span class="si">{:^7}</span><span class="s1"> </span><span class="si">{:^7}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:-^7}</span><span class="s1"> </span><span class="si">{:-^7}</span><span class="s1"> </span><span class="si">{:-^7}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+
+<span class="n">INPUTS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">m</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">INPUTS</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ldexp</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:7.2f}</span><span class="s1"> </span><span class="si">{:7d}</span><span class="s1"> </span><span class="si">{:7.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Using the same formula as <code class="docutils literal notranslate"><span class="pre">frexp()</span></code>, <code class="docutils literal notranslate"><span class="pre">ldexp()</span></code> takes the
+mantissa and exponent values as arguments and returns a floating point
+number.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_ldexp.py
+
+   m       e       x
+------- ------- -------
+   0.80      -3    0.10
+   0.50       0    0.50
+   0.50       3    4.00
+</pre></div>
+</div>
+</div>
+<div class="section" id="positive-and-negative-signs">
+<h2>Positive and Negative Signs<a class="headerlink" href="#positive-and-negative-signs" title="Permalink to this headline">¶</a></h2>
+<p>The absolute value of a number is its value without a sign.  Use
+<code class="docutils literal notranslate"><span class="pre">fabs()</span></code> to calculate the absolute value of a floating point
+number.</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-text">math_fabs.py</span><a class="headerlink" href="#id13" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="o">-</span><span class="mf">1.1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="o">-</span><span class="mf">0.0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="mf">0.0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="mf">1.1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>In practical terms, the absolute value of a <code class="docutils literal notranslate"><span class="pre">float</span></code> is
+represented as a positive value.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_fabs.py
+
+1.1
+0.0
+0.0
+1.1
+</pre></div>
+</div>
+<p>To determine the sign of a value, either to give a set of values the
+same sign or to compare two values, use <code class="docutils literal notranslate"><span class="pre">copysign()</span></code> to set the
+sign of a known good value.</p>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-text">math_copysign.py</span><a class="headerlink" href="#id14" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">HEADINGS</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt; 0&#39;</span><span class="p">,</span> <span class="s1">&#39;&gt; 0&#39;</span><span class="p">,</span> <span class="s1">&#39;= 0&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:^5}</span><span class="s1"> </span><span class="si">{:^5}</span><span class="s1"> </span><span class="si">{:^5}</span><span class="s1"> </span><span class="si">{:^5}</span><span class="s1"> </span><span class="si">{:^5}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">HEADINGS</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:-^5}</span><span class="s1"> </span><span class="si">{:-^5}</span><span class="s1"> </span><span class="si">{:-^5}</span><span class="s1"> </span><span class="si">{:-^5}</span><span class="s1"> </span><span class="si">{:-^5}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+<span class="p">))</span>
+
+<span class="n">VALUES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="mf">0.0</span><span class="p">,</span>
+    <span class="mf">1.0</span><span class="p">,</span>
+    <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;-inf&#39;</span><span class="p">),</span>
+    <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">),</span>
+    <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;-nan&#39;</span><span class="p">),</span>
+    <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">VALUES</span><span class="p">:</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">copysign</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">f</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:5.1f}</span><span class="s1"> </span><span class="si">{:5d}</span><span class="s1"> </span><span class="si">{!s:5}</span><span class="s1"> </span><span class="si">{!s:5}</span><span class="s1"> </span><span class="si">{!s:5}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">f</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">f</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">f</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">f</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>An extra function like <code class="docutils literal notranslate"><span class="pre">copysign()</span></code> is needed because comparing
+nan and -nan directly with other values does not work.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_copysign.py
+
+  f     s    &lt; 0   &gt; 0   = 0
+----- ----- ----- ----- -----
+ -1.0    -1 True  False False
+  0.0     1 False False True
+  1.0     1 False True  False
+ -inf    -1 True  False False
+  inf     1 False True  False
+  nan    -1 False False False
+  nan     1 False False False
+</pre></div>
+</div>
+</div>
+<div class="section" id="commonly-used-calculations">
+<h2>Commonly Used Calculations<a class="headerlink" href="#commonly-used-calculations" title="Permalink to this headline">¶</a></h2>
+<p>Representing precise values in binary floating point memory is
+challenging.  Some values cannot be represented exactly, and the more
+often a value is manipulated through repeated calculations, the more
+likely a representation error will be introduced.  <code class="docutils literal notranslate"><span class="pre">math</span></code>
+includes a function for computing the sum of a series of floating
+point numbers using an efficient algorithm that minimizes such errors.</p>
+<div class="literal-block-wrapper docutils container" id="id15">
+<div class="code-block-caption"><span class="caption-text">math_fsum.py</span><a class="headerlink" href="#id15" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Input values:&#39;</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sum()       : </span><span class="si">{:.20f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">values</span><span class="p">)))</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">i</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;for-loop    : </span><span class="si">{:.20f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;math.fsum() : </span><span class="si">{:.20f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">fsum</span><span class="p">(</span><span class="n">values</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<p>Given a sequence of ten values, each equal to <code class="docutils literal notranslate"><span class="pre">0.1</span></code>, the expected
+value for the sum of the sequence is <code class="docutils literal notranslate"><span class="pre">1.0</span></code>.  Since <code class="docutils literal notranslate"><span class="pre">0.1</span></code> cannot be
+represented exactly as a floating point value, however, errors are
+introduced into the sum unless it is calculated with <code class="docutils literal notranslate"><span class="pre">fsum()</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_fsum.py
+
+Input values: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+sum()       : 0.99999999999999988898
+for-loop    : 0.99999999999999988898
+math.fsum() : 1.00000000000000000000
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">factorial()</span></code> is commonly used to calculate the number of
+permutations and combinations of a series of objects.  The factorial
+of a positive integer <code class="docutils literal notranslate"><span class="pre">n</span></code>, expressed <code class="docutils literal notranslate"><span class="pre">n!</span></code>, is defined recursively as
+<code class="docutils literal notranslate"><span class="pre">(n-1)!</span> <span class="pre">*</span> <span class="pre">n</span></code> and stops with <code class="docutils literal notranslate"><span class="pre">0!</span> <span class="pre">==</span> <span class="pre">1</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id16">
+<div class="code-block-caption"><span class="caption-text">math_factorial.py</span><a class="headerlink" href="#id16" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.1</span><span class="p">]:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:2.0f}</span><span class="s1"> </span><span class="si">{:6.0f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">i</span><span class="p">)))</span>
+    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error computing factorial(</span><span class="si">{}</span><span class="s1">): </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">err</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">factorial()</span></code> only works with whole numbers, but does accept
+<code class="docutils literal notranslate"><span class="pre">float</span></code> arguments as long as they can be converted to an
+integer without losing value.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_factorial.py
+
+ 0      1
+ 1      1
+ 2      2
+ 3      6
+ 4     24
+ 5    120
+Error computing factorial(6.1): factorial() only accepts integral
+ values
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">gamma()</span></code> is like <code class="docutils literal notranslate"><span class="pre">factorial()</span></code>, except it works with real
+numbers and the value is shifted down by one (gamma is equal to
+<code class="docutils literal notranslate"><span class="pre">(n</span> <span class="pre">-</span> <span class="pre">1)!</span></code>).</p>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-text">math_gamma.py</span><a class="headerlink" href="#id17" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">,</span> <span class="mf">3.3</span><span class="p">,</span> <span class="mf">4.4</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">,</span> <span class="mf">6.6</span><span class="p">]:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:2.1f}</span><span class="s1"> </span><span class="si">{:6.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">i</span><span class="p">)))</span>
+    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error computing gamma(</span><span class="si">{}</span><span class="s1">): </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">err</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Since zero causes the start value to be negative, it is not allowed.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_gamma.py
+
+Error computing gamma(0): math domain error
+1.1   0.95
+2.2   1.10
+3.3   2.68
+4.4  10.14
+5.5  52.34
+6.6 344.70
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">lgamma()</span></code> returns the natural logarithm of the absolute value of
+gamma for the input value.</p>
+<div class="literal-block-wrapper docutils container" id="id18">
+<div class="code-block-caption"><span class="caption-text">math_lgamma.py</span><a class="headerlink" href="#id18" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">,</span> <span class="mf">3.3</span><span class="p">,</span> <span class="mf">4.4</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">,</span> <span class="mf">6.6</span><span class="p">]:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:2.1f}</span><span class="s1"> </span><span class="si">{:.20f}</span><span class="s1"> </span><span class="si">{:.20f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">i</span><span class="p">,</span>
+            <span class="n">math</span><span class="o">.</span><span class="n">lgamma</span><span class="p">(</span><span class="n">i</span><span class="p">),</span>
+            <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">i</span><span class="p">)),</span>
+        <span class="p">))</span>
+    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error computing lgamma(</span><span class="si">{}</span><span class="s1">): </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">err</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Using <code class="docutils literal notranslate"><span class="pre">lgamma()</span></code> retains more precision than calculating the
+logarithm separately using the results of <code class="docutils literal notranslate"><span class="pre">gamma()</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_lgamma.py
+
+Error computing lgamma(0): math domain error
+1.1 -0.04987244125984036103 -0.04987244125983997245
+2.2 0.09694746679063825923 0.09694746679063866168
+3.3 0.98709857789473387513 0.98709857789473409717
+4.4 2.31610349142485727469 2.31610349142485727469
+5.5 3.95781396761871651080 3.95781396761871606671
+6.6 5.84268005527463252236 5.84268005527463252236
+</pre></div>
+</div>
+<p>The modulo operator (<code class="docutils literal notranslate"><span class="pre">%</span></code>) computes the remainder of a division
+expression (i.e., <code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">%</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">1</span></code>).  The operator built into the
+language works well with integers but, as with so many other floating
+point operations, intermediate calculations cause representational
+issues that result in a loss of data.  <code class="docutils literal notranslate"><span class="pre">fmod()</span></code> provides a more
+accurate implementation for floating point values.</p>
+<div class="literal-block-wrapper docutils container" id="id19">
+<div class="code-block-caption"><span class="caption-text">math_fmod.py</span><a class="headerlink" href="#id19" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:^4}</span><span class="s1"> </span><span class="si">{:^4}</span><span class="s1"> </span><span class="si">{:^5}</span><span class="s1"> </span><span class="si">{:^5}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;%&#39;</span><span class="p">,</span> <span class="s1">&#39;fmod&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:-^4}</span><span class="s1"> </span><span class="si">{:-^4}</span><span class="s1"> </span><span class="si">{:-^5}</span><span class="s1"> </span><span class="si">{:-^5}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">))</span>
+
+<span class="n">INPUTS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">),</span>
+    <span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">INPUTS</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:4.1f}</span><span class="s1"> </span><span class="si">{:4.1f}</span><span class="s1"> </span><span class="si">{:5.2f}</span><span class="s1"> </span><span class="si">{:5.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">x</span><span class="p">,</span>
+        <span class="n">y</span><span class="p">,</span>
+        <span class="n">x</span> <span class="o">%</span> <span class="n">y</span><span class="p">,</span>
+        <span class="n">math</span><span class="o">.</span><span class="n">fmod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span>
+    <span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>A potentially more frequent source of confusion is the fact that the
+algorithm used by <code class="docutils literal notranslate"><span class="pre">fmod()</span></code> for computing modulo is also different
+from that used by <code class="docutils literal notranslate"><span class="pre">%</span></code>, so the sign of the result is different.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_fmod.py
+
+ x    y     %   fmod
+---- ---- ----- -----
+ 5.0  2.0  1.00  1.00
+ 5.0 -2.0 -1.00  1.00
+-5.0  2.0  1.00 -1.00
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">gcd()</span></code> to find the largest integer that can divide evenly
+into two integers, the greatest common divisor.</p>
+<div class="literal-block-wrapper docutils container" id="id20">
+<div class="code-block-caption"><span class="caption-text">math_gcd.py</span><a class="headerlink" href="#id20" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">gcd</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">gcd</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">gcd</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">225</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">gcd</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">gcd</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>If both values are <code class="docutils literal notranslate"><span class="pre">0</span></code>, the result is <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_gcd.py
+
+2
+10
+25
+1
+0
+</pre></div>
+</div>
+</div>
+<div class="section" id="exponents-and-logarithms">
+<h2>Exponents and Logarithms<a class="headerlink" href="#exponents-and-logarithms" title="Permalink to this headline">¶</a></h2>
+<p>Exponential growth curves appear in economics, physics, and other
+sciences.  Python has a built-in exponentiation operator (“<code class="docutils literal notranslate"><span class="pre">**</span></code>”),
+but <code class="docutils literal notranslate"><span class="pre">pow()</span></code> can be useful when a callable function is needed as an
+argument to another function.</p>
+<div class="literal-block-wrapper docutils container" id="id21">
+<div class="code-block-caption"><span class="caption-text">math_pow.py</span><a class="headerlink" href="#id21" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">INPUTS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Typical uses</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">2.1</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">),</span>
+
+    <span class="c1"># Always 1</span>
+    <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+
+    <span class="c1"># Not-a-number</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">)),</span>
+
+    <span class="c1"># Roots</span>
+    <span class="p">(</span><span class="mf">9.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">27.0</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mi">3</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">INPUTS</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:5.1f}</span><span class="s1"> ** </span><span class="si">{:5.3f}</span><span class="s1"> = </span><span class="si">{:6.3f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<p>Raising <code class="docutils literal notranslate"><span class="pre">1</span></code> to any power always returns <code class="docutils literal notranslate"><span class="pre">1.0</span></code>, as does raising any
+value to a power of <code class="docutils literal notranslate"><span class="pre">0.0</span></code>.  Most operations on the not-a-number
+value <code class="docutils literal notranslate"><span class="pre">nan</span></code> return <code class="docutils literal notranslate"><span class="pre">nan</span></code>.  If the exponent is less than <code class="docutils literal notranslate"><span class="pre">1</span></code>,
+<code class="docutils literal notranslate"><span class="pre">pow()</span></code> computes a root.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_pow.py
+
+  2.0 ** 3.000 =  8.000
+  2.1 ** 3.200 = 10.742
+  1.0 ** 5.000 =  1.000
+  2.0 ** 0.000 =  1.000
+  2.0 **   nan =    nan
+  9.0 ** 0.500 =  3.000
+ 27.0 ** 0.333 =  3.000
+</pre></div>
+</div>
+<p>Since square roots (exponent of <code class="docutils literal notranslate"><span class="pre">1/2</span></code>) are used so frequently, there
+is a separate function for computing them.</p>
+<div class="literal-block-wrapper docutils container" id="id22">
+<div class="code-block-caption"><span class="caption-text">math_sqrt.py</span><a class="headerlink" href="#id22" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">9.0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cannot compute sqrt(-1):&#39;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Computing the square roots of negative numbers requires <em>complex
+numbers</em>, which are not handled by <code class="docutils literal notranslate"><span class="pre">math</span></code>.  Any attempt to
+calculate a square root of a negative value results in a
+<code class="docutils literal notranslate"><span class="pre">ValueError</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_sqrt.py
+
+3.0
+1.7320508075688772
+Cannot compute sqrt(-1): math domain error
+</pre></div>
+</div>
+<p>The logarithm function finds <code class="docutils literal notranslate"><span class="pre">y</span></code> where <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">b</span> <span class="pre">**</span> <span class="pre">y</span></code>.  By default,
+<code class="docutils literal notranslate"><span class="pre">log()</span></code> computes the natural logarithm (the base is <em>e</em>).  If a
+second argument is provided, that value is used as the base.</p>
+<div class="literal-block-wrapper docutils container" id="id23">
+<div class="code-block-caption"><span class="caption-text">math_log.py</span><a class="headerlink" href="#id23" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Logarithms where <code class="docutils literal notranslate"><span class="pre">x</span></code> is less than one yield negative results.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_log.py
+
+2.0794415416798357
+3.0
+-1.0
+</pre></div>
+</div>
+<p>There are three variations of <code class="docutils literal notranslate"><span class="pre">log()</span></code>.  Given floating point
+representation and rounding errors, the computed value produced by
+<code class="docutils literal notranslate"><span class="pre">log(x,</span> <span class="pre">b)</span></code> has limited accuracy, especially for some bases.
+<code class="docutils literal notranslate"><span class="pre">log10()</span></code> computes <code class="docutils literal notranslate"><span class="pre">log(x,</span> <span class="pre">10)</span></code>, using a more accurate algorithm
+than <code class="docutils literal notranslate"><span class="pre">log()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id24">
+<div class="code-block-caption"><span class="caption-text">math_log10.py</span><a class="headerlink" href="#id24" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:2}</span><span class="s1"> </span><span class="si">{:^12}</span><span class="s1"> </span><span class="si">{:^10}</span><span class="s1"> </span><span class="si">{:^20}</span><span class="s1"> </span><span class="si">{:8}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;accurate&#39;</span><span class="p">,</span> <span class="s1">&#39;inaccurate&#39;</span><span class="p">,</span> <span class="s1">&#39;mismatch&#39;</span><span class="p">,</span>
+<span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:-^2}</span><span class="s1"> </span><span class="si">{:-^12}</span><span class="s1"> </span><span class="si">{:-^10}</span><span class="s1"> </span><span class="si">{:-^20}</span><span class="s1"> </span><span class="si">{:-^8}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+<span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+    <span class="n">accurate</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">inaccurate</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">inaccurate</span><span class="p">)</span> <span class="o">==</span> <span class="n">i</span> <span class="k">else</span> <span class="s1">&#39;*&#39;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:2d}</span><span class="s1"> </span><span class="si">{:12.1f}</span><span class="s1"> </span><span class="si">{:10.8f}</span><span class="s1"> </span><span class="si">{:20.18f}</span><span class="s1"> </span><span class="si">{:^5}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">accurate</span><span class="p">,</span> <span class="n">inaccurate</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span>
+    <span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>The lines in the output with trailing <code class="docutils literal notranslate"><span class="pre">*</span></code> highlight the inaccurate
+values.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_log10.py
+
+i       x        accurate       inaccurate      mismatch
+-- ------------ ---------- -------------------- --------
+ 0          1.0 0.00000000 0.000000000000000000
+ 1         10.0 1.00000000 1.000000000000000000
+ 2        100.0 2.00000000 2.000000000000000000
+ 3       1000.0 3.00000000 2.999999999999999556   *
+ 4      10000.0 4.00000000 4.000000000000000000
+ 5     100000.0 5.00000000 5.000000000000000000
+ 6    1000000.0 6.00000000 5.999999999999999112   *
+ 7   10000000.0 7.00000000 7.000000000000000000
+ 8  100000000.0 8.00000000 8.000000000000000000
+ 9 1000000000.0 9.00000000 8.999999999999998224   *
+</pre></div>
+</div>
+<p>Similar to <code class="docutils literal notranslate"><span class="pre">log10()</span></code>, <code class="docutils literal notranslate"><span class="pre">log2()</span></code> calculates the equivalent of
+<code class="docutils literal notranslate"><span class="pre">math.log(x,</span> <span class="pre">2)</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id25">
+<div class="code-block-caption"><span class="caption-text">math_log2.py</span><a class="headerlink" href="#id25" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:&gt;2}</span><span class="s1"> </span><span class="si">{:^5}</span><span class="s1"> </span><span class="si">{:^5}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;log2&#39;</span><span class="p">,</span>
+<span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:-^2}</span><span class="s1"> </span><span class="si">{:-^5}</span><span class="s1"> </span><span class="si">{:-^5}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+<span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:2d}</span><span class="s1"> </span><span class="si">{:5.1f}</span><span class="s1"> </span><span class="si">{:5.1f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span>
+    <span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Depending on the underlying platform, using the built-in and
+special-purpose function can offer better performance and accuracy by
+using special-purpose algorithms for base 2 that are not found in the
+more general purpose function.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_log2.py
+
+ i   x   log2
+-- ----- -----
+ 0   1.0   0.0
+ 1   2.0   1.0
+ 2   4.0   2.0
+ 3   8.0   3.0
+ 4  16.0   4.0
+ 5  32.0   5.0
+ 6  64.0   6.0
+ 7 128.0   7.0
+ 8 256.0   8.0
+ 9 512.0   9.0
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">log1p()</span></code> calculates the Newton-Mercator series (the natural
+logarithm of <code class="docutils literal notranslate"><span class="pre">1+x</span></code>).</p>
+<div class="literal-block-wrapper docutils container" id="id26">
+<div class="code-block-caption"><span class="caption-text">math_log1p.py</span><a class="headerlink" href="#id26" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="mf">0.0000000000000000000000001</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;x       :&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;1 + x   :&#39;</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;log(1+x):&#39;</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">x</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;log1p(x):&#39;</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">log1p()</span></code> is more accurate for values of <code class="docutils literal notranslate"><span class="pre">x</span></code> very close to zero
+because it uses an algorithm that compensates for round-off errors
+from the initial addition.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_log1p.py
+
+x       : 1e-25
+1 + x   : 1.0
+log(1+x): 0.0
+log1p(x): 1e-25
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">exp()</span></code> computes the exponential function (<code class="docutils literal notranslate"><span class="pre">e**x</span></code>).</p>
+<div class="literal-block-wrapper docutils container" id="id27">
+<div class="code-block-caption"><span class="caption-text">math_exp.py</span><a class="headerlink" href="#id27" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:.20f}</span><span class="s1">&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">e</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">e</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">2</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<p>As with other special-case functions, it uses an algorithm that
+produces more accurate results than the general-purpose equivalent
+<code class="docutils literal notranslate"><span class="pre">math.pow(math.e,</span> <span class="pre">x)</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_exp.py
+
+7.38905609893064951876
+7.38905609893064951876
+7.38905609893065040694
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">expm1()</span></code> is the inverse of <code class="docutils literal notranslate"><span class="pre">log1p()</span></code>, and calculates <code class="docutils literal notranslate"><span class="pre">e**x</span> <span class="pre">-</span>
+<span class="pre">1</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id28">
+<div class="code-block-caption"><span class="caption-text">math_expm1.py</span><a class="headerlink" href="#id28" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="mf">0.0000000000000000000000001</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">expm1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Small values of <code class="docutils literal notranslate"><span class="pre">x</span></code> lose precision when the subtraction is performed
+separately, like with <code class="docutils literal notranslate"><span class="pre">log1p()</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_expm1.py
+
+1e-25
+0.0
+1e-25
+</pre></div>
+</div>
+</div>
+<div class="section" id="angles">
+<h2>Angles<a class="headerlink" href="#angles" title="Permalink to this headline">¶</a></h2>
+<p>Although degrees are more commonly used in everyday discussions of
+angles, radians are the standard unit of angular measure in science
+and math.  A radian is the angle created by two lines intersecting at
+the center of a circle, with their ends on the circumference of the
+circle spaced one radius apart.</p>
+<p>The circumference is calculated as <code class="docutils literal notranslate"><span class="pre">2πr</span></code>, so there is a relationship
+between radians and π, a value that shows up frequently in
+trigonometric calculations.  That relationship leads to radians being
+used in trigonometry and calculus, because they result in more compact
+formulas.</p>
+<p>To convert from degrees to radians, use <code class="docutils literal notranslate"><span class="pre">radians()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id29">
+<div class="code-block-caption"><span class="caption-text">math_radians.py</span><a class="headerlink" href="#id29" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:^7}</span><span class="s1"> </span><span class="si">{:^7}</span><span class="s1"> </span><span class="si">{:^7}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;Degrees&#39;</span><span class="p">,</span> <span class="s1">&#39;Radians&#39;</span><span class="p">,</span> <span class="s1">&#39;Expected&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:-^7}</span><span class="s1"> </span><span class="si">{:-^7}</span><span class="s1"> </span><span class="si">{:-^7}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+
+<span class="n">INPUTS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">6</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">45</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">180</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">270</span><span class="p">,</span> <span class="mi">3</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">360</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">deg</span><span class="p">,</span> <span class="n">expected</span> <span class="ow">in</span> <span class="n">INPUTS</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:7d}</span><span class="s1"> </span><span class="si">{:7.2f}</span><span class="s1"> </span><span class="si">{:7.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">deg</span><span class="p">,</span>
+        <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">deg</span><span class="p">),</span>
+        <span class="n">expected</span><span class="p">,</span>
+    <span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>The formula for the conversion is <code class="docutils literal notranslate"><span class="pre">rad</span> <span class="pre">=</span> <span class="pre">deg</span> <span class="pre">*</span> <span class="pre">π</span> <span class="pre">/</span> <span class="pre">180</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_radians.py
+
+Degrees Radians Expected
+------- ------- -------
+      0    0.00    0.00
+     30    0.52    0.52
+     45    0.79    0.79
+     60    1.05    1.05
+     90    1.57    1.57
+    180    3.14    3.14
+    270    4.71    4.71
+    360    6.28    6.28
+</pre></div>
+</div>
+<p>To convert from radians to degrees, use <code class="docutils literal notranslate"><span class="pre">degrees()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id30">
+<div class="code-block-caption"><span class="caption-text">math_degrees.py</span><a class="headerlink" href="#id30" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">INPUTS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">45</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">60</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">90</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">180</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">270</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">360</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:^8}</span><span class="s1"> </span><span class="si">{:^8}</span><span class="s1"> </span><span class="si">{:^8}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;Radians&#39;</span><span class="p">,</span> <span class="s1">&#39;Degrees&#39;</span><span class="p">,</span> <span class="s1">&#39;Expected&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:-^8}</span><span class="s1"> </span><span class="si">{:-^8}</span><span class="s1"> </span><span class="si">{:-^8}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">rad</span><span class="p">,</span> <span class="n">expected</span> <span class="ow">in</span> <span class="n">INPUTS</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:8.2f}</span><span class="s1"> </span><span class="si">{:8.2f}</span><span class="s1"> </span><span class="si">{:8.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">rad</span><span class="p">,</span>
+        <span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">rad</span><span class="p">),</span>
+        <span class="n">expected</span><span class="p">,</span>
+    <span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>The formula is <code class="docutils literal notranslate"><span class="pre">deg</span> <span class="pre">=</span> <span class="pre">rad</span> <span class="pre">*</span> <span class="pre">180</span> <span class="pre">/</span> <span class="pre">π</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_degrees.py
+
+Radians  Degrees  Expected
+-------- -------- --------
+    0.00     0.00     0.00
+    0.52    30.00    30.00
+    0.79    45.00    45.00
+    1.05    60.00    60.00
+    1.57    90.00    90.00
+    3.14   180.00   180.00
+    4.71   270.00   270.00
+    6.28   360.00   360.00
+</pre></div>
+</div>
+</div>
+<div class="section" id="trigonometry">
+<h2>Trigonometry<a class="headerlink" href="#trigonometry" title="Permalink to this headline">¶</a></h2>
+<p>Trigonometric functions relate angles in a triangle to the lengths of
+its sides.  They show up in formulas with periodic properties such as
+harmonics, circular motion, or when dealing with angles.  All of the
+trigonometric functions in the standard library take angles expressed
+as radians.</p>
+<p>Given an angle in a right triangle, the <em>sine</em> is the ratio of the
+length of the side opposite the angle to the hypotenuse (<code class="docutils literal notranslate"><span class="pre">sin</span> <span class="pre">A</span> <span class="pre">=</span>
+<span class="pre">opposite/hypotenuse</span></code>).  The <em>cosine</em> is the ratio of the length of
+the adjacent side to the hypotenuse (<code class="docutils literal notranslate"><span class="pre">cos</span> <span class="pre">A</span> <span class="pre">=</span> <span class="pre">adjacent/hypotenuse</span></code>).
+And the <em>tangent</em> is the ratio of the opposite side to the adjacent
+side (<code class="docutils literal notranslate"><span class="pre">tan</span> <span class="pre">A</span> <span class="pre">=</span> <span class="pre">opposite/adjacent</span></code>).</p>
+<div class="literal-block-wrapper docutils container" id="id31">
+<div class="code-block-caption"><span class="caption-text">math_trig.py</span><a class="headerlink" href="#id31" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:^7}</span><span class="s1"> </span><span class="si">{:^7}</span><span class="s1"> </span><span class="si">{:^7}</span><span class="s1"> </span><span class="si">{:^7}</span><span class="s1"> </span><span class="si">{:^7}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;Degrees&#39;</span><span class="p">,</span> <span class="s1">&#39;Radians&#39;</span><span class="p">,</span> <span class="s1">&#39;Sine&#39;</span><span class="p">,</span> <span class="s1">&#39;Cosine&#39;</span><span class="p">,</span> <span class="s1">&#39;Tangent&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:-^7}</span><span class="s1"> </span><span class="si">{:-^7}</span><span class="s1"> </span><span class="si">{:-^7}</span><span class="s1"> </span><span class="si">{:-^7}</span><span class="s1"> </span><span class="si">{:-^7}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">))</span>
+
+<span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:7.2f}</span><span class="s1"> </span><span class="si">{:7.2f}</span><span class="s1"> </span><span class="si">{:7.2f}</span><span class="s1"> </span><span class="si">{:7.2f}</span><span class="s1"> </span><span class="si">{:7.2f}</span><span class="s1">&#39;</span>
+
+<span class="k">for</span> <span class="n">deg</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">361</span><span class="p">,</span> <span class="mi">30</span><span class="p">):</span>
+    <span class="n">rad</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">deg</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">deg</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">270</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">rad</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">deg</span><span class="p">,</span> <span class="n">rad</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rad</span><span class="p">),</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rad</span><span class="p">),</span> <span class="n">t</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>The tangent can also be defined as the ratio of the sine of the angle
+to its cosine, and since the cosine is 0 for π/2 and 3π/2 radians, the
+tangent is infinite.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_trig.py
+
+Degrees Radians  Sine   Cosine  Tangent
+------- ------- ------- ------- -------
+   0.00    0.00    0.00    1.00    0.00
+  30.00    0.52    0.50    0.87    0.58
+  60.00    1.05    0.87    0.50    1.73
+  90.00    1.57    1.00    0.00     inf
+ 120.00    2.09    0.87   -0.50   -1.73
+ 150.00    2.62    0.50   -0.87   -0.58
+ 180.00    3.14    0.00   -1.00   -0.00
+ 210.00    3.67   -0.50   -0.87    0.58
+ 240.00    4.19   -0.87   -0.50    1.73
+ 270.00    4.71   -1.00   -0.00     inf
+ 300.00    5.24   -0.87    0.50   -1.73
+ 330.00    5.76   -0.50    0.87   -0.58
+ 360.00    6.28   -0.00    1.00   -0.00
+</pre></div>
+</div>
+<p>Given a point <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>, the length of the hypotenuse for the
+triangle between the points [(0, 0), (<code class="docutils literal notranslate"><span class="pre">x</span></code>, 0), (<code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>)] is
+<code class="docutils literal notranslate"><span class="pre">(x**2</span> <span class="pre">+</span> <span class="pre">y**2)</span> <span class="pre">**</span> <span class="pre">1/2</span></code>, and can be computed with <code class="docutils literal notranslate"><span class="pre">hypot()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id32">
+<div class="code-block-caption"><span class="caption-text">math_hypot.py</span><a class="headerlink" href="#id32" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:^7}</span><span class="s1"> </span><span class="si">{:^7}</span><span class="s1"> </span><span class="si">{:^10}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="s1">&#39;Hypotenuse&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:-^7}</span><span class="s1"> </span><span class="si">{:-^7}</span><span class="s1"> </span><span class="si">{:-^10}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+
+<span class="n">POINTS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># simple points</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span>
+    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>  <span class="c1"># 3-4-5 triangle</span>
+    <span class="c1"># on the circle</span>
+    <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span>  <span class="c1"># pi/4 rads</span>
+    <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span>  <span class="c1"># pi/3 rads</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">POINTS</span><span class="p">:</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">hypot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:7.2f}</span><span class="s1"> </span><span class="si">{:7.2f}</span><span class="s1"> </span><span class="si">{:7.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Points on the circle always have hypotenuse equal to 1.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_hypot.py
+
+   X       Y    Hypotenuse
+------- ------- ----------
+   1.00    1.00    1.41
+  -1.00   -1.00    1.41
+   1.41    1.41    2.00
+   3.00    4.00    5.00
+   0.71    0.71    1.00
+   0.50    0.87    1.00
+</pre></div>
+</div>
+<p>The same function can be used to find the distance between two points.</p>
+<div class="literal-block-wrapper docutils container" id="id33">
+<div class="code-block-caption"><span class="caption-text">math_distance_2_points.py</span><a class="headerlink" href="#id33" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:^8}</span><span class="s1"> </span><span class="si">{:^8}</span><span class="s1"> </span><span class="si">{:^8}</span><span class="s1"> </span><span class="si">{:^8}</span><span class="s1"> </span><span class="si">{:^8}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;X1&#39;</span><span class="p">,</span> <span class="s1">&#39;Y1&#39;</span><span class="p">,</span> <span class="s1">&#39;X2&#39;</span><span class="p">,</span> <span class="s1">&#39;Y2&#39;</span><span class="p">,</span> <span class="s1">&#39;Distance&#39;</span><span class="p">,</span>
+<span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:-^8}</span><span class="s1"> </span><span class="si">{:-^8}</span><span class="s1"> </span><span class="si">{:-^8}</span><span class="s1"> </span><span class="si">{:-^8}</span><span class="s1"> </span><span class="si">{:-^8}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+<span class="p">))</span>
+
+<span class="n">POINTS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">)),</span>
+    <span class="p">((</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">)),</span>
+    <span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span>  <span class="c1"># 3-4-5 triangle</span>
+    <span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)),</span>  <span class="c1"># 3-4-5 triangle</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">),</span> <span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">)</span> <span class="ow">in</span> <span class="n">POINTS</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">-</span> <span class="n">x2</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">y1</span> <span class="o">-</span> <span class="n">y2</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">hypot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:8.2f}</span><span class="s1"> </span><span class="si">{:8.2f}</span><span class="s1"> </span><span class="si">{:8.2f}</span><span class="s1"> </span><span class="si">{:8.2f}</span><span class="s1"> </span><span class="si">{:8.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span>
+    <span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Use the difference in the <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> values to move one endpoint
+to the origin, and then pass the results to <code class="docutils literal notranslate"><span class="pre">hypot()</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_distance_2_points.py
+
+   X1       Y1       X2       Y2    Distance
+-------- -------- -------- -------- --------
+    5.00     5.00     6.00     6.00     1.41
+   -6.00    -6.00    -5.00    -5.00     1.41
+    0.00     0.00     3.00     4.00     5.00
+   -1.00    -1.00     2.00     3.00     5.00
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">math</span></code> also defines inverse trigonometric functions.</p>
+<div class="literal-block-wrapper docutils container" id="id34">
+<div class="code-block-caption"><span class="caption-text">math_inverse_trig.py</span><a class="headerlink" href="#id34" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;arcsine(</span><span class="si">{:.1f}</span><span class="s1">)    = </span><span class="si">{:5.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">asin</span><span class="p">(</span><span class="n">r</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;arccosine(</span><span class="si">{:.1f}</span><span class="s1">)  = </span><span class="si">{:5.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">acos</span><span class="p">(</span><span class="n">r</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;arctangent(</span><span class="si">{:.1f}</span><span class="s1">) = </span><span class="si">{:5.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">atan</span><span class="p">(</span><span class="n">r</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">1.57</span></code> is roughly equal to <code class="docutils literal notranslate"><span class="pre">π/2</span></code>, or 90 degrees, the angle at
+which the sine is 1 and the cosine is 0.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_inverse_trig.py
+
+arcsine(0.0)    =  0.00
+arccosine(0.0)  =  1.57
+arctangent(0.0) =  0.00
+
+arcsine(0.5)    =  0.52
+arccosine(0.5)  =  1.05
+arctangent(0.5) =  0.46
+
+arcsine(1.0)    =  1.57
+arccosine(1.0)  =  0.00
+arctangent(1.0) =  0.79
+</pre></div>
+</div>
+</div>
+<div class="section" id="hyperbolic-functions">
+<h2>Hyperbolic Functions<a class="headerlink" href="#hyperbolic-functions" title="Permalink to this headline">¶</a></h2>
+<p>Hyperbolic functions appear in linear differential equations and are
+used when working with electromagnetic fields, fluid dynamics, special
+relativity, and other advanced physics and mathematics.</p>
+<div class="literal-block-wrapper docutils container" id="id35">
+<div class="code-block-caption"><span class="caption-text">math_hyperbolic.py</span><a class="headerlink" href="#id35" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:^6}</span><span class="s1"> </span><span class="si">{:^6}</span><span class="s1"> </span><span class="si">{:^6}</span><span class="s1"> </span><span class="si">{:^6}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;sinh&#39;</span><span class="p">,</span> <span class="s1">&#39;cosh&#39;</span><span class="p">,</span> <span class="s1">&#39;tanh&#39;</span><span class="p">,</span>
+<span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:-^6}</span><span class="s1"> </span><span class="si">{:-^6}</span><span class="s1"> </span><span class="si">{:-^6}</span><span class="s1"> </span><span class="si">{:-^6}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+
+<span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:6.4f}</span><span class="s1"> </span><span class="si">{:6.4f}</span><span class="s1"> </span><span class="si">{:6.4f}</span><span class="s1"> </span><span class="si">{:6.4f}</span><span class="s1">&#39;</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="mf">10.0</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">x</span><span class="p">,</span>
+        <span class="n">math</span><span class="o">.</span><span class="n">sinh</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
+        <span class="n">math</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
+        <span class="n">math</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
+    <span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Whereas the cosine and sine functions enscribe a circle, the
+hyperbolic cosine and hyperbolic sine form half of a hyperbola.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_hyperbolic.py
+
+  X     sinh   cosh   tanh
+------ ------ ------ ------
+0.0000 0.0000 1.0000 0.0000
+0.2000 0.2013 1.0201 0.1974
+0.4000 0.4108 1.0811 0.3799
+0.6000 0.6367 1.1855 0.5370
+0.8000 0.8881 1.3374 0.6640
+1.0000 1.1752 1.5431 0.7616
+</pre></div>
+</div>
+<p>Inverse hyperbolic functions <code class="docutils literal notranslate"><span class="pre">acosh()</span></code>, <code class="docutils literal notranslate"><span class="pre">asinh()</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">atanh()</span></code> are also available.</p>
+</div>
+<div class="section" id="special-functions">
+<h2>Special Functions<a class="headerlink" href="#special-functions" title="Permalink to this headline">¶</a></h2>
+<p>The Gauss Error function is used in statistics.</p>
+<div class="literal-block-wrapper docutils container" id="id36">
+<div class="code-block-caption"><span class="caption-text">math_erf.py</span><a class="headerlink" href="#id36" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:^5}</span><span class="s1"> </span><span class="si">{:7}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;erf(x)&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:-^5}</span><span class="s1"> </span><span class="si">{:-^7}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:5.2f}</span><span class="s1"> </span><span class="si">{:7.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">erf</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<p>For the error function, <code class="docutils literal notranslate"><span class="pre">erf(-x)</span> <span class="pre">==</span> <span class="pre">-erf(x)</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_erf.py
+
+  x   erf(x)
+----- -------
+-3.00 -1.0000
+-2.00 -0.9953
+-1.00 -0.8427
+-0.50 -0.5205
+-0.25 -0.2763
+ 0.00  0.0000
+ 0.25  0.2763
+ 0.50  0.5205
+ 1.00  0.8427
+ 2.00  0.9953
+ 3.00  1.0000
+</pre></div>
+</div>
+<p>The complimentary error function is <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">-</span> <span class="pre">erf(x)</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id37">
+<div class="code-block-caption"><span class="caption-text">math_erfc.py</span><a class="headerlink" href="#id37" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:^5}</span><span class="s1"> </span><span class="si">{:7}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;erfc(x)&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:-^5}</span><span class="s1"> </span><span class="si">{:-^7}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:5.2f}</span><span class="s1"> </span><span class="si">{:7.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">erfc</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<p>The implementation of <code class="docutils literal notranslate"><span class="pre">erfc()</span></code> avoids precision errors for small
+values of <code class="docutils literal notranslate"><span class="pre">x</span></code> when subtracting from 1.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 math_erfc.py
+
+  x   erfc(x)
+----- -------
+-3.00  2.0000
+-2.00  1.9953
+-1.00  1.8427
+-0.50  1.5205
+-0.25  1.2763
+ 0.00  1.0000
+ 0.25  0.7237
+ 0.50  0.4795
+ 1.00  0.1573
+ 2.00  0.0047
+ 3.00  0.0000
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference external" href="https://docs.python.org/3.7/library/math.html">Standard library documentation for math</a></li>
+<li><a class="reference external" href="http://www.johndcook.com/blog/2009/07/21/ieee-arithmetic-python/">IEEE floating point arithmetic in Python</a>
+– Blog post by John Cook about how special values arise and are
+dealt with when doing math in Python.</li>
+<li><a class="reference external" href="http://scipy.org/">SciPy</a> – Open source libraryes for
+scientific and mathematical calculations in Python.</li>
+<li><span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0485"><strong>PEP 485</strong></a> – “A function for testing approximate equality”</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+        <div id="footer-nav">
+<a id="prev-link" href="../random/index.html"
+   title="previous chapter"><i class="fa fa-arrow-circle-left"></i> random — Pseudorandom Number Generators</a>
+<a id="next-link" href="../statistics/index.html"
+   title="next chapter">statistics — Statistical Calculations <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+        </div>
+      </div>
+
+      <div class="pure-u-1-4">
+        <div class="sidebar-wrapper">
+          <div class="sidebar">
+<div id="sidebar-toc">
+  <h5>Quick Links</h5>
+  <ul>
+    
+    <li><a href="#special-constants"><i class="fa fa-caret-right"></i>Special Constants</a></li>
+    
+    <li><a href="#testing-for-exceptional-values"><i class="fa fa-caret-right"></i>Testing for Exceptional Values</a></li>
+    
+    <li><a href="#comparing"><i class="fa fa-caret-right"></i>Comparing</a></li>
+    
+    <li><a href="#converting-floating-point-values-to-integers"><i class="fa fa-caret-right"></i>Converting Floating Point Values to Integers</a></li>
+    
+    <li><a href="#alternate-representations-of-floating-point-values"><i class="fa fa-caret-right"></i>Alternate Representations of Floating Point Values</a></li>
+    
+    <li><a href="#positive-and-negative-signs"><i class="fa fa-caret-right"></i>Positive and Negative Signs</a></li>
+    
+    <li><a href="#commonly-used-calculations"><i class="fa fa-caret-right"></i>Commonly Used Calculations</a></li>
+    
+    <li><a href="#exponents-and-logarithms"><i class="fa fa-caret-right"></i>Exponents and Logarithms</a></li>
+    
+    <li><a href="#angles"><i class="fa fa-caret-right"></i>Angles</a></li>
+    
+    <li><a href="#trigonometry"><i class="fa fa-caret-right"></i>Trigonometry</a></li>
+    
+    <li><a href="#hyperbolic-functions"><i class="fa fa-caret-right"></i>Hyperbolic Functions</a></li>
+    
+    <li><a href="#special-functions"><i class="fa fa-caret-right"></i>Special Functions</a></li>
+    
+  </ul>
+</div>
+
+          </div>
+          <div class="sidebar"><div id="sidebar-last-updated">
+  This page was last updated 2016-12-28.
+</div>
+
+          </div>
+          <div class="sidebar">
+<div id="sidebar-nav">
+  <h5>Navigation</h5>
+  <ul>
+    <li><a href="../random/index.html"
+           title="previous chapter"><i class="fa fa-arrow-circle-left"></i>random — Pseudorandom Number Generators</a></li>
+    <li><a href="../statistics/index.html"
+           title="next chapter"><i class="fa fa-arrow-circle-right"></i>statistics — Statistical Calculations</a></li>
+  </ul>
+</div>
+          </div>
+          <div class="sidebar"><div id="sidebar-book"><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/book-cover-image-med.jpg"><br>Get the book</a></div>
+          </div>
+          <div class="sidebar"><div id="sidebar-example-disclaimer">
+<p>The output from all the example programs
+from PyMOTW-3 has been generated with Python 3.7.9, unless
+otherwise noted. Some of the features described here may not be
+available in earlier versions of Python.</p>
+<p>Looking for <a href="/2/">examples for Python 2</a>?</p>
+</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pure-g-r" id="footer">
+
+      <div class="pure-u-1-3">
+        <div class="footer-list">
+            <h4>This Site</h4>
+            <ul>
+              <li><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+              <li><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+            </ul>
+        </div>
+      </div><div class="pure-u-1-3">
+          <div class="footer-content">
+            <div class="socialmedia">
+              <a class="sociallink" href="../index.html"
+       title="Home">
+      <i class="fa fa-home fa-lg"></i></a>
+              <a class="sociallink" href="../about.html"
+       title="About">
+      <i class="fa fa-user fa-lg"></i></a>
+              <a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a>
+              <a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a>
+              <a class="sociallink" href="http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US"
+       title="Subscribe via Email">
+      <i class="fa fa-envelope fa-lg"></i></a>
+            </div>
+
+            <div class="copyright">
+              <a rel="author" href="../about.html">&copy; Copyright 2021, Doug Hellmann</a>
+            </div>
+
+            <div class="cc"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License BY-NC-SA" style="border-width:0; align: center;" width="88" height="31" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAfCAMAAABUFvrSAAAABGdBTUEAALGOfPtRkwAAAf5QTFRF////////////AAAADQwNDQ4NDg4OEBAQGRkZGxsbHxscICAgIx8gJCQkKCUmKCgoKCkoKSkpKSopKicnKioqLS0tMDAwMS0uMjExMjMxNTY1Pj8+Pzc5Pzs8QEBAQ0RDUFBQUFFQWldYXV5dYGBgY19haGVmbmxscHBwcHJvdXJzdnN0eHV2eXx5en15fH98fX98fnt8f4F+gICAgoWChIGChIWEhIaEh4aHiYyJjIqLjoeLj4+PkY+PkZORkZSRk5iTlZmUlpmWmJaXmpiZnp2dnqCdn5aan5+fn6Oeoqaho6Gho6ijpqqmq7GqrKurrLKrrbOsrrOtrrStr6+vr7Kvr7Sur7WusLOvsLWvsLavsbewsrexsrixs7iytLmztLqztbW1tbq0tru1t7y2uL23ub64ub65urm5ur+5ur+6u8C6u8C7vMC8vMG7vMG8vcK8vcK9vsK9vsO+v7+/v8O+v8S+wMS/wMW/wMXAwcXAwsfCw8fCw8jDxMfDxMjDxMnExcnExcnFxsrFxsrGx8vHyMfHyMzHyMzIycjIyc3Iyc3Jys3Jy8rLy87Ky8/Ky8/LzM/LzNDLzNDMzdDMzdHMzdHNztHNztLOz8/Pz9PP0NPP0NTQ0dTQ0dTR0tXR0tXS09bS1tXV39/f4N/g4+Pj6Ofn7+/v8fHx////rrSdFQAAAAN0Uk5TAAoO5yEBUwAAA+FJREFUSMe1lo9301QUx6uXUmaf0qJ26iTrRoVinUzjQNR1gAyH6Lqx6XTDoVvXbU7qhA5m7CgYWaTDlLa6AiFsba3t+y+9Sdr8OvVMi7zTnLTf5H7ee9/73n11PA1PpDkcADPRWPwKt8YLG2I2n89m7gh8iluJz0dnpqe+HBsdHRn+7w3JyF1cvpbk05mCJG8Xi9uPpMLdNJ9cXV5UyBNjoyMtkR2A3B9Tt8SCfLTTqUzC2XlMvpcRbnA/IPmryYnzoyM9XuWBt8eI21FBcAy5Qk4KtxkGtQ1I+fRNbnk+evHC5NhJDwATDDIAnhNa1ImdFQTHr6WEvNyFPFeATSTYgAu/dl3/I31jNR6bnZ76eDf4yxRb2Q+71aiz/0JB8JXkrZzCdbFVqrUhRHuu54XkytLczAUvBFADUB6ARwnyqEp/t02prK9XdAXBHC9KyPWVqd6qPhyzlOG55dhsL/hLDTD1A3rYAy+dRu6eXaGKruA75wi2hbqigNd+LYSRW6XUSh64l05dXYruA1OPZfAOD3vhObL/ILDvQkRXynSdvPpaiJB+TVHAfEZuA9d9amlVF7TJd3nu+xgwyu8AqNOnDGAM8/obOLhQpWQotPYReZ/SQdKuKQpY2DwKwFJbGwI4VhCSlxchSFUnNC+CCgaV9RAKoZKh1J4le9FmQv5SFQW88aATXGhEws8wrHb7AANc0CndQS+ag5ERaieke0FXvnkxoYL/1MGi7FSmmVBXMDOu3gLK5J2PMjdXv2tmBX6pDdKSkq39DWXh3G1KI4QYVmS3AHCIPnCXE+4hHy6PcfeQ6sV2lufiL2jJ0wasp4p2k/Z2CEXeeqahDBLS1/c8+dBIXq4IkFAiWQ1QtxtnUMz/wsXfBj+1LzdUKn17dvXXzEqfMoFDNWO57QCe22dskKB5g7zXbVN+i0RKumKxonrfzaIVys2wYu7TVrd0PXn1rOnJC4JTFjF5c19/gnXLFwj6jJJz1rOjoi63LnBRfbmNM+qNunG5baSufhu9OPX5my2VTWEzrHrRbIP8dHl+dnpyrIVDBME/q1u6/E9bGmt9i2AsQmeaFaFwIb22soSlfuL8SEtgOCJKB5BsKkNltWyK7zzWMY3X4exDc6GvsljoX5FzR+BxwdCbf3jAdjTJv5/S39H2B2iXpmgXpWB7iVrB0JuVzpgP07CUO2WKqX+oiVL/benKImhgOIzHf7hx/A/IBdHsQ6Nsmruilo4afVFqB8PLn2U2H8hbxeKWjH9YvuiwxNiMaNhALZptCg5d7zh+Sczmclnx0vEOax6ajdjucSMPTcD/97/Cp54Q929ZZbgcR3o0hAAAAABJRU5ErkJggg=="/></a>
+            </div>
+
+          </div></div><div class="pure-u-1-3">
+          <div class="footer-list">
+            <h4>Other Writing</h4>
+            <ul>
+              <li><a href="https://doughellmann.com/"><i class="fa fa-pencil fa-lg"></i> Blog</a></li>
+              <li><a href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><i class="fa fa-book fa-lg"></i> The Python Standard Library By Example</a></li>
+            </ul>
+          </div>
+        </div><script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-3', 'pymotw.com');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>pathlib — Filesystem Paths as Objects &mdash; PyMOTW 3</title>
+
+    <link rel="stylesheet" href="../_static/pure-min.css" type="text/css">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pymotw.css" type="text/css">
+
+    <link rel="shortcut icon" type="image/png" href="../_static/favicon.png">
+
+    <link rel="alternate" type="application/atom+xml"
+          title="Doug Hellmann"
+          href="http://feeds.doughellmann.com/DougHellmann" />
+    <link rel="alternate" type="application/atom+xml"
+          title="PyMOTW Updates"
+          href="http://feeds.doughellmann.com/PyMOTW" />
+
+    <meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+
+  </head>
+  <body>
+
+    <div class="pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
+      <a class="pure-menu-heading" href="../index.html"><img src="../_static/logo.png"> PyMOTW-3</a>
+
+      <ul id="top-menu">
+        <li class="pure-menu-selected"><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+        <li class="pure-menu-selected"><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a></a>
+        <li class="pure-menu-selected"><a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a></li>
+      </ul>
+
+    </div>
+
+    <div class="pure-menu pure-menu-open pure-menu-vertical" id="breadcrumbs-menu">
+      
+      <ul id="breadcrumbs">
+        <li class="pure-menu-selected"><a href="../file_access.html"><i class="fa fa-arrow-circle-up"></i> The File System</a></li>
+      </ul>
+    </div>
+
+    <div class="pure-g-r" id="content-container">
+
+      <div class="pure-u-3-4">
+        <div class="content">
+          
+  <div class="section" id="module-pathlib">
+<span id="pathlib-filesystem-paths-as-objects"></span><h1>pathlib — Filesystem Paths as Objects<a class="headerlink" href="#module-pathlib" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Parse, build, test, and otherwise work on filenames and
+paths using an object-oriented API instead of low-level
+string operations.</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="path-representations">
+<h2>Path Representations<a class="headerlink" href="#path-representations" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">pathlib</span></code> includes classes for managing filesystem paths
+formatted using either the POSIX standard or Microsoft Windows
+syntax. It includes so called “pure” classes, which operate on strings
+but do not interact with an actual filesystem, and “concrete” classes,
+which extend the API to include operations that reflect or modify data
+on the local filesystem.</p>
+<p>The pure classes <code class="docutils literal notranslate"><span class="pre">PurePosixPath</span></code> and <code class="docutils literal notranslate"><span class="pre">PureWindowsPath</span></code>
+can be instantiated and used on any operating system, since they only
+work on names. To instantiate the correct class for working with a
+real filesystem, use <code class="docutils literal notranslate"><span class="pre">Path</span></code> to get either a <code class="docutils literal notranslate"><span class="pre">PosixPath</span></code>
+or <code class="docutils literal notranslate"><span class="pre">WindowsPath</span></code>, depending on the platform.</p>
+</div>
+<div class="section" id="building-paths">
+<h2>Building Paths<a class="headerlink" href="#building-paths" title="Permalink to this headline">¶</a></h2>
+<p>To instantiate a new path, give a string as the first argument. The
+string representation of the path object is this name value. To create
+a new path referring to a value relative to an existing path, use the
+<code class="docutils literal notranslate"><span class="pre">/</span></code> operator to extend the path. The argument to the operator can
+either be a string or another path object.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">pathlib_operator.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+
+<span class="n">usr</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">PurePosixPath</span><span class="p">(</span><span class="s1">&#39;/usr&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">usr</span><span class="p">)</span>
+
+<span class="n">usr_local</span> <span class="o">=</span> <span class="n">usr</span> <span class="o">/</span> <span class="s1">&#39;local&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">usr_local</span><span class="p">)</span>
+
+<span class="n">usr_share</span> <span class="o">=</span> <span class="n">usr</span> <span class="o">/</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">PurePosixPath</span><span class="p">(</span><span class="s1">&#39;share&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">usr_share</span><span class="p">)</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="n">usr</span> <span class="o">/</span> <span class="s1">&#39;..&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+
+<span class="n">etc</span> <span class="o">=</span> <span class="n">root</span> <span class="o">/</span> <span class="s1">&#39;/etc/&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">etc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>As the value for <code class="docutils literal notranslate"><span class="pre">root</span></code> in the example output shows, the operator
+combines the path values as they are given, and does not normalize the
+result when it contains the parent directory reference
+<code class="docutils literal notranslate"><span class="pre">&quot;..&quot;</span></code>. However, if a segment begins with the path separator it is
+interpreted as a new “root” reference in the same way as
+<code class="docutils literal notranslate"><span class="pre">os.path.join()</span></code>.  Extra path separators are removed from the
+middle of the path value, as in the <code class="docutils literal notranslate"><span class="pre">etc</span></code> example here.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 pathlib_operator.py
+
+/usr
+/usr/local
+/usr/share
+/usr/..
+/etc
+</pre></div>
+</div>
+<p>The concrete path classes include a <code class="docutils literal notranslate"><span class="pre">resolve()</span></code> method for
+normalizing a path by looking at the filesystem for directories and
+symbolic links and producing the absolute path referred to by a name.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">pathlib_resolve.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+
+<span class="n">usr_local</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;/usr/local&#39;</span><span class="p">)</span>
+<span class="n">share</span> <span class="o">=</span> <span class="n">usr_local</span> <span class="o">/</span> <span class="s1">&#39;..&#39;</span> <span class="o">/</span> <span class="s1">&#39;share&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">share</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<p>Here the relative path is converted to the absolute path to
+<code class="docutils literal notranslate"><span class="pre">/usr/share</span></code>. If the input path includes symlinks, those are
+expanded as well to allow the resolved path to refer directly to the
+target.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 pathlib_resolve.py
+
+/usr/share
+</pre></div>
+</div>
+<p>To build paths when the segments are not known in advance, use
+<code class="docutils literal notranslate"><span class="pre">joinpath()</span></code>, passing each path segment as a separate argument.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">pathlib_joinpath.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">PurePosixPath</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="n">subdirs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;usr&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">]</span>
+<span class="n">usr_local</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="o">*</span><span class="n">subdirs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">usr_local</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>As with the <code class="docutils literal notranslate"><span class="pre">/</span></code> operator, calling <code class="docutils literal notranslate"><span class="pre">joinpath()</span></code> creates a new
+instance.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 pathlib_joinpath.py
+
+/usr/local
+</pre></div>
+</div>
+<p>Given an existing path object, it is easy to build a new one with
+minor differences such as referring to a different file in the same
+directory. Use <code class="docutils literal notranslate"><span class="pre">with_name()</span></code> to create a new path that replaces
+the name portion of a path with a different file name. Use
+<code class="docutils literal notranslate"><span class="pre">with_suffix()</span></code> to create a new path that replaces the file name’s
+extension with a different value.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">pathlib_from_existing.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+
+<span class="n">ind</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">PurePosixPath</span><span class="p">(</span><span class="s1">&#39;source/pathlib/index.rst&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span>
+
+<span class="n">py</span> <span class="o">=</span> <span class="n">ind</span><span class="o">.</span><span class="n">with_name</span><span class="p">(</span><span class="s1">&#39;pathlib_from_existing.py&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">py</span><span class="p">)</span>
+
+<span class="n">pyc</span> <span class="o">=</span> <span class="n">py</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s1">&#39;.pyc&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pyc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Both methods return new objects, and the original is left unchanged.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 pathlib_from_existing.py
+
+source/pathlib/index.rst
+source/pathlib/pathlib_from_existing.py
+source/pathlib/pathlib_from_existing.pyc
+</pre></div>
+</div>
+</div>
+<div class="section" id="parsing-paths">
+<h2>Parsing Paths<a class="headerlink" href="#parsing-paths" title="Permalink to this headline">¶</a></h2>
+<p>Path objects have methods and properties for extracting partial values
+from the name. For example, the <code class="docutils literal notranslate"><span class="pre">parts</span></code> property produces a sequence
+of path segments parsed based on the path separator value.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">pathlib_parts.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">PurePosixPath</span><span class="p">(</span><span class="s1">&#39;/usr/local&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">parts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The sequence is a tuple, reflecting the immutability of the path
+instance.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 pathlib_parts.py
+
+(&#39;/&#39;, &#39;usr&#39;, &#39;local&#39;)
+</pre></div>
+</div>
+<p>There are two ways to navigate “up” the filesystem hierarchy from a
+given path object. The <code class="docutils literal notranslate"><span class="pre">parent</span></code> property refers to a new path
+instance for the directory containing the path, the value returned by
+<code class="docutils literal notranslate"><span class="pre">os.path.dirname()</span></code>.  The <code class="docutils literal notranslate"><span class="pre">parents</span></code> property is an iterable that
+produces parent directory references, continually going “up” the path
+hierarchy until reaching the root.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">pathlib_parents.py</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">PurePosixPath</span><span class="p">(</span><span class="s1">&#39;/usr/local/lib&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;parent: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">parent</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">hierarchy:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">up</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">parents</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">up</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The example iterates over the <code class="docutils literal notranslate"><span class="pre">parents</span></code> property and prints the
+member values.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 pathlib_parents.py
+
+parent: /usr/local
+
+hierarchy:
+/usr/local
+/usr
+/
+</pre></div>
+</div>
+<p>Other parts of the path can be accessed through properties of the path
+object.  The <code class="docutils literal notranslate"><span class="pre">name</span></code> property holds the last part of the path, after
+the final path separator (the same value that <code class="docutils literal notranslate"><span class="pre">os.path.basename()</span></code>
+produces). The <code class="docutils literal notranslate"><span class="pre">suffix</span></code> property holds the value after the extension
+separator and the <code class="docutils literal notranslate"><span class="pre">stem</span></code> property holds the portion of
+the name before the suffix.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">pathlib_name.py</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">PurePosixPath</span><span class="p">(</span><span class="s1">&#39;./source/pathlib/pathlib_name.py&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;path  : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;name  : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;suffix: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">suffix</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;stem  : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">stem</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Although the <code class="docutils literal notranslate"><span class="pre">suffix</span></code> and <code class="docutils literal notranslate"><span class="pre">stem</span></code> values are similar to the values
+produced by <code class="docutils literal notranslate"><span class="pre">os.path.splitext()</span></code>, the values are based only on the
+value of <code class="docutils literal notranslate"><span class="pre">name</span></code> and not the full path.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 pathlib_name.py
+
+path  : source/pathlib/pathlib_name.py
+name  : pathlib_name.py
+suffix: .py
+stem  : pathlib_name
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-concrete-paths">
+<h2>Creating Concrete Paths<a class="headerlink" href="#creating-concrete-paths" title="Permalink to this headline">¶</a></h2>
+<p>Instances of the concrete <code class="docutils literal notranslate"><span class="pre">Path</span></code> class can be created from
+string arguments referring to the name (or potential name) of a file,
+directory, or symbolic link on the file system. The class also
+provides several convenience methods for building instances using
+commonly used locations that change, such as the current working
+directory and the user’s home directory.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">pathlib_convenience.py</span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+
+<span class="n">home</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;home: &#39;</span><span class="p">,</span> <span class="n">home</span><span class="p">)</span>
+
+<span class="n">cwd</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;cwd : &#39;</span><span class="p">,</span> <span class="n">cwd</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Both methods create <code class="docutils literal notranslate"><span class="pre">Path</span></code> instances pre-populated with an
+absolute file system reference.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 pathlib_convenience.py
+
+home:  /Users/dhellmann
+cwd :  /Users/dhellmann/PyMOTW
+</pre></div>
+</div>
+</div>
+<div class="section" id="directory-contents">
+<h2>Directory Contents<a class="headerlink" href="#directory-contents" title="Permalink to this headline">¶</a></h2>
+<p>There are three methods for accessing the directory listings to
+discover the names of files available on the file
+system. <code class="docutils literal notranslate"><span class="pre">iterdir()</span></code> is a generator, yielding a new <code class="docutils literal notranslate"><span class="pre">Path</span></code>
+instance for each item in the containing directory.</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">pathlib_iterdir.py</span><a class="headerlink" href="#id9" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>If the <code class="docutils literal notranslate"><span class="pre">Path</span></code> does not refer to a directory, <code class="docutils literal notranslate"><span class="pre">iterdir()</span></code>
+raises <code class="docutils literal notranslate"><span class="pre">NotADirectoryError</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 pathlib_iterdir.py
+
+example_link
+index.rst
+pathlib_chmod.py
+pathlib_convenience.py
+pathlib_from_existing.py
+pathlib_glob.py
+pathlib_iterdir.py
+pathlib_joinpath.py
+pathlib_mkdir.py
+pathlib_name.py
+pathlib_operator.py
+pathlib_ownership.py
+pathlib_parents.py
+pathlib_parts.py
+pathlib_read_write.py
+pathlib_resolve.py
+pathlib_rglob.py
+pathlib_rmdir.py
+pathlib_stat.py
+pathlib_symlink_to.py
+pathlib_touch.py
+pathlib_types.py
+pathlib_unlink.py
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">glob()</span></code> to find only files matching a pattern.</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">pathlib_glob.py</span><a class="headerlink" href="#id10" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.rst&#39;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>This example shows all of the <a class="reference external" href="http://docutils.sourceforge.net/">reStructuredText</a> input files in the
+parent directory of the script.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 pathlib_glob.py
+
+../about.rst
+../algorithm_tools.rst
+../book.rst
+../compression.rst
+../concurrency.rst
+../cryptographic.rst
+../data_structures.rst
+../dates.rst
+../dev_tools.rst
+../email.rst
+../file_access.rst
+../frameworks.rst
+../i18n.rst
+../importing.rst
+../index.rst
+../internet_protocols.rst
+../language.rst
+../networking.rst
+../numeric.rst
+../persistence.rst
+../porting_notes.rst
+../runtime_services.rst
+../text.rst
+../third_party.rst
+../unix.rst
+</pre></div>
+</div>
+<p>The glob processor supports recursive scanning using the pattern prefix
+<code class="docutils literal notranslate"><span class="pre">**</span></code> or by calling <code class="docutils literal notranslate"><span class="pre">rglob()</span></code> instead of <code class="docutils literal notranslate"><span class="pre">glob()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">pathlib_rglob.py</span><a class="headerlink" href="#id11" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">rglob</span><span class="p">(</span><span class="s1">&#39;pathlib_*.py&#39;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Because this example starts from the parent directory, a recursive
+search is necessary to find the example files matching
+<code class="docutils literal notranslate"><span class="pre">pathlib_*.py</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 pathlib_rglob.py
+
+../pathlib/pathlib_chmod.py
+../pathlib/pathlib_convenience.py
+../pathlib/pathlib_from_existing.py
+../pathlib/pathlib_glob.py
+../pathlib/pathlib_iterdir.py
+../pathlib/pathlib_joinpath.py
+../pathlib/pathlib_mkdir.py
+../pathlib/pathlib_name.py
+../pathlib/pathlib_operator.py
+../pathlib/pathlib_ownership.py
+../pathlib/pathlib_parents.py
+../pathlib/pathlib_parts.py
+../pathlib/pathlib_read_write.py
+../pathlib/pathlib_resolve.py
+../pathlib/pathlib_rglob.py
+../pathlib/pathlib_rmdir.py
+../pathlib/pathlib_stat.py
+../pathlib/pathlib_symlink_to.py
+../pathlib/pathlib_touch.py
+../pathlib/pathlib_types.py
+../pathlib/pathlib_unlink.py
+</pre></div>
+</div>
+</div>
+<div class="section" id="reading-and-writing-files">
+<h2>Reading and Writing Files<a class="headerlink" href="#reading-and-writing-files" title="Permalink to this headline">¶</a></h2>
+<p>Each <code class="docutils literal notranslate"><span class="pre">Path</span></code> instance includes methods for working with the
+contents of the file to which it refers. For immediately retrieving
+the contents, use <code class="docutils literal notranslate"><span class="pre">read_bytes()</span></code> or <code class="docutils literal notranslate"><span class="pre">read_text()</span></code>. To write to
+the file, use <code class="docutils literal notranslate"><span class="pre">write_bytes()</span></code> or <code class="docutils literal notranslate"><span class="pre">write_text()</span></code>.  Use the
+<code class="docutils literal notranslate"><span class="pre">open()</span></code> method to open the file and retain the file handle,
+instead of passing the name to the built-in <code class="docutils literal notranslate"><span class="pre">open()</span></code> function.</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-text">pathlib_read_write.py</span><a class="headerlink" href="#id12" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;example.txt&#39;</span><span class="p">)</span>
+
+<span class="n">f</span><span class="o">.</span><span class="n">write_bytes</span><span class="p">(</span><span class="s1">&#39;This is the content&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+
+<span class="k">with</span> <span class="n">f</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;read from open(): </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">handle</span><span class="o">.</span><span class="n">read</span><span class="p">()))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;read_text(): </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<p>The convenience methods do some type checking before opening the file
+and writing to it, but otherwise they are equivalent to doing the
+operation directly.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 pathlib_read_write.py
+
+read from open(): &#39;This is the content&#39;
+read_text(): &#39;This is the content&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="manipulating-directories-and-symbolic-links">
+<h2>Manipulating Directories and Symbolic Links<a class="headerlink" href="#manipulating-directories-and-symbolic-links" title="Permalink to this headline">¶</a></h2>
+<p>Paths representing directories or symbolic links that do not exist can
+be used to create the associated file system entries.</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-text">pathlib_mkdir.py</span><a class="headerlink" href="#id13" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;example_dir&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Creating </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+<span class="n">p</span><span class="o">.</span><span class="n">mkdir</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>If the path already exists, <code class="docutils literal notranslate"><span class="pre">mkdir()</span></code> raises a
+<code class="docutils literal notranslate"><span class="pre">FileExistsError</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 pathlib_mkdir.py
+
+Creating example_dir
+
+$ python3 pathlib_mkdir.py
+
+Creating example_dir
+Traceback (most recent call last):
+  File &quot;pathlib_mkdir.py&quot;, line 16, in &lt;module&gt;
+    p.mkdir()
+  File &quot;.../lib/python3.6/pathlib.py&quot;, line 1226, in mkdir
+    self._accessor.mkdir(self, mode)
+  File &quot;.../lib/python3.6/pathlib.py&quot;, line 387, in wrapped
+    return strfunc(str(pathobj), *args)
+FileExistsError: [Errno 17] File exists: &#39;example_dir&#39;
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">symlink_to()</span></code> to create a symbolic link. The link will be
+named based on the path’s value and will refer to the name given as
+argument to <code class="docutils literal notranslate"><span class="pre">symlink_to()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-text">pathlib_symlink_to.py</span><a class="headerlink" href="#id14" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;example_link&#39;</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">symlink_to</span><span class="p">(</span><span class="s1">&#39;index.rst&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>This example creates a symbolic link, then uses <code class="docutils literal notranslate"><span class="pre">resolve()</span></code> to
+read the link to find what it points to and print the name.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 pathlib_symlink_to.py
+
+example_link
+index.rst
+</pre></div>
+</div>
+</div>
+<div class="section" id="file-types">
+<h2>File Types<a class="headerlink" href="#file-types" title="Permalink to this headline">¶</a></h2>
+<p>A <code class="docutils literal notranslate"><span class="pre">Path</span></code> instance includes several methods for testing the type
+of file refered to by the path. This example creates several files of
+different types and tests those as well as a few other device-specific
+files available on the local operating system.</p>
+<div class="literal-block-wrapper docutils container" id="id15">
+<div class="code-block-caption"><span class="caption-text">pathlib_types.py</span><a class="headerlink" href="#id15" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;test_files&#39;</span><span class="p">)</span>
+
+<span class="c1"># Clean up from previous runs.</span>
+<span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">root</span><span class="o">.</span><span class="n">mkdir</span><span class="p">()</span>
+
+<span class="c1"># Create test files</span>
+<span class="p">(</span><span class="n">root</span> <span class="o">/</span> <span class="s1">&#39;file&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span>
+    <span class="s1">&#39;This is a regular file&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="p">(</span><span class="n">root</span> <span class="o">/</span> <span class="s1">&#39;symlink&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">symlink_to</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">mkfifo</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">root</span> <span class="o">/</span> <span class="s1">&#39;fifo&#39;</span><span class="p">))</span>
+
+<span class="c1"># Check the file types</span>
+<span class="n">to_scan</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
+    <span class="n">root</span><span class="o">.</span><span class="n">iterdir</span><span class="p">(),</span>
+    <span class="p">[</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;/dev/disk0&#39;</span><span class="p">),</span>
+     <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;/dev/console&#39;</span><span class="p">)],</span>
+<span class="p">)</span>
+<span class="n">hfmt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:18s}</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="p">(</span><span class="s1">&#39;  </span><span class="si">{:&gt;5}</span><span class="s1">&#39;</span> <span class="o">*</span> <span class="mi">6</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">hfmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;File&#39;</span><span class="p">,</span> <span class="s1">&#39;Dir&#39;</span><span class="p">,</span> <span class="s1">&#39;Link&#39;</span><span class="p">,</span> <span class="s1">&#39;FIFO&#39;</span><span class="p">,</span> <span class="s1">&#39;Block&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Character&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:20s}</span><span class="s1">  &#39;</span> <span class="o">+</span> <span class="p">(</span><span class="s1">&#39;</span><span class="si">{!r:&gt;5}</span><span class="s1">  &#39;</span> <span class="o">*</span> <span class="mi">6</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">to_scan</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">),</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">is_file</span><span class="p">(),</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">is_dir</span><span class="p">(),</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">is_symlink</span><span class="p">(),</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">is_fifo</span><span class="p">(),</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">is_block_device</span><span class="p">(),</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">is_char_device</span><span class="p">(),</span>
+    <span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Each of the methods, <code class="docutils literal notranslate"><span class="pre">is_dir()</span></code>, <code class="docutils literal notranslate"><span class="pre">is_file()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">is_symlink()</span></code>, <code class="docutils literal notranslate"><span class="pre">is_socket()</span></code>, <code class="docutils literal notranslate"><span class="pre">is_fifo()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">is_block_device()</span></code>, and <code class="docutils literal notranslate"><span class="pre">is_char_device()</span></code>, takes no
+arguments.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 pathlib_types.py
+
+Name                 File    Dir   Link   FIFO  Block  Character
+
+test_files/fifo       False  False  False   True  False  False
+test_files/file        True  False  False  False  False  False
+test_files/symlink     True  False   True  False  False  False
+/dev/disk0            False  False  False  False   True  False
+/dev/console          False  False  False  False  False   True
+</pre></div>
+</div>
+</div>
+<div class="section" id="file-properties">
+<h2>File Properties<a class="headerlink" href="#file-properties" title="Permalink to this headline">¶</a></h2>
+<p>Detailed information about a file can be accessed using the methods
+<code class="docutils literal notranslate"><span class="pre">stat()</span></code> or <code class="docutils literal notranslate"><span class="pre">lstat()</span></code> (for checking the status of something that
+might be a symbolic link). These methods produce the same results as
+<code class="docutils literal notranslate"><span class="pre">os.stat()</span></code> and <code class="docutils literal notranslate"><span class="pre">os.lstat()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id16">
+<div class="code-block-caption"><span class="caption-text">pathlib_stat.py</span><a class="headerlink" href="#id16" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="vm">__file__</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">stat_info</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  Size:&#39;</span><span class="p">,</span> <span class="n">stat_info</span><span class="o">.</span><span class="n">st_size</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  Permissions:&#39;</span><span class="p">,</span> <span class="nb">oct</span><span class="p">(</span><span class="n">stat_info</span><span class="o">.</span><span class="n">st_mode</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  Owner:&#39;</span><span class="p">,</span> <span class="n">stat_info</span><span class="o">.</span><span class="n">st_uid</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  Device:&#39;</span><span class="p">,</span> <span class="n">stat_info</span><span class="o">.</span><span class="n">st_dev</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  Created      :&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">(</span><span class="n">stat_info</span><span class="o">.</span><span class="n">st_ctime</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  Last modified:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">(</span><span class="n">stat_info</span><span class="o">.</span><span class="n">st_mtime</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  Last accessed:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">(</span><span class="n">stat_info</span><span class="o">.</span><span class="n">st_atime</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>The output will vary depending on how the example code was
+installed. Try passing different filenames on the command line to
+<code class="docutils literal notranslate"><span class="pre">pathlib_stat.py</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 pathlib_stat.py
+
+pathlib_stat.py:
+  Size: 607
+  Permissions: 0o100644
+  Owner: 527
+  Device: 16777220
+  Created      : Thu Dec 29 12:38:23 2016
+  Last modified: Thu Dec 29 12:38:23 2016
+  Last accessed: Sun Mar 18 16:21:41 2018
+
+$ python3 pathlib_stat.py index.rst
+
+index.rst:
+  Size: 19569
+  Permissions: 0o100644
+  Owner: 527
+  Device: 16777220
+  Created      : Sun Mar 18 16:11:31 2018
+  Last modified: Sun Mar 18 16:11:31 2018
+  Last accessed: Sun Mar 18 16:21:40 2018
+</pre></div>
+</div>
+<p>For simpler access to information about the owner of a file, use
+<code class="docutils literal notranslate"><span class="pre">owner()</span></code> and <code class="docutils literal notranslate"><span class="pre">group()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-text">pathlib_ownership.py</span><a class="headerlink" href="#id17" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> is owned by </span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">owner</span><span class="p">(),</span> <span class="n">p</span><span class="o">.</span><span class="n">group</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<p>While <code class="docutils literal notranslate"><span class="pre">stat()</span></code> returns numerical system ID values, these methods
+look up the name associated with the IDs.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 pathlib_ownership.py
+
+pathlib_ownership.py is owned by dhellmann/dhellmann
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">touch()</span></code> method works like the Unix command <code class="docutils literal notranslate"><span class="pre">touch</span></code>
+to create a file or update an existing file’s modification time and
+permissions.</p>
+<div class="literal-block-wrapper docutils container" id="id18">
+<div class="code-block-caption"><span class="caption-text">pathlib_touch.py</span><a class="headerlink" href="#id18" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;touched&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;already exists&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;creating new&#39;</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">touch</span><span class="p">()</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span>
+
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">touch</span><span class="p">()</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Start:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">(</span><span class="n">start</span><span class="o">.</span><span class="n">st_mtime</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;End  :&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">(</span><span class="n">end</span><span class="o">.</span><span class="n">st_mtime</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Running this example more than once updates the existing file on
+subsequent runs.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 pathlib_touch.py
+
+creating new
+Start: Sun Mar 18 16:21:41 2018
+End  : Sun Mar 18 16:21:42 2018
+
+$ python3 pathlib_touch.py
+
+already exists
+Start: Sun Mar 18 16:21:42 2018
+End  : Sun Mar 18 16:21:43 2018
+</pre></div>
+</div>
+</div>
+<div class="section" id="permissions">
+<h2>Permissions<a class="headerlink" href="#permissions" title="Permalink to this headline">¶</a></h2>
+<p>On Unix-like systems, file permissions can be changed using
+<code class="docutils literal notranslate"><span class="pre">chmod()</span></code>, passing the mode as an integer. Mode values can be
+constructed using constants defined in the <code class="xref py py-mod docutils literal notranslate"><span class="pre">stat</span></code> module.  This
+example toggles the user’s execute permission bit.</p>
+<div class="literal-block-wrapper docutils container" id="id19">
+<div class="code-block-caption"><span class="caption-text">pathlib_chmod.py</span><a class="headerlink" href="#id19" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">import</span> <span class="nn">stat</span>
+
+<span class="c1"># Create a fresh test file.</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;pathlib_chmod_example.txt&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s1">&#39;contents&#39;</span><span class="p">)</span>
+
+<span class="c1"># Determine what permissions are already set using stat.</span>
+<span class="n">existing_permissions</span> <span class="o">=</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IMODE</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span><span class="o">.</span><span class="n">st_mode</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Before: </span><span class="si">{:o}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">existing_permissions</span><span class="p">))</span>
+
+<span class="c1"># Decide which way to toggle them.</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">existing_permissions</span> <span class="o">&amp;</span> <span class="n">os</span><span class="o">.</span><span class="n">X_OK</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Adding execute permission&#39;</span><span class="p">)</span>
+    <span class="n">new_permissions</span> <span class="o">=</span> <span class="n">existing_permissions</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IXUSR</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Removing execute permission&#39;</span><span class="p">)</span>
+    <span class="c1"># use xor to remove the user execute permission</span>
+    <span class="n">new_permissions</span> <span class="o">=</span> <span class="n">existing_permissions</span> <span class="o">^</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IXUSR</span>
+
+<span class="c1"># Make the change and show the new value.</span>
+<span class="n">f</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="n">new_permissions</span><span class="p">)</span>
+<span class="n">after_permissions</span> <span class="o">=</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IMODE</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span><span class="o">.</span><span class="n">st_mode</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;After: </span><span class="si">{:o}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">after_permissions</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>The script assumes it has the permissions necessary to modify the mode
+of the file when run.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 pathlib_chmod.py
+
+Before: 644
+Adding execute permission
+After: 744
+</pre></div>
+</div>
+</div>
+<div class="section" id="deleting">
+<h2>Deleting<a class="headerlink" href="#deleting" title="Permalink to this headline">¶</a></h2>
+<p>There are two methods for removing things from the file system,
+depending on the type.  To remove an empty directory, use
+<code class="docutils literal notranslate"><span class="pre">rmdir()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id20">
+<div class="code-block-caption"><span class="caption-text">pathlib_rmdir.py</span><a class="headerlink" href="#id20" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;example_dir&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Removing </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+<span class="n">p</span><span class="o">.</span><span class="n">rmdir</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>A <code class="docutils literal notranslate"><span class="pre">FileNotFoundError</span></code> exception is raised if the
+post-conditions are already met and the directory does not exist. It
+is also an error to try to remove a directory that is not empty.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 pathlib_rmdir.py
+
+Removing example_dir
+
+$ python3 pathlib_rmdir.py
+
+Removing example_dir
+Traceback (most recent call last):
+  File &quot;pathlib_rmdir.py&quot;, line 16, in &lt;module&gt;
+    p.rmdir()
+  File &quot;.../lib/python3.6/pathlib.py&quot;, line 1270, in rmdir
+    self._accessor.rmdir(self)
+  File &quot;.../lib/python3.6/pathlib.py&quot;, line 387, in wrapped
+    return strfunc(str(pathobj), *args)
+FileNotFoundError: [Errno 2] No such file or directory:
+&#39;example_dir&#39;
+</pre></div>
+</div>
+<p>For files, symbolic links, and most other path types use
+<code class="docutils literal notranslate"><span class="pre">unlink()</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id21">
+<div class="code-block-caption"><span class="caption-text">pathlib_unlink.py</span><a class="headerlink" href="#id21" title="Permalink to this code">¶</a></div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;touched&#39;</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">touch</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;exists before removing:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">exists</span><span class="p">())</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;exists after removing:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">exists</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<p>The user must have permission to remove the file, symbolic link,
+socket, or other file system object.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python3 pathlib_unlink.py
+
+exists before removing: True
+exists after removing: False
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference external" href="https://docs.python.org/3.7/library/pathlib.html">Standard library documentation for pathlib</a></li>
+<li><a class="reference internal" href="../os.path/index.html#module-os.path" title="os.path: Platform-independent manipulation of filenames."><code class="xref py py-mod docutils literal notranslate"><span class="pre">os.path</span></code></a> – Platform-independent manipulation of filenames</li>
+<li><a class="reference internal" href="../os/index.html#os-stat"><span class="std std-ref">Managing File System Permissions</span></a> – Discussion of <code class="docutils literal notranslate"><span class="pre">os.stat()</span></code> and <code class="docutils literal notranslate"><span class="pre">os.lstat()</span></code>.</li>
+<li><a class="reference internal" href="../glob/index.html#module-glob" title="glob: Use Unix shell rules to find filenames matching a pattern."><code class="xref py py-mod docutils literal notranslate"><span class="pre">glob</span></code></a> – Unix shell pattern matching for filenames</li>
+<li><span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0428"><strong>PEP 428</strong></a> – The pathlib module</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+        <div id="footer-nav">
+<a id="prev-link" href="../os.path/index.html"
+   title="previous chapter"><i class="fa fa-arrow-circle-left"></i> os.path — Platform-independent Manipulation of Filenames</a>
+<a id="next-link" href="../glob/index.html"
+   title="next chapter">glob — Filename Pattern Matching <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+        </div>
+      </div>
+
+      <div class="pure-u-1-4">
+        <div class="sidebar-wrapper">
+          <div class="sidebar">
+<div id="sidebar-toc">
+  <h5>Quick Links</h5>
+  <ul>
+    
+    <li><a href="#path-representations"><i class="fa fa-caret-right"></i>Path Representations</a></li>
+    
+    <li><a href="#building-paths"><i class="fa fa-caret-right"></i>Building Paths</a></li>
+    
+    <li><a href="#parsing-paths"><i class="fa fa-caret-right"></i>Parsing Paths</a></li>
+    
+    <li><a href="#creating-concrete-paths"><i class="fa fa-caret-right"></i>Creating Concrete Paths</a></li>
+    
+    <li><a href="#directory-contents"><i class="fa fa-caret-right"></i>Directory Contents</a></li>
+    
+    <li><a href="#reading-and-writing-files"><i class="fa fa-caret-right"></i>Reading and Writing Files</a></li>
+    
+    <li><a href="#manipulating-directories-and-symbolic-links"><i class="fa fa-caret-right"></i>Manipulating Directories and Symbolic Links</a></li>
+    
+    <li><a href="#file-types"><i class="fa fa-caret-right"></i>File Types</a></li>
+    
+    <li><a href="#file-properties"><i class="fa fa-caret-right"></i>File Properties</a></li>
+    
+    <li><a href="#permissions"><i class="fa fa-caret-right"></i>Permissions</a></li>
+    
+    <li><a href="#deleting"><i class="fa fa-caret-right"></i>Deleting</a></li>
+    
+  </ul>
+</div>
+
+          </div>
+          <div class="sidebar"><div id="sidebar-last-updated">
+  This page was last updated 2018-03-18.
+</div>
+
+          </div>
+          <div class="sidebar">
+<div id="sidebar-nav">
+  <h5>Navigation</h5>
+  <ul>
+    <li><a href="../os.path/index.html"
+           title="previous chapter"><i class="fa fa-arrow-circle-left"></i>os.path — Platform-independent Manipulation of Filenames</a></li>
+    <li><a href="../glob/index.html"
+           title="next chapter"><i class="fa fa-arrow-circle-right"></i>glob — Filename Pattern Matching</a></li>
+  </ul>
+</div>
+          </div>
+          <div class="sidebar"><div id="sidebar-book"><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/book-cover-image-med.jpg"><br>Get the book</a></div>
+          </div>
+          <div class="sidebar"><div id="sidebar-example-disclaimer">
+<p>The output from all the example programs
+from PyMOTW-3 has been generated with Python 3.7.9, unless
+otherwise noted. Some of the features described here may not be
+available in earlier versions of Python.</p>
+<p>Looking for <a href="/2/">examples for Python 2</a>?</p>
+</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pure-g-r" id="footer">
+
+      <div class="pure-u-1-3">
+        <div class="footer-list">
+            <h4>This Site</h4>
+            <ul>
+              <li><a href="../py-modindex.html"><i class="fa fa-list fa-lg"></i> Module Index</a></li>
+              <li><a href="../genindex.html"><i class="fa fa-italic fa-lg"></i> Index</a></li>
+            </ul>
+        </div>
+      </div><div class="pure-u-1-3">
+          <div class="footer-content">
+            <div class="socialmedia">
+              <a class="sociallink" href="../index.html"
+       title="Home">
+      <i class="fa fa-home fa-lg"></i></a>
+              <a class="sociallink" href="../about.html"
+       title="About">
+      <i class="fa fa-user fa-lg"></i></a>
+              <a class="sociallink" href="http://www.twitter.com/pymotw"
+       title="Twitter">
+      <i class="fa fa-twitter fa-lg"></i></a>
+              <a class="sociallink" href="http://feeds.doughellmann.com/PyMOTW"
+       title="Subscribe via RSS">
+      <i class="fa fa-rss-square fa-lg"></i></a>
+              <a class="sociallink" href="http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US"
+       title="Subscribe via Email">
+      <i class="fa fa-envelope fa-lg"></i></a>
+            </div>
+
+            <div class="copyright">
+              <a rel="author" href="../about.html">&copy; Copyright 2021, Doug Hellmann</a>
+            </div>
+
+            <div class="cc"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License BY-NC-SA" style="border-width:0; align: center;" width="88" height="31" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAfCAMAAABUFvrSAAAABGdBTUEAALGOfPtRkwAAAf5QTFRF////////////AAAADQwNDQ4NDg4OEBAQGRkZGxsbHxscICAgIx8gJCQkKCUmKCgoKCkoKSkpKSopKicnKioqLS0tMDAwMS0uMjExMjMxNTY1Pj8+Pzc5Pzs8QEBAQ0RDUFBQUFFQWldYXV5dYGBgY19haGVmbmxscHBwcHJvdXJzdnN0eHV2eXx5en15fH98fX98fnt8f4F+gICAgoWChIGChIWEhIaEh4aHiYyJjIqLjoeLj4+PkY+PkZORkZSRk5iTlZmUlpmWmJaXmpiZnp2dnqCdn5aan5+fn6Oeoqaho6Gho6ijpqqmq7GqrKurrLKrrbOsrrOtrrStr6+vr7Kvr7Sur7WusLOvsLWvsLavsbewsrexsrixs7iytLmztLqztbW1tbq0tru1t7y2uL23ub64ub65urm5ur+5ur+6u8C6u8C7vMC8vMG7vMG8vcK8vcK9vsK9vsO+v7+/v8O+v8S+wMS/wMW/wMXAwcXAwsfCw8fCw8jDxMfDxMjDxMnExcnExcnFxsrFxsrGx8vHyMfHyMzHyMzIycjIyc3Iyc3Jys3Jy8rLy87Ky8/Ky8/LzM/LzNDLzNDMzdDMzdHMzdHNztHNztLOz8/Pz9PP0NPP0NTQ0dTQ0dTR0tXR0tXS09bS1tXV39/f4N/g4+Pj6Ofn7+/v8fHx////rrSdFQAAAAN0Uk5TAAoO5yEBUwAAA+FJREFUSMe1lo9301QUx6uXUmaf0qJ26iTrRoVinUzjQNR1gAyH6Lqx6XTDoVvXbU7qhA5m7CgYWaTDlLa6AiFsba3t+y+9Sdr8OvVMi7zTnLTf5H7ee9/73n11PA1PpDkcADPRWPwKt8YLG2I2n89m7gh8iluJz0dnpqe+HBsdHRn+7w3JyF1cvpbk05mCJG8Xi9uPpMLdNJ9cXV5UyBNjoyMtkR2A3B9Tt8SCfLTTqUzC2XlMvpcRbnA/IPmryYnzoyM9XuWBt8eI21FBcAy5Qk4KtxkGtQ1I+fRNbnk+evHC5NhJDwATDDIAnhNa1ImdFQTHr6WEvNyFPFeATSTYgAu/dl3/I31jNR6bnZ76eDf4yxRb2Q+71aiz/0JB8JXkrZzCdbFVqrUhRHuu54XkytLczAUvBFADUB6ARwnyqEp/t02prK9XdAXBHC9KyPWVqd6qPhyzlOG55dhsL/hLDTD1A3rYAy+dRu6eXaGKruA75wi2hbqigNd+LYSRW6XUSh64l05dXYruA1OPZfAOD3vhObL/ILDvQkRXynSdvPpaiJB+TVHAfEZuA9d9amlVF7TJd3nu+xgwyu8AqNOnDGAM8/obOLhQpWQotPYReZ/SQdKuKQpY2DwKwFJbGwI4VhCSlxchSFUnNC+CCgaV9RAKoZKh1J4le9FmQv5SFQW88aATXGhEws8wrHb7AANc0CndQS+ag5ERaieke0FXvnkxoYL/1MGi7FSmmVBXMDOu3gLK5J2PMjdXv2tmBX6pDdKSkq39DWXh3G1KI4QYVmS3AHCIPnCXE+4hHy6PcfeQ6sV2lufiL2jJ0wasp4p2k/Z2CEXeeqahDBLS1/c8+dBIXq4IkFAiWQ1QtxtnUMz/wsXfBj+1LzdUKn17dvXXzEqfMoFDNWO57QCe22dskKB5g7zXbVN+i0RKumKxonrfzaIVys2wYu7TVrd0PXn1rOnJC4JTFjF5c19/gnXLFwj6jJJz1rOjoi63LnBRfbmNM+qNunG5baSufhu9OPX5my2VTWEzrHrRbIP8dHl+dnpyrIVDBME/q1u6/E9bGmt9i2AsQmeaFaFwIb22soSlfuL8SEtgOCJKB5BsKkNltWyK7zzWMY3X4exDc6GvsljoX5FzR+BxwdCbf3jAdjTJv5/S39H2B2iXpmgXpWB7iVrB0JuVzpgP07CUO2WKqX+oiVL/benKImhgOIzHf7hx/A/IBdHsQ6Nsmruilo4afVFqB8PLn2U2H8hbxeKWjH9YvuiwxNiMaNhALZptCg5d7zh+Sczmclnx0vEOax6ajdjucSMPTcD/97/Cp54Q929ZZbgcR3o0hAAAAABJRU5ErkJggg=="/></a>
+            </div>
+
+          </div></div><div class="pure-u-1-3">
+          <div class="footer-list">
+            <h4>Other Writing</h4>
+            <ul>
+              <li><a href="https://doughellmann.com/"><i class="fa fa-pencil fa-lg"></i> Blog</a></li>
+              <li><a href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><i class="fa fa-book fa-lg"></i> The Python Standard Library By Example</a></li>
+            </ul>
+          </div>
+        </div><script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-3', 'pymotw.com');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>
