@@ -273,8 +273,8 @@ several different dialects.
 	
 	Dialect: "escaped"
 	
-	  delimiter   = ','       skipinitialspace = 0
-	  doublequote = 0         quoting          = QUOTE_NONE
+	  delimiter   = ','       skipinitialspace = False
+	  doublequote = False     quoting          = QUOTE_NONE
 	  quotechar   = '"'       lineterminator   = '\r\n'
 	  escapechar  = '\\'  
 	
@@ -282,8 +282,8 @@ several different dialects.
 	
 	Dialect: "excel"
 	
-	  delimiter   = ','       skipinitialspace = 0
-	  doublequote = 1         quoting          = QUOTE_MINIMAL
+	  delimiter   = ','       skipinitialspace = False
+	  doublequote = True      quoting          = QUOTE_MINIMAL
 	  quotechar   = '"'       lineterminator   = '\r\n'
 	  escapechar  = None  
 	
@@ -291,8 +291,8 @@ several different dialects.
 	
 	Dialect: "excel-tab"
 	
-	  delimiter   = '\t'      skipinitialspace = 0
-	  doublequote = 1         quoting          = QUOTE_MINIMAL
+	  delimiter   = '\t'      skipinitialspace = False
+	  doublequote = True      quoting          = QUOTE_MINIMAL
 	  quotechar   = '"'       lineterminator   = '\r\n'
 	  escapechar  = None  
 	
@@ -300,8 +300,8 @@ several different dialects.
 	
 	Dialect: "singlequote"
 	
-	  delimiter   = ','       skipinitialspace = 0
-	  doublequote = 1         quoting          = QUOTE_ALL
+	  delimiter   = ','       skipinitialspace = False
+	  doublequote = True      quoting          = QUOTE_ALL
 	  quotechar   = "'"       lineterminator   = '\r\n'
 	  escapechar  = None  
 	
@@ -309,8 +309,8 @@ several different dialects.
 	
 	Dialect: "unix"
 	
-	  delimiter   = ','       skipinitialspace = 0
-	  doublequote = 1         quoting          = QUOTE_ALL
+	  delimiter   = ','       skipinitialspace = False
+	  doublequote = True      quoting          = QUOTE_ALL
 	  quotechar   = '"'       lineterminator   = '\n'
 	  escapechar  = None  
 	
@@ -420,12 +420,12 @@ returned as regular ``dict`` instances).
 
 	$ python3 csv_dictreader.py testdata.csv
 	
-	OrderedDict([('Title 1', '1'), ('Title 2', 'a'), ('Title 3', 
-	'08/18/07'), ('Title 4', 'å')])
-	OrderedDict([('Title 1', '2'), ('Title 2', 'b'), ('Title 3', 
-	'08/19/07'), ('Title 4', '∫')])
-	OrderedDict([('Title 1', '3'), ('Title 2', 'c'), ('Title 3', 
-	'08/20/07'), ('Title 4', 'ç')])
+	{'Title 1': '1', 'Title 2': 'a', 'Title 3': '08/18/07', 'Titl
+	e 4': 'å'}
+	{'Title 1': '2', 'Title 2': 'b', 'Title 3': '08/19/07', 'Titl
+	e 4': '∫'}
+	{'Title 1': '3', 'Title 2': 'c', 'Title 3': '08/20/07', 'Titl
+	e 4': 'ç'}
 
 .. {{{end}}}
 

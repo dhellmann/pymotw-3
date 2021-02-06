@@ -53,16 +53,16 @@ to call multiple copies of the function with different arguments.
 	ThreadPoolExecutor-0_1          blocks(1): running
 	ThreadPoolExecutor-0_2          blocks(2): running
 	MainThread run_blocking_tasks: waiting for executor tasks
-	ThreadPoolExecutor-0_0          blocks(0): done
 	ThreadPoolExecutor-0_1          blocks(1): done
+	ThreadPoolExecutor-0_0          blocks(0): done
 	ThreadPoolExecutor-0_2          blocks(2): done
-	ThreadPoolExecutor-0_0          blocks(3): running
-	ThreadPoolExecutor-0_1          blocks(4): running
+	ThreadPoolExecutor-0_1          blocks(3): running
+	ThreadPoolExecutor-0_0          blocks(4): running
 	ThreadPoolExecutor-0_2          blocks(5): running
-	ThreadPoolExecutor-0_0          blocks(3): done
+	ThreadPoolExecutor-0_1          blocks(3): done
 	ThreadPoolExecutor-0_2          blocks(5): done
-	ThreadPoolExecutor-0_1          blocks(4): done
-	MainThread run_blocking_tasks: results: [0, 9, 16, 25, 1, 4]
+	ThreadPoolExecutor-0_0          blocks(4): done
+	MainThread run_blocking_tasks: results: [1, 25, 4, 9, 0, 16]
 	MainThread run_blocking_tasks: exiting
 
 .. {{{end}}}
@@ -92,23 +92,11 @@ demonstrate that the tasks are in fact running in separate processes.
 
 	$ python3 asyncio_executor_process.py
 	
-	PID 40498 run_blocking_tasks: starting
-	PID 40498 run_blocking_tasks: creating executor tasks
-	PID 40498 run_blocking_tasks: waiting for executor tasks
-	PID 40499          blocks(0): running
-	PID 40500          blocks(1): running
-	PID 40501          blocks(2): running
-	PID 40499          blocks(0): done
-	PID 40500          blocks(1): done
-	PID 40501          blocks(2): done
-	PID 40500          blocks(3): running
-	PID 40499          blocks(4): running
-	PID 40501          blocks(5): running
-	PID 40499          blocks(4): done
-	PID 40500          blocks(3): done
-	PID 40501          blocks(5): done
-	PID 40498 run_blocking_tasks: results: [1, 4, 9, 0, 16, 25]
-	PID 40498 run_blocking_tasks: exiting
+	PID 77044 run_blocking_tasks: starting
+	PID 77044 run_blocking_tasks: creating executor tasks
+	PID 77044 run_blocking_tasks: waiting for executor tasks
+	PID 77044 run_blocking_tasks: results: [0, 9, 16, 25, 1, 4]
+	PID 77044 run_blocking_tasks: exiting
 
 .. {{{end}}}
 

@@ -34,7 +34,7 @@ compression.
 
 	$ python3 gzip_write.py
 	
-	application/x-gzip; charset=binary
+	application/gzip; charset=binary
 	example.txt.gz contains 75 bytes
 
 .. {{{end}}}
@@ -64,16 +64,16 @@ storage space.  Results will vary, depending on the input data.
 	Level  Size        Checksum
 	-----  ----------  ---------------------------------
 	data       754688  e4c0f9433723971563f08a458715119c
-	    0      754793  ced7189c324eb73a8388492a9024d391
-	    1        9846  5356d357f23e0d5b6d85e920929f0e43
-	    2        8267  8ce46bce238edc095e47e941cebad93d
-	    3        8227  91662517459db94a744671a6b4295b67
-	    4        4167  ad304e3aec585640de9f14306fb32083
-	    5        4167  4381a5d6dff4dd2746387f20411dcfcd
-	    6        4167  ef3a05112ea382abb53bc4a5bee3a52a
-	    7        4167  4723a253d1dc8ddecd4ff7b7adf0bc0b
-	    8        4167  0e1aeba7bdc39f0007039f130d9a28b2
-	    9        4167  eccf47c4c4f1cca3274e57a1b9b9ddd2
+	    0      754793  bc74f5a496ea90620ba3c3b75a9fd04f
+	    1        9846  afbc2008176f180124632c8fb32d228f
+	    2        8267  8852a3f63cc36719fcd87b8b36e2ac6d
+	    3        8227  020279969bf10865118d078096ce89c4
+	    4        4167  10e5b548bf264bdb785b60053131c1ff
+	    5        4167  67079e678ce367d2fdb1163a566d6a03
+	    6        4167  b9e93af66738a2d11d5fc1fc5332180a
+	    7        4167  59301172dc98a16ad5bcbfeb14f62ab1
+	    8        4167  576eb4e9582707acfef37a9b452a1b3a
+	    9        4167  a09f9ca030f414fc4c132dfa259f511b
 
 .. {{{end}}}
 
@@ -202,7 +202,7 @@ the incremental decompression API in :mod:`zlib`.
 	e line, over and over.\nThe same line, over and over.\nThe same l
 	ine, over and over.\nThe same line, over and over.\n'
 	COMPRESSED: 51
-	b'1f8b080022caae5a02ff0bc94855284ecc4d55c8c9cc4bd551c82f4b2d5248c
+	b'1f8b080084d9ef5e02ff0bc94855284ecc4d55c8c9cc4bd551c82f4b2d5248c
 	c4b0133f4b8424665916401d3e717802c010000'
 	
 	REREAD: 300

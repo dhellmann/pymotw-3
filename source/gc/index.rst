@@ -254,36 +254,36 @@ different times, shown here because debugging is enabled.
 	Thresholds: (5, 1, 1)
 	Clear the collector by forcing a run
 	gc: collecting generation 2...
-	gc: objects in each generation: 575 1279 4527
+	gc: objects in each generation: 551 855 5099
 	gc: objects in permanent generation: 0
-	gc: done, 0.0009s elapsed
+	gc: done, 0 unreachable, 0 uncollectable, 0.0009s elapsed
 	
 	Creating objects
 	gc: collecting generation 0...
-	gc: objects in each generation: 3 0 6137
+	gc: objects in each generation: 3 0 6294
 	gc: objects in permanent generation: 0
-	gc: done, 0.0000s elapsed
+	gc: done, 0 unreachable, 0 uncollectable, 0.0000s elapsed
 	Created 0
 	Created 1
 	Created 2
 	gc: collecting generation 0...
-	gc: objects in each generation: 3 2 6137
+	gc: objects in each generation: 4 2 6294
 	gc: objects in permanent generation: 0
-	gc: done, 0.0000s elapsed
+	gc: done, 0 unreachable, 0 uncollectable, 0.0000s elapsed
 	Created 3
 	Created 4
 	Created 5
 	gc: collecting generation 1...
-	gc: objects in each generation: 4 4 6137
+	gc: objects in each generation: 4 5 6294
 	gc: objects in permanent generation: 0
-	gc: done, 0.0000s elapsed
+	gc: done, 0 unreachable, 0 uncollectable, 0.0000s elapsed
 	Created 6
 	Created 7
 	Created 8
 	gc: collecting generation 0...
-	gc: objects in each generation: 4 0 6144
+	gc: objects in each generation: 4 0 6302
 	gc: objects in permanent generation: 0
-	gc: done, 0.0000s elapsed
+	gc: done, 0 unreachable, 0 uncollectable, 0.0000s elapsed
 	Created 9
 	Exiting
 
@@ -302,52 +302,52 @@ A smaller threshold causes the sweeps to run more frequently.
 	Thresholds: (2, 1, 1)
 	Clear the collector by forcing a run
 	gc: collecting generation 2...
-	gc: objects in each generation: 575 1279 4527
+	gc: objects in each generation: 551 855 5099
 	gc: objects in permanent generation: 0
-	gc: done, 0.0026s elapsed
-	gc: collecting generation 0...
-	gc: objects in each generation: 1 0 6137
-	gc: objects in permanent generation: 0
-	gc: done, 0.0000s elapsed
+	gc: done, 0 unreachable, 0 uncollectable, 0.0010s elapsed
 	
 	Creating objects
 	gc: collecting generation 0...
-	gc: objects in each generation: 3 0 6137
+	gc: objects in each generation: 1 0 6294
 	gc: objects in permanent generation: 0
-	gc: done, 0.0000s elapsed
+	gc: done, 0 unreachable, 0 uncollectable, 0.0000s elapsed
+	gc: collecting generation 0...
+	gc: objects in each generation: 2 1 6294
+	gc: objects in permanent generation: 0
+	gc: done, 0 unreachable, 0 uncollectable, 0.0000s elapsed
 	Created 0
-	gc: collecting generation 1...
-	gc: objects in each generation: 2 2 6137
-	gc: objects in permanent generation: 0
-	gc: done, 0.0000s elapsed
 	Created 1
+	gc: collecting generation 1...
+	gc: objects in each generation: 2 2 6294
+	gc: objects in permanent generation: 0
+	gc: done, 0 unreachable, 0 uncollectable, 0.0000s elapsed
 	Created 2
 	gc: collecting generation 0...
-	gc: objects in each generation: 2 0 6140
+	gc: objects in each generation: 3 0 6297
 	gc: objects in permanent generation: 0
-	gc: done, 0.0000s elapsed
+	gc: done, 0 unreachable, 0 uncollectable, 0.0000s elapsed
 	Created 3
-	gc: collecting generation 0...
-	gc: objects in each generation: 3 1 6140
-	gc: objects in permanent generation: 0
-	gc: done, 0.0000s elapsed
 	Created 4
+	gc: collecting generation 0...
+	gc: objects in each generation: 2 2 6297
+	gc: objects in permanent generation: 0
+	gc: done, 0 unreachable, 0 uncollectable, 0.0000s elapsed
 	Created 5
 	gc: collecting generation 1...
-	gc: objects in each generation: 2 3 6140
+	gc: objects in each generation: 3 3 6297
 	gc: objects in permanent generation: 0
-	gc: done, 0.0000s elapsed
+	gc: done, 0 unreachable, 0 uncollectable, 0.0000s elapsed
 	Created 6
-	gc: collecting generation 0...
-	gc: objects in each generation: 3 0 6144
-	gc: objects in permanent generation: 0
-	gc: done, 0.0000s elapsed
 	Created 7
+	gc: collecting generation 0...
+	gc: objects in each generation: 2 0 6302
+	gc: objects in permanent generation: 0
+	gc: done, 0 unreachable, 0 uncollectable, 0.0000s elapsed
 	Created 8
 	gc: collecting generation 0...
-	gc: objects in each generation: 2 2 6144
+	gc: objects in each generation: 3 1 6302
 	gc: objects in permanent generation: 0
-	gc: done, 0.0000s elapsed
+	gc: done, 0 unreachable, 0 uncollectable, 0.0000s elapsed
 	Created 9
 	Exiting
 
@@ -384,22 +384,22 @@ interpreter exits.
 	$ python3 gc_debug_stats.py
 	
 	gc: collecting generation 2...
-	gc: objects in each generation: 826 471 4529
+	gc: objects in each generation: 115 507 5101
 	gc: objects in permanent generation: 0
-	gc: done, 24 unreachable, 0 uncollectable, 0.0007s elapsed
+	gc: done, 0 unreachable, 0 uncollectable, 0.0008s elapsed
 	Exiting
 	gc: collecting generation 2...
-	gc: objects in each generation: 1 0 5552
+	gc: objects in each generation: 0 0 5703
 	gc: objects in permanent generation: 0
-	gc: done, 0.0005s elapsed
+	gc: done, 0 unreachable, 0 uncollectable, 0.0006s elapsed
 	gc: collecting generation 2...
-	gc: objects in each generation: 107 0 5382
+	gc: objects in each generation: 109 0 5541
 	gc: objects in permanent generation: 0
-	gc: done, 1406 unreachable, 0 uncollectable, 0.0008s elapsed
+	gc: done, 1493 unreachable, 0 uncollectable, 0.0010s elapsed
 	gc: collecting generation 2...
-	gc: objects in each generation: 0 0 3307
+	gc: objects in each generation: 0 0 3311
 	gc: objects in permanent generation: 0
-	gc: done, 151 unreachable, 0 uncollectable, 0.0002s elapsed
+	gc: done, 303 unreachable, 0 uncollectable, 0.0003s elapsed
 
 .. {{{end}}}
 
@@ -428,45 +428,21 @@ the object id when each object is created.
 	
 	CleanupGraph(three).__del__()
 	Collecting
-	gc: collectable <tuple 0x1098186d0>
-	gc: collectable <cell 0x10983c3a8>
-	gc: collectable <tuple 0x109860da0>
-	gc: collectable <function 0x109864048>
-	gc: collectable <function 0x1098640d0>
-	gc: collectable <cell 0x10983c3d8>
-	gc: collectable <function 0x1098641e0>
-	gc: collectable <cell 0x10983c408>
-	gc: collectable <cell 0x10983c438>
-	gc: collectable <set 0x109854588>
-	gc: collectable <tuple 0x109838dc8>
-	gc: collectable <function 0x109864268>
-	gc: collectable <function 0x109864158>
-	gc: collectable <function 0x1098642f0>
-	gc: collectable <tuple 0x109860dd8>
-	gc: collectable <dict 0x10985c090>
-	gc: collectable <type 0x7fe2aa037a18>
-	gc: collectable <staticmethod 0x109860e10>
-	gc: collectable <member_descriptor 0x10985c8b8>
-	gc: collectable <member_descriptor 0x10985c900>
-	gc: collectable <member_descriptor 0x10985c948>
-	gc: collectable <getset_descriptor 0x10985c990>
-	gc: collectable <getset_descriptor 0x10985c9d8>
-	gc: collectable <tuple 0x109852b48>
-	gc: collectable <Graph 0x109771828>
-	gc: collectable <Graph 0x10979f320>
-	gc: collectable <dict 0x109745168>
-	gc: collectable <dict 0x109745318>
-	gc: collectable <CleanupGraph 0x1097af4e0>
-	gc: collectable <CleanupGraph 0x10983eb70>
-	gc: collectable <dict 0x1097ab558>
-	gc: collectable <dict 0x109869af8>
+	gc: collectable <Graph 0x7fafebdc97c0>
+	gc: collectable <Graph 0x7fafed056850>
+	gc: collectable <dict 0x7fafebf83580>
+	gc: collectable <dict 0x7fafed0ce580>
+	gc: collectable <CleanupGraph 0x7fafed0928e0>
+	gc: collectable <CleanupGraph 0x7fafed08a610>
+	gc: collectable <dict 0x7fafed02f600>
+	gc: collectable <dict 0x7fafed02f400>
 	CleanupGraph(four).__del__()
 	CleanupGraph(five).__del__()
 	Done
-	Retained: Graph(one) 0x109771828
-	Retained: Graph(two) 0x10979f320
-	Retained: CleanupGraph(four) 0x1097af4e0
-	Retained: CleanupGraph(five) 0x10983eb70
+	Retained: Graph(one) 0x7fafebdc97c0
+	Retained: Graph(two) 0x7fafed056850
+	Retained: CleanupGraph(four) 0x7fafed0928e0
+	Retained: CleanupGraph(five) 0x7fafed08a610
 
 .. {{{end}}}
 
@@ -491,45 +467,21 @@ have been collected and deleted are retained.
 	
 	CleanupGraph(three).__del__()
 	Collecting
-	gc: collectable <tuple 0x10beb76d0>
-	gc: collectable <cell 0x10bedb3a8>
-	gc: collectable <tuple 0x10befada0>
-	gc: collectable <function 0x10befe048>
-	gc: collectable <function 0x10befe0d0>
-	gc: collectable <cell 0x10bedb3d8>
-	gc: collectable <function 0x10befe1e0>
-	gc: collectable <cell 0x10bedb408>
-	gc: collectable <cell 0x10bedb438>
-	gc: collectable <set 0x10bef3588>
-	gc: collectable <tuple 0x10bed7dc8>
-	gc: collectable <function 0x10befe268>
-	gc: collectable <function 0x10befe158>
-	gc: collectable <function 0x10befe2f0>
-	gc: collectable <tuple 0x10befadd8>
-	gc: collectable <dict 0x10bef6090>
-	gc: collectable <type 0x7ff77183ae18>
-	gc: collectable <staticmethod 0x10befae10>
-	gc: collectable <member_descriptor 0x10bef68b8>
-	gc: collectable <member_descriptor 0x10bef6900>
-	gc: collectable <member_descriptor 0x10bef6948>
-	gc: collectable <getset_descriptor 0x10bef6990>
-	gc: collectable <getset_descriptor 0x10bef69d8>
-	gc: collectable <tuple 0x10bef1b48>
-	gc: collectable <Graph 0x10be10828>
-	gc: collectable <Graph 0x10be3e320>
-	gc: collectable <dict 0x10bde4168>
-	gc: collectable <dict 0x10bde4318>
-	gc: collectable <CleanupGraph 0x10be4e4e0>
-	gc: collectable <CleanupGraph 0x10beddb70>
-	gc: collectable <dict 0x10be4a288>
-	gc: collectable <dict 0x10bf03af8>
+	gc: collectable <Graph 0x7fcb78ec97c0>
+	gc: collectable <Graph 0x7fcb7a24c850>
+	gc: collectable <dict 0x7fcb7a183580>
+	gc: collectable <dict 0x7fcb7a2c4580>
+	gc: collectable <CleanupGraph 0x7fcb7a2888e0>
+	gc: collectable <CleanupGraph 0x7fcb7a280610>
+	gc: collectable <dict 0x7fcb7a225600>
+	gc: collectable <dict 0x7fcb7a225400>
 	CleanupGraph(four).__del__()
 	CleanupGraph(five).__del__()
 	Done
-	Retained: Graph(one) 0x10be10828
-	Retained: Graph(two) 0x10be3e320
-	Retained: CleanupGraph(four) 0x10be4e4e0
-	Retained: CleanupGraph(five) 0x10beddb70
+	Retained: Graph(one) 0x7fcb78ec97c0
+	Retained: Graph(two) 0x7fcb7a24c850
+	Retained: CleanupGraph(four) 0x7fcb7a2888e0
+	Retained: CleanupGraph(five) 0x7fcb7a280610
 
 .. {{{end}}}
 

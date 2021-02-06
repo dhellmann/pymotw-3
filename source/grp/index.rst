@@ -47,7 +47,7 @@ sorted before printing the report.
 
 	$ python3 grp_getgrall.py
 	
-	34
+	47
 	Name                            GID         Members            
 	------------------------------- ----------- -------------------
 	accessibility                            90                    
@@ -59,12 +59,24 @@ sorted before printing the report.
 	                                            _calendar, _dovecot
 	com.apple.access_disabled               396                    
 	com.apple.access_ftp                    395                    
+	com.apple.access_remote_ae              400                    
 	com.apple.access_screensharing          398                    
 	com.apple.access_sessionkey             397                    
 	com.apple.access_ssh                    399                    
-	com.apple.sharepoint.group.1            701 dhellmann          
+	com.apple.sharepoint.group.1            402 dhellmann          
+	com.apple.sharepoint.group.10           709                    
+	com.apple.sharepoint.group.11           710                    
+	com.apple.sharepoint.group.2            701 dhellmann          
+	com.apple.sharepoint.group.3            702 dhellmann          
+	com.apple.sharepoint.group.4            703                    
+	com.apple.sharepoint.group.5            704                    
+	com.apple.sharepoint.group.6            705                    
+	com.apple.sharepoint.group.7            706                    
+	com.apple.sharepoint.group.8            707                    
+	com.apple.sharepoint.group.9            708                    
 	consoleusers                             53                    
 	daemon                                    1 root               
+	dhellmann                               501                    
 	dialer                                   68                    
 	everyone                                 12                    
 	group                                    16                    
@@ -81,6 +93,7 @@ sorted before printing the report.
 	owner                                    10                    
 	procmod                                   9 root               
 	procview                                  8 root               
+	racemi                                  500 dhellmann          
 	staff                                    20 root               
 	sys                                       3 root               
 	tty                                       4 root               
@@ -109,8 +122,10 @@ The set of unique group names is sorted before they are printed.
 
 	$ python3 grp_groups_for_user.py
 	
-	dhellmann belongs to: _appserveradm, _appserverusr, _lpadmin, ad
-	min, com.apple.sharepoint.group.1
+	dhellmann belongs to: _lpadmin, admin, com.apple.access_screensh
+	aring, com.apple.access_ssh, com.apple.sharepoint.group.1, com.a
+	pple.sharepoint.group.2, com.apple.sharepoint.group.3, racemi, s
+	taff
 
 .. {{{end}}}
 
@@ -159,7 +174,7 @@ To identify the group running the current process, combine
 
 	$ python3 grp_getgrgid_process.py
 	
-	Currently running with GID=20 name=staff
+	Currently running with GID=501 name=dhellmann
 
 .. {{{end}}}
 
@@ -181,7 +196,7 @@ file or directory.
 
 	$ python3 grp_getgrgid_fileowner.py
 	
-	grp_getgrgid_fileowner.py is owned by staff (20)
+	grp_getgrgid_fileowner.py is owned by dhellmann (501)
 
 .. {{{end}}}
 

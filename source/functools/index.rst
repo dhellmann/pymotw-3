@@ -47,23 +47,23 @@ invoked without passing a value for ``a``, causing an exception.
 	$ python3 functools_partial.py
 	
 	myfunc:
-	  object: <function myfunc at 0x1007a6a60>
+	  object: <function myfunc at 0x7ff87e6ba160>
 	  __name__: myfunc
 	  called myfunc with: ('a', 3)
 	
 	partial with named default:
-	  object: functools.partial(<function myfunc at 0x1007a6a60>,
+	  object: functools.partial(<function myfunc at 0x7ff87e6ba160>,
 	b=4)
-	  func: <function myfunc at 0x1007a6a60>
+	  func: <function myfunc at 0x7ff87e6ba160>
 	  args: ()
 	  keywords: {'b': 4}
 	  called myfunc with: ('passing a', 4)
 	  called myfunc with: ('override b', 5)
 	
 	partial with defaults:
-	  object: functools.partial(<function myfunc at 0x1007a6a60>,
+	  object: functools.partial(<function myfunc at 0x7ff87e6ba160>,
 	'default a', b=99)
-	  func: <function myfunc at 0x1007a6a60>
+	  func: <function myfunc at 0x7ff87e6ba160>
 	  args: ('default a',)
 	  keywords: {'b': 99}
 	  called myfunc with: ('default a', 99)
@@ -105,12 +105,12 @@ values to be modified.
 	$ python3 functools_update_wrapper.py
 	
 	myfunc:
-	  object: <function myfunc at 0x1018a6a60>
+	  object: <function myfunc at 0x7fd7c3190310>
 	  __name__: myfunc
 	  __doc__ 'Docstring for myfunc().'
 	
 	raw wrapper:
-	  object: functools.partial(<function myfunc at 0x1018a6a60>,
+	  object: functools.partial(<function myfunc at 0x7fd7c3190310>,
 	b=4)
 	  __name__: (no __name__)
 	  __doc__ 'partial(func, *args, **keywords) - new function with
@@ -122,7 +122,7 @@ values to be modified.
 	  update: ('__dict__',)
 	
 	updated wrapper:
-	  object: functools.partial(<function myfunc at 0x1018a6a60>,
+	  object: functools.partial(<function myfunc at 0x7fd7c3190310>,
 	b=4)
 	  __name__: myfunc
 	  __doc__ 'Docstring for myfunc().'
@@ -151,19 +151,19 @@ This example creates partials from an instance of a class with a
 	$ python3 functools_callable.py
 	
 	instance:
-	  object: <__main__.MyClass object at 0x1011b1cf8>
+	  object: <__main__.MyClass object at 0x7fd5b378e340>
 	  __name__: (no __name__)
 	  __doc__ 'Demonstration class for functools'
-	  called object with: (<__main__.MyClass object at 0x1011b1cf8>,
-	'e goes here', 6)
+	  called object with: (<__main__.MyClass object at
+	0x7fd5b378e340>, 'e goes here', 6)
 	
 	instance wrapper:
 	  object: functools.partial(<__main__.MyClass object at
-	0x1011b1cf8>, f=8, e='default for e')
+	0x7fd5b378e340>, e='default for e', f=8)
 	  __name__: (no __name__)
 	  __doc__ 'Demonstration class for functools'
-	  called object with: (<__main__.MyClass object at 0x1011b1cf8>,
-	'default for e', 8)
+	  called object with: (<__main__.MyClass object at
+	0x7fd5b378e340>, 'default for e', 8)
 
 .. {{{end}}}
 
@@ -200,7 +200,7 @@ in a ``TypeError``.
 	
 	method1 as partialmethod
 	  called standalone with: (<__main__.MyClass object at
-	0x1007b1d30>, 1, 2)
+	0x7ff5d394c8b0>, 1, 2)
 	  self.attr = instance attribute
 	
 	method2 as partial
@@ -232,7 +232,7 @@ properties of the original "bare" function.
 	$ python3 functools_wraps.py
 	
 	myfunc:
-	  object: <function myfunc at 0x101241b70>
+	  object: <function myfunc at 0x7febaea905e0>
 	  __name__: myfunc
 	  __doc__ 'myfunc() is not complicated'
 	
@@ -240,7 +240,7 @@ properties of the original "bare" function.
 	  myfunc: ('unwrapped, passing b', 3)
 	
 	wrapped_myfunc:
-	  object: <function myfunc at 0x1012e62f0>
+	  object: <function myfunc at 0x7febaea904c0>
 	  __name__: myfunc
 	  __doc__ 'myfunc() is not complicated'
 	
@@ -250,7 +250,7 @@ properties of the original "bare" function.
 	     myfunc: ('args to wrapped', 4)
 	
 	decorated_myfunc:
-	  object: <function decorated_myfunc at 0x1012e6400>
+	  object: <function decorated_myfunc at 0x7febaea90700>
 	  __name__: decorated_myfunc
 	  __doc__ None
 	
@@ -306,12 +306,12 @@ on the other object, before failing entirely.
 	
 	Methods:
 	
-	[('__eq__', <function MyObject.__eq__ at 0x10139a488>),
-	 ('__ge__', <function _ge_from_gt at 0x1012e2510>),
-	 ('__gt__', <function MyObject.__gt__ at 0x10139a510>),
-	 ('__init__', <function MyObject.__init__ at 0x10139a400>),
-	 ('__le__', <function _le_from_gt at 0x1012e2598>),
-	 ('__lt__', <function _lt_from_gt at 0x1012e2488>)]
+	[('__eq__', <function MyObject.__eq__ at 0x7f9479b81670>),
+	 ('__ge__', <function _ge_from_gt at 0x7f9479ab8a60>),
+	 ('__gt__', <function MyObject.__gt__ at 0x7f9479b81700>),
+	 ('__init__', <function MyObject.__init__ at 0x7f9479b815e0>),
+	 ('__le__', <function _le_from_gt at 0x7f9479ab8af0>),
+	 ('__lt__', <function _lt_from_gt at 0x7f9479ab89d0>)]
 	
 	Comparisons:
 	
@@ -373,15 +373,15 @@ keys are created, the sequence is sorted by comparing the keys.
 	$ python3 functools_cmp_to_key.py
 	
 	key_wrapper(MyObject(5)) -> <functools.KeyWrapper object at
-	0x1011c5530>
+	0x7f88632c03b0>
 	key_wrapper(MyObject(4)) -> <functools.KeyWrapper object at
-	0x1011c5510>
+	0x7f88632c0530>
 	key_wrapper(MyObject(3)) -> <functools.KeyWrapper object at
-	0x1011c54f0>
+	0x7f88632c0510>
 	key_wrapper(MyObject(2)) -> <functools.KeyWrapper object at
-	0x1011c5390>
+	0x7f88632c0350>
 	key_wrapper(MyObject(1)) -> <functools.KeyWrapper object at
-	0x1011c5710>
+	0x7f88632c02f0>
 	comparing MyObject(4) and MyObject(5)
 	comparing MyObject(3) and MyObject(4)
 	comparing MyObject(2) and MyObject(3)

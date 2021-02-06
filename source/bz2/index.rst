@@ -383,7 +383,7 @@ Running ``bz2_server.py`` produces:
 
 	$ python3 bz2_server.py
 	
-	Client: Contacting server on 127.0.0.1:57364
+	Client: Contacting server on 127.0.0.1:59483
 	Client: sending filename: "lorem.txt"
 	Server: client asked for: "lorem.txt"
 	Server: RAW b'Lorem ipsum dolor sit amet, cons'
@@ -409,16 +409,16 @@ Running ``bz2_server.py`` produces:
 	Server: FLUSHING b'98387682c7ca7b5a3bb75da77755eb81c1cb1ca94c4b6
 	faf209c52a90aaa4d16'
 	Client: BUFFERING
-	Server: FLUSHING b'a4a1b9c167a01c8d9ef32589d831e77df7a5753a398b1
-	1660e392126fc18a72a'
 	Client: READ b'9112793d4ca789068698a0d1a341901a0d53f4d1119a8d4c9
 	e812d755a67c107'
+	Server: FLUSHING b'a4a1b9c167a01c8d9ef32589d831e77df7a5753a398b1
+	1660e392126fc18a72a'
+	Client: BUFFERING
 	Server: FLUSHING b'1088716cc8dedda5d489da410748531278043d70a8a13
 	1c2b8adcd6a221bdb8c'
-	Client: BUFFERING
-	Server: FLUSHING b'7ff76b88c1d5342ee48a70a12175074918'
 	Client: READ b'98387682c7ca7b5a3bb75da77755eb81c1cb1ca94c4b6faf2
 	09c52a90aaa4d16'
+	Server: FLUSHING b'7ff76b88c1d5342ee48a70a12175074918'
 	Client: BUFFERING
 	Client: READ b'a4a1b9c167a01c8d9ef32589d831e77df7a5753a398b11660
 	e392126fc18a72a'

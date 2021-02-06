@@ -146,7 +146,7 @@ into a different part of memory.
 	Expected:
 	    [<doctest_unpredictable.MyClass object at 0x10055a2d0>]
 	Got:
-	    [<doctest_unpredictable.MyClass object at 0x1047a2710>]
+	    [<doctest_unpredictable.MyClass object at 0x7f9a5c759190>]
 	2 items had no tests:
 	    doctest_unpredictable
 	    doctest_unpredictable.MyClass
@@ -531,7 +531,7 @@ also available, for output where those formats are more readable.
 	Failed example:
 	    my_function(2, 3) #doctest: +REPORT_NDIFF
 	Differences (ndiff with -expected +actual):
-	    - 6
+	    - 6 
 	    ?  -
 	    + 6
 	Trying:
@@ -995,7 +995,7 @@ instead of being reported individually.
 	Doctest: doctest_in_help.txt ... ok
 	
 	----------------------------------------------------------------
-	Ran 2 tests in 0.003s
+	Ran 2 tests in 0.004s
 	
 	OK
 

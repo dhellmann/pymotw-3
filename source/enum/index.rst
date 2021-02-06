@@ -183,8 +183,8 @@ when the ``Enum`` class is being interpreted.
 	Traceback (most recent call last):
 	  File "enum_unique_enforce.py", line 11, in <module>
 	    class BugStatus(enum.Enum):
-	  File ".../lib/python3.7/enum.py", line 848, in unique
-	    (enumeration, alias_details))
+	  File ".../lib/python3.8/enum.py", line 860, in unique
+	    raise ValueError('duplicate values found in %r: %s' %
 	ValueError: duplicate values found in <enum 'BugStatus'>:
 	by_design -> wont_fix, closed -> fix_released
 

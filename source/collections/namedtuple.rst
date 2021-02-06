@@ -209,7 +209,7 @@ fields for the ``namedtuple``.
 	$ python3 collections_namedtuple_asdict.py
 	
 	Representation: Person(name='Bob', age=30)
-	As Dictionary: OrderedDict([('name', 'Bob'), ('age', 30)])
+	As Dictionary: {'name': 'Bob', 'age': 30}
 
 .. {{{end}}}
 

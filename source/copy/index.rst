@@ -35,8 +35,10 @@ the reference in the ``dup`` list is to the same object that is in
 
 	$ python3 copy_shallow.py
 	
-	             my_list: [<__main__.MyClass object at 0x101f9c160>]
-	                 dup: [<__main__.MyClass object at 0x101f9c160>]
+	             my_list: [<__main__.MyClass object at 0x7f849de8634
+	0>]
+	                 dup: [<__main__.MyClass object at 0x7f849de8634
+	0>]
 	      dup is my_list: False
 	      dup == my_list: True
 	dup[0] is my_list[0]: True
@@ -74,8 +76,10 @@ equal.
 
 	$ python3 copy_deep.py
 	
-	             my_list: [<__main__.MyClass object at 0x101e9c160>]
-	                 dup: [<__main__.MyClass object at 0x1044e1f98>]
+	             my_list: [<__main__.MyClass object at 0x7fb46708e34
+	0>]
+	                 dup: [<__main__.MyClass object at 0x7fb46728a61
+	0>]
 	      dup is my_list: False
 	      dup == my_list: True
 	dup[0] is my_list[0]: False
@@ -176,30 +180,31 @@ When the *root* node is copied, it produces the following output.
 	$ python3 copy_recursion.py
 	
 	
-	Calling __deepcopy__ for Graph(name=root, id=4326183824)
+	Calling __deepcopy__ for Graph(name=root, id=140436091738048)
 	  Memo dictionary:
 	    (empty)
-	  Copying to new object Graph(name=root, id=4367233208)
+	  Copying to new object Graph(name=root, id=140436121775072)
 	
-	Calling __deepcopy__ for Graph(name=a, id=4326186344)
+	Calling __deepcopy__ for Graph(name=a, id=140436121675856)
 	  Memo dictionary:
-	    Graph(name=root, id=4326183824): Graph(name=root,
-	id=4367233208)
-	  Copying to new object Graph(name=a, id=4367234720)
+	    Graph(name=root, id=140436091738048): Graph(name=root,
+	id=140436121775072)
+	  Copying to new object Graph(name=a, id=140436121776080)
 	
-	Calling __deepcopy__ for Graph(name=root, id=4326183824)
-	  Already copied to Graph(name=root, id=4367233208)
+	Calling __deepcopy__ for Graph(name=root, id=140436091738048)
+	  Already copied to Graph(name=root, id=140436121775072)
 	
-	Calling __deepcopy__ for Graph(name=b, id=4326183880)
+	Calling __deepcopy__ for Graph(name=b, id=140436121921712)
 	  Memo dictionary:
-	    Graph(name=root, id=4326183824): Graph(name=root,
-	id=4367233208)
-	    Graph(name=a, id=4326186344): Graph(name=a, id=4367234720)
-	    4326183824: Graph(name=root, id=4367233208)
-	    4367217936: [Graph(name=root, id=4326183824), Graph(name=a,
-	id=4326186344)]
-	    4326186344: Graph(name=a, id=4367234720)
-	  Copying to new object Graph(name=b, id=4367235000)
+	    Graph(name=root, id=140436091738048): Graph(name=root,
+	id=140436121775072)
+	    Graph(name=a, id=140436121675856): Graph(name=a,
+	id=140436121776080)
+	    140436091738048: Graph(name=root, id=140436121775072)
+	    140436122268224: [Graph(name=root, id=140436091738048),
+	Graph(name=a, id=140436121675856)]
+	    140436121675856: Graph(name=a, id=140436121776080)
+	  Copying to new object Graph(name=b, id=140436122236144)
 
 .. {{{end}}}
 

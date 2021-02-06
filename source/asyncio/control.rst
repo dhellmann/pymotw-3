@@ -36,13 +36,13 @@ containing two sets holding the finished and pending tasks.
 	
 	starting main
 	waiting for phases to complete
+	in phase 2
 	in phase 0
 	in phase 1
-	in phase 2
 	done with phase 0
 	done with phase 1
 	done with phase 2
-	results: ['phase 1 result', 'phase 0 result', 'phase 2 result']
+	results: ['phase 0 result', 'phase 1 result', 'phase 2 result']
 
 .. {{{end}}}
 
@@ -75,10 +75,10 @@ reported.
 	in phase 2
 	done with phase 0
 	1 completed and 2 pending
-	cancelling tasks
+	canceling tasks
 	exiting main
-	phase 1 cancelled
-	phase 2 cancelled
+	phase 1 canceled
+	phase 2 canceled
 
 .. {{{end}}}
 
@@ -108,8 +108,8 @@ background operations actually completed.
 	
 	starting main
 	waiting for phases to complete
-	in phase2
 	in phase1
+	in phase2
 	done with phase2
 	done with phase1
 	results: ['phase1 result', 'phase2 result']
@@ -144,9 +144,9 @@ loop waits for the result of the coroutine using ``await``.
 	
 	starting main
 	waiting for phases to complete
+	in phase 1
 	in phase 0
 	in phase 2
-	in phase 1
 	done with phase 2
 	received answer 'phase 2 result'
 	done with phase 1

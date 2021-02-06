@@ -77,7 +77,8 @@ returned by ``__enter__()``, which is not necessarily the
 	
 	Context.__init__()
 	Context.__enter__()
-	WithinContext.__init__(<__main__.Context object at 0x101f046d8>)
+	WithinContext.__init__(<__main__.Context object at 0x7f8ec2dc97c
+	0>)
 	WithinContext.do_something()
 	Context.__exit__()
 	WithinContext.__del__
@@ -109,14 +110,14 @@ re-raised after ``__exit__()`` returns.
 	__exit__()
 	  exc_type = <class 'RuntimeError'>
 	  exc_val  = error message handled
-	  exc_tb   = <traceback object at 0x101c94948>
+	  exc_tb   = <traceback object at 0x7fab52a2f180>
 	
 	__init__(False)
 	__enter__()
 	__exit__()
 	  exc_type = <class 'RuntimeError'>
 	  exc_val  = error message propagated
-	  exc_tb   = <traceback object at 0x101c94948>
+	  exc_tb   = <traceback object at 0x7fab52a2f240>
 	Traceback (most recent call last):
 	  File "contextlib_api_error.py", line 34, in <module>
 	    raise RuntimeError('error message propagated')
@@ -252,7 +253,7 @@ the decorated function are still available, as demonstrated by
 	  File "contextlib_contextmanager_decorator.py", line 43, in
 	<module>
 	    throw_error(ValueError('this exception is not handled'))
-	  File ".../lib/python3.7/contextlib.py", line 74, in inner
+	  File ".../lib/python3.8/contextlib.py", line 75, in inner
 	    return func(*args, **kwds)
 	  File "contextlib_contextmanager_decorator.py", line 33, in
 	throw_error

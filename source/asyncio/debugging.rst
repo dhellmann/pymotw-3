@@ -65,18 +65,11 @@ event loop is not being properly closed when the program exits.
 	   INFO: enabling debugging
 	   INFO: entering event loop
 	   INFO: outer starting
-	WARNING: Executing <Task pending coro=<outer() running at
-	asyncio_debug.py:43> wait_for=<Task pending coro=<inner()
-	running at asyncio_debug.py:33> cb=[<TaskWakeupMethWrapper
-	object at 0x106e0d288>()] created at asyncio_debug.py:43>
-	cb=[_run_until_complete_cb() at
-	.../lib/python3.7/asyncio/base_events.py:158] created at
-	.../lib/python3.7/asyncio/base_events.py:552> took 0.001 seconds
 	   INFO: inner starting
 	   INFO: inner completed
-	WARNING: Executing <Task finished coro=<inner() done, defined at
-	asyncio_debug.py:33> result=None created at asyncio_debug.py:43>
-	took 0.101 seconds
+	WARNING: Executing <Task finished name='Task-2' coro=<inner()
+	done, defined at asyncio_debug.py:33> result=None created at
+	asyncio_debug.py:43> took 0.101 seconds
 	   INFO: outer completed
 
 .. {{{end}}}

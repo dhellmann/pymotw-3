@@ -198,7 +198,7 @@ A similar ``TypeError`` is raised if a value is not a string.
 
 	$ python3 dbm_intvalue.py
 	
-	dbm mappings have byte or string elements only
+	dbm mappings have bytes or string elements only
 
 .. {{{end}}}
 

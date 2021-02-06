@@ -43,7 +43,7 @@ address and port number.
 	
 	pymotw.com          : 66.33.211.242
 	doughellmann.com    : 66.33.211.240
-	python.org          : 23.253.135.79
+	python.org          : 45.55.99.72
 
 .. {{{end}}}
 
@@ -71,7 +71,8 @@ resolve back to a hostname.
 
 	$ python3 asyncio_getnameinfo.py
 	
-	66.33.211.242  : n821.com https
+	66.33.211.242  : apache2-zoo.george-washington.dreamhost.com htt
+	ps
 	104.130.43.121 : 104.130.43.121 https
 
 .. {{{end}}}

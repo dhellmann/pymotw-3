@@ -38,13 +38,13 @@ context managers with the ``with await`` keywords, as in ``coro1()``.
 	acquiring the lock before starting coroutines
 	lock acquired: True
 	waiting for coroutines
-	coro2 waiting for the lock
 	coro1 waiting for the lock
+	coro2 waiting for the lock
 	callback releasing lock
-	coro2 acquired lock
-	coro2 released lock
 	coro1 acquired lock
 	coro1 released lock
+	coro2 acquired lock
+	coro2 released lock
 
 .. {{{end}}}
 
@@ -74,11 +74,11 @@ hold on the event object.
 	$ python3 asyncio_event.py
 	
 	event start state: False
-	coro2 waiting for event
 	coro1 waiting for event
+	coro2 waiting for event
 	setting event in callback
-	coro2 triggered
 	coro1 triggered
+	coro2 triggered
 	event end state: True
 
 .. {{{end}}}
@@ -108,25 +108,25 @@ consumers, then all of the remaining consumers.
 	$ python3 asyncio_condition.py
 	
 	starting manipulate_condition
-	consumer 3 is waiting
-	consumer 0 is waiting
 	consumer 4 is waiting
-	consumer 1 is waiting
 	consumer 2 is waiting
+	consumer 1 is waiting
+	consumer 0 is waiting
+	consumer 3 is waiting
 	notifying 1 consumers
-	consumer 3 triggered
-	ending consumer 3
-	notifying 2 consumers
-	consumer 0 triggered
-	ending consumer 0
 	consumer 4 triggered
 	ending consumer 4
-	notifying remaining consumers
-	ending manipulate_condition
-	consumer 1 triggered
-	ending consumer 1
+	notifying 2 consumers
 	consumer 2 triggered
 	ending consumer 2
+	consumer 1 triggered
+	ending consumer 1
+	notifying remaining consumers
+	ending manipulate_condition
+	consumer 0 triggered
+	ending consumer 0
+	consumer 3 triggered
+	ending consumer 3
 
 .. {{{end}}}
 

@@ -134,6 +134,15 @@ generator functions instead of native coroutines.
 
 	$ python3 asyncio_generator.py
 	
+	asyncio_generator.py:13: DeprecationWarning: "@coroutine" decora
+	tor is deprecated since Python 3.8, use "async def" instead
+	  def outer():
+	asyncio_generator.py:23: DeprecationWarning: "@coroutine" decora
+	tor is deprecated since Python 3.8, use "async def" instead
+	  def phase1():
+	asyncio_generator.py:29: DeprecationWarning: "@coroutine" decora
+	tor is deprecated since Python 3.8, use "async def" instead
+	  def phase2(arg):
 	in outer
 	waiting for result1
 	in phase1

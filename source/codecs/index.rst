@@ -860,7 +860,7 @@ functions.
 	$ python3 codecs_register.py
 	
 	UTF-8: <codecs.CodecInfo object for encoding utf-8 at
-	0x1007773a8>
+	0x7fca3ff589a0>
 	search1: Searching for: no-such-encoding
 	search2: Searching for: no-such-encoding
 	ERROR: unknown encoding: no-such-encoding

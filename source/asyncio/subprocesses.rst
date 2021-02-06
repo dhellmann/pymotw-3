@@ -91,17 +91,20 @@ on three drives on the system where it was run.
 	
 	in run_df
 	launching process
-	process started 49675
+	process started 77063
 	waiting for process to complete
-	read 332 bytes from stdout
+	read 589 bytes from stdout
 	process exited
 	return code 0
 	parsing results
 	
 	Free space:
-	/                        : 233Gi
-	/Volumes/hubertinternal  : 157Gi
-	/Volumes/hubert-tm       : 2.3Ti
+	/                        : 181Gi
+	/System/Volumes/Data     : 181Gi
+	/private/var/vm          : 181Gi
+	/Volumes/hubert-tm       : 699Gi
+	/Volumes/external2       : 7.8Ti
+	/Volumes/Recovery        : 181Gi
 
 .. {{{end}}}
 
@@ -168,15 +171,21 @@ looks similar to the previous example.
 	
 	in run_df
 	launching process
-	process started 49678
-	read b'Filesystem     Size   Used  Avail Capacity   iused
+	process started 77066
+	read b'Filesystem     Size   Used  Avail Capacity  iused
 	ifree %iused  Mounted on\n'
-	read b'/dev/disk2s2  446Gi  213Gi  233Gi    48%  55955082
-	61015132   48%   /\n'
-	read b'/dev/disk1    465Gi  307Gi  157Gi    67%  80514922
-	41281172   66%   /Volumes/hubertinternal\n'
-	read b'/dev/disk3s2  3.6Ti  1.4Ti  2.3Ti    38% 181837749
-	306480579   37%   /Volumes/hubert-tm\n'
+	read b'/dev/disk1s5  466Gi   10Gi  181Gi     6%   487886
+	4882989034    0%   /\n'
+	read b'/dev/disk1s1  466Gi  263Gi  181Gi    60%  5033629
+	4878443291    0%   /System/Volumes/Data\n'
+	read b'/dev/disk1s4  466Gi   11Gi  181Gi     6%       12
+	4883476908    0%   /private/var/vm\n'
+	read b'/dev/disk2s2  3.6Ti  3.0Ti  699Gi    82% 93226929
+	4201740350    2%   /Volumes/hubert-tm\n'
+	read b'/dev/disk3s2  9.1Ti  1.3Ti  7.8Ti    14%   288312
+	4294678967    0%   /Volumes/external2\n'
+	read b'/dev/disk1s3  466Gi  504Mi  181Gi     1%       46
+	4883476874    0%   /Volumes/Recovery\n'
 	read b''
 	no more output from command
 	waiting for process to complete
@@ -184,9 +193,12 @@ looks similar to the previous example.
 	parsing results
 	
 	Free space:
-	/                        : 233Gi
-	/Volumes/hubertinternal  : 157Gi
-	/Volumes/hubert-tm       : 2.3Ti
+	/                        : 181Gi
+	/System/Volumes/Data     : 181Gi
+	/private/var/vm          : 181Gi
+	/Volumes/hubert-tm       : 699Gi
+	/Volumes/external2       : 7.8Ti
+	/Volumes/Recovery        : 181Gi
 
 .. {{{end}}}
 
@@ -254,7 +266,7 @@ text message is transformed.
 	
 	in to_upper
 	launching process
-	pid 49684
+	pid 77069
 	communicating with process
 	waiting for process to complete
 	return code 0

@@ -94,7 +94,7 @@ the body of the function.
 	$ python3 -m dis dis_function.py
 	
 	  5           0 LOAD_CONST               0 (<code object f at
-	0x102c2df60, file "dis_function.py", line 5>)
+	0x7fc016436660, file "dis_function.py", line 5>)
 	              2 LOAD_CONST               1 ('f')
 	              4 MAKE_FUNCTION            0
 	              6 STORE_NAME               0 (f)
@@ -117,7 +117,7 @@ the body of the function.
 	        >>   34 LOAD_CONST               4 (None)
 	             36 RETURN_VALUE
 	
-	Disassembly of <code object f at 0x102c2df60, file
+	Disassembly of <code object f at 0x7fc016436660, file
 	"dis_function.py", line 5>:
 	  6           0 LOAD_GLOBAL              0 (len)
 	              2 LOAD_FAST                0 (args)
@@ -182,6 +182,7 @@ string, or other code object, ready to be printed.
 	Name:              f
 	Filename:          dis_show_code.py
 	Argument count:    0
+	Positional-only arguments: 0
 	Kw-only arguments: 0
 	Number of locals:  2
 	Stack size:        3
@@ -276,6 +277,7 @@ in cases when statements outside of a function are being examined.
 	Name:              <module>
 	Filename:          <disassembly>
 	Argument count:    0
+	Positional-only arguments: 0
 	Kw-only arguments: 0
 	Number of locals:  0
 	Stack size:        2
@@ -360,7 +362,7 @@ stack.
 	  6           8 LOAD_CONST               2 (3)
 	             10 STORE_NAME               2 (k)
 	
-	  8          12 SETUP_EXCEPT            24 (to 38)
+	  8          12 SETUP_FINALLY           24 (to 38)
 	
 	  9          14 LOAD_NAME                2 (k)
 	             16 LOAD_NAME                0 (i)

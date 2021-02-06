@@ -26,7 +26,7 @@ library documentation includes several examples in which
 
 	$ python3 collections_defaultdict.py
 	
-	d: defaultdict(<function default_factory at 0x101341950>,
+	d: defaultdict(<function default_factory at 0x7f9c055ba160>,
 	{'foo': 'bar'})
 	foo => bar
 	bar => default value

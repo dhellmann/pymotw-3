@@ -96,12 +96,12 @@ returned by ``time.time()``.
 	$ python3 asyncio_call_at.py
 	
 	entering event loop
-	clock time: 1521404411.833459
-	loop  time: 715855.398664185
+	clock time: 1592777060.818301
+	loop  time: 0.070960913
 	registering callbacks
-	callback 3 invoked at 715855.398744743
-	callback 2 invoked at 715855.503897727
-	callback 1 invoked at 715855.601119414
+	callback 3 invoked at 0.071032715
+	callback 2 invoked at 0.175314401
+	callback 1 invoked at 0.272824703
 	closing event loop
 
 .. {{{end}}}

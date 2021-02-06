@@ -32,11 +32,11 @@ This example waits for the task to return a result before the
 	$ python3 asyncio_create_task.py
 	
 	creating task
-	waiting for <Task pending coro=<task_func() running at
-	asyncio_create_task.py:12>>
+	waiting for <Task pending name='Task-2' coro=<task_func()
+	running at asyncio_create_task.py:12>>
 	in task_func
-	task completed <Task finished coro=<task_func() done, defined at
-	asyncio_create_task.py:12> result='the result'>
+	task completed <Task finished name='Task-2' coro=<task_func()
+	done, defined at asyncio_create_task.py:12> result='the result'>
 	return value: 'the result'
 
 .. {{{end}}}
@@ -66,8 +66,8 @@ loop. The result is a ``CancelledError`` exception from
 	
 	creating task
 	canceling task
-	canceled task <Task cancelling coro=<task_func() running at
-	asyncio_cancel_task.py:12>>
+	canceled task <Task cancelling name='Task-2' coro=<task_func()
+	running at asyncio_cancel_task.py:12>>
 	caught error from canceled task
 
 .. {{{end}}}
@@ -128,8 +128,8 @@ until something uses ``await`` to allow it to be executed.
 	starter: creating task
 	starter: waiting for inner
 	inner: starting
-	inner: waiting for <Task pending coro=<wrapped() running at
-	asyncio_ensure_future.py:12>>
+	inner: waiting for <Task pending name='Task-2' coro=<wrapped()
+	running at asyncio_ensure_future.py:12>>
 	wrapped
 	inner: task returned 'result'
 	starter: inner returned

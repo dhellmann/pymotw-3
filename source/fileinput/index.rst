@@ -64,11 +64,11 @@ data using the RSS format.
 	$ python3 fileinput_example.py sample_data.m3u
 	
 	<?xml version="1.0" ?>
-	<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
 	  <channel>
 	    <title>Sample podcast feed</title>
 	    <description>Generated for PyMOTW</description>
-	    <pubDate>Sun Mar 18 16:20:44 2018</pubDate>
+	    <pubDate>Sun Jun 21 18:04:47 2020</pubDate>
 	    <generator>https://pymotw.com/</generator>
 	  </channel>
 	  <item>

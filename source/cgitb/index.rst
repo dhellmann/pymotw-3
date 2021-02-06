@@ -80,14 +80,14 @@ the line where the actual exception is generated.
 	$ python3 cgitb_local_vars.py
 	
 	ZeroDivisionError
-	Python 3.7.1: .../bin/python3
-	Sun Dec  9 10:46:17 2018
+	Python 3.8.1: .../bin/python3
+	Sun Jun 21 18:04:27 2020
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
 	occurred.
 	
-	 .../cgitb_local_vars.py in <module>()
+	 .../cgitb_local_vars.py in <module>
 	   18 def func1(a, b):
 	   19     c = b - 5
 	   20     return func2(a, c)
@@ -230,14 +230,14 @@ error-prone code.
 	$ python3 cgitb_with_classes.py
 	
 	ZeroDivisionError
-	Python 3.7.1: .../bin/python3
-	Sun Dec  9 10:46:17 2018
+	Python 3.8.1: .../bin/python3
+	Sun Jun 21 18:04:27 2020
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
 	occurred.
 	
-	 .../cgitb_with_classes.py in <module>()
+	 .../cgitb_with_classes.py in <module>
 	   21         self.a = a
 	   22         self.b = b
 	   23         self.c = self.a * self.b
@@ -367,14 +367,14 @@ standard ``message`` and ``args`` values.
 	$ python3 cgitb_exception_properties.py
 	
 	MyException
-	Python 3.7.1: .../bin/python3
-	Sun Dec  9 10:46:17 2018
+	Python 3.8.1: .../bin/python3
+	Sun Jun 21 18:04:27 2020
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
 	occurred.
 	
-	 .../cgitb_exception_properties.py in <module>()
+	 .../cgitb_exception_properties.py in <module>
 	   19         self.bad_value = bad_value
 	   20         Exception.__init__(self, message)
 	   21         return
@@ -487,23 +487,23 @@ describing where to go to find the error log.
 	$ python3 cgitb_log_exception.py
 	
 	<p>A problem occurred in a Python script.
-	.../LOGS/tmpdl2oafqt.txt contains the description of this error.
+	.../LOGS/tmpd3qt9zpl.txt contains the description of this error.
 
 	$ ls LOGS
 	
-	tmpdl2oafqt.txt
+	tmpd3qt9zpl.txt
 
 	$ cat LOGS/*.txt
 	
 	ZeroDivisionError
-	Python 3.7.1: .../bin/python3
-	Sun Dec  9 10:46:17 2018
+	Python 3.8.1: .../bin/python3
+	Sun Jun 21 18:04:27 2020
 	
 	A problem occurred in a Python script.  Here is the sequence of
 	function calls leading up to the error, in the order they
 	occurred.
 	
-	 .../cgitb_log_exception.py in <module>()
+	 .../cgitb_log_exception.py in <module>
 	   24 
 	   25 def func(a, divisor):
 	   26     return a / divisor

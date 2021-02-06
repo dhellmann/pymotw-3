@@ -50,7 +50,7 @@ yields control after sending a signal.
 
 	$ python3 asyncio_signal.py
 	
-	starting send_signals for 21772
+	starting send_signals for 77087
 	sending SIGHUP
 	yielding control
 	signal_handler('SIGHUP')

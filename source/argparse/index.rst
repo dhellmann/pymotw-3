@@ -1281,12 +1281,12 @@ always ``None``.
 	  required = False
 	
 	Processing CustomAction for a
-	  parser = 4315836992
+	  parser = 140723384784832
 	  values = 'value'
 	  option_string = '-a'
 	
 	Processing CustomAction for m
-	  parser = 4315836992
+	  parser = 140723384784832
 	  values = ['multivalue', 'second']
 	  option_string = '-m'
 	

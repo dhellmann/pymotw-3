@@ -55,10 +55,10 @@ based on the Python interpreter version.
 	  examples/a.py
 	  examples/subdir
 	  examples/subdir/__pycache__
-	  examples/subdir/__pycache__/b.cpython-37.pyc
+	  examples/subdir/__pycache__/b.cpython-38.pyc
 	  examples/subdir/b.py
 	  examples/__pycache__
-	  examples/__pycache__/a.cpython-37.pyc
+	  examples/__pycache__/a.cpython-38.pyc
 	
 
 .. {{{end}}}
@@ -184,7 +184,7 @@ or a relative path.
 	  examples/subdir
 	  examples/subdir/b.py
 	  examples/__pycache__
-	  examples/__pycache__/a.cpython-37.pyc
+	  examples/__pycache__/a.cpython-38.pyc
 	
 
 .. {{{end}}}
@@ -254,8 +254,11 @@ example:
 	  -j WORKERS, --workers WORKERS
 	                        Run compileall concurrently
 	  --invalidation-mode {checked-hash,timestamp,unchecked-hash}
-	                        How the pycs will be invalidated at
-	runtime
+	                        set .pyc invalidation mode; defaults to
+	"checked-hash"
+	                        if the SOURCE_DATE_EPOCH environment
+	variable is set,
+	                        and "timestamp" otherwise.
 
 .. {{{end}}}
 
