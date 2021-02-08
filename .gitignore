@@ -1,4 +1,5 @@
 build/doctrees
+build/html/*.tar.gz
 module
 source/_themes/pymotw/static/pymotw.css
 /order.txt
