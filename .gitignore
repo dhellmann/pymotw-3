@@ -1,5 +1,6 @@
 build/doctrees
 build/html/*.tar.gz
+build/html/sitemap.xml
 module
 source/_themes/pymotw/static/pymotw.css
 /order.txt
