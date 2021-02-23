@@ -3,7 +3,7 @@ About Python Module of the Week
 ===============================
 
 PyMOTW-3 is a series of articles written by `Doug Hellmann
-<https://doughellmann.com/blog/>`_.  to demonstrate how to use the modules of
+<https://doughellmann.com/>`_.  to demonstrate how to use the modules of
 the Python 3 standard library. It is based on the original PyMOTW_
 series, which covered Python 2.7.
 
@@ -28,7 +28,7 @@ http://feeds.doughellmann.com/PyMOTW and `email
 <http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US>`_. Follow
 `@pymotw`_ or `@doughellmann`_ for updates as well.
 
-.. _my blog: https://doughellmann.com/blog/
+.. _my blog: https://doughellmann.com/
 .. _@pymotw: https://twitter.com/pymotw
 .. _@doughellmann: https://twitter.com/doughellmann
 
