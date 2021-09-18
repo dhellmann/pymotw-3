@@ -72,15 +72,8 @@ options(
         warnerror=False,
     ),
 
-    website=Bunch(
-        # What server hosts the website?
-        server='pymotw.com',
-        server_path='/home/douhel3shell/pymotw.com/3/',
-    ),
-
-    testsite=Bunch(
-        # Where do we put the files for local testing?
-        local_path='/Users/dhellmann/Sites/pymotw.com/3',
+    publish=Bunch(
+        dest_path='/Users/dhellmann/Documents/PyMOTW/Python3/gh-pages/3/',
     ),
 
     sitemap_gen=Bunch(
@@ -305,11 +298,10 @@ def linkcheck():
 @task
 def rsyncwebsite(options):
     # Copy to the server
-    os.environ['RSYNC_RSH'] = '/usr/bin/ssh'
     src_path = path(options.sphinx.builddir) / 'html'
-    sh('(cd %s; rsync --archive --delete --verbose . %s:%s)' %
-        (src_path, options.website.server,
-         options.website.server_path))
+    sh('(cd %s; rsync --archive --delete --verbose . %s)' %
+        (src_path, options.publish.dest_path))
+    print('\nDO NOT FORGET TO COMMIT AND PUSH THE BRANCH')
     return
 
 
@@ -357,7 +349,7 @@ def deploy(options):
     html_clean(options)
     # Rebuild the site-map
     buildsitemap(options)
-    # Install
+    # Copy to the branch directory
     rsyncwebsite(options)
     # Update Google
     #notify_google(options)
@@ -374,7 +366,7 @@ def push(options):
 @task
 def publish(options):
     deploy(options)
-    push(options)
+    #push(options)
 
 
 @task
