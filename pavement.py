@@ -355,8 +355,6 @@ def deploy(options):
     """
     # Rebuild
     html_clean(options)
-    # Copy the sdist into the html output directory.
-    sdist(options)
     # Rebuild the site-map
     buildsitemap(options)
     # Install
