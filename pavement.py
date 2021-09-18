@@ -360,7 +360,7 @@ def deploy(options):
     # Install
     rsyncwebsite(options)
     # Update Google
-    notify_google(options)
+    #notify_google(options)
     return
 
 
